@@ -169,10 +169,66 @@ Toutes sous le drapeau `veritable`, commentées `// VERITABLE:`, testées avec u
 ## 2026-09-21 — Clôture du J1 (validation du rapport)
 
 - **J1 validé par Lukas.** Correction de dérive de `LocalServer` validée.
-- **Le bouton « Solo » hérité ouvre le panneau de départ Véritable** au lieu de lancer une campagne France par défaut (`GameModeSelector.openSinglePlayerModal`, `// VERITABLE:`). Suppression du bouton au J7. La modale solo d'OpenFront n'est plus atteignable que par le tutoriel.
+- **Le bouton « Solo » hérité ouvre le panneau de départ Véritable** au lieu de lancer une campagne France par défaut (`SinglePlayerModal.open()` redirige vers le panneau, `// VERITABLE:` ; d'abord fait dans `GameModeSelector`, déplacé le 2026-09-22 parce que deux tests OpenFront vérifient que la carte Solo ouvre bien la modale sans être bloquée). Suppression du bouton au J7. La modale solo d'OpenFront n'est plus atteignable que par le tutoriel.
 - **Chypre-Nord reste neutre au J1. À traiter au J6 comme région contestée de facto distincte de la Turquie** (Natural Earth la donne comme entité à part, `CYN`) : contrôleur de facto à modéliser, reconnue par la seule Turquie.
 - **Dette n° 1 — catalogue de données.** `src/veritable/data/catalog.ts` repose sur `import.meta.glob` (Vite) ; un runner lancé par `tsx` ne peut pas l'importer. Réglée au J2 par un chargeur à deux implémentations (Vite et `fs`) derrière une même interface.
 - **Dette n° 2 — liaison nation ↔ joueur du cœur par nom d'affichage** (`bindScenario`) : deux nations d'un même scénario ne peuvent pas partager un nom, et une traduction change la liaison. À remplacer par un identifiant (la `NationId` portée par le `PlayerInfo`) la prochaine fois qu'on touche le cœur, au plus tard au J3a.
+
+## 2026-09-22 — J2 : économie et noyau politique (session Claude Code, sans validation intermédiaire)
+
+Plan et écarts : `docs/veritable/plans/J2.md`. Formules : celles de la consigne du 2026-09-21 ; ce qui suit consigne les choix qu'elle laissait ouverts.
+
+### Marché
+
+- **Participants du marché = les dix nations + `ROW`.** Le reste du monde n'est pas une entrée de `nations[]` : hors carte, jamais jouable, sans politique ni budget, par construction. Production et consommation par bien = totaux mondiaux moins les dix. **Il ferme le bilan mondial** : sa consommation = production mondiale − consommation des dix, si bien que les écarts statistiques entre séries de production et de consommation (charbon : 10 %) ne se retrouvent pas dans le prix. Distance fixe 4 000 km, élasticités doubles, croissance tendancielle 2,5 %/an, choc d'offre AR(1) par bien.
+- **Unités : énergie en TWh par an** (pétrole, gaz, charbon, électricité), l'unité dans laquelle Our World in Data publie les quatre séries ; prix en M$/TWh (= $/MWh). Écart assumé par rapport aux exemples « Mbbl, bcm » : aucune conversion estimée. Alimentation en Mt de céréales (Banque mondiale / FAO). Les sept autres biens en **indice 100 = production des dix nations**, avec un `basePrice` en M$ par point calculé à l'ingestion, pour que droits de douane et rentes aient une assiette en dollars.
+- **Embargo et prix.** Avec un prix mondial unique et un reste du monde qui absorbe tout, un embargo ne changerait que des parts de flux. Règle retenue : le surplus qu'un embargo empêche de livrer est revendu au reste du monde avec la décote (`sanctionDiscount` = 0,2, sur l'assiette des rentes) **et sort de l'offre qui forme le prix** (`S` effectif = `S` − volume bloqué). Le prix monte, la couverture des importateurs chute, puis l'offre élastique referme l'écart. C'est la lecture de DESIGN.md (« perd ses exportations […] et revend à prix décoté ailleurs ») qui rend la coupure visible. Le contournement vient au J3a.
+- **Électricité.** Part fossile de la production (données OWID, par combustible) × couverture du combustible le mois précédent ; l'industrie (acier, biens de consommation, électronique, armement, pharmacie) perd `electricityShortageOnIndustry` = 0,5 de sa production par point d'électricité manquante. Échanges seulement entre nations partageant une frontière terrestre sur la carte (adjacences calculées par l'outil de frontières) ; le reste du monde est voisin de toute nation qui touche une terre neutre.
+- **Pénuries.** Couverture = (production propre + imports) / besoin. Indice = Σ poids du bien × (1 − couverture), poids dans `goods.json`. L'alimentation compte double dans la stabilité (`foodShortageWeight`). `armsShort` est posé pour les divisions du J3a, sans effet au J2.
+- **Aléa** : bruit de croissance mensuel par nation (σ = 0,15 %) et choc d'offre du reste du monde, tirés du `Rng` : c'est ce qui distingue les graines.
+
+### Budget, politique, IA
+
+- **Calibrage du budget.** Taux d'imposition calculés pour que chaque impôt rapporte sa part des recettes observées (Banque mondiale) ; un taux qui dépasserait son plafond (assiette minuscule) est écrêté et le manque passe en TVA. Assiettes : revenu 50 %, sociétés 15 %, TVA 55 % du PIB ; droits de douane sur la valeur des imports ; rentes sur la valeur de la production des biens `rent`.
+- **Taux d'intérêt réel** : `i = 0,02 + 0,01 × max(0, dette/PIB − 0,6) + 0,02 × (1 − stabilité)`. Première calibration (0,03 / 0,04) abandonnée : avec un PIB réel sans inflation elle donnait 5,8 % à l'Italie et un défaut en 2058.
+- **Austérité forcée** : postes plafonnés à 90 % de leur part du premier jour (et non de leur part au moment du déclenchement : pas d'état supplémentaire). **Défaut** : décote 50 %, postes ramenés aux recettes pendant 5 ans, −0,15 de satisfaction et de stabilité.
+- **Curseurs à effet immédiat** (au mois suivant). L'effet progressif (`rampMonths`) est une tâche du J4.
+- **Croissance** : `alpha` = 0,02 par mois et par point de PIB d'investissement au-dessus de la référence (infrastructures + recherche du premier jour) ; première valeur 0,05 abandonnée : l'austérité de l'IA faisait reculer le PIB italien de 25 % en 50 ans.
+- **Règle budgétaire IA (`ai/fiscal.ts`), pas l'IA du J5.** Le PIB étant réel, un déficit de 3 % laisserait la dette monter sans fin : la règle consolide si le déficit dépasse 3 % **ou** si la dette dépasse 60 % du PIB et monte depuis 12 mois ; elle épargne infrastructures et recherche ; elle relâche vers les valeurs du premier jour, jamais au-delà. En headless (`autopilot`) elle pilote aussi la nation « du joueur ».
+- **Asymétrie** : huit groupes pour la nation du joueur seulement ; les autres ont une opinion proxy (croissance, pénuries, prix). Poids des groupes : défaut dans `config.json`, surcharge possible par `interestGroups` dans la fiche.
+- **Règle UE** dans `blocs/eu.json` (`fiscalRule`) : malus d'opinion de 0,03 tant que dure le dépassement, entrée au journal à son début. Bonus commercial de bloc (`tradeBonus` = 1,5) entre membres pleins.
+
+### Données et ingestion
+
+- **Sources épinglées** : Banque mondiale (CC BY 4.0), 14 indicateurs, **instantanés JSON commités** (l'API n'est pas versionnée) avec sha256 du JSON canonique dans `tools/veritable/ingest/sources.lock.json` — indépendant du formatage, Prettier repassant sur les fichiers commités ; Our World in Data énergie (CC BY 4.0), commit `7e387a16`, CSV en cache hors git, sha256 vérifié.
+- **Céréales lues à l'année 2023** : l'agrégat mondial 2024 de la Banque mondiale est partiel (1 644 Mt contre 3 124).
+- **Croissance tendancielle** : moyenne 2015-2024 de la croissance réelle, bornée à [1 %, 4 %] (Ukraine, Allemagne, Turquie écrêtées, la note de la fiche le dit).
+- **Estimations (`source: "estimate"`, justifiées dans `tools/veritable/ingest/estimates.json`)** : dette publique des dix (périmètre Maastricht ; la série Banque mondiale est lacunaire et de périmètre « administration centrale ») ; dons extérieurs de l'Ukraine (26 % du PIB) ; ventilation du résidu de dépenses (social 65 %, infrastructures 20 %, subventions 15 %) et part publique de la R&D (35 %) ; répartition des recettes par impôt ; consommation alimentaire (population × production mondiale par habitant) ; minerais critiques (parts, indice mondial, valeur) ; parts de la valeur ajoutée manufacturière par bien en indice et part d'équipement des dépenses militaires ; effectifs et puissances aérienne / navale ; ogives et doctrines ; prix de base et élasticités des biens (dans `goods.json`).
+- **À vérifier avant distribution** : `MS.MIL.XPND.GD.ZS` (dépenses militaires) est republié par la Banque mondiale mais sa source primaire est le SIPRI.
+- **`DataSource` à deux implémentations** (`files.vite.ts`, `files.fs.ts`) derrière une même validation : règle la dette n° 1. La sim ne reçoit que des objets validés (`SimData`).
+- **Champs des fiches de nouveau obligatoires** : `population`, `gdp`, `debtToGdp`, `economy`, `military`, `nuclear` (nullable), `startingTech`. Restent optionnels par conception : `interestGroups` (surcharge) et `aiAgenda` (J5). Écart de DATA-SCHEMAS.md : `production: { bien: ratio }` devient `economy.goods.<bien>.{production, consumption}` en quantités sourcées.
+
+### Sauvegarde
+
+- **`schemaVersion: 2`** : sections `economy` (marché, reste du monde, embargos, économie de chaque nation) et `politics`. Le schéma v1 est figé dans `data/schemas/saveV1.ts` ; `save.ts` est la version courante.
+- **`migrations/v1-to-v2.ts`** : une campagne v1 n'avait pas d'économie ; les deux sections partent donc des fiches, comme une nouvelle campagne, quelle que soit la date de la sauvegarde. Une migration reçoit désormais un **contexte** (`MigrationContext` : config, `SimData`, fiches). Testée sur une vraie sauvegarde J1 (`save/fixtures/j1-europe-10.vsave`, Pologne, 15 mars 2026) et vérifiée dans le navigateur sur une sauvegarde J1 faite au jalon précédent.
+- `peekCoreStart()` lit le `GameStartInfo` d'une sauvegarde de n'importe quelle version sans la migrer (l'interface en a besoin avant que le worker existe).
+
+### Runner headless v1
+
+- `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42 [--shock cut-gas-exports:RUS@2028-01] [--player NAT] [--out dir]` : JSON par campagne (prix finaux et extrêmes, dette, stabilité, événements, défauts, troubles, temps CPU par domaine et par horloge), CSV mensuel, `summary.json`.
+- **Sans le cœur OpenFront au J2** (`adapters/BordersWorld.ts`, monde statique sur les frontières du scénario) : l'économie ne dépend des tuiles que par les adjacences. Le cœur entre dans le runner au J3a. 20 ans ≈ 0,35 s par campagne.
+- **Résultats de clôture** : 20 ans × 10 graines (42 à 51) : prix entre 0,95 et 1,04 × base, dette/PIB maximale 1,46 (Italie, en baisse ensuite), aucun défaut, aucun trouble. 50 ans × 3 graines : prix entre 0,93 et 1,07, aucun défaut. Choc gazier contre témoin : `docs/veritable/reports/J2/`.
+- Temps CPU sur 20 ans : prix journaliers ≈ 140 ms, flux et PIB mensuels ≈ 100 ms, politique hebdomadaire ≈ 17 ms, budget ≈ 6 ms.
+
+### Deux pièges d'environnement rencontrés à la clôture
+
+- **`npm run build-prod` laisse un dossier `static/` (ignoré par git) qui fait échouer `tests/server/RenderHtml.test.ts`** : le test attend un manifeste d'assets vide et le rendu lit celui du build. Le build de vérification du J1 l'avait laissé derrière lui. Règle : après un build de vérification, supprimer `static/` avant `npm test`.
+- **Prettier lancé sur un dossier entier reformate des fichiers qu'on ne touche pas** (`DESIGN.md`, `ARCHITECTURE.md`, instantanés d'ingestion). Règle : ne formater que les fichiers modifiés ; les empreintes des instantanés portent sur le JSON canonique.
+
+### Schémas zod créés ou modifiés
+
+`goods.ts`, `row.ts`, `bloc.ts` (nouveaux) ; `nation.ts` (économie obligatoire) ; `config.ts` (`economy`, `budget`, `politics`, `ai`) ; `save.ts` (v2) et `saveV1.ts` (figé). `src/core` n'a pas été touché au J2.
 
 ## À compléter par Claude Code
 

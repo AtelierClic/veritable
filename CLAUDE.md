@@ -138,4 +138,5 @@ Boucle de tick et rendu de la carte, format des cartes et `map-generator`, logiq
 - Développement : `npm run dev`. Tests : `npm test`.
 - Frontières d'un scénario (rejouable) : `npm run veritable:borders -- calibrate --map europe` puis `npm run veritable:borders -- rasterize --scenario europe-10`.
 - Banc de cinq ans sur la carte Europe : `VERITABLE_BENCH=1 npx vitest src/veritable/adapters/fiveYears.bench --run`.
-- Runner headless (à partir du J2) : `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42`.
+- Données des fiches (rejouable) : `npm run veritable:ingest -- fetch --scenario europe-10` (réseau, réécrit les instantanés et le verrou) puis `npm run veritable:ingest -- build --scenario europe-10` (hors ligne).
+- Runner headless : `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42` ; choc : `--shock cut-gas-exports:RUS@2028-01` ; choc contre témoin en CSV + SVG : `npx tsx tools/veritable/headless/report.ts --out docs/veritable/reports/J2`.

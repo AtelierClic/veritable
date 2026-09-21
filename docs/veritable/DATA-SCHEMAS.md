@@ -34,6 +34,36 @@ Doctrines nucléaires : `first-use-possible`, `no-first-use`, `undeclared`, `unp
 
 Jusqu'à l'ingestion du J2, les champs chiffrés (`nuclear`, `population`, `gdp`, `debtToGdp`, `production`, `military`, `startingTech`, `interestGroups`, `aiAgenda`) sont optionnels dans le schéma ; ils redeviennent obligatoires ensuite.
 
+### Économie d'une nation (depuis le J2)
+
+Le champ `production` en ratios est remplacé par `economy`, en quantités par an dans l'unité du bien, chaque chiffre avec `source`, `asOf` et, pour `derived` et `estimate`, une `note` :
+
+```jsonc
+"economy": {
+  "growthBase": { "value": 0.0125, "source": "worldbank:NY.GDP.MKTP.KD.ZG", "asOf": "2015-2024", "note": "…" },
+  "goods": { "gas": { "production": { "value": 0, "source": "owid-energy@7e387a16:gas_production", "asOf": "2016" },
+                      "consumption": { "value": 320.4, "source": "owid-energy@7e387a16:gas_consumption", "asOf": "2024" } }, "…": {} },
+  "electricityFromFossil": { "gas": { "value": 17, "…": "" }, "coal": {}, "oil": {} },   // TWh produits à partir de chaque combustible
+  "budget": {
+    "revenuePctGdp": {}, "expensePctGdp": {}, "grantsPctGdp": {},
+    "revenueShares": { "value": { "income": 0.42, "corporate": 0.14, "vat": 0.435, "tariffs": 0.005, "rents": 0 }, "source": "estimate", "asOf": "…", "note": "…" },
+    "spending": { "defense": {}, "social": {}, "healthEducation": {}, "research": {}, "infrastructure": {}, "subsidies": {} }   // parts du PIB
+  }
+}
+```
+
+`source` vaut `worldbank:<indicateur>`, `owid-energy@<commit>:<colonne>`, `derived` (calculé à partir de chiffres sourcés, méthode en note) ou `estimate` (aucune source ouverte : justification en note, liste dans `tools/veritable/ingest/estimates.json`). `interestGroups` (surcharge des poids par défaut) et `aiAgenda` (J5) restent optionnels.
+
+## reste du monde (`row.json`)
+
+```jsonc
+{ "id": "ROW", "name": "nation.row.name", "scenario": "europe-10",
+  "goods": { "oil": { "production": { "value": 45190.6, "source": "derived", "asOf": "2024", "note": "Production mondiale moins celle des dix nations." },
+                      "consumption": { "…": "" } } } }
+```
+
+Participant du marché, pas une nation : hors carte, jamais jouable, sans politique ni budget. Il ferme le bilan mondial de chaque bien.
+
 ## leader (`leaders/<iso3>.json`)
 
 ```jsonc
@@ -72,7 +102,7 @@ Le réglage global `config.json → leaderNames: "parody" | "fictional"` choisit
 ]
 ```
 
-Palier 1 : `oil, gas, coal, electricity, food, critical-minerals, steel, consumer-goods, electronics, arms, pharma, services`. Le palier 2 ajoute des lignes avec `"parent": "oil"` sans changer le moteur.
+Palier 1 : `oil, gas, coal, electricity, food, critical-minerals, steel, consumer-goods, electronics, arms, pharma, services`. Depuis le J2 chaque bien porte aussi `epsilon` (élasticité de la demande), `eta` (de l'offre), `shortageWeight`, `rent`, `industrial`, `transport` (`normal` | `neighbors-only` | `free`) et `basePriceSource`. Unités : TWh par an pour l'énergie, Mt pour l'alimentation, indice 100 = production du scénario (avec un `basePrice` en M$ par point) pour le reste. Le palier 2 ajoute des lignes avec `"parent": "oil"` sans changer le moteur.
 
 ## law (`laws/<domain>.json`)
 
@@ -157,4 +187,6 @@ Curseurs (`sliders.json`) : même forme d'`effects`, avec `min`, `max`, `default
   "nations": [], "blocs": [], "world": {}, "tilesRef": "tiles.bin", "journal": [], "metrics": {} }
 ```
 
-Migrations : `migrations/v1-to-v2.ts` exporte `(save: SaveV1) => SaveV2`. Le chargeur applique la chaîne jusqu'à la version courante.
+Depuis le J2 (`schemaVersion: 2`) la sauvegarde porte aussi `economy` (marché : prix, volumes bloqués, reste du monde, embargos ; économie de chaque nation : PIB, dette, capacités, couverture, curseurs, soldes…) et `politics` (groupes du joueur, opinion, stabilité, troubles, réprimande). Schéma de référence : `src/veritable/data/schemas/save.ts` ; v1 figée dans `saveV1.ts`.
+
+Migrations : `migrations/v1-to-v2.ts` exporte `(save: SaveV1, contexte) => SaveV2`. Le chargeur applique la chaîne jusqu'à la version courante.

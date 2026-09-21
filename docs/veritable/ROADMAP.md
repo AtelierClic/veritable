@@ -37,17 +37,18 @@ Modèle recommandé : Fable 5.1, effort xhigh.
 
 ## J2 — Économie et noyau politique
 
-- [ ] `goods.json` palier 1 (12 biens) ; production/consommation par nation depuis les fiches
-- [ ] Marché : prix mondial par bien, flux bilatéraux (distance, accords, blocs, embargos)
-- [ ] Budget : recettes et dépenses par curseurs ; dette/PIB ; taux ; seuils austérité/défaut
-- [ ] Pénuries : effets directs (électricité → industrie, alimentation → troubles, armement → divisions)
-- [ ] Noyau politique joueur : 8 groupes, opinion, stabilité, réaction aux curseurs et aux chocs
-- [ ] Stabilité scalaire des nations IA
-- [ ] Écrans : économie (biens, prix, flux), budget, opinion
-- [ ] `tools/veritable/headless/` v1 : boucle `advance`, métriques de base, sortie JSON
-- [ ] `tools/veritable/ingest/` : Banque mondiale, OWID/EIA → fiches des 10 nations
+- [x] `goods.json` palier 1 (12 biens) ; production/consommation par nation depuis les fiches _(2026-09-22 — énergie en TWh, alimentation en Mt, sept biens en indice ; élasticités et prix de base dans `goods.json`)_
+- [x] Marché : prix mondial par bien, flux bilatéraux (distance, accords, blocs, embargos) _(2026-09-22 — plus le reste du monde (`ROW`), trois passes de rationnement, embargos avec revente décotée)_
+- [x] Budget : recettes et dépenses par curseurs ; dette/PIB ; taux ; seuils austérité/défaut _(2026-09-22 — plus la règle UE 3 % / 60 % et une règle budgétaire IA minimale)_
+- [x] Pénuries : effets directs (électricité → industrie, alimentation → troubles, armement → divisions) _(2026-09-22 — `armsShort` posé pour le J3a, sans effet au J2)_
+- [x] Noyau politique joueur : 8 groupes, opinion, stabilité, réaction aux curseurs et aux chocs _(2026-09-22)_
+- [x] Stabilité scalaire des nations IA _(2026-09-22 — opinion proxy (croissance, pénuries, prix))_
+- [x] Écrans : économie (biens, prix, flux), budget, opinion _(2026-09-22 — ouverts depuis la barre supérieure)_
+- [x] `tools/veritable/headless/` v1 : boucle `advance`, métriques de base, sortie JSON _(2026-09-22 — sans le cœur OpenFront au J2 ; `--runs`, `--seed`, `--shock`, JSON + CSV, temps CPU par domaine)_
+- [x] `tools/veritable/ingest/` : Banque mondiale, OWID/EIA → fiches des 10 nations _(2026-09-22 — instantanés commités, sha256 ; estimations marquées et justifiées)_
+- [x] Sauvegarde `schemaVersion: 2` et migration `v1-to-v2.ts` testée sur une vraie sauvegarde J1 _(2026-09-22 — tâche ajoutée au jalon)_
 
-**Livré quand** : vingt ans de jeu headless sans divergence absurde des prix ni de la dette ; couper un fournisseur de gaz se voit dans les courbes.
+**Livré quand** : vingt ans de jeu headless sans divergence absurde des prix ni de la dette ; couper un fournisseur de gaz se voit dans les courbes. — **Livré le 2026-09-22** (20 ans × 10 graines : prix entre 0,95 et 1,04 × base, aucun défaut ; choc gazier contre témoin dans `docs/veritable/reports/J2/`).
 
 ## J3a — Guerre terrestre et réaction internationale
 
