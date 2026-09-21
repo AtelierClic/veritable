@@ -1924,13 +1924,21 @@ export class PlayerImpl implements Player {
     if (!this.mg.isLand(tile) || this.mg.isImpassable(tile)) {
       return false;
     }
+    // VERITABLE: neutral land cannot be attacked, nor crossed to reach a target.
+    if (!owner.isPlayer() && this.mg.isUnclaimable(tile)) {
+      return false;
+    }
     if (this.mg.hasOwner(tile)) {
       return this.sharesBorderWith(owner);
     } else {
       for (const t of this.mg.bfs(
         tile,
         andFN(
-          (gm, t) => !gm.hasOwner(t) && gm.isLand(t) && !gm.isImpassable(t),
+          (gm, t) =>
+            !gm.hasOwner(t) &&
+            gm.isLand(t) &&
+            !gm.isImpassable(t) &&
+            !this.mg.isUnclaimable(t), // VERITABLE
           manhattanDistFN(tile, 200),
         ),
       )) {

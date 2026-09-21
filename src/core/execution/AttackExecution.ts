@@ -27,6 +27,12 @@ export class AttackExecution implements Execution {
 
   private target: Player | TerraNullius;
 
+  // VERITABLE: an attack on unowned land never takes neutral tiles (land
+  // outside the scenario). Owned tiles are never neutral.
+  private isNeutral(tile: TileRef): boolean {
+    return !this.target.isPlayer() && this.mg.isUnclaimable(tile);
+  }
+
   private mg: Game;
   // Direct GameMap reference to skip the Game delegation hop in hot loops.
   private map: GameMap;
@@ -305,7 +311,8 @@ export class AttackExecution implements Execution {
       }
       if (
         !this.map.isLand(tileToConquer) ||
-        this.map.isImpassable(tileToConquer)
+        this.map.isImpassable(tileToConquer) ||
+        this.isNeutral(tileToConquer) // VERITABLE
       ) {
         continue;
       }
@@ -392,7 +399,8 @@ export class AttackExecution implements Execution {
       if (
         this.map.isWater(neighbor) ||
         this.map.isImpassable(neighbor) ||
-        this.map.ownerID(neighbor) !== this.targetSmallID
+        this.map.ownerID(neighbor) !== this.targetSmallID ||
+        this.isNeutral(neighbor) // VERITABLE
       ) {
         continue;
       }

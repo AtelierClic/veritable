@@ -227,6 +227,23 @@ export class GameImpl implements Game {
     return old;
   }
 
+  // VERITABLE: neutral land (outside the scenario), see Game.ts.
+  private unclaimableTiles: Uint8Array | null = null;
+
+  setUnclaimableTiles(mask: Uint8Array | null): void {
+    if (!this.config().isVeritable()) {
+      throw new Error("unclaimable tiles only exist in a Véritable campaign");
+    }
+    if (mask !== null && mask.length !== this.width() * this.height()) {
+      throw new Error("unclaimable mask does not match the map");
+    }
+    this.unclaimableTiles = mask;
+  }
+
+  isUnclaimable(tile: TileRef): boolean {
+    return this.unclaimableTiles !== null && this.unclaimableTiles[tile] === 1;
+  }
+
   setFallout(tile: TileRef, value: boolean) {
     if (value && this.hasOwner(tile)) {
       throw Error(`cannot set fallout, tile ${tile} has owner`);

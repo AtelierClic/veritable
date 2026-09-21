@@ -908,6 +908,11 @@ export interface Game extends GameMap {
   nations(): Nation[];
 
   numTilesWithFallout(): number;
+  // VERITABLE: land outside the scenario is neutral and cannot be conquered.
+  // The mask (1 = unclaimable, one byte per tile) only applies to tiles that
+  // have no owner; it is refused outside a Véritable campaign.
+  setUnclaimableTiles(mask: Uint8Array | null): void;
+  isUnclaimable(tile: TileRef): boolean;
   stats(): Stats;
 
   addUpdate(update: GameUpdate): void;

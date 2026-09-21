@@ -12,6 +12,7 @@ import {
   GameType,
   GameUpdates,
   NameViewData,
+  Nation,
   Player,
   PlayerActions,
   PlayerBorderTiles,
@@ -37,10 +38,15 @@ export async function createGameRunner(
   clientID: ClientID | undefined,
   mapLoader: GameMapLoader,
   callBack: (gu: GameUpdateViewData | ErrorUpdate) => void,
-  // VERITABLE: called with the core game once it exists and before any
-  // execution is registered. The worker uses it to attach the Véritable
-  // session (whose restore must run ahead of the nation executions).
-  onGameCreated?: (game: Game) => void,
+  // VERITABLE: hooks of a campaign.
+  veritable?: {
+    // Roster of the scenario, replacing the nations of the map manifest.
+    nations?: (random: PseudoRandom) => Nation[];
+    // Called with the core game once it exists and before any execution is
+    // registered: the worker attaches the Véritable session there (its
+    // scenario load / restore must run ahead of everything else).
+    onGameCreated?: (game: Game) => void;
+  },
 ): Promise<GameRunner> {
   const config = new Config(gameStart.config, null, false, gameStart.listed);
   const gameMap = await loadGameMap(
@@ -64,13 +70,15 @@ export async function createGameRunner(
     );
   });
 
-  const nations = createNationsForGame(
-    gameStart,
-    gameMap.nations,
-    gameMap.additionalNations,
-    humans.length,
-    random,
-  );
+  const nations =
+    veritable?.nations?.(random) ??
+    createNationsForGame(
+      gameStart,
+      gameMap.nations,
+      gameMap.additionalNations,
+      humans.length,
+      random,
+    );
 
   const game: Game = createGame(
     humans,
@@ -91,7 +99,7 @@ export async function createGameRunner(
     ),
     callBack,
   );
-  onGameCreated?.(game);
+  veritable?.onGameCreated?.(game);
   gr.init();
   return gr;
 }
@@ -113,7 +121,12 @@ export class GameRunner {
     if (this.game.config().gameConfig().gameType !== GameType.Singleplayer) {
       this.game.addExecution(new SpawnTimerExecution());
     }
-    if (this.game.config().spawnNations()) {
+    // VERITABLE: the legacy nation AI plays a 45-minute land grab; nations of
+    // a campaign stay inert until the J3a (war) and J5 (AI) systems exist.
+    if (
+      this.game.config().spawnNations() &&
+      !this.game.config().isVeritable()
+    ) {
       this.game.addExecution(...this.execManager.nationExecutions());
     }
     if (this.game.config().isRandomSpawn()) {

@@ -557,6 +557,11 @@ export const GameConfigSchema = z.object({
   // every solo game. No win condition, no timer, no Overtime, and a player
   // (= a nation) is never eliminated for owning zero tiles.
   veritable: z.boolean().optional(),
+  // VERITABLE: scenario of the campaign (data/veritable/scenarios/<id>.json)
+  // and the nation the player embodies. The roster and the borders come from
+  // the scenario, not from the map manifest or a spawn phase.
+  veritableScenario: z.string().max(64).optional(),
+  veritablePlayerNation: z.string().max(64).optional(),
 });
 
 export const TeamSchema = z.string();

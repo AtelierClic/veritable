@@ -166,14 +166,16 @@ ctx.addEventListener("message", async (e: MessageEvent<MainThreadMessage>) => {
           gameUpdate,
           // VERITABLE: attach the campaign (new, or restored from a save)
           // before any execution is registered.
-          (game) => {
-            veritableSession = game.config().isVeritable()
-              ? VeritableSession.create(
-                  game,
-                  message.gameStartInfo,
-                  message.veritableSave,
-                )
-              : null;
+          {
+            onGameCreated: (game) => {
+              veritableSession = game.config().isVeritable()
+                ? VeritableSession.create(
+                    game,
+                    message.gameStartInfo,
+                    message.veritableSave,
+                  )
+                : null;
+            },
           },
         ).then((gr) => {
           sendMessage({
