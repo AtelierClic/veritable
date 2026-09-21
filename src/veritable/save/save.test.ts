@@ -63,7 +63,10 @@ describe("tile block (RLE)", () => {
     const uniform = new Uint16Array(2_000_000).fill(0xffff);
     const bytes = encodeTiles(uniform);
     expect(bytes.length).toBeLessThan(10);
-    expect(decodeTiles(bytes, uniform.length)).toEqual(uniform);
+    // (not toEqual: deep-comparing two million entries is needlessly slow)
+    const back = decodeTiles(bytes, uniform.length);
+    expect(back.length).toBe(uniform.length);
+    expect(back.every((v) => v === 0xffff)).toBe(true);
   });
 
   it("rejects a block that does not fit the grid", () => {
