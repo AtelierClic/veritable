@@ -136,4 +136,6 @@ Boucle de tick et rendu de la carte, format des cartes et `map-generator`, logiq
 - Installation : `npm run inst` — jamais `npm install`.
 - Ajouter une dépendance : `npm install --save-dev <paquet> --ignore-scripts`, puis `npm run inst` ; jamais `npm install` nu.
 - Développement : `npm run dev`. Tests : `npm test`.
+- Frontières d'un scénario (rejouable) : `npm run veritable:borders -- calibrate --map europe` puis `npm run veritable:borders -- rasterize --scenario europe-10`.
+- Banc de cinq ans sur la carte Europe : `VERITABLE_BENCH=1 npx vitest src/veritable/adapters/fiveYears.bench --run`.
 - Runner headless (à partir du J2) : `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42`.

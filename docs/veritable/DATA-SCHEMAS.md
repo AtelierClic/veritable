@@ -10,8 +10,9 @@ Conventions : identifiants en `kebab-case` ou ISO 3166-1 alpha-3 ; nombres en un
 {
   "id": "FRA",
   "name": "nation.fra.name",
-  "capital": { "tileHint": [x, y] },
+  "capital": { "name": "nation.fra.capital", "lon": 2.3522, "lat": 48.8566, "source": "manual", "asOf": "2026-01-01" },   // la tuile dépend de la carte : calculée par tools/veritable/borders → borders/<scénario>.meta.json
   "regime": "semi-presidential",          // voir regimes ci-dessous
+  "regimeSource": { "source": "manual", "asOf": "2026-01-01" },
   "blocs": ["eu", "nato", "g7", "g20"],
   "nuclear": { "warheads": 290, "doctrine": "first-use-possible" } | null,
   "territory": { "kind": "tiles" } | { "kind": "microstate", "hostTile": [x, y] },
@@ -30,6 +31,8 @@ Conventions : identifiants en `kebab-case` ou ISO 3166-1 alpha-3 ; nombres en un
 Régimes (`regime`) : `parliamentary`, `presidential`, `semi-presidential`, `electoral-authoritarian`, `single-party`, `absolute-monarchy`, `junta`, `theocracy`, `failed-state`. Chaque régime est décrit dans `regimes.json` : `successionRule`, `electionIntervalMonths | null`, `coupBaseProbability`, `availableLawDomains`.
 
 Doctrines nucléaires : `first-use-possible`, `no-first-use`, `undeclared`, `unpredictable`.
+
+Jusqu'à l'ingestion du J2, les champs chiffrés (`nuclear`, `population`, `gdp`, `debtToGdp`, `production`, `military`, `startingTech`, `interestGroups`, `aiAgenda`) sont optionnels dans le schéma ; ils redeviennent obligatoires ensuite.
 
 ## leader (`leaders/<iso3>.json`)
 

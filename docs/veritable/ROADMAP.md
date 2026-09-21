@@ -24,15 +24,16 @@ Modèle recommandé : Fable 5.1, effort xhigh.
 
 ## J1 — On joue
 
-- [ ] `tools/veritable/borders/` : Natural Earth (de facto) → tuiles, rejouable
-- [ ] Scénario `europe-10.json` : 10 nations à frontières fixes sur la carte Europe
-- [ ] Phase de spawn remplacée par le chargeur de scénario
-- [ ] Calendrier : 1er janvier 2026, 1 min réelle = 1 mois à ×1 ; pause, ×1, ×2, ×5
-- [ ] `Scheduler` central avec les horloges par domaine (vides pour l'instant)
-- [ ] Barre supérieure : date, vitesse, nation jouée
-- [ ] Instrumentation `perf.mark` par domaine
+- [x] `tools/veritable/borders/` : Natural Earth (de facto) → tuiles, rejouable _(2026-09-21 — auto-calibration sur le trait de côte (équirectangulaire, IoU 0,956), Natural Earth v5.1.2 épinglé, surcharges de facto)_
+- [x] Scénario `europe-10.json` : 10 nations à frontières fixes sur la carte Europe _(2026-09-21 — FRA, DEU, GBR, ITA, ESP, POL, UKR, RUS, TUR, NOR ; 1 331 874 tuiles, le reste neutre)_
+- [x] Phase de spawn remplacée par le chargeur de scénario _(2026-09-21 — `adHocNations` supprimé, plus aucune nation « exilée » au départ)_
+- [x] Calendrier : 1er janvier 2026, 1 min réelle = 1 mois à ×1 ; pause, ×1, ×2, ×5 _(2026-09-21 — calendrier réel, un jour = 2 s à ×1 ; ×5 mesuré à 49,95 ticks/s sur la carte Europe)_
+- [x] `Scheduler` central avec les horloges par domaine (vides pour l'instant) _(2026-09-21 — sans état, six domaines enregistrés et vides)_
+- [x] Barre supérieure : date, vitesse, nation jouée _(2026-09-21 — plus l'écran de départ avec choix de la nation)_
+- [x] Instrumentation `perf.mark` par domaine _(2026-09-21 — sonde injectée, `performance.mark`/`measure` par domaine dans le worker)_
+- [x] Rotation des six sauvegardes automatiques mensuelles _(2026-09-21 — tâche reportée du J0, ajoutée au jalon en cours)_
 
-**Livré quand** : on lance, on joue cinq ans de jeu, on sauvegarde, on reprend.
+**Livré quand** : on lance, on joue cinq ans de jeu, on sauvegarde, on reprend. — **Livré le 2026-09-21** (cinq ans joués d'une traite en headless sur la carte Europe, sauvegarde et reprise à l'identique ; dans le navigateur : 17 mois de jeu, sauvegardes automatiques, sauvegarde manuelle et reprise).
 
 ## J2 — Économie et noyau politique
 
