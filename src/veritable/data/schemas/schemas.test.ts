@@ -132,6 +132,7 @@ describe("config", () => {
       VeritableConfigSchema.parse({
         leaderNames: "parody",
         time: { gameMinutesPerTick: 0, defaultStartDate: "2026-01-01" },
+        save: { autosaveSlots: 6 },
       }),
     ).toThrow();
   });

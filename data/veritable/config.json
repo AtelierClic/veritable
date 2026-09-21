@@ -3,5 +3,8 @@
   "time": {
     "gameMinutesPerTick": 72,
     "defaultStartDate": "2026-01-01"
+  },
+  "save": {
+    "autosaveSlots": 6
   }
 }

@@ -13,5 +13,9 @@ export const VeritableConfigSchema = z.object({
     // scenarios built from the map roster).
     defaultStartDate: IsoDateSchema,
   }),
+  save: z.object({
+    // Monthly automatic saves kept; older ones are rotated out.
+    autosaveSlots: z.number().int().min(1),
+  }),
 });
 export type VeritableConfig = z.infer<typeof VeritableConfigSchema>;
