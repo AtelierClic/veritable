@@ -37,3 +37,6 @@ tools/veritable/borders/cache/
 
 # VERITABLE: ingestion download cache (OWID CSV, pinned by commit + sha256)
 tools/veritable/ingest/cache/
+
+# VERITABLE: headless runner output
+tools/veritable/headless/out/

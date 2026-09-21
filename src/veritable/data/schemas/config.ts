@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { INTEREST_GROUPS, IsoDateSchema } from "./common";
-import { TAX_IDS } from "./nation";
+import { SPENDING_POSTS, TAX_IDS } from "./nation";
 
 // Shape of data/veritable/config.json: every balancing constant has a name
 // and lives there, never in a .ts file.
@@ -130,6 +130,10 @@ export const VeritableConfigSchema = z.object({
       maxDeficitToGdp: share,
       adjustPerMonth: share,
       relaxBelowDeficit: share,
+      prudentDebtToGdp: z.number().min(0),
+      debtRisingMonths: z.number().int().min(1),
+      // Posts a consolidation never trims: cutting investment cuts growth.
+      sparedPosts: z.array(z.enum(SPENDING_POSTS)),
     }),
   }),
 });

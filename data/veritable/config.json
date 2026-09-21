@@ -20,7 +20,7 @@
     "sanctionDiscount": 0.2,
     "rationingPasses": 3,
     "growth": {
-      "alpha": 0.05,
+      "alpha": 0.02,
       "beta": 0.02,
       "gamma": 0.002,
       "capacityInvestment": 0.02,
@@ -48,9 +48,9 @@
     "maxSpendingShare": 0.35,
     "interest": {
       "base": 0.02,
-      "debtSlope": 0.03,
+      "debtSlope": 0.01,
       "debtThreshold": 0.6,
-      "instabilitySlope": 0.04
+      "instabilitySlope": 0.02
     },
     "austerity": {
       "debtToGdp": 1.5,
@@ -164,7 +164,10 @@
     "fiscal": {
       "maxDeficitToGdp": 0.03,
       "adjustPerMonth": 0.01,
-      "relaxBelowDeficit": 0.01
+      "relaxBelowDeficit": 0.01,
+      "prudentDebtToGdp": 0.6,
+      "debtRisingMonths": 12,
+      "sparedPosts": ["infrastructure", "research"]
     }
   }
 }
