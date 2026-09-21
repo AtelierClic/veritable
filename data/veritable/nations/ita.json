@@ -1,0 +1,22 @@
+{
+  "id": "ITA",
+  "name": "nation.ita.name",
+  "capital": {
+    "name": "nation.ita.capital",
+    "lon": 12.4964,
+    "lat": 41.9028,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "parliamentary",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["eu", "nato", "g7", "g20"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

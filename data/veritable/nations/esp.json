@@ -1,0 +1,22 @@
+{
+  "id": "ESP",
+  "name": "nation.esp.name",
+  "capital": {
+    "name": "nation.esp.capital",
+    "lon": -3.7038,
+    "lat": 40.4168,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "parliamentary",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["eu", "nato"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

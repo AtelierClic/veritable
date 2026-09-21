@@ -324,6 +324,8 @@ export default defineConfig(({ mode }) => {
     root: "./",
     base: "/",
     publicDir: isProduction ? false : "resources",
+    // VERITABLE: rasterized borders are imported (inlined) by the game worker.
+    assetsInclude: ["**/data/veritable/**/*.bin"],
 
     resolve: {
       tsconfigPaths: true,

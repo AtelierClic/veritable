@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
-import { encodeBorders } from "../../../src/veritable/data/bordersFile";
+import {
+  Borders,
+  encodeBorders,
+} from "../../../src/veritable/data/bordersFile";
 import { buildBorders, Inset, Override } from "./buildBorders";
 import { calibrate, loadLandMask, prepare } from "./calibrate";
 import { bordersImage, controlImage } from "./control";
@@ -13,6 +16,7 @@ import {
   REPO_ROOT,
   SOURCES,
 } from "./geodata";
+import { toTile } from "./projections";
 
 // Natural Earth (de facto, 1:10m) -> tiles. Replayable:
 //
@@ -131,6 +135,36 @@ async function runCalibrate(args: string[]): Promise<void> {
   console.log(`wrote ${path.relative(REPO_ROOT, image)}`);
 }
 
+// Closest tile owned by `value`, searching growing squares around (x, y).
+export function nearestTileOf(
+  borders: Borders,
+  value: number,
+  x: number,
+  y: number,
+): [number, number] {
+  const { width, height, tiles } = borders;
+  for (let r = 0; r < Math.max(width, height); r++) {
+    let best: [number, number] | null = null;
+    let bestD = Infinity;
+    for (let dy = -r; dy <= r; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
+        const tx = x + dx;
+        const ty = y + dy;
+        if (tx < 0 || ty < 0 || tx >= width || ty >= height) continue;
+        if (tiles[ty * width + tx] !== value) continue;
+        const d = dx * dx + dy * dy;
+        if (d < bestD) {
+          bestD = d;
+          best = [tx, ty];
+        }
+      }
+    }
+    if (best !== null) return best;
+  }
+  throw new Error(`nation ${value} owns no tile`);
+}
+
 // Orphan land further than this from any Natural Earth country stays neutral.
 const MAX_ORPHAN_DISTANCE_TILES = 60;
 
@@ -192,6 +226,34 @@ async function runRasterize(args: string[]): Promise<void> {
       2,
     ) + "\n",
   );
+  // Capital tiles: lon/lat of the nation sheet -> nearest tile of the nation.
+  const project = toTile(stored);
+  const capitals: Record<string, [number, number]> = {};
+  scenario.nations.forEach((id: string, n: number) => {
+    const sheet = JSON.parse(
+      fs.readFileSync(
+        path.join(data, "nations", `${id.toLowerCase()}.json`),
+        "utf8",
+      ),
+    );
+    const [x, y] = project(sheet.capital.lon, sheet.capital.lat);
+    capitals[id] = nearestTileOf(borders, n + 1, Math.floor(x), Math.floor(y));
+  });
+  fs.writeFileSync(
+    bin.replace(/\.bin$/, ".meta.json"),
+    JSON.stringify(
+      {
+        scenario: scenarioId,
+        map,
+        width: borders.width,
+        height: borders.height,
+        capitals,
+      },
+      null,
+      2,
+    ) + "\n",
+  );
+
   console.table(report.nations);
   console.log({ ...report, nations: undefined, fileBytes: bytes.length });
 

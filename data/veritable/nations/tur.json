@@ -1,0 +1,22 @@
+{
+  "id": "TUR",
+  "name": "nation.tur.name",
+  "capital": {
+    "name": "nation.tur.capital",
+    "lon": 32.8597,
+    "lat": 39.9334,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "electoral-authoritarian",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["nato", "g20"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

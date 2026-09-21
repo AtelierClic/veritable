@@ -10,8 +10,15 @@ import { ScenarioSchema } from "./scenario";
 const fra = {
   id: "FRA",
   name: "nation.fra.name",
-  capital: { tileHint: [10, 20] },
+  capital: {
+    name: "nation.fra.capital",
+    lon: 2.3522,
+    lat: 48.8566,
+    source: "manual",
+    asOf: "2026-01-01",
+  },
   regime: "semi-presidential",
+  regimeSource: { source: "manual", asOf: "2026-01-01" },
   blocs: ["eu", "nato", "g7", "g20"],
   nuclear: { warheads: 290, doctrine: "first-use-possible" },
   territory: { kind: "tiles" },
@@ -50,6 +57,7 @@ const scenario = {
   map: "world",
   startDate: "2026-01-01",
   nations: ["FRA", "DEU"],
+  borders: { source: "natural-earth-de-facto", rasterized: "borders/test.bin" },
   contested: [
     {
       region: "crimea",
@@ -77,6 +85,14 @@ describe("nation schema", () => {
     expect(NationDataSchema.parse(vat).territory.kind).toBe("microstate");
   });
 
+  it("accepts a J1 sheet without the figures of the J2 ingestion", () => {
+    const j1: Record<string, unknown> = { ...fra };
+    for (const key of ["population", "gdp", "production", "military"]) {
+      delete j1[key];
+    }
+    expect(NationDataSchema.parse(j1).gdp).toBeUndefined();
+  });
+
   it("rejects an unknown regime and an unsourced figure", () => {
     expect(() =>
       NationDataSchema.parse({ ...fra, regime: "republic" }),
@@ -98,12 +114,9 @@ describe("scenario schema", () => {
     ).toThrow();
   });
 
-  it("rejects duplicate nation ids, ad-hoc ones included", () => {
+  it("rejects duplicate nation ids", () => {
     expect(() =>
-      ScenarioSchema.parse({
-        ...scenario,
-        adHocNations: [{ id: "FRA", literalName: "France" }],
-      }),
+      ScenarioSchema.parse({ ...scenario, nations: ["FRA", "DEU", "FRA"] }),
     ).toThrow();
   });
 });

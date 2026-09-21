@@ -1,0 +1,22 @@
+{
+  "id": "UKR",
+  "name": "nation.ukr.name",
+  "capital": {
+    "name": "nation.ukr.capital",
+    "lon": 30.5234,
+    "lat": 50.4501,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "semi-presidential",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": [],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

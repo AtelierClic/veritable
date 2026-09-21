@@ -30,36 +30,62 @@ export const AI_GOALS = [
   "ideology",
 ] as const;
 
+const ProvenanceSchema = z.object({
+  source: z.string().min(1),
+  asOf: z.string().min(1),
+  note: z.string().optional(),
+});
+
+// The capital is geographic data (lon/lat): its tile depends on the map and is
+// computed by tools/veritable/borders (borders/<scenario>.meta.json).
+const CapitalSchema = z.object({
+  name: z.string().min(1), // i18n key
+  lon: z.number().min(-180).max(180),
+  lat: z.number().min(-90).max(90),
+  source: z.string().min(1),
+  asOf: z.string().min(1),
+});
+
+// J1 -> J2: the sourced figures (population, gdp, debtToGdp, production,
+// military, startingTech, interestGroups, aiAgenda, nuclear) are OPTIONAL
+// until the J2 ingestion fills the sheets; they become mandatory again then
+// (DECISIONS.md, 2026-09-21).
 export const NationDataSchema = z.object({
   id: NationIdSchema,
   name: z.string().min(1), // i18n key
-  capital: z.object({ tileHint: TileCoordSchema }),
+  capital: CapitalSchema,
   regime: RegimeSchema,
+  regimeSource: ProvenanceSchema,
   blocs: z.array(z.string()),
   nuclear: z
     .object({
       warheads: z.number().int().nonnegative(),
       doctrine: NuclearDoctrineSchema,
     })
-    .nullable(),
+    .nullable()
+    .optional(),
   territory: TerritorySchema,
   contested: z.array(ContestedRegionSchema),
-  population: SourcedNumberSchema,
-  gdp: SourcedNumberSchema,
-  debtToGdp: SourcedNumberSchema,
-  production: z.record(z.string(), z.number().nonnegative()),
-  military: z.object({
-    spendingPctGdp: z.number().nonnegative(),
-    activePersonnel: z.number().int().nonnegative(),
-    airPower: z.number().min(0).max(1),
-    navalPower: z.number().min(0).max(1),
-    source: z.string().min(1),
-    asOf: z.string().min(1),
-  }),
-  startingTech: z.array(z.string()),
-  interestGroups: InterestGroupsSchema,
-  aiAgenda: z.array(
-    z.object({ goal: z.enum(AI_GOALS), weight: z.number().min(0).max(1) }),
-  ),
+  population: SourcedNumberSchema.optional(),
+  gdp: SourcedNumberSchema.optional(),
+  debtToGdp: SourcedNumberSchema.optional(),
+  production: z.record(z.string(), z.number().nonnegative()).optional(),
+  military: z
+    .object({
+      spendingPctGdp: z.number().nonnegative(),
+      activePersonnel: z.number().int().nonnegative(),
+      airPower: z.number().min(0).max(1),
+      navalPower: z.number().min(0).max(1),
+      source: z.string().min(1),
+      asOf: z.string().min(1),
+    })
+    .optional(),
+  startingTech: z.array(z.string()).optional(),
+  interestGroups: InterestGroupsSchema.optional(),
+  aiAgenda: z
+    .array(
+      z.object({ goal: z.enum(AI_GOALS), weight: z.number().min(0).max(1) }),
+    )
+    .optional(),
 });
 export type NationData = z.infer<typeof NationDataSchema>;

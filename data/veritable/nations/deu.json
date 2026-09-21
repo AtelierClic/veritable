@@ -1,0 +1,22 @@
+{
+  "id": "DEU",
+  "name": "nation.deu.name",
+  "capital": {
+    "name": "nation.deu.capital",
+    "lon": 13.405,
+    "lat": 52.52,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "parliamentary",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["eu", "nato", "g7", "g20"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

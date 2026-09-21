@@ -1,0 +1,22 @@
+{
+  "id": "RUS",
+  "name": "nation.rus.name",
+  "capital": {
+    "name": "nation.rus.capital",
+    "lon": 37.6173,
+    "lat": 55.7558,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "electoral-authoritarian",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["brics", "sco", "g20"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

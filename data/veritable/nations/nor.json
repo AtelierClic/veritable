@@ -1,0 +1,22 @@
+{
+  "id": "NOR",
+  "name": "nation.nor.name",
+  "capital": {
+    "name": "nation.nor.capital",
+    "lon": 10.7522,
+    "lat": 59.9139,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "parliamentary",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["nato"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

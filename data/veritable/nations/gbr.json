@@ -1,0 +1,22 @@
+{
+  "id": "GBR",
+  "name": "nation.gbr.name",
+  "capital": {
+    "name": "nation.gbr.capital",
+    "lon": -0.1276,
+    "lat": 51.5072,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "parliamentary",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["nato", "g7", "g20"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}

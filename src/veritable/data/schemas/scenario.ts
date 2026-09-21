@@ -3,9 +3,7 @@ import { ContestedRegionSchema, IsoDateSchema, NationIdSchema } from "./common";
 
 // Shape of data/veritable/scenarios/<slug>.json.
 
-// J0 extension (see DECISIONS.md): until the J1 scenario loader and the J2
-// nation sheets exist, a scenario can declare nations inline, built from the
-// map manifest. Their names are literals, not i18n keys.
+// J0 scaffolding, removed with the scenario loader (J1, step 6).
 export const AdHocNationSchema = z.object({
   id: NationIdSchema,
   literalName: z.string().min(1),
@@ -37,17 +35,15 @@ export const ScenarioSchema = z
     ),
     playerDefault: NationIdSchema,
   })
-  .refine(
-    (s) => {
-      const ids = [...s.nations, ...(s.adHocNations ?? []).map((n) => n.id)];
-      return new Set(ids).size === ids.length;
-    },
-    { message: "duplicate nation id in scenario" },
-  )
+  .refine((s) => new Set(s.nations).size === s.nations.length, {
+    message: "duplicate nation id in scenario",
+  })
   .refine(
     (s) =>
       s.nations.includes(s.playerDefault) ||
       (s.adHocNations ?? []).some((n) => n.id === s.playerDefault),
-    { message: "playerDefault is not a nation of the scenario" },
+    {
+      message: "playerDefault is not a nation of the scenario",
+    },
   );
 export type Scenario = z.infer<typeof ScenarioSchema>;

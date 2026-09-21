@@ -1,0 +1,22 @@
+{
+  "id": "POL",
+  "name": "nation.pol.name",
+  "capital": {
+    "name": "nation.pol.capital",
+    "lon": 21.0122,
+    "lat": 52.2297,
+    "source": "manual",
+    "asOf": "2026-01-01"
+  },
+  "regime": "semi-presidential",
+  "regimeSource": {
+    "source": "manual",
+    "asOf": "2026-01-01",
+    "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
+  },
+  "blocs": ["eu", "nato"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": []
+}
