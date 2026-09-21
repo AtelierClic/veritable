@@ -65,9 +65,6 @@ export function loadBordersMeta(scenario: Scenario): BordersMeta {
 }
 
 export async function loadBorders(scenario: Scenario): Promise<Borders> {
-  if (scenario.borders === undefined) {
-    throw new Error(`scenario ${scenario.id} has no rasterized borders`);
-  }
   const file = scenario.borders.rasterized;
   const load = find(borderFiles, file.slice(file.lastIndexOf("/") + 1));
   const dataUrl = await load();

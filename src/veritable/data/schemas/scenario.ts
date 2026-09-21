@@ -3,23 +3,16 @@ import { ContestedRegionSchema, IsoDateSchema, NationIdSchema } from "./common";
 
 // Shape of data/veritable/scenarios/<slug>.json.
 
-// J0 scaffolding, removed with the scenario loader (J1, step 6).
-export const AdHocNationSchema = z.object({
-  id: NationIdSchema,
-  literalName: z.string().min(1),
-});
-export type AdHocNation = z.infer<typeof AdHocNationSchema>;
-
 export const ScenarioSchema = z
   .object({
     id: z.string().min(1),
     map: z.string().min(1),
     startDate: IsoDateSchema,
-    nations: z.array(NationIdSchema),
-    adHocNations: z.array(AdHocNationSchema).optional(),
-    borders: z
-      .object({ source: z.string().min(1), rasterized: z.string().min(1) })
-      .optional(),
+    nations: z.array(NationIdSchema).min(1),
+    borders: z.object({
+      source: z.string().min(1),
+      rasterized: z.string().min(1),
+    }),
     contested: z.array(ContestedRegionSchema),
     wars: z.array(
       z.object({
@@ -38,12 +31,7 @@ export const ScenarioSchema = z
   .refine((s) => new Set(s.nations).size === s.nations.length, {
     message: "duplicate nation id in scenario",
   })
-  .refine(
-    (s) =>
-      s.nations.includes(s.playerDefault) ||
-      (s.adHocNations ?? []).some((n) => n.id === s.playerDefault),
-    {
-      message: "playerDefault is not a nation of the scenario",
-    },
-  );
+  .refine((s) => s.nations.includes(s.playerDefault), {
+    message: "playerDefault is not a nation of the scenario",
+  });
 export type Scenario = z.infer<typeof ScenarioSchema>;

@@ -3,6 +3,7 @@ import {
   ReadonlyWorldView,
   SimEvent,
 } from "../sim/VeritableSim";
+import { DomainTiming } from "./perfProbe";
 import { SnapshotResult, VeritableRequest } from "./protocol";
 
 // What RemoteVeritableSim needs from src/core/worker/WorkerClient.
@@ -39,6 +40,13 @@ export class RemoteVeritableSim {
   // Encoded .vsave of the campaign as it is now.
   snapshot(): Promise<SnapshotResult> {
     return this.request({ kind: "snapshot" }) as Promise<SnapshotResult>;
+  }
+
+  // Time spent per domain clock since the campaign was opened.
+  perf(): Promise<Record<string, DomainTiming>> {
+    return this.request({ kind: "perf" }) as Promise<
+      Record<string, DomainTiming>
+    >;
   }
 
   onEvents(listener: (events: SimEvent[]) => void): () => void {

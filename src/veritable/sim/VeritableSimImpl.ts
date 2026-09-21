@@ -10,7 +10,7 @@ import {
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
 import { dateAfter } from "./calendar";
-import { nationFromAdHoc, nationFromData, statusFromTerritory } from "./nation";
+import { nationFromData, statusFromTerritory } from "./nation";
 import { Rng } from "./rng";
 import { DomainSystem, PerfProbe, Scheduler } from "./scheduler";
 import {
@@ -26,7 +26,7 @@ export interface SimDeps {
   config: VeritableConfig;
   world: WorldPort;
   // Nation sheets of data/veritable/nations/, looked up by scenario.nations.
-  nationData?: (id: NationId) => NationData | undefined;
+  nationData: (id: NationId) => NationData | undefined;
   // Domain systems plugged on the scheduler (all empty at J1) and the probe
   // that times them.
   systems?: readonly DomainSystem[];
@@ -64,18 +64,13 @@ export class VeritableSimImpl implements VeritableSim {
       date: scenario.startDate,
       speed: 1,
     };
-    this.nations = [
-      ...scenario.nations.map((id) => {
-        const data = this.deps.nationData?.(id);
-        if (data === undefined) {
-          throw new Error(`scenario ${scenario.id}: no nation sheet for ${id}`);
-        }
-        return nationFromData(data, id === scenario.playerDefault);
-      }),
-      ...(scenario.adHocNations ?? []).map((n) =>
-        nationFromAdHoc(n, n.id === scenario.playerDefault),
-      ),
-    ];
+    this.nations = scenario.nations.map((id) => {
+      const data = this.deps.nationData(id);
+      if (data === undefined) {
+        throw new Error(`scenario ${scenario.id}: no nation sheet for ${id}`);
+      }
+      return nationFromData(data, id === scenario.playerDefault);
+    });
     this.journal = [
       { date: this.calendar.date, kind: "campaign-started", params: {} },
     ];

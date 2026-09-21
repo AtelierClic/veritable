@@ -21,7 +21,7 @@ import {
   WorldState,
 } from "../data/schemas/save";
 import { TileGrid, WorldPort } from "../sim/VeritableSim";
-import { NationBinding } from "./coreScenario";
+import { NationBinding } from "./scenarioWorld";
 
 // The only place where the Véritable simulation meets the OpenFront core.
 //

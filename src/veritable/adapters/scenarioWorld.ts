@@ -1,0 +1,154 @@
+import {
+  Cell,
+  Game,
+  Nation,
+  Player,
+  PlayerInfo,
+  PlayerType,
+  UnitType,
+} from "../../core/game/Game";
+import { PseudoRandom } from "../../core/PseudoRandom";
+import { Borders } from "../data/bordersFile";
+import { BordersMeta } from "../data/catalog";
+import { vt } from "../data/i18n";
+import { NationId } from "../data/schemas/common";
+import { NationData } from "../data/schemas/nation";
+import { WorldState } from "../data/schemas/save";
+import { Scenario } from "../data/schemas/scenario";
+import { TileGrid } from "../sim/VeritableSim";
+
+// The scenario loader: a campaign starts from the fixed borders of its
+// scenario. There is no spawn phase and no map-manifest roster any more.
+
+export interface ScenarioPack {
+  scenario: Scenario;
+  nations: NationData[]; // in scenario order
+  borders: Borders;
+  meta: BordersMeta;
+}
+
+export interface NationBinding {
+  nationId: NationId;
+  player: Player;
+}
+
+export function nationDisplayName(data: NationData): string {
+  return vt(data.name);
+}
+
+export function playerNationOf(
+  pack: ScenarioPack,
+  requested?: string,
+): NationId {
+  const id = requested ?? pack.scenario.playerDefault;
+  if (!pack.scenario.nations.includes(id)) {
+    throw new Error(`${id} is not a nation of scenario ${pack.scenario.id}`);
+  }
+  return id;
+}
+
+// Core roster of the campaign: one Nation-type player per nation of the
+// scenario, except the one the human embodies. Passed to createGameRunner.
+export function coreRoster(
+  pack: ScenarioPack,
+  playerNation: NationId,
+): (random: PseudoRandom) => Nation[] {
+  return (random) =>
+    pack.nations
+      .filter((n) => n.id !== playerNation)
+      .map((n) => {
+        const [x, y] = pack.meta.capitals[n.id];
+        return new Nation(
+          new Cell(x, y),
+          new PlayerInfo(
+            nationDisplayName(n),
+            PlayerType.Nation,
+            null,
+            random.nextID(),
+          ),
+        );
+      });
+}
+
+// Nation <-> core player. The human is the player's nation; the others are
+// matched by display name (unique within a scenario).
+export function bindScenario(
+  game: Game,
+  pack: ScenarioPack,
+  playerNation: NationId,
+): NationBinding[] {
+  const players = game.allPlayers();
+  return pack.nations.map((nation) => {
+    const player =
+      nation.id === playerNation
+        ? players.find((p) => p.type() === PlayerType.Human)
+        : players.find(
+            (p) =>
+              p.type() === PlayerType.Nation &&
+              p.name() === nationDisplayName(nation),
+          );
+    if (player === undefined) {
+      throw new Error(`no core player for nation ${nation.id}`);
+    }
+    return { nationId: nation.id, player };
+  });
+}
+
+function assertSameGrid(game: Game, pack: ScenarioPack): void {
+  if (
+    pack.borders.width !== game.width() ||
+    pack.borders.height !== game.height()
+  ) {
+    throw new Error(
+      `scenario ${pack.scenario.id} is rasterized for ${pack.borders.width}x${pack.borders.height}, the map is ${game.width()}x${game.height()} (compact maps are not supported)`,
+    );
+  }
+}
+
+// Land that belongs to no nation of the scenario: neutral, unclaimable.
+// Derived from the scenario borders, never from the current owners: land a
+// nation loses (nuclear fallout, say) stays claimable.
+export function unclaimableMask(game: Game, pack: ScenarioPack): Uint8Array {
+  assertSameGrid(game, pack);
+  const mask = new Uint8Array(pack.borders.tiles.length);
+  game.forEachTile((tile) => {
+    if (game.isLand(tile) && pack.borders.tiles[tile] === 0) mask[tile] = 1;
+  });
+  return mask;
+}
+
+// State of the world on the first day: every nation on its borders, a city on
+// its capital. Expressed like a save, and applied by the same restore path.
+export function initialWorld(
+  game: Game,
+  pack: ScenarioPack,
+  bindings: readonly NationBinding[],
+  coreStart: unknown,
+): { world: WorldState; grid: TileGrid } {
+  assertSameGrid(game, pack);
+  const tiles = new Uint16Array(pack.borders.tiles.length);
+  game.forEachTile((tile) => {
+    const value = pack.borders.tiles[tile];
+    // The borders file only owns land; stay safe if the map ever changes.
+    if (value !== 0 && game.isLand(tile) && !game.isImpassable(tile)) {
+      tiles[tile] = value;
+    }
+  });
+  return {
+    world: {
+      coreStart,
+      players: bindings.map(({ nationId, player }) => {
+        const [x, y] = pack.meta.capitals[nationId];
+        const capital = game.ref(x, y);
+        return {
+          nation: nationId,
+          troops: player.troops(),
+          gold: player.gold(),
+          spawnTile: capital,
+          structures: [{ type: UnitType.City, tile: capital, level: 1 }],
+        };
+      }),
+    },
+    grid: { width: game.width(), height: game.height(), tiles },
+  };
+}

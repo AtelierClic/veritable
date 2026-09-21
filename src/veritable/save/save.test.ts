@@ -1,8 +1,8 @@
 import { zb } from "../../../zbin";
 import { loadVeritableConfig } from "../data/loadConfig";
 import { SaveFile } from "../data/schemas/save";
-import { Scenario } from "../data/schemas/scenario";
 import { MemoryWorld } from "../sim/testing/MemoryWorld";
+import { testNation, testScenario } from "../sim/testing/nations";
 import { VeritableSimImpl } from "../sim/VeritableSimImpl";
 import { migrateToCurrent, Migration, MigrationError } from "./migrations";
 import { MemorySaveStore, SaveMeta } from "./SaveStore";
@@ -15,20 +15,7 @@ import {
 } from "./serialize";
 import { decodeTiles, encodeTiles, TileBlockError } from "./tiles";
 
-const scenario: Scenario = {
-  id: "test",
-  map: "memory",
-  startDate: "2026-01-01",
-  nations: [],
-  adHocNations: [
-    { id: "alpha", literalName: "Alpha" },
-    { id: "beta", literalName: "Bêta — accentué" },
-    { id: "gamma", literalName: "Gamma" },
-  ],
-  contested: [],
-  wars: [],
-  playerDefault: "alpha",
-};
+const scenario = testScenario(["alpha", "beta", "gamma"]);
 
 function playedGame() {
   const world = new MemoryWorld(40, 25);
@@ -36,7 +23,11 @@ function playedGame() {
   for (let t = 400; t < 700; t++) world.setOwner(t, "beta");
   world.setFallout(650, true);
   world.setFallout(900, true);
-  const sim = new VeritableSimImpl({ config: loadVeritableConfig(), world });
+  const sim = new VeritableSimImpl({
+    nationData: testNation,
+    config: loadVeritableConfig(),
+    world,
+  });
   sim.init(scenario, 20260101);
   sim.advance(43_200 * 7 + 555);
   world.transferAll("beta", "alpha"); // beta now has zero tiles
@@ -95,6 +86,7 @@ describe("save file v1", () => {
 
     // Restored in a brand new simulation and world, then saved again.
     const sim2 = new VeritableSimImpl({
+      nationData: testNation,
       config: loadVeritableConfig(),
       world: new MemoryWorld(40, 25),
     });
@@ -115,6 +107,7 @@ describe("save file v1", () => {
     const { sim, world } = playedGame();
     const world2 = new MemoryWorld(40, 25);
     const sim2 = new VeritableSimImpl({
+      nationData: testNation,
       config: loadVeritableConfig(),
       world: world2,
     });

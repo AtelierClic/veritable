@@ -3,6 +3,7 @@ import { FetchGameMapLoader } from "../game/FetchGameMapLoader";
 import { ErrorUpdate, GameUpdateViewData } from "../game/GameUpdates";
 import { createGameRunner, GameRunner } from "../GameRunner";
 // VERITABLE: the simulation lives in the worker, next to the GameRunner.
+import { loadCampaign } from "../../veritable/adapters/campaign";
 import { VeritableSession } from "../../veritable/adapters/VeritableSession";
 import {
   AttackClusteredPositionsResultMessage,
@@ -159,31 +160,38 @@ ctx.addEventListener("message", async (e: MessageEvent<MainThreadMessage>) => {
         // Set before createGameRunner so map fetches via mapLoader pick up the
         // CDN base. Workers have no `window`, so AssetUrls falls back to this.
         globalThis.__CDN_BASE__ = message.cdnBase;
-        gameRunner = createGameRunner(
-          message.gameStartInfo,
-          message.clientID,
-          mapLoader,
-          gameUpdate,
-          // VERITABLE: attach the campaign (new, or restored from a save)
-          // before any execution is registered.
-          {
-            onGameCreated: (game) => {
-              veritableSession = game.config().isVeritable()
-                ? VeritableSession.create(
-                    game,
-                    message.gameStartInfo,
-                    message.veritableSave,
-                  )
-                : null;
-            },
-          },
-        ).then((gr) => {
-          sendMessage({
-            type: "initialized",
-            id: message.id,
-          } as InitializedMessage);
-          return gr;
-        });
+        // VERITABLE: a campaign takes its roster and borders from a scenario.
+        const campaign = loadCampaign(message.gameStartInfo);
+        gameRunner = campaign
+          .then((c) =>
+            createGameRunner(
+              message.gameStartInfo,
+              message.clientID,
+              mapLoader,
+              gameUpdate,
+              // VERITABLE: attach the campaign (new, or restored from a save)
+              // before any execution is registered.
+              c === null
+                ? undefined
+                : {
+                    nations: c.roster,
+                    onGameCreated: (game) => {
+                      veritableSession = VeritableSession.create(game, {
+                        coreStart: message.gameStartInfo,
+                        pack: c.pack,
+                        saveBytes: message.veritableSave,
+                      });
+                    },
+                  },
+            ),
+          )
+          .then((gr) => {
+            sendMessage({
+              type: "initialized",
+              id: message.id,
+            } as InitializedMessage);
+            return gr;
+          });
       } catch (error) {
         console.error("Failed to initialize game runner:", error);
         throw error;

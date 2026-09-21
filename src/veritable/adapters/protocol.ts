@@ -13,7 +13,8 @@ import {
 export type VeritableRequest =
   | { kind: "read" }
   | { kind: "apply"; command: PlayerCommand }
-  | { kind: "snapshot" };
+  | { kind: "snapshot" }
+  | { kind: "perf" };
 
 export interface SnapshotResult {
   bytes: Uint8Array; // encoded .vsave

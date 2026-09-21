@@ -1,28 +1,20 @@
 import { loadVeritableConfig } from "../data/loadConfig";
-import { Scenario } from "../data/schemas/scenario";
 import { MemoryWorld } from "./testing/MemoryWorld";
+import { testNation, testScenario } from "./testing/nations";
 import { VeritableSimImpl } from "./VeritableSimImpl";
 
-const scenario: Scenario = {
-  id: "test",
-  map: "memory",
-  startDate: "2026-01-01",
-  nations: [],
-  adHocNations: [
-    { id: "alpha", literalName: "Alpha" },
-    { id: "beta", literalName: "Beta" },
-  ],
-  contested: [],
-  wars: [],
-  playerDefault: "alpha",
-};
+const scenario = testScenario(["alpha", "beta"]);
 
 function newGame() {
   const world = new MemoryWorld(8, 4);
   for (let t = 0; t < 16; t++) world.setOwner(t, "alpha");
   for (let t = 16; t < 28; t++) world.setOwner(t, "beta");
   world.setFallout(30, true);
-  const sim = new VeritableSimImpl({ config: loadVeritableConfig(), world });
+  const sim = new VeritableSimImpl({
+    nationData: testNation,
+    config: loadVeritableConfig(),
+    world,
+  });
   sim.init(scenario, 42);
   return { world, sim };
 }
@@ -30,6 +22,7 @@ function newGame() {
 describe("VeritableSimImpl", () => {
   it("refuses to run before init", () => {
     const sim = new VeritableSimImpl({
+      nationData: testNation,
       config: loadVeritableConfig(),
       world: new MemoryWorld(1, 1),
     });
@@ -114,6 +107,7 @@ describe("VeritableSimImpl", () => {
 
     const world2 = new MemoryWorld(8, 4);
     const sim2 = new VeritableSimImpl({
+      nationData: testNation,
       config: loadVeritableConfig(),
       world: world2,
     });
