@@ -33,9 +33,14 @@ export class WorkerClient {
     update: GameUpdateViewData | ErrorUpdate,
   ) => void;
 
+  // VERITABLE: listener for simulation events pushed by the worker.
+  public onVeritableEvents?: (events: unknown[]) => void;
+
   constructor(
     private gameStartInfo: GameStartInfo,
     private clientID: ClientID | undefined,
+    // VERITABLE: encoded .vsave to restore, when loading a campaign.
+    private veritableSave?: Uint8Array,
   ) {
     this.messageHandlers = new Map();
   }
@@ -60,6 +65,10 @@ export class WorkerClient {
         if (this.gameUpdateCallback && message.error) {
           this.gameUpdateCallback(message.error);
         }
+        break;
+
+      case "veritable_events":
+        this.onVeritableEvents?.(message.events);
         break;
 
       case "initialized":
@@ -94,6 +103,7 @@ export class WorkerClient {
         gameStartInfo: this.gameStartInfo,
         clientID: this.clientID,
         cdnBase: getCdnBase(),
+        veritableSave: this.veritableSave,
       });
 
       setTimeout(() => {
@@ -322,6 +332,28 @@ export class WorkerClient {
         id: messageId,
         playerID: playerID,
         targetTile: targetTile,
+      });
+    });
+  }
+
+  // VERITABLE: one request to the Véritable session in the worker. Typed by
+  // RemoteVeritableSim (src/veritable/adapters).
+  veritableRequest(request: unknown): Promise<unknown> {
+    return new Promise((resolve, reject) => {
+      if (!this.isInitialized) {
+        reject(new Error("Worker not initialized"));
+        return;
+      }
+      const messageId = generateID();
+      this.messageHandlers.set(messageId, (message) => {
+        if (message.type !== "veritable_response") return;
+        if (message.error !== undefined) reject(new Error(message.error));
+        else resolve(message.result);
+      });
+      this.worker!.postMessage({
+        type: "veritable_request",
+        id: messageId,
+        request,
       });
     });
   }

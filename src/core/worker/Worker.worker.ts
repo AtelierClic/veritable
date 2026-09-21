@@ -2,6 +2,8 @@ import { assetUrl } from "../AssetUrls";
 import { FetchGameMapLoader } from "../game/FetchGameMapLoader";
 import { ErrorUpdate, GameUpdateViewData } from "../game/GameUpdates";
 import { createGameRunner, GameRunner } from "../GameRunner";
+// VERITABLE: the simulation lives in the worker, next to the GameRunner.
+import { VeritableSession } from "../../veritable/adapters/VeritableSession";
 import {
   AttackClusteredPositionsResultMessage,
   InitializedMessage,
@@ -18,6 +20,8 @@ import {
 const ctx: Worker = self as any;
 globalThis.__ASSET_MANIFEST__ = __ASSET_MANIFEST__;
 let gameRunner: Promise<GameRunner> | null = null;
+// VERITABLE: set when the game is a Véritable campaign (GameConfig.veritable).
+let veritableSession: VeritableSession | null = null;
 const mapLoader = new FetchGameMapLoader((path) => assetUrl(`maps/${path}`));
 // Yield threshold; not a backlog cap. Used to avoid monopolizing the worker task
 // and flooding the main thread with messages during catch-up.
@@ -59,6 +63,7 @@ async function drain(): Promise<void> {
     }
 
     const batch: GameUpdateViewData[] = [];
+    const veritableEvents: unknown[] = [];
     const onTickUpdate = (gu: GameUpdateViewData | ErrorUpdate) => {
       if (!("updates" in gu)) {
         if ("errMsg" in gu) {
@@ -79,11 +84,18 @@ async function drain(): Promise<void> {
         break;
       }
       ticksRun++;
+      // VERITABLE: campaign time advances with every core tick.
+      if (veritableSession !== null) {
+        veritableEvents.push(...veritableSession.onCoreTick());
+      }
     }
 
     tickUpdateSink = null;
 
     sendGameUpdateBatch(batch);
+    if (veritableEvents.length > 0) {
+      sendMessage({ type: "veritable_events", events: veritableEvents });
+    }
 
     shouldContinue = gr.pendingTurns() > 0;
   } finally {
@@ -152,6 +164,17 @@ ctx.addEventListener("message", async (e: MessageEvent<MainThreadMessage>) => {
           message.clientID,
           mapLoader,
           gameUpdate,
+          // VERITABLE: attach the campaign (new, or restored from a save)
+          // before any execution is registered.
+          (game) => {
+            veritableSession = game.config().isVeritable()
+              ? VeritableSession.create(
+                  game,
+                  message.gameStartInfo,
+                  message.veritableSave,
+                )
+              : null;
+          },
         ).then((gr) => {
           sendMessage({
             type: "initialized",
@@ -291,6 +314,27 @@ ctx.addEventListener("message", async (e: MessageEvent<MainThreadMessage>) => {
           id: message.id,
           attacks: [],
         } as AttackClusteredPositionsResultMessage);
+      }
+      break;
+    case "veritable_request":
+      // VERITABLE
+      try {
+        if (!gameRunner) throw new Error("Game runner not initialized");
+        await gameRunner;
+        if (veritableSession === null) {
+          throw new Error("not a Véritable campaign");
+        }
+        sendMessage({
+          type: "veritable_response",
+          id: message.id,
+          result: veritableSession.handle(message.request as never),
+        });
+      } catch (error) {
+        sendMessage({
+          type: "veritable_response",
+          id: message.id,
+          error: error instanceof Error ? error.message : String(error),
+        });
       }
       break;
     case "transport_ship_spawn":

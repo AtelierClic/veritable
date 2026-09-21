@@ -29,7 +29,12 @@ export type WorkerMessageType =
   | "attack_clustered_positions"
   | "attack_clustered_positions_result"
   | "transport_ship_spawn"
-  | "transport_ship_spawn_result";
+  | "transport_ship_spawn_result"
+  // VERITABLE: generic channel to the Véritable session living in the worker.
+  // Payloads are typed in src/veritable/adapters/protocol.ts.
+  | "veritable_request"
+  | "veritable_response"
+  | "veritable_events";
 
 // Base interface for all messages
 interface BaseWorkerMessage {
@@ -43,6 +48,27 @@ export interface InitMessage extends BaseWorkerMessage {
   gameStartInfo: GameStartInfo;
   clientID: ClientID | undefined;
   cdnBase: string;
+  // VERITABLE: encoded .vsave to restore into the freshly created game.
+  veritableSave?: Uint8Array;
+}
+
+// VERITABLE
+export interface VeritableRequestMessage extends BaseWorkerMessage {
+  type: "veritable_request";
+  request: unknown;
+}
+
+// VERITABLE
+export interface VeritableResponseMessage extends BaseWorkerMessage {
+  type: "veritable_response";
+  result?: unknown;
+  error?: string;
+}
+
+// VERITABLE: simulation events of one batch of ticks.
+export interface VeritableEventsMessage extends BaseWorkerMessage {
+  type: "veritable_events";
+  events: unknown[];
 }
 
 export interface TurnMessage extends BaseWorkerMessage {
@@ -152,7 +178,8 @@ export type MainThreadMessage =
   | PlayerProfileMessage
   | PlayerBorderTilesMessage
   | AttackClusteredPositionsMessage
-  | TransportShipSpawnMessage;
+  | TransportShipSpawnMessage
+  | VeritableRequestMessage;
 
 // Message send from worker
 export type WorkerMessage =
@@ -166,4 +193,6 @@ export type WorkerMessage =
   | PlayerProfileResultMessage
   | PlayerBorderTilesResultMessage
   | AttackClusteredPositionsResultMessage
-  | TransportShipSpawnResultMessage;
+  | TransportShipSpawnResultMessage
+  | VeritableResponseMessage
+  | VeritableEventsMessage;

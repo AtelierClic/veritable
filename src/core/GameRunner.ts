@@ -37,6 +37,10 @@ export async function createGameRunner(
   clientID: ClientID | undefined,
   mapLoader: GameMapLoader,
   callBack: (gu: GameUpdateViewData | ErrorUpdate) => void,
+  // VERITABLE: called with the core game once it exists and before any
+  // execution is registered. The worker uses it to attach the Véritable
+  // session (whose restore must run ahead of the nation executions).
+  onGameCreated?: (game: Game) => void,
 ): Promise<GameRunner> {
   const config = new Config(gameStart.config, null, false, gameStart.listed);
   const gameMap = await loadGameMap(
@@ -87,6 +91,7 @@ export async function createGameRunner(
     ),
     callBack,
   );
+  onGameCreated?.(game);
   gr.init();
   return gr;
 }

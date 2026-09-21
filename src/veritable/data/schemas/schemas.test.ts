@@ -118,7 +118,7 @@ describe("config", () => {
     expect(() =>
       VeritableConfigSchema.parse({
         leaderNames: "parody",
-        time: { gameMinutesPerTick: 0 },
+        time: { gameMinutesPerTick: 0, defaultStartDate: "2026-01-01" },
       }),
     ).toThrow();
   });

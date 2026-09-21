@@ -1,6 +1,7 @@
 {
   "leaderNames": "parody",
   "time": {
-    "gameMinutesPerTick": 72
+    "gameMinutesPerTick": 72,
+    "defaultStartDate": "2026-01-01"
   }
 }
