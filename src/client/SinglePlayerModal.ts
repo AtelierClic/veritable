@@ -16,6 +16,7 @@ import {
 import { UserSettings } from "../core/game/UserSettings";
 import { PlayerCosmetics, TeamCountConfig } from "../core/Schemas";
 import { generateID } from "../core/Util";
+import { veritablePanel } from "../veritable/ui/VeritablePanel";
 import { responseHasLinkedIdentity } from "./AccountIdentity";
 import "./components/baseComponents/Button";
 import "./components/baseComponents/Modal";
@@ -690,6 +691,14 @@ export class SinglePlayerModal extends BaseModal {
     this.doomsdayClockSpeed = DEFAULT_OPTIONS.doomsdayClockSpeed;
     this.overtime = DEFAULT_OPTIONS.overtime;
     this.overtimeStartMinutes = DEFAULT_OPTIONS.overtimeStartMinutes;
+  }
+
+  // VERITABLE: solo is a campaign. The legacy solo settings (map, bots,
+  // timers) no longer apply, so opening this modal — from the Solo card or
+  // from its URL — opens the Véritable start panel instead. The tutorial
+  // (startTutorial) does not go through open(). The card goes away at J7.
+  public open(): void {
+    veritablePanel().show();
   }
 
   protected onOpen(): void {

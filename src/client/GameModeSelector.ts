@@ -12,7 +12,6 @@ import {
   Trios,
 } from "../core/game/Game";
 import { PublicGameInfo, PublicGames } from "../core/Schemas";
-import { veritablePanel } from "../veritable/ui/VeritablePanel";
 import { getDesktopSessionState } from "./Auth";
 import "./components/IOSAddToHomeScreenBanner";
 import {
@@ -46,6 +45,7 @@ import {
   retryServerList,
   type BackendReachabilityDetail,
 } from "./ServerList";
+import { SinglePlayerModal } from "./SinglePlayerModal";
 import { UsernameInput } from "./UsernameInput";
 import {
   calculateServerTimeOffset,
@@ -818,10 +818,9 @@ export class GameModeSelector extends LitElement {
 
   private openSinglePlayerModal = () => {
     if (!this.validateUsername()) return;
-    // VERITABLE: solo is a campaign. The legacy solo modal (map, bots, timers)
-    // no longer applies; the button opens the Véritable start panel instead.
-    // The legacy button itself goes away at J7.
-    veritablePanel().show();
+    (
+      document.querySelector("single-player-modal") as SinglePlayerModal
+    )?.open();
   };
 
   // Handled in Main, which also serves the help page's tutorial button.
