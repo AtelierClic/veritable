@@ -553,6 +553,10 @@ export const GameConfigSchema = z.object({
       startingGold: zb.uint({ max: 1000000000 }).nullable().optional(),
     })
     .optional(),
+  // VERITABLE: single switch for every Véritable change in src/core. Set by
+  // every solo game. No win condition, no timer, no Overtime, and a player
+  // (= a nation) is never eliminated for owning zero tiles.
+  veritable: z.boolean().optional(),
 });
 
 export const TeamSchema = z.string();

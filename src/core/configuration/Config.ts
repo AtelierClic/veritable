@@ -276,6 +276,12 @@ export class Config {
     return this._isReplay;
   }
 
+  // VERITABLE: true for a Véritable campaign (every solo game). Gates every
+  // Véritable change in src/core; see docs/veritable/DECISIONS.md.
+  isVeritable(): boolean {
+    return this._gameConfig.veritable === true;
+  }
+
   /** True when the player joined the lobby as a spectator (watch-only). */
   isIntentionalSpectator(): boolean {
     return this._spectator;
@@ -323,7 +329,8 @@ export class Config {
     const c = this._gameConfig.overtime;
     const d = OVERTIME_DEFAULTS;
     return {
-      enabled: c?.enabled ?? d.enabled,
+      // VERITABLE: Overtime can never be enabled in a campaign.
+      enabled: this.isVeritable() ? false : (c?.enabled ?? d.enabled),
       startMinutes: c?.startMinutes ?? d.startMinutes,
       // The drop rate is internal (not wire-configurable): always the default.
       dropPercentPerMinute: d.dropPercentPerMinute,

@@ -119,7 +119,11 @@ export class GameRunner {
         ...this.execManager.spawnTribes(this.game.config().bots()),
       );
     }
-    this.game.addExecution(new WinCheckExecution());
+    // VERITABLE: a campaign has no win condition, no lobby timer and no
+    // 170-minute hard cap: the win check is never registered.
+    if (!this.game.config().isVeritable()) {
+      this.game.addExecution(new WinCheckExecution());
+    }
     if (this.game.config().doomsdayClockConfig().enabled) {
       this.game.addExecution(new DoomsdayClockExecution());
     }
@@ -194,6 +198,12 @@ export class GameRunner {
       this.game.ticks() % 30 === 0
     ) {
       for (const p of this.game.players()) {
+        // VERITABLE: a living player can own zero tiles (exile); there is
+        // no territory to place a name on.
+        if (p.numTilesOwned() === 0) {
+          this.playerViewData[p.id()] = { x: 0, y: 0, size: 0 };
+          continue;
+        }
         this.playerViewData[p.id()] = placeName(this.game, p);
       }
       viewDataChanged = true;

@@ -716,6 +716,16 @@ export class PlayerImpl implements Player {
   }
 
   isAlive(): boolean {
+    // VERITABLE: a nation is not its tiles. Once it has entered the world
+    // (spawned), a player stays alive with zero tiles (exile, microstate).
+    // Bots (tribes) are map fill, not nations: they still die.
+    if (
+      this.mg.config().isVeritable() &&
+      this.hasSpawned() &&
+      this.type() !== PlayerType.Bot
+    ) {
+      return true;
+    }
     return this._tiles.size > 0;
   }
 

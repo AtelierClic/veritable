@@ -37,6 +37,13 @@ export class WinCheckExecution implements Execution {
     }
     if (this.mg === null) throw new Error("Not initialized");
 
+    // VERITABLE: neutralized even if something registers it. Covers the win
+    // threshold, maxTimerValue and HARD_TIME_LIMIT_SECONDS (170 min).
+    if (this.mg.config().gameConfig().veritable === true) {
+      this.active = false;
+      return;
+    }
+
     if (this.checkRanked2v2Cancelled()) {
       return;
     }
