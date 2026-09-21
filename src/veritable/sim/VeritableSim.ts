@@ -30,13 +30,17 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
 ]);
 export type PlayerCommand = z.infer<typeof PlayerCommandSchema>;
 
-export type SimEvent = {
-  type: "nation-status-changed";
-  date: string;
-  nation: NationId;
-  from: NationStatus;
-  to: NationStatus;
-};
+export type SimEvent =
+  | { type: "day-started"; date: string }
+  // The monthly clocks have run; the client takes its automatic save on it.
+  | { type: "month-started"; date: string }
+  | {
+      type: "nation-status-changed";
+      date: string;
+      nation: NationId;
+      from: NationStatus;
+      to: NationStatus;
+    };
 
 export interface ReadonlyWorldView {
   readonly seed: number;

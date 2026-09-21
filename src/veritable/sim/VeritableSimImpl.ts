@@ -12,6 +12,7 @@ import { Scenario } from "../data/schemas/scenario";
 import { dateAfter } from "./calendar";
 import { nationFromAdHoc, nationFromData, statusFromTerritory } from "./nation";
 import { Rng } from "./rng";
+import { DomainSystem, PerfProbe, Scheduler } from "./scheduler";
 import {
   PlayerCommand,
   PlayerCommandSchema,
@@ -26,6 +27,10 @@ export interface SimDeps {
   world: WorldPort;
   // Nation sheets of data/veritable/nations/, looked up by scenario.nations.
   nationData?: (id: NationId) => NationData | undefined;
+  // Domain systems plugged on the scheduler (all empty at J1) and the probe
+  // that times them.
+  systems?: readonly DomainSystem[];
+  perf?: PerfProbe;
 }
 
 const METRIC_ADVANCE_CALLS = "sim.advanceCalls";
@@ -44,7 +49,11 @@ export class VeritableSimImpl implements VeritableSim {
   private metrics: Record<string, number> = {};
   private initialized = false;
 
-  constructor(private readonly deps: SimDeps) {}
+  private readonly scheduler: Scheduler;
+
+  constructor(private readonly deps: SimDeps) {
+    this.scheduler = new Scheduler(deps.systems, deps.perf);
+  }
 
   init(scenario: Scenario, seed: number): void {
     this.seed = seed >>> 0;
@@ -130,11 +139,22 @@ export class VeritableSimImpl implements VeritableSim {
     if (!(gameMinutes >= 0)) throw new Error("advance: negative duration");
     const events: SimEvent[] = [];
 
+    const before = this.calendar.elapsedGameMinutes;
     this.calendar.elapsedGameMinutes += gameMinutes;
     this.calendar.date = dateAfter(
       this.calendar.startDate,
       this.calendar.elapsedGameMinutes,
     );
+    for (const tick of this.scheduler.run(
+      this.calendar.startDate,
+      before,
+      this.calendar.elapsedGameMinutes,
+    )) {
+      events.push({ type: "day-started", date: tick.context.date });
+      if (tick.monthStarted) {
+        events.push({ type: "month-started", date: tick.context.date });
+      }
+    }
     this.metrics[METRIC_ADVANCE_CALLS] =
       (this.metrics[METRIC_ADVANCE_CALLS] ?? 0) + 1;
 
