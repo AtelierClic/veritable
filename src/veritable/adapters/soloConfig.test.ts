@@ -10,6 +10,7 @@ import { loadVeritableConfig } from "../data/loadConfig";
 import { encodeSave } from "../save/serialize";
 import { MemoryWorld } from "../sim/testing/MemoryWorld";
 import { testNation, testScenario } from "../sim/testing/nations";
+import { testSimData } from "../sim/testing/simData";
 import { VeritableSimImpl } from "../sim/VeritableSimImpl";
 import { LEGACY_SAVE_ERROR } from "./campaign";
 import { gameStartInfoFromSave, veritableSoloConfig } from "./soloConfig";
@@ -40,6 +41,7 @@ function saveWith(coreStart: unknown): Uint8Array {
     config: loadVeritableConfig(),
     world,
     nationData: testNation,
+    data: testSimData(["alpha"]),
   });
   sim.init(testScenario(["alpha"]), 1);
   return encodeSave(sim.snapshot());

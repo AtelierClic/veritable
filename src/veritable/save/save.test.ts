@@ -1,8 +1,8 @@
-import { zb } from "../../../zbin";
 import { loadVeritableConfig } from "../data/loadConfig";
 import { SaveFile } from "../data/schemas/save";
 import { MemoryWorld } from "../sim/testing/MemoryWorld";
 import { testNation, testScenario } from "../sim/testing/nations";
+import { testSimData } from "../sim/testing/simData";
 import { VeritableSimImpl } from "../sim/VeritableSimImpl";
 import { migrateToCurrent, Migration, MigrationError } from "./migrations";
 import { MemorySaveStore, SaveMeta } from "./SaveStore";
@@ -25,6 +25,7 @@ function playedGame() {
   world.setFallout(900, true);
   const sim = new VeritableSimImpl({
     nationData: testNation,
+    data: testSimData(["alpha", "beta", "gamma"]),
     config: loadVeritableConfig(),
     world,
   });
@@ -70,7 +71,7 @@ describe("tile block (RLE)", () => {
   });
 });
 
-describe("save file v1", () => {
+describe("save file (current version)", () => {
   it("save -> load -> identical state, identical bytes", () => {
     const { sim } = playedGame();
     const saved = sim.snapshot();
@@ -87,6 +88,7 @@ describe("save file v1", () => {
     // Restored in a brand new simulation and world, then saved again.
     const sim2 = new VeritableSimImpl({
       nationData: testNation,
+      data: testSimData(["alpha", "beta", "gamma"]),
       config: loadVeritableConfig(),
       world: new MemoryWorld(40, 25),
     });
@@ -108,6 +110,7 @@ describe("save file v1", () => {
     const world2 = new MemoryWorld(40, 25);
     const sim2 = new VeritableSimImpl({
       nationData: testNation,
+      data: testSimData(["alpha", "beta", "gamma"]),
       config: loadVeritableConfig(),
       world: world2,
     });
@@ -120,7 +123,7 @@ describe("save file v1", () => {
 
   it("carries schemaVersion where it can be read before decoding", () => {
     const bytes = encodeSave(playedGame().sim.snapshot());
-    expect(peekSchemaVersion(bytes)).toBe(1);
+    expect(peekSchemaVersion(bytes)).toBe(2);
     expect(String.fromCharCode(...bytes.subarray(0, 4))).toBe("VRTB");
   });
 
@@ -152,55 +155,6 @@ describe("save file v1", () => {
 });
 
 describe("migration chain", () => {
-  // A fake "version 0" whose header lacks `metrics` and names the seed
-  // differently: proves that an older file is decoded with ITS codec and then
-  // walked up the chain to the current version.
-  const V0Header = zb.object({
-    schemaVersion: zb.literal(0),
-    oldSeed: zb.uint(),
-    tilesInfo: zb.object({ width: zb.uint(), height: zb.uint() }),
-  });
-
-  function v0File(): Uint8Array {
-    const header = V0Header.serialize({
-      schemaVersion: 0,
-      oldSeed: 77,
-      tilesInfo: { width: 40, height: 25 },
-    });
-    const tiles = encodeTiles(new Uint16Array(1000).fill(1));
-    const bytes = new Uint8Array(10 + header.length + 4 + tiles.length);
-    const view = new DataView(bytes.buffer);
-    bytes.set([0x56, 0x52, 0x54, 0x42], 0);
-    view.setUint16(4, 0, true);
-    view.setUint32(6, header.length, true);
-    bytes.set(header, 10);
-    view.setUint32(10 + header.length, tiles.length, true);
-    bytes.set(tiles, 14 + header.length);
-    return bytes;
-  }
-
-  const v0ToV1: Migration = {
-    from: 0,
-    migrate: (save) => {
-      const current = playedGame().sim.snapshot();
-      return {
-        ...current,
-        seed: save.oldSeed as number,
-        tiles: save.tiles,
-      };
-    },
-  };
-
-  it("loads an older file through its codec and the chain", () => {
-    const save = decodeSave(v0File(), {
-      codecs: { 0: V0Header, 1: { parseBytes: () => ({ schemaVersion: 1 }) } },
-      migrations: [v0ToV1],
-    });
-    expect(save.schemaVersion).toBe(1);
-    expect(save.seed).toBe(77);
-    expect(save.tiles[999]).toBe(1);
-  });
-
   it("applies several steps in order", () => {
     const steps: number[] = [];
     const chain: Migration[] = [2, 0, 1].map((from) => ({

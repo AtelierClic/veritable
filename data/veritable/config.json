@@ -6,5 +6,165 @@
   },
   "save": {
     "autosaveSlots": 6
+  },
+  "economy": {
+    "priceAdjustment": 0.02,
+    "maxDailyPriceChange": 0.02,
+    "priceFloor": 0.25,
+    "priceCeiling": 4,
+    "distanceScaleKm": 3000,
+    "rowDistanceKm": 4000,
+    "rowElasticityFactor": 2,
+    "rowGrowthPerYear": 0.025,
+    "agreementBonus": 1.25,
+    "sanctionDiscount": 0.2,
+    "rationingPasses": 3,
+    "growth": {
+      "alpha": 0.05,
+      "beta": 0.02,
+      "gamma": 0.002,
+      "capacityInvestment": 0.02,
+      "noiseMonthlySd": 0.0015
+    },
+    "rowSupplyNoise": {
+      "monthlySd": 0.004,
+      "persistence": 0.9
+    },
+    "electricityShortageOnIndustry": 0.5
+  },
+  "budget": {
+    "taxBases": {
+      "income": 0.5,
+      "corporate": 0.15,
+      "vat": 0.55
+    },
+    "maxTaxRate": {
+      "income": 0.6,
+      "corporate": 0.6,
+      "vat": 0.4,
+      "tariffs": 0.5,
+      "rents": 0.9
+    },
+    "maxSpendingShare": 0.35,
+    "interest": {
+      "base": 0.02,
+      "debtSlope": 0.03,
+      "debtThreshold": 0.6,
+      "instabilitySlope": 0.04
+    },
+    "austerity": {
+      "debtToGdp": 1.5,
+      "risingMonths": 12,
+      "spendingCap": 0.9
+    },
+    "default": {
+      "debtToGdp": 2,
+      "interestToRevenue": 0.4,
+      "haircut": 0.5,
+      "noDeficitYears": 5,
+      "satisfactionHit": 0.15,
+      "stabilityHit": 0.15
+    }
+  },
+  "politics": {
+    "convergencePerWeek": 0.1,
+    "groupWeights": {
+      "business": 0.12,
+      "workers": 0.25,
+      "farmers": 0.05,
+      "military": 0.05,
+      "religious": 0.08,
+      "youth": 0.15,
+      "retirees": 0.2,
+      "minorities": 0.1
+    },
+    "driverScales": {
+      "growth": 0.04,
+      "prices": 0.5,
+      "taxRate": 0.1,
+      "spending": 0.5,
+      "shortage": 0.2
+    },
+    "drivers": {
+      "business": {
+        "growth": 0.2,
+        "tax.corporate": 0.2,
+        "prices": 0.05,
+        "spending.infrastructure": 0.1,
+        "spending.research": 0.05,
+        "shortage": 0.15
+      },
+      "workers": {
+        "growth": 0.15,
+        "tax.income": 0.15,
+        "tax.vat": 0.1,
+        "spending.social": 0.15,
+        "prices": 0.15,
+        "shortage": 0.15
+      },
+      "farmers": {
+        "growth": 0.1,
+        "spending.subsidies": 0.2,
+        "tax.vat": 0.05,
+        "prices": 0.05,
+        "shortage": 0.1
+      },
+      "military": {
+        "spending.defense": 0.3,
+        "growth": 0.05,
+        "shortage": 0.1
+      },
+      "religious": {
+        "spending.social": 0.1,
+        "spending.healthEducation": 0.1,
+        "growth": 0.05,
+        "shortage": 0.1
+      },
+      "youth": {
+        "spending.healthEducation": 0.2,
+        "spending.research": 0.05,
+        "growth": 0.15,
+        "prices": 0.1,
+        "tax.vat": 0.05,
+        "shortage": 0.1
+      },
+      "retirees": {
+        "spending.social": 0.25,
+        "spending.healthEducation": 0.1,
+        "prices": 0.2,
+        "tax.income": 0.05,
+        "shortage": 0.15
+      },
+      "minorities": {
+        "spending.social": 0.2,
+        "spending.healthEducation": 0.1,
+        "growth": 0.1,
+        "prices": 0.1,
+        "shortage": 0.1
+      }
+    },
+    "stability": {
+      "opinion": 0.5,
+      "shortage": 0.2,
+      "debt": 0.15,
+      "legitimacy": 0.15,
+      "legitimacyValue": 0.7,
+      "unrestThreshold": 0.35,
+      "debtHealthyAt": 0.6,
+      "debtRuinousAt": 2,
+      "foodShortageWeight": 2
+    },
+    "aiOpinion": {
+      "growth": 4,
+      "shortage": 1.5,
+      "prices": 0.5
+    }
+  },
+  "ai": {
+    "fiscal": {
+      "maxDeficitToGdp": 0.03,
+      "adjustPerMonth": 0.01,
+      "relaxBelowDeficit": 0.01
+    }
   }
 }

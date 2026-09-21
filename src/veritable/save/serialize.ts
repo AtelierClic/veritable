@@ -9,6 +9,7 @@ import {
   HeaderCodec,
   migrateToCurrent,
   Migration,
+  MigrationContext,
   MIGRATIONS,
 } from "./migrations";
 import { decodeTiles, encodeTiles } from "./tiles";
@@ -78,6 +79,8 @@ export interface DecodeOptions {
   migrations?: readonly Migration[];
   codecs?: Record<number, HeaderCodec>;
   targetVersion?: number;
+  // Campaign data, needed by migrations that build new state (v1 -> v2).
+  context?: MigrationContext;
 }
 
 export function peekSchemaVersion(bytes: Uint8Array): number {
@@ -90,6 +93,22 @@ export function peekSchemaVersion(bytes: Uint8Array): number {
     }
   }
   return new DataView(bytes.buffer, bytes.byteOffset).getUint16(4, true);
+}
+
+// `world.coreStart` of a save of any version, WITHOUT migrating it: what
+// recreates the core game, and which scenario the campaign data comes from.
+export function peekCoreStart(bytes: Uint8Array): unknown {
+  const version = peekSchemaVersion(bytes);
+  const codec = HEADER_CODECS[version];
+  if (codec === undefined) {
+    throw new SaveFormatError(`unknown save schemaVersion ${version}`);
+  }
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.length);
+  const headerLength = view.getUint32(6, true);
+  const header = codec.parseBytes(
+    bytes.subarray(PREAMBLE_BYTES, PREAMBLE_BYTES + headerLength),
+  ) as { world?: { coreStart?: unknown } };
+  return header.world?.coreStart;
 }
 
 // Reads a save of ANY known version and returns it migrated to the current one.
@@ -131,6 +150,7 @@ export function decodeSave(
     { ...header, tiles },
     options.migrations ?? MIGRATIONS,
     options.targetVersion ?? SAVE_SCHEMA_VERSION,
+    options.context,
   );
   assertTilesReferenceNations(save);
   return save;

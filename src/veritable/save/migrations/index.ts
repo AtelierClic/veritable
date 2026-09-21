@@ -1,8 +1,14 @@
+import { NationId } from "../../data/schemas/common";
+import { VeritableConfig } from "../../data/schemas/config";
+import { NationData } from "../../data/schemas/nation";
 import {
   SAVE_SCHEMA_VERSION,
   SaveFile,
-  SaveHeaderV1Schema,
+  SaveHeaderV2Schema,
 } from "../../data/schemas/save";
+import { SaveFileV1, SaveHeaderV1Schema } from "../../data/schemas/saveV1";
+import { SimData } from "../../sim/economy/context";
+import { v1ToV2 } from "./v1-to-v2";
 
 // A save as read from disk, before migration: the header decoded with the
 // frozen schema of ITS version, plus the raw tile grid.
@@ -12,11 +18,22 @@ export interface VersionedSave {
   tiles: Uint16Array;
 }
 
+// What a migration may need to build the state a newer version adds: the
+// data of the campaign (the same objects the simulation receives).
+export interface MigrationContext {
+  config: VeritableConfig;
+  data: SimData;
+  nationData: (id: NationId) => NationData | undefined;
+}
+
 // One entry per change of shape of the save: `from` N produces N + 1.
-// File naming: migrations/v1-to-v2.ts exports `(save: SaveV1) => SaveV2`.
+// File naming: migrations/v1-to-v2.ts exports `(save: SaveV1, ctx) => SaveV2`.
 export interface Migration {
   from: number;
-  migrate(save: VersionedSave): VersionedSave;
+  migrate(
+    save: VersionedSave,
+    context: MigrationContext | undefined,
+  ): VersionedSave;
 }
 
 // Frozen header codec of every version ever shipped. zbin has no version byte:
@@ -26,17 +43,30 @@ export interface HeaderCodec {
 }
 export const HEADER_CODECS: Record<number, HeaderCodec> = {
   1: SaveHeaderV1Schema,
+  2: SaveHeaderV2Schema,
 };
 
-// The chain. Empty at schemaVersion 1, but wired: decodeSave always runs it.
-export const MIGRATIONS: Migration[] = [];
-
 export class MigrationError extends Error {}
+
+export const MIGRATIONS: Migration[] = [
+  {
+    from: 1,
+    migrate(save, context) {
+      if (context === undefined) {
+        throw new MigrationError(
+          "migration v1 -> v2 needs the campaign data (MigrationContext)",
+        );
+      }
+      return v1ToV2(save as unknown as SaveFileV1, context) as VersionedSave;
+    },
+  },
+];
 
 export function migrateToCurrent(
   save: VersionedSave,
   migrations: readonly Migration[] = MIGRATIONS,
   target: number = SAVE_SCHEMA_VERSION,
+  context?: MigrationContext,
 ): SaveFile {
   let current = save;
   if (current.schemaVersion > target) {
@@ -50,7 +80,7 @@ export function migrateToCurrent(
     if (step === undefined) {
       throw new MigrationError(`no migration from save version ${from}`);
     }
-    current = step.migrate(current);
+    current = step.migrate(current, context);
     if (current.schemaVersion !== from + 1) {
       throw new MigrationError(
         `migration from ${from} produced version ${current.schemaVersion}`,

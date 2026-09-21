@@ -57,7 +57,7 @@ describe("Scheduler", () => {
     ]);
   });
 
-  it("politics ticks weekly; politics, blocs and save tick monthly", () => {
+  it("politics ticks weekly; economy, politics, blocs and save tick monthly", () => {
     const { calls, systems } = recorder();
     const ticks = new Scheduler(systems).run(START, 0, DAY * 31);
     expect(ticks).toHaveLength(31);
@@ -68,6 +68,7 @@ describe("Scheduler", () => {
       "2026-01-29 week politics",
     ]);
     expect(calls.filter((c) => c.includes(" month "))).toEqual([
+      "2026-02-01 month economy",
       "2026-02-01 month politics",
       "2026-02-01 month blocs",
       "2026-02-01 month save",
@@ -116,6 +117,7 @@ describe("Scheduler", () => {
       "events/day": 31,
       "diplomacy/day": 31,
       "politics/week": 4,
+      "economy/month": 1,
       "politics/month": 1,
       "blocs/month": 1,
       "save/month": 1,

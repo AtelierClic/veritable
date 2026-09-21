@@ -83,5 +83,11 @@
   "good.electronics": "Électronique et high-tech",
   "good.arms": "Armement",
   "good.pharma": "Pharmacie",
-  "good.services": "Services"
+  "good.services": "Services",
+  "journal.unrest-started": "{nation} : des troubles éclatent.",
+  "journal.unrest-ended": "{nation} : les troubles s'apaisent.",
+  "journal.austerity-started": "{nation} : austérité forcée, les postes de dépenses sont plafonnés.",
+  "journal.austerity-ended": "{nation} : fin de l'austérité forcée.",
+  "journal.sovereign-default": "{nation} : défaut souverain. La dette est décotée de moitié, plus aucun déficit n'est financé pendant cinq ans.",
+  "journal.bloc-reprimand": "{nation} : réprimande de {bloc} (déficit {deficit} % du PIB, dette {debt} %)."
 }

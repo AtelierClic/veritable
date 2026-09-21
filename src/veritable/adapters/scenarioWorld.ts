@@ -9,12 +9,13 @@ import {
 } from "../../core/game/Game";
 import { PseudoRandom } from "../../core/PseudoRandom";
 import { Borders } from "../data/bordersFile";
-import { BordersMeta } from "../data/catalog";
+import { BordersMeta } from "../data/DataSource";
 import { vt } from "../data/i18n";
 import { NationId } from "../data/schemas/common";
 import { NationData } from "../data/schemas/nation";
 import { WorldState } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
+import { SimData } from "../sim/economy/context";
 import { TileGrid } from "../sim/VeritableSim";
 
 // The scenario loader: a campaign starts from the fixed borders of its
@@ -25,6 +26,7 @@ export interface ScenarioPack {
   nations: NationData[]; // in scenario order
   borders: Borders;
   meta: BordersMeta;
+  data: SimData; // goods, rest of the world, blocs, geography
 }
 
 export interface NationBinding {

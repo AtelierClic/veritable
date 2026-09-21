@@ -22,6 +22,7 @@ import { PseudoRandom } from "../../core/PseudoRandom";
 import { GameConfig, GameStartInfo } from "../../core/Schemas";
 import { decodeSave } from "../save/serialize";
 import { testNation, testScenario } from "../sim/testing/nations";
+import { testSimData } from "../sim/testing/simData";
 import { LEGACY_SAVE_ERROR, loadCampaign } from "./campaign";
 import { loadScenarioPack } from "./scenarioPack";
 import { coreRoster, ScenarioPack } from "./scenarioWorld";
@@ -55,6 +56,7 @@ function testPack(width = 200, height = 200): ScenarioPack {
     scenario: testScenario(ids),
     nations: ids.map((id) => testNation(id)),
     borders: { width, height, nations: ids, tiles },
+    data: testSimData(ids),
     meta: {
       scenario: "test",
       map: "big_plains",

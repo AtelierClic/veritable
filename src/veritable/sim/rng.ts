@@ -66,6 +66,13 @@ export class Rng {
     return min + this.next() * (max - min);
   }
 
+  // Standard normal draw (Box-Muller; always consumes two draws).
+  nextGaussian(): number {
+    const u = 1 - this.next(); // (0, 1]
+    const v = this.next();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+
   // True with the given probability (0..1).
   chance(probability: number): boolean {
     return this.next() < probability;

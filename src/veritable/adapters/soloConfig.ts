@@ -5,7 +5,7 @@ import {
 } from "../../core/Schemas";
 import { GameMapSize, GameMapType } from "../../core/game/Game";
 import { loadScenario } from "../data/catalog";
-import { decodeSave } from "../save/serialize";
+import { peekCoreStart } from "../save/serialize";
 import { LEGACY_SAVE_ERROR } from "./campaign";
 
 export const DEFAULT_SCENARIO = "europe-10";
@@ -51,8 +51,7 @@ export function veritableSoloConfig(
 // The GameStartInfo stored in a save, validated: it recreates the core game
 // the save was made in. Saves of the J0 (no scenario) are refused.
 export function gameStartInfoFromSave(bytes: Uint8Array): GameStartInfo {
-  const save = decodeSave(bytes);
-  const start = GameStartInfoSchema.parse(save.world.coreStart);
+  const start = GameStartInfoSchema.parse(peekCoreStart(bytes));
   if (start.config.veritableScenario === undefined) {
     throw new Error(LEGACY_SAVE_ERROR);
   }

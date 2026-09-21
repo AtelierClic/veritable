@@ -1,6 +1,7 @@
 import { loadVeritableConfig } from "../data/loadConfig";
 import { MemoryWorld } from "./testing/MemoryWorld";
 import { testNation, testScenario } from "./testing/nations";
+import { testSimData } from "./testing/simData";
 import { VeritableSimImpl } from "./VeritableSimImpl";
 
 const scenario = testScenario(["alpha", "beta"]);
@@ -12,6 +13,7 @@ function newGame() {
   world.setFallout(30, true);
   const sim = new VeritableSimImpl({
     nationData: testNation,
+    data: testSimData(["alpha", "beta", "gamma"]),
     config: loadVeritableConfig(),
     world,
   });
@@ -23,6 +25,7 @@ describe("VeritableSimImpl", () => {
   it("refuses to run before init", () => {
     const sim = new VeritableSimImpl({
       nationData: testNation,
+      data: testSimData(["alpha", "beta", "gamma"]),
       config: loadVeritableConfig(),
       world: new MemoryWorld(1, 1),
     });
@@ -108,6 +111,7 @@ describe("VeritableSimImpl", () => {
     const world2 = new MemoryWorld(8, 4);
     const sim2 = new VeritableSimImpl({
       nationData: testNation,
+      data: testSimData(["alpha", "beta", "gamma"]),
       config: loadVeritableConfig(),
       world: world2,
     });
@@ -131,7 +135,7 @@ describe("VeritableSimImpl", () => {
 
   it("refuses a save of another schema version", () => {
     const { sim } = newGame();
-    const saved = { ...sim.snapshot(), schemaVersion: 2 };
+    const saved = { ...sim.snapshot(), schemaVersion: 3 };
     expect(() => sim.restore(saved as never)).toThrow(/migrated/);
   });
 });

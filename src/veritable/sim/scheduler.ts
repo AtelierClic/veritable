@@ -9,7 +9,8 @@ import {
 // domain clocks (ARCHITECTURE.md, "Horloges"). No system reads a clock itself.
 //
 //   military, tiles, fronts            OpenFront tick   (not scheduled here)
-//   economy                            1 / game day
+//   economy (prices)                   1 / game day
+//   economy (flows, GDP, capacities)   1 / game month
 //   events, diplomacy                  1 / game day
 //   politics (opinion, stability)      1 / game week
 //   politics (elections, laws, budget) 1 / game month
@@ -60,7 +61,7 @@ export const NULL_PROBE: PerfProbe = {
 const CLOCKS: Record<ClockKind, readonly Domain[]> = {
   day: ["economy", "events", "diplomacy"],
   week: ["politics"],
-  month: ["politics", "blocs", "save"],
+  month: ["economy", "politics", "blocs", "save"],
 };
 
 export interface SchedulerTick {

@@ -23,6 +23,8 @@ export interface SessionOptions {
   // Encoded .vsave made in the same scenario, when loading a campaign.
   saveBytes?: Uint8Array;
   config?: VeritableConfig;
+  // Nobody plays: the AI fiscal rule also runs the player's nation.
+  autopilot?: boolean;
 }
 
 // One Véritable campaign running next to one OpenFront core game. Used by the
@@ -53,14 +55,21 @@ export class VeritableSession {
     const bridge = new CoreBridge(game, bindings, coreStart);
 
     const probe = new PerformanceProbe();
+    const nationData = (id: string) => pack.nations.find((n) => n.id === id);
     const sim = new VeritableSimImpl({
       config,
       world: bridge,
-      nationData: (id) => pack.nations.find((n) => n.id === id),
+      data: pack.data,
+      nationData,
       perf: probe,
+      autopilot: options.autopilot,
     });
     if (saveBytes !== undefined) {
-      sim.restore(decodeSave(saveBytes));
+      sim.restore(
+        decodeSave(saveBytes, {
+          context: { config, data: pack.data, nationData },
+        }),
+      );
     } else {
       // A new campaign is the first day of the scenario applied like a save:
       // the nations hold their borders before the first advance, so none of

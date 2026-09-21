@@ -1,113 +1,141 @@
 import { z } from "zod";
 import { zb } from "../../../../zbin";
-import { IsoDateSchema, NationIdSchema, RegimeSchema } from "./common";
+import { IsoDateSchema, NationIdSchema } from "./common";
+import { CalendarSchema, NationStateSchema, WorldStateSchema } from "./saveV1";
 
-// Save file, schemaVersion 1.
+// Save file, CURRENT version: schemaVersion 2 (J2: economy and politics).
 //
-// zbin has no version byte and no field tags: the schema IS the format. This
-// file is therefore FROZEN once a save of this version exists in the wild.
-// Any change of shape = a new saveVN schema + a migration in
-// src/veritable/save/migrations/ (see ARCHITECTURE.md, invariant 2).
+// zbin has no version byte and no field tags: the schema IS the format. Once
+// a save of this version exists in the wild, any change of shape means a new
+// version: freeze this file as saveV2.ts, write the new one here, and add
+// migrations/v2-to-v3.ts (ARCHITECTURE.md, invariant 2).
+//
+// Pieces imported from saveV1.ts are unchanged since v1; saveV1.ts is frozen,
+// so a piece that must change is redefined here, never edited there.
 
-export const SAVE_SCHEMA_VERSION = 1;
+export const SAVE_SCHEMA_VERSION = 2;
 
-export const NATION_STATUSES = ["active", "exiled", "dissolved"] as const;
-export const NationStatusSchema = z.enum(NATION_STATUSES);
-export type NationStatus = z.infer<typeof NationStatusSchema>;
+export * from "./saveV1";
 
-export const NationNameSchema = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("key"), key: z.string() }),
-  z.object({ kind: z.literal("literal"), text: z.string() }),
-]);
-export type NationName = z.infer<typeof NationNameSchema>;
-
-const SaveTerritorySchema = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("tiles") }),
-  z.object({
-    kind: z.literal("microstate"),
-    hostTile: z.tuple([zb.uint(), zb.uint()]),
-  }),
-]);
-
-// A nation is an autonomous entity. Tiles reference it (by index in the save,
-// by smallID in the OpenFront core); it never depends on them to exist.
-export const NationStateSchema = z.object({
-  id: NationIdSchema,
-  name: NationNameSchema,
-  regime: RegimeSchema.nullable(), // null for J0 ad-hoc nations
-  territory: SaveTerritorySchema,
-  status: NationStatusSchema,
-  tileCount: zb.uint(), // cache refreshed from the world; never a liveness test
-  isPlayer: z.boolean(),
-});
-export type NationState = z.infer<typeof NationStateSchema>;
-
-export const SPEEDS = [0, 1, 2, 5] as const;
-export const CalendarSchema = z.object({
-  startDate: IsoDateSchema,
-  elapsedGameMinutes: zb.float(),
-  date: IsoDateSchema, // derived from the two fields above, kept readable
-  speed: zb.uint({ max: 5 }),
-});
-export type Calendar = z.infer<typeof CalendarSchema>;
-
-export const JOURNAL_KINDS = ["campaign-started", "nation-status"] as const;
-export const JournalEntrySchema = z.object({
+export const JOURNAL_KINDS_V2 = [
+  "campaign-started",
+  "nation-status",
+  "unrest-started",
+  "unrest-ended",
+  "austerity-started",
+  "austerity-ended",
+  "sovereign-default",
+  "bloc-reprimand",
+] as const;
+export const JournalEntryV2Schema = z.object({
   date: IsoDateSchema,
-  kind: z.enum(JOURNAL_KINDS),
+  kind: z.enum(JOURNAL_KINDS_V2),
   nation: NationIdSchema.optional(),
   params: z.record(z.string(), z.string()),
 });
-export type JournalEntry = z.infer<typeof JournalEntrySchema>;
+export type JournalEntryV2 = z.infer<typeof JournalEntryV2Schema>;
 
-// State of the inherited OpenFront core that survives a reload. In-flight
-// state (attacks, boats, warheads, legacy AI, alliances, embargoes) is NOT
-// saved until the system that owns it is replaced (see DECISIONS.md).
-export const CoreStructureSchema = z.object({
-  type: z.string(),
-  tile: zb.uint(),
-  level: zb.uint(),
-});
-export const CorePlayerStateSchema = z.object({
-  nation: NationIdSchema,
-  troops: zb.float(),
-  gold: z.bigint(),
-  spawnTile: zb.uint().nullable(),
-  structures: z.array(CoreStructureSchema),
-});
-export type CorePlayerState = z.infer<typeof CorePlayerStateSchema>;
+// Quantities keyed by good, tax, spending post or interest group. Key order
+// is part of the bytes: records are always built in the order of the ids.
+const amounts = z.record(z.string(), zb.float());
 
-export const WorldStateSchema = z.object({
-  // Opaque to the simulation: whatever the adapter needs to recreate the
-  // same core game (OpenFront GameStartInfo). JSON-encoded.
-  coreStart: zb.json(z.unknown()),
-  players: z.array(CorePlayerStateSchema),
+// Economy of one nation. Quantities per year in the unit of the good; money
+// in US$. Sliders (taxes, spending) are the player's or the AI's settings;
+// the `0` variants are the values of the first day, the reference of the
+// political drivers and of the AI fiscal rule.
+export const NationEconomySchema = z.object({
+  gdp: zb.float(),
+  debt: zb.float(),
+  growthBase: zb.float(), // per year
+  growthAnnual: zb.float(), // last month, annualised
+  production: amounts, // capacity
+  consumption: amounts, // demand at the base price
+  fossilShare: amounts, // share of electricity made from gas / coal / oil
+  coverage: amounts, // obtained / needed, last month
+  imports: amounts, // last month, annualised
+  exports: amounts,
+  shortage: zb.float(), // weighted lack of coverage, 0..1
+  priceIndex: zb.float(), // consumer basket, 1 = base prices
+  taxes: amounts,
+  taxes0: amounts,
+  spending: amounts, // shares of GDP
+  spending0: amounts,
+  grantsPctGdp: zb.float(),
+  investmentReference: zb.float(), // infrastructure + research on day one
+  revenue: zb.float(), // last month, US$
+  expenditure: zb.float(),
+  interest: zb.float(),
+  interestRate: zb.float(),
+  balances: z.array(zb.float()), // last 12 monthly balances, US$
+  debtRisingMonths: zb.uint(),
+  austerity: z.boolean(),
+  noDeficitUntil: IsoDateSchema.nullable(),
+  defaults: zb.uint(),
+  armsShort: z.boolean(), // read by the J3a divisions
 });
-export type WorldState = z.infer<typeof WorldStateSchema>;
+export type NationEconomy = z.infer<typeof NationEconomySchema>;
 
-export const SaveHeaderV1Schema = zb.object({
-  schemaVersion: z.literal(1),
+export const NationPoliticsSchema = z.object({
+  // Eight interest groups: the player's nation only (asymmetric simulation).
+  groups: amounts.nullable(),
+  opinion: zb.float(),
+  stability: zb.float(),
+  unrest: z.boolean(),
+  reprimanded: z.boolean(),
+});
+export type NationPolitics = z.infer<typeof NationPoliticsSchema>;
+
+export const EmbargoSchema = z.object({
+  from: z.string(), // exporter
+  to: z.string(), // importer (a nation or ROW)
+  good: z.string(),
+});
+export type Embargo = z.infer<typeof EmbargoSchema>;
+
+export const MarketSchema = z.object({
+  prices: amounts,
+  // Volume a good's embargoes keep off the market, annualised: it leaves the
+  // supply that forms the price.
+  stranded: amounts,
+  rowProduction: amounts,
+  rowConsumption: amounts,
+  rowSupplyShock: amounts, // AR(1), multiplicative
+  embargoes: z.array(EmbargoSchema),
+});
+export type Market = z.infer<typeof MarketSchema>;
+
+export const EconomyStateSchema = z.object({
+  market: MarketSchema,
+  nations: z.record(z.string(), NationEconomySchema),
+});
+export type EconomyState = z.infer<typeof EconomyStateSchema>;
+
+export const PoliticsStateSchema = z.object({
+  nations: z.record(z.string(), NationPoliticsSchema),
+  // True when the player's nation is run by the AI fiscal rule (headless).
+  autopilot: z.boolean(),
+});
+export type PoliticsState = z.infer<typeof PoliticsStateSchema>;
+
+export const SaveHeaderV2Schema = zb.object({
+  schemaVersion: z.literal(2),
   seed: zb.uint(),
   rngState: z.tuple([zb.uint(), zb.uint(), zb.uint(), zb.uint()]),
   calendar: CalendarSchema,
   nations: z.array(NationStateSchema),
   blocs: z.array(z.object({ id: z.string() })),
   world: WorldStateSchema,
-  journal: z.array(JournalEntrySchema),
+  economy: EconomyStateSchema,
+  politics: PoliticsStateSchema,
+  journal: z.array(JournalEntryV2Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),
 });
-export type SaveHeaderV1 = z.infer<typeof SaveHeaderV1Schema>;
-
-// Tile grid of a save. One 16-bit value per tile:
-//   bits 0-11  index of the owning nation in `nations[]`, + 1 (0 = no owner)
-//   bit  13    fallout
-// Stored apart from the header, RLE-compressed (src/veritable/save/tiles.ts).
-export const TILE_NATION_MASK = 0x0fff;
-export const TILE_FALLOUT_BIT = 1 << 13;
-
-export type SaveFileV1 = SaveHeaderV1 & { tiles: Uint16Array };
+export type SaveHeaderV2 = z.infer<typeof SaveHeaderV2Schema>;
+export type SaveFileV2 = SaveHeaderV2 & { tiles: Uint16Array };
 
 // Current version aliases: the rest of the code only uses these.
-export const SaveHeaderSchema = SaveHeaderV1Schema;
-export type SaveFile = SaveFileV1;
+export const SaveHeaderSchema = SaveHeaderV2Schema;
+export type SaveFile = SaveFileV2;
+export type JournalEntry = JournalEntryV2;
+export const JOURNAL_KINDS = JOURNAL_KINDS_V2;
