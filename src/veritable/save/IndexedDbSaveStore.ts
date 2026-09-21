@@ -25,11 +25,18 @@ function done(tx: IDBTransaction): Promise<void> {
 export class IndexedDbSaveStore implements SaveStore {
   private db: Promise<IDBDatabase> | null = null;
 
-  constructor(private readonly factory: IDBFactory = indexedDB) {}
+  // The factory is resolved on first use: constructing the store must never
+  // fail where IndexedDB does not exist (tests, some private modes).
+  constructor(private readonly factory?: IDBFactory) {}
 
   private open(): Promise<IDBDatabase> {
     this.db ??= new Promise((resolve, reject) => {
-      const req = this.factory.open(DB_NAME, DB_VERSION);
+      const factory = this.factory ?? globalThis.indexedDB;
+      if (factory === undefined) {
+        reject(new Error("IndexedDB is not available"));
+        return;
+      }
+      const req = factory.open(DB_NAME, DB_VERSION);
       req.onupgradeneeded = () => {
         const db = req.result;
         if (!db.objectStoreNames.contains(META_STORE)) {

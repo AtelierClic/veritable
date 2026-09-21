@@ -8,19 +8,19 @@ Claude Code coche ici en fin de session et note la date. Une tâche non listée 
 
 Modèle recommandé : Fable 5.1, effort xhigh.
 
-- [ ] Fork cloné, `npm run inst`, `npm run dev` et `npm test` verts sur le code d'origine
-- [ ] Commit de départ tagué `upstream-base`, noté dans DECISIONS.md
-- [ ] Section Véritable ajoutée à `CLAUDE.md` (imports ARCHITECTURE, DECISIONS, ROADMAP)
-- [ ] Arborescence `docs/veritable/`, `data/veritable/`, `src/veritable/`, `tools/veritable/` créée
-- [ ] `Nation` entité autonome ; propriété des tuiles référence une nation ; aucune élimination à 0 tuile
-- [ ] Condition de victoire, Overtime et plafond 170 min neutralisés (`// VERITABLE:`)
-- [ ] `Rng` seedé injecté ; état du RNG dans la sauvegarde
-- [ ] Interface `VeritableSim` posée ; le client passe par elle
-- [ ] Sauvegarde/chargement : `schemaVersion: 1`, chaîne de migrations vide mais câblée, IndexedDB + export fichier
-- [ ] Schémas zod pour `nation`, `scenario`, `save`, `config` ; `data/veritable/i18n/fr.json` amorcé
-- [ ] Tests : sauvegarde → chargement → état identique ; nation à zéro tuile survit
+- [x] Fork cloné, `npm run inst`, `npm run dev` et `npm test` verts sur le code d'origine _(2026-09-21 — base : 3 échecs connus hors jeu, voir DECISIONS.md ; `npm run inst` déjà fait avant la session, non relancé)_
+- [x] Commit de départ tagué `upstream-base`, noté dans DECISIONS.md _(2026-09-21)_
+- [x] Section Véritable ajoutée à `CLAUDE.md` (imports ARCHITECTURE, DECISIONS, ROADMAP) _(2026-09-21)_
+- [x] Arborescence `docs/veritable/`, `data/veritable/`, `src/veritable/`, `tools/veritable/` créée _(2026-09-21)_
+- [x] `Nation` entité autonome ; propriété des tuiles référence une nation ; aucune élimination à 0 tuile _(2026-09-21)_
+- [x] Condition de victoire, Overtime et plafond 170 min neutralisés (`// VERITABLE:`) _(2026-09-21)_
+- [x] `Rng` seedé injecté ; état du RNG dans la sauvegarde _(2026-09-21)_
+- [x] Interface `VeritableSim` posée ; le client passe par elle _(2026-09-21 — sim dans le worker, client via `RemoteVeritableSim`)_
+- [x] Sauvegarde/chargement : `schemaVersion: 1`, chaîne de migrations vide mais câblée, IndexedDB + export fichier _(2026-09-21 — conteneur `.vsave`, vérifié dans le navigateur (sauvegarde, rechargement en jeu et depuis le menu))_
+- [x] Schémas zod pour `nation`, `scenario`, `save`, `config` ; `data/veritable/i18n/fr.json` amorcé _(2026-09-21)_
+- [x] Tests : sauvegarde → chargement → état identique ; nation à zéro tuile survit _(2026-09-21)_
 
-**Livré quand** : une partie se lance, se sauvegarde, se recharge à l'identique ; une nation à zéro tuile survit ; tests verts.
+**Livré quand** : une partie se lance, se sauvegarde, se recharge à l'identique ; une nation à zéro tuile survit ; tests verts. — **Livré le 2026-09-21** (« à l'identique » = identité du fichier de sauvegarde, voir DECISIONS.md).
 
 ## J1 — On joue
 
