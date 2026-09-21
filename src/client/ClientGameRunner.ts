@@ -15,6 +15,7 @@ import {
 import { findClosestBy, replacer } from "../core/Util";
 import {
   BuildableUnit,
+  GameType,
   PlayerType,
   Structures,
   UnitType,
@@ -89,6 +90,10 @@ import { audioMixer, initAudioMixer } from "./sound/AudioMixer";
 import { SoundManager } from "./sound/SoundManager";
 import { themeProvider } from "./theme/ThemeProvider";
 import { GameView, PlayerView } from "./view";
+// VERITABLE: every solo game is a campaign; the simulation lives in the worker.
+import { RemoteVeritableSim } from "../veritable/adapters/RemoteVeritableSim";
+import { veritableSoloConfig } from "../veritable/adapters/soloConfig";
+import { veritablePanel } from "../veritable/ui/VeritablePanel";
 
 export interface LobbyConfig {
   cosmetics: PlayerCosmeticRefs;
@@ -106,6 +111,8 @@ export interface LobbyConfig {
   gameRecord?: GameRecord;
   // Watch without playing.
   spectator?: boolean;
+  // VERITABLE: encoded .vsave to restore (gameStartInfo then comes from it).
+  veritableSave?: Uint8Array;
 }
 
 export interface JoinLobbyResult {
@@ -127,6 +134,18 @@ export function joinLobby(
   const joinPromise = new Promise<void>((r) => (resolveJoin = r));
 
   console.log(`joining lobby: gameID: ${lobbyConfig.gameID}`);
+
+  // VERITABLE: every solo game (not a replay) is a Véritable campaign.
+  if (
+    lobbyConfig.gameStartInfo !== undefined &&
+    lobbyConfig.gameRecord === undefined &&
+    lobbyConfig.gameStartInfo.config.gameType === GameType.Singleplayer
+  ) {
+    lobbyConfig.gameStartInfo = {
+      ...lobbyConfig.gameStartInfo,
+      config: veritableSoloConfig(lobbyConfig.gameStartInfo.config),
+    };
+  }
 
   const userSettings: UserSettings = new UserSettings();
   themeProvider.reset(); // fresh colour allocators for this game
@@ -694,8 +713,16 @@ async function createClientGame(
   // Kick off the font-atlas fetch so it overlaps with worker init; the
   // render passes need it parsed before createWebGLView runs.
   const atlasDataLoad = preloadAtlasData();
-  const worker = new WorkerClient(lobbyConfig.gameStartInfo, clientID);
+  const worker = new WorkerClient(
+    lobbyConfig.gameStartInfo,
+    clientID,
+    lobbyConfig.veritableSave,
+  );
   await worker.initialize();
+  // VERITABLE: the client reaches the simulation through this handle only.
+  if (config.isVeritable()) {
+    veritablePanel().attach(new RemoteVeritableSim(worker));
+  }
   await atlasDataLoad;
   const gameView = new GameView(
     worker,
@@ -1167,6 +1194,7 @@ export class ClientGameRunner {
     if (!this.isActive) return;
 
     this.isActive = false;
+    veritablePanel().detach(); // VERITABLE
     this.worker.cleanup();
     this.transport.leaveGame();
     if (this.connectionCheckInterval) {

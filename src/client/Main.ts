@@ -15,6 +15,7 @@ import {
 import { toWireGameStartInfo } from "../core/Util";
 import { GameEnv } from "../core/configuration/Config";
 import { UserSettings } from "../core/game/UserSettings";
+import { veritablePanel } from "../veritable/ui/VeritablePanel";
 import "./AccountModal";
 import "./AccountSettingsModal";
 import { syncAchievements } from "./AchievementSignal";
@@ -244,6 +245,8 @@ export interface JoinLobbyEvent {
   publicLobbyInfo?: GameInfo | PublicGameInfo;
   // Watch without playing.
   spectator?: boolean;
+  // VERITABLE: encoded .vsave to restore when loading a campaign.
+  veritableSave?: Uint8Array;
 }
 
 /**
@@ -317,6 +320,7 @@ class Client {
   private turnstileTokenPromise: Promise<TurnstileToken> | null = null;
 
   async initialize(): Promise<void> {
+    veritablePanel(); // VERITABLE: campaign panel (saves), menu and in game
     // FIRST, ahead of consumeCreatorCodePath() and of handleUrl() below --
     // ahead of every history write this client performs. A page served under
     // `/v/<commit>/` is pinned to that build, and three guards depend on
@@ -1424,6 +1428,7 @@ class Client {
           : undefined),
       gameRecord: lobby.gameRecord,
       spectator: lobby.spectator,
+      veritableSave: lobby.veritableSave,
     });
 
     if (this.mostRecentJoinEvent !== event.timeStamp) {

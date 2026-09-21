@@ -44,13 +44,15 @@ export class CoreBridge implements WorldPort {
   private readonly bySmallID = new Map<number, NationId>();
   private pending: PendingRestore | null = null;
   private restoredAtTick: number | null = null;
+  private readonly coreStart: unknown;
 
   constructor(
     private readonly game: Game,
     bindings: readonly NationBinding[],
     // Whatever recreates this exact core game (OpenFront GameStartInfo).
-    private readonly coreStart: unknown,
+    coreStart: unknown,
   ) {
+    this.coreStart = canonicalJson(coreStart);
     for (const b of bindings) {
       this.byNation.set(b.nationId, b.player);
       this.bySmallID.set(b.player.smallID(), b.nationId);
@@ -210,6 +212,21 @@ export class CoreBridge implements WorldPort {
     this.restoredAtTick = game.ticks();
     if (game.inSpawnPhase()) game.endSpawnPhase();
   }
+}
+
+// Plain JSON value with object keys sorted: the same GameStartInfo always
+// serializes to the same bytes, whatever built it (UI, zod parse of a save).
+function canonicalJson(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(canonicalJson);
+  if (value !== null && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const key of Object.keys(value).sort()) {
+      const v = (value as Record<string, unknown>)[key];
+      if (v !== undefined) out[key] = canonicalJson(v);
+    }
+    return out;
+  }
+  return value;
 }
 
 function structureExecution(
