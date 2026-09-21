@@ -9,6 +9,7 @@ import {
   PlayerInfo,
   PlayerType,
 } from "../../src/core/game/Game";
+import { GameImpl } from "../../src/core/game/GameImpl";
 import { GameRunner } from "../../src/core/GameRunner";
 import { GameConfig } from "../../src/core/Schemas";
 import { setup } from "../util/Setup";
@@ -153,7 +154,7 @@ describe("Véritable: no win condition, no timer, no 170-minute cap, no Overtime
       );
       runner.init();
       executeTicks(game, 1);
-      const hasWinCheck = game
+      const hasWinCheck = (game as unknown as GameImpl)
         .executions()
         .some((e) => e instanceof WinCheckExecution);
       expect(hasWinCheck).toBe(!veritable);
