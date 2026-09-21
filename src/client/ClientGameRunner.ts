@@ -145,6 +145,9 @@ export function joinLobby(
       ...lobbyConfig.gameStartInfo,
       config: veritableSoloConfig(lobbyConfig.gameStartInfo.config),
     };
+    // The player is the State: they carry the name of their nation.
+    const state = lobbyConfig.gameStartInfo.players[0]?.username;
+    if (state !== undefined) lobbyConfig.playerName = state;
   }
 
   const userSettings: UserSettings = new UserSettings();

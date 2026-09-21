@@ -101,7 +101,19 @@ export class LocalServer {
         canQueueNextTurn &&
         Date.now() > this.turnStartTime + turnIntervalMs
       ) {
-        this.turnStartTime = Date.now();
+        // VERITABLE: a campaign keeps calendar time ("one game day = two real
+        // seconds"), so turns are scheduled without drift: restarting the
+        // interval from "now" added the poll granularity (~5 ms) to every
+        // turn, i.e. 41.7 turns/s at x5 instead of 50. Never more than one
+        // interval of catch-up, so a stall is not followed by a burst.
+        const now = Date.now();
+        this.turnStartTime =
+          this.lobbyConfig.gameStartInfo?.config.veritable === true
+            ? Math.max(
+                this.turnStartTime + turnIntervalMs,
+                now - turnIntervalMs,
+              )
+            : now;
         // "Ending" the turn hands it to the client, which starts processing it.
         this.endTurn();
       }
