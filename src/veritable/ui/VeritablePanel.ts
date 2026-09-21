@@ -168,6 +168,11 @@ export class VeritablePanel extends LitElement {
     `;
   }
 
+  // Opens the panel (start screen when no campaign is running).
+  show(): void {
+    if (!this.open) this.toggle();
+  }
+
   private toggle(): void {
     this.open = !this.open;
     if (this.open) {

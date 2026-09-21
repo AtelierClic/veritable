@@ -166,6 +166,14 @@ Toutes sous le drapeau `veritable`, commentées `// VERITABLE:`, testées avec u
 
 `nation.ts` (capitale géographique, `regimeSource`, champs chiffrés optionnels jusqu'au J2), `scenario.ts` (`adHocNations` supprimé, `borders` obligatoire, au moins une nation), `config.ts` (`time.defaultStartDate`, `save.autosaveSlots`), nouveau format binaire `data/bordersFile.ts` (`VBRD` v1).
 
+## 2026-09-21 — Clôture du J1 (validation du rapport)
+
+- **J1 validé par Lukas.** Correction de dérive de `LocalServer` validée.
+- **Le bouton « Solo » hérité ouvre le panneau de départ Véritable** au lieu de lancer une campagne France par défaut (`GameModeSelector.openSinglePlayerModal`, `// VERITABLE:`). Suppression du bouton au J7. La modale solo d'OpenFront n'est plus atteignable que par le tutoriel.
+- **Chypre-Nord reste neutre au J1. À traiter au J6 comme région contestée de facto distincte de la Turquie** (Natural Earth la donne comme entité à part, `CYN`) : contrôleur de facto à modéliser, reconnue par la seule Turquie.
+- **Dette n° 1 — catalogue de données.** `src/veritable/data/catalog.ts` repose sur `import.meta.glob` (Vite) ; un runner lancé par `tsx` ne peut pas l'importer. Réglée au J2 par un chargeur à deux implémentations (Vite et `fs`) derrière une même interface.
+- **Dette n° 2 — liaison nation ↔ joueur du cœur par nom d'affichage** (`bindScenario`) : deux nations d'un même scénario ne peuvent pas partager un nom, et une traduction change la liaison. À remplacer par un identifiant (la `NationId` portée par le `PlayerInfo`) la prochaine fois qu'on touche le cœur, au plus tard au J3a.
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.
