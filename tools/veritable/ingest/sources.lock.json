@@ -1,0 +1,17 @@
+{
+  "snapshots/worldbank/NY.GDP.MKTP.CD.json": "6372e1572b4e69aacb39e6237661d16b283f00cea4fd1fa458c5a6c981553832",
+  "snapshots/worldbank/SP.POP.TOTL.json": "25b84920c14c5ced99b145b7ce9352200dd8fb077a194f549595e0dfd723cb5f",
+  "snapshots/worldbank/NY.GDP.MKTP.KD.ZG.json": "f1566334f82fb7385ec019a9fdefd93fbffc97d06b520911f36801300aee2b19",
+  "snapshots/worldbank/GC.DOD.TOTL.GD.ZS.json": "2933624934e2325e3bc6fe4cd4479602cf82e4f0689637b73f73e9e71b658e30",
+  "snapshots/worldbank/GC.REV.XGRT.GD.ZS.json": "06303d8a9c0970b43f73bcd0e2c3c810a5b4e89a35a0c3a09d79fd06fe42cc34",
+  "snapshots/worldbank/GC.XPN.TOTL.GD.ZS.json": "dd6a6da5089351d6dd6271b11b72f9d2e30dfb04aa50543e47aa939d0d380ca2",
+  "snapshots/worldbank/MS.MIL.XPND.GD.ZS.json": "73875f6f02bb3a5b167bf5307d23c3cc09d14cb4e096d41b5cd5575e9afd5a4d",
+  "snapshots/worldbank/SH.XPD.GHED.GD.ZS.json": "afceb2fefba66e02d6af1711afcbd80897576f19263384ec72e73cc7db42c104",
+  "snapshots/worldbank/SE.XPD.TOTL.GD.ZS.json": "fd478f00136b5f2da5cbd483a05813c44a04380069eb1854a7eeef151c4f7f5e",
+  "snapshots/worldbank/GB.XPD.RSDV.GD.ZS.json": "c6cee176bf276d37befd211571674fb1eb70c562f05de871ed6bfdda3bf9e21b",
+  "snapshots/worldbank/NV.IND.MANF.CD.json": "8af4e4ed10da8219333a6f49f1f640517e03ce381c77eb060243e468038c7778",
+  "snapshots/worldbank/NV.SRV.TOTL.CD.json": "0751cec79d2123a0706d94ecb5a51a76a1e1d7307b85facd8e7b465d8343125a",
+  "snapshots/worldbank/TX.VAL.TECH.CD.json": "05d365093719f18b897999f1538a6633be5841ecdfd5665cd29faf7d3add7d4b",
+  "snapshots/worldbank/AG.PRD.CREL.MT.json": "b0e426e53bd711fb0f696941f6e51049fe665f5e1d51ce8285f8d18e5e8ced49",
+  "cache/owid-energy-data.csv@7e387a16f70a510e433f8aac7efeac6faa1e5059": "266f2e2baad7975351bc9bb4aa061d22b1da9fe4c47d51d2ac6071e01e171f76"
+}

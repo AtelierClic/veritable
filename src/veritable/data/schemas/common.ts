@@ -49,8 +49,12 @@ export const IsoDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 // A figure taken from a real-world source carries where and when it comes from.
 export const SourcedNumberSchema = z.object({
   value: z.number(),
+  // "worldbank:<indicator>", "owid-energy@<commit>:<column>", "derived"
+  // (computed from sourced figures, method in `note`) or "estimate" (no open
+  // source: justification in `note`, never a silent number).
   source: z.string().min(1),
   asOf: z.string().min(1),
+  note: z.string().optional(),
 });
 
 export const TileCoordSchema = z.tuple([

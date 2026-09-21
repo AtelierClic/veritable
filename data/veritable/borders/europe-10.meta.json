@@ -14,5 +14,27 @@
     "RUS": [2534, 631],
     "TUR": [2340, 1274],
     "NOR": [1442, 462]
-  }
+  },
+  "landNeighbours": [
+    ["FRA", "DEU"],
+    ["FRA", "ITA"],
+    ["FRA", "ESP"],
+    ["DEU", "POL"],
+    ["POL", "UKR"],
+    ["POL", "RUS"],
+    ["UKR", "RUS"],
+    ["RUS", "NOR"]
+  ],
+  "bordersNeutralLand": [
+    "FRA",
+    "DEU",
+    "GBR",
+    "ITA",
+    "ESP",
+    "POL",
+    "UKR",
+    "RUS",
+    "TUR",
+    "NOR"
+  ]
 }

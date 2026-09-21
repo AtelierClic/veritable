@@ -70,5 +70,18 @@
   "save.kind.manual": "manuelle",
   "save.autosave-name": "Auto {date}",
   "save.error.legacy-j0": "Cette sauvegarde date du J0 (scénario « j0-core-roster », disparu) et ne peut plus être chargée.",
-  "journal.month-started": "Début du mois."
+  "nation.row.name": "Reste du monde",
+  "bloc.eu.name": "Union européenne",
+  "good.oil": "Pétrole",
+  "good.gas": "Gaz",
+  "good.coal": "Charbon",
+  "good.electricity": "Électricité",
+  "good.food": "Alimentation",
+  "good.critical-minerals": "Minerais critiques",
+  "good.steel": "Acier et industrie lourde",
+  "good.consumer-goods": "Biens de consommation",
+  "good.electronics": "Électronique et high-tech",
+  "good.arms": "Armement",
+  "good.pharma": "Pharmacie",
+  "good.services": "Services"
 }

@@ -1,0 +1,176 @@
+{
+  "id": "ROW",
+  "name": "nation.row.name",
+  "scenario": "europe-10",
+  "note": "Reste du monde : hors carte, jamais jouable, sans politique. Totaux mondiaux moins les dix nations.",
+  "goods": {
+    "oil": {
+      "production": {
+        "value": 45190.6,
+        "source": "derived",
+        "asOf": "2024",
+        "note": "Production mondiale (owid-energy@7e387a16:oil_production) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 45281.6,
+        "source": "derived",
+        "asOf": "2024",
+        "note": "Production mondiale (owid-energy@7e387a16:oil_production) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "gas": {
+      "production": {
+        "value": 33220.6,
+        "source": "derived",
+        "asOf": "2024",
+        "note": "Production mondiale (owid-energy@7e387a16:gas_production) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 32925.3,
+        "source": "derived",
+        "asOf": "2024",
+        "note": "Production mondiale (owid-energy@7e387a16:gas_production) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "coal": {
+      "production": {
+        "value": 47149.3,
+        "source": "derived",
+        "asOf": "2024",
+        "note": "Production mondiale (owid-energy@7e387a16:coal_production) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 48002.5,
+        "source": "derived",
+        "asOf": "2024",
+        "note": "Production mondiale (owid-energy@7e387a16:coal_production) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "electricity": {
+      "production": {
+        "value": 27864.8,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (owid-energy@7e387a16:electricity_generation) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 27915.7,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (owid-energy@7e387a16:electricity_generation) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "food": {
+      "production": {
+        "value": 2693.29,
+        "source": "derived",
+        "asOf": "2023",
+        "note": "Production mondiale (worldbank:AG.PRD.CREL.MT) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 2880.13,
+        "source": "derived",
+        "asOf": "2023",
+        "note": "Production mondiale (worldbank:AG.PRD.CREL.MT) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "steel": {
+      "production": {
+        "value": 509.918,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 492.331,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "consumer-goods": {
+      "production": {
+        "value": 509.918,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 492.331,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "pharma": {
+      "production": {
+        "value": 509.918,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 492.331,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "electronics": {
+      "production": {
+        "value": 496.086,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 481.166,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "services": {
+      "production": {
+        "value": 370.798,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 380.032,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "arms": {
+      "production": {
+        "value": 341.184,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 341.184,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    },
+    "critical-minerals": {
+      "production": {
+        "value": 1150,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (estimate) moins celle des dix nations."
+      },
+      "consumption": {
+        "value": 1009.01,
+        "source": "derived",
+        "asOf": "2025",
+        "note": "Production mondiale (estimate) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
+      }
+    }
+  }
+}

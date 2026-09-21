@@ -82,7 +82,11 @@ describe.runIf(enabled)("bench: five game years on the Europe map", () => {
         pack,
         saveBytes,
       });
-      new GameRunner(game, new Executor(game, "bench", undefined), () => {}).init();
+      new GameRunner(
+        game,
+        new Executor(game, "bench", undefined),
+        () => {},
+      ).init();
       return { game, session };
     };
 

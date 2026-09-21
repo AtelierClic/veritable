@@ -1,0 +1,230 @@
+[
+  {
+    "id": "oil",
+    "name": "good.oil",
+    "tier": 1,
+    "unit": "TWh/an",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 43,
+    "basePriceSource": {
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Brent autour de 70 $/baril en 2025, soit environ 43 $/MWh (1 baril = 1,63 MWh)."
+    },
+    "epsilon": 0.15,
+    "eta": 0.15,
+    "shortageWeight": 0.14,
+    "rent": true,
+    "industrial": false
+  },
+  {
+    "id": "gas",
+    "name": "good.gas",
+    "tier": 1,
+    "unit": "TWh/an",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 30,
+    "basePriceSource": {
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Moyenne mondiale entre le TTF européen (35 à 40 $/MWh) et le Henry Hub (10 $/MWh)."
+    },
+    "epsilon": 0.2,
+    "eta": 0.15,
+    "shortageWeight": 0.14,
+    "rent": true,
+    "industrial": false
+  },
+  {
+    "id": "coal",
+    "name": "good.coal",
+    "tier": 1,
+    "unit": "TWh/an",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 12,
+    "basePriceSource": {
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Charbon vapeur autour de 100 $/t, soit environ 12 $/MWh."
+    },
+    "epsilon": 0.25,
+    "eta": 0.3,
+    "shortageWeight": 0.06,
+    "rent": true,
+    "industrial": false
+  },
+  {
+    "id": "electricity",
+    "name": "good.electricity",
+    "tier": 1,
+    "unit": "TWh/an",
+    "transport": "neighbors-only",
+    "storable": false,
+    "basePrice": 80,
+    "basePriceSource": {
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Prix de gros européen moyen, environ 80 $/MWh."
+    },
+    "epsilon": 0.2,
+    "eta": 0.2,
+    "shortageWeight": 0.16,
+    "rent": false,
+    "industrial": false
+  },
+  {
+    "id": "food",
+    "name": "good.food",
+    "tier": 1,
+    "unit": "Mt/an",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 250,
+    "basePriceSource": {
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Céréales autour de 250 $/t."
+    },
+    "epsilon": 0.15,
+    "eta": 0.2,
+    "shortageWeight": 0.16,
+    "rent": false,
+    "industrial": false
+  },
+  {
+    "id": "critical-minerals",
+    "name": "good.critical-minerals",
+    "tier": 1,
+    "unit": "indice (M$ par point)",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 600,
+    "basePriceSource": {
+      "source": "derived",
+      "asOf": "2025",
+      "note": "Aucune série ouverte agrégée des minerais critiques. Parts de la production des dix nations (indice 100) d'après les positions connues : Russie (nickel, palladium, cobalt, aluminium), Turquie (bore, chrome), Ukraine (titane, manganèse), Norvège (graphite, titane, silicium), Pologne (cuivre, argent), Espagne (cuivre). Les dix pèsent environ 8 % de la production mondiale en valeur : indice mondial 1 250. Valeur de la production des dix : environ 60 Md$."
+    },
+    "epsilon": 0.3,
+    "eta": 0.2,
+    "shortageWeight": 0.05,
+    "rent": true,
+    "industrial": false
+  },
+  {
+    "id": "steel",
+    "name": "good.steel",
+    "tier": 1,
+    "unit": "indice (M$ par point)",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 1731.49,
+    "basePriceSource": {
+      "source": "derived",
+      "asOf": "2025",
+      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.06 (part du bien, estimation) / 100."
+    },
+    "epsilon": 0.4,
+    "eta": 0.4,
+    "shortageWeight": 0.05,
+    "rent": false,
+    "industrial": true
+  },
+  {
+    "id": "consumer-goods",
+    "name": "good.consumer-goods",
+    "tier": 1,
+    "unit": "indice (M$ par point)",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 12986.2,
+    "basePriceSource": {
+      "source": "derived",
+      "asOf": "2025",
+      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.45 (part du bien, estimation) / 100."
+    },
+    "epsilon": 0.6,
+    "eta": 0.6,
+    "shortageWeight": 0.08,
+    "rent": false,
+    "industrial": true
+  },
+  {
+    "id": "electronics",
+    "name": "good.electronics",
+    "tier": 1,
+    "unit": "indice (M$ par point)",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 3462.97,
+    "basePriceSource": {
+      "source": "derived",
+      "asOf": "2025",
+      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.12 (part du bien, estimation) / 100."
+    },
+    "epsilon": 0.6,
+    "eta": 0.5,
+    "shortageWeight": 0.05,
+    "rent": false,
+    "industrial": true
+  },
+  {
+    "id": "arms",
+    "name": "good.arms",
+    "tier": 1,
+    "unit": "indice (M$ par point)",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 1658.88,
+    "basePriceSource": {
+      "source": "derived",
+      "asOf": "2025",
+      "note": "Dépenses militaires des dix (Banque mondiale) × 0.25 (part d'équipement, estimation) / 100."
+    },
+    "epsilon": 0.2,
+    "eta": 0.3,
+    "shortageWeight": 0.02,
+    "rent": false,
+    "industrial": true
+  },
+  {
+    "id": "pharma",
+    "name": "good.pharma",
+    "tier": 1,
+    "unit": "indice (M$ par point)",
+    "transport": "normal",
+    "storable": true,
+    "basePrice": 1442.91,
+    "basePriceSource": {
+      "source": "derived",
+      "asOf": "2025",
+      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.05 (part du bien, estimation) / 100."
+    },
+    "epsilon": 0.2,
+    "eta": 0.4,
+    "shortageWeight": 0.05,
+    "rent": false,
+    "industrial": true
+  },
+  {
+    "id": "services",
+    "name": "good.services",
+    "tier": 1,
+    "unit": "indice (M$ par point)",
+    "transport": "free",
+    "storable": false,
+    "basePrice": 150147,
+    "basePriceSource": {
+      "source": "derived",
+      "asOf": "2025",
+      "note": "Valeur ajoutée des services des dix nations (Banque mondiale) / 100."
+    },
+    "epsilon": 0.5,
+    "eta": 0.5,
+    "shortageWeight": 0.04,
+    "rent": false,
+    "industrial": false
+  }
+]

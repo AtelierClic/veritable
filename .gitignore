@@ -34,3 +34,6 @@ map-generator/map-generator.exe
 
 # VERITABLE: Natural Earth download cache (replayable, see tools/veritable/borders)
 tools/veritable/borders/cache/
+
+# VERITABLE: ingestion download cache (OWID CSV, pinned by commit + sha256)
+tools/veritable/ingest/cache/

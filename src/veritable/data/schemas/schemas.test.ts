@@ -1,3 +1,4 @@
+import { testNation } from "../../sim/testing/nations";
 import { hasTextKey, vt } from "../i18n";
 import { loadVeritableConfig } from "../loadConfig";
 import { REGIMES } from "./common";
@@ -6,51 +7,7 @@ import { NationDataSchema } from "./nation";
 import { JOURNAL_KINDS, NATION_STATUSES, SaveHeaderV1Schema } from "./save";
 import { ScenarioSchema } from "./scenario";
 
-// Fixture taken from docs/veritable/DATA-SCHEMAS.md. Real sheets arrive at J2.
-const fra = {
-  id: "FRA",
-  name: "nation.fra.name",
-  capital: {
-    name: "nation.fra.capital",
-    lon: 2.3522,
-    lat: 48.8566,
-    source: "manual",
-    asOf: "2026-01-01",
-  },
-  regime: "semi-presidential",
-  regimeSource: { source: "manual", asOf: "2026-01-01" },
-  blocs: ["eu", "nato", "g7", "g20"],
-  nuclear: { warheads: 290, doctrine: "first-use-possible" },
-  territory: { kind: "tiles" },
-  contested: [],
-  population: { value: 68.5e6, source: "worldbank", asOf: "2025" },
-  gdp: { value: 3.1e12, source: "worldbank", asOf: "2025" },
-  debtToGdp: { value: 1.1, source: "worldbank", asOf: "2025" },
-  production: { oil: 0.02, gas: 0.01, electricity: 1.0, food: 1.2 },
-  military: {
-    spendingPctGdp: 2.0,
-    activePersonnel: 200000,
-    airPower: 0.6,
-    navalPower: 0.7,
-    source: "sipri",
-    asOf: "2025",
-  },
-  startingTech: ["energy-nuclear-3", "air-4"],
-  interestGroups: {
-    business: 0.15,
-    workers: 0.2,
-    farmers: 0.05,
-    military: 0.05,
-    religious: 0.05,
-    youth: 0.15,
-    retirees: 0.2,
-    minorities: 0.15,
-  },
-  aiAgenda: [
-    { goal: "security", weight: 0.4 },
-    { goal: "growth", weight: 0.3 },
-  ],
-};
+const fra = testNation("FRA");
 
 const scenario = {
   id: "test",
@@ -85,12 +42,10 @@ describe("nation schema", () => {
     expect(NationDataSchema.parse(vat).territory.kind).toBe("microstate");
   });
 
-  it("accepts a J1 sheet without the figures of the J2 ingestion", () => {
+  it("requires the sourced figures again since the J2 ingestion", () => {
     const j1: Record<string, unknown> = { ...fra };
-    for (const key of ["population", "gdp", "production", "military"]) {
-      delete j1[key];
-    }
-    expect(NationDataSchema.parse(j1).gdp).toBeUndefined();
+    delete j1.economy;
+    expect(() => NationDataSchema.parse(j1)).toThrow();
   });
 
   it("rejects an unknown regime and an unsourced figure", () => {

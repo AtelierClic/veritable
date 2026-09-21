@@ -1,0 +1,67 @@
+{
+  "id": "eu",
+  "name": "bloc.eu.name",
+  "members": [
+    {
+      "nation": "FRA",
+      "status": "full"
+    },
+    {
+      "nation": "DEU",
+      "status": "full"
+    },
+    {
+      "nation": "ITA",
+      "status": "full"
+    },
+    {
+      "nation": "ESP",
+      "status": "full"
+    },
+    {
+      "nation": "POL",
+      "status": "full"
+    },
+    {
+      "nation": "UKR",
+      "status": "candidate"
+    },
+    {
+      "nation": "TUR",
+      "status": "candidate"
+    }
+  ],
+  "joinCriteria": {
+    "regimes": ["parliamentary", "presidential", "semi-presidential"],
+    "maxDebtToGdp": 0.6,
+    "geography": "europe"
+  },
+  "exit": {
+    "delayMonths": 24,
+    "cost": 0.02
+  },
+  "decisionRules": {
+    "sanctions": "unanimity",
+    "trade": "qualified-majority",
+    "budget": "qualified-majority",
+    "defense": "unanimity"
+  },
+  "budget": {
+    "contributionPctGdp": 0.01,
+    "spending": {
+      "aid": 0.3,
+      "structural": 0.5,
+      "defense": 0.2
+    }
+  },
+  "competencies": ["trade", "sanctions", "currency", "free-movement", "norms"],
+  "leadership": "rotating",
+  "techBranch": "eu-strategic-autonomy",
+  "layer": 1,
+  "fiscalRule": {
+    "maxDeficitToGdp": 0.03,
+    "maxDebtToGdp": 0.6,
+    "opinionMalus": 0.03
+  },
+  "tradeBonus": 1.5
+}

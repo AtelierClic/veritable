@@ -15,8 +15,295 @@
     "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
   },
   "blocs": ["brics", "sco", "g20"],
+  "nuclear": {
+    "warheads": 5500,
+    "doctrine": "first-use-possible",
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "Nombre d'ogives : ordres de grandeur publics (inventaires totaux). Doctrines : lecture des postures déclarées. Sans effet avant le J5."
+  },
   "territory": {
     "kind": "tiles"
   },
-  "contested": []
+  "contested": [],
+  "population": {
+    "value": 143513000,
+    "source": "worldbank:SP.POP.TOTL",
+    "asOf": "2025"
+  },
+  "gdp": {
+    "value": 2561310000000,
+    "source": "worldbank:NY.GDP.MKTP.CD",
+    "asOf": "2025"
+  },
+  "debtToGdp": {
+    "value": 0.2,
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "Dette brute des administrations publiques (périmètre de Maastricht, celui de la règle des 60 %), ordre de grandeur des Perspectives de l'économie mondiale du FMI 2025, de mémoire. La série Banque mondiale GC.DOD.TOTL.GD.ZS est lacunaire (5 pays sur 10) et ne couvre que l'administration centrale (Royaume-Uni à 131 %), donc non retenue."
+  },
+  "economy": {
+    "growthBase": {
+      "value": 0.0158178,
+      "source": "worldbank:NY.GDP.MKTP.KD.ZG",
+      "asOf": "2015-2024",
+      "note": "Moyenne 2015-2024 de la croissance réelle (1.58 %/an)."
+    },
+    "goods": {
+      "oil": {
+        "production": {
+          "value": 6121.84,
+          "source": "owid-energy@7e387a16:oil_production",
+          "asOf": "2024"
+        },
+        "consumption": {
+          "value": 2129.1,
+          "source": "owid-energy@7e387a16:oil_consumption",
+          "asOf": "2024"
+        }
+      },
+      "gas": {
+        "production": {
+          "value": 6298.64,
+          "source": "owid-energy@7e387a16:gas_production",
+          "asOf": "2024"
+        },
+        "consumption": {
+          "value": 4770.23,
+          "source": "owid-energy@7e387a16:gas_consumption",
+          "asOf": "2024"
+        }
+      },
+      "coal": {
+        "production": {
+          "value": 2533.17,
+          "source": "owid-energy@7e387a16:coal_production",
+          "asOf": "2024"
+        },
+        "consumption": {
+          "value": 1041.38,
+          "source": "owid-energy@7e387a16:coal_consumption",
+          "asOf": "2024"
+        }
+      },
+      "electricity": {
+        "production": {
+          "value": 1192.79,
+          "source": "owid-energy@7e387a16:electricity_generation",
+          "asOf": "2025"
+        },
+        "consumption": {
+          "value": 1176.11,
+          "source": "owid-energy@7e387a16:electricity_demand",
+          "asOf": "2025"
+        }
+      },
+      "food": {
+        "production": {
+          "value": 136.708,
+          "source": "worldbank:AG.PRD.CREL.MT",
+          "asOf": "2023"
+        },
+        "consumption": {
+          "value": 54.5657,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "Consommation apparente : population × production mondiale de céréales par habitant (Banque mondiale). Aucune série ouverte de consommation homogène."
+        }
+      },
+      "steel": {
+        "production": {
+          "value": 12.1203,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée manufacturière (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 13.1997,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+        }
+      },
+      "consumer-goods": {
+        "production": {
+          "value": 12.1203,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée manufacturière (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 13.1997,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+        }
+      },
+      "pharma": {
+        "production": {
+          "value": 12.1203,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée manufacturière (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 13.1997,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+        }
+      },
+      "electronics": {
+        "production": {
+          "value": 1.76697,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice 100 = production des dix nations ; part d'après exportations de haute technologie (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 12.9004,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+        }
+      },
+      "services": {
+        "production": {
+          "value": 10.0437,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée des services (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 10.1889,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+        }
+      },
+      "arms": {
+        "production": {
+          "value": 27.222,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice 100 = production des dix nations ; part d'après dépenses militaires en dollars (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 27.222,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice mondial × part des dépenses militaires mondiales (Banque mondiale)."
+        }
+      },
+      "critical-minerals": {
+        "production": {
+          "value": 60,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "Aucune série ouverte agrégée des minerais critiques. Parts de la production des dix nations (indice 100) d'après les positions connues : Russie (nickel, palladium, cobalt, aluminium), Turquie (bore, chrome), Ukraine (titane, manganèse), Norvège (graphite, titane, silicium), Pologne (cuivre, argent), Espagne (cuivre). Les dix pèsent environ 8 % de la production mondiale en valeur : indice mondial 1 250. Valeur de la production des dix : environ 60 Md$."
+        },
+        "consumption": {
+          "value": 27.0523,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Indice mondial (estimation) × part du PIB mondial (Banque mondiale)."
+        }
+      }
+    },
+    "electricityFromFossil": {
+      "gas": {
+        "value": 533.17,
+        "source": "owid-energy@7e387a16:gas_electricity",
+        "asOf": "2025"
+      },
+      "coal": {
+        "value": 219.52,
+        "source": "owid-energy@7e387a16:coal_electricity",
+        "asOf": "2025"
+      },
+      "oil": {
+        "value": 14.47,
+        "source": "owid-energy@7e387a16:oil_electricity",
+        "asOf": "2025"
+      }
+    },
+    "budget": {
+      "revenuePctGdp": {
+        "value": 0.278284,
+        "source": "worldbank:GC.REV.XGRT.GD.ZS",
+        "asOf": "2024"
+      },
+      "expensePctGdp": {
+        "value": 0.299691,
+        "source": "worldbank:GC.XPN.TOTL.GD.ZS",
+        "asOf": "2023"
+      },
+      "grantsPctGdp": {
+        "value": 0,
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Dons budgétaires extérieurs. Ukraine : soutien budgétaire international d'environ 40 Md$ par an pour un PIB d'environ 190 Md$ ; sans lui le déficit de guerre (dépenses 66 % du PIB, recettes 34 %, Banque mondiale) ferait exploser la dette en deux ans. Nul pour les autres."
+      },
+      "revenueShares": {
+        "value": {
+          "income": 0.30625,
+          "corporate": 0.0729167,
+          "vat": 0.30625,
+          "tariffs": 0.0145833,
+          "rents": 0.3
+        },
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Répartition des recettes entre impôts, faute de ventilation ouverte homogène : ordre de grandeur OCDE pour les pays développés. Les rentes sur ressources prennent la part indiquée pour les exportateurs d'hydrocarbures (Russie, Norvège), prélevée sur les autres impôts."
+      },
+      "spending": {
+        "defense": {
+          "value": 0.0705234,
+          "source": "worldbank:MS.MIL.XPND.GD.ZS",
+          "asOf": "2024",
+          "note": "Source primaire SIPRI, republiée par la Banque mondiale."
+        },
+        "healthEducation": {
+          "value": 0.0909866,
+          "source": "derived",
+          "asOf": "2023",
+          "note": "Dépenses publiques de santé + d'éducation (Banque mondiale SH.XPD.GHED.GD.ZS + SE.XPD.TOTL.GD.ZS)."
+        },
+        "research": {
+          "value": 0.00327971,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "social": {
+          "value": 0.0876858,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "infrastructure": {
+          "value": 0.0269803,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "subsidies": {
+          "value": 0.0202352,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        }
+      }
+    }
+  },
+  "military": {
+    "spendingPctGdp": 7.05234,
+    "activePersonnel": 1300000,
+    "airPower": 0.8,
+    "navalPower": 0.7,
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "Effectifs d'active et puissances aérienne et navale relatives (0 à 1) : ordres de grandeur publics. La source de référence (IISS Military Balance) est sous licence fermée et n'est pas utilisée. Sans effet au J2. spendingPctGdp : Banque mondiale MS.MIL.XPND.GD.ZS (source primaire SIPRI)."
+  },
+  "startingTech": []
 }

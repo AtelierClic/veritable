@@ -135,6 +135,44 @@ async function runCalibrate(args: string[]): Promise<void> {
   console.log(`wrote ${path.relative(REPO_ROOT, image)}`);
 }
 
+// Land borders read off the raster: two nations are neighbours when two of
+// their tiles touch; a nation borders neutral land when one of its tiles
+// touches a land tile that belongs to no nation of the scenario (that is how
+// it trades electricity with the rest of the world).
+export function landAdjacency(
+  borders: Borders,
+  land: Uint8Array,
+): { landNeighbours: [string, string][]; bordersNeutralLand: string[] } {
+  const { width, height, tiles, nations } = borders;
+  const pairs = new Set<string>();
+  const neutral = new Set<number>();
+  const visit = (a: number, b: number) => {
+    const va = tiles[a];
+    const vb = tiles[b];
+    if (va === vb) return;
+    if (va !== 0 && vb !== 0) {
+      pairs.add(va < vb ? `${va}:${vb}` : `${vb}:${va}`);
+    } else if (va !== 0 && land[b] === 1) neutral.add(va);
+    else if (vb !== 0 && land[a] === 1) neutral.add(vb);
+  };
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const i = y * width + x;
+      if (x + 1 < width) visit(i, i + 1);
+      if (y + 1 < height) visit(i, i + width);
+    }
+  }
+  return {
+    landNeighbours: [...pairs]
+      .map((pair) => pair.split(":").map(Number))
+      .sort((p, q) => p[0] - q[0] || p[1] - q[1])
+      .map(([a, b]) => [nations[a - 1], nations[b - 1]] as [string, string]),
+    bordersNeutralLand: [...neutral]
+      .sort((a, b) => a - b)
+      .map((v) => nations[v - 1]),
+  };
+}
+
 // Closest tile owned by `value`, searching growing squares around (x, y).
 export function nearestTileOf(
   borders: Borders,
@@ -248,6 +286,7 @@ async function runRasterize(args: string[]): Promise<void> {
         width: borders.width,
         height: borders.height,
         capitals,
+        ...landAdjacency(borders, mask.land),
       },
       null,
       2,

@@ -53,7 +53,7 @@ function testPack(width = 200, height = 200): ScenarioPack {
   const ids = BANDS.map(([id]) => id);
   return {
     scenario: testScenario(ids),
-    nations: ids.map(testNation),
+    nations: ids.map((id) => testNation(id)),
     borders: { width, height, nations: ids, tiles },
     meta: {
       scenario: "test",
@@ -61,6 +61,11 @@ function testPack(width = 200, height = 200): ScenarioPack {
       width,
       height,
       capitals: { AAA: [40, 100], BBB: [80, 100], CCC: [115, 100] },
+      landNeighbours: [
+        ["AAA", "BBB"],
+        ["BBB", "CCC"],
+      ],
+      bordersNeutralLand: ["CCC"],
     },
   };
 }

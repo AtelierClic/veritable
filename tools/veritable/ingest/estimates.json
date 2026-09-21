@@ -1,0 +1,97 @@
+{
+  "_comment": "Tout ce qui n'a pas de source ouverte épinglable. Chaque entrée est marquée source: \"estimate\" dans les fiches, avec sa justification. À remplacer par une source dès qu'il en existe une. asOf = date de l'estimation.",
+  "asOf": "2026-01-01",
+
+  "debtToGdp": {
+    "justification": "Dette brute des administrations publiques (périmètre de Maastricht, celui de la règle des 60 %), ordre de grandeur des Perspectives de l'économie mondiale du FMI 2025, de mémoire. La série Banque mondiale GC.DOD.TOTL.GD.ZS est lacunaire (5 pays sur 10) et ne couvre que l'administration centrale (Royaume-Uni à 131 %), donc non retenue.",
+    "values": {
+      "FRA": 1.13,
+      "DEU": 0.64,
+      "GBR": 1.01,
+      "ITA": 1.37,
+      "ESP": 1.01,
+      "POL": 0.58,
+      "UKR": 0.95,
+      "RUS": 0.2,
+      "TUR": 0.25,
+      "NOR": 0.43
+    }
+  },
+
+  "grantsPctGdp": {
+    "justification": "Dons budgétaires extérieurs. Ukraine : soutien budgétaire international d'environ 40 Md$ par an pour un PIB d'environ 190 Md$ ; sans lui le déficit de guerre (dépenses 66 % du PIB, recettes 34 %, Banque mondiale) ferait exploser la dette en deux ans. Nul pour les autres.",
+    "values": { "UKR": 0.26 }
+  },
+
+  "spendingSplit": {
+    "justification": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D.",
+    "publicShareOfResearch": 0.35,
+    "residual": { "social": 0.65, "infrastructure": 0.2, "subsidies": 0.15 }
+  },
+
+  "taxSplit": {
+    "justification": "Répartition des recettes entre impôts, faute de ventilation ouverte homogène : ordre de grandeur OCDE pour les pays développés. Les rentes sur ressources prennent la part indiquée pour les exportateurs d'hydrocarbures (Russie, Norvège), prélevée sur les autres impôts.",
+    "default": {
+      "income": 0.42,
+      "corporate": 0.1,
+      "vat": 0.42,
+      "tariffs": 0.02,
+      "rents": 0.04
+    },
+    "rentsShare": { "RUS": 0.3, "NOR": 0.3 }
+  },
+
+  "military": {
+    "justification": "Effectifs d'active et puissances aérienne et navale relatives (0 à 1) : ordres de grandeur publics. La source de référence (IISS Military Balance) est sous licence fermée et n'est pas utilisée. Sans effet au J2.",
+    "values": {
+      "FRA": { "activePersonnel": 200000, "airPower": 0.6, "navalPower": 0.7 },
+      "DEU": { "activePersonnel": 180000, "airPower": 0.5, "navalPower": 0.4 },
+      "GBR": { "activePersonnel": 140000, "airPower": 0.6, "navalPower": 0.8 },
+      "ITA": { "activePersonnel": 160000, "airPower": 0.5, "navalPower": 0.6 },
+      "ESP": { "activePersonnel": 120000, "airPower": 0.4, "navalPower": 0.5 },
+      "POL": { "activePersonnel": 200000, "airPower": 0.4, "navalPower": 0.2 },
+      "UKR": { "activePersonnel": 900000, "airPower": 0.2, "navalPower": 0.1 },
+      "RUS": { "activePersonnel": 1300000, "airPower": 0.8, "navalPower": 0.7 },
+      "TUR": { "activePersonnel": 355000, "airPower": 0.5, "navalPower": 0.5 },
+      "NOR": { "activePersonnel": 25000, "airPower": 0.3, "navalPower": 0.4 }
+    }
+  },
+
+  "nuclear": {
+    "justification": "Nombre d'ogives : ordres de grandeur publics (inventaires totaux). Doctrines : lecture des postures déclarées. Sans effet avant le J5.",
+    "values": {
+      "FRA": { "warheads": 290, "doctrine": "first-use-possible" },
+      "GBR": { "warheads": 225, "doctrine": "first-use-possible" },
+      "RUS": { "warheads": 5500, "doctrine": "first-use-possible" }
+    }
+  },
+
+  "criticalMinerals": {
+    "justification": "Aucune série ouverte agrégée des minerais critiques. Parts de la production des dix nations (indice 100) d'après les positions connues : Russie (nickel, palladium, cobalt, aluminium), Turquie (bore, chrome), Ukraine (titane, manganèse), Norvège (graphite, titane, silicium), Pologne (cuivre, argent), Espagne (cuivre). Les dix pèsent environ 8 % de la production mondiale en valeur : indice mondial 1 250. Valeur de la production des dix : environ 60 Md$.",
+    "shares": {
+      "RUS": 60,
+      "TUR": 12,
+      "UKR": 8,
+      "NOR": 6,
+      "POL": 5,
+      "ESP": 4,
+      "DEU": 2,
+      "FRA": 1,
+      "GBR": 1,
+      "ITA": 1
+    },
+    "worldIndex": 1250,
+    "scenarioValueMusd": 60000
+  },
+
+  "manufacturingSplit": {
+    "justification": "Part de la valeur ajoutée manufacturière (Banque mondiale) attribuée à chaque bien en indice, pour donner une valeur en dollars au point d'indice. Ordres de grandeur des comptes de branches européens.",
+    "shareOfManufacturingValueAdded": {
+      "steel": 0.06,
+      "consumer-goods": 0.45,
+      "electronics": 0.12,
+      "pharma": 0.05
+    },
+    "armsShareOfMilitarySpending": 0.25
+  }
+}

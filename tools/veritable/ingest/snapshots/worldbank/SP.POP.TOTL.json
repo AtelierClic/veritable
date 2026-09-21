@@ -1,0 +1,887 @@
+{
+  "indicator": "SP.POP.TOTL",
+  "lastUpdated": "2026-07-13",
+  "license": "CC BY 4.0, World Bank Open Data",
+  "values": [
+    {
+      "iso3": "DEU",
+      "year": 2010,
+      "value": 81776930
+    },
+    {
+      "iso3": "DEU",
+      "year": 2011,
+      "value": 80274983
+    },
+    {
+      "iso3": "DEU",
+      "year": 2012,
+      "value": 80425823
+    },
+    {
+      "iso3": "DEU",
+      "year": 2013,
+      "value": 80645605
+    },
+    {
+      "iso3": "DEU",
+      "year": 2014,
+      "value": 80982500
+    },
+    {
+      "iso3": "DEU",
+      "year": 2015,
+      "value": 81686611
+    },
+    {
+      "iso3": "DEU",
+      "year": 2016,
+      "value": 82348669
+    },
+    {
+      "iso3": "DEU",
+      "year": 2017,
+      "value": 82657002
+    },
+    {
+      "iso3": "DEU",
+      "year": 2018,
+      "value": 82905782
+    },
+    {
+      "iso3": "DEU",
+      "year": 2019,
+      "value": 83092962
+    },
+    {
+      "iso3": "DEU",
+      "year": 2020,
+      "value": 83160871
+    },
+    {
+      "iso3": "DEU",
+      "year": 2021,
+      "value": 83196078
+    },
+    {
+      "iso3": "DEU",
+      "year": 2022,
+      "value": 83177813
+    },
+    {
+      "iso3": "DEU",
+      "year": 2023,
+      "value": 83287273
+    },
+    {
+      "iso3": "DEU",
+      "year": 2024,
+      "value": 83516593
+    },
+    {
+      "iso3": "DEU",
+      "year": 2025,
+      "value": 83491249
+    },
+    {
+      "iso3": "ESP",
+      "year": 2010,
+      "value": 46576897
+    },
+    {
+      "iso3": "ESP",
+      "year": 2011,
+      "value": 46742697
+    },
+    {
+      "iso3": "ESP",
+      "year": 2012,
+      "value": 46773055
+    },
+    {
+      "iso3": "ESP",
+      "year": 2013,
+      "value": 46604197
+    },
+    {
+      "iso3": "ESP",
+      "year": 2014,
+      "value": 46460733
+    },
+    {
+      "iso3": "ESP",
+      "year": 2015,
+      "value": 46422303
+    },
+    {
+      "iso3": "ESP",
+      "year": 2016,
+      "value": 46458139
+    },
+    {
+      "iso3": "ESP",
+      "year": 2017,
+      "value": 46571232
+    },
+    {
+      "iso3": "ESP",
+      "year": 2018,
+      "value": 46782011
+    },
+    {
+      "iso3": "ESP",
+      "year": 2019,
+      "value": 47118501
+    },
+    {
+      "iso3": "ESP",
+      "year": 2020,
+      "value": 47359424
+    },
+    {
+      "iso3": "ESP",
+      "year": 2021,
+      "value": 47443821
+    },
+    {
+      "iso3": "ESP",
+      "year": 2022,
+      "value": 47786102
+    },
+    {
+      "iso3": "ESP",
+      "year": 2023,
+      "value": 48352528
+    },
+    {
+      "iso3": "ESP",
+      "year": 2024,
+      "value": 48848840
+    },
+    {
+      "iso3": "ESP",
+      "year": 2025,
+      "value": 49355143
+    },
+    {
+      "iso3": "FRA",
+      "year": 2010,
+      "value": 65026211
+    },
+    {
+      "iso3": "FRA",
+      "year": 2011,
+      "value": 65340830
+    },
+    {
+      "iso3": "FRA",
+      "year": 2012,
+      "value": 65657659
+    },
+    {
+      "iso3": "FRA",
+      "year": 2013,
+      "value": 65997932
+    },
+    {
+      "iso3": "FRA",
+      "year": 2014,
+      "value": 66312067
+    },
+    {
+      "iso3": "FRA",
+      "year": 2015,
+      "value": 66548272
+    },
+    {
+      "iso3": "FRA",
+      "year": 2016,
+      "value": 66724104
+    },
+    {
+      "iso3": "FRA",
+      "year": 2017,
+      "value": 66918020
+    },
+    {
+      "iso3": "FRA",
+      "year": 2018,
+      "value": 67158348
+    },
+    {
+      "iso3": "FRA",
+      "year": 2019,
+      "value": 67382061
+    },
+    {
+      "iso3": "FRA",
+      "year": 2020,
+      "value": 67601110
+    },
+    {
+      "iso3": "FRA",
+      "year": 2021,
+      "value": 67842811
+    },
+    {
+      "iso3": "FRA",
+      "year": 2022,
+      "value": 68184457
+    },
+    {
+      "iso3": "FRA",
+      "year": 2023,
+      "value": 68372286
+    },
+    {
+      "iso3": "FRA",
+      "year": 2024,
+      "value": 68551653
+    },
+    {
+      "iso3": "FRA",
+      "year": 2025,
+      "value": 68720337
+    },
+    {
+      "iso3": "GBR",
+      "year": 2010,
+      "value": 62766365
+    },
+    {
+      "iso3": "GBR",
+      "year": 2011,
+      "value": 63258810
+    },
+    {
+      "iso3": "GBR",
+      "year": 2012,
+      "value": 63711000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2013,
+      "value": 64138000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2014,
+      "value": 64619000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2015,
+      "value": 65087000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2016,
+      "value": 65606000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2017,
+      "value": 65964000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2018,
+      "value": 66287000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2019,
+      "value": 66628000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2020,
+      "value": 66740000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2021,
+      "value": 66978000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2022,
+      "value": 67636000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2023,
+      "value": 68526000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2024,
+      "value": 69281000
+    },
+    {
+      "iso3": "GBR",
+      "year": 2025,
+      "value": 69487000
+    },
+    {
+      "iso3": "ITA",
+      "year": 2010,
+      "value": 59819407
+    },
+    {
+      "iso3": "ITA",
+      "year": 2011,
+      "value": 60026841
+    },
+    {
+      "iso3": "ITA",
+      "year": 2012,
+      "value": 60191247
+    },
+    {
+      "iso3": "ITA",
+      "year": 2013,
+      "value": 60311613
+    },
+    {
+      "iso3": "ITA",
+      "year": 2014,
+      "value": 60320707
+    },
+    {
+      "iso3": "ITA",
+      "year": 2015,
+      "value": 60229605
+    },
+    {
+      "iso3": "ITA",
+      "year": 2016,
+      "value": 60115223
+    },
+    {
+      "iso3": "ITA",
+      "year": 2017,
+      "value": 60002252
+    },
+    {
+      "iso3": "ITA",
+      "year": 2018,
+      "value": 59877221
+    },
+    {
+      "iso3": "ITA",
+      "year": 2019,
+      "value": 59729081
+    },
+    {
+      "iso3": "ITA",
+      "year": 2020,
+      "value": 59438851
+    },
+    {
+      "iso3": "ITA",
+      "year": 2021,
+      "value": 59133173
+    },
+    {
+      "iso3": "ITA",
+      "year": 2022,
+      "value": 59013667
+    },
+    {
+      "iso3": "ITA",
+      "year": 2023,
+      "value": 58984216
+    },
+    {
+      "iso3": "ITA",
+      "year": 2024,
+      "value": 58952704
+    },
+    {
+      "iso3": "ITA",
+      "year": 2025,
+      "value": 58915656
+    },
+    {
+      "iso3": "NOR",
+      "year": 2010,
+      "value": 4889252
+    },
+    {
+      "iso3": "NOR",
+      "year": 2011,
+      "value": 4953088
+    },
+    {
+      "iso3": "NOR",
+      "year": 2012,
+      "value": 5018573
+    },
+    {
+      "iso3": "NOR",
+      "year": 2013,
+      "value": 5079623
+    },
+    {
+      "iso3": "NOR",
+      "year": 2014,
+      "value": 5137232
+    },
+    {
+      "iso3": "NOR",
+      "year": 2015,
+      "value": 5188607
+    },
+    {
+      "iso3": "NOR",
+      "year": 2016,
+      "value": 5234519
+    },
+    {
+      "iso3": "NOR",
+      "year": 2017,
+      "value": 5276968
+    },
+    {
+      "iso3": "NOR",
+      "year": 2018,
+      "value": 5311916
+    },
+    {
+      "iso3": "NOR",
+      "year": 2019,
+      "value": 5347896
+    },
+    {
+      "iso3": "NOR",
+      "year": 2020,
+      "value": 5379475
+    },
+    {
+      "iso3": "NOR",
+      "year": 2021,
+      "value": 5408320
+    },
+    {
+      "iso3": "NOR",
+      "year": 2022,
+      "value": 5457127
+    },
+    {
+      "iso3": "NOR",
+      "year": 2023,
+      "value": 5519601
+    },
+    {
+      "iso3": "NOR",
+      "year": 2024,
+      "value": 5572279
+    },
+    {
+      "iso3": "NOR",
+      "year": 2025,
+      "value": 5610870
+    },
+    {
+      "iso3": "POL",
+      "year": 2010,
+      "value": 38042794
+    },
+    {
+      "iso3": "POL",
+      "year": 2011,
+      "value": 38063255
+    },
+    {
+      "iso3": "POL",
+      "year": 2012,
+      "value": 38063164
+    },
+    {
+      "iso3": "POL",
+      "year": 2013,
+      "value": 38040196
+    },
+    {
+      "iso3": "POL",
+      "year": 2014,
+      "value": 38011735
+    },
+    {
+      "iso3": "POL",
+      "year": 2015,
+      "value": 37986412
+    },
+    {
+      "iso3": "POL",
+      "year": 2016,
+      "value": 37970087
+    },
+    {
+      "iso3": "POL",
+      "year": 2017,
+      "value": 37974826
+    },
+    {
+      "iso3": "POL",
+      "year": 2018,
+      "value": 37974750
+    },
+    {
+      "iso3": "POL",
+      "year": 2019,
+      "value": 37965475
+    },
+    {
+      "iso3": "POL",
+      "year": 2020,
+      "value": 37515748
+    },
+    {
+      "iso3": "POL",
+      "year": 2021,
+      "value": 36981559
+    },
+    {
+      "iso3": "POL",
+      "year": 2022,
+      "value": 36821749
+    },
+    {
+      "iso3": "POL",
+      "year": 2023,
+      "value": 36687353
+    },
+    {
+      "iso3": "POL",
+      "year": 2024,
+      "value": 36559233
+    },
+    {
+      "iso3": "POL",
+      "year": 2025,
+      "value": 36435861
+    },
+    {
+      "iso3": "RUS",
+      "year": 2010,
+      "value": 142849468
+    },
+    {
+      "iso3": "RUS",
+      "year": 2011,
+      "value": 143018195
+    },
+    {
+      "iso3": "RUS",
+      "year": 2012,
+      "value": 143378447
+    },
+    {
+      "iso3": "RUS",
+      "year": 2013,
+      "value": 143805638
+    },
+    {
+      "iso3": "RUS",
+      "year": 2014,
+      "value": 144237223
+    },
+    {
+      "iso3": "RUS",
+      "year": 2015,
+      "value": 144640716
+    },
+    {
+      "iso3": "RUS",
+      "year": 2016,
+      "value": 145015460
+    },
+    {
+      "iso3": "RUS",
+      "year": 2017,
+      "value": 145293260
+    },
+    {
+      "iso3": "RUS",
+      "year": 2018,
+      "value": 145398106
+    },
+    {
+      "iso3": "RUS",
+      "year": 2019,
+      "value": 145453291
+    },
+    {
+      "iso3": "RUS",
+      "year": 2020,
+      "value": 145245148
+    },
+    {
+      "iso3": "RUS",
+      "year": 2021,
+      "value": 144746762
+    },
+    {
+      "iso3": "RUS",
+      "year": 2022,
+      "value": 144236933
+    },
+    {
+      "iso3": "RUS",
+      "year": 2023,
+      "value": 143826130
+    },
+    {
+      "iso3": "RUS",
+      "year": 2024,
+      "value": 143669648
+    },
+    {
+      "iso3": "RUS",
+      "year": 2025,
+      "value": 143513328
+    },
+    {
+      "iso3": "TUR",
+      "year": 2010,
+      "value": 73142150
+    },
+    {
+      "iso3": "TUR",
+      "year": 2011,
+      "value": 74223629
+    },
+    {
+      "iso3": "TUR",
+      "year": 2012,
+      "value": 75175827
+    },
+    {
+      "iso3": "TUR",
+      "year": 2013,
+      "value": 76147624
+    },
+    {
+      "iso3": "TUR",
+      "year": 2014,
+      "value": 77181884
+    },
+    {
+      "iso3": "TUR",
+      "year": 2015,
+      "value": 78218479
+    },
+    {
+      "iso3": "TUR",
+      "year": 2016,
+      "value": 79277962
+    },
+    {
+      "iso3": "TUR",
+      "year": 2017,
+      "value": 80312698
+    },
+    {
+      "iso3": "TUR",
+      "year": 2018,
+      "value": 81407204
+    },
+    {
+      "iso3": "TUR",
+      "year": 2019,
+      "value": 82579440
+    },
+    {
+      "iso3": "TUR",
+      "year": 2020,
+      "value": 83384680
+    },
+    {
+      "iso3": "TUR",
+      "year": 2021,
+      "value": 84147318
+    },
+    {
+      "iso3": "TUR",
+      "year": 2022,
+      "value": 84979913
+    },
+    {
+      "iso3": "TUR",
+      "year": 2023,
+      "value": 85325965
+    },
+    {
+      "iso3": "TUR",
+      "year": 2024,
+      "value": 85518661
+    },
+    {
+      "iso3": "TUR",
+      "year": 2025,
+      "value": 85878556
+    },
+    {
+      "iso3": "UKR",
+      "year": 2010,
+      "value": 46456003
+    },
+    {
+      "iso3": "UKR",
+      "year": 2011,
+      "value": 46307853
+    },
+    {
+      "iso3": "UKR",
+      "year": 2012,
+      "value": 46210056
+    },
+    {
+      "iso3": "UKR",
+      "year": 2013,
+      "value": 46126770
+    },
+    {
+      "iso3": "UKR",
+      "year": 2014,
+      "value": 45972380
+    },
+    {
+      "iso3": "UKR",
+      "year": 2015,
+      "value": 45784896
+    },
+    {
+      "iso3": "UKR",
+      "year": 2016,
+      "value": 45616832
+    },
+    {
+      "iso3": "UKR",
+      "year": 2017,
+      "value": 45436041
+    },
+    {
+      "iso3": "UKR",
+      "year": 2018,
+      "value": 45208907
+    },
+    {
+      "iso3": "UKR",
+      "year": 2019,
+      "value": 44957458
+    },
+    {
+      "iso3": "UKR",
+      "year": 2020,
+      "value": 44680014
+    },
+    {
+      "iso3": "UKR",
+      "year": 2021,
+      "value": 44298640
+    },
+    {
+      "iso3": "UKR",
+      "year": 2022,
+      "value": 41048766
+    },
+    {
+      "iso3": "UKR",
+      "year": 2023,
+      "value": 37732836
+    },
+    {
+      "iso3": "UKR",
+      "year": 2024,
+      "value": 37860221
+    },
+    {
+      "iso3": "UKR",
+      "year": 2025,
+      "value": 38980376
+    },
+    {
+      "iso3": "WLD",
+      "year": 2010,
+      "value": 7000860073
+    },
+    {
+      "iso3": "WLD",
+      "year": 2011,
+      "value": 7086704141
+    },
+    {
+      "iso3": "WLD",
+      "year": 2012,
+      "value": 7176482165
+    },
+    {
+      "iso3": "WLD",
+      "year": 2013,
+      "value": 7265404737
+    },
+    {
+      "iso3": "WLD",
+      "year": 2014,
+      "value": 7353532223
+    },
+    {
+      "iso3": "WLD",
+      "year": 2015,
+      "value": 7441084771
+    },
+    {
+      "iso3": "WLD",
+      "year": 2016,
+      "value": 7528221579
+    },
+    {
+      "iso3": "WLD",
+      "year": 2017,
+      "value": 7613788655
+    },
+    {
+      "iso3": "WLD",
+      "year": 2018,
+      "value": 7696159728
+    },
+    {
+      "iso3": "WLD",
+      "year": 2019,
+      "value": 7777162476
+    },
+    {
+      "iso3": "WLD",
+      "year": 2020,
+      "value": 7853863139
+    },
+    {
+      "iso3": "WLD",
+      "year": 2021,
+      "value": 7919567995
+    },
+    {
+      "iso3": "WLD",
+      "year": 2022,
+      "value": 7988550201
+    },
+    {
+      "iso3": "WLD",
+      "year": 2023,
+      "value": 8062923417
+    },
+    {
+      "iso3": "WLD",
+      "year": 2024,
+      "value": 8140897523
+    },
+    {
+      "iso3": "WLD",
+      "year": 2025,
+      "value": 8215424893
+    }
+  ]
+}
