@@ -134,5 +134,6 @@ Boucle de tick et rendu de la carte, format des cartes et `map-generator`, logiq
 ## Commandes
 
 - Installation : `npm run inst` — jamais `npm install`.
+- Ajouter une dépendance : `npm install --save-dev <paquet> --ignore-scripts`, puis `npm run inst` ; jamais `npm install` nu.
 - Développement : `npm run dev`. Tests : `npm test`.
 - Runner headless (à partir du J2) : `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42`.

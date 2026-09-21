@@ -155,7 +155,7 @@ Point juridique : l'AGPL-3.0 s'applique aussi à la **distribution de binaires**
 
 ## Le temps
 
-La campagne démarre le 1er janvier 2026 et suit le calendrier réel. À vitesse ×1, une minute réelle vaut un mois de jeu : un jour dure deux secondes, une année douze minutes, et dix heures de jeu couvrent cinquante ans. Vitesses : pause, ×1, ×2, ×5.
+La campagne démarre le 1er janvier 2026 et suit le calendrier réel (mois de 28 à 31 jours, années bissextiles). À vitesse ×1, un jour de jeu dure exactement deux secondes réelles : un mois dure donc de 56 à 62 secondes, une année ≈ 12,2 minutes (730 s), et dix heures de jeu couvrent un peu plus de quarante-neuf ans. « Une minute réelle = un mois de jeu » est l'approximation qui se retient, pas la règle : la règle est le jour de deux secondes. Vitesses : pause, ×1, ×2, ×5.
 
 Tout ne tourne pas au même rythme. Chaque domaine a son horloge, et c'est ce qui permet une économie détaillée sur 195 nations sans étrangler le tick militaire.
 

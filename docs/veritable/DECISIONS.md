@@ -91,6 +91,15 @@ Toutes commentées `// VERITABLE:`, testées dans `tests/veritable/CoreNeutraliz
 
 `data/schemas/common.ts`, `nation.ts` (fiche `nations/<iso3>.json`), `scenario.ts` (+ `adHocNations`), `config.ts`, `save.ts` (`SaveHeaderV1Schema`, figé).
 
+## 2026-09-21 — Clôture du J0 (validation du rapport)
+
+- **J0 validé par Lukas**, export → rechargement de page → import d'un `.vsave` vérifié à la main dans le navigateur.
+- **Bots (tribus) forcés à 0 en solo : confirmé.**
+- **`adHocNations` : accepté comme échafaudage du J0, à retirer au J1** avec le chargeur de scénario.
+- **Calendrier réel conservé ; « 1 minute réelle = 1 mois » est une approximation.** La règle exacte est : à ×1, un jour de jeu = 2 secondes réelles (`gameMinutesPerTick = 72`, 20 ticks par jour). Un mois dure 56 à 62 s, une année ≈ 12,2 min (730 s). Exclut un calendrier à mois de 30 jours ou à année de 360 jours. Phrase de DESIGN.md (section « Le temps ») corrigée en conséquence ; les mentions « 1 min = 1 mois » ailleurs (tableau des décisions, ARCHITECTURE, ROADMAP) restent comme raccourci.
+- **Règle d'ajout de dépendance** (section Véritable de CLAUDE.md) : `npm install --save-dev <paquet> --ignore-scripts`, puis `npm run inst` ; jamais `npm install` nu. Remplace l'interdiction absolue qui avait empêché d'ajouter `fake-indexeddb` au J0.
+- **`fake-indexeddb` ajouté en dépendance de dev** ; `IndexedDbSaveStore` a désormais son test unitaire (`src/veritable/save/IndexedDbSaveStore.test.ts`).
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.
