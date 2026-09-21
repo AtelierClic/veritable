@@ -93,7 +93,7 @@ import { GameView, PlayerView } from "./view";
 // VERITABLE: every solo game is a campaign; the simulation lives in the worker.
 import { RemoteVeritableSim } from "../veritable/adapters/RemoteVeritableSim";
 import { veritableSoloConfig } from "../veritable/adapters/soloConfig";
-import { veritablePanel } from "../veritable/ui/VeritablePanel";
+import { campaignController } from "../veritable/ui/CampaignController";
 
 export interface LobbyConfig {
   cosmetics: PlayerCosmeticRefs;
@@ -721,7 +721,7 @@ async function createClientGame(
   await worker.initialize();
   // VERITABLE: the client reaches the simulation through this handle only.
   if (config.isVeritable()) {
-    veritablePanel().attach(new RemoteVeritableSim(worker));
+    void campaignController().attach(new RemoteVeritableSim(worker), eventBus);
   }
   await atlasDataLoad;
   const gameView = new GameView(
@@ -1194,7 +1194,7 @@ export class ClientGameRunner {
     if (!this.isActive) return;
 
     this.isActive = false;
-    veritablePanel().detach(); // VERITABLE
+    campaignController().detach(); // VERITABLE
     this.worker.cleanup();
     this.transport.leaveGame();
     if (this.connectionCheckInterval) {

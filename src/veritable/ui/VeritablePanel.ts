@@ -2,12 +2,17 @@ import { html, LitElement, nothing } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { RemoteVeritableSim } from "../adapters/RemoteVeritableSim";
 import { gameStartInfoFromSave } from "../adapters/soloConfig";
-import { vt } from "../data/i18n";
+import { hasTextKey, vt } from "../data/i18n";
 import { NationState } from "../data/schemas/save";
 import { IndexedDbSaveStore } from "../save/IndexedDbSaveStore";
 import { SaveMeta, SaveStore } from "../save/SaveStore";
 import { peekSchemaVersion, SAVE_FILE_EXTENSION } from "../save/serialize";
 import { ReadonlyWorldView } from "../sim/VeritableSim";
+import {
+  newCampaignStartInfo,
+  ScenarioChoice,
+  scenarioChoices,
+} from "./newCampaign";
 
 const REFRESH_MS = 1000;
 const JOURNAL_LINES = 8;
@@ -22,6 +27,10 @@ export class VeritablePanel extends LitElement {
   @state() private saves: SaveMeta[] = [];
   @state() private status = "";
   @state() private saveName = "";
+  @state() private scenarioId = "";
+  @state() private nationId = "";
+
+  private readonly scenarios: ScenarioChoice[] = scenarioChoices();
 
   private sim: RemoteVeritableSim | null = null;
   private store: SaveStore = new IndexedDbSaveStore();
@@ -72,7 +81,91 @@ export class VeritablePanel extends LitElement {
 
   private fail(error: unknown): void {
     const message = error instanceof Error ? error.message : String(error);
-    this.status = vt("save.status.error", { message });
+    // Adapters report known failures as i18n keys.
+    this.status = hasTextKey(message)
+      ? vt(message)
+      : vt("save.status.error", { message });
+  }
+
+  private currentScenario(): ScenarioChoice | undefined {
+    return (
+      this.scenarios.find((s) => s.id === this.scenarioId) ?? this.scenarios[0]
+    );
+  }
+
+  // Starting = joining a solo lobby with the GameStartInfo of the campaign.
+  private startCampaign(): void {
+    const scenario = this.currentScenario();
+    if (scenario === undefined) return;
+    const nation = scenario.nations.some((n) => n.id === this.nationId)
+      ? this.nationId
+      : scenario.playerDefault;
+    try {
+      const gameStartInfo = newCampaignStartInfo(
+        scenario.id,
+        nation,
+        Date.now(),
+      );
+      this.open = false;
+      this.dispatchEvent(
+        new CustomEvent("join-lobby", {
+          detail: {
+            gameID: gameStartInfo.gameID,
+            gameStartInfo,
+            source: "singleplayer",
+          },
+          bubbles: true,
+          composed: true,
+        }),
+      );
+    } catch (error) {
+      this.fail(error);
+    }
+  }
+
+  private renderNewCampaign() {
+    const scenario = this.currentScenario();
+    if (scenario === undefined) return nothing;
+    const selected = scenario.nations.some((n) => n.id === this.nationId)
+      ? this.nationId
+      : scenario.playerDefault;
+    return html`
+      <div class="font-bold">${vt("start.title")}</div>
+      <label class="mt-1 block text-gray-300">${vt("start.scenario")}</label>
+      <select
+        class="w-full rounded bg-gray-700 px-1"
+        @change=${(e: Event) => {
+          this.scenarioId = (e.target as HTMLSelectElement).value;
+          this.nationId = "";
+        }}
+      >
+        ${this.scenarios.map(
+          (s) =>
+            html`<option value=${s.id} ?selected=${s.id === scenario.id}>
+              ${s.label}
+            </option>`,
+        )}
+      </select>
+      <label class="mt-1 block text-gray-300">${vt("start.nation")}</label>
+      <select
+        class="w-full rounded bg-gray-700 px-1"
+        @change=${(e: Event) =>
+          (this.nationId = (e.target as HTMLSelectElement).value)}
+      >
+        ${scenario.nations.map(
+          (n) =>
+            html`<option value=${n.id} ?selected=${n.id === selected}>
+              ${n.label}
+            </option>`,
+        )}
+      </select>
+      <button
+        class="mt-1 w-full rounded bg-blue-700 px-2"
+        @click=${() => this.startCampaign()}
+      >
+        ${vt("start.begin")}
+      </button>
+    `;
   }
 
   private toggle(): void {
@@ -263,7 +356,9 @@ export class VeritablePanel extends LitElement {
                 <div class="mb-1 text-sm font-bold">
                   ${vt("app.name")} — ${vt("save.panel.title")}
                 </div>
-                ${this.view !== null ? this.renderCampaign(this.view) : nothing}
+                ${this.view !== null
+                  ? this.renderCampaign(this.view)
+                  : this.renderNewCampaign()}
                 <label
                   class="mt-1 block w-full cursor-pointer rounded bg-gray-700 px-2 text-center"
                 >
@@ -285,8 +380,8 @@ export class VeritablePanel extends LitElement {
                         (meta) => html`
                           <div class="flex items-center justify-between gap-1">
                             <span class="truncate" title=${meta.savedAt}
-                              >${meta.name} (${Math.ceil(meta.sizeBytes / 1024)}
-                              ko)</span
+                              >[${vt(`save.kind.${meta.kind}`)}] ${meta.name}
+                              (${Math.ceil(meta.sizeBytes / 1024)} ko)</span
                             >
                             <span class="flex shrink-0 gap-1">
                               <button
