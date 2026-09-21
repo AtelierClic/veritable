@@ -40,5 +40,13 @@
     "source": "natural-earth v5.1.2 ne_10m_admin_0_countries.geojson",
     "sha256": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255"
   },
-  "controlPoints": []
+  "controlPoints": [],
+  "insets": [
+    {
+      "name": "canary-islands",
+      "box": [270, 1555, 330, 1595],
+      "rule": "neutral",
+      "note": "Encart hors position (les Canaries réelles sont au sud du bord de la carte) : 128 tuiles terrestres laissées neutres, sans rattachement."
+    }
+  ]
 }

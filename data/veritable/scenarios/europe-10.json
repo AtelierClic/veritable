@@ -1,0 +1,45 @@
+{
+  "id": "europe-10",
+  "map": "europe",
+  "startDate": "2026-01-01",
+  "nations": [
+    "FRA",
+    "DEU",
+    "GBR",
+    "ITA",
+    "ESP",
+    "POL",
+    "UKR",
+    "RUS",
+    "TUR",
+    "NOR"
+  ],
+  "borders": {
+    "source": "natural-earth-de-facto",
+    "rasterized": "borders/europe-10.bin"
+  },
+  "contested": [
+    {
+      "region": "crimea",
+      "controller": "RUS",
+      "claimants": ["UKR"],
+      "recognizedBy": []
+    },
+    {
+      "region": "ukraine-occupied-mainland",
+      "controller": "RUS",
+      "claimants": ["UKR"],
+      "recognizedBy": []
+    }
+  ],
+  "wars": [
+    {
+      "id": "rus-ukr-2022",
+      "belligerents": [["RUS"], ["UKR"]],
+      "since": "2022-02-24",
+      "intensity": 0.8,
+      "fronts": []
+    }
+  ],
+  "playerDefault": "FRA"
+}

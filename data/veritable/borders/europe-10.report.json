@@ -1,0 +1,109 @@
+{
+  "scenario": "europe-10",
+  "map": "europe",
+  "source": "natural-earth v5.1.2",
+  "sha256": {
+    "countries": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255"
+  },
+  "maxOrphanDistanceTiles": 60,
+  "fileBytes": 76294,
+  "landTiles": 2345907,
+  "nations": [
+    {
+      "nation": "FRA",
+      "fromPolygons": 103592,
+      "fromOrphans": 712,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 104304
+    },
+    {
+      "nation": "DEU",
+      "fromPolygons": 74300,
+      "fromOrphans": 363,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 74663
+    },
+    {
+      "nation": "GBR",
+      "fromPolygons": 53085,
+      "fromOrphans": 913,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 53998
+    },
+    {
+      "nation": "ITA",
+      "fromPolygons": 53901,
+      "fromOrphans": 849,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 54750
+    },
+    {
+      "nation": "ESP",
+      "fromPolygons": 85643,
+      "fromOrphans": 582,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 86225
+    },
+    {
+      "nation": "POL",
+      "fromPolygons": 66848,
+      "fromOrphans": 116,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 66964
+    },
+    {
+      "nation": "UKR",
+      "fromPolygons": 112819,
+      "fromOrphans": 75,
+      "gainedByOverride": 0,
+      "lostToOverride": 17119,
+      "total": 95775
+    },
+    {
+      "nation": "RUS",
+      "fromPolygons": 553853,
+      "fromOrphans": 1470,
+      "gainedByOverride": 17119,
+      "lostToOverride": 0,
+      "total": 572442
+    },
+    {
+      "nation": "TUR",
+      "fromPolygons": 130708,
+      "fromOrphans": 709,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 131417
+    },
+    {
+      "nation": "NOR",
+      "fromPolygons": 90970,
+      "fromOrphans": 366,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 91336
+    }
+  ],
+  "neutralLand": 1013905,
+  "insetLand": 128,
+  "unattachedLand": 0,
+  "orphansReattached": 14405,
+  "overrides": [
+    {
+      "id": "crimea",
+      "controller": "RUS",
+      "tiles": 0
+    },
+    {
+      "id": "ukraine-occupied-mainland",
+      "controller": "RUS",
+      "tiles": 17119
+    }
+  ]
+}

@@ -1,12 +1,15 @@
 import fs from "fs";
 import path from "path";
+import { encodeBorders } from "../../../src/veritable/data/bordersFile";
+import { buildBorders, Inset, Override } from "./buildBorders";
 import { calibrate, loadLandMask, prepare } from "./calibrate";
-import { controlImage } from "./control";
+import { bordersImage, controlImage } from "./control";
 import {
   CACHE_DIR,
   clipToBox,
   loadCountries,
   NATURAL_EARTH_TAG,
+  parseFeatures,
   REPO_ROOT,
   SOURCES,
 } from "./geodata";
@@ -17,7 +20,9 @@ import {
 //       fits the georeference of a map from its coastline, writes
 //       data/veritable/maps/<map>.georef.json and a control image.
 //
-// (The `rasterize` command is added with the scenario, see README.)
+//   npm run veritable:borders -- rasterize --scenario europe-10
+//       rasterizes the nations of a scenario on its map, writes
+//       data/veritable/borders/<scenario>.bin, a report and a control image.
 
 function option(args: string[], name: string, fallback?: string): string {
   const i = args.indexOf(`--${name}`);
@@ -81,6 +86,9 @@ async function runCalibrate(args: string[]): Promise<void> {
   const g = result.georef;
   const file = georefPath(map);
   fs.mkdirSync(path.dirname(file), { recursive: true });
+  const previous = fs.existsSync(file)
+    ? JSON.parse(fs.readFileSync(file, "utf8"))
+    : {};
   fs.writeFileSync(
     file,
     JSON.stringify(
@@ -109,6 +117,8 @@ async function runCalibrate(args: string[]): Promise<void> {
           sha256: SOURCES.countries.sha256,
         },
         controlPoints: [],
+        // Hand-maintained: kept across re-calibrations.
+        insets: previous.insets ?? [],
       },
       null,
       2,
@@ -121,13 +131,116 @@ async function runCalibrate(args: string[]): Promise<void> {
   console.log(`wrote ${path.relative(REPO_ROOT, image)}`);
 }
 
+// Orphan land further than this from any Natural Earth country stays neutral.
+const MAX_ORPHAN_DISTANCE_TILES = 60;
+
+async function runRasterize(args: string[]): Promise<void> {
+  const scenarioId = option(args, "scenario");
+  const data = path.join(REPO_ROOT, "data/veritable");
+  const scenario = JSON.parse(
+    fs.readFileSync(path.join(data, "scenarios", `${scenarioId}.json`), "utf8"),
+  );
+  const map: string = scenario.map;
+  const stored = JSON.parse(fs.readFileSync(georefPath(map), "utf8"));
+  const insets: Inset[] = stored.insets ?? [];
+  const mask = loadLandMask(map);
+  if (stored.width !== mask.width || stored.height !== mask.height) {
+    throw new Error(`${map}: georeference does not match the map size`);
+  }
+
+  const countries = await loadCountries();
+  const overridesFile = path.join(data, "borders/overrides", `${map}.geojson`);
+  const overrides: Override[] = fs.existsSync(overridesFile)
+    ? parseFeatures(fs.readFileSync(overridesFile, "utf8"), "id", "id").map(
+        (feature, i) => {
+          const p = JSON.parse(fs.readFileSync(overridesFile, "utf8")).features[
+            i
+          ].properties;
+          return { id: p.id, controller: p.controller, from: p.from, feature };
+        },
+      )
+    : [];
+
+  const { borders, report } = buildBorders(
+    mask,
+    stored,
+    countries,
+    overrides,
+    insets,
+    scenario.nations,
+    MAX_ORPHAN_DISTANCE_TILES,
+  );
+
+  const bin = path.join(data, scenario.borders.rasterized);
+  fs.mkdirSync(path.dirname(bin), { recursive: true });
+  const bytes = encodeBorders(borders);
+  fs.writeFileSync(bin, bytes);
+  const reportFile = bin.replace(/\.bin$/, ".report.json");
+  fs.writeFileSync(
+    reportFile,
+    JSON.stringify(
+      {
+        scenario: scenarioId,
+        map,
+        source: `natural-earth ${NATURAL_EARTH_TAG}`,
+        sha256: { countries: SOURCES.countries.sha256 },
+        maxOrphanDistanceTiles: MAX_ORPHAN_DISTANCE_TILES,
+        fileBytes: bytes.length,
+        ...report,
+      },
+      null,
+      2,
+    ) + "\n",
+  );
+  console.table(report.nations);
+  console.log({ ...report, nations: undefined, fileBytes: bytes.length });
+
+  const image = path.join(CACHE_DIR, `${scenarioId}-borders.png`);
+  fs.writeFileSync(
+    image,
+    bordersImage(
+      mask,
+      borders,
+      stored,
+      prepare(overrides.map((o) => o.feature)),
+    ),
+  );
+  console.log(
+    `wrote ${path.relative(REPO_ROOT, bin)}, its report and ${path.relative(REPO_ROOT, image)}`,
+  );
+
+  // Zoom on every override marked approximate: those are checked by eye.
+  overrides.forEach((o, i) => {
+    const raw = JSON.parse(fs.readFileSync(overridesFile, "utf8")).features[i];
+    if (raw.properties.status !== "approximate") return;
+    const lons = o.feature.polygons.flat(2).map((p) => p[0]);
+    const lats = o.feature.polygons.flat(2).map((p) => p[1]);
+    const zoomFile = path.join(CACHE_DIR, `${scenarioId}-${o.id}.png`);
+    fs.writeFileSync(
+      zoomFile,
+      bordersImage(mask, borders, stored, prepare([o.feature]), {
+        west: Math.min(...lons) - 3,
+        east: Math.max(...lons) + 0.5,
+        south: Math.min(...lats) - 0.5,
+        north: Math.max(...lats) + 0.5,
+        factor: 3,
+      }),
+    );
+    console.log(`wrote ${path.relative(REPO_ROOT, zoomFile)}`);
+  });
+}
+
 async function main(): Promise<void> {
   const [command, ...args] = process.argv.slice(2);
   switch (command) {
     case "calibrate":
       return runCalibrate(args);
+    case "rasterize":
+      return runRasterize(args);
     default:
-      throw new Error("usage: veritable:borders -- calibrate --map <map>");
+      throw new Error(
+        "usage: veritable:borders -- calibrate --map <map> | rasterize --scenario <id>",
+      );
   }
 }
 
