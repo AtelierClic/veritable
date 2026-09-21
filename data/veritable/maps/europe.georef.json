@@ -1,0 +1,44 @@
+{
+  "map": "europe",
+  "width": 2904,
+  "height": 1672,
+  "projection": "eqc",
+  "lon0": 18,
+  "lat0": 46,
+  "lat1": 40,
+  "lat2": 62,
+  "scale": 2327.7882,
+  "aspect": 1.00038,
+  "rotation": 0.0041,
+  "tx": 1736.862,
+  "ty": 1028.002,
+  "fit": {
+    "method": "coastline-iou",
+    "iou": 0.9564,
+    "candidates": [
+      {
+        "projection": "eqc",
+        "iouAtQuarterResolution": 0.9663
+      },
+      {
+        "projection": "lcc",
+        "iouAtQuarterResolution": 0.7879
+      },
+      {
+        "projection": "albers",
+        "iouAtQuarterResolution": 0.7726
+      },
+      {
+        "projection": "laea",
+        "iouAtQuarterResolution": 0.7251
+      },
+      {
+        "projection": "stereo",
+        "iouAtQuarterResolution": 0.7233
+      }
+    ],
+    "source": "natural-earth v5.1.2 ne_10m_admin_0_countries.geojson",
+    "sha256": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255"
+  },
+  "controlPoints": []
+}

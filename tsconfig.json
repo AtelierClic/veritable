@@ -29,6 +29,7 @@
     "proprietary/**/*",
     "generated/**/*",
     "tests/**/*",
+    "tools/veritable/**/*",
     "src/scripts",
     "vite.config.ts"
   ],
