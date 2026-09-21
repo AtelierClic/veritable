@@ -85,3 +85,54 @@ Tests use a `setup()` helper from `tests/util/Setup.ts` that creates a full game
 - **Schemas/Validation:** Zod
 - **Testing:** Vitest
 - **Server:** Node.js, Express, ws (WebSocket)
+
+<!-- ============================================================
+     VÉRITABLE — à coller tel quel À LA FIN du CLAUDE.md d'OpenFront.
+     Ne rien supprimer au-dessus : les conventions OpenFront restent valables,
+     cette section prime en cas de contradiction.
+     ============================================================ -->
+
+# Véritable
+
+Ce dépôt est un fork d'OpenFrontIO devenu **Véritable** : un grand strategy géopolitique du monde de 2026, solo, sans condition de victoire, distribué gratuitement en application Windows. Le joueur incarne l'État d'une nation parmi 195 ; l'économie est une économie de biens ; la politique interne est le moteur du jeu ; les blocs supranationaux sont des acteurs ; la guerre est libre mais lourdement sanctionnée. Le fork ne fusionne plus jamais depuis OpenFront.
+
+Documents de référence, présents dans chaque session :
+
+@docs/veritable/ARCHITECTURE.md
+@docs/veritable/ROADMAP.md
+@docs/veritable/DECISIONS.md
+
+Référence complète, à ouvrir dès qu'une décision de conception est en jeu : `docs/veritable/DESIGN.md`. Forme des données : `docs/veritable/DATA-SCHEMAS.md`.
+
+## Règles absolues
+
+1. Une nation n'est pas ses tuiles : zéro tuile n'élimine jamais une nation.
+2. Tout état sauvegardable porte `schemaVersion` et une migration par changement de forme.
+3. Aucune donnée de jeu ni constante d'équilibrage en dur : JSON validé zod dans `data/veritable/`.
+4. `src/veritable/sim/` n'importe jamais le client, le DOM ni Electron ; tout passe par l'interface `VeritableSim` et par `src/veritable/adapters/`.
+5. Jamais `Math.random()` : le `Rng` seedé injecté, dont l'état est sauvegardé.
+6. Jamais de texte visible en dur : clés i18n dans `data/veritable/i18n/fr.json`.
+
+## Ce qui ne se rediscute pas
+
+Solo local · le joueur est l'État, pas le gouvernement · 1er janvier 2026, 1 min réelle = 1 mois à ×1 · 12 biens au palier 1, prix mondial + flux bilatéraux · simulation politique asymétrique (complète pour le joueur, régime + stabilité + traits pour l'IA) · 9 régimes · fronts = tuiles frontalières segmentées, divisions sans position exacte · structures OpenFront conservées · frontières de facto, territoires occupés = tuiles du contrôleur « contesté » · micro-États sans tuile · doctrines nucléaires + main morte · blocs = entités complètes en trois couches · exil puis dissolution puis baroud d'honneur · français pour le contenu, anglais pour le code · rupture avec l'amont.
+
+Une contradiction entre une tâche demandée et cette liste se signale avant de coder ; elle ne se résout pas en silence.
+
+## Ce qu'on ne touche pas dans le code hérité
+
+Boucle de tick et rendu de la carte, format des cartes et `map-generator`, logique des structures, tests existants d'OpenFront. Les modifications inévitables dans `src/core` (élimination à 0 tuile, `WinCheckExecution.ts`, Overtime, plafond 170 min, spawn) sont isolées, commentées `// VERITABLE:` et consignées dans `DECISIONS.md`.
+
+## Rythme de session
+
+- **Début** : lire le jalon en cours dans `ROADMAP.md` et les dernières entrées de `DECISIONS.md` ; annoncer le système de la session en une phrase.
+- **Un seul système par session.** Aucune tâche d'un jalon futur ne se commence, même si elle semble facile.
+- **Pendant** : tests Vitest colocalisés pour tout ce qui est dans `sim/`, `save/`, `ai/` ; constantes nommées dans `config.json` ; chaque écran livré fonctionnel, même laid.
+- **Ambiguïté ou impossibilité** dans `DESIGN.md` : proposer deux options avec leurs conséquences et attendre, plutôt que trancher seul.
+- **Fin** : `npm test` vert, état jouable, cases cochées dans `ROADMAP.md` avec la date, entrée dans `DECISIONS.md` pour toute décision prise, commit avec un message qui nomme le jalon (`J0: seeded Rng + save v1`).
+
+## Commandes
+
+- Installation : `npm run inst` — jamais `npm install`.
+- Développement : `npm run dev`. Tests : `npm test`.
+- Runner headless (à partir du J2) : `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42`.
