@@ -42,6 +42,9 @@ Une entrée par décision, datée, jamais supprimée : une décision annulée re
 
 ## À compléter par Claude Code
 
-- Commit de départ du fork (`upstream-base`) : _à noter au J0_.
+- Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.
+- Échecs de `npm test` connus sur la machine de développement Windows, présents sur le code d'origine et indépendants du jeu — ne pas réparer ; « tests verts » = aucun échec au-delà de ces trois :
+  1. `tests/UpdateRegister.test.ts` (2 tests) — exécute le script shell `update.sh`.
+  2. `tests/client/clan/ClanDonateDialog.test.ts` (1 test) — format de nombre dépendant de la locale `fr`.
 - Chaque modification de `src/core` : fichier, raison, ligne `// VERITABLE:`.
 - Chaque schéma zod créé ou modifié : version de `schemaVersion` associée.
