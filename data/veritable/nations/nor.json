@@ -240,15 +240,15 @@
       },
       "revenueShares": {
         "value": {
-          "income": 0.30625,
-          "corporate": 0.0729167,
-          "vat": 0.30625,
-          "tariffs": 0.0145833,
+          "income": 0.294,
+          "corporate": 0.098,
+          "vat": 0.3045,
+          "tariffs": 0.0035,
           "rents": 0.3
         },
         "source": "estimate",
         "asOf": "2026-01-01",
-        "note": "Répartition des recettes entre impôts, faute de ventilation ouverte homogène : ordre de grandeur OCDE pour les pays développés. Les rentes sur ressources prennent la part indiquée pour les exportateurs d'hydrocarbures (Russie, Norvège), prélevée sur les autres impôts."
+        "note": "Répartition des recettes entre impôts, faute de ventilation ouverte homogène : ordre de grandeur OCDE pour les pays développés. Droits de douane : environ 0,5 % des recettes (ressource propre de l'UE, marginale ailleurs). Rentes sur ressources : nulles, sauf pour les exportateurs d'hydrocarbures (Russie, Norvège), où elles prennent la part indiquée, prélevée sur les autres impôts."
       },
       "spending": {
         "defense": {

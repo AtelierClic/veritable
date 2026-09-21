@@ -10,6 +10,7 @@ import { IndexedDbSaveStore } from "../save/IndexedDbSaveStore";
 import { SaveStore } from "../save/SaveStore";
 import { peekSchemaVersion } from "../save/serialize";
 import { veritablePanel } from "./VeritablePanel";
+import { ScreenId, SCREENS, veritableScreens } from "./VeritableScreens";
 import { Speed, veritableTopBar } from "./VeritableTopBar";
 
 // Glue between a running campaign (the simulation in the game worker) and the
@@ -34,6 +35,16 @@ export class CampaignController {
 
     const bar = veritableTopBar();
     bar.onSpeed = (speed) => void this.setSpeed(speed);
+    const screens = veritableScreens();
+    screens.attach(sim);
+    bar.screens = SCREENS;
+    bar.onScreen = (screen) => {
+      screens.toggle(screen as ScreenId);
+      bar.setActiveScreen(screens.current());
+    };
+    screens.addEventListener("screen-changed", () =>
+      bar.setActiveScreen(screens.current()),
+    );
     const view = await sim.read();
     if (this.sim !== sim) return; // detached meanwhile
     const nation = view.nations.find((n) => n.id === view.playerNation);
@@ -62,6 +73,8 @@ export class CampaignController {
     this.eventBus = null;
     this.paused = false;
     veritablePanel().detach();
+    veritableScreens().detach();
+    veritableTopBar().setActiveScreen(null);
     veritableTopBar().hide();
   }
 

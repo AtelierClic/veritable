@@ -49,6 +49,12 @@ export function sha256(data: Buffer | string): string {
   return crypto.createHash("sha256").update(data).digest("hex");
 }
 
+// sha256 of a JSON snapshot, independent of its formatting: the committed
+// snapshots go through Prettier like any other file of the repository.
+export function jsonSha256(text: string): string {
+  return sha256(JSON.stringify(JSON.parse(text)));
+}
+
 export function readLock(): Lock {
   return fs.existsSync(LOCK_FILE)
     ? JSON.parse(fs.readFileSync(LOCK_FILE, "utf8"))
@@ -94,7 +100,7 @@ export async function fetchAll(countries: readonly string[]): Promise<void> {
     };
     const text = JSON.stringify(snapshot, null, 1) + "\n";
     fs.writeFileSync(worldBankSnapshot(key), text);
-    lock[`snapshots/worldbank/${id}.json`] = sha256(text);
+    lock[`snapshots/worldbank/${id}.json`] = jsonSha256(text);
     console.log(`World Bank ${id}: ${snapshot.values.length} values`);
   }
   const csv = Buffer.from(await (await fetch(OWID_ENERGY_URL)).arrayBuffer());
@@ -118,7 +124,7 @@ export function loadWorldBank(key: WorldBankKey, lock: Lock): Series {
   const file = worldBankSnapshot(key);
   const text = fs.readFileSync(file, "utf8");
   const id = WORLD_BANK_INDICATORS[key];
-  if (lock[`snapshots/worldbank/${id}.json`] !== sha256(text)) {
+  if (lock[`snapshots/worldbank/${id}.json`] !== jsonSha256(text)) {
     throw new Error(`${id}: snapshot does not match sources.lock.json`);
   }
   const snapshot = JSON.parse(text) as {

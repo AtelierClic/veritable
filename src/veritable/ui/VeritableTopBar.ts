@@ -16,6 +16,14 @@ export class VeritableTopBar extends LitElement {
   @state() private visible = false;
 
   onSpeed: (speed: Speed) => void = () => {};
+  // Screens of the campaign, opened from the bar.
+  screens: readonly string[] = [];
+  onScreen: (screen: string) => void = () => {};
+  @state() private activeScreen: string | null = null;
+
+  setActiveScreen(screen: string | null): void {
+    this.activeScreen = screen;
+  }
 
   createRenderRoot() {
     return this;
@@ -80,6 +88,20 @@ export class VeritableTopBar extends LitElement {
         ${this.speed === 0
           ? html`<span class="text-gray-300">${vt("topbar.paused")}</span>`
           : nothing}
+        <span class="flex gap-1">
+          ${this.screens.map(
+            (screen) => html`
+              <button
+                class="rounded px-2 ${screen === this.activeScreen
+                  ? "bg-yellow-600"
+                  : "bg-gray-700"}"
+                @click=${() => this.onScreen(screen)}
+              >
+                ${vt(`screen.${screen}.title`)}
+              </button>
+            `,
+          )}
+        </span>
       </div>
     `;
   }
