@@ -32,6 +32,14 @@ const EconomyConfigSchema = z.object({
   rowGrowthPerYear: z.number(),
   agreementBonus: z.number().min(1),
   sanctionDiscount: share,
+  // Circumvention of an embargoed exporter: the share of the market it lost
+  // that it can re-route at once, rising every month it stays embargoed.
+  circumvention: z.object({ initial: share, perMonth: share }),
+  // Trade dependence: GDP level lost = friction x openness x share of the
+  // trade partners (by distance and GDP) that sanction or fight the nation
+  // x (1 - circumvention); reached over adjustMonths.
+  sanctionFriction: share,
+  tradeFactorAdjustMonths: z.number().min(1),
   rationingPasses: z.number().int().min(1),
   // Months the rest of the world takes to bring its price response on line.
   rowSupplyLagMonths: z.number().min(1),

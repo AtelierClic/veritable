@@ -29,10 +29,13 @@ export const DOMAINS = [
   "politics",
   "blocs",
   "save",
+  // The fronts: resolved at every core tick, outside the scheduler (they
+  // only appear here to be timed by the probe).
+  "war",
 ] as const;
 export type Domain = (typeof DOMAINS)[number];
 
-export type ClockKind = "day" | "week" | "month";
+export type ClockKind = "day" | "week" | "month" | "tick";
 
 export interface ClockContext {
   date: string; // ISO date of the day that starts
@@ -63,6 +66,7 @@ const CLOCKS: Record<ClockKind, readonly Domain[]> = {
   day: ["economy", "events", "diplomacy"],
   week: ["politics"],
   month: ["economy", "politics", "diplomacy", "blocs", "save"],
+  tick: [], // the fronts run outside the scheduler
 };
 
 export interface SchedulerTick {

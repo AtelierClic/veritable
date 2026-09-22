@@ -375,6 +375,7 @@ export class CoreBridge implements WorldPort {
       player.conquer(tile);
       this.contested[tile] = 1;
     });
+    if (taken.length > 0) this.sea = null;
     return taken.length;
   }
 
@@ -397,11 +398,14 @@ export class CoreBridge implements WorldPort {
     }
   }
 
-  // Computed once per core tick at most: coasts and ports of every nation,
-  // warships by zone.
+  // Coasts and ports of every nation, warships by zone. Coasts move slowly:
+  // the snapshot is kept for a game week of ticks (a performance cache, not a
+  // rule), and dropped by captures and transfers.
   naval(): NavalSnapshot {
     const tick = this.game.ticks();
-    if (this.sea !== null && this.sea.tick === tick) return this.sea.snapshot;
+    if (this.sea !== null && tick - this.sea.tick < 140) {
+      return this.sea.snapshot;
+    }
     const coast: Record<NationId, string[]> = {};
     const ports: Record<NationId, string[]> = {};
     const ships: Record<string, Record<NationId, number>> = {};
@@ -526,6 +530,7 @@ export class CoreBridge implements WorldPort {
       this.contested[tile] = 1;
     }
     this.segments.clear();
+    this.sea = null;
     return tiles.length;
   }
 }

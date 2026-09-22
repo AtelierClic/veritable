@@ -1,7 +1,14 @@
 import fs from "fs";
 import path from "path";
 import { build } from "./build";
-import { fetchAll, fetchImf, REPO_ROOT } from "./sources";
+import {
+  fetchAll,
+  fetchImf,
+  fetchWorldBank,
+  REPO_ROOT,
+  WORLD_BANK_INDICATORS,
+  WorldBankKey,
+} from "./sources";
 
 // Open sources -> data/veritable/. Replayable:
 //
@@ -35,11 +42,18 @@ async function main(): Promise<void> {
       return fetchAll(scenario.nations);
     case "fetch-imf":
       return fetchImf(scenario.nations);
+    case "fetch-wb": {
+      // One World Bank indicator, the others untouched.
+      const key = option(args, "key") as WorldBankKey;
+      if (!(key in WORLD_BANK_INDICATORS))
+        throw new Error(`unknown key ${key}`);
+      return fetchWorldBank(key, scenario.nations);
+    }
     case "build":
       return build(scenarioId);
     default:
       throw new Error(
-        "usage: veritable:ingest -- fetch|fetch-imf|build --scenario <id>",
+        "usage: veritable:ingest -- fetch|fetch-imf|fetch-wb --key <k>|build --scenario <id>",
       );
   }
 }

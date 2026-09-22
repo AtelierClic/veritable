@@ -38,6 +38,9 @@ export interface EconomyContext {
   // True when the two share a land border on the map (trade by land; the
   // rest is by sea and subject to blockades).
   landNeighbours(a: string, b: string): boolean;
+  // Weight of b among the trade partners of a: distance decay x GDP of b
+  // (the rest of the world included, with its own GDP and distance).
+  partnerWeight(a: string, b: string): number;
   // Affinity of a trade pair for a good, embargoes excluded: distance decay,
   // land adjacency for electricity, bloc and agreement bonuses. 0 = no trade.
   affinity(good: Good, exporter: string, importer: string): number;
@@ -76,6 +79,7 @@ export function buildContext(
   };
   const decay = new Map<string, number>();
 
+  const gdpOf = new Map(nations.map((n) => [n.id, n.gdp.value]));
   const byTemplate = new Map<string, DivisionTemplate>(
     data.divisions.map((d) => [d.id, d]),
   );
@@ -100,6 +104,12 @@ export function buildContext(
     seas: data.seas,
     nationIds: nations.map((n) => n.id),
     landNeighbours: (a, b) => neighbours.has(`${a}|${b}`),
+    partnerWeight: (a, b) => {
+      if (a === b) return 0;
+      const gdp = b === ROW_ID ? data.row.gdp.value : gdpOf.get(b);
+      if (gdp === undefined) return 0;
+      return Math.exp(-distanceKm(a, b) / config.economy.distanceScaleKm) * gdp;
+    },
     sheet: (id) => {
       const sheet = sheets.get(id);
       if (sheet === undefined) throw new Error(`no nation sheet for ${id}`);

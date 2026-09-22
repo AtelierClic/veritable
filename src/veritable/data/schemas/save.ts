@@ -99,6 +99,13 @@ export const NationEconomySchema = z.object({
   // year), what a blockade bites into.
   strikeDamage: zb.float(),
   maritimeTradeValue: zb.float(),
+  // Circumvention index of an embargoed exporter, 0..1 (J3a sanctions).
+  circumvention: zb.float(),
+  // Trade dependence (J3a): trade / GDP of the sheet, and the level factor
+  // of GDP that sanctions and wars with trade partners are pulling towards
+  // (1 = nothing lost).
+  tradeOpenness: zb.float(),
+  tradeFactor: zb.float(),
 });
 export type NationEconomy = z.infer<typeof NationEconomySchema>;
 

@@ -73,6 +73,8 @@ function record<K extends string, T extends z.ZodTypeAny>(
 // the good (goods.json). Everything is sourced; `source: "estimate"` marks
 // what has no open source.
 export const NationEconomySchema = z.object({
+  // Trade (exports + imports) as a share of GDP: what sanctions bite into.
+  tradeOpenness: SourcedNumberSchema,
   growthBase: SourcedNumberSchema, // trend real growth per year
   goods: record(
     GOOD_IDS,

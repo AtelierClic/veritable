@@ -43,6 +43,11 @@
     "note": "Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper, extraction du 2026-09-22) ; la valeur 2025 est une estimation du FMI."
   },
   "economy": {
+    "tradeOpenness": {
+      "value": 0.337101,
+      "source": "worldbank:NE.TRD.GNFS.ZS",
+      "asOf": "2025"
+    },
     "growthBase": {
       "value": 0.0158178,
       "source": "worldbank:NY.GDP.MKTP.KD.ZG",

@@ -17,6 +17,7 @@ export interface TestNationOptions {
   gdp?: number; // US$
   debtToGdp?: number;
   growthBase?: number;
+  tradeOpenness?: number;
   production?: Partial<Record<GoodId, number>>;
   consumption?: Partial<Record<GoodId, number>>;
   fossilElectricity?: { gas?: number; coal?: number; oil?: number };
@@ -64,6 +65,7 @@ export function testNation(
     gdp: sourced(options.gdp ?? 1e12),
     debtToGdp: sourced(options.debtToGdp ?? 0.5),
     economy: {
+      tradeOpenness: sourced(options.tradeOpenness ?? 0.5),
       growthBase: sourced(options.growthBase ?? 0.02),
       goods: Object.fromEntries(
         GOOD_IDS.map((g) => [

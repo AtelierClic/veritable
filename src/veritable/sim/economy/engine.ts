@@ -155,6 +155,35 @@ export function stepTrade(
       ),
     );
 
+    // Market an embargoed exporter loses: the share of its potential buyers
+    // (by affinity and deficit) that embargo it. Only what its circumvention
+    // index allows is offered to new customers, at the sanction discount; the
+    // rest is withheld: unsold, dumped, off the price-forming supply.
+    const lostShare = new Map<string, number>();
+    const withheld = new Map<string, number>();
+    for (const exporter of traders) {
+      if (exporter.surplus <= 0 || exporter.id === ROW_ID) continue;
+      let potential = 0;
+      let blockedPotential = 0;
+      for (const importer of traders) {
+        if (importer.deficit <= 0) continue;
+        const w =
+          ctx.affinity(good, exporter.id, importer.id) * importer.deficit;
+        potential += w;
+        if (blocked.has(`${good.id}|${exporter.id}|${importer.id}`)) {
+          blockedPotential += w;
+        }
+      }
+      const lost = potential > 0 ? blockedPotential / potential : 0;
+      lostShare.set(exporter.id, lost);
+      if (lost > 0) {
+        const circumvention = state.nations[exporter.id].circumvention;
+        const kept = exporter.surplus * lost * (1 - circumvention);
+        exporter.surplus -= kept;
+        withheld.set(exporter.id, kept);
+      }
+    }
+
     const flows = allocateFlows(
       traders,
       (exporter, importer) =>
@@ -219,7 +248,7 @@ export function stepTrade(
       const supply = produced.get(id)!;
       const received = flows.received.get(id) ?? 0;
       const shipped = flows.shipped.get(id) ?? 0;
-      const unsold = flows.unsold.get(id) ?? 0;
+      const unsold = (flows.unsold.get(id) ?? 0) + (withheld.get(id) ?? 0);
       const embargoed = market.embargoes.some(
         (e) => e.good === good.id && e.from === id,
       );
@@ -231,9 +260,12 @@ export function stepTrade(
           : Math.min(1, (Math.min(supply, demand) + received) / demand);
       importsValue[id] += received * importPrice * 1e6;
       const dumped = embargoed ? unsold : 0;
-      exportsValue[id] += (shipped + dumped * (1 - discount)) * price * 1e6;
+      const rerouted = discount * (lostShare.get(id) ?? 0);
+      exportsValue[id] +=
+        (shipped * (1 - rerouted) + dumped * (1 - discount)) * price * 1e6;
       if (good.rent) {
-        rentsValue[id] += (supply - dumped * discount) * price * 1e6;
+        rentsValue[id] +=
+          (supply - dumped * discount - shipped * rerouted) * price * 1e6;
       }
       if (embargoed) stranded += unsold;
       void blockaded;
@@ -247,8 +279,18 @@ export function stepTrade(
     market.stranded[good.id] = stranded + blockaded;
   }
 
+  const circumvention = cfg.circumvention;
   for (const id of ctx.nationIds) {
     const nation = state.nations[id];
+    // Circumvention builds up while embargoed, fades once free.
+    const embargoedExporter = market.embargoes.some((e) => e.from === id);
+    nation.circumvention = embargoedExporter
+      ? Math.min(
+          1,
+          Math.max(circumvention.initial, nation.circumvention) +
+            circumvention.perMonth,
+        )
+      : Math.max(0, nation.circumvention - circumvention.perMonth);
     let shortage = 0;
     for (const good of ctx.goods) {
       shortage += good.shortageWeight * (1 - nation.coverage[good.id]);
@@ -279,11 +321,25 @@ export function stepGrowth(
   state: EconomyState,
   politics: PoliticsState,
   rng: Rng,
+  // Share of the trade partners of a nation (by distance and GDP) that
+  // sanction it or fight it: sanctions are not cosmetic (J3a).
+  lostTradeShare: (id: string) => number = () => 0,
 ): void {
   const cfg = ctx.config.economy;
   const c = cfg.growth;
   for (const id of ctx.nationIds) {
     const nation = state.nations[id];
+    // Trade dependence: the GDP level moves towards what the remaining
+    // partners support.
+    const target =
+      1 -
+      cfg.sanctionFriction *
+        nation.tradeOpenness *
+        lostTradeShare(id) *
+        (1 - nation.circumvention);
+    const before = nation.tradeFactor;
+    nation.tradeFactor += (target - before) / cfg.tradeFactorAdjustMonths;
+    const tradeStep = nation.tradeFactor / before - 1;
     const investment =
       nation.spending.infrastructure +
       nation.spending.research -
@@ -295,6 +351,7 @@ export function stepGrowth(
       c.beta * nation.shortage -
       (politics.nations[id].unrest ? c.gamma : 0) +
       c.delta * (exportShare - nation.exportShareReference) +
+      tradeStep +
       c.noiseMonthlySd * rng.nextGaussian();
     nation.exportShareReference +=
       (exportShare - nation.exportShareReference) /

@@ -17,7 +17,13 @@
     "rowElasticityFactor": 2,
     "rowGrowthPerYear": 0.025,
     "agreementBonus": 1.25,
-    "sanctionDiscount": 0.4,
+    "sanctionDiscount": 0.5,
+    "circumvention": {
+      "initial": 0.2,
+      "perMonth": 0.015
+    },
+    "sanctionFriction": 0.5,
+    "tradeFactorAdjustMonths": 3,
     "rationingPasses": 6,
     "rowSupplyLagMonths": 18,
     "scarcityPremium": 3.5,
@@ -213,8 +219,8 @@
     },
     "segmentTiles": 200,
     "advanceThreshold": 1.2,
-    "v0": 0.5,
-    "vMax": 3,
+    "v0": 0.1,
+    "vMax": 1,
     "lambda": 0.7,
     "terrain": {
       "plains": 1,

@@ -1,5 +1,11 @@
 {
   "id": "ROW",
+  "gdp": {
+    "value": 95533100000000,
+    "source": "derived",
+    "asOf": "2025",
+    "note": "PIB mondial (Banque mondiale) moins celui des dix nations."
+  },
   "name": "nation.row.name",
   "scenario": "europe-10",
   "note": "Reste du monde : hors carte, jamais jouable, sans politique. Totaux mondiaux moins les dix nations.",

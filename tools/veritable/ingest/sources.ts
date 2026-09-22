@@ -44,6 +44,7 @@ export const WORLD_BANK_INDICATORS = {
   services: "NV.SRV.TOTL.CD",
   highTechExports: "TX.VAL.TECH.CD",
   cereals: "AG.PRD.CREL.MT",
+  trade: "NE.TRD.GNFS.ZS", // trade (exports + imports) in % of GDP
 } as const;
 export type WorldBankKey = keyof typeof WORLD_BANK_INDICATORS;
 
@@ -79,12 +80,40 @@ export function worldBankSnapshot(key: WorldBankKey): string {
   );
 }
 
+// One World Bank indicator: snapshot rewritten, its lock entry updated, the
+// other entries kept (the API is not versioned: refetching everything would
+// move every figure).
+export async function fetchWorldBank(
+  key: WorldBankKey,
+  countries: readonly string[],
+): Promise<void> {
+  fs.mkdirSync(path.join(SNAPSHOT_DIR, "worldbank"), { recursive: true });
+  const lock = readLock();
+  await fetchIndicator(key, countries, lock);
+  fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
+}
+
 export async function fetchAll(countries: readonly string[]): Promise<void> {
   const lock: Lock = {};
   fs.mkdirSync(path.join(SNAPSHOT_DIR, "worldbank"), { recursive: true });
   fs.mkdirSync(CACHE_DIR, { recursive: true });
-  const list = [...countries, WORLD].join(";");
   for (const key of Object.keys(WORLD_BANK_INDICATORS) as WorldBankKey[]) {
+    await fetchIndicator(key, countries, lock);
+  }
+  const csv = Buffer.from(await (await fetch(OWID_ENERGY_URL)).arrayBuffer());
+  fs.writeFileSync(path.join(CACHE_DIR, "owid-energy-data.csv"), csv);
+  lock[`cache/owid-energy-data.csv@${OWID_ENERGY_COMMIT}`] = sha256(csv);
+  console.log(`OWID energy: ${csv.length} bytes`);
+  fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
+}
+
+async function fetchIndicator(
+  key: WorldBankKey,
+  countries: readonly string[],
+  lock: Lock,
+): Promise<void> {
+  const list = [...countries, WORLD].join(";");
+  {
     const id = WORLD_BANK_INDICATORS[key];
     const url = `https://api.worldbank.org/v2/country/${list}/indicator/${id}?format=json&date=2010:2025&per_page=2000`;
     const response = await fetch(url);
@@ -113,11 +142,6 @@ export async function fetchAll(countries: readonly string[]): Promise<void> {
     lock[`snapshots/worldbank/${id}.json`] = jsonSha256(text);
     console.log(`World Bank ${id}: ${snapshot.values.length} values`);
   }
-  const csv = Buffer.from(await (await fetch(OWID_ENERGY_URL)).arrayBuffer());
-  fs.writeFileSync(path.join(CACHE_DIR, "owid-energy-data.csv"), csv);
-  lock[`cache/owid-energy-data.csv@${OWID_ENERGY_COMMIT}`] = sha256(csv);
-  console.log(`OWID energy: ${csv.length} bytes`);
-  fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
 }
 
 // IMF WEO: one indicator, cached with the date of the extraction (the WEO

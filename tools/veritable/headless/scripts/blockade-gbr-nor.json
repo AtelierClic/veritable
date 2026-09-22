@@ -1,0 +1,4 @@
+[
+  { "date": "2027-01-01", "command": { "type": "declare-war", "target": "NOR", "casusBelli": "none" } },
+  { "date": "2027-01-01", "command": { "type": "set-blockade", "target": "NOR", "active": true } }
+]

@@ -8,11 +8,19 @@ import {
   Domain,
   PerfProbe,
 } from "../../../src/veritable/sim/scheduler";
-import { SimEvent } from "../../../src/veritable/sim/VeritableSim";
+import {
+  PlayerCommand,
+  PlayerCommandSchema,
+  ReadonlyWorldView,
+  SimEvent,
+} from "../../../src/veritable/sim/VeritableSim";
 import { VeritableSimImpl } from "../../../src/veritable/sim/VeritableSimImpl";
 
-// One headless campaign: the simulation alone, AI against AI, no rendering and
-// (at J2) no OpenFront core. Same VeritableSim interface as the client.
+// One headless campaign: AI against AI, no rendering, the same VeritableSim
+// interface as the client. Two drivers:
+//   - the simulation alone on the static borders (fast, no fronts);
+//   - the simulation next to the OpenFront core on the real map (J3: fronts,
+//     captures, landings), see coreDriver.ts.
 
 // --shock cut-gas-exports:RUS@2028-01   every other nation stops buying its gas
 // --shock eu-embargo:RUS@2027-01        the full EU members stop buying its
@@ -54,6 +62,93 @@ export function shockEmbargoes(
   );
 }
 
+// --script commands.json: dated player commands, replayed when the campaign
+// reaches their date (the scripted nation is the player, run by nobody
+// else). A macro "send-all" assigns every division of the player to a front
+// with a posture.
+export interface ScriptEntry {
+  date: string; // YYYY-MM-DD
+  command?: PlayerCommand;
+  macro?: {
+    kind: "send-all";
+    front: string;
+    posture: "defend" | "attack" | "breakthrough";
+  };
+}
+
+export function parseScript(raw: unknown): ScriptEntry[] {
+  if (!Array.isArray(raw)) throw new Error("script: expected an array");
+  return raw.map((entry, i) => {
+    const e = entry as Record<string, unknown>;
+    if (typeof e.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) {
+      throw new Error(`script entry ${i}: bad date`);
+    }
+    if (e.macro !== undefined) {
+      const m = e.macro as Record<string, unknown>;
+      if (m.kind !== "send-all" || typeof m.front !== "string") {
+        throw new Error(`script entry ${i}: unknown macro`);
+      }
+      return {
+        date: e.date,
+        macro: {
+          kind: "send-all",
+          front: m.front,
+          posture:
+            (m.posture as "defend" | "attack" | "breakthrough") ?? "attack",
+        },
+      };
+    }
+    return { date: e.date, command: PlayerCommandSchema.parse(e.command) };
+  });
+}
+
+// What a campaign runs on: the simulation alone, or the simulation with the
+// core. advanceDay() returns the events of the day.
+export interface Driver {
+  read(): ReadonlyWorldView;
+  apply(command: PlayerCommand): void;
+  advanceDay(): SimEvent[];
+  perf(): Record<string, { calls: number; totalMs: number }>;
+}
+
+export class TimingProbe implements PerfProbe {
+  readonly byDomain: Record<string, { calls: number; totalMs: number }> = {};
+  measure(domain: Domain, clock: ClockKind, run: () => void): void {
+    const key = `${domain}:${clock}`;
+    const started = performance.now();
+    run();
+    const entry = (this.byDomain[key] ??= { calls: 0, totalMs: 0 });
+    entry.calls++;
+    entry.totalMs += performance.now() - started;
+  }
+}
+
+export function simDriver(
+  pack: ScenarioPack,
+  config: VeritableConfig,
+  seed: number,
+  player: string,
+  autopilot: boolean,
+): Driver {
+  const probe = new TimingProbe();
+  const sim = new VeritableSimImpl({
+    config,
+    world: new BordersWorld(pack.borders, pack.zones),
+    data: pack.data,
+    nationData: (id) => pack.nations.find((n) => n.id === id),
+    scenario: pack.scenario,
+    perf: probe,
+    autopilot,
+  });
+  sim.init({ ...pack.scenario, playerDefault: player }, seed);
+  return {
+    read: () => sim.read(),
+    apply: (command) => sim.apply(command),
+    advanceDay: () => sim.advance(MINUTES_PER_GAME_DAY),
+    perf: () => probe.byDomain,
+  };
+}
+
 export interface CampaignOptions {
   pack: ScenarioPack;
   config: VeritableConfig;
@@ -61,6 +156,9 @@ export interface CampaignOptions {
   years: number;
   player?: string;
   shock?: Shock;
+  script?: ScriptEntry[];
+  // Prepared driver; the simulation alone when absent.
+  driver?: Driver;
 }
 
 export interface MonthRow {
@@ -76,6 +174,10 @@ export interface MonthRow {
   blockade: Record<string, number>;
   tiles: Record<string, number>;
   exhaustion: Record<string, number>;
+  sanctionsAgainst: Record<string, number>; // nations sanctioning it
+  atWar: Record<string, number>; // 1 when at war
+  exportShare: Record<string, number>; // exports really sold / GDP
+  circumvention: Record<string, number>;
 }
 
 export interface CampaignResult {
@@ -91,6 +193,7 @@ export interface CampaignResult {
   events: Record<string, number>;
   defaults: string[];
   unrest: string[];
+  wars: string[]; // declarations and joins, "nation>target@date"
   final: {
     worldGdp: number;
     prices: Record<string, number>;
@@ -103,32 +206,13 @@ export interface CampaignResult {
   series: MonthRow[];
 }
 
-class TimingProbe implements PerfProbe {
-  readonly byDomain: Record<string, { calls: number; totalMs: number }> = {};
-  measure(domain: Domain, clock: ClockKind, run: () => void): void {
-    const key = `${domain}:${clock}`;
-    const started = performance.now();
-    run();
-    const entry = (this.byDomain[key] ??= { calls: 0, totalMs: 0 });
-    entry.calls++;
-    entry.totalMs += performance.now() - started;
-  }
-}
-
 export function runCampaign(options: CampaignOptions): CampaignResult {
-  const { pack, config, seed, years, shock } = options;
+  const { pack, config, seed, years, shock, script } = options;
   const player = options.player ?? pack.scenario.playerDefault;
-  const probe = new TimingProbe();
-  const sim = new VeritableSimImpl({
-    config,
-    world: new BordersWorld(pack.borders, pack.zones),
-    data: pack.data,
-    nationData: (id) => pack.nations.find((n) => n.id === id),
-    perf: probe,
-    autopilot: true,
-  });
+  const driver =
+    options.driver ??
+    simDriver(pack, config, seed, player, script === undefined);
   const started = performance.now();
-  sim.init({ ...pack.scenario, playerDefault: player }, seed);
 
   const basePrice = Object.fromEntries(
     pack.data.goods.map((g) => [g.id, g.basePrice]),
@@ -139,14 +223,18 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   const counts: Record<string, number> = {};
   const defaults: string[] = [];
   const unrest: string[] = [];
+  const wars: string[] = [];
   const priceRange: Record<string, [number, number]> = Object.fromEntries(
     GOOD_IDS.map((g) => [g, [1, 1]]),
   );
   const maxDebt: Record<string, number> = {};
   let shockApplied = false;
+  const pending = [...(script ?? [])].sort((a, b) =>
+    a.date < b.date ? -1 : 1,
+  );
 
   const sample = (date: string) => {
-    const view = sim.read();
+    const view = driver.read();
     const pick = (f: (id: string) => number) =>
       Object.fromEntries(pack.scenario.nations.map((id) => [id, f(id)]));
     const row: MonthRow = {
@@ -168,6 +256,20 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         (id) => view.nations.find((n) => n.id === id)?.tileCount ?? 0,
       ),
       exhaustion: pick((id) => view.military.nations[id]?.exhaustion ?? 0),
+      sanctionsAgainst: pick(
+        (id) => view.diplomacy.sanctions.filter((s) => s.against === id).length,
+      ),
+      atWar: pick((id) =>
+        view.diplomacy.wars.some(
+          (w) => w.aggressors.includes(id) || w.defenders.includes(id),
+        )
+          ? 1
+          : 0,
+      ),
+      exportShare: pick(
+        (id) => view.economies[id].exportsValue / view.economies[id].gdp,
+      ),
+      circumvention: pick((id) => view.economies[id].circumvention),
     };
     for (const g of GOOD_IDS) {
       priceRange[g][0] = Math.min(priceRange[g][0], row.prices[g]);
@@ -189,22 +291,49 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     if (event.type === "unrest-started") {
       unrest.push(`${event.nation}@${event.date}`);
     }
+    if (event.type === "war-declared") {
+      wars.push(`${event.nation}>${event.target}@${event.date}`);
+    }
+    if (event.type === "war-joined") {
+      wars.push(`${event.nation}>${event.against}@${event.date}`);
+    }
     if (event.type === "month-started") sample(event.date);
   };
 
-  while (sim.read().date < endDate) {
+  while (driver.read().date < endDate) {
+    const date = driver.read().date;
     if (
       shock !== undefined &&
       !shockApplied &&
-      sim.read().date.slice(0, 7) >= shock.month
+      date.slice(0, 7) >= shock.month
     ) {
       // The rest of the world keeps buying.
       for (const embargo of shockEmbargoes(shock, pack)) {
-        sim.apply({ type: "set-embargo", ...embargo, active: true });
+        driver.apply({ type: "set-embargo", ...embargo, active: true });
       }
       shockApplied = true;
     }
-    for (const event of sim.advance(MINUTES_PER_GAME_DAY)) onEvent(event);
+    while (pending.length > 0 && pending[0].date <= date) {
+      const entry = pending.shift()!;
+      if (entry.command !== undefined) driver.apply(entry.command);
+      else if (entry.macro !== undefined) {
+        const view = driver.read();
+        for (const d of view.military.nations[player]?.divisions ?? []) {
+          driver.apply({
+            type: "assign-division",
+            division: d.id,
+            front: entry.macro.front,
+            segment: null,
+          });
+          driver.apply({
+            type: "set-posture",
+            division: d.id,
+            posture: entry.macro.posture,
+          });
+        }
+      }
+    }
+    for (const event of driver.advanceDay()) onEvent(event);
   }
 
   const last = series[series.length - 1];
@@ -216,10 +345,10 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     player,
     shock: shock ?? null,
     startDate: pack.scenario.startDate,
-    endDate: sim.read().date,
+    endDate: driver.read().date,
     wallMs: Math.round(performance.now() - started),
     cpuMsByDomain: Object.fromEntries(
-      Object.entries(probe.byDomain).map(([k, v]) => [
+      Object.entries(driver.perf()).map(([k, v]) => [
         k,
         { calls: v.calls, totalMs: Number(v.totalMs.toFixed(1)) },
       ]),
@@ -227,6 +356,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     events: counts,
     defaults,
     unrest,
+    wars,
     final: {
       worldGdp: Object.values(last.gdp).reduce((a, b) => a + b, 0),
       prices: last.prices,
@@ -257,6 +387,10 @@ export function seriesCsv(result: CampaignResult): string {
     ...nations.map((n) => `blockade_${n}`),
     ...nations.map((n) => `tiles_${n}`),
     ...nations.map((n) => `exhaustion_${n}`),
+    ...nations.map((n) => `sanctions_against_${n}`),
+    ...nations.map((n) => `at_war_${n}`),
+    ...nations.map((n) => `export_share_${n}`),
+    ...nations.map((n) => `circumvention_${n}`),
   ];
   const lines = [header.join(",")];
   for (const row of result.series) {
@@ -274,6 +408,10 @@ export function seriesCsv(result: CampaignResult): string {
         ...nations.map((n) => row.blockade[n].toFixed(4)),
         ...nations.map((n) => String(row.tiles[n])),
         ...nations.map((n) => row.exhaustion[n].toFixed(4)),
+        ...nations.map((n) => String(row.sanctionsAgainst[n])),
+        ...nations.map((n) => String(row.atWar[n])),
+        ...nations.map((n) => row.exportShare[n].toFixed(4)),
+        ...nations.map((n) => row.circumvention[n].toFixed(3)),
       ].join(","),
     );
   }

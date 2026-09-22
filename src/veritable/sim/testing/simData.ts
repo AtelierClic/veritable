@@ -110,6 +110,7 @@ export function testRow(
     id: "ROW",
     name: "nation.row.name",
     scenario: "test",
+    gdp: sourced(50e12),
     goods: Object.fromEntries(
       GOOD_IDS.map((g) => [
         g,

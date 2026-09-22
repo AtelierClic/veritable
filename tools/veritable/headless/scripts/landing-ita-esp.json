@@ -1,0 +1,4 @@
+[
+  { "date": "2026-07-01", "command": { "type": "declare-war", "target": "ESP", "casusBelli": "none" } },
+  { "date": "2026-07-02", "command": { "type": "landing", "target": "ESP" } }
+]

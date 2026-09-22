@@ -11,6 +11,9 @@ export const RowSchema = z.object({
   name: z.string().min(1), // i18n key
   scenario: z.string().min(1),
   note: z.string().optional(),
+  // World GDP minus the nations of the scenario (US$): the weight of the rest
+  // of the world among the trade partners of a nation.
+  gdp: SourcedNumberSchema,
   goods: z.record(
     GoodIdSchema,
     z.object({

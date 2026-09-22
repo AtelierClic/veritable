@@ -334,6 +334,7 @@ export function build(scenarioId: string): void {
       gdp: gdp[n],
       debtToGdp: imfDebt(n),
       economy: {
+        tradeOpenness: wbValue("trade", n, 0.01),
         growthBase: {
           value: round(growthBase / 100),
           source: `worldbank:${WORLD_BANK_INDICATORS.growth}`,
@@ -463,8 +464,14 @@ export function build(scenarioId: string): void {
   for (const n of nations) {
     write(path.join(DATA, "nations", `${n.toLowerCase()}.json`), sheets[n]);
   }
+  const tenGdp = nations.reduce((s, n) => s + gdp[n].value, 0);
   write(path.join(DATA, "row.json"), {
     id: "ROW",
+    gdp: derived(
+      worldGdp.value - tenGdp,
+      "PIB mondial (Banque mondiale) moins celui des dix nations.",
+      gdpYear,
+    ),
     name: "nation.row.name",
     scenario: scenarioId,
     note: "Reste du monde : hors carte, jamais jouable, sans politique. Totaux mondiaux moins les dix nations.",

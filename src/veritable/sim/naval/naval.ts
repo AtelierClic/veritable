@@ -145,3 +145,17 @@ export function controlOf(
 ): number {
   return naval.control[zone]?.[id] ?? 0;
 }
+
+// Control that matters for a landing: the share between the belligerents
+// present in the zone (neutral fleets neither help nor hinder).
+export function landingControl(
+  naval: NavalState,
+  zone: string,
+  id: NationId,
+  enemies: readonly NationId[],
+): number {
+  const mine = controlOf(naval, zone, id);
+  let theirs = 0;
+  for (const enemy of enemies) theirs += controlOf(naval, zone, enemy);
+  return mine + theirs > 0 ? mine / (mine + theirs) : 0;
+}

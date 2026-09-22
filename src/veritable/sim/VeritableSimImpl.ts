@@ -45,8 +45,8 @@ import {
 import { initEconomy, initPolitics } from "./economy/init";
 import { nationFromData, statusFromTerritory } from "./nation";
 import {
-  controlOf,
   initNaval,
+  landingControl,
   maritimeFactor,
   NavalEvent,
   setBlockade,
@@ -54,7 +54,13 @@ import {
 } from "./naval/naval";
 import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
-import { ClockContext, DomainSystem, PerfProbe, Scheduler } from "./scheduler";
+import {
+  ClockContext,
+  DomainSystem,
+  NULL_PROBE,
+  PerfProbe,
+  Scheduler,
+} from "./scheduler";
 import {
   FrontGeometry,
   FrontView,
@@ -172,7 +178,9 @@ export class VeritableSimImpl implements VeritableSim {
           this.trade = stepTrade(this.ctx, this.economy, (e, i) =>
             maritimeFactor(this.ctx, this.naval, e, i),
           );
-          stepGrowth(this.ctx, this.economy, this.politics, this.rng);
+          stepGrowth(this.ctx, this.economy, this.politics, this.rng, (id) =>
+            this.lostTradeShare(id),
+          );
         },
       },
       { domain: "events" },
@@ -454,7 +462,15 @@ export class VeritableSimImpl implements VeritableSim {
           throw new Error(`${cmd.target} is not an enemy`);
         }
         const zone = this.deps.world.landingZone(me, cmd.target);
-        const control = zone === null ? 0 : controlOf(this.naval, zone, me);
+        const control =
+          zone === null
+            ? 0
+            : landingControl(
+                this.naval,
+                zone,
+                me,
+                enemiesOf(this.diplomacy, me),
+              );
         if (
           zone === null ||
           control < this.deps.config.naval.landingControl ||
@@ -501,7 +517,9 @@ export class VeritableSimImpl implements VeritableSim {
         events.push({ type: "month-started", date: tick.context.date });
       }
     }
-    this.resolveFronts(gameMinutes);
+    (this.deps.perf ?? NULL_PROBE).measure("war", "tick", () =>
+      this.resolveFronts(gameMinutes),
+    );
     events.push(...this.pending);
     this.pending = [];
     this.metrics[METRIC_ADVANCE_CALLS] =
@@ -581,6 +599,23 @@ export class VeritableSimImpl implements VeritableSim {
     air: (nation, enemy) =>
       airMultiplier(this.ctx, this.military, nation, enemy),
   };
+
+  // Share of the trade partners of a nation that sanction it or fight it.
+  private lostTradeShare(id: NationId): number {
+    const lost = new Set<NationId>(enemiesOf(this.diplomacy, id));
+    for (const s of this.diplomacy.sanctions) {
+      if (s.against === id) lost.add(s.by);
+    }
+    if (lost.size === 0) return 0;
+    let total = this.ctx.partnerWeight(id, ROW_ID);
+    let blocked = 0;
+    for (const other of this.ctx.nationIds) {
+      const w = this.ctx.partnerWeight(id, other);
+      total += w;
+      if (lost.has(other)) blocked += w;
+    }
+    return total > 0 ? blocked / total : 0;
+  }
 
   private navalDay(): void {
     stepNavalDay(

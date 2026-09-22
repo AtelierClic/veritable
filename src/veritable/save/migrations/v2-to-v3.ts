@@ -69,6 +69,12 @@ export function v2ToV3(
             extended.exportShareReference ?? exportsValue / nation.gdp,
           strikeDamage: extended.strikeDamage ?? 0,
           maritimeTradeValue: extended.maritimeTradeValue ?? 0,
+          circumvention: extended.circumvention ?? 0,
+          tradeOpenness:
+            extended.tradeOpenness ??
+            context.nationData(id)?.economy.tradeOpenness.value ??
+            0.5,
+          tradeFactor: extended.tradeFactor ?? 1,
         },
       ];
     }),
