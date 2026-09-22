@@ -74,10 +74,15 @@ export function stepPolitics(
   data: NationData | undefined,
   economy: NationEconomy,
   politics: NationPolitics,
+  // War exhaustion of the nation, 0..1 (war/military.ts).
+  exhaustion = 0,
 ): PoliticsEvent[] {
   const cfg = ctx.config.politics;
-  // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts).
-  const malus = politics.reprimandMalus;
+  // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts); a war
+  // weighs on every group and on the AI proxy alike.
+  const malus =
+    politics.reprimandMalus +
+    ctx.config.war.exhaustion.opinionWeight * exhaustion;
 
   if (politics.groups !== null) {
     const weights = data?.interestGroups ?? cfg.groupWeights;

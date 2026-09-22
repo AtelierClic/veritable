@@ -164,6 +164,95 @@
       "prices": 0.5
     }
   },
+  "diplomacy": {
+    "blocRelation": 30,
+    "blocRelationCap": 60,
+    "warRelation": -100,
+    "relationDecayPerMonth": 1,
+    "declarationGroupHit": 0.1,
+    "humanitarianStability": 0.3,
+    "sanction": {
+      "relationsBelow": -40,
+      "aggressorPowerShare": 0.25,
+      "exemptGoods": ["food", "pharma"],
+      "blocAlignShare": 0.5,
+      "liftAboveRelations": -40
+    },
+    "coalition": {
+      "relationsBelow": -60,
+      "powerRatio": 1.5,
+      "monthlyProbability": 0.3,
+      "windowMonths": 3
+    }
+  },
+  "war": {
+    "startingMix": {
+      "infantry": 0.5,
+      "mechanized": 0.25,
+      "armored": 0.15,
+      "artillery": 0.1
+    },
+    "conscription": {
+      "peace": 0.005,
+      "partial": 0.015,
+      "total": 0.04
+    },
+    "manpowerRenewalPerMonth": 0.05,
+    "raisedDivisionEquipment": 0.5,
+    "armsIndexPerEquipmentUnit": 0.25,
+    "armsToDivisionsShare": 0.5,
+    "training": {
+      "base": 1,
+      "min": 0.5,
+      "max": 1.5,
+      "defenseSpendingScale": 0.1
+    },
+    "power": {
+      "air": 20,
+      "naval": 20
+    },
+    "segmentTiles": 200,
+    "advanceThreshold": 1.2,
+    "v0": 0.5,
+    "vMax": 3,
+    "lambda": 0.0004,
+    "terrain": {
+      "plains": 1,
+      "highland": 1.2,
+      "mountain": 1.5
+    },
+    "cityDefense": 1.25,
+    "breakthrough": {
+      "speed": 1.5,
+      "losses": 1.3
+    },
+    "exhaustion": {
+      "perLossShareOfPopulation": 20,
+      "perMonthAtWar": 0.01,
+      "recoveryPerMonthAtPeace": 0.02,
+      "opinionWeight": 0.3
+    },
+    "lossesGroupHit": {
+      "youth": 50,
+      "workers": 30
+    },
+    "warScore": {
+      "tileValue": 0.001,
+      "lossValue": 0.0001
+    },
+    "peace": {
+      "exhaustionToAccept": 0.5,
+      "retreatMonthsToAccept": 6,
+      "reparationsValue": 10,
+      "demilitarizationValue": 2,
+      "annexationValue": 100
+    },
+    "ai": {
+      "attackRatio": 1.5,
+      "totalConscriptionWhenLosingShare": 0.1,
+      "retreatMonthsForTotal": 3
+    }
+  },
   "ai": {
     "fiscal": {
       "maxDeficitToGdp": 0.03,

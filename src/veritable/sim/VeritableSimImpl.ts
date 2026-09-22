@@ -5,8 +5,10 @@ import { NationData } from "../data/schemas/nation";
 import { ROW_ID } from "../data/schemas/row";
 import {
   Calendar,
+  DiplomacyState,
   EconomyState,
   JournalEntry,
+  MilitaryState,
   NationState,
   PoliticsState,
   SAVE_SCHEMA_VERSION,
@@ -15,6 +17,16 @@ import {
 import { Scenario } from "../data/schemas/scenario";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
 import { dateAfter } from "./calendar";
+import {
+  availableCasusBelli,
+  declareWar,
+  DiplomacyEvent,
+  enemiesOf,
+  imposeSanctions,
+  initDiplomacy,
+  liftSanctions,
+  stepDiplomacyMonth,
+} from "./diplomacy/diplomacy";
 import { BudgetEvent, spendingCeiling, stepBudget } from "./economy/budget";
 import { buildContext, EconomyContext, SimData } from "./economy/context";
 import {
@@ -29,6 +41,7 @@ import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
 import { ClockContext, DomainSystem, PerfProbe, Scheduler } from "./scheduler";
 import {
+  FrontView,
   PlayerCommand,
   PlayerCommandSchema,
   ReadonlyWorldView,
@@ -36,6 +49,15 @@ import {
   VeritableSim,
   WorldPort,
 } from "./VeritableSim";
+import {
+  assignDivision,
+  disbandDivision,
+  initMilitary,
+  raiseDivision,
+  setConscription,
+  setPosture,
+  stepMilitaryMonth,
+} from "./war/military";
 
 export interface SimDeps {
   config: VeritableConfig;
@@ -44,8 +66,10 @@ export interface SimDeps {
   data: SimData;
   // Nation sheets of data/veritable/nations/, looked up by scenario.nations.
   nationData: (id: NationId) => NationData | undefined;
+  // The scenario of the campaign, for a restore (init receives its own).
+  scenario?: Scenario;
   perf?: PerfProbe;
-  // True when nobody plays: the AI fiscal rule also runs the player's nation
+  // True when nobody plays: the AI rules also run the player's nation
   // (headless runner).
   autopilot?: boolean;
 }
@@ -53,7 +77,7 @@ export interface SimDeps {
 const METRIC_ADVANCE_CALLS = "sim.advanceCalls";
 
 // What the domain systems report; the simulation dates it.
-type DomainEvent = BudgetEvent | PoliticsEvent | BlocEvent;
+type DomainEvent = BudgetEvent | PoliticsEvent | BlocEvent | DiplomacyEvent;
 
 export class VeritableSimImpl implements VeritableSim {
   private seed = 0;
@@ -69,6 +93,9 @@ export class VeritableSimImpl implements VeritableSim {
   private metrics: Record<string, number> = {};
   private economy!: EconomyState;
   private politics!: PoliticsState;
+  private diplomacy!: DiplomacyState;
+  private military!: MilitaryState;
+  private scenario!: Scenario;
   private ctx!: EconomyContext;
   private sheets = new Map<NationId, NationData>();
   private initialized = false;
@@ -82,7 +109,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.scheduler = new Scheduler(this.systems(), deps.perf);
   }
 
-  // The domains of the J2, plugged on the central scheduler.
+  // The domains, plugged on the central scheduler.
   private systems(): DomainSystem[] {
     return [
       {
@@ -94,7 +121,7 @@ export class VeritableSimImpl implements VeritableSim {
         },
       },
       { domain: "events" },
-      { domain: "diplomacy" },
+      { domain: "diplomacy", onMonth: (c) => this.diplomacyMonth(c) },
       {
         domain: "politics",
         onWeek: (c) => this.politicsWeek(c),
@@ -114,6 +141,7 @@ export class VeritableSimImpl implements VeritableSim {
       date: scenario.startDate,
       speed: 1,
     };
+    this.scenario = scenario;
     const sheets = this.loadSheets(scenario.nations, scenario.id);
     this.nations = sheets.map((data) =>
       nationFromData(data, data.id === scenario.playerDefault),
@@ -125,6 +153,8 @@ export class VeritableSimImpl implements VeritableSim {
       scenario.playerDefault,
       this.deps.autopilot === true,
     );
+    this.diplomacy = initDiplomacy(this.ctx, scenario);
+    this.military = initMilitary(this.ctx, sheets);
     this.journal = [
       { date: this.calendar.date, kind: "campaign-started", params: {} },
     ];
@@ -141,10 +171,18 @@ export class VeritableSimImpl implements VeritableSim {
       );
     }
     const state = structuredClone(snapshot);
-    this.loadSheets(
-      state.nations.map((n) => n.id),
-      "save",
-    );
+    const ids = state.nations.map((n) => n.id);
+    this.loadSheets(ids, "save");
+    this.scenario = this.deps.scenario ?? {
+      id: "save",
+      map: "save",
+      startDate: state.calendar.startDate,
+      nations: ids,
+      borders: { source: "save", rasterized: "save" },
+      contested: [],
+      wars: [],
+      playerDefault: state.nations.find((n) => n.isPlayer)?.id ?? ids[0],
+    };
     this.seed = state.seed;
     this.rng = Rng.fromState(state.rngState);
     this.calendar = state.calendar;
@@ -153,6 +191,8 @@ export class VeritableSimImpl implements VeritableSim {
     this.metrics = state.metrics;
     this.economy = state.economy;
     this.politics = state.politics;
+    this.diplomacy = state.diplomacy;
+    this.military = state.military;
     this.trade = null;
     this.initialized = true;
     this.deps.world.restore(this.nationIds(), state.world, {
@@ -176,6 +216,8 @@ export class VeritableSimImpl implements VeritableSim {
       world,
       economy: this.economy,
       politics: this.politics,
+      diplomacy: this.diplomacy,
+      military: this.military,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -186,6 +228,7 @@ export class VeritableSimImpl implements VeritableSim {
   apply(command: PlayerCommand): void {
     this.assertInitialized();
     const cmd = PlayerCommandSchema.parse(command);
+    const date = this.calendar.date;
     switch (cmd.type) {
       case "set-speed":
         this.calendar.speed = cmd.speed;
@@ -221,6 +264,93 @@ export class VeritableSimImpl implements VeritableSim {
         } else if (!cmd.active && at >= 0) list.splice(at, 1);
         return;
       }
+      case "set-sanctions": {
+        const me = this.requirePlayer();
+        if (!this.ctx.nationIds.includes(cmd.against)) {
+          throw new Error(`sanctions: unknown nation ${cmd.against}`);
+        }
+        const event = cmd.active
+          ? imposeSanctions(
+              this.ctx,
+              this.diplomacy,
+              this.economy,
+              me,
+              cmd.against,
+              date,
+            )
+          : liftSanctions(
+              this.ctx,
+              this.diplomacy,
+              this.economy,
+              me,
+              cmd.against,
+            );
+        if (event !== null) this.record(date, event);
+        return;
+      }
+      case "declare-war": {
+        const me = this.requirePlayer();
+        const event = declareWar(
+          this.ctx,
+          this.diplomacy,
+          this.politics,
+          this.military,
+          this.scenario,
+          me,
+          cmd.target,
+          cmd.casusBelli,
+          date,
+        );
+        this.record(date, event);
+        return;
+      }
+      case "raise-division": {
+        const me = this.requirePlayer();
+        const cap = this.diplomacy.demilitarized.find((d) => d.nation === me);
+        raiseDivision(
+          this.ctx,
+          this.military.nations[me],
+          cmd.template,
+          cap?.maxDivisions ?? null,
+        );
+        return;
+      }
+      case "disband-division":
+        disbandDivision(
+          this.military.nations[this.requirePlayer()],
+          cmd.division,
+        );
+        return;
+      case "assign-division":
+        assignDivision(
+          this.military.nations[this.requirePlayer()],
+          cmd.division,
+          cmd.front,
+          cmd.segment,
+        );
+        return;
+      case "set-posture":
+        setPosture(
+          this.military.nations[this.requirePlayer()],
+          cmd.division,
+          cmd.posture,
+        );
+        return;
+      case "set-conscription": {
+        const me = this.requirePlayer();
+        setConscription(
+          this.ctx,
+          this.military.nations[me],
+          this.sheets.get(me)!.population.value,
+          cmd.level,
+        );
+        return;
+      }
+      case "propose-peace":
+      case "answer-peace":
+        throw new Error(
+          `${cmd.type}: peace arrives with the fronts (J3 step 6)`,
+        );
     }
   }
 
@@ -235,8 +365,8 @@ export class VeritableSimImpl implements VeritableSim {
       this.calendar.startDate,
       this.calendar.elapsedGameMinutes,
     );
-    // Domain systems push what happened into `pending` while the clocks run.
-    this.pending = [];
+    // Domain systems push what happened into `pending` while the clocks run;
+    // events of the commands applied since the last advance are already there.
     for (const tick of this.scheduler.run(
       this.calendar.startDate,
       before,
@@ -277,17 +407,36 @@ export class VeritableSimImpl implements VeritableSim {
 
   read(): ReadonlyWorldView {
     this.assertInitialized();
+    const player = this.playerNationId();
+    const casusBelli: Record<NationId, string[]> = {};
+    if (player !== null) {
+      for (const id of this.ctx.nationIds) {
+        if (id === player) continue;
+        casusBelli[id] = availableCasusBelli(
+          this.ctx,
+          this.diplomacy,
+          this.politics,
+          this.scenario,
+          player,
+          id,
+        );
+      }
+    }
     return {
       seed: this.seed,
       date: this.calendar.date,
       elapsedGameMinutes: this.calendar.elapsedGameMinutes,
       speed: this.calendar.speed,
-      playerNation: this.playerNationId(),
+      playerNation: player,
       nations: this.nations,
       journal: this.journal,
       market: this.economy.market,
       economies: this.economy.nations,
       politics: this.politics.nations,
+      diplomacy: this.diplomacy,
+      military: this.military,
+      fronts: this.frontViews(),
+      casusBelli,
     };
   }
 
@@ -301,6 +450,7 @@ export class VeritableSimImpl implements VeritableSim {
         this.sheets.get(id),
         this.economy.nations[id],
         this.politics.nations[id],
+        this.military.nations[id]?.exhaustion ?? 0,
       );
       for (const event of events) this.record(clock.date, event);
     }
@@ -339,17 +489,58 @@ export class VeritableSimImpl implements VeritableSim {
     }
   }
 
+  private diplomacyMonth(clock: ClockContext): void {
+    for (const id of this.ctx.nationIds) {
+      stepMilitaryMonth(
+        this.ctx,
+        this.military.nations[id],
+        this.sheets.get(id)!,
+        this.economy.nations[id],
+        this.politics.nations[id],
+        enemiesOf(this.diplomacy, id).length > 0,
+      );
+    }
+    const events = stepDiplomacyMonth(
+      this.ctx,
+      this.diplomacy,
+      this.economy,
+      this.military,
+      this.rng,
+      clock.date,
+      this.aiNations(),
+    );
+    for (const event of events) this.record(clock.date, event);
+  }
+
   // An event of a domain: returned by advance(), and written in the journal.
   private record(date: string, event: DomainEvent): void {
     this.pending.push({ ...event, date } as SimEvent);
-    const params: Record<string, string> =
-      event.type === "bloc-reprimand"
-        ? {
-            bloc: event.bloc,
-            deficit: (event.deficitToGdp * 100).toFixed(1),
-            debt: (event.debtToGdp * 100).toFixed(0),
-          }
-        : {};
+    let params: Record<string, string> = {};
+    switch (event.type) {
+      case "bloc-reprimand":
+        params = {
+          bloc: event.bloc,
+          deficit: (event.deficitToGdp * 100).toFixed(1),
+          debt: (event.debtToGdp * 100).toFixed(0),
+        };
+        break;
+      case "war-declared":
+        params = {
+          target: event.target,
+          casusBelli: event.casusBelli ?? "none",
+          war: event.war,
+        };
+        break;
+      case "war-joined":
+        params = { war: event.war, against: event.against };
+        break;
+      case "sanctions-imposed":
+      case "sanctions-lifted":
+        params = { by: event.by };
+        break;
+      default:
+        break;
+    }
     this.journal.push({ date, kind: event.type, nation: event.nation, params });
   }
 
@@ -372,14 +563,32 @@ export class VeritableSimImpl implements VeritableSim {
     return this.nations.find((n) => n.isPlayer)?.id ?? null;
   }
 
-  private playerEconomy() {
+  private requirePlayer(): NationId {
     const id = this.playerNationId();
     if (id === null) throw new Error("no player nation");
-    return this.economy.nations[id];
+    return id;
+  }
+
+  // Nations run by the AI rules: everyone but the player, or everyone when
+  // nobody plays (headless autopilot).
+  private aiNations(): NationId[] {
+    const player = this.playerNationId();
+    return this.ctx.nationIds.filter(
+      (id) => id !== player || this.politics.autopilot,
+    );
+  }
+
+  private playerEconomy() {
+    return this.economy.nations[this.requirePlayer()];
   }
 
   private nationIds(): NationId[] {
     return this.nations.map((n) => n.id);
+  }
+
+  // Fronts arrive with step 6 of the J3 (war/fronts.ts).
+  private frontViews(): FrontView[] {
+    return [];
   }
 
   private refreshTileCounts(): void {

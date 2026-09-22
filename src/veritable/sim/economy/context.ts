@@ -4,6 +4,7 @@ import { VeritableConfig } from "../../data/schemas/config";
 import { Good, GoodId } from "../../data/schemas/goods";
 import { NationData } from "../../data/schemas/nation";
 import { ROW_ID, RowData } from "../../data/schemas/row";
+import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
 import { greatCircleKm } from "./trade";
 
 // Static data of a campaign, injected into the simulation (never imported by
@@ -12,6 +13,8 @@ export interface SimData {
   goods: Good[];
   row: RowData;
   blocs: Bloc[];
+  divisions: DivisionTemplate[];
+  casusBelli: CasusBelli[];
   geography: {
     landNeighbours: [NationId, NationId][];
     bordersNeutralLand: NationId[];
@@ -24,7 +27,11 @@ export interface EconomyContext {
   goods: Good[];
   good(id: GoodId): Good;
   blocs: Bloc[];
+  divisions: DivisionTemplate[];
+  template(id: string): DivisionTemplate;
+  casusBelli: CasusBelli[];
   nationIds: NationId[];
+  sheet(id: NationId): NationData;
   // Affinity of a trade pair for a good, embargoes excluded: distance decay,
   // land adjacency for electricity, bloc and agreement bonuses. 0 = no trade.
   affinity(good: Good, exporter: string, importer: string): number;
@@ -63,6 +70,11 @@ export function buildContext(
   };
   const decay = new Map<string, number>();
 
+  const byTemplate = new Map<string, DivisionTemplate>(
+    data.divisions.map((d) => [d.id, d]),
+  );
+  const sheets = new Map(nations.map((n) => [n.id, n]));
+
   return {
     config,
     goods: data.goods,
@@ -72,7 +84,19 @@ export function buildContext(
       return good;
     },
     blocs: data.blocs,
+    divisions: data.divisions,
+    template: (id) => {
+      const template = byTemplate.get(id);
+      if (template === undefined) throw new Error(`unknown division ${id}`);
+      return template;
+    },
+    casusBelli: data.casusBelli,
     nationIds: nations.map((n) => n.id),
+    sheet: (id) => {
+      const sheet = sheets.get(id);
+      if (sheet === undefined) throw new Error(`no nation sheet for ${id}`);
+      return sheet;
+    },
     affinity(good, exporter, importer) {
       if (exporter === importer) return 0;
       if (

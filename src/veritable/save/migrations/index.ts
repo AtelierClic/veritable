@@ -8,6 +8,7 @@ import {
 } from "../../data/schemas/save";
 import { SaveFileV1, SaveHeaderV1Schema } from "../../data/schemas/saveV1";
 import { SaveFileV2, SaveHeaderV2Schema } from "../../data/schemas/saveV2";
+import { Scenario } from "../../data/schemas/scenario";
 import { SimData } from "../../sim/economy/context";
 import { v1ToV2 } from "./v1-to-v2";
 import { v2ToV3 } from "./v2-to-v3";
@@ -26,6 +27,9 @@ export interface MigrationContext {
   config: VeritableConfig;
   data: SimData;
   nationData: (id: NationId) => NationData | undefined;
+  // The scenario of the campaign (its wars and contested regions), when the
+  // caller knows it.
+  scenario?: Scenario;
 }
 
 // One entry per change of shape of the save: `from` N produces N + 1.
@@ -65,8 +69,13 @@ export const MIGRATIONS: Migration[] = [
   },
   {
     from: 2,
-    migrate(save) {
-      return v2ToV3(save as unknown as SaveFileV2) as VersionedSave;
+    migrate(save, context) {
+      if (context === undefined) {
+        throw new MigrationError(
+          "migration v2 -> v3 needs the campaign data (MigrationContext)",
+        );
+      }
+      return v2ToV3(save as unknown as SaveFileV2, context) as VersionedSave;
     },
   },
 ];

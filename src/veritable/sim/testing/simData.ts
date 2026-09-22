@@ -2,7 +2,65 @@ import { Bloc } from "../../data/schemas/bloc";
 import { NationId } from "../../data/schemas/common";
 import { Good, GOOD_IDS, GoodId } from "../../data/schemas/goods";
 import { RowData } from "../../data/schemas/row";
+import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
 import { SimData } from "../economy/context";
+
+// The real templates and catalogue: they are data, not balancing of a test.
+export const TEST_DIVISIONS: DivisionTemplate[] = [
+  {
+    id: "infantry",
+    name: "division.infantry",
+    attack: 1,
+    defense: 1.5,
+    men: 15000,
+    arms: 1,
+  },
+  {
+    id: "mechanized",
+    name: "division.mechanized",
+    attack: 2,
+    defense: 2,
+    men: 15000,
+    arms: 3,
+  },
+  {
+    id: "armored",
+    name: "division.armored",
+    attack: 3,
+    defense: 1.5,
+    men: 12000,
+    arms: 5,
+  },
+  {
+    id: "artillery",
+    name: "division.artillery",
+    attack: 2.5,
+    defense: 1,
+    men: 10000,
+    arms: 3,
+  },
+];
+export const TEST_CASUS_BELLI: CasusBelli[] = [
+  {
+    id: "contested-territory",
+    name: "casus.contested-territory",
+    check: "contested-territory",
+    relationsCost: 5,
+  },
+  {
+    id: "ally-attacked",
+    name: "casus.ally-attacked",
+    check: "ally-attacked",
+    relationsCost: 5,
+  },
+  {
+    id: "humanitarian",
+    name: "casus.humanitarian",
+    check: "humanitarian",
+    relationsCost: 5,
+  },
+  { id: "none", name: "casus.none", check: "none", relationsCost: 15 },
+];
 
 const RENT: GoodId[] = ["oil", "gas", "coal", "critical-minerals"];
 const INDUSTRIAL: GoodId[] = [
@@ -79,6 +137,8 @@ export function testSimData(
     goods: options.goods ?? testGoods(),
     row: options.row ?? testRow(),
     blocs: options.blocs ?? [],
+    divisions: TEST_DIVISIONS,
+    casusBelli: TEST_CASUS_BELLI,
     geography: {
       landNeighbours: options.landNeighbours ?? [],
       bordersNeutralLand: options.bordersNeutralLand ?? nations,

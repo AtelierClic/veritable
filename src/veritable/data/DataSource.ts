@@ -6,6 +6,12 @@ import { Good, GoodsSchema } from "./schemas/goods";
 import { NationData, NationDataSchema } from "./schemas/nation";
 import { RowData, RowSchema } from "./schemas/row";
 import { Scenario, ScenarioSchema } from "./schemas/scenario";
+import {
+  CasusBelli,
+  CasusBelliCatalogueSchema,
+  DivisionTemplate,
+  DivisionTemplatesSchema,
+} from "./schemas/war";
 
 // Access to data/veritable/, validated. Two implementations of the raw file
 // access exist behind it:
@@ -37,6 +43,8 @@ export interface DataSource {
   goods(): Good[];
   row(): RowData;
   blocs(): Bloc[];
+  divisions(): DivisionTemplate[];
+  casusBelli(): CasusBelli[];
   scenarioIds(): string[];
   scenario(id: string): Scenario;
   nation(id: NationId): NationData;
@@ -67,6 +75,14 @@ export function createDataSource(files: RawDataFiles): DataSource {
           .list("blocs", ".json")
           .sort()
           .map((path) => BlocSchema.parse(files.json(path))),
+      ),
+    divisions: () =>
+      once("divisions", () =>
+        DivisionTemplatesSchema.parse(files.json("war/divisions.json")),
+      ),
+    casusBelli: () =>
+      once("casusBelli", () =>
+        CasusBelliCatalogueSchema.parse(files.json("war/casus-belli.json")),
       ),
     scenarioIds: () =>
       files

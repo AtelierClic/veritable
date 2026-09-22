@@ -17,10 +17,13 @@ function context(): MigrationContext {
   return {
     config: dataSource.config(),
     nationData: (id) => dataSource.nation(id),
+    scenario,
     data: {
       goods: dataSource.goods(),
       row: dataSource.row(),
       blocs: dataSource.blocs(),
+      divisions: dataSource.divisions(),
+      casusBelli: dataSource.casusBelli(),
       geography: {
         landNeighbours: meta.landNeighbours,
         bordersNeutralLand: meta.bordersNeutralLand,

@@ -14,6 +14,7 @@ import {
 //   events, diplomacy                  1 / game day
 //   politics (opinion, stability)      1 / game week
 //   politics (elections, laws, budget) 1 / game month
+//   diplomacy (reaction, military)     1 / game month
 //   blocs                              1 / game month
 //   save (autosave)                    1 / game month
 //
@@ -61,7 +62,7 @@ export const NULL_PROBE: PerfProbe = {
 const CLOCKS: Record<ClockKind, readonly Domain[]> = {
   day: ["economy", "events", "diplomacy"],
   week: ["politics"],
-  month: ["economy", "politics", "blocs", "save"],
+  month: ["economy", "politics", "diplomacy", "blocs", "save"],
 };
 
 export interface SchedulerTick {

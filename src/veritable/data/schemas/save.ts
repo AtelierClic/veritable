@@ -29,6 +29,16 @@ export const JOURNAL_KINDS_V3 = [
   "austerity-ended",
   "sovereign-default",
   "bloc-reprimand",
+  "war-declared",
+  "war-joined",
+  "sanctions-imposed",
+  "sanctions-lifted",
+  "peace-offered",
+  "peace-refused",
+  "peace-signed",
+  "annexation",
+  "landing-refused",
+  "landing",
 ] as const;
 export const JournalEntryV3Schema = z.object({
   date: IsoDateSchema,
@@ -136,6 +146,127 @@ export const PoliticsStateSchema = z.object({
 });
 export type PoliticsState = z.infer<typeof PoliticsStateSchema>;
 
+// --- diplomacy (J3a) ---------------------------------------------------------
+
+export const PeaceTermsSchema = z.object({
+  // ceasefire: everyone keeps what it holds, no transfer; cession: the tiles
+  // the winner holds stay with it, tagged contested; annexation: every tile
+  // of the loser goes to the winner, the loser is exiled.
+  kind: z.enum(["ceasefire", "cession", "annexation"]),
+  reparationsPctGdp: zb.float(), // of the payer's GDP, per year
+  reparationYears: zb.uint(),
+  maxDivisions: zb.uint().nullable(), // demilitarisation of the loser
+});
+export type PeaceTerms = z.infer<typeof PeaceTermsSchema>;
+
+export const PeaceOfferSchema = z.object({
+  id: zb.uint(),
+  war: z.string(),
+  from: NationIdSchema,
+  to: NationIdSchema,
+  terms: PeaceTermsSchema,
+  date: IsoDateSchema,
+});
+export type PeaceOffer = z.infer<typeof PeaceOfferSchema>;
+
+export const WarSchema = z.object({
+  id: z.string().min(1),
+  aggressors: z.array(NationIdSchema),
+  defenders: z.array(NationIdSchema),
+  casusBelli: z.string().nullable(), // id of the catalogue; null = none
+  since: IsoDateSchema,
+  // False for a war the scenario starts with: the world has priced it in.
+  declaredInCampaign: z.boolean(),
+  // Per belligerent: war score, months in a row spent losing tiles, tiles
+  // taken since the start.
+  score: z.record(z.string(), zb.float()),
+  retreatMonths: z.record(z.string(), zb.uint()),
+  tilesTaken: z.record(z.string(), zb.uint()),
+  offers: z.array(PeaceOfferSchema),
+});
+export type War = z.infer<typeof WarSchema>;
+
+export const SanctionSchema = z.object({
+  by: NationIdSchema,
+  against: NationIdSchema,
+  since: IsoDateSchema,
+});
+export type Sanction = z.infer<typeof SanctionSchema>;
+
+export const DiplomacyStateSchema = z.object({
+  // relations[a][b] for a < b (ids compared as strings), in [-100, 100].
+  relations: z.record(z.string(), z.record(z.string(), zb.float())),
+  wars: z.array(WarSchema),
+  sanctions: z.array(SanctionSchema),
+  // Coalition calls open against an aggressor: months left to answer.
+  coalitionCalls: z.array(
+    z.object({
+      war: z.string(),
+      nation: NationIdSchema,
+      monthsLeft: zb.uint(),
+    }),
+  ),
+  // Regions created by cessions, claimed by the loser.
+  contestedRegions: z.array(
+    z.object({
+      region: z.string(),
+      controller: NationIdSchema,
+      claimants: z.array(NationIdSchema),
+      tiles: zb.uint(),
+    }),
+  ),
+  reparations: z.array(
+    z.object({
+      from: NationIdSchema,
+      to: NationIdSchema,
+      pctGdp: zb.float(),
+      until: IsoDateSchema,
+    }),
+  ),
+  demilitarized: z.array(
+    z.object({ nation: NationIdSchema, maxDivisions: zb.uint() }),
+  ),
+  nextOfferId: zb.uint(),
+  nextWarId: zb.uint(),
+});
+export type DiplomacyState = z.infer<typeof DiplomacyStateSchema>;
+
+// --- military (J3a) ----------------------------------------------------------
+
+export const DivisionSchema = z.object({
+  id: zb.uint(),
+  template: z.string(),
+  men: zb.float(),
+  equipment: zb.float(), // 0..1
+  training: zb.float(),
+  // Assignment: a front (id "A|B", ids sorted), optionally one of its
+  // segments; null = reserve.
+  front: z.string().nullable(),
+  segment: zb.uint().nullable(),
+  posture: z.enum(["defend", "attack", "breakthrough"]),
+});
+export type Division = z.infer<typeof DivisionSchema>;
+
+export const NationMilitarySchema = z.object({
+  conscription: z.enum(["peace", "partial", "total"]),
+  manpower: zb.float(), // men available in the pool
+  divisions: z.array(DivisionSchema),
+  nextDivisionId: zb.uint(),
+  exhaustion: zb.float(), // 0..1
+  training: zb.float(), // of new divisions
+  losses: zb.float(), // men, cumulative
+  lossesLastMonth: zb.float(),
+  // Air and naval power of the sheet, scaled by the arms coverage in play.
+  airPower: zb.float(),
+  navalPower: zb.float(),
+});
+export type NationMilitary = z.infer<typeof NationMilitarySchema>;
+
+export const MilitaryStateSchema = z.object({
+  nations: z.record(z.string(), NationMilitarySchema),
+});
+export type MilitaryState = z.infer<typeof MilitaryStateSchema>;
+
 export const SaveHeaderV3Schema = zb.object({
   schemaVersion: z.literal(3),
   seed: zb.uint(),
@@ -146,6 +277,8 @@ export const SaveHeaderV3Schema = zb.object({
   world: WorldStateSchema,
   economy: EconomyStateSchema,
   politics: PoliticsStateSchema,
+  diplomacy: DiplomacyStateSchema,
+  military: MilitaryStateSchema,
   journal: z.array(JournalEntryV3Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),

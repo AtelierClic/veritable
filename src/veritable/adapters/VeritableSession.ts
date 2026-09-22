@@ -61,13 +61,19 @@ export class VeritableSession {
       world: bridge,
       data: pack.data,
       nationData,
+      scenario: pack.scenario,
       perf: probe,
       autopilot: options.autopilot,
     });
     if (saveBytes !== undefined) {
       sim.restore(
         decodeSave(saveBytes, {
-          context: { config, data: pack.data, nationData },
+          context: {
+            config,
+            data: pack.data,
+            nationData,
+            scenario: pack.scenario,
+          },
         }),
       );
     } else {

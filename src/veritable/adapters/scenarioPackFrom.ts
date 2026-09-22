@@ -24,6 +24,8 @@ export async function loadScenarioPackFrom(
       goods: source.goods(),
       row: source.row(),
       blocs: source.blocs(),
+      divisions: source.divisions(),
+      casusBelli: source.casusBelli(),
       geography: {
         landNeighbours: meta.landNeighbours,
         bordersNeutralLand: meta.bordersNeutralLand,

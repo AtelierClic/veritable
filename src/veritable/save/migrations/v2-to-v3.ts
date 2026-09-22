@@ -1,5 +1,9 @@
 import { SaveFileV3 } from "../../data/schemas/save";
 import { SaveFileV2 } from "../../data/schemas/saveV2";
+import { initDiplomacy } from "../../sim/diplomacy/diplomacy";
+import { buildContext } from "../../sim/economy/context";
+import { initMilitary } from "../../sim/war/military";
+import { MigrationContext } from "./index";
 
 // v2 (J2) -> v3 (J3). Everything of the v2 is kept; the v3 adds:
 //   - economy: value of the exports really sold and its reference share of
@@ -7,12 +11,36 @@ import { SaveFileV2 } from "../../data/schemas/saveV2";
 //     (equal to the world prices: no premium until the next flows), and the
 //     production the rest of the world really delivers (its capacity);
 //   - politics: the counters of the revised bloc fiscal rule (the malus in
-//     force is kept as it was: full when reprimanded, none otherwise).
-// Nothing is recomputed from the sheets: a v2 campaign carries its economy.
+//     force is kept as it was: full when reprimanded, none otherwise);
+//   - diplomacy and military: built from the sheets and the scenario like a
+//     new campaign (a v2 campaign had neither).
+// The economy is not recomputed: a v2 campaign carries its own.
 //
-// Fields are only added when absent: the v1 -> v2 step builds the economy
-// with the current code, whose objects already carry them.
-export function v2ToV3(save: SaveFileV2): SaveFileV3 {
+// Economy and politics fields are only added when absent: the v1 -> v2 step
+// builds them with the current code, whose objects already carry them.
+export function v2ToV3(
+  save: SaveFileV2,
+  context: MigrationContext,
+): SaveFileV3 {
+  const sheets = save.nations.map((nation) => {
+    const data = context.nationData(nation.id);
+    if (data === undefined) {
+      throw new Error(`migration v2 -> v3: no nation sheet for ${nation.id}`);
+    }
+    return data;
+  });
+  const ctx = buildContext(context.config, context.data, sheets);
+  const ids = save.nations.map((n) => n.id);
+  const scenario = context.scenario ?? {
+    id: "save",
+    map: "save",
+    startDate: save.calendar.startDate,
+    nations: ids,
+    borders: { source: "save", rasterized: "save" },
+    contested: [],
+    wars: [],
+    playerDefault: save.nations.find((n) => n.isPlayer)?.id ?? ids[0],
+  };
   const { market } = save.economy;
   const malusOf = (id: string): number => {
     let malus = 0;
@@ -71,6 +99,8 @@ export function v2ToV3(save: SaveFileV2): SaveFileV3 {
       nations: economyNations,
     },
     politics: { ...save.politics, nations: politicsNations },
+    diplomacy: initDiplomacy(ctx, scenario),
+    military: initMilitary(ctx, sheets),
   };
 }
 
