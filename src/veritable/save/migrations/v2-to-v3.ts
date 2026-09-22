@@ -2,6 +2,7 @@ import { SaveFileV3 } from "../../data/schemas/save";
 import { SaveFileV2 } from "../../data/schemas/saveV2";
 import { initDiplomacy } from "../../sim/diplomacy/diplomacy";
 import { buildContext } from "../../sim/economy/context";
+import { initNaval } from "../../sim/naval/naval";
 import { initMilitary } from "../../sim/war/military";
 import { MigrationContext } from "./index";
 
@@ -66,6 +67,8 @@ export function v2ToV3(
           exportsValue,
           exportShareReference:
             extended.exportShareReference ?? exportsValue / nation.gdp,
+          strikeDamage: extended.strikeDamage ?? 0,
+          maritimeTradeValue: extended.maritimeTradeValue ?? 0,
         },
       ];
     }),
@@ -101,6 +104,7 @@ export function v2ToV3(
     politics: { ...save.politics, nations: politicsNations },
     diplomacy: initDiplomacy(ctx, scenario),
     military: initMilitary(ctx, sheets),
+    naval: initNaval(),
   };
 }
 

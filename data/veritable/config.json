@@ -18,9 +18,9 @@
     "rowGrowthPerYear": 0.025,
     "agreementBonus": 1.25,
     "sanctionDiscount": 0.4,
-    "rationingPasses": 3,
+    "rationingPasses": 6,
     "rowSupplyLagMonths": 18,
-    "scarcityPremium": 3,
+    "scarcityPremium": 3.5,
     "exportReferenceAdaptMonths": 60,
     "growth": {
       "alpha": 0.02,
@@ -253,6 +253,23 @@
       "totalConscriptionWhenLosingShare": 0.1,
       "retreatMonthsForTotal": 3
     }
+  },
+  "naval": {
+    "shipWeight": 0.1,
+    "portWeight": 0.05,
+    "landingControl": 0.5,
+    "landingRadius": 6
+  },
+  "air": {
+    "segmentWeight": 0.5,
+    "strikeShare": 0.1,
+    "strikeDecayPerMonth": 0.5
+  },
+  "logistics": {
+    "base": 2,
+    "perStructure": 2,
+    "infrastructureScale": 50,
+    "range": 40
   },
   "ai": {
     "fiscal": {

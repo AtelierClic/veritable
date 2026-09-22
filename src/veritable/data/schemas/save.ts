@@ -94,6 +94,11 @@ export const NationEconomySchema = z.object({
   noDeficitUntil: IsoDateSchema.nullable(),
   defaults: zb.uint(),
   armsShort: z.boolean(), // read by the J3a divisions
+  // Share of the industrial capacity and supply lost to enemy air strikes
+  // (J3b), decaying; value of the trade that went by sea last month (US$ per
+  // year), what a blockade bites into.
+  strikeDamage: zb.float(),
+  maritimeTradeValue: zb.float(),
 });
 export type NationEconomy = z.infer<typeof NationEconomySchema>;
 
@@ -272,6 +277,20 @@ export const MilitaryStateSchema = z.object({
 });
 export type MilitaryState = z.infer<typeof MilitaryStateSchema>;
 
+// --- navy (J3b) ------------------------------------------------------------------
+
+export const NavalStateSchema = z.object({
+  // Where each nation projects its naval power: zone -> share (sum <= 1).
+  // Empty = spread over its own coastal zones.
+  deployments: z.record(z.string(), z.record(z.string(), zb.float())),
+  // Last computed control of each zone: nation -> share of the presence.
+  control: z.record(z.string(), z.record(z.string(), zb.float())),
+  // Last computed blockade of each nation: share of the enemy control of
+  // its coastal zones, 0..1.
+  blockade: z.record(z.string(), zb.float()),
+});
+export type NavalState = z.infer<typeof NavalStateSchema>;
+
 export const SaveHeaderV3Schema = zb.object({
   schemaVersion: z.literal(3),
   seed: zb.uint(),
@@ -284,6 +303,7 @@ export const SaveHeaderV3Schema = zb.object({
   politics: PoliticsStateSchema,
   diplomacy: DiplomacyStateSchema,
   military: MilitaryStateSchema,
+  naval: NavalStateSchema,
   journal: z.array(JournalEntryV3Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),

@@ -5,7 +5,12 @@ import {
   TILE_NATION_MASK,
   WorldState,
 } from "../../data/schemas/save";
-import { FrontGeometry, TileGrid, WorldPort } from "../VeritableSim";
+import {
+  FrontGeometry,
+  NavalSnapshot,
+  TileGrid,
+  WorldPort,
+} from "../VeritableSim";
 import {
   captureAlong,
   frontTiles,
@@ -15,7 +20,8 @@ import {
 } from "../war/geometry";
 
 // In-memory WorldPort: a tiled world without the OpenFront core. Used by the
-// simulation and save tests. Every tile is land; terrain is plains unless set.
+// simulation and save tests. Every tile is land; terrain is plains unless set;
+// the sea is whatever the test declares (setNaval).
 export class MemoryWorld implements WorldPort {
   private owners: (NationId | null)[];
   private fallout: boolean[];
@@ -23,6 +29,10 @@ export class MemoryWorld implements WorldPort {
   private terrain: Terrain[];
   private structures = new Map<number, number>(); // tile -> defence multiplier
   private segments = new Map<string, number[][]>(); // front id -> segment tiles
+  private sea: NavalSnapshot = { coast: {}, ports: {}, ships: {} };
+  // Zone a landing on each nation aims at, and the tiles it takes.
+  private landingZones: Record<NationId, string> = {};
+  landings: { attacker: NationId; target: NationId; radius: number }[] = [];
   coreStart: unknown = { memory: true };
 
   constructor(
@@ -58,6 +68,11 @@ export class MemoryWorld implements WorldPort {
   // A defensive structure: its multiplier applies to the tiles within range.
   setStructure(tile: number, multiplier: number): void {
     this.structures.set(tile, multiplier);
+  }
+
+  setNaval(sea: NavalSnapshot, landingZones: Record<NationId, string> = {}) {
+    this.sea = sea;
+    this.landingZones = landingZones;
   }
 
   // Gives every tile of `from` to `to` (or to nobody).
@@ -158,11 +173,13 @@ export class MemoryWorld implements WorldPort {
         b: id.split("|")[1],
         segments: segments.map((s) => {
           const defense: Record<NationId, number> = {};
+          const supply: Record<NationId, number> = {};
           for (const n of nations) {
             // A structure of n within 2 tiles of a tile n holds here.
             let covered = 0;
             let held = 0;
             let bonus = 1;
+            let near = 0;
             for (const tile of s.tiles) {
               if (this.owners[tile] !== n) continue;
               held++;
@@ -179,14 +196,18 @@ export class MemoryWorld implements WorldPort {
                 }
               }
             }
+            for (const [at] of this.structures) {
+              if (this.owners[at] === n) near++;
+            }
             defense[n] = held === 0 ? 1 : 1 + (bonus - 1) * (covered / held);
+            supply[n] = near;
           }
           return {
             index: s.index,
             tiles: s.tiles.length,
             terrain: s.terrain,
             defense,
-            supply: Object.fromEntries(nations.map((n) => [n, 0])),
+            supply,
           };
         }),
       });
@@ -211,5 +232,29 @@ export class MemoryWorld implements WorldPort {
       this.fallout[tile] = false;
     });
     return taken.length;
+  }
+
+  // --- sea ------------------------------------------------------------------------
+
+  naval(): NavalSnapshot {
+    return this.sea;
+  }
+
+  landingZone(_attacker: NationId, target: NationId): string | null {
+    return this.landingZones[target] ?? null;
+  }
+
+  // The beachhead: the first `radius` tiles of the target, at once.
+  launchLanding(attacker: NationId, target: NationId, radius: number): boolean {
+    if (this.landingZones[target] === undefined) return false;
+    this.landings.push({ attacker, target, radius });
+    let taken = 0;
+    for (let i = 0; i < this.owners.length && taken < radius; i++) {
+      if (this.owners[i] !== target) continue;
+      this.owners[i] = attacker;
+      this.contested[i] = true;
+      taken++;
+    }
+    return true;
   }
 }

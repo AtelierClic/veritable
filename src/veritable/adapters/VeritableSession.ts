@@ -52,7 +52,14 @@ export class VeritableSession {
     // First: it checks that the scenario was rasterized for this very map.
     game.setUnclaimableTiles(unclaimableMask(game, pack));
     const bindings = bindScenario(game, pack, playerNation);
-    const bridge = new CoreBridge(game, bindings, coreStart, config.war);
+    const bridge = new CoreBridge(
+      game,
+      bindings,
+      coreStart,
+      config.war,
+      pack.zones,
+      config.naval,
+    );
 
     const probe = new PerformanceProbe();
     const nationData = (id: string) => pack.nations.find((n) => n.id === id);

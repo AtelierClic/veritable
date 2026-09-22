@@ -56,6 +56,7 @@ function testPack(width = 200, height = 200): ScenarioPack {
     scenario: testScenario(ids),
     nations: ids.map((id) => testNation(id)),
     borders: { width, height, nations: ids, tiles },
+    zones: { width, height, zones: [], tiles: new Uint16Array(width * height) },
     data: testSimData(ids),
     meta: {
       scenario: "test",

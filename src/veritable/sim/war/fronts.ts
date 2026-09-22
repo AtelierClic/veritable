@@ -32,9 +32,9 @@ import { divisionStrength } from "./military";
 // in proportion to the threat they face.
 
 export interface Multipliers {
-  // Per nation: supply and air factors applied to its force on the front
-  // against a given enemy (1 until J3b).
-  supply(nation: NationId, front: FrontGeometry, segment: number): number;
+  // Per nation: supply factor of its `divisions` engaged on a segment
+  // (logistics, J3b) and air factor against a given enemy (air, J3b).
+  supply(nation: NationId, segment: SegmentGeometry, divisions: number): number;
   air(nation: NationId, enemy: NationId): number;
 }
 
@@ -238,7 +238,11 @@ function sideState(
   }
   for (const division of army.pool)
     engaged.push({ division, share: poolShare });
-  const supply = multipliers.supply(nation, front, segment.index);
+  const supply = multipliers.supply(
+    nation,
+    segment,
+    engaged.reduce((sum, e) => sum + e.share, 0),
+  );
   const air = multipliers.air(nation, enemy);
   let force = 0;
   let attacking = false;

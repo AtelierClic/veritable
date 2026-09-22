@@ -134,6 +134,8 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     noDeficitUntil: null,
     defaults: 0,
     armsShort: false,
+    strikeDamage: 0,
+    maritimeTradeValue: 0,
   };
 }
 

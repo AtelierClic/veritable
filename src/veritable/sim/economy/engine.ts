@@ -37,7 +37,9 @@ export function effectiveProduction(
   if (good.industrial) {
     const lack = 1 - nation.coverage.electricity;
     return (
-      capacity * (1 - ctx.config.economy.electricityShortageOnIndustry * lack)
+      capacity *
+      (1 - ctx.config.economy.electricityShortageOnIndustry * lack) *
+      (1 - nation.strikeDamage)
     );
   }
   return capacity;
@@ -93,6 +95,10 @@ export function stepPrices(ctx: EconomyContext, state: EconomyState): void {
 export function stepTrade(
   ctx: EconomyContext,
   state: EconomyState,
+  // Share of the flows of a pair that trades by sea that gets through
+  // (blockades, J3b): what does not is neither delivered nor sold, and
+  // leaves the supply that forms the price.
+  maritime: (exporter: string, importer: string) => number = () => 1,
 ): MonthlyTrade {
   const { market } = state;
   const cfg = ctx.config.economy;
@@ -103,6 +109,7 @@ export function stepTrade(
   const importsValue: Record<string, number> = {};
   const rentsValue: Record<string, number> = {};
   const exportsValue: Record<string, number> = {};
+  const maritimeValue: Record<string, number> = {};
   // Price each nation paid for its basket, weighted by consumption.
   const basket: Record<string, number> = {};
   const basketBase: Record<string, number> = {};
@@ -110,6 +117,7 @@ export function stepTrade(
     importsValue[id] = 0;
     rentsValue[id] = 0;
     exportsValue[id] = 0;
+    maritimeValue[id] = 0;
     basket[id] = 0;
     basketBase[id] = 0;
   }
@@ -155,6 +163,34 @@ export function stepTrade(
           : ctx.affinity(good, exporter, importer),
       cfg.rationingPasses,
     );
+    // Blockades: a share of what went by sea is lost at sea. It is neither
+    // delivered nor sold, and it leaves the supply that forms the price.
+    let blockaded = 0;
+    if (good.transport === "normal") {
+      for (const [exporter, row] of flows.delivered) {
+        for (const [importer, volume] of row) {
+          if (ctx.landNeighbours(exporter, importer)) continue;
+          const lost = volume * (1 - maritime(exporter, importer));
+          if (lost > 0) {
+            row.set(importer, volume - lost);
+            flows.received.set(importer, flows.received.get(importer)! - lost);
+            flows.shipped.set(exporter, flows.shipped.get(exporter)! - lost);
+            flows.unsold.set(
+              exporter,
+              (flows.unsold.get(exporter) ?? 0) + lost,
+            );
+            blockaded += lost;
+          }
+          const value = (volume - lost) * price * 1e6;
+          if (maritimeValue[exporter] !== undefined) {
+            maritimeValue[exporter] += value;
+          }
+          if (maritimeValue[importer] !== undefined) {
+            maritimeValue[importer] += value;
+          }
+        }
+      }
+    }
 
     // What the scenario's importers could not get sets the premium they pay
     // over the world price (the "pays a premium elsewhere" of DESIGN.md).
@@ -200,6 +236,7 @@ export function stepTrade(
         rentsValue[id] += (supply - dumped * discount) * price * 1e6;
       }
       if (embargoed) stranded += unsold;
+      void blockaded;
       // The imported share of the basket is paid at the import price.
       const importedShare =
         demand <= 1e-12 ? 0 : Math.min(1, received / demand);
@@ -207,7 +244,7 @@ export function stepTrade(
       basket[id] += nation.consumption[good.id] * paid;
       basketBase[id] += nation.consumption[good.id] * good.basePrice;
     }
-    market.stranded[good.id] = stranded;
+    market.stranded[good.id] = stranded + blockaded;
   }
 
   for (const id of ctx.nationIds) {
@@ -220,6 +257,7 @@ export function stepTrade(
     nation.priceIndex = basketBase[id] > 0 ? basket[id] / basketBase[id] : 1;
     nation.armsShort = nation.coverage.arms < 0.999;
     nation.exportsValue = exportsValue[id];
+    nation.maritimeTradeValue = maritimeValue[id];
   }
   return { importsValue, rentsValue };
 }

@@ -2,6 +2,7 @@ import { Bloc } from "../../data/schemas/bloc";
 import { NationId } from "../../data/schemas/common";
 import { Good, GOOD_IDS, GoodId } from "../../data/schemas/goods";
 import { RowData } from "../../data/schemas/row";
+import { SeaZone } from "../../data/schemas/seas";
 import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
 import { SimData } from "../economy/context";
 
@@ -131,6 +132,7 @@ export function testSimData(
     blocs?: Bloc[];
     landNeighbours?: [NationId, NationId][];
     bordersNeutralLand?: NationId[];
+    seas?: SeaZone[];
   } = {},
 ): SimData {
   return {
@@ -139,6 +141,7 @@ export function testSimData(
     blocs: options.blocs ?? [],
     divisions: TEST_DIVISIONS,
     casusBelli: TEST_CASUS_BELLI,
+    seas: options.seas ?? [],
     geography: {
       landNeighbours: options.landNeighbours ?? [],
       bordersNeutralLand: options.bordersNeutralLand ?? nations,

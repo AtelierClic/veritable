@@ -5,6 +5,7 @@ import { MissileSiloExecution } from "../../core/execution/MissileSiloExecution"
 import { PlayerExecution } from "../../core/execution/PlayerExecution";
 import { PortExecution } from "../../core/execution/PortExecution";
 import { SAMLauncherExecution } from "../../core/execution/SAMLauncherExecution";
+import { TransportShipExecution } from "../../core/execution/TransportShipExecution";
 import {
   Execution,
   Game,
@@ -23,7 +24,13 @@ import {
   TILE_NATION_MASK,
   WorldState,
 } from "../data/schemas/save";
-import { FrontGeometry, TileGrid, WorldPort } from "../sim/VeritableSim";
+import { Zones } from "../data/zonesFile";
+import {
+  FrontGeometry,
+  NavalSnapshot,
+  TileGrid,
+  WorldPort,
+} from "../sim/VeritableSim";
 import {
   captureAlong,
   frontTiles,
@@ -71,9 +78,16 @@ export class CoreBridge implements WorldPort {
     // Whatever recreates this exact core game (OpenFront GameStartInfo).
     coreStart: unknown,
     private readonly war: VeritableConfig["war"],
+    private readonly zones: Zones | null = null,
+    private readonly naval_?: VeritableConfig["naval"],
   ) {
     this.coreStart = canonicalJson(coreStart);
     this.contested = new Uint8Array(game.width() * game.height());
+    if (zones !== null && zones.tiles.length !== this.contested.length) {
+      throw new Error("maritime zones do not match the map");
+    }
+    // Landings take a beachhead around the landing tile (J3b).
+    game.setVeritableLanding((player, tile) => this.beachhead(player, tile));
     for (const b of bindings) {
       this.byNation.set(b.nationId, b.player);
       this.bySmallID.set(b.player.smallID(), b.nationId);
@@ -362,6 +376,143 @@ export class CoreBridge implements WorldPort {
       this.contested[tile] = 1;
     });
     return taken.length;
+  }
+
+  // --- sea ------------------------------------------------------------------------
+
+  private sea: { tick: number; snapshot: NavalSnapshot } | null = null;
+
+  private zoneOfWater(tile: number): string | null {
+    if (this.zones === null) return null;
+    const z = this.zones.tiles[tile];
+    return z === 0 ? null : this.zones.zones[z - 1];
+  }
+
+  // Zones of the water next to a land tile.
+  private zonesAround(tile: number, out: Set<string>): void {
+    for (const n of this.game.neighbors(tile)) {
+      if (!this.game.isWater(n)) continue;
+      const zone = this.zoneOfWater(n);
+      if (zone !== null) out.add(zone);
+    }
+  }
+
+  // Computed once per core tick at most: coasts and ports of every nation,
+  // warships by zone.
+  naval(): NavalSnapshot {
+    const tick = this.game.ticks();
+    if (this.sea !== null && this.sea.tick === tick) return this.sea.snapshot;
+    const coast: Record<NationId, string[]> = {};
+    const ports: Record<NationId, string[]> = {};
+    const ships: Record<string, Record<NationId, number>> = {};
+    if (this.pending === null) {
+      for (const [id, player] of this.byNation) {
+        const zones = new Set<string>();
+        player.borderTiles().forEach((tile) => {
+          if (this.game.isOceanShore(tile)) this.zonesAround(tile, zones);
+        });
+        coast[id] = [...zones].sort();
+        const portZones = new Set<string>();
+        for (const unit of player.units(UnitType.Port)) {
+          if (unit.isActive()) this.zonesAround(unit.tile(), portZones);
+        }
+        ports[id] = [...portZones].sort();
+        for (const unit of player.units(UnitType.Warship)) {
+          if (!unit.isActive()) continue;
+          const zone = this.zoneOfWater(unit.tile());
+          if (zone === null) continue;
+          (ships[zone] ??= {})[id] = (ships[zone][id] ?? 0) + 1;
+        }
+      }
+    }
+    this.sea = { tick, snapshot: { coast, ports, ships } };
+    return this.sea.snapshot;
+  }
+
+  // The landing tile: an enemy port, else the enemy shore nearest to the
+  // attacker's capital (spawn tile).
+  private landingTile(attacker: NationId, target: NationId): number | null {
+    const me = this.byNation.get(attacker);
+    const enemy = this.byNation.get(target);
+    if (me === undefined || enemy === undefined) return null;
+    const from = me.spawnTile() ?? null;
+    const candidates: number[] = [];
+    for (const unit of enemy.units(UnitType.Port)) {
+      if (unit.isActive()) candidates.push(unit.tile());
+    }
+    if (candidates.length === 0) {
+      enemy.borderTiles().forEach((tile) => {
+        if (this.game.isOceanShore(tile)) candidates.push(tile);
+      });
+    }
+    if (candidates.length === 0) return null;
+    if (from === null) return candidates.sort((a, b) => a - b)[0];
+    let best = candidates[0];
+    let bestD = Infinity;
+    for (const tile of candidates) {
+      const d = this.game.manhattanDist(from, tile);
+      if (d < bestD || (d === bestD && tile < best)) {
+        best = tile;
+        bestD = d;
+      }
+    }
+    return best;
+  }
+
+  landingZone(attacker: NationId, target: NationId): string | null {
+    if (this.pending !== null) return null;
+    const tile = this.landingTile(attacker, target);
+    if (tile === null) return null;
+    const zones = new Set<string>();
+    this.zonesAround(tile, zones);
+    return [...zones].sort()[0] ?? null;
+  }
+
+  private pendingBeachheads = new Map<number, number>(); // tile -> radius
+
+  launchLanding(attacker: NationId, target: NationId, radius: number): boolean {
+    if (this.pending !== null) return false;
+    const me = this.byNation.get(attacker);
+    const tile = this.landingTile(attacker, target);
+    if (me === undefined || tile === null) return false;
+    // The legacy transport carries core troops; the beachhead does not use
+    // them, they come back with the boat.
+    const troops = Math.max(1, Math.floor(me.troops() / 10));
+    this.pendingBeachheads.set(tile, radius);
+    this.game.addExecution(new TransportShipExecution(me, tile, troops));
+    return true;
+  }
+
+  // On arrival: the tiles of the defender within `radius` of the landing tile.
+  private beachhead(player: Player, tile: number): void {
+    const radius = this.pendingBeachheads.get(tile) ?? 1;
+    this.pendingBeachheads.delete(tile);
+    const defender = this.game.owner(tile);
+    void defender;
+    const x0 = this.game.x(tile);
+    const y0 = this.game.y(tile);
+    for (let dy = -radius; dy <= radius; dy++) {
+      for (let dx = -radius; dx <= radius; dx++) {
+        const x = x0 + dx;
+        const y = y0 + dy;
+        if (
+          x < 0 ||
+          y < 0 ||
+          x >= this.game.width() ||
+          y >= this.game.height()
+        ) {
+          continue;
+        }
+        const t = this.game.ref(x, y);
+        if (!this.game.isLand(t) || this.game.isImpassable(t)) continue;
+        const owner = this.game.owner(t);
+        if (!owner.isPlayer() || owner === player) continue;
+        if (!this.bySmallID.has(owner.smallID())) continue;
+        player.conquer(t);
+        this.contested[t] = 1;
+      }
+    }
+    this.segments.clear();
   }
 
   transferAll(from: NationId, to: NationId): number {

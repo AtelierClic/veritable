@@ -168,5 +168,18 @@
   "posture.breakthrough": "Percer",
   "peace.ceasefire": "cessez-le-feu",
   "peace.cession": "cession des territoires occupés",
-  "peace.annexation": "annexion totale"
+  "peace.annexation": "annexion totale",
+  "sea.north-atlantic": "Atlantique Nord",
+  "sea.biscay": "Golfe de Gascogne",
+  "sea.channel": "Manche",
+  "sea.north-sea": "Mer du Nord",
+  "sea.baltic": "Baltique",
+  "sea.norwegian-sea": "Mer de Norvège",
+  "sea.barents": "Mer de Barents",
+  "sea.med-west": "Méditerranée occidentale",
+  "sea.med-central": "Méditerranée centrale",
+  "sea.med-east": "Méditerranée orientale",
+  "sea.adriatic": "Adriatique",
+  "sea.aegean": "Mer Égée",
+  "sea.black-sea": "Mer Noire"
 }

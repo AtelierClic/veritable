@@ -72,6 +72,10 @@ export interface MonthRow {
   stability: Record<string, number>;
   shortage: Record<string, number>;
   gasCoverage: Record<string, number>;
+  maritimeTrade: Record<string, number>; // US$ per year
+  blockade: Record<string, number>;
+  tiles: Record<string, number>;
+  exhaustion: Record<string, number>;
 }
 
 export interface CampaignResult {
@@ -117,7 +121,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   const probe = new TimingProbe();
   const sim = new VeritableSimImpl({
     config,
-    world: new BordersWorld(pack.borders),
+    world: new BordersWorld(pack.borders, pack.zones),
     data: pack.data,
     nationData: (id) => pack.nations.find((n) => n.id === id),
     perf: probe,
@@ -158,6 +162,12 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       stability: pick((id) => view.politics[id].stability),
       shortage: pick((id) => view.economies[id].shortage),
       gasCoverage: pick((id) => view.economies[id].coverage.gas),
+      maritimeTrade: pick((id) => view.economies[id].maritimeTradeValue),
+      blockade: pick((id) => view.naval.blockade[id] ?? 0),
+      tiles: pick(
+        (id) => view.nations.find((n) => n.id === id)?.tileCount ?? 0,
+      ),
+      exhaustion: pick((id) => view.military.nations[id]?.exhaustion ?? 0),
     };
     for (const g of GOOD_IDS) {
       priceRange[g][0] = Math.min(priceRange[g][0], row.prices[g]);
@@ -243,6 +253,10 @@ export function seriesCsv(result: CampaignResult): string {
     ...nations.map((n) => `stability_${n}`),
     ...nations.map((n) => `shortage_${n}`),
     ...nations.map((n) => `gas_coverage_${n}`),
+    ...nations.map((n) => `maritime_trade_${n}`),
+    ...nations.map((n) => `blockade_${n}`),
+    ...nations.map((n) => `tiles_${n}`),
+    ...nations.map((n) => `exhaustion_${n}`),
   ];
   const lines = [header.join(",")];
   for (const row of result.series) {
@@ -256,6 +270,10 @@ export function seriesCsv(result: CampaignResult): string {
         ...nations.map((n) => row.stability[n].toFixed(4)),
         ...nations.map((n) => row.shortage[n].toFixed(4)),
         ...nations.map((n) => row.gasCoverage[n].toFixed(4)),
+        ...nations.map((n) => (row.maritimeTrade[n] / 1e9).toFixed(2)),
+        ...nations.map((n) => row.blockade[n].toFixed(4)),
+        ...nations.map((n) => String(row.tiles[n])),
+        ...nations.map((n) => row.exhaustion[n].toFixed(4)),
       ].join(","),
     );
   }

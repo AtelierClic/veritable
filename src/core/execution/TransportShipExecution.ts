@@ -259,6 +259,14 @@ export class TransportShipExecution implements Execution {
           return;
         }
         this.attacker.conquer(this.dst);
+        // VERITABLE: in a campaign the landing takes a beachhead (the fronts
+        // fight on from there); no legacy attack with core troops.
+        if (this.mg.veritableLanding(this.attacker, this.dst)) {
+          this.attacker.addTroops(this.boat.troops());
+          this.boat.delete(false);
+          this.active = false;
+          return;
+        }
         if (this.target.isPlayer() && this.attacker.isFriendly(this.target)) {
           this.attacker.addTroops(this.boat.troops());
         } else {

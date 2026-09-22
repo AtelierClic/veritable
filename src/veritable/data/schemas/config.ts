@@ -209,6 +209,35 @@ const WarConfigSchema = z.object({
   }),
 });
 
+const NavalConfigSchema = z.object({
+  // Presence of a nation in a zone = its naval power x its deployment share
+  // there (its coast by default) + shipWeight per warship + portWeight per
+  // port on the zone. Control = share of the presence.
+  shipWeight: z.number().min(0),
+  portWeight: z.number().min(0),
+  landingControl: share, // control of the zone a landing needs
+  landingRadius: z.number().int().positive(), // tiles of the beachhead
+});
+
+const AirConfigSchema = z.object({
+  // a = air_a / (air_a + air_b); segment multiplier 1 + weight x (a - 0.5).
+  segmentWeight: z.number().min(0),
+  // Monthly strikes: the enemy's industrial capacity and supply lose
+  // strikeShare x a; the damage decays by this factor every month.
+  strikeShare: share,
+  strikeDecayPerMonth: share,
+});
+
+const LogisticsConfigSchema = z.object({
+  // Supply capacity of a segment, in divisions: base + perStructure x (ports
+  // and cities within range) + infrastructureScale x infrastructure share of
+  // GDP. Beyond it, the force is scaled by capacity / divisions.
+  base: z.number().min(0),
+  perStructure: z.number().min(0),
+  infrastructureScale: z.number().min(0),
+  range: z.number().int().positive(), // tiles
+});
+
 export const VeritableConfigSchema = z.object({
   leaderNames: z.enum(["parody", "fictional"]),
   time: z.object({
@@ -227,6 +256,9 @@ export const VeritableConfigSchema = z.object({
   politics: PoliticsConfigSchema,
   diplomacy: DiplomacyConfigSchema,
   war: WarConfigSchema,
+  naval: NavalConfigSchema,
+  air: AirConfigSchema,
+  logistics: LogisticsConfigSchema,
   ai: z.object({
     // Minimal fiscal rule of nations nobody plays (not the J5 AI).
     fiscal: z.object({

@@ -6,12 +6,14 @@ import { Good, GoodsSchema } from "./schemas/goods";
 import { NationData, NationDataSchema } from "./schemas/nation";
 import { RowData, RowSchema } from "./schemas/row";
 import { Scenario, ScenarioSchema } from "./schemas/scenario";
+import { Seas, SeasSchema } from "./schemas/seas";
 import {
   CasusBelli,
   CasusBelliCatalogueSchema,
   DivisionTemplate,
   DivisionTemplatesSchema,
 } from "./schemas/war";
+import { decodeZones, Zones } from "./zonesFile";
 
 // Access to data/veritable/, validated. Two implementations of the raw file
 // access exist behind it:
@@ -50,6 +52,9 @@ export interface DataSource {
   nation(id: NationId): NationData;
   bordersMeta(scenario: Scenario): BordersMeta;
   borders(scenario: Scenario): Promise<Borders>;
+  // Maritime zones (J3b): the seeds of the map, and their rasterization.
+  seas(map: string): Seas;
+  zones(scenario: Scenario): Promise<Zones>;
 }
 
 export function createDataSource(files: RawDataFiles): DataSource {
@@ -109,6 +114,12 @@ export function createDataSource(files: RawDataFiles): DataSource {
       ),
     borders: async (scenario) =>
       decodeBorders(await files.bytes(scenario.borders.rasterized)),
+    seas: (map) =>
+      once(`seas:${map}`, () =>
+        SeasSchema.parse(files.json(`maps/${map}.seas.json`)),
+      ),
+    zones: async (scenario) =>
+      decodeZones(await files.bytes(`borders/${scenario.id}.zones.bin`)),
   };
 }
 

@@ -1,0 +1,127 @@
+{
+  "scenario": "europe-10",
+  "map": "europe",
+  "width": 2904,
+  "height": 1672,
+  "waterTiles": 2509581,
+  "unzonedWater": 15426,
+  "zones": [
+    {
+      "id": "north-atlantic",
+      "name": "sea.north-atlantic",
+      "seed": [
+        395,
+        865
+      ],
+      "tiles": 903186
+    },
+    {
+      "id": "biscay",
+      "name": "sea.biscay",
+      "seed": [
+        802,
+        1048
+      ],
+      "tiles": 161828
+    },
+    {
+      "id": "channel",
+      "name": "sea.channel",
+      "seed": [
+        944,
+        865
+      ],
+      "tiles": 52648
+    },
+    {
+      "id": "north-sea",
+      "name": "sea.north-sea",
+      "seed": [
+        1127,
+        621
+      ],
+      "tiles": 195831
+    },
+    {
+      "id": "baltic",
+      "name": "sea.baltic",
+      "seed": [
+        1777,
+        540
+      ],
+      "tiles": 128244
+    },
+    {
+      "id": "norwegian-sea",
+      "name": "sea.norwegian-sea",
+      "seed": [
+        1208,
+        215
+      ],
+      "tiles": 403427
+    },
+    {
+      "id": "barents",
+      "name": "sea.barents",
+      "seed": [
+        2549,
+        0
+      ],
+      "tiles": 118176
+    },
+    {
+      "id": "med-west",
+      "name": "sea.med-west",
+      "seed": [
+        1167,
+        1312
+      ],
+      "tiles": 122165
+    },
+    {
+      "id": "med-central",
+      "name": "sea.med-central",
+      "seed": [
+        1574,
+        1434
+      ],
+      "tiles": 132486
+    },
+    {
+      "id": "med-east",
+      "name": "sea.med-east",
+      "seed": [
+        2143,
+        1515
+      ],
+      "tiles": 102825
+    },
+    {
+      "id": "adriatic",
+      "name": "sea.adriatic",
+      "seed": [
+        1635,
+        1149
+      ],
+      "tiles": 30143
+    },
+    {
+      "id": "aegean",
+      "name": "sea.aegean",
+      "seed": [
+        2021,
+        1353
+      ],
+      "tiles": 47385
+    },
+    {
+      "id": "black-sea",
+      "name": "sea.black-sea",
+      "seed": [
+        2387,
+        1149
+      ],
+      "tiles": 95811
+    }
+  ]
+}

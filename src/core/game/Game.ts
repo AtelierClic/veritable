@@ -917,6 +917,13 @@ export interface Game extends GameMap {
   // have no owner; it is refused outside a Véritable campaign.
   setUnclaimableTiles(mask: Uint8Array | null): void;
   isUnclaimable(tile: TileRef): boolean;
+  // VERITABLE: a landing in a campaign takes a beachhead through this handler
+  // instead of starting a legacy attack (TransportShipExecution). Refused
+  // outside a Véritable campaign; returns false when no handler is set.
+  setVeritableLanding(
+    handler: ((player: Player, tile: TileRef) => void) | null,
+  ): void;
+  veritableLanding(player: Player, tile: TileRef): boolean;
   stats(): Stats;
 
   addUpdate(update: GameUpdate): void;

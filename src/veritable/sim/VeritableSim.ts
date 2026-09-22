@@ -11,6 +11,7 @@ import {
   NationPolitics,
   NationState,
   NationStatus,
+  NavalState,
   PeaceTermsSchema,
   SaveFile,
   SPEEDS,
@@ -100,6 +101,15 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
     offer: z.number().int(),
     accept: z.boolean(),
   }),
+  // Navy (J3b): the fleet goes to the coastal zones of the target, or home.
+  z.object({
+    type: z.literal("set-blockade"),
+    target: NationIdSchema,
+    active: z.boolean(),
+  }),
+  // A landing on the coast of an enemy: refused unless the zone of the
+  // landing tile is controlled.
+  z.object({ type: z.literal("landing"), target: NationIdSchema }),
 ]);
 export type PlayerCommand = z.infer<typeof PlayerCommandSchema>;
 
@@ -202,6 +212,7 @@ export interface ReadonlyWorldView {
   readonly politics: Readonly<Record<NationId, Readonly<NationPolitics>>>;
   readonly diplomacy: Readonly<DiplomacyState>;
   readonly military: Readonly<MilitaryState>;
+  readonly naval: Readonly<NavalState>;
   readonly fronts: readonly FrontView[];
   // Casus belli the player could invoke against each other nation.
   readonly casusBelli: Readonly<Record<NationId, readonly string[]>>;
@@ -231,6 +242,14 @@ export interface SegmentGeometry {
   defense: Record<NationId, number>;
   // Ports and cities of each side near the segment (logistics, J3b).
   supply: Record<NationId, number>;
+}
+
+// The sea as the world sees it today (J3b): zones each nation touches from
+// its coast and from its ports, and the warships present in each zone.
+export interface NavalSnapshot {
+  coast: Record<NationId, string[]>;
+  ports: Record<NationId, string[]>;
+  ships: Record<string, Record<NationId, number>>;
 }
 
 // What the simulation needs from the tiled world. Implemented by
@@ -264,6 +283,14 @@ export interface WorldPort {
   ): number;
   // Annexation: every tile of `from` goes to `to`, tagged contested.
   transferAll(from: NationId, to: NationId): number;
+  // The sea today (computed by the world, cached for the day).
+  naval(): NavalSnapshot;
+  // Zone of the tile a landing of `attacker` on `target` would aim at (an
+  // enemy port, else the nearest enemy shore); null when there is none.
+  landingZone(attacker: NationId, target: NationId): string | null;
+  // Sends the landing: a transport that takes a beachhead of `radius` tiles
+  // around the landing tile when it arrives. False when it cannot sail.
+  launchLanding(attacker: NationId, target: NationId, radius: number): boolean;
 }
 
 export { NationIdSchema };

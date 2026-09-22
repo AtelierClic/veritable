@@ -4,6 +4,7 @@ import { VeritableConfig } from "../../data/schemas/config";
 import { Good, GoodId } from "../../data/schemas/goods";
 import { NationData } from "../../data/schemas/nation";
 import { ROW_ID, RowData } from "../../data/schemas/row";
+import { SeaZone } from "../../data/schemas/seas";
 import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
 import { greatCircleKm } from "./trade";
 
@@ -15,6 +16,7 @@ export interface SimData {
   blocs: Bloc[];
   divisions: DivisionTemplate[];
   casusBelli: CasusBelli[];
+  seas: SeaZone[];
   geography: {
     landNeighbours: [NationId, NationId][];
     bordersNeutralLand: NationId[];
@@ -30,8 +32,12 @@ export interface EconomyContext {
   divisions: DivisionTemplate[];
   template(id: string): DivisionTemplate;
   casusBelli: CasusBelli[];
+  seas: SeaZone[];
   nationIds: NationId[];
   sheet(id: NationId): NationData;
+  // True when the two share a land border on the map (trade by land; the
+  // rest is by sea and subject to blockades).
+  landNeighbours(a: string, b: string): boolean;
   // Affinity of a trade pair for a good, embargoes excluded: distance decay,
   // land adjacency for electricity, bloc and agreement bonuses. 0 = no trade.
   affinity(good: Good, exporter: string, importer: string): number;
@@ -91,7 +97,9 @@ export function buildContext(
       return template;
     },
     casusBelli: data.casusBelli,
+    seas: data.seas,
     nationIds: nations.map((n) => n.id),
+    landNeighbours: (a, b) => neighbours.has(`${a}|${b}`),
     sheet: (id) => {
       const sheet = sheets.get(id);
       if (sheet === undefined) throw new Error(`no nation sheet for ${id}`);

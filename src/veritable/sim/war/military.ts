@@ -243,7 +243,7 @@ export function stepMilitaryMonth(
   }
 
   // Arms: a share of what the nation has this month re-equips the divisions.
-  let available =
+  const available =
     (Math.max(
       0,
       economy.production.arms * economy.coverage.arms +
@@ -268,7 +268,6 @@ export function stepMilitaryMonth(
         1,
       );
     }
-    available -= Math.min(available, deficit);
   }
 
   // Training follows the defence spending above the first day's share.

@@ -24,6 +24,7 @@ function context(): MigrationContext {
       blocs: dataSource.blocs(),
       divisions: dataSource.divisions(),
       casusBelli: dataSource.casusBelli(),
+      seas: dataSource.seas(scenario.map).zones,
       geography: {
         landNeighbours: meta.landNeighbours,
         bordersNeutralLand: meta.bordersNeutralLand,

@@ -4,6 +4,8 @@ import {
   Borders,
   encodeBorders,
 } from "../../../src/veritable/data/bordersFile";
+import { SeasSchema } from "../../../src/veritable/data/schemas/seas";
+import { encodeZones } from "../../../src/veritable/data/zonesFile";
 import { buildBorders, Inset, Override } from "./buildBorders";
 import { calibrate, loadLandMask, prepare } from "./calibrate";
 import { bordersImage, controlImage } from "./control";
@@ -17,6 +19,7 @@ import {
   SOURCES,
 } from "./geodata";
 import { toTile } from "./projections";
+import { nearestWater, partitionWater } from "./zones";
 
 // Natural Earth (de facto, 1:10m) -> tiles. Replayable:
 //
@@ -27,6 +30,11 @@ import { toTile } from "./projections";
 //   npm run veritable:borders -- rasterize --scenario europe-10
 //       rasterizes the nations of a scenario on its map, writes
 //       data/veritable/borders/<scenario>.bin, a report and a control image.
+//
+//   npm run veritable:borders -- zones --scenario europe-10
+//       partitions the water tiles of the map between the sea seeds of
+//       data/veritable/maps/<map>.seas.json (travel distance over water),
+//       writes data/veritable/borders/<scenario>.zones.bin and .zones.json.
 
 function option(args: string[], name: string, fallback?: string): string {
   const i = args.indexOf(`--${name}`);
@@ -331,6 +339,66 @@ async function runRasterize(args: string[]): Promise<void> {
   });
 }
 
+// Maritime zones of a scenario: seeds of the map projected to tiles, snapped
+// to water, then a breadth-first partition of the water.
+function runZones(args: string[]): void {
+  const scenarioId = option(args, "scenario");
+  const data = path.join(REPO_ROOT, "data/veritable");
+  const scenario = JSON.parse(
+    fs.readFileSync(path.join(data, "scenarios", `${scenarioId}.json`), "utf8"),
+  );
+  const map: string = scenario.map;
+  const seas = SeasSchema.parse(
+    JSON.parse(
+      fs.readFileSync(path.join(data, "maps", `${map}.seas.json`), "utf8"),
+    ),
+  );
+  const stored = JSON.parse(fs.readFileSync(georefPath(map), "utf8"));
+  const mask = loadLandMask(map);
+  const project = toTile(stored);
+  const seeds = seas.zones.map((zone) => {
+    const [px, py] = project(zone.lon, zone.lat);
+    const at = nearestWater(mask, Math.floor(px), Math.floor(py));
+    if (at === null) throw new Error(`zone ${zone.id}: no water near its seed`);
+    return { id: zone.id, x: at[0], y: at[1] };
+  });
+  const zones = partitionWater(mask, seeds);
+  const counts = new Array(seeds.length + 1).fill(0);
+  for (const v of zones.tiles) counts[v]++;
+  const landTiles = mask.land.reduce((s, v) => s + v, 0);
+  const bin = path.join(data, "borders", `${scenarioId}.zones.bin`);
+  fs.writeFileSync(bin, encodeZones(zones));
+  fs.writeFileSync(
+    bin.replace(/\.bin$/, ".json"),
+    JSON.stringify(
+      {
+        scenario: scenarioId,
+        map,
+        width: zones.width,
+        height: zones.height,
+        waterTiles: zones.tiles.length - landTiles,
+        unzonedWater: counts[0] - landTiles,
+        zones: seeds.map((s, i) => ({
+          id: s.id,
+          name: seas.zones[i].name,
+          seed: [s.x, s.y],
+          tiles: counts[i + 1],
+        })),
+      },
+      null,
+      2,
+    ) + "\n",
+  );
+  console.table(
+    seeds.map((s, i) => ({
+      zone: s.id,
+      seed: `${s.x},${s.y}`,
+      tiles: counts[i + 1],
+    })),
+  );
+  console.log(`wrote ${path.relative(REPO_ROOT, bin)} and its .json`);
+}
+
 async function main(): Promise<void> {
   const [command, ...args] = process.argv.slice(2);
   switch (command) {
@@ -338,9 +406,11 @@ async function main(): Promise<void> {
       return runCalibrate(args);
     case "rasterize":
       return runRasterize(args);
+    case "zones":
+      return runZones(args);
     default:
       throw new Error(
-        "usage: veritable:borders -- calibrate --map <map> | rasterize --scenario <id>",
+        "usage: veritable:borders -- calibrate --map <map> | rasterize --scenario <id> | zones --scenario <id>",
       );
   }
 }

@@ -244,6 +244,26 @@ export class GameImpl implements Game {
     return this.unclaimableTiles !== null && this.unclaimableTiles[tile] === 1;
   }
 
+  // VERITABLE: see Game.setVeritableLanding.
+  private veritableLandingHandler:
+    | ((player: Player, tile: TileRef) => void)
+    | null = null;
+
+  setVeritableLanding(
+    handler: ((player: Player, tile: TileRef) => void) | null,
+  ): void {
+    if (!this.config().isVeritable()) {
+      throw new Error("landings only exist in a Véritable campaign");
+    }
+    this.veritableLandingHandler = handler;
+  }
+
+  veritableLanding(player: Player, tile: TileRef): boolean {
+    if (this.veritableLandingHandler === null) return false;
+    this.veritableLandingHandler(player, tile);
+    return true;
+  }
+
   setFallout(tile: TileRef, value: boolean) {
     if (value && this.hasOwner(tile)) {
       throw Error(`cannot set fallout, tile ${tile} has owner`);

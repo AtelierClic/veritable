@@ -14,6 +14,7 @@ import { vt } from "../data/i18n";
 import { NationId } from "../data/schemas/common";
 import { NationData } from "../data/schemas/nation";
 import { WorldState } from "../data/schemas/save";
+import { Zones } from "../data/zonesFile";
 import { Scenario } from "../data/schemas/scenario";
 import { SimData } from "../sim/economy/context";
 import { TileGrid } from "../sim/VeritableSim";
@@ -26,6 +27,7 @@ export interface ScenarioPack {
   nations: NationData[]; // in scenario order
   borders: Borders;
   meta: BordersMeta;
+  zones: Zones; // maritime zones of the map (J3b)
   data: SimData; // goods, rest of the world, blocs, geography
 }
 

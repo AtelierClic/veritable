@@ -11,6 +11,7 @@ import {
   JournalEntry,
   MilitaryState,
   NationState,
+  NavalState,
   PeaceOffer,
   PeaceTerms,
   PoliticsState,
@@ -19,6 +20,7 @@ import {
   War,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
+import { airMultiplier, stepAirMonth } from "./air/air";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
 import { dateAfter, dayIndex } from "./calendar";
 import {
@@ -42,6 +44,14 @@ import {
 } from "./economy/engine";
 import { initEconomy, initPolitics } from "./economy/init";
 import { nationFromData, statusFromTerritory } from "./nation";
+import {
+  controlOf,
+  initNaval,
+  maritimeFactor,
+  NavalEvent,
+  setBlockade,
+  stepNavalDay,
+} from "./naval/naval";
 import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
 import { ClockContext, DomainSystem, PerfProbe, Scheduler } from "./scheduler";
@@ -57,6 +67,7 @@ import {
 } from "./VeritableSim";
 import {
   enemyPairs,
+  Multipliers,
   releaseIdleDivisions,
   resolveTick,
   stepWarMonth,
@@ -102,7 +113,8 @@ type DomainEvent =
   | PoliticsEvent
   | BlocEvent
   | DiplomacyEvent
-  | PeaceEvent;
+  | PeaceEvent
+  | NavalEvent;
 
 const CEASEFIRE: PeaceTerms = {
   kind: "ceasefire",
@@ -127,6 +139,7 @@ export class VeritableSimImpl implements VeritableSim {
   private politics!: PoliticsState;
   private diplomacy!: DiplomacyState;
   private military!: MilitaryState;
+  private naval!: NavalState;
   private scenario!: Scenario;
   private ctx!: EconomyContext;
   private sheets = new Map<NationId, NationData>();
@@ -137,8 +150,10 @@ export class VeritableSimImpl implements VeritableSim {
   private pending: SimEvent[] = [];
   private readonly scheduler: Scheduler;
 
-  // Fronts: geometry read from the world once a game day, and the views of
-  // the last tick. Transient: rebuilt after a restore.
+  // Fronts: geometry read from the world once a game day (and after any
+  // command or event that changes the wars), and the views of the last tick.
+  // Transient: a reloaded campaign reads it again from the current tiles, so
+  // its fronts can differ from the saved campaign's until the next day.
   private geometry: FrontGeometry[] = [];
   private geometryDay = -1;
   private frontViews: FrontView[] = [];
@@ -154,12 +169,18 @@ export class VeritableSimImpl implements VeritableSim {
         domain: "economy",
         onDay: () => stepPrices(this.ctx, this.economy),
         onMonth: () => {
-          this.trade = stepTrade(this.ctx, this.economy);
+          this.trade = stepTrade(this.ctx, this.economy, (e, i) =>
+            maritimeFactor(this.ctx, this.naval, e, i),
+          );
           stepGrowth(this.ctx, this.economy, this.politics, this.rng);
         },
       },
       { domain: "events" },
-      { domain: "diplomacy", onMonth: (c) => this.diplomacyMonth(c) },
+      {
+        domain: "diplomacy",
+        onDay: () => this.navalDay(),
+        onMonth: (c) => this.diplomacyMonth(c),
+      },
       {
         domain: "politics",
         onWeek: (c) => this.politicsWeek(c),
@@ -193,6 +214,7 @@ export class VeritableSimImpl implements VeritableSim {
     );
     this.diplomacy = initDiplomacy(this.ctx, scenario);
     this.military = initMilitary(this.ctx, sheets);
+    this.naval = initNaval();
     this.journal = [
       { date: this.calendar.date, kind: "campaign-started", params: {} },
     ];
@@ -232,6 +254,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.politics = state.politics;
     this.diplomacy = state.diplomacy;
     this.military = state.military;
+    this.naval = state.naval;
     this.trade = null;
     this.invalidateFronts();
     this.initialized = true;
@@ -258,6 +281,7 @@ export class VeritableSimImpl implements VeritableSim {
       politics: this.politics,
       diplomacy: this.diplomacy,
       military: this.military,
+      naval: this.naval,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -409,6 +433,48 @@ export class VeritableSimImpl implements VeritableSim {
         else this.record(date, refuseOffer(found.war, found.offer));
         return;
       }
+      case "set-blockade": {
+        const me = this.requirePlayer();
+        if (!this.ctx.nationIds.includes(cmd.target)) {
+          throw new Error(`blockade: unknown nation ${cmd.target}`);
+        }
+        setBlockade(
+          this.naval,
+          this.deps.world.naval(),
+          me,
+          cmd.target,
+          cmd.active,
+        );
+        this.navalDay();
+        return;
+      }
+      case "landing": {
+        const me = this.requirePlayer();
+        if (!enemiesOf(this.diplomacy, me).includes(cmd.target)) {
+          throw new Error(`${cmd.target} is not an enemy`);
+        }
+        const zone = this.deps.world.landingZone(me, cmd.target);
+        const control = zone === null ? 0 : controlOf(this.naval, zone, me);
+        if (
+          zone === null ||
+          control < this.deps.config.naval.landingControl ||
+          !this.deps.world.launchLanding(
+            me,
+            cmd.target,
+            this.deps.config.naval.landingRadius,
+          )
+        ) {
+          this.record(date, {
+            type: "landing-refused",
+            nation: me,
+            target: cmd.target,
+          });
+          return;
+        }
+        this.record(date, { type: "landing", nation: me, target: cmd.target });
+        this.invalidateFronts();
+        return;
+      }
     }
   }
 
@@ -494,9 +560,36 @@ export class VeritableSimImpl implements VeritableSim {
       politics: this.politics.nations,
       diplomacy: this.diplomacy,
       military: this.military,
+      naval: this.naval,
       fronts: this.frontViews,
       casusBelli,
     };
+  }
+
+  // Logistics and air, read by the resolution of the fronts.
+  private readonly multipliers: Multipliers = {
+    supply: (nation, segment, divisions) => {
+      const cfg = this.deps.config.logistics;
+      const economy = this.economy.nations[nation];
+      const capacity =
+        (cfg.base +
+          cfg.perStructure * (segment.supply[nation] ?? 0) +
+          cfg.infrastructureScale * (economy?.spending.infrastructure ?? 0)) *
+        (1 - (economy?.strikeDamage ?? 0));
+      return divisions <= 0 ? 1 : Math.min(1, capacity / divisions);
+    },
+    air: (nation, enemy) =>
+      airMultiplier(this.ctx, this.military, nation, enemy),
+  };
+
+  private navalDay(): void {
+    stepNavalDay(
+      this.ctx,
+      this.naval,
+      this.deps.world.naval(),
+      this.diplomacy,
+      this.military,
+    );
   }
 
   // --- the military tick --------------------------------------------------------
@@ -539,6 +632,7 @@ export class VeritableSimImpl implements VeritableSim {
         this.military,
         this.geometry,
         this.rng,
+        this.multipliers,
       );
     }
   }
@@ -629,6 +723,7 @@ export class VeritableSimImpl implements VeritableSim {
     for (const event of events) this.record(clock.date, event);
     if (events.some((e) => e.type === "war-joined")) this.invalidateFronts();
     stepWarMonth(this.diplomacy);
+    stepAirMonth(this.ctx, this.diplomacy, this.military, this.economy);
 
     // The war AI of the nations nobody plays: orders, then peace offers.
     for (const id of this.aiNations()) {
@@ -729,6 +824,10 @@ export class VeritableSimImpl implements VeritableSim {
         break;
       case "annexation":
         params = { by: event.by };
+        break;
+      case "landing":
+      case "landing-refused":
+        params = { target: event.target };
         break;
       default:
         break;

@@ -1,23 +1,37 @@
 import { Borders } from "../data/bordersFile";
 import { NationId } from "../data/schemas/common";
 import { TILE_NATION_MASK, WorldState } from "../data/schemas/save";
-import { FrontGeometry, TileGrid, WorldPort } from "../sim/VeritableSim";
+import { Zones } from "../data/zonesFile";
+import {
+  FrontGeometry,
+  NavalSnapshot,
+  TileGrid,
+  WorldPort,
+} from "../sim/VeritableSim";
 
 // The tiled world WITHOUT the OpenFront core: nations sit on the rasterized
 // borders of their scenario and nothing moves. Used by the headless runner v1
-// (J2), whose economy only needs tile counts. The core enters the runner at
-// J3a, when war starts moving tiles.
+// (J2), whose economy only needs tile counts, and by the tests. It knows the
+// maritime zones (coasts) but has no terrain, no structures and no ships:
+// no fronts, no landings.
 export class BordersWorld implements WorldPort {
   private tiles: Uint16Array;
   private nations: NationId[];
   private coreStart: unknown;
+  private readonly zones: Zones | null;
+  private sea: NavalSnapshot | null = null;
 
-  constructor(borders: Borders, coreStart: unknown = { headless: true }) {
+  constructor(
+    borders: Borders,
+    zones: Zones | null = null,
+    coreStart: unknown = { headless: true },
+  ) {
     this.tiles = borders.tiles.slice();
     this.nations = [...borders.nations];
     this.coreStart = coreStart;
     this.width = borders.width;
     this.height = borders.height;
+    this.zones = zones;
   }
 
   readonly width: number;
@@ -60,6 +74,7 @@ export class BordersWorld implements WorldPort {
     this.tiles = grid.tiles.slice();
     this.coreStart = world.coreStart;
     this.counts = null;
+    this.sea = null;
   }
 
   // No terrain, no structures: this world has no fronts. Wars declared in it
@@ -84,6 +99,55 @@ export class BordersWorld implements WorldPort {
       }
     }
     this.counts = null;
+    this.sea = null;
     return moved;
+  }
+
+  // Coastal zones of every nation, read once off the tiles: a land tile of
+  // the nation next to a water tile of a zone.
+  naval(): NavalSnapshot {
+    if (this.sea !== null) return this.sea;
+    const coast: Record<NationId, Set<string>> = {};
+    for (const id of this.nations) coast[id] = new Set();
+    if (this.zones !== null) {
+      const { width, height } = this;
+      const z = this.zones;
+      const visit = (a: number, b: number) => {
+        const owner = this.tiles[a] & TILE_NATION_MASK;
+        const zone = z.tiles[b];
+        if (owner !== 0 && zone !== 0 && this.tiles[b] === 0) {
+          coast[this.nations[owner - 1]].add(z.zones[zone - 1]);
+        }
+      };
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const i = y * width + x;
+          if (x + 1 < width) {
+            visit(i, i + 1);
+            visit(i + 1, i);
+          }
+          if (y + 1 < height) {
+            visit(i, i + width);
+            visit(i + width, i);
+          }
+        }
+      }
+    }
+    this.sea = {
+      coast: Object.fromEntries(
+        this.nations.map((id) => [id, [...coast[id]].sort()]),
+      ),
+      ports: Object.fromEntries(this.nations.map((id) => [id, []])),
+      ships: {},
+    };
+    return this.sea;
+  }
+
+  landingZone(): string | null {
+    return null;
+  }
+
+  launchLanding(): boolean {
+    return false;
   }
 }

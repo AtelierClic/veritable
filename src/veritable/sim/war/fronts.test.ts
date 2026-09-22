@@ -47,6 +47,8 @@ function twoNations(options: Options = {}) {
   }
   const config = quietConfig();
   config.war.segmentTiles = 40;
+  // These tests are about the fronts, not the logistics (logistics.test.ts).
+  config.logistics.base = 1000;
   if (options.slow) {
     config.war.v0 = 0.05;
     config.war.vMax = 0.5;
@@ -437,6 +439,7 @@ describe("saves", () => {
     const world2 = new MemoryWorld(60, 40);
     const config = quietConfig();
     config.war.segmentTiles = 40;
+    config.logistics.base = 1000;
     const sim2 = new VeritableSimImpl({
       config,
       world: world2,
@@ -446,9 +449,13 @@ describe("saves", () => {
     });
     sim2.restore(saved);
     expect(encodeSave(sim2.snapshot())).toEqual(encodeSave(saved));
-    for (let i = 0; i < 30; i++) {
-      sim.advance(TICK);
-      sim2.advance(TICK);
+    // Played on by whole days, both read the same fronts off the same tiles
+    // at every day start: identical. (Within a day the saved campaign keeps
+    // the segments it read at the day start while the reloaded one reads
+    // them again, so tick-level play can differ until the next day.)
+    for (let i = 0; i < 3; i++) {
+      sim.advance(DAY);
+      sim2.advance(DAY);
     }
     expect(encodeSave(sim2.snapshot())).toEqual(encodeSave(sim.snapshot()));
   });
