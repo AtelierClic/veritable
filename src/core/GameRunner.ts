@@ -67,6 +67,11 @@ export async function createGameRunner(
       p.clanTag,
       p.friends ?? [],
       p.teamIndex ?? null,
+      null,
+      // VERITABLE: the human embodies the played nation of the campaign.
+      gameStart.config.veritable === true
+        ? (gameStart.config.veritablePlayerNation ?? null)
+        : null,
     );
   });
 

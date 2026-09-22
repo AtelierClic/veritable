@@ -2,7 +2,7 @@
   "_comment": "Tout ce qui n'a pas de source ouverte épinglable. Chaque entrée est marquée source: \"estimate\" dans les fiches, avec sa justification. À remplacer par une source dès qu'il en existe une. asOf = date de l'estimation.",
   "asOf": "2026-01-01",
   "debtToGdp": {
-    "justification": "Dette brute des administrations publiques (périmètre de Maastricht, celui de la règle des 60 %), ordre de grandeur des Perspectives de l'économie mondiale du FMI 2025, de mémoire. La série Banque mondiale GC.DOD.TOTL.GD.ZS est lacunaire (5 pays sur 10) et ne couvre que l'administration centrale (Royaume-Uni à 131 %), donc non retenue.",
+    "justification": "Repli seulement, pour une nation absente de la série du FMI (imf-weo:GGXWDG_NGDP, voir sources.ts) : ordre de grandeur des Perspectives de l'économie mondiale du FMI 2025, de mémoire. La série Banque mondiale GC.DOD.TOTL.GD.ZS est lacunaire (5 pays sur 10) et ne couvre que l'administration centrale (Royaume-Uni à 131 %), donc non retenue.",
     "values": {
       "FRA": 1.13,
       "DEU": 0.64,

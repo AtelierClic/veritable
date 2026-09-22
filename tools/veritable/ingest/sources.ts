@@ -10,8 +10,14 @@ import { fileURLToPath } from "url";
 //   sources.lock.json: a rebuild never depends on the network.
 // - Our World in Data, energy dataset (CC BY 4.0), pinned to a git commit; the
 //   10 MB CSV is cached outside git and its sha256 is checked.
+// - IMF World Economic Outlook (DataMapper API), general government gross
+//   debt in % of GDP. The IMF terms of use could not be read by the tool (the
+//   page is served to browsers only), so the dataset is NOT redistributed:
+//   the response is cached outside git, pinned by sha256, and only the ten
+//   attributed figures reach the nation sheets.
 //
 // `npm run veritable:ingest -- fetch` refreshes snapshots and lock;
+// `npm run veritable:ingest -- fetch-imf` refreshes the IMF cache alone;
 // `npm run veritable:ingest -- build` rebuilds data/veritable/ from them.
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -42,6 +48,10 @@ export const WORLD_BANK_INDICATORS = {
 export type WorldBankKey = keyof typeof WORLD_BANK_INDICATORS;
 
 export const WORLD = "WLD";
+
+export const IMF_DEBT_INDICATOR = "GGXWDG_NGDP";
+export const IMF_DEBT_URL = `https://www.imf.org/external/datamapper/api/v1/${IMF_DEBT_INDICATOR}`;
+const IMF_CACHE_KEY = `cache/imf-weo-${IMF_DEBT_INDICATOR}.json`;
 
 export type Lock = Record<string, string>; // relative path -> sha256
 
@@ -108,6 +118,68 @@ export async function fetchAll(countries: readonly string[]): Promise<void> {
   lock[`cache/owid-energy-data.csv@${OWID_ENERGY_COMMIT}`] = sha256(csv);
   console.log(`OWID energy: ${csv.length} bytes`);
   fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
+}
+
+// IMF WEO: one indicator, cached with the date of the extraction (the WEO
+// vintage is not in the API response).
+export async function fetchImf(countries: readonly string[]): Promise<void> {
+  fs.mkdirSync(CACHE_DIR, { recursive: true });
+  const url = `${IMF_DEBT_URL}/${countries.join("/")}`;
+  const response = await fetch(url);
+  if (!response.ok)
+    throw new Error(`IMF ${IMF_DEBT_INDICATOR}: HTTP ${response.status}`);
+  const body = (await response.json()) as {
+    values: Record<string, Record<string, Record<string, number>>>;
+  };
+  const series = body.values[IMF_DEBT_INDICATOR];
+  const cache = {
+    indicator: IMF_DEBT_INDICATOR,
+    source: "IMF World Economic Outlook, DataMapper API",
+    fetchedAt: new Date().toISOString().slice(0, 10),
+    values: countries.map((iso3) => ({ iso3, byYear: series[iso3] ?? {} })),
+  };
+  const text = JSON.stringify(cache, null, 1) + "\n";
+  fs.writeFileSync(
+    path.join(CACHE_DIR, `imf-weo-${IMF_DEBT_INDICATOR}.json`),
+    text,
+  );
+  const lock = readLock();
+  lock[IMF_CACHE_KEY] = sha256(text);
+  fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
+  console.log(`IMF ${IMF_DEBT_INDICATOR}: ${cache.values.length} countries`);
+}
+
+export function loadImfDebt(lock: Lock): {
+  fetchedAt: string;
+  // Value of the year, or of the latest earlier year that has one.
+  at(iso3: string, year: number): { value: number; year: number } | null;
+} {
+  const file = path.join(CACHE_DIR, `imf-weo-${IMF_DEBT_INDICATOR}.json`);
+  if (!fs.existsSync(file)) {
+    throw new Error(
+      "IMF WEO cache missing: run `veritable:ingest -- fetch-imf`",
+    );
+  }
+  const text = fs.readFileSync(file, "utf8");
+  if (lock[IMF_CACHE_KEY] !== sha256(text)) {
+    throw new Error("IMF WEO cache does not match sources.lock.json");
+  }
+  const cache = JSON.parse(text) as {
+    fetchedAt: string;
+    values: { iso3: string; byYear: Record<string, number> }[];
+  };
+  return {
+    fetchedAt: cache.fetchedAt,
+    at(iso3, year) {
+      const entry = cache.values.find((v) => v.iso3 === iso3);
+      if (entry === undefined) return null;
+      for (let y = year; y >= 1980; y--) {
+        const value = entry.byYear[String(y)];
+        if (value !== undefined) return { value, year: y };
+      }
+      return null;
+    },
+  };
 }
 
 export interface Series {

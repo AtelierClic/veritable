@@ -67,13 +67,20 @@ export function coreRoster(
             PlayerType.Nation,
             null,
             random.nextID(),
+            false,
+            null,
+            [],
+            null,
+            null,
+            n.id,
           ),
         );
       });
 }
 
-// Nation <-> core player. The human is the player's nation; the others are
-// matched by display name (unique within a scenario).
+// Nation <-> core player, by the nation id carried by PlayerInfo (J3; it was
+// the display name until then). The human is the player's nation: a human
+// without an id (tests, older lobbies) is accepted for it.
 export function bindScenario(
   game: Game,
   pack: ScenarioPack,
@@ -83,11 +90,14 @@ export function bindScenario(
   return pack.nations.map((nation) => {
     const player =
       nation.id === playerNation
-        ? players.find((p) => p.type() === PlayerType.Human)
+        ? players.find(
+            (p) =>
+              p.type() === PlayerType.Human &&
+              (p.info().nationId === nation.id || p.info().nationId === null),
+          )
         : players.find(
             (p) =>
-              p.type() === PlayerType.Nation &&
-              p.name() === nationDisplayName(nation),
+              p.type() === PlayerType.Nation && p.info().nationId === nation.id,
           );
     if (player === undefined) {
       throw new Error(`no core player for nation ${nation.id}`);

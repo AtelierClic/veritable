@@ -31,10 +31,10 @@
     "asOf": "2025"
   },
   "debtToGdp": {
-    "value": 1.01,
-    "source": "estimate",
-    "asOf": "2026-01-01",
-    "note": "Dette brute des administrations publiques (périmètre de Maastricht, celui de la règle des 60 %), ordre de grandeur des Perspectives de l'économie mondiale du FMI 2025, de mémoire. La série Banque mondiale GC.DOD.TOTL.GD.ZS est lacunaire (5 pays sur 10) et ne couvre que l'administration centrale (Royaume-Uni à 131 %), donc non retenue."
+    "value": 1.004,
+    "source": "imf-weo:GGXWDG_NGDP",
+    "asOf": "2025",
+    "note": "Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper, extraction du 2026-09-22) ; la valeur 2025 est une estimation du FMI."
   },
   "economy": {
     "growthBase": {

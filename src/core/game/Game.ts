@@ -454,6 +454,10 @@ export class PlayerInfo {
     // the correct flag even when multiple nations on a map share a display
     // name (e.g. India's and Pakistan's "Punjab").
     public readonly nationFlag: string | null = null,
+    // VERITABLE: id of the Véritable nation this player embodies (the human
+    // and the scenario roster); null outside a campaign. The simulation binds
+    // nations to core players by this id, never by display name.
+    public readonly nationId: string | null = null,
   ) {
     this.displayName = formatPlayerDisplayName(this.name, this.clanTag);
   }

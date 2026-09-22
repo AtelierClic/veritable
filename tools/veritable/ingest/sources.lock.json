@@ -13,5 +13,6 @@
   "snapshots/worldbank/NV.SRV.TOTL.CD.json": "7e2094f835324b0a2dadb0dd21285eda934141d7c9831dabf5a71a7b745f5e10",
   "snapshots/worldbank/TX.VAL.TECH.CD.json": "1fa0e367874abfc489dadf6668b7ed4207885d86e6c429501b1e8f0360516c54",
   "snapshots/worldbank/AG.PRD.CREL.MT.json": "cbaac18e8f871958492812dd8eadf038dfe2b7e5536f7e9ef5cad2fc5cffd3de",
-  "cache/owid-energy-data.csv@7e387a16f70a510e433f8aac7efeac6faa1e5059": "266f2e2baad7975351bc9bb4aa061d22b1da9fe4c47d51d2ac6071e01e171f76"
+  "cache/owid-energy-data.csv@7e387a16f70a510e433f8aac7efeac6faa1e5059": "266f2e2baad7975351bc9bb4aa061d22b1da9fe4c47d51d2ac6071e01e171f76",
+  "cache/imf-weo-GGXWDG_NGDP.json": "4d768fd28271249775c93fd4623e16b9e37ca164ab228616c43f560e4e199ae9"
 }

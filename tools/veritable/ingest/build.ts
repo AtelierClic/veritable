@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import {
+  IMF_DEBT_INDICATOR,
+  loadImfDebt,
   loadOwidEnergy,
   loadWorldBank,
   OWID_ENERGY_COMMIT,
@@ -43,6 +45,8 @@ const FOSSIL_ELECTRICITY = {
 // recent year (1 644 Mt in 2024 against 3 124 Mt in 2023): every cereal figure
 // is read at the last complete year.
 const CEREALS_LAST_COMPLETE_YEAR = 2023;
+// Year of the IMF debt figure: the last year before the campaign starts.
+const DEBT_YEAR = 2025;
 
 const round = (v: number, digits = 4) => Number(v.toPrecision(digits + 2));
 
@@ -62,6 +66,24 @@ export function build(scenarioId: string): void {
     ]),
   ) as Record<WorldBankKey, ReturnType<typeof loadWorldBank>>;
   const owid = loadOwidEnergy(lock);
+  const imf = loadImfDebt(lock);
+  // General government gross debt (Maastricht perimeter, the one of the 60 %
+  // rule) at the year the campaign starts: the IMF estimate for that year.
+  const imfDebt = (iso3: string): Sourced => {
+    const v = imf.at(iso3, DEBT_YEAR);
+    if (v === null) {
+      return estimate(
+        estimates.debtToGdp.values[iso3],
+        estimates.debtToGdp.justification,
+      );
+    }
+    return {
+      value: round(v.value / 100),
+      source: `imf-weo:${IMF_DEBT_INDICATOR}`,
+      asOf: String(v.year),
+      note: `Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper, extraction du ${imf.fetchedAt}) ; la valeur ${v.year} est une estimation du FMI.`,
+    };
+  };
 
   const wbValue = (key: WorldBankKey, iso3: string, scale = 1): Sourced => {
     const v = wb[key].latest(
@@ -310,10 +332,7 @@ export function build(scenarioId: string): void {
       contested: existing.contested,
       population: wbValue("population", n),
       gdp: gdp[n],
-      debtToGdp: estimate(
-        estimates.debtToGdp.values[n],
-        estimates.debtToGdp.justification,
-      ),
+      debtToGdp: imfDebt(n),
       economy: {
         growthBase: {
           value: round(growthBase / 100),
