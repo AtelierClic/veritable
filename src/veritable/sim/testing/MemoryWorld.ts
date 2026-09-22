@@ -1,16 +1,28 @@
 import { NationId } from "../../data/schemas/common";
 import {
+  TILE_CONTESTED_BIT,
   TILE_FALLOUT_BIT,
   TILE_NATION_MASK,
   WorldState,
 } from "../../data/schemas/save";
-import { TileGrid, WorldPort } from "../VeritableSim";
+import { FrontGeometry, TileGrid, WorldPort } from "../VeritableSim";
+import {
+  captureAlong,
+  frontTiles,
+  GridAccess,
+  segmentFront,
+  Terrain,
+} from "../war/geometry";
 
 // In-memory WorldPort: a tiled world without the OpenFront core. Used by the
-// simulation and save tests.
+// simulation and save tests. Every tile is land; terrain is plains unless set.
 export class MemoryWorld implements WorldPort {
   private owners: (NationId | null)[];
   private fallout: boolean[];
+  private contested: boolean[];
+  private terrain: Terrain[];
+  private structures = new Map<number, number>(); // tile -> defence multiplier
+  private segments = new Map<string, number[][]>(); // front id -> segment tiles
   coreStart: unknown = { memory: true };
 
   constructor(
@@ -19,19 +31,45 @@ export class MemoryWorld implements WorldPort {
   ) {
     this.owners = new Array(width * height).fill(null);
     this.fallout = new Array(width * height).fill(false);
+    this.contested = new Array(width * height).fill(false);
+    this.terrain = new Array<Terrain>(width * height).fill("plains");
   }
 
   setOwner(tile: number, nation: NationId | null): void {
     this.owners[tile] = nation;
   }
 
+  ownerOf(tile: number): NationId | null {
+    return this.owners[tile];
+  }
+
+  isContested(tile: number): boolean {
+    return this.contested[tile];
+  }
+
   setFallout(tile: number, value: boolean): void {
     this.fallout[tile] = value;
   }
 
+  setTerrain(tile: number, terrain: Terrain): void {
+    this.terrain[tile] = terrain;
+  }
+
+  // A defensive structure: its multiplier applies to the tiles within range.
+  setStructure(tile: number, multiplier: number): void {
+    this.structures.set(tile, multiplier);
+  }
+
   // Gives every tile of `from` to `to` (or to nobody).
-  transferAll(from: NationId, to: NationId | null): void {
-    this.owners = this.owners.map((o) => (o === from ? to : o));
+  transferAll(from: NationId, to: NationId | null): number {
+    let moved = 0;
+    this.owners = this.owners.map((o, i) => {
+      if (o !== from) return o;
+      moved++;
+      this.contested[i] = to !== null;
+      return to;
+    });
+    return moved;
   }
 
   tileCounts(): ReadonlyMap<NationId, number> {
@@ -47,7 +85,10 @@ export class MemoryWorld implements WorldPort {
     const tiles = new Uint16Array(this.owners.length);
     this.owners.forEach((o, i) => {
       const owner = o === null ? 0 : (index.get(o) ?? 0);
-      tiles[i] = owner | (this.fallout[i] ? TILE_FALLOUT_BIT : 0);
+      tiles[i] =
+        owner |
+        (this.fallout[i] ? TILE_FALLOUT_BIT : 0) |
+        (owner !== 0 && this.contested[i] ? TILE_CONTESTED_BIT : 0);
     });
     return {
       world: { coreStart: this.coreStart, players: [] },
@@ -68,6 +109,107 @@ export class MemoryWorld implements WorldPort {
       const owner = value & TILE_NATION_MASK;
       this.owners[i] = owner === 0 ? null : nations[owner - 1];
       this.fallout[i] = (value & TILE_FALLOUT_BIT) !== 0;
+      this.contested[i] = (value & TILE_CONTESTED_BIT) !== 0;
     });
+    this.segments.clear();
+  }
+
+  // --- fronts -------------------------------------------------------------------
+
+  private grid(nations: readonly NationId[]): GridAccess {
+    const index = new Map(nations.map((id, i) => [id, i + 1]));
+    return {
+      width: this.width,
+      height: this.height,
+      ownerAt: (tile) => {
+        const o = this.owners[tile];
+        return o === null ? 0 : (index.get(o) ?? 0);
+      },
+      terrainAt: (tile) => this.terrain[tile],
+    };
+  }
+
+  fronts(
+    pairs: readonly [NationId, NationId][],
+    segmentTiles: number,
+  ): FrontGeometry[] {
+    const out: FrontGeometry[] = [];
+    for (const [a, b] of pairs) {
+      const nations = [a, b];
+      const g = this.grid(nations);
+      const candidates: number[] = [];
+      this.owners.forEach((o, i) => {
+        if (o === a || o === b) candidates.push(i);
+      });
+      const line = frontTiles(g, candidates, 1, 2);
+      const id = a < b ? `${a}|${b}` : `${b}|${a}`;
+      if (line.length === 0) {
+        this.segments.delete(id);
+        continue;
+      }
+      const segments = segmentFront(g, line, segmentTiles);
+      this.segments.set(
+        id,
+        segments.map((s) => s.tiles),
+      );
+      out.push({
+        id,
+        a: id.split("|")[0],
+        b: id.split("|")[1],
+        segments: segments.map((s) => {
+          const defense: Record<NationId, number> = {};
+          for (const n of nations) {
+            // A structure of n within 2 tiles of a tile n holds here.
+            let covered = 0;
+            let held = 0;
+            let bonus = 1;
+            for (const tile of s.tiles) {
+              if (this.owners[tile] !== n) continue;
+              held++;
+              for (const [at, multiplier] of this.structures) {
+                if (this.owners[at] !== n) continue;
+                const dx = Math.abs((at % this.width) - (tile % this.width));
+                const dy = Math.abs(
+                  Math.floor(at / this.width) - Math.floor(tile / this.width),
+                );
+                if (Math.max(dx, dy) <= 2) {
+                  covered++;
+                  bonus = Math.max(bonus, multiplier);
+                  break;
+                }
+              }
+            }
+            defense[n] = held === 0 ? 1 : 1 + (bonus - 1) * (covered / held);
+          }
+          return {
+            index: s.index,
+            tiles: s.tiles.length,
+            terrain: s.terrain,
+            defense,
+            supply: Object.fromEntries(nations.map((n) => [n, 0])),
+          };
+        }),
+      });
+    }
+    return out;
+  }
+
+  advance(
+    front: string,
+    segment: number,
+    winner: NationId,
+    loser: NationId,
+    tiles: number,
+  ): number {
+    const segments = this.segments.get(front);
+    if (segments === undefined || segments[segment] === undefined) return 0;
+    const nations = [winner, loser];
+    const g = this.grid(nations);
+    const taken = captureAlong(g, segments[segment], 1, 2, tiles, (tile) => {
+      this.owners[tile] = winner;
+      this.contested[tile] = true;
+      this.fallout[tile] = false;
+    });
+    return taken.length;
   }
 }

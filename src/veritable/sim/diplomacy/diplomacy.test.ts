@@ -1,4 +1,5 @@
 import { loadVeritableConfig } from "../../data/loadConfig";
+import { Bloc } from "../../data/schemas/bloc";
 import { VeritableConfig } from "../../data/schemas/config";
 import { NationData } from "../../data/schemas/nation";
 import { Scenario } from "../../data/schemas/scenario";
@@ -27,7 +28,7 @@ interface Setup {
   scenario?: Partial<Scenario>;
   autopilot?: boolean;
   config?: VeritableConfig;
-  blocsData?: Parameters<typeof testSimData>[1]["blocs"];
+  blocsData?: Bloc[];
 }
 
 function campaign(setup: Setup) {
@@ -160,7 +161,7 @@ describe("declaring war", () => {
     // 15 x (1 + share of AAA in the total power), share = 0.25 here.
     const hit = 60 - relation(d, "AAA", "BBB");
     expect(hit).toBeCloseTo(18.75, 6);
-    expect(sim.read().journal.at(-1)).toMatchObject({
+    expect(sim.read().journal[sim.read().journal.length - 1]).toMatchObject({
       kind: "war-declared",
       nation: "AAA",
       params: { target: "DDD", casusBelli: "none", war: "war-1" },
@@ -223,11 +224,12 @@ describe("international reaction", () => {
     });
     sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
     months(4);
-    expect(sim.read().diplomacy.sanctions.map((s) => s.by).sort()).toEqual([
-      "BBB",
-      "CCC",
-      "DDD",
-    ]);
+    expect(
+      sim
+        .read()
+        .diplomacy.sanctions.map((s) => s.by)
+        .sort(),
+    ).toEqual(["BBB", "CCC", "DDD"]);
   });
 
   it("the full members of a bloc entity align once half of them sanction", () => {
@@ -253,7 +255,10 @@ describe("international reaction", () => {
     });
     sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
     months(8);
-    const by = sim.read().diplomacy.sanctions.map((s) => s.by).sort();
+    const by = sim
+      .read()
+      .diplomacy.sanctions.map((s) => s.by)
+      .sort();
     // BBB is the victim; CCC sanctions as a bloc-mate of BBB; DDD follows CCC
     // inside the "club" entity; EEE has no reason.
     expect(by).toEqual(["BBB", "CCC", "DDD"]);

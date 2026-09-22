@@ -189,6 +189,7 @@ function newWar(
     score: Object.fromEntries(all.map((n) => [n, 0])),
     retreatMonths: Object.fromEntries(all.map((n) => [n, 0])),
     tilesTaken: Object.fromEntries(all.map((n) => [n, 0])),
+    monthlyTiles: Object.fromEntries(all.map((n) => [n, 0])),
     offers: [],
   };
 }
@@ -605,6 +606,7 @@ export function joinWar(
   war.score[nation] = 0;
   war.retreatMonths[nation] = 0;
   war.tilesTaken[nation] = 0;
+  war.monthlyTiles[nation] = 0;
   const enemies = side === "aggressors" ? war.defenders : war.aggressors;
   for (const enemy of enemies) {
     setRelation(state, nation, enemy, ctx.config.diplomacy.warRelation);

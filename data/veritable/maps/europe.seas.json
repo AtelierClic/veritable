@@ -1,0 +1,19 @@
+{
+  "map": "europe",
+  "note": "Germes des zones maritimes (lon, lat). Partition des tuiles d'eau par distance de parcours sur l'eau (Voronoï par parcours en largeur multi-source) : une mer fermée n'appartient qu'au germe atteignable par l'eau. Les lacs et eaux intérieures inaccessibles restent hors zone. Le golfe de Gascogne est ajouté à la liste de la consigne : sans lui, ses eaux allaient à la Manche.",
+  "zones": [
+    { "id": "north-atlantic", "name": "sea.north-atlantic", "lon": -15, "lat": 50 },
+    { "id": "biscay", "name": "sea.biscay", "lon": -5, "lat": 45.5 },
+    { "id": "channel", "name": "sea.channel", "lon": -1.5, "lat": 50 },
+    { "id": "north-sea", "name": "sea.north-sea", "lon": 3, "lat": 56 },
+    { "id": "baltic", "name": "sea.baltic", "lon": 19, "lat": 58 },
+    { "id": "norwegian-sea", "name": "sea.norwegian-sea", "lon": 5, "lat": 66 },
+    { "id": "barents", "name": "sea.barents", "lon": 38, "lat": 71.5 },
+    { "id": "med-west", "name": "sea.med-west", "lon": 4, "lat": 39 },
+    { "id": "med-central", "name": "sea.med-central", "lon": 14, "lat": 36 },
+    { "id": "med-east", "name": "sea.med-east", "lon": 28, "lat": 34 },
+    { "id": "adriatic", "name": "sea.adriatic", "lon": 15.5, "lat": 43 },
+    { "id": "aegean", "name": "sea.aegean", "lon": 25, "lat": 38 },
+    { "id": "black-sea", "name": "sea.black-sea", "lon": 34, "lat": 43 }
+  ]
+}

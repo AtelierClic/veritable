@@ -1,7 +1,7 @@
 import { Borders } from "../data/bordersFile";
 import { NationId } from "../data/schemas/common";
 import { TILE_NATION_MASK, WorldState } from "../data/schemas/save";
-import { TileGrid, WorldPort } from "../sim/VeritableSim";
+import { FrontGeometry, TileGrid, WorldPort } from "../sim/VeritableSim";
 
 // The tiled world WITHOUT the OpenFront core: nations sit on the rasterized
 // borders of their scenario and nothing moves. Used by the headless runner v1
@@ -60,5 +60,30 @@ export class BordersWorld implements WorldPort {
     this.tiles = grid.tiles.slice();
     this.coreStart = world.coreStart;
     this.counts = null;
+  }
+
+  // No terrain, no structures: this world has no fronts. Wars declared in it
+  // change relations and trade, never a tile (the runner on the core does).
+  fronts(): FrontGeometry[] {
+    return [];
+  }
+
+  advance(): number {
+    return 0;
+  }
+
+  transferAll(from: NationId, to: NationId): number {
+    const f = this.nations.indexOf(from) + 1;
+    const t = this.nations.indexOf(to) + 1;
+    if (f === 0 || t === 0) return 0;
+    let moved = 0;
+    for (let i = 0; i < this.tiles.length; i++) {
+      if ((this.tiles[i] & TILE_NATION_MASK) === f) {
+        this.tiles[i] = (this.tiles[i] & ~TILE_NATION_MASK) | t;
+        moved++;
+      }
+    }
+    this.counts = null;
+    return moved;
   }
 }

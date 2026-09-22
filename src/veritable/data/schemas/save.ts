@@ -20,6 +20,10 @@ export const SAVE_SCHEMA_VERSION = 3;
 
 export * from "./saveV1";
 
+// Tile bit set on land taken by war or ceded at a peace (J3a); the nation
+// index keeps its twelve bits and fallout its bit 13.
+export const TILE_CONTESTED_BIT = 1 << 12;
+
 export const JOURNAL_KINDS_V3 = [
   "campaign-started",
   "nation-status",
@@ -178,10 +182,11 @@ export const WarSchema = z.object({
   // False for a war the scenario starts with: the world has priced it in.
   declaredInCampaign: z.boolean(),
   // Per belligerent: war score, months in a row spent losing tiles, tiles
-  // taken since the start.
+  // taken since the start, net tiles gained this month (reset monthly).
   score: z.record(z.string(), zb.float()),
   retreatMonths: z.record(z.string(), zb.uint()),
   tilesTaken: z.record(z.string(), zb.uint()),
+  monthlyTiles: z.record(z.string(), zb.float()),
   offers: z.array(PeaceOfferSchema),
 });
 export type War = z.infer<typeof WarSchema>;

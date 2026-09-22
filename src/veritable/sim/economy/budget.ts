@@ -52,6 +52,8 @@ export function stepBudget(
   politics: NationPolitics,
   trade: MonthlyTrade,
   date: string,
+  // Net transfer received this month (reparations, J3a), US$.
+  transfer = 0,
 ): BudgetEvent[] {
   const events: BudgetEvent[] = [];
   const cfg = ctx.config.budget;
@@ -69,7 +71,7 @@ export function stepBudget(
     }
   }
 
-  let revenue = (nation.grantsPctGdp * nation.gdp) / 12;
+  let revenue = (nation.grantsPctGdp * nation.gdp) / 12 + transfer;
   for (const tax of TAX_IDS) {
     revenue += (nation.taxes[tax] * taxBase(ctx, tax, nation.gdp, bases)) / 12;
   }

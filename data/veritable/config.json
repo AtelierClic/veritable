@@ -215,13 +215,14 @@
     "advanceThreshold": 1.2,
     "v0": 0.5,
     "vMax": 3,
-    "lambda": 0.0004,
+    "lambda": 0.7,
     "terrain": {
       "plains": 1,
       "highland": 1.2,
       "mountain": 1.5
     },
     "cityDefense": 1.25,
+    "cityDefenseRange": 15,
     "breakthrough": {
       "speed": 1.5,
       "losses": 1.3
@@ -243,8 +244,8 @@
     "peace": {
       "exhaustionToAccept": 0.5,
       "retreatMonthsToAccept": 6,
-      "reparationsValue": 10,
-      "demilitarizationValue": 2,
+      "reparationsValue": 1,
+      "demilitarizationValue": 0.5,
       "annexationValue": 100
     },
     "ai": {

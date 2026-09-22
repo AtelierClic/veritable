@@ -1,4 +1,5 @@
 import { stepFiscalRule } from "../ai/fiscal";
+import { stepWarAi } from "../ai/war";
 import { NationId } from "../data/schemas/common";
 import { VeritableConfig } from "../data/schemas/config";
 import { NationData } from "../data/schemas/nation";
@@ -10,13 +11,16 @@ import {
   JournalEntry,
   MilitaryState,
   NationState,
+  PeaceOffer,
+  PeaceTerms,
   PoliticsState,
   SAVE_SCHEMA_VERSION,
   SaveFile,
+  War,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
-import { dateAfter } from "./calendar";
+import { dateAfter, dayIndex } from "./calendar";
 import {
   availableCasusBelli,
   declareWar,
@@ -26,6 +30,7 @@ import {
   initDiplomacy,
   liftSanctions,
   stepDiplomacyMonth,
+  warSide,
 } from "./diplomacy/diplomacy";
 import { BudgetEvent, spendingCeiling, stepBudget } from "./economy/budget";
 import { buildContext, EconomyContext, SimData } from "./economy/context";
@@ -41,6 +46,7 @@ import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
 import { ClockContext, DomainSystem, PerfProbe, Scheduler } from "./scheduler";
 import {
+  FrontGeometry,
   FrontView,
   PlayerCommand,
   PlayerCommandSchema,
@@ -50,6 +56,12 @@ import {
   WorldPort,
 } from "./VeritableSim";
 import {
+  enemyPairs,
+  releaseIdleDivisions,
+  resolveTick,
+  stepWarMonth,
+} from "./war/fronts";
+import {
   assignDivision,
   disbandDivision,
   initMilitary,
@@ -58,6 +70,14 @@ import {
   setPosture,
   stepMilitaryMonth,
 } from "./war/military";
+import {
+  aiAccepts,
+  findOffer,
+  PeaceEvent,
+  proposePeace,
+  refuseOffer,
+  signPeace,
+} from "./war/peace";
 
 export interface SimDeps {
   config: VeritableConfig;
@@ -77,7 +97,19 @@ export interface SimDeps {
 const METRIC_ADVANCE_CALLS = "sim.advanceCalls";
 
 // What the domain systems report; the simulation dates it.
-type DomainEvent = BudgetEvent | PoliticsEvent | BlocEvent | DiplomacyEvent;
+type DomainEvent =
+  | BudgetEvent
+  | PoliticsEvent
+  | BlocEvent
+  | DiplomacyEvent
+  | PeaceEvent;
+
+const CEASEFIRE: PeaceTerms = {
+  kind: "ceasefire",
+  reparationsPctGdp: 0,
+  reparationYears: 0,
+  maxDivisions: null,
+};
 
 export class VeritableSimImpl implements VeritableSim {
   private seed = 0;
@@ -104,6 +136,12 @@ export class VeritableSimImpl implements VeritableSim {
   private trade: MonthlyTrade | null = null;
   private pending: SimEvent[] = [];
   private readonly scheduler: Scheduler;
+
+  // Fronts: geometry read from the world once a game day, and the views of
+  // the last tick. Transient: rebuilt after a restore.
+  private geometry: FrontGeometry[] = [];
+  private geometryDay = -1;
+  private frontViews: FrontView[] = [];
 
   constructor(private readonly deps: SimDeps) {
     this.scheduler = new Scheduler(this.systems(), deps.perf);
@@ -160,6 +198,7 @@ export class VeritableSimImpl implements VeritableSim {
     ];
     this.metrics = { [METRIC_ADVANCE_CALLS]: 0 };
     this.trade = null;
+    this.invalidateFronts();
     this.initialized = true;
     this.refreshTileCounts();
   }
@@ -194,6 +233,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.diplomacy = state.diplomacy;
     this.military = state.military;
     this.trade = null;
+    this.invalidateFronts();
     this.initialized = true;
     this.deps.world.restore(this.nationIds(), state.world, {
       width: state.tilesInfo.width,
@@ -302,6 +342,7 @@ export class VeritableSimImpl implements VeritableSim {
           date,
         );
         this.record(date, event);
+        this.invalidateFronts();
         return;
       }
       case "raise-division": {
@@ -346,11 +387,28 @@ export class VeritableSimImpl implements VeritableSim {
         );
         return;
       }
-      case "propose-peace":
-      case "answer-peace":
-        throw new Error(
-          `${cmd.type}: peace arrives with the fronts (J3 step 6)`,
-        );
+      case "propose-peace": {
+        const me = this.requirePlayer();
+        const war = this.diplomacy.wars.find((w) => w.id === cmd.war);
+        if (war === undefined) throw new Error(`no war ${cmd.war}`);
+        const mySide = warSide(war, me);
+        const theirSide = warSide(war, cmd.to);
+        if (mySide === null || theirSide === null || mySide === theirSide) {
+          throw new Error(`${cmd.to} is not an enemy in ${cmd.war}`);
+        }
+        this.offerPeace(war, me, cmd.to, cmd.terms, date);
+        return;
+      }
+      case "answer-peace": {
+        const me = this.requirePlayer();
+        const found = findOffer(this.diplomacy, cmd.offer);
+        if (found === undefined || found.offer.to !== me) {
+          throw new Error(`no pending offer ${cmd.offer} for ${me}`);
+        }
+        if (cmd.accept) this.sign(found.war, found.offer, date);
+        else this.record(date, refuseOffer(found.war, found.offer));
+        return;
+      }
     }
   }
 
@@ -377,6 +435,7 @@ export class VeritableSimImpl implements VeritableSim {
         events.push({ type: "month-started", date: tick.context.date });
       }
     }
+    this.resolveFronts(gameMinutes);
     events.push(...this.pending);
     this.pending = [];
     this.metrics[METRIC_ADVANCE_CALLS] =
@@ -435,9 +494,53 @@ export class VeritableSimImpl implements VeritableSim {
       politics: this.politics.nations,
       diplomacy: this.diplomacy,
       military: this.military,
-      fronts: this.frontViews(),
+      fronts: this.frontViews,
       casusBelli,
     };
+  }
+
+  // --- the military tick --------------------------------------------------------
+
+  private invalidateFronts(): void {
+    this.geometryDay = -1;
+    this.geometry = [];
+    this.frontViews = [];
+  }
+
+  // The fronts are resolved once per core tick; an advance covering several
+  // ticks (tests, headless days) resolves them as many times.
+  private resolveFronts(gameMinutes: number): void {
+    if (this.diplomacy.wars.length === 0) {
+      if (this.frontViews.length > 0) this.frontViews = [];
+      return;
+    }
+    const day = dayIndex(this.calendar.elapsedGameMinutes);
+    if (day !== this.geometryDay) {
+      this.geometry = this.deps.world.fronts(
+        enemyPairs(this.diplomacy),
+        this.deps.config.war.segmentTiles,
+      );
+      this.geometryDay = day;
+      releaseIdleDivisions(this.diplomacy, this.military, this.geometry);
+    }
+    if (this.geometry.length === 0) {
+      this.frontViews = [];
+      return;
+    }
+    const steps = Math.max(
+      1,
+      Math.round(gameMinutes / this.deps.config.time.gameMinutesPerTick),
+    );
+    for (let i = 0; i < steps; i++) {
+      this.frontViews = resolveTick(
+        this.ctx,
+        this.deps.world,
+        this.diplomacy,
+        this.military,
+        this.geometry,
+        this.rng,
+      );
+    }
   }
 
   // --- domain clocks ----------------------------------------------------------
@@ -460,6 +563,18 @@ export class VeritableSimImpl implements VeritableSim {
     const trade = this.trade;
     if (trade === null) return; // the monthly flows always run first
     const player = this.playerNationId();
+    // Reparations: a share of the payer's GDP, every month until the date.
+    const transfers: Record<NationId, number> = {};
+    this.diplomacy.reparations = this.diplomacy.reparations.filter(
+      (r) => clock.date < r.until,
+    );
+    for (const r of this.diplomacy.reparations) {
+      const payer = this.economy.nations[r.from];
+      if (payer === undefined) continue;
+      const amount = (r.pctGdp * payer.gdp) / 12;
+      transfers[r.from] = (transfers[r.from] ?? 0) - amount;
+      transfers[r.to] = (transfers[r.to] ?? 0) + amount;
+    }
     for (const id of this.ctx.nationIds) {
       const economy = this.economy.nations[id];
       const events = stepBudget(
@@ -469,6 +584,7 @@ export class VeritableSimImpl implements VeritableSim {
         this.politics.nations[id],
         trade,
         clock.date,
+        transfers[id] ?? 0,
       );
       for (const event of events) this.record(clock.date, event);
       if (id !== player || this.politics.autopilot) {
@@ -500,6 +616,7 @@ export class VeritableSimImpl implements VeritableSim {
         enemiesOf(this.diplomacy, id).length > 0,
       );
     }
+    const before = this.diplomacy.wars.length;
     const events = stepDiplomacyMonth(
       this.ctx,
       this.diplomacy,
@@ -510,10 +627,73 @@ export class VeritableSimImpl implements VeritableSim {
       this.aiNations(),
     );
     for (const event of events) this.record(clock.date, event);
+    if (events.some((e) => e.type === "war-joined")) this.invalidateFronts();
+    stepWarMonth(this.diplomacy);
+
+    // The war AI of the nations nobody plays: orders, then peace offers.
+    for (const id of this.aiNations()) {
+      const orders = stepWarAi(
+        this.ctx,
+        this.diplomacy,
+        this.military,
+        this.sheets.get(id)!,
+        this.geometry,
+        id,
+      );
+      for (const to of orders.ceasefireTo) {
+        const war = this.diplomacy.wars.find(
+          (w) => warSide(w, id) !== null && warSide(w, to) !== null,
+        );
+        if (war === undefined) continue;
+        if (war.offers.some((o) => o.from === id && o.to === to)) continue;
+        this.offerPeace(war, id, to, CEASEFIRE, clock.date);
+      }
+    }
+    if (this.diplomacy.wars.length !== before) this.invalidateFronts();
+  }
+
+  // An offer from `from` to `to`: an AI recipient answers at once, the player
+  // gets it as a pending offer (and an event).
+  private offerPeace(
+    war: War,
+    from: NationId,
+    to: NationId,
+    terms: PeaceTerms,
+    date: string,
+  ): void {
+    const offer = proposePeace(this.diplomacy, war, from, to, terms, date);
+    this.record(
+      date,
+      { type: "peace-offered", nation: from, war: war.id, offer: offer.id },
+      terms.kind,
+    );
+    if (!this.aiNations().includes(to)) return; // the player answers later
+    if (aiAccepts(this.ctx, war, this.military, from, to, terms)) {
+      this.sign(war, offer, date);
+    } else {
+      this.record(date, refuseOffer(war, offer), terms.kind);
+    }
+  }
+
+  private sign(war: War, offer: PeaceOffer, date: string): void {
+    const events = signPeace(
+      this.ctx,
+      this.deps.world,
+      this.diplomacy,
+      this.military,
+      this.nations,
+      war,
+      offer,
+      date,
+    );
+    for (const event of events) this.record(date, event, offer.terms.kind);
+    // Divisions facing a former enemy go home.
+    releaseIdleDivisions(this.diplomacy, this.military, this.geometry);
+    this.invalidateFronts();
   }
 
   // An event of a domain: returned by advance(), and written in the journal.
-  private record(date: string, event: DomainEvent): void {
+  private record(date: string, event: DomainEvent, terms?: string): void {
     this.pending.push({ ...event, date } as SimEvent);
     let params: Record<string, string> = {};
     switch (event.type) {
@@ -536,6 +716,18 @@ export class VeritableSimImpl implements VeritableSim {
         break;
       case "sanctions-imposed":
       case "sanctions-lifted":
+        params = { by: event.by };
+        break;
+      case "peace-offered":
+      case "peace-refused":
+      case "peace-signed":
+        params = {
+          war: event.war,
+          offer: String(event.offer),
+          terms: terms ?? "ceasefire",
+        };
+        break;
+      case "annexation":
         params = { by: event.by };
         break;
       default:
@@ -584,11 +776,6 @@ export class VeritableSimImpl implements VeritableSim {
 
   private nationIds(): NationId[] {
     return this.nations.map((n) => n.id);
-  }
-
-  // Fronts arrive with step 6 of the J3 (war/fronts.ts).
-  private frontViews(): FrontView[] {
-    return [];
   }
 
   private refreshTileCounts(): void {

@@ -10,28 +10,44 @@ import {
   Game,
   Player,
   Structures,
+  TerrainType,
   Unit,
   UnitType,
 } from "../../core/game/Game";
 import { NationId } from "../data/schemas/common";
+import { VeritableConfig } from "../data/schemas/config";
 import {
   CorePlayerState,
+  TILE_CONTESTED_BIT,
   TILE_FALLOUT_BIT,
   TILE_NATION_MASK,
   WorldState,
 } from "../data/schemas/save";
-import { TileGrid, WorldPort } from "../sim/VeritableSim";
+import { FrontGeometry, TileGrid, WorldPort } from "../sim/VeritableSim";
+import {
+  captureAlong,
+  frontTiles,
+  GridAccess,
+  segmentFront,
+  Terrain,
+} from "../sim/war/geometry";
 import { NationBinding } from "./scenarioWorld";
 
 // The only place where the Véritable simulation meets the OpenFront core.
 //
 // Tiles belong to nations: the core stores a 12-bit owner smallID per tile,
 // this bridge maps smallID <-> NationId, and a save stores the index of the
-// nation in the save's own nation table — never a smallID.
+// nation in the save's own nation table — never a smallID. Bit 12 of a saved
+// tile marks land taken by war (contested); the bridge keeps that mask, the
+// core knows nothing of it.
 //
 // What survives a reload (DECISIONS.md, option A): tile ownership, fallout,
-// and per nation troops, gold, spawn tile and structures. In-flight state
-// (attacks, boats, warheads, legacy AI, alliances, embargoes) does not.
+// contested land, and per nation troops, gold, spawn tile and structures.
+// In-flight state (attacks, boats, warheads, legacy AI, alliances) does not.
+//
+// Fronts (J3a): the geometry of a front is read off the border tiles of the
+// two core players and cut into segments; captures ordered by the simulation
+// conquer tiles through the core's own Player.conquer.
 
 interface PendingRestore {
   nations: readonly NationId[];
@@ -45,14 +61,19 @@ export class CoreBridge implements WorldPort {
   private pending: PendingRestore | null = null;
   private restoredAtTick: number | null = null;
   private readonly coreStart: unknown;
+  private readonly contested: Uint8Array;
+  // Segment tiles of the last computed geometry, by front id.
+  private readonly segments = new Map<string, number[][]>();
 
   constructor(
     private readonly game: Game,
     bindings: readonly NationBinding[],
     // Whatever recreates this exact core game (OpenFront GameStartInfo).
     coreStart: unknown,
+    private readonly war: VeritableConfig["war"],
   ) {
     this.coreStart = canonicalJson(coreStart);
+    this.contested = new Uint8Array(game.width() * game.height());
     for (const b of bindings) {
       this.byNation.set(b.nationId, b.player);
       this.bySmallID.set(b.player.smallID(), b.nationId);
@@ -100,6 +121,8 @@ export class CoreBridge implements WorldPort {
       // Tiles of non-nations (tribes) are saved unowned.
       let value = smallIdToIndex.get(this.game.ownerID(tile)) ?? 0;
       if (this.game.hasFallout(tile)) value |= TILE_FALLOUT_BIT;
+      if (value !== 0 && this.contested[tile] === 1)
+        value |= TILE_CONTESTED_BIT;
       tiles[tile] = value;
     });
 
@@ -149,6 +172,7 @@ export class CoreBridge implements WorldPort {
       }
     }
     this.pending = { nations, world, grid };
+    this.segments.clear();
     this.game.addExecution(new RestoreExecution(() => this.applyPending()));
   }
 
@@ -172,6 +196,8 @@ export class CoreBridge implements WorldPort {
 
     grid.tiles.forEach((value, tile) => {
       const owner = value & TILE_NATION_MASK;
+      this.contested[tile] =
+        owner !== 0 && (value & TILE_CONTESTED_BIT) !== 0 ? 1 : 0;
       if (owner !== 0) {
         const player = this.byNation.get(nations[owner - 1]);
         if (player === undefined) {
@@ -211,6 +237,156 @@ export class CoreBridge implements WorldPort {
     this.pending = null;
     this.restoredAtTick = game.ticks();
     if (game.inSpawnPhase()) game.endSpawnPhase();
+  }
+
+  // --- fronts -------------------------------------------------------------------
+
+  isContested(tile: number): boolean {
+    return this.contested[tile] === 1;
+  }
+
+  private grid(nations: readonly NationId[]): GridAccess {
+    const bySmall = new Map<number, number>();
+    nations.forEach((id, i) => {
+      const player = this.byNation.get(id);
+      if (player !== undefined) bySmall.set(player.smallID(), i + 1);
+    });
+    const game = this.game;
+    return {
+      width: game.width(),
+      height: game.height(),
+      ownerAt: (tile) => bySmall.get(game.ownerID(tile)) ?? 0,
+      terrainAt: (tile) => terrainOf(game.terrainType(tile)),
+    };
+  }
+
+  fronts(
+    pairs: readonly [NationId, NationId][],
+    segmentTiles: number,
+  ): FrontGeometry[] {
+    if (this.pending !== null) return [];
+    const out: FrontGeometry[] = [];
+    const config = this.game.config();
+    for (const [a, b] of pairs) {
+      const pa = this.byNation.get(a);
+      const pb = this.byNation.get(b);
+      if (pa === undefined || pb === undefined) continue;
+      const nations = [a, b];
+      const g = this.grid(nations);
+      const candidates: number[] = [];
+      pa.borderTiles().forEach((t) => candidates.push(t));
+      pb.borderTiles().forEach((t) => candidates.push(t));
+      const line = frontTiles(g, candidates, 1, 2);
+      const id = a < b ? `${a}|${b}` : `${b}|${a}`;
+      if (line.length === 0) {
+        this.segments.delete(id);
+        continue;
+      }
+      const segments = segmentFront(g, line, segmentTiles);
+      this.segments.set(
+        id,
+        segments.map((s) => s.tiles),
+      );
+      out.push({
+        id,
+        a: id.split("|")[0],
+        b: id.split("|")[1],
+        segments: segments.map((s) => {
+          const defense: Record<NationId, number> = {};
+          const supply: Record<NationId, number> = {};
+          nations.forEach((n, i) => {
+            const player = i === 0 ? pa : pb;
+            let held = 0;
+            let posts = 0;
+            let cities = 0;
+            for (const tile of s.tiles) {
+              if (g.ownerAt(tile) !== i + 1) continue;
+              held++;
+              if (
+                this.game.hasUnitNearby(
+                  tile,
+                  config.defensePostRange(),
+                  UnitType.DefensePost,
+                  player.id(),
+                )
+              ) {
+                posts++;
+              }
+              if (
+                this.game.hasUnitNearby(
+                  tile,
+                  this.war.cityDefenseRange,
+                  UnitType.City,
+                  player.id(),
+                )
+              ) {
+                cities++;
+              }
+            }
+            defense[n] =
+              held === 0
+                ? 1
+                : (1 +
+                    (config.defensePostDefenseBonus() - 1) * (posts / held)) *
+                  (1 + (this.war.cityDefense - 1) * (cities / held));
+            supply[n] = 0; // logistics: J3b
+          });
+          return {
+            index: s.index,
+            tiles: s.tiles.length,
+            terrain: s.terrain,
+            defense,
+            supply,
+          };
+        }),
+      });
+    }
+    return out;
+  }
+
+  advance(
+    front: string,
+    segment: number,
+    winner: NationId,
+    loser: NationId,
+    tiles: number,
+  ): number {
+    if (this.pending !== null) return 0;
+    const segments = this.segments.get(front);
+    const player = this.byNation.get(winner);
+    if (segments === undefined || segments[segment] === undefined) return 0;
+    if (player === undefined || !this.byNation.has(loser)) return 0;
+    const g = this.grid([winner, loser]);
+    const taken = captureAlong(g, segments[segment], 1, 2, tiles, (tile) => {
+      player.conquer(tile);
+      this.contested[tile] = 1;
+    });
+    return taken.length;
+  }
+
+  transferAll(from: NationId, to: NationId): number {
+    if (this.pending !== null) return 0;
+    const loser = this.byNation.get(from);
+    const winner = this.byNation.get(to);
+    if (loser === undefined || winner === undefined) return 0;
+    const tiles = [...loser.tiles()];
+    for (const tile of tiles) {
+      winner.conquer(tile);
+      this.contested[tile] = 1;
+    }
+    this.segments.clear();
+    return tiles.length;
+  }
+}
+
+function terrainOf(type: TerrainType): Terrain {
+  switch (type) {
+    case TerrainType.Mountain:
+      return "mountain";
+    case TerrainType.Highland:
+      return "highland";
+    default:
+      return "plains";
   }
 }
 

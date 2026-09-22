@@ -214,6 +214,25 @@ export interface TileGrid {
   tiles: Uint16Array;
 }
 
+// Geometry of a front as the world computes it (J3a): the simulation reasons
+// in segments, never in tiles.
+export interface FrontGeometry {
+  id: string; // "A|B", ids sorted
+  a: NationId;
+  b: NationId;
+  segments: readonly SegmentGeometry[];
+}
+export interface SegmentGeometry {
+  index: number;
+  tiles: number;
+  terrain: { plains: number; highland: number; mountain: number }; // shares
+  // Multiplier of the structures (defence posts, cities) each side holds on
+  // its tiles of the segment.
+  defense: Record<NationId, number>;
+  // Ports and cities of each side near the segment (logistics, J3b).
+  supply: Record<NationId, number>;
+}
+
 // What the simulation needs from the tiled world. Implemented by
 // src/veritable/adapters/CoreBridge.ts over the OpenFront core, and by
 // in-memory worlds for tests and the headless runner. Nations are always
@@ -227,6 +246,24 @@ export interface WorldPort {
     world: WorldState,
     grid: TileGrid,
   ): void;
+  // Fronts between the given pairs of belligerents, cut into segments of
+  // about `segmentTiles` tiles. Pairs without a common border are omitted.
+  fronts(
+    pairs: readonly [NationId, NationId][],
+    segmentTiles: number,
+  ): FrontGeometry[];
+  // Takes up to `tiles` tiles of `loser` for `winner` along a segment of the
+  // last computed geometry of the front; returns how many were taken. Taken
+  // tiles are tagged contested.
+  advance(
+    front: string,
+    segment: number,
+    winner: NationId,
+    loser: NationId,
+    tiles: number,
+  ): number;
+  // Annexation: every tile of `from` goes to `to`, tagged contested.
+  transferAll(from: NationId, to: NationId): number;
 }
 
 export { NationIdSchema };

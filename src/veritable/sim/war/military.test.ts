@@ -72,7 +72,7 @@ describe("divisions and manpower", () => {
     sim.apply({ type: "raise-division", template: "armored" });
     sim.apply({ type: "raise-division", template: "armored" });
     let m = sim.read().military.nations.AAA;
-    expect(m.divisions.at(-1)).toMatchObject({
+    expect(m.divisions[m.divisions.length - 1]).toMatchObject({
       template: "armored",
       men: 12000,
       equipment: 0.5,
@@ -88,7 +88,10 @@ describe("divisions and manpower", () => {
     expect(sim.read().military.nations.AAA.manpower).toBe(11_000 + 20_000);
     sim.apply({ type: "raise-division", template: "mechanized" });
     m = sim.read().military.nations.AAA;
-    sim.apply({ type: "disband-division", division: m.divisions.at(-1)!.id });
+    sim.apply({
+      type: "disband-division",
+      division: m.divisions[m.divisions.length - 1].id,
+    });
     m = sim.read().military.nations.AAA;
     expect(m.conscription).toBe("total");
     expect(m.divisions.map((d) => d.template)).toEqual([
@@ -132,15 +135,15 @@ describe("divisions and manpower", () => {
   it("every month the pool refills, arms re-equip the divisions, exhaustion recovers in peace", () => {
     const { sim, months } = campaign(30_000);
     sim.apply({ type: "raise-division", template: "infantry" });
-    expect(sim.read().military.nations.AAA.divisions.at(-1)!.equipment).toBe(
-      0.5,
-    );
+    expect(
+      sim.read().military.nations.AAA.divisions.slice(-1)[0].equipment,
+    ).toBe(0.5);
     months(1);
     const m = sim.read().military.nations.AAA;
     // 5 % of the 50 000 ceiling would come in, but the pool is capped by the
     // ceiling minus the men in the divisions.
     expect(m.manpower).toBe(50_000 - 30_000);
-    expect(m.divisions.at(-1)!.equipment).toBeGreaterThan(0.5);
+    expect(m.divisions[m.divisions.length - 1].equipment).toBeGreaterThan(0.5);
     expect(m.exhaustion).toBe(0);
     expect(m.airPower).toBeCloseTo(0.5, 6);
   });

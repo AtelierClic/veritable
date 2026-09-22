@@ -170,13 +170,14 @@ const WarConfigSchema = z.object({
   advanceThreshold: z.number().min(1), // r above which the line moves
   v0: positive, // tiles per tick per unit of (r - 1)
   vMax: positive,
-  lambda: z.number().min(0), // losses per tick = enemy force x lambda
+  lambda: z.number().min(0), // men lost per tick per point of enemy force
   terrain: z.object({
     plains: positive,
     highland: positive,
     mountain: positive,
   }),
   cityDefense: positive,
+  cityDefenseRange: z.number().int().positive(), // tiles
   breakthrough: z.object({ speed: positive, losses: positive }),
   exhaustion: z.object({
     perLossShareOfPopulation: z.number().min(0),
