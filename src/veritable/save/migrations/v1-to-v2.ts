@@ -1,5 +1,5 @@
-import { SaveFileV2 } from "../../data/schemas/save";
 import { SaveFileV1 } from "../../data/schemas/saveV1";
+import { SaveFileV2 } from "../../data/schemas/saveV2";
 import { buildContext } from "../../sim/economy/context";
 import { initEconomy, initPolitics } from "../../sim/economy/init";
 import { MigrationContext } from "./index";
@@ -10,6 +10,9 @@ import { MigrationContext } from "./index";
 // sections start from the nation sheets, exactly like a new campaign, whatever
 // the date of the save. Everything else (calendar, nations, tiles, core world,
 // journal, Rng) is kept as it is.
+//
+// The economy is built by the current code, so the objects carry the fields
+// of later versions too; the next migrations only add what is absent.
 export function v1ToV2(
   save: SaveFileV1,
   context: MigrationContext,
@@ -28,5 +31,5 @@ export function v1ToV2(
     schemaVersion: 2,
     economy: initEconomy(ctx, sheets, context.data.row),
     politics: initPolitics(ctx, sheets, player, false),
-  };
+  } as SaveFileV2;
 }

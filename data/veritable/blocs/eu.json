@@ -60,8 +60,11 @@
   "layer": 1,
   "fiscalRule": {
     "maxDeficitToGdp": 0.03,
+    "deficitYears": 2,
     "maxDebtToGdp": 0.6,
-    "opinionMalus": 0.03
+    "debtRisingMonths": 12,
+    "opinionMalus": 0.03,
+    "malusFadeMonths": 6
   },
   "tradeBonus": 1.5
 }

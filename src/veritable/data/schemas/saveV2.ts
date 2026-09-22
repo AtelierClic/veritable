@@ -3,24 +3,12 @@ import { zb } from "../../../../zbin";
 import { IsoDateSchema, NationIdSchema } from "./common";
 import { CalendarSchema, NationStateSchema, WorldStateSchema } from "./saveV1";
 
-// Save file, CURRENT version: schemaVersion 3 (J3: exports in the growth,
-// deferred substitution of the rest of the world, regional premium, revised
-// EU rule, diplomacy, land war, navy, air).
+// Save file, version 2 (J2: economy and politics). FROZEN: a v2 file can only
+// be decoded by this schema, forever. The current version is save.ts.
 //
-// zbin has no version byte and no field tags: the schema IS the format. Once
-// a save of this version exists in the wild, any change of shape means a new
-// version: freeze this file as saveV3.ts, write the new one here, and add
-// migrations/v3-to-v4.ts (ARCHITECTURE.md, invariant 2).
-//
-// Pieces imported from saveV1.ts / saveV2.ts are unchanged since then; those
-// files are frozen, so a piece that must change is redefined here, never
-// edited there.
+// Pieces imported from saveV1.ts are unchanged since v1.
 
-export const SAVE_SCHEMA_VERSION = 3;
-
-export * from "./saveV1";
-
-export const JOURNAL_KINDS_V3 = [
+export const JOURNAL_KINDS_V2 = [
   "campaign-started",
   "nation-status",
   "unrest-started",
@@ -30,13 +18,13 @@ export const JOURNAL_KINDS_V3 = [
   "sovereign-default",
   "bloc-reprimand",
 ] as const;
-export const JournalEntryV3Schema = z.object({
+export const JournalEntryV2Schema = z.object({
   date: IsoDateSchema,
-  kind: z.enum(JOURNAL_KINDS_V3),
+  kind: z.enum(JOURNAL_KINDS_V2),
   nation: NationIdSchema.optional(),
   params: z.record(z.string(), z.string()),
 });
-export type JournalEntryV3 = z.infer<typeof JournalEntryV3Schema>;
+export type JournalEntryV2 = z.infer<typeof JournalEntryV2Schema>;
 
 // Quantities keyed by good, tax, spending post or interest group. Key order
 // is part of the bytes: records are always built in the order of the ids.
@@ -46,7 +34,7 @@ const amounts = z.record(z.string(), zb.float());
 // in US$. Sliders (taxes, spending) are the player's or the AI's settings;
 // the `0` variants are the values of the first day, the reference of the
 // political drivers and of the AI fiscal rule.
-export const NationEconomySchema = z.object({
+export const NationEconomyV2Schema = z.object({
   gdp: zb.float(),
   debt: zb.float(),
   growthBase: zb.float(), // per year
@@ -57,11 +45,6 @@ export const NationEconomySchema = z.object({
   coverage: amounts, // obtained / needed, last month
   imports: amounts, // last month, annualised
   exports: amounts,
-  // Value of the exports really sold (US$ per year, last month), and the
-  // share of GDP it is compared with in the growth: starts at the share of
-  // the first day and adapts slowly (J3, correction of the J2).
-  exportsValue: zb.float(),
-  exportShareReference: zb.float(),
   shortage: zb.float(), // weighted lack of coverage, 0..1
   priceIndex: zb.float(), // consumer basket, 1 = base prices
   taxes: amounts,
@@ -81,7 +64,7 @@ export const NationEconomySchema = z.object({
   defaults: zb.uint(),
   armsShort: z.boolean(), // read by the J3a divisions
 });
-export type NationEconomy = z.infer<typeof NationEconomySchema>;
+export type NationEconomyV2 = z.infer<typeof NationEconomyV2Schema>;
 
 export const NationPoliticsSchema = z.object({
   // Eight interest groups: the player's nation only (asymmetric simulation).
@@ -90,11 +73,6 @@ export const NationPoliticsSchema = z.object({
   stability: zb.float(),
   unrest: z.boolean(),
   reprimanded: z.boolean(),
-  // Bloc fiscal rule (J3 revision): consecutive months with the trailing
-  // twelve-month deficit above the limit, and the opinion malus in force,
-  // which fades out over some months once the reprimand is lifted.
-  deficitBreachMonths: zb.uint(),
-  reprimandMalus: zb.float(),
 });
 export type NationPolitics = z.infer<typeof NationPoliticsSchema>;
 
@@ -105,29 +83,23 @@ export const EmbargoSchema = z.object({
 });
 export type Embargo = z.infer<typeof EmbargoSchema>;
 
-export const MarketSchema = z.object({
-  prices: amounts, // world price
-  // Price paid by the importers of the scenario: the world price plus a
-  // premium when the scenario's demand is not covered (J3).
-  importPrices: amounts,
+export const MarketV2Schema = z.object({
+  prices: amounts,
   // Volume a good's embargoes keep off the market, annualised: it leaves the
   // supply that forms the price.
   stranded: amounts,
   rowProduction: amounts,
-  // Production the rest of the world really delivers: it follows its price
-  // response with a lag of months instead of instantly (J3).
-  rowEffectiveProduction: amounts,
   rowConsumption: amounts,
   rowSupplyShock: amounts, // AR(1), multiplicative
   embargoes: z.array(EmbargoSchema),
 });
-export type Market = z.infer<typeof MarketSchema>;
+export type MarketV2 = z.infer<typeof MarketV2Schema>;
 
-export const EconomyStateSchema = z.object({
-  market: MarketSchema,
-  nations: z.record(z.string(), NationEconomySchema),
+export const EconomyStateV2Schema = z.object({
+  market: MarketV2Schema,
+  nations: z.record(z.string(), NationEconomyV2Schema),
 });
-export type EconomyState = z.infer<typeof EconomyStateSchema>;
+export type EconomyStateV2 = z.infer<typeof EconomyStateV2Schema>;
 
 export const PoliticsStateSchema = z.object({
   nations: z.record(z.string(), NationPoliticsSchema),
@@ -136,25 +108,19 @@ export const PoliticsStateSchema = z.object({
 });
 export type PoliticsState = z.infer<typeof PoliticsStateSchema>;
 
-export const SaveHeaderV3Schema = zb.object({
-  schemaVersion: z.literal(3),
+export const SaveHeaderV2Schema = zb.object({
+  schemaVersion: z.literal(2),
   seed: zb.uint(),
   rngState: z.tuple([zb.uint(), zb.uint(), zb.uint(), zb.uint()]),
   calendar: CalendarSchema,
   nations: z.array(NationStateSchema),
   blocs: z.array(z.object({ id: z.string() })),
   world: WorldStateSchema,
-  economy: EconomyStateSchema,
+  economy: EconomyStateV2Schema,
   politics: PoliticsStateSchema,
-  journal: z.array(JournalEntryV3Schema),
+  journal: z.array(JournalEntryV2Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),
 });
-export type SaveHeaderV3 = z.infer<typeof SaveHeaderV3Schema>;
-export type SaveFileV3 = SaveHeaderV3 & { tiles: Uint16Array };
-
-// Current version aliases: the rest of the code only uses these.
-export const SaveHeaderSchema = SaveHeaderV3Schema;
-export type SaveFile = SaveFileV3;
-export type JournalEntry = JournalEntryV3;
-export const JOURNAL_KINDS = JOURNAL_KINDS_V3;
+export type SaveHeaderV2 = z.infer<typeof SaveHeaderV2Schema>;
+export type SaveFileV2 = SaveHeaderV2 & { tiles: Uint16Array };

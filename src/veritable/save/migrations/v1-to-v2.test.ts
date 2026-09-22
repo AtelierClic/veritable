@@ -35,8 +35,9 @@ describe("migration v1 -> v2 on a real J1 save", () => {
   });
 
   it("keeps the campaign and adds the economy and the politics", () => {
+    // Migrated all the way to the current version (v1 -> v2 -> v3).
     const save = decodeSave(FIXTURE, { context: context() });
-    expect(save.schemaVersion).toBe(2);
+    expect(save.schemaVersion).toBe(3);
 
     // Untouched: calendar, nations, tiles, core world, Rng.
     expect(save.calendar).toEqual({
@@ -67,13 +68,23 @@ describe("migration v1 -> v2 on a real J1 save", () => {
     expect(Object.keys(save.politics.nations.POL.groups!)).toHaveLength(8);
     expect(save.politics.nations.FRA.groups).toBeNull();
     expect(save.politics.autopilot).toBe(false);
+    // v3 fields, built by the current initialisation.
+    expect(poland.exportsValue).toBeGreaterThan(0);
+    expect(poland.exportShareReference).toBeCloseTo(
+      poland.exportsValue / poland.gdp,
+      12,
+    );
+    expect(save.economy.market.importPrices).toEqual(
+      save.economy.market.prices,
+    );
+    expect(save.politics.nations.POL.reprimandMalus).toBe(0);
   });
 
-  it("is deterministic, and the migrated save round-trips as version 2", () => {
+  it("is deterministic, and the migrated save round-trips in the current version", () => {
     const a = encodeSave(decodeSave(FIXTURE, { context: context() }));
     const b = encodeSave(decodeSave(FIXTURE, { context: context() }));
     expect(a).toEqual(b);
-    expect(peekSchemaVersion(a)).toBe(2);
+    expect(peekSchemaVersion(a)).toBe(3);
     expect(encodeSave(decodeSave(a))).toEqual(a);
   });
 

@@ -123,7 +123,7 @@ describe("save file (current version)", () => {
 
   it("carries schemaVersion where it can be read before decoding", () => {
     const bytes = encodeSave(playedGame().sim.snapshot());
-    expect(peekSchemaVersion(bytes)).toBe(2);
+    expect(peekSchemaVersion(bytes)).toBe(3);
     expect(String.fromCharCode(...bytes.subarray(0, 4))).toBe("VRTB");
   });
 

@@ -124,6 +124,34 @@ describe("cutting a gas supplier shows in the curves", () => {
     );
   }, 60_000);
 
+  // Delivery test 1 of the J3: the full EU members stop buying Russian gas
+  // and oil in January 2027.
+  it("EU embargo on Russian gas and oil: Russian GDP -3 % in two years, gas import price +25 % in the first year", () => {
+    const shock = parseShock("eu-embargo:RUS@2027-01");
+    const control = runCampaign({ pack, config, seed: 42, years: 4 });
+    const cut = runCampaign({ pack, config, seed: 42, years: 4, shock });
+    const at = (date: string, r: typeof control) =>
+      r.series.find((row) => row.date === date)!;
+    expect(at("2027-01-01", cut)).toEqual(at("2027-01-01", control));
+    const year1 = cut.series.filter(
+      (row) => row.date > "2027-01-01" && row.date <= "2028-01-01",
+    );
+    const peak = Math.max(...year1.map((row) => row.importPrices.gas));
+    const before = at("2027-01-01", cut).importPrices.gas;
+    expect(peak).toBeGreaterThan(before * 1.25);
+    // The world price alone cannot move that much: the stranded volume is a
+    // few percent of the world supply (DECISIONS.md, J3).
+    expect(Math.max(...year1.map((row) => row.prices.gas))).toBeLessThan(
+      before * 1.15,
+    );
+    expect(at("2029-01-01", cut).gdp.RUS).toBeLessThan(
+      at("2029-01-01", control).gdp.RUS * 0.97,
+    );
+    // The importers suffered too, then adapted.
+    expect(at("2027-03-01", cut).gasCoverage.DEU).toBeLessThan(0.8);
+    expect(at("2030-01-01", cut).gasCoverage.DEU).toBeGreaterThan(0.95);
+  }, 60_000);
+
   it("rejects an unknown shock", () => {
     expect(() => parseShock("cut-gas:RUS")).toThrow(/unknown shock/);
     expect(parseShock("cut-gas-exports:NOR@2030-06")).toEqual({

@@ -17,12 +17,16 @@
     "rowElasticityFactor": 2,
     "rowGrowthPerYear": 0.025,
     "agreementBonus": 1.25,
-    "sanctionDiscount": 0.2,
+    "sanctionDiscount": 0.4,
     "rationingPasses": 3,
+    "rowSupplyLagMonths": 18,
+    "scarcityPremium": 3,
+    "exportReferenceAdaptMonths": 60,
     "growth": {
       "alpha": 0.02,
       "beta": 0.02,
       "gamma": 0.002,
+      "delta": 0.15,
       "capacityInvestment": 0.02,
       "noiseMonthlySd": 0.0015
     },

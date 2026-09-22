@@ -4,11 +4,13 @@ import { NationData } from "../../data/schemas/nation";
 import {
   SAVE_SCHEMA_VERSION,
   SaveFile,
-  SaveHeaderV2Schema,
+  SaveHeaderV3Schema,
 } from "../../data/schemas/save";
 import { SaveFileV1, SaveHeaderV1Schema } from "../../data/schemas/saveV1";
+import { SaveFileV2, SaveHeaderV2Schema } from "../../data/schemas/saveV2";
 import { SimData } from "../../sim/economy/context";
 import { v1ToV2 } from "./v1-to-v2";
+import { v2ToV3 } from "./v2-to-v3";
 
 // A save as read from disk, before migration: the header decoded with the
 // frozen schema of ITS version, plus the raw tile grid.
@@ -44,6 +46,7 @@ export interface HeaderCodec {
 export const HEADER_CODECS: Record<number, HeaderCodec> = {
   1: SaveHeaderV1Schema,
   2: SaveHeaderV2Schema,
+  3: SaveHeaderV3Schema,
 };
 
 export class MigrationError extends Error {}
@@ -58,6 +61,12 @@ export const MIGRATIONS: Migration[] = [
         );
       }
       return v1ToV2(save as unknown as SaveFileV1, context) as VersionedSave;
+    },
+  },
+  {
+    from: 2,
+    migrate(save) {
+      return v2ToV3(save as unknown as SaveFileV2) as VersionedSave;
     },
   },
 ];

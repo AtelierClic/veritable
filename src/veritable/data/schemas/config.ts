@@ -31,10 +31,18 @@ const EconomyConfigSchema = z.object({
   agreementBonus: z.number().min(1),
   sanctionDiscount: share,
   rationingPasses: z.number().int().min(1),
+  // Months the rest of the world takes to bring its price response on line.
+  rowSupplyLagMonths: z.number().min(1),
+  // Import price = world price x (1 + premium x uncovered share of the
+  // scenario's demand).
+  scarcityPremium: z.number().min(0),
+  // Months over which the export share reference adapts to the current one.
+  exportReferenceAdaptMonths: z.number().min(1),
   growth: z.object({
     alpha: z.number().min(0), // x (infrastructure + research - reference)
     beta: z.number().min(0), // x shortage index
     gamma: z.number().min(0), // unrest
+    delta: z.number().min(0), // x (exports / GDP - reference share)
     capacityInvestment: z.number().min(0),
     noiseMonthlySd: z.number().min(0),
   }),

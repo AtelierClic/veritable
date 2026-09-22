@@ -94,6 +94,10 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     SPENDING_POSTS.map((p) => [p, sheet.budget.spending[p].value]),
   );
   const electricity = Math.max(production.electricity, 1e-9);
+  let exportsValue = 0;
+  for (const good of ctx.goods) {
+    exportsValue += exports[good.id] * good.basePrice * 1e6;
+  }
   return {
     gdp,
     debt: data.debtToGdp.value * gdp,
@@ -110,6 +114,8 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     coverage: perGood(() => 1),
     imports,
     exports,
+    exportsValue,
+    exportShareReference: exportsValue / gdp,
     shortage: 0,
     priceIndex: 1,
     taxes,
@@ -139,8 +145,10 @@ export function initEconomy(
   return {
     market: {
       prices: perGood((g) => ctx.good(g).basePrice),
+      importPrices: perGood((g) => ctx.good(g).basePrice),
       stranded: perGood(() => 0),
       rowProduction: perGood((g) => row.goods[g]!.production.value),
+      rowEffectiveProduction: perGood((g) => row.goods[g]!.production.value),
       rowConsumption: perGood((g) => row.goods[g]!.consumption.value),
       rowSupplyShock: perGood(() => 0),
       embargoes: [],
@@ -171,6 +179,8 @@ export function initPolitics(
         s.legitimacy * s.legitimacyValue,
       unrest: false,
       reprimanded: false,
+      deficitBreachMonths: 0,
+      reprimandMalus: 0,
     };
   };
   return {

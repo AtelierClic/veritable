@@ -2,6 +2,9 @@ import { loadVeritableConfig } from "../../data/loadConfig";
 import { Bloc } from "../../data/schemas/bloc";
 import { VeritableConfig } from "../../data/schemas/config";
 import { NationData } from "../../data/schemas/nation";
+import { NationEconomy } from "../../data/schemas/save";
+import { stepFiscalRules } from "../blocs/fiscalRule";
+import { Rng } from "../rng";
 import { MemoryWorld } from "../testing/MemoryWorld";
 import {
   testNation,
@@ -12,8 +15,8 @@ import { testRow, testSimData } from "../testing/simData";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { buildContext } from "./context";
-import { effectiveProduction } from "./engine";
-import { initEconomy } from "./init";
+import { effectiveProduction, stepGrowth, stepTrade } from "./engine";
+import { initEconomy, initPolitics } from "./init";
 
 const DAY = 1440;
 
@@ -328,24 +331,64 @@ describe("blocs and AI", () => {
     members: [{ nation: "AAA", status: "full" }],
     fiscalRule: {
       maxDeficitToGdp: 0.03,
+      deficitYears: 2,
       maxDebtToGdp: 0.6,
+      debtRisingMonths: 12,
       opinionMalus: 0.03,
+      malusFadeMonths: 6,
     },
   };
 
-  it("the bloc reprimands a member beyond 3 % / 60 %, once, and it costs opinion", () => {
+  it("debt above 60 % and rising for a year: the bloc reprimands a member, once, and it costs opinion", () => {
     const { sim, events, months } = campaign({
       nations: { AAA: { debtToGdp: 0.9 }, BBB: { debtToGdp: 0.9 } },
       blocs: [club],
     });
     months(6);
+    expect(events.filter((e) => e.type === "bloc-reprimand")).toHaveLength(0);
+    months(8);
     const reprimands = events.filter((e) => e.type === "bloc-reprimand");
     expect(reprimands).toHaveLength(1);
     expect(reprimands[0]).toMatchObject({ nation: "AAA", bloc: "club" });
     const politics = sim.read().politics;
     expect(politics.AAA.reprimanded).toBe(true);
+    expect(politics.AAA.reprimandMalus).toBe(0.03);
     expect(politics.BBB.reprimanded).toBe(false);
     expect(politics.AAA.opinion).toBeLessThan(0.5);
+  });
+
+  it("a deficit above 3 % reprimands only after two consecutive years", () => {
+    const { sim, events, months } = campaign({
+      nations: { AAA: { debtToGdp: 0.3, revenuePctGdp: 0.35 } }, // 5 points
+      blocs: [club],
+    });
+    months(20);
+    expect(events.filter((e) => e.type === "bloc-reprimand")).toHaveLength(0);
+    expect(sim.read().politics.AAA.deficitBreachMonths).toBeGreaterThan(18);
+    months(6);
+    expect(events.filter((e) => e.type === "bloc-reprimand")).toHaveLength(1);
+    expect(
+      sim.read().economies.AAA.debt / sim.read().economies.AAA.gdp,
+    ).toBeLessThan(0.6);
+  });
+
+  it("the malus fades out over six months once the reprimand is lifted", () => {
+    const config = quietConfig();
+    const nations = [testNation("AAA", { debtToGdp: 0.3 })];
+    const ctx = buildContext(config, testSimData(["AAA"]), nations);
+    const economy = initEconomy(ctx, nations, testRow()).nations.AAA;
+    const politics = initPolitics(ctx, nations, "AAA", false).nations.AAA;
+    politics.reprimanded = true;
+    politics.reprimandMalus = 0.03;
+    const malus: number[] = [];
+    for (let m = 0; m < 7; m++) {
+      stepFiscalRules([club], "AAA", economy, politics);
+      malus.push(politics.reprimandMalus);
+    }
+    expect(politics.reprimanded).toBe(false);
+    expect(malus.map((m) => Number(m.toFixed(3)))).toEqual([
+      0.025, 0.02, 0.015, 0.01, 0.005, 0, 0,
+    ]);
   });
 
   it("the AI fiscal rule consolidates a nation nobody plays, and spares investment", () => {
@@ -372,5 +415,117 @@ describe("blocs and AI", () => {
     months(24);
     const a = sim.read().economies.AAA;
     expect(a.spending.social).toBeLessThan(a.spending0.social);
+  });
+});
+
+describe("J3 corrections of the J2", () => {
+  // AAA exports oil (300 made, 100 used); BBB and the rest of the world buy.
+  const exporter = {
+    nations: {
+      AAA: { production: { oil: 300 }, consumption: { oil: 100 } },
+      BBB: { production: { oil: 50 }, consumption: { oil: 150 } },
+    },
+  };
+
+  it("exports lost to an embargo cost growth through the export term, and the drag fades", () => {
+    const control = campaign(exporter);
+    const cut = campaign(exporter);
+    for (const to of ["BBB", "ROW"]) {
+      cut.sim.apply({
+        type: "set-embargo",
+        from: "AAA",
+        to,
+        good: "oil",
+        active: true,
+      });
+    }
+    control.months(24);
+    cut.months(24);
+    const a = cut.sim.read().economies.AAA;
+    const c = control.sim.read().economies.AAA;
+    // The dumped surplus sells at a discount (on a world price that the
+    // stranded volume pushed up): less export value...
+    expect(a.exportsValue).toBeLessThan(c.exportsValue * 0.95);
+    // ...and less growth, month after month.
+    expect(a.gdp).toBeLessThan(c.gdp * 0.997);
+    // The reference share has moved towards the new share: the drag fades.
+    expect(a.exportShareReference).toBeLessThan(c.exportShareReference);
+    const drag = (e: NationEconomy) => e.growthAnnual - c.growthBase;
+    const early = campaign(exporter);
+    for (const to of ["BBB", "ROW"]) {
+      early.sim.apply({
+        type: "set-embargo",
+        from: "AAA",
+        to,
+        good: "oil",
+        active: true,
+      });
+    }
+    early.months(2);
+    expect(drag(early.sim.read().economies.AAA)).toBeLessThan(drag(a));
+    expect(drag(a)).toBeLessThan(0);
+    // Steady export growth costs nothing: the control grows on its trend.
+    expect(c.growthAnnual).toBeCloseTo(c.growthBase, 2);
+  });
+
+  it("the rest of the world brings its price response on line with a lag, not instantly", () => {
+    const { sim, months } = campaign({
+      nations: {
+        AAA: { production: { food: 100 }, consumption: { food: 300 } },
+        BBB: {},
+      },
+      row: [1000, 1000, { food: [1000, 1000] as [number, number] }],
+    });
+    months(1);
+    const m1 = sim.read().market;
+    expect(m1.prices.food).toBeGreaterThan(100);
+    const target = (m: typeof m1) =>
+      m.rowProduction.food * Math.pow(m.prices.food / 100, 0.3 * 2);
+    // One month in: a fraction of the way (1/18) from capacity to target.
+    expect(m1.rowEffectiveProduction.food).toBeGreaterThan(
+      m1.rowProduction.food,
+    );
+    expect(m1.rowEffectiveProduction.food).toBeLessThan(
+      m1.rowProduction.food + 0.1 * (target(m1) - m1.rowProduction.food),
+    );
+    months(35);
+    const m36 = sim.read().market;
+    // Three years in: most of the way.
+    expect(m36.rowEffectiveProduction.food).toBeGreaterThan(
+      m36.rowProduction.food + 0.7 * (target(m36) - m36.rowProduction.food),
+    );
+  });
+
+  it("importers pay a premium over the world price when the scenario's demand is not covered", () => {
+    const { sim, months } = campaign({
+      nations: {
+        AAA: { production: { food: 100 }, consumption: { food: 300 } },
+        BBB: {},
+      },
+      row: [1000, 1000, { food: [1000, 1000] as [number, number] }],
+    });
+    months(1);
+    const view = sim.read();
+    expect(view.market.importPrices.food).toBeGreaterThan(
+      view.market.prices.food * 1.1,
+    );
+    expect(view.market.importPrices.oil).toBe(view.market.prices.oil);
+    // AAA imports its missing food dear; BBB, self-sufficient, only sees
+    // the world price move.
+    expect(view.economies.AAA.priceIndex).toBeGreaterThan(
+      view.economies.BBB.priceIndex + 0.02,
+    );
+    expect(view.economies.BBB.priceIndex).toBeLessThan(1.02);
+  });
+
+  it("stepTrade and stepGrowth are the monthly steps behind the campaign", () => {
+    const config = quietConfig();
+    const nations = [testNation("AAA")];
+    const ctx = buildContext(config, testSimData(["AAA"]), nations);
+    const economy = initEconomy(ctx, nations, testRow());
+    const politics = initPolitics(ctx, nations, "AAA", false);
+    stepTrade(ctx, economy);
+    stepGrowth(ctx, economy, politics, new Rng(1));
+    expect(economy.nations.AAA.growthAnnual).toBeCloseTo(0.02, 6);
   });
 });

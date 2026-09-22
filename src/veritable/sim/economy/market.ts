@@ -14,6 +14,9 @@ export interface MarketSide {
   production: number; // per year, at the base price
   consumption: number;
   elasticityFactor: number; // 1 for a nation, rowElasticityFactor for ROW
+  // Supply side only, when it differs: 0 for the rest of the world, whose
+  // production follows the price with a lag (engine.ts) instead of instantly.
+  supplyElasticityFactor?: number;
 }
 
 export function demandAt(
@@ -48,7 +51,12 @@ export function totals(
   let supply = 0;
   for (const side of sides) {
     demand += demandAt(side.consumption, good, price, side.elasticityFactor);
-    supply += supplyAt(side.production, good, price, side.elasticityFactor);
+    supply += supplyAt(
+      side.production,
+      good,
+      price,
+      side.supplyElasticityFactor ?? side.elasticityFactor,
+    );
   }
   return { demand, supply };
 }

@@ -74,10 +74,10 @@ export function stepPolitics(
   data: NationData | undefined,
   economy: NationEconomy,
   politics: NationPolitics,
-  reprimandMalus: number,
 ): PoliticsEvent[] {
   const cfg = ctx.config.politics;
-  const malus = politics.reprimanded ? reprimandMalus : 0;
+  // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts).
+  const malus = politics.reprimandMalus;
 
   if (politics.groups !== null) {
     const weights = data?.interestGroups ?? cfg.groupWeights;

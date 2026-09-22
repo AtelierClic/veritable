@@ -32,11 +32,18 @@ export const BlocSchema = z.object({
   techBranch: z.string().optional(),
   layer: z.number().int().min(1).max(3),
   // Reprimand of members beyond these limits: opinion malus and journal.
+  // Reprimanded when the deficit is above the limit for `deficitYears`
+  // consecutive years, or when debt is above its limit and has been rising
+  // for `debtRisingMonths`; the malus fades out over `malusFadeMonths` once
+  // the reprimand is lifted (J3 revision).
   fiscalRule: z
     .object({
       maxDeficitToGdp: z.number().positive(),
+      deficitYears: z.number().int().min(1),
       maxDebtToGdp: z.number().positive(),
+      debtRisingMonths: z.number().int().min(1),
       opinionMalus: z.number().min(0).max(1),
+      malusFadeMonths: z.number().int().min(1),
     })
     .optional(),
   // Weight multiplier of trade flows between two full members.

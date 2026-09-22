@@ -1,7 +1,7 @@
 import { BordersWorld } from "../../../src/veritable/adapters/BordersWorld";
 import { ScenarioPack } from "../../../src/veritable/adapters/scenarioWorld";
 import { VeritableConfig } from "../../../src/veritable/data/schemas/config";
-import { GOOD_IDS } from "../../../src/veritable/data/schemas/goods";
+import { GOOD_IDS, GoodId } from "../../../src/veritable/data/schemas/goods";
 import { MINUTES_PER_GAME_DAY } from "../../../src/veritable/sim/calendar";
 import {
   ClockKind,
@@ -14,21 +14,44 @@ import { VeritableSimImpl } from "../../../src/veritable/sim/VeritableSimImpl";
 // One headless campaign: the simulation alone, AI against AI, no rendering and
 // (at J2) no OpenFront core. Same VeritableSim interface as the client.
 
-// --shock cut-gas-exports:RUS@2028-01
+// --shock cut-gas-exports:RUS@2028-01   every other nation stops buying its gas
+// --shock eu-embargo:RUS@2027-01        the full EU members stop buying its
+//                                       gas and oil (delivery test 1 of J3)
+export const SHOCK_KINDS = ["cut-gas-exports", "eu-embargo"] as const;
 export interface Shock {
-  kind: "cut-gas-exports";
+  kind: (typeof SHOCK_KINDS)[number];
   nation: string;
   month: string; // YYYY-MM
 }
 
 export function parseShock(text: string): Shock {
-  const match = /^(cut-gas-exports):([A-Za-z0-9-]+)@(\d{4}-\d{2})$/.exec(text);
-  if (match === null) {
+  const match = /^([a-z-]+):([A-Za-z0-9-]+)@(\d{4}-\d{2})$/.exec(text);
+  const kind = SHOCK_KINDS.find((k) => k === match?.[1]);
+  if (match === null || kind === undefined) {
     throw new Error(
-      `unknown shock "${text}" (cut-gas-exports:<NATION>@YYYY-MM)`,
+      `unknown shock "${text}" (${SHOCK_KINDS.join(" | ")}:<NATION>@YYYY-MM)`,
     );
   }
-  return { kind: "cut-gas-exports", nation: match[2], month: match[3] };
+  return { kind, nation: match[2], month: match[3] };
+}
+
+// The embargoes a shock puts in place: exporter, importer, good.
+export function shockEmbargoes(
+  shock: Shock,
+  pack: ScenarioPack,
+): { from: string; to: string; good: GoodId }[] {
+  const others = pack.scenario.nations.filter((id) => id !== shock.nation);
+  if (shock.kind === "cut-gas-exports") {
+    return others.map((to) => ({ from: shock.nation, to, good: "gas" }));
+  }
+  const eu = pack.data.blocs.find((b) => b.id === "eu");
+  if (eu === undefined) throw new Error("eu-embargo: no EU bloc in the data");
+  const members = eu.members
+    .filter((m) => m.status === "full" && others.includes(m.nation))
+    .map((m) => m.nation);
+  return (["gas", "oil"] as GoodId[]).flatMap((good) =>
+    members.map((to) => ({ from: shock.nation, to, good })),
+  );
 }
 
 export interface CampaignOptions {
@@ -42,7 +65,8 @@ export interface CampaignOptions {
 
 export interface MonthRow {
   date: string;
-  prices: Record<string, number>; // relative to the base price
+  prices: Record<string, number>; // world price, relative to the base price
+  importPrices: Record<string, number>; // paid by the scenario's importers
   gdp: Record<string, number>; // US$
   debtToGdp: Record<string, number>;
   stability: Record<string, number>;
@@ -126,6 +150,9 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       prices: Object.fromEntries(
         GOOD_IDS.map((g) => [g, view.market.prices[g] / basePrice[g]]),
       ),
+      importPrices: Object.fromEntries(
+        GOOD_IDS.map((g) => [g, view.market.importPrices[g] / basePrice[g]]),
+      ),
       gdp: pick((id) => view.economies[id].gdp),
       debtToGdp: pick((id) => view.economies[id].debt / view.economies[id].gdp),
       stability: pick((id) => view.politics[id].stability),
@@ -161,17 +188,9 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       !shockApplied &&
       sim.read().date.slice(0, 7) >= shock.month
     ) {
-      // Embargo on the gas exports of one nation towards every other nation
-      // of the scenario (the rest of the world keeps buying).
-      for (const to of pack.scenario.nations) {
-        if (to === shock.nation) continue;
-        sim.apply({
-          type: "set-embargo",
-          from: shock.nation,
-          to,
-          good: "gas",
-          active: true,
-        });
+      // The rest of the world keeps buying.
+      for (const embargo of shockEmbargoes(shock, pack)) {
+        sim.apply({ type: "set-embargo", ...embargo, active: true });
       }
       shockApplied = true;
     }
@@ -218,6 +237,7 @@ export function seriesCsv(result: CampaignResult): string {
   const header = [
     "date",
     ...GOOD_IDS.map((g) => `price_${g}`),
+    ...GOOD_IDS.map((g) => `import_price_${g}`),
     ...nations.map((n) => `gdp_${n}`),
     ...nations.map((n) => `debt_${n}`),
     ...nations.map((n) => `stability_${n}`),
@@ -230,6 +250,7 @@ export function seriesCsv(result: CampaignResult): string {
       [
         row.date,
         ...GOOD_IDS.map((g) => row.prices[g].toFixed(4)),
+        ...GOOD_IDS.map((g) => row.importPrices[g].toFixed(4)),
         ...nations.map((n) => (row.gdp[n] / 1e9).toFixed(2)),
         ...nations.map((n) => row.debtToGdp[n].toFixed(4)),
         ...nations.map((n) => row.stability[n].toFixed(4)),

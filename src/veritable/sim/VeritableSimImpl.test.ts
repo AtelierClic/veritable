@@ -135,7 +135,7 @@ describe("VeritableSimImpl", () => {
 
   it("refuses a save of another schema version", () => {
     const { sim } = newGame();
-    const saved = { ...sim.snapshot(), schemaVersion: 3 };
+    const saved = { ...sim.snapshot(), schemaVersion: 4 };
     expect(() => sim.restore(saved as never)).toThrow(/migrated/);
   });
 });

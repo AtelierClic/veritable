@@ -13,7 +13,7 @@ import {
   SaveFile,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
-import { BlocEvent, reprimandMalus, stepFiscalRules } from "./blocs/fiscalRule";
+import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
 import { dateAfter } from "./calendar";
 import { BudgetEvent, spendingCeiling, stepBudget } from "./economy/budget";
 import { buildContext, EconomyContext, SimData } from "./economy/context";
@@ -301,7 +301,6 @@ export class VeritableSimImpl implements VeritableSim {
         this.sheets.get(id),
         this.economy.nations[id],
         this.politics.nations[id],
-        reprimandMalus(this.ctx.blocs, id),
       );
       for (const event of events) this.record(clock.date, event);
     }
