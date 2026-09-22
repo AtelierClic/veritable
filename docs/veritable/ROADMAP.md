@@ -54,26 +54,28 @@ Modèle recommandé : Fable 5.1, effort xhigh.
 
 Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'implémentation.
 
-- [ ] Fronts calculés automatiquement, segments, postures (défendre / attaquer / percer)
-- [ ] Divisions : 4 gabarits, effectifs (population × conscription), armement, entraînement, ravitaillement
-- [ ] Résolution par segment (rapport de force × terrain × doctrine × structures OpenFront)
-- [ ] Épuisement de guerre ; pertes → effectifs, armement, opinion
-- [ ] Casus belli (catalogue) ; déclaration de guerre
-- [ ] Réaction internationale : opinion des nations, coalitions, votes de sanctions par les blocs (couche 1)
-- [ ] Sanctions par bien et par pays ; contournement ; flux d'armes vers les belligérants
-- [ ] Paix : négociée, cessez-le-feu, annexion ; tuiles transférées étiquetées « contesté »
-- [ ] Écrans : fronts et divisions, diplomatie et sanctions
+- [x] Fronts calculés automatiquement, segments, postures (défendre / attaquer / percer) _(2026-09-22 — géométrie lue par le monde une fois par jour, segments d'environ 200 tuiles le long de la ligne)_
+- [x] Divisions : 4 gabarits, effectifs (population × conscription), armement, entraînement, ravitaillement _(2026-09-22 — `war/divisions.json`, armée de départ selon `startingMix`)_
+- [x] Résolution par segment (rapport de force × terrain × doctrine × structures OpenFront) _(2026-09-22 — doctrine remplacée par la posture (défendre / attaquer / percer) ; colline OpenFront tenue pour forêt)_
+- [x] Épuisement de guerre ; pertes → effectifs, armement, opinion _(2026-09-22)_
+- [x] Casus belli (catalogue) ; déclaration de guerre _(2026-09-22 — `war/casus-belli.json`, quatre entrées)_
+- [x] Réaction internationale : opinion des nations, coalitions, votes de sanctions par les blocs (couche 1) _(2026-09-22 — coût de relations à la déclaration et chaque mois, sanctions IA, alignement de l'UE, coalitions)_
+- [x] Sanctions par bien et par pays ; contournement ; flux d'armes vers les belligérants _(2026-09-22 — contournement et sanctions non cosmétiques (dépendance commerciale) ; flux d'armes vers les belligérants reportés au J5 avec l'IA)_
+- [x] Paix : négociée, cessez-le-feu, annexion ; tuiles transférées étiquetées « contesté » _(2026-09-22 — cession, réparations, démilitarisation, annexion → exil)_
+- [x] Écrans : fronts et divisions, diplomatie et sanctions _(2026-09-22 — vérifiés dans le navigateur)_
+- [x] Corrections du J2 : exportations dans le PIB, substitution différée, prime régionale, règle UE révisée, dette FMI, liaison par identifiant _(2026-09-22 — tâches ajoutées au jalon)_
+- [x] Runner headless sur le cœur OpenFront, `--script` ; sauvegarde `schemaVersion: 3` et migration `v2-to-v3.ts` testée sur une vraie sauvegarde v2 _(2026-09-22 — tâches ajoutées au jalon)_
 
-**Livré quand** : une sanction se voit dans les courbes en moins d'un an de jeu ; une guerre sans casus belli coûte plus qu'elle ne rapporte (mesuré headless).
+**Livré quand** : une sanction se voit dans les courbes en moins d'un an de jeu ; une guerre sans casus belli coûte plus qu'elle ne rapporte (mesuré headless). — **Livré le 2026-09-22** (embargo UE : prix du gaz à l'import +32 % en un an, Russie −8 % à deux ans ; France → Espagne : 8 sanctions en six mois, perte de PIB 311 Md$ contre 186 Md$ de tuiles prises à trois ans ; `docs/veritable/reports/J3/`).
 
 ## J3b — Marine, air, logistique
 
-- [ ] Zones maritimes ; contrôle par navires et ports ; blocus → commerce
-- [ ] Débarquements (contrôle de zone puis prise d'un port)
-- [ ] Supériorité aérienne par région ; multiplicateur terrestre ; frappes
-- [ ] Capacité de ravitaillement par segment ; force réduite au-delà
+- [x] Zones maritimes ; contrôle par navires et ports ; blocus → commerce _(2026-09-22 — germes + partition par parcours sur l'eau, `borders/europe-10.zones.bin` ; présence = fiche projetée + navires + ports)_
+- [x] Débarquements (contrôle de zone puis prise d'un port) _(2026-09-22 — tête de pont par crochet du cœur ; contrôle mesuré entre belligérants)_
+- [x] Supériorité aérienne par région ; multiplicateur terrestre ; frappes _(2026-09-22 — par paire de belligérants, frappes mensuelles sur l'industrie et le ravitaillement)_
+- [x] Capacité de ravitaillement par segment ; force réduite au-delà _(2026-09-22 — base + infrastructures (ports et villes à portée : comptés à 0 sur le cœur, reste à faire))_
 
-**Livré quand** : un blocus se lit dans le commerce du bloqué ; un débarquement sans contrôle de zone échoue.
+**Livré quand** : un blocus se lit dans le commerce du bloqué ; un débarquement sans contrôle de zone échoue. — **Livré le 2026-09-22** (blocus britannique : commerce maritime norvégien −48 % à six mois ; débarquement italien en Espagne refusé).
 
 ## J4 — Le moteur
 

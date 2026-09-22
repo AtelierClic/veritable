@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, nothing } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { keyed } from "lit/directives/keyed.js";
 import { assetUrl } from "../../../core/AssetUrls";
@@ -502,6 +502,12 @@ export class ControlPanel extends LitElement implements Controller {
     `;
   }
 
+  // VERITABLE: a campaign fights with fronts and divisions; the legacy attack
+  // ratio has no meaning there (the troop bar stays: structures cost troops).
+  private get veritable(): boolean {
+    return this.game?.config().isVeritable() ?? false;
+  }
+
   private renderDesktop() {
     return html`
       ${this.renderNotification()}
@@ -559,40 +565,42 @@ export class ControlPanel extends LitElement implements Controller {
         </div>
       </div>
       <!-- Row 2: attack ratio | slider -->
-      <div
-        class="flex items-center gap-1.5 ${this.tutorialHighlightClass(
-          "attack_ratio",
-        )}"
-        translate="no"
-      >
-        <div
-          class="flex items-center gap-1 shrink-0 border border-gray-600 rounded-md px-1 py-0.5 text-sm font-bold text-white cursor-pointer w-[8rem]"
-        >
-          <img
-            src=${swordIcon}
-            alt=""
-            aria-hidden="true"
-            width="12"
-            height="12"
-            style="filter: brightness(0) invert(1);"
-          />
-          <span
-            >${(this.attackRatio * 100).toFixed(0)}%
-            (${renderTroops(
-              (this.game?.myPlayer()?.troops() ?? 0) * this.attackRatio,
-            )})</span
+      ${this.veritable
+        ? nothing
+        : html`<div
+            class="flex items-center gap-1.5 ${this.tutorialHighlightClass(
+              "attack_ratio",
+            )}"
+            translate="no"
           >
-        </div>
-        <input
-          type="range"
-          min="1"
-          max="100"
-          .value=${String(Math.round(this.attackRatio * 100))}
-          @input=${(e: Event) => this.handleRatioSliderInput(e)}
-          @pointerup=${(e: Event) => this.handleRatioSliderPointerUp(e)}
-          class="flex-1 h-1.5 accent-aquarius cursor-pointer"
-        />
-      </div>
+            <div
+              class="flex items-center gap-1 shrink-0 border border-gray-600 rounded-md px-1 py-0.5 text-sm font-bold text-white cursor-pointer w-[8rem]"
+            >
+              <img
+                src=${swordIcon}
+                alt=""
+                aria-hidden="true"
+                width="12"
+                height="12"
+                style="filter: brightness(0) invert(1);"
+              />
+              <span
+                >${(this.attackRatio * 100).toFixed(0)}%
+                (${renderTroops(
+                  (this.game?.myPlayer()?.troops() ?? 0) * this.attackRatio,
+                )})</span
+              >
+            </div>
+            <input
+              type="range"
+              min="1"
+              max="100"
+              .value=${String(Math.round(this.attackRatio * 100))}
+              @input=${(e: Event) => this.handleRatioSliderInput(e)}
+              @pointerup=${(e: Event) => this.handleRatioSliderPointerUp(e)}
+              class="flex-1 h-1.5 accent-aquarius cursor-pointer"
+            />
+          </div>`}
     `;
   }
 
@@ -628,37 +636,39 @@ export class ControlPanel extends LitElement implements Controller {
           ${this.renderMobileTroopBar()}
         </div>
         <!-- Sword + % label -->
-        <div
-          class="flex flex-col items-center shrink-0 gap-0.5 w-8"
-          translate="no"
-        >
-          <img
-            src=${swordIcon}
-            alt=""
-            aria-hidden="true"
-            width="10"
-            height="10"
-            style="filter: brightness(0) invert(1);"
-          />
-          <span class="text-white text-xs font-bold tabular-nums"
-            >${(this.attackRatio * 100).toFixed(0)}%</span
-          >
-        </div>
-        <!-- Attack ratio slider -->
-        <div
-          class="flex-1 ${this.tutorialHighlightClass("attack_ratio")}"
-          translate="no"
-        >
-          <input
-            type="range"
-            min="1"
-            max="100"
-            .value=${String(Math.round(this.attackRatio * 100))}
-            @input=${(e: Event) => this.handleRatioSliderInput(e)}
-            @pointerup=${(e: Event) => this.handleRatioSliderPointerUp(e)}
-            class="w-full h-1.5 accent-aquarius cursor-pointer"
-          />
-        </div>
+        ${this.veritable
+          ? nothing
+          : html`<div
+                class="flex flex-col items-center shrink-0 gap-0.5 w-8"
+                translate="no"
+              >
+                <img
+                  src=${swordIcon}
+                  alt=""
+                  aria-hidden="true"
+                  width="10"
+                  height="10"
+                  style="filter: brightness(0) invert(1);"
+                />
+                <span class="text-white text-xs font-bold tabular-nums"
+                  >${(this.attackRatio * 100).toFixed(0)}%</span
+                >
+              </div>
+              <!-- Attack ratio slider -->
+              <div
+                class="flex-1 ${this.tutorialHighlightClass("attack_ratio")}"
+                translate="no"
+              >
+                <input
+                  type="range"
+                  min="1"
+                  max="100"
+                  .value=${String(Math.round(this.attackRatio * 100))}
+                  @input=${(e: Event) => this.handleRatioSliderInput(e)}
+                  @pointerup=${(e: Event) => this.handleRatioSliderPointerUp(e)}
+                  class="w-full h-1.5 accent-aquarius cursor-pointer"
+                />
+              </div>`}
       </div>
     `;
   }

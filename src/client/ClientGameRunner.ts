@@ -1235,6 +1235,15 @@ export class ClientGameRunner {
     if (this.gameView.inSpawnPhase()) {
       return;
     }
+    // VERITABLE: in a campaign the fronts and divisions move the lines
+    // (declared and ordered from the Véritable screens); a click on the map
+    // never sends the legacy attack or boat.
+    const config = (
+      this.gameView as { config?: () => { isVeritable?: () => boolean } }
+    ).config?.();
+    if (config?.isVeritable?.() === true) {
+      return;
+    }
     if (this.myPlayer === null) {
       if (!this.clientID) return;
       const myPlayer = this.gameView.playerByClientID(this.clientID);

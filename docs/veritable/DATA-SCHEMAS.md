@@ -62,7 +62,28 @@ Le champ `production` en ratios est remplacé par `economy`, en quantités par a
                       "consumption": { "…": "" } } } }
 ```
 
-Participant du marché, pas une nation : hors carte, jamais jouable, sans politique ni budget. Il ferme le bilan mondial de chaque bien.
+Participant du marché, pas une nation : hors carte, jamais jouable, sans politique ni budget. Il ferme le bilan mondial de chaque bien. Depuis le J3 il porte aussi `gdp` (PIB mondial moins celui des nations du scénario, dérivé) : son poids parmi les partenaires commerciaux d'une nation.
+
+### Dépendance commerciale (depuis le J3)
+
+`economy.tradeOpenness` : commerce (exportations + importations) en part du PIB, `worldbank:NE.TRD.GNFS.ZS`. C'est l'assiette de la dépendance commerciale : PIB visé = 1 − friction × ouverture × part des partenaires (par distance et PIB) qui sanctionnent ou combattent la nation × (1 − contournement).
+
+## guerre (`war/divisions.json`, `war/casus-belli.json`)
+
+```jsonc
+[{ "id": "armored", "name": "division.armored", "attack": 3, "defense": 1.5, "men": 12000, "arms": 5 }]
+[{ "id": "contested-territory", "name": "casus.contested-territory", "check": "contested-territory", "relationsCost": 5 }]
+```
+
+Quatre gabarits (`infantry`, `mechanized`, `armored`, `artillery`) ; `arms` = unités d'armement (× `war.armsIndexPerEquipmentUnit` points d'indice) pour un rééquipement complet. Casus belli : `check` ∈ `contested-territory`, `ally-attacked`, `humanitarian`, `none` ; `relationsCost` = relations perdues avec toute nation par mois de guerre, avant le multiplicateur de puissance.
+
+## zones maritimes (`maps/<carte>.seas.json`, `borders/<scénario>.zones.bin`)
+
+```jsonc
+{ "map": "europe", "zones": [ { "id": "north-sea", "name": "sea.north-sea", "lon": 3, "lat": 56 } ] }
+```
+
+Germes projetés en tuiles par le géoréférencement, ramenés à l'eau la plus proche ; partition des tuiles d'eau par parcours en largeur multi-source sur l'eau (`tools/veritable/borders zones`). Format `VZON` : `"VZON"` u8 version u32 largeur u32 hauteur u16 nombre de zones, identifiants (u8 longueur + ASCII), u32 longueur + bloc RLE du codec des sauvegardes ; valeur = index de zone + 1, 0 = terre ou eau hors zone. `borders/<scénario>.zones.json` : germes en tuiles et tuiles par zone.
 
 ## leader (`leaders/<iso3>.json`)
 
@@ -189,4 +210,6 @@ Curseurs (`sliders.json`) : même forme d'`effects`, avec `min`, `max`, `default
 
 Depuis le J2 (`schemaVersion: 2`) la sauvegarde porte aussi `economy` (marché : prix, volumes bloqués, reste du monde, embargos ; économie de chaque nation : PIB, dette, capacités, couverture, curseurs, soldes…) et `politics` (groupes du joueur, opinion, stabilité, troubles, réprimande). Schéma de référence : `src/veritable/data/schemas/save.ts` ; v1 figée dans `saveV1.ts`.
 
-Migrations : `migrations/v1-to-v2.ts` exporte `(save: SaveV1, contexte) => SaveV2`. Le chargeur applique la chaîne jusqu'à la version courante.
+Depuis le J3 (`schemaVersion: 3`) la sauvegarde porte `diplomacy` (relations, guerres avec score, recul, tuiles prises et offres de paix, sanctions, appels de coalition, régions contestées issues des cessions, réparations, démilitarisations), `military` (par nation : conscription, réserve d'effectifs, divisions avec affectation et posture, épuisement, entraînement, pertes, puissances aérienne et navale), `naval` (déploiements, contrôle des zones, blocus), et l'économie gagne prix à l'import, production effective du reste du monde, exportations vendues et part de référence, frappes aériennes, commerce maritime, contournement, ouverture et facteur de dépendance commerciale. Le bit 12 d'une tuile sauvegardée marque une terre contestée. Schéma de référence : `src/veritable/data/schemas/save.ts` ; v1 et v2 figées dans `saveV1.ts` et `saveV2.ts`.
+
+Migrations : `migrations/v1-to-v2.ts` exporte `(save: SaveV1, contexte) => SaveV2` ; `migrations/v2-to-v3.ts` exporte `(save: SaveV2, contexte) => SaveV3` (contexte : config, données, fiches, scénario). Le chargeur applique la chaîne jusqu'à la version courante.

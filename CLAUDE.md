@@ -137,6 +137,9 @@ Boucle de tick et rendu de la carte, format des cartes et `map-generator`, logiq
 - Ajouter une dépendance : `npm install --save-dev <paquet> --ignore-scripts`, puis `npm run inst` ; jamais `npm install` nu.
 - Développement : `npm run dev`. Tests : `npm test`.
 - Frontières d'un scénario (rejouable) : `npm run veritable:borders -- calibrate --map europe` puis `npm run veritable:borders -- rasterize --scenario europe-10`.
+- Zones maritimes d'un scénario (rejouable) : `npm run veritable:borders -- zones --scenario europe-10` (germes dans `data/veritable/maps/<carte>.seas.json`).
 - Banc de cinq ans sur la carte Europe : `VERITABLE_BENCH=1 npx vitest src/veritable/adapters/fiveYears.bench --run`.
 - Données des fiches (rejouable) : `npm run veritable:ingest -- fetch --scenario europe-10` (réseau, réécrit les instantanés et le verrou) puis `npm run veritable:ingest -- build --scenario europe-10` (hors ligne).
-- Runner headless : `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42` ; choc : `--shock cut-gas-exports:RUS@2028-01` ; choc contre témoin en CSV + SVG : `npx tsx tools/veritable/headless/report.ts --out docs/veritable/reports/J2`.
+- Runner headless : `npm run veritable:headless -- --scenario europe-10 --years 20 --runs 10 --seed 42` ; `--core` pour le cœur OpenFront sur la vraie carte (fronts, débarquements) ; `--script tools/veritable/headless/scripts/war-fra-esp.json --player FRA` pour rejouer des commandes datées ; chocs : `--shock cut-gas-exports:RUS@2028-01`, `--shock eu-embargo:RUS@2027-01`.
+- Rapports : `npx tsx tools/veritable/headless/report.ts --out docs/veritable/reports/J2` (choc gazier du J2) ; `npx tsx tools/veritable/headless/reportJ3.ts --out docs/veritable/reports/J3` (les quatre tests de livraison du J3).
+- Dette FMI et ouverture commerciale : `npm run veritable:ingest -- fetch-imf --scenario europe-10` (cache hors git) ; un seul indicateur Banque mondiale : `npm run veritable:ingest -- fetch-wb --key trade --scenario europe-10`.
