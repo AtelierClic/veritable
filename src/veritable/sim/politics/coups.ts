@@ -30,7 +30,14 @@ export type CoupEvent =
   | { type: "coup-succeeded"; nation: NationId; leader: string }
   | { type: "revolution"; nation: NationId; leader: string }
   | { type: "regime-changed"; nation: NationId; from: string; to: string }
+  | { type: "civilian-transition"; nation: NationId; to: string }
   | { type: "law-repeal-announced"; nation: NationId; law: string; at: string };
+
+export function monthsSince(from: string, to: string): number {
+  const [fy, fm] = from.split("-").map(Number);
+  const [ty, tm] = to.split("-").map(Number);
+  return (ty - fy) * 12 + (tm - fm);
+}
 
 export interface CoupOutcome {
   events: CoupEvent[];
@@ -77,6 +84,11 @@ export function stepCoups(
   politics.coupRisk = coupProbability(ctx, politics, military, date);
   if (politics.fraudCoupUntil !== null && date >= politics.fraudCoupUntil) {
     politics.fraudCoupUntil = null;
+  }
+  // A new regime settles in: no attempt during the grace period.
+  if (monthsSince(politics.regimeSince, date) < cfg.graceMonths) {
+    politics.coupRisk = 0;
+    return out;
   }
   if (rng.next() >= politics.coupRisk) return out;
   if (rng.next() < cfg.failureShare) {
@@ -222,6 +234,71 @@ export function stepRevolution(
   politics.levers = { propagandaPctGdp: 0, fraud: 0, clientelism: null };
   void sheet;
   events.push({ type: "revolution", nation, leader: nameOf(leader) });
+  for (const law of scheduleRepeals(ctx, politics, date)) {
+    events.push({
+      type: "law-repeal-announced",
+      nation,
+      law: law.id,
+      at: law.at,
+    });
+  }
+  return events;
+}
+
+// A junta old enough hands power back to civilians: the regime before the
+// coup when it was democratic, a parliamentary one otherwise; elections in
+// six months, led by the strongest party.
+export function stepJuntaTransition(
+  ctx: EconomyContext,
+  rng: Rng,
+  nation: NationId,
+  politics: NationPolitics,
+  date: string,
+): CoupEvent[] {
+  const cfg = ctx.config.politics.coups;
+  if (politics.regime !== "junta") return [];
+  if (monthsSince(politics.regimeSince, date) < cfg.juntaTransitionMonths) {
+    return [];
+  }
+  if (rng.next() >= cfg.juntaTransitionMonthlyProbability) return [];
+  const before = politics.regimeBefore;
+  const to =
+    before !== null && before !== "junta" && ctx.regime(before).democratic
+      ? before
+      : "parliamentary";
+  changeRegime(ctx, politics, to, date);
+  const regime = ctx.regime(to);
+  const lead = [...politics.parties].sort((a, b) => b.support - a.support)[0];
+  const leader =
+    lead?.leader ??
+    generateActor(
+      ctx,
+      rng,
+      nation,
+      "head-of-government",
+      null,
+      { economic: 0, authority: -0.2, sovereignty: 0 },
+      regime,
+      date,
+      `${nation.toLowerCase()}-transition-${date}`,
+    );
+  politics.leader = leader;
+  politics.corruption = leader.traits.corruption;
+  politics.government = {
+    ...formGovernment(ctx, regime, politics.parties, lead?.id ?? ""),
+    since: date,
+  };
+  politics.legitimacy = ctx.config.politics.legitimacy.revolutionValue;
+  politics.capital = ctx.config.politics.elections.newGovernmentCapital;
+  politics.nextElection =
+    regime.electionIntervalMonths === null
+      ? null
+      : addMonths(date, ctx.config.politics.revolution.electionDelayMonths);
+  politics.electionsSuspended = false;
+  const events: CoupEvent[] = [
+    { type: "civilian-transition", nation, to },
+    { type: "regime-changed", nation, from: "junta", to },
+  ];
   for (const law of scheduleRepeals(ctx, politics, date)) {
     events.push({
       type: "law-repeal-announced",

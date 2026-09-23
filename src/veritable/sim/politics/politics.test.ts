@@ -333,6 +333,7 @@ describe("coups, revolutions and the AI", () => {
     p.stability = 0;
     p.groups!.military = 0;
     p.regime = "junta"; // coupBase 0.03 -> p = 0.03 x 4 x 3 x 1 = 0.36 a month
+    p.regimeSince = "2020-01-01"; // past the grace period
     let coup = false;
     for (let m = 0; m < 24 && !coup; m++) {
       for (let d = 0; d < 31; d++) sim.advance(DAY);
@@ -350,6 +351,31 @@ describe("coups, revolutions and the AI", () => {
     expect(sim.read().journal.map((j) => j.kind)).toContain("bloc-suspended");
     // The nation's groups are still there: the player goes on.
     expect(after.groups).not.toBeNull();
+  });
+
+  it("no coup during the grace period of a new regime; a junta hands power back after a while", () => {
+    const config = quietConfig();
+    config.politics.coups.failureShare = 0;
+    config.politics.coups.juntaTransitionMonths = 12;
+    config.politics.coups.juntaTransitionMonthlyProbability = 1;
+    const { sim, months } = campaign({ ...two, config });
+    const p = live(sim, "AAA");
+    p.legitimacy = 0;
+    p.stability = 0;
+    p.groups!.military = 0;
+    p.regime = "junta";
+    p.regimeSince = "2026-01-01";
+    months(12);
+    // Grace: 36 months without any attempt, whatever the odds.
+    expect(p.coups).toBe(0);
+    expect(p.coupRisk).toBe(0);
+    // Then the junta (started 2026-01) hands power back to civilians: the
+    // regime before it is unknown here, so a parliamentary one.
+    expect(sim.read().journal.map((j) => j.kind)).toContain(
+      "civilian-transition",
+    );
+    expect(p.regime).toBe("parliamentary");
+    expect(p.nextElection).not.toBeNull();
   });
 
   it("three angry groups and a long instability bring a revolution and elections in six months", () => {

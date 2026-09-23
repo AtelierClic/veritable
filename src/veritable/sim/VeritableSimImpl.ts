@@ -53,7 +53,12 @@ import {
   setBlockade,
   stepNavalDay,
 } from "./naval/naval";
-import { CoupEvent, stepCoups, stepRevolution } from "./politics/coups";
+import {
+  CoupEvent,
+  stepCoups,
+  stepJuntaTransition,
+  stepRevolution,
+} from "./politics/coups";
 import {
   ElectionEvent,
   holdElection,
@@ -172,6 +177,7 @@ const POLITICAL_EVENTS = new Set<string>([
   "objective-completed",
   "regime-changed",
   "bloc-suspended",
+  "civilian-transition",
 ]);
 
 const CEASEFIRE: PeaceTerms = {
@@ -952,7 +958,16 @@ export class VeritableSimImpl implements VeritableSim {
         this.record(date, event);
       }
 
-      // Coups and revolutions.
+      // A junta hands power back, coups, revolutions.
+      for (const event of stepJuntaTransition(
+        this.ctx,
+        this.rng,
+        id,
+        politics,
+        date,
+      )) {
+        this.record(date, event);
+      }
       const coup = stepCoups(
         this.ctx,
         this.rng,
@@ -1300,6 +1315,9 @@ export class VeritableSimImpl implements VeritableSim {
         break;
       case "bloc-suspended":
         params = { bloc: event.bloc };
+        break;
+      case "civilian-transition":
+        params = { to: event.to };
         break;
       case "note":
         params = { text: event.text };

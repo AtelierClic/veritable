@@ -259,7 +259,9 @@ export function changeRegime(
   date: string,
 ): void {
   const regime = ctx.regime(to);
+  politics.regimeBefore = politics.regime;
   politics.regime = regime.id;
+  politics.regimeSince = date;
   if (regime.electionIntervalMonths === null) {
     politics.nextElection = null;
   } else if (politics.nextElection === null) {

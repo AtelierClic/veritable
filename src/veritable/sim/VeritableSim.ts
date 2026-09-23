@@ -217,7 +217,8 @@ export type SimEvent =
         | "fraud-detected"
         | "objective-completed"
         | "regime-changed"
-        | "bloc-suspended";
+        | "bloc-suspended"
+        | "civilian-transition";
       date: string;
       nation: NationId;
       params: Record<string, string>;

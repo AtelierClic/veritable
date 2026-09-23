@@ -161,6 +161,8 @@ export function initNationPolitics(
     revolutions: 0,
     electionsWon: 0,
     suspendedFrom: [],
+    regimeSince: date,
+    regimeBefore: null,
   };
 }
 

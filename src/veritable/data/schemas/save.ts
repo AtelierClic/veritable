@@ -66,6 +66,7 @@ export const JOURNAL_KINDS_V4 = [
   "objective-completed",
   "regime-changed",
   "bloc-suspended",
+  "civilian-transition",
   "note",
 ] as const;
 export const JournalEntryV4Schema = z.object({
@@ -235,6 +236,10 @@ export const NationPoliticsSchema = z.object({
   electionsWon: zb.uint(),
   // Blocs with a democratic criterion that suspended the nation (coup).
   suspendedFrom: z.array(z.string()),
+  // When the regime in play started, and the regime before it (a junta
+  // hands power back to it when it was democratic).
+  regimeSince: IsoDateSchema,
+  regimeBefore: RegimeSchema.nullable(),
 });
 export type NationPolitics = z.infer<typeof NationPoliticsSchema>;
 

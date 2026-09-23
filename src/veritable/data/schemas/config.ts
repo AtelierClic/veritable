@@ -188,6 +188,11 @@ const PoliticsConfigSchema = z.object({
     democracyRelationsHit: z.number(),
     failedStabilityHit: share,
     failedMilitaryHit: share,
+    // No coup attempt in the months after a regime change (a new regime
+    // settles in), and a junta hands power back after a while.
+    graceMonths: z.number().int().min(0),
+    juntaTransitionMonths: z.number().int().min(0),
+    juntaTransitionMonthlyProbability: share,
   }),
   revolution: z.object({
     angryGroups: z.number().int().min(1),

@@ -222,7 +222,10 @@
       "failureShare": 0.5,
       "democracyRelationsHit": -30,
       "failedStabilityHit": 0.1,
-      "failedMilitaryHit": 0.1
+      "failedMilitaryHit": 0.1,
+      "graceMonths": 36,
+      "juntaTransitionMonths": 48,
+      "juntaTransitionMonthlyProbability": 0.05
     },
     "revolution": {
       "angryGroups": 3,
