@@ -9,29 +9,14 @@ import {
   WorldStateSchema,
 } from "./saveV1";
 
-// Save file, CURRENT version: schemaVersion 5 (J5: contest of each tile,
-// territory, nuclear, nation AI, blocs, technology, events).
+// Save file, version 4 (J4: circumvention per good, the political engine —
+// regimes, leaders, parties, elections, laws, political capital,
+// legitimacy, coups, objectives, notes). FROZEN: a v4 file can only be
+// decoded by this schema, forever. The current version is save.ts.
 //
-// zbin has no version byte and no field tags: the schema IS the format. Once
-// a save of this version exists in the wild, any change of shape means a new
-// version: freeze this file as saveV5.ts, write the new one here, and add
-// migrations/v5-to-v6.ts (ARCHITECTURE.md, invariant 2).
-//
-// Pieces imported from saveV1.ts are unchanged since then; the frozen files
-// (saveV1.ts to saveV4.ts) are never edited: a piece that must change is
-// redefined here.
+// Pieces imported from saveV1.ts are unchanged since v1.
 
-export const SAVE_SCHEMA_VERSION = 5;
-
-export * from "./saveV1";
-
-// Tile bit set on land taken by war or ceded at a peace (J3a); the nation
-// index keeps its twelve bits and fallout its bit 13. Since v5 the contest
-// block of the file says since when and how (sim/war/contest.ts); the bit is
-// kept equal to "contest != 0".
-export const TILE_CONTESTED_BIT = 1 << 12;
-
-export const JOURNAL_KINDS_V5 = [
+export const JOURNAL_KINDS_V4 = [
   "campaign-started",
   "nation-status",
   "unrest-started",
@@ -70,13 +55,13 @@ export const JOURNAL_KINDS_V5 = [
   "civilian-transition",
   "note",
 ] as const;
-export const JournalEntryV5Schema = z.object({
+export const JournalEntryV4Schema = z.object({
   date: IsoDateSchema,
-  kind: z.enum(JOURNAL_KINDS_V5),
+  kind: z.enum(JOURNAL_KINDS_V4),
   nation: NationIdSchema.optional(),
   params: z.record(z.string(), z.string()),
 });
-export type JournalEntryV5 = z.infer<typeof JournalEntryV5Schema>;
+export type JournalEntryV4 = z.infer<typeof JournalEntryV4Schema>;
 
 // Quantities keyed by good, tax, spending post or interest group. Key order
 // is part of the bytes: records are always built in the order of the ids.
@@ -86,7 +71,7 @@ const amounts = z.record(z.string(), zb.float());
 // in US$. Sliders (taxes, spending) are the player's or the AI's settings;
 // the `0` variants are the values of the first day, the reference of the
 // political drivers and of the AI fiscal rule.
-export const NationEconomySchema = z.object({
+export const NationEconomyV4Schema = z.object({
   gdp: zb.float(),
   debt: zb.float(),
   growthBase: zb.float(), // per year
@@ -139,18 +124,18 @@ export const NationEconomySchema = z.object({
   tradeOpenness: zb.float(),
   tradeFactor: zb.float(),
 });
-export type NationEconomy = z.infer<typeof NationEconomySchema>;
+export type NationEconomyV4 = z.infer<typeof NationEconomyV4Schema>;
 
 // --- the political engine (J4) --------------------------------------------
 
 // Wire versions of the ideology and traits of politics.ts / leaders.ts (zbin
 // wants explicit number encodings).
-export const IdeologyWireSchema = z.object({
+export const IdeologyWireV4Schema = z.object({
   economic: zb.float(),
   authority: zb.float(),
   sovereignty: zb.float(),
 });
-export const TraitsWireSchema = IdeologyWireSchema.extend({
+export const TraitsWireV4Schema = IdeologyWireV4Schema.extend({
   aggressiveness: zb.float(),
   corruption: zb.float(),
   charisma: zb.float(),
@@ -160,35 +145,35 @@ export const TraitsWireSchema = IdeologyWireSchema.extend({
 // A political actor in play: the leader of the nation or of a party. Real
 // ones carry an i18n key (parody or fictional name, per config), generated
 // ones a literal name drawn from the name pools.
-export const ActorStateSchema = z.object({
+export const ActorStateV4Schema = z.object({
   id: z.string().min(1),
   name: NationNameSchema,
   born: IsoDateSchema,
   party: z.string().nullable(),
   role: ActorRoleSchema,
-  traits: TraitsWireSchema,
+  traits: TraitsWireV4Schema,
 });
-export type ActorState = z.infer<typeof ActorStateSchema>;
+export type ActorStateV4 = z.infer<typeof ActorStateV4Schema>;
 
-export const PartyStateSchema = z.object({
+export const PartyStateV4Schema = z.object({
   id: z.string().min(1),
   name: NationNameSchema,
-  ideology: IdeologyWireSchema,
+  ideology: IdeologyWireV4Schema,
   support: zb.float(), // share at the last election
-  leader: ActorStateSchema,
+  leader: ActorStateV4Schema,
 });
-export type PartyState = z.infer<typeof PartyStateSchema>;
+export type PartyStateV4 = z.infer<typeof PartyStateV4Schema>;
 
-export const ElectionResultSchema = z.object({
+export const ElectionResultV4Schema = z.object({
   date: IsoDateSchema,
   results: amounts, // party -> share
   incumbentShare: zb.float(),
   alternation: z.boolean(),
   fraudDetected: z.boolean(),
 });
-export type ElectionResult = z.infer<typeof ElectionResultSchema>;
+export type ElectionResultV4 = z.infer<typeof ElectionResultV4Schema>;
 
-export const NationPoliticsSchema = z.object({
+export const NationPoliticsV4Schema = z.object({
   // Eight interest groups: the player's nation only (asymmetric simulation).
   groups: amounts.nullable(),
   opinion: zb.float(),
@@ -209,15 +194,15 @@ export const NationPoliticsSchema = z.object({
   corruption: zb.float(),
   pressFreedom: zb.float(),
   mediaControl: zb.float(),
-  leader: ActorStateSchema,
-  parties: z.array(PartyStateSchema),
+  leader: ActorStateV4Schema,
+  parties: z.array(PartyStateV4Schema),
   government: z.object({
     parties: z.array(z.string()),
     since: IsoDateSchema,
-    ideology: IdeologyWireSchema,
+    ideology: IdeologyWireV4Schema,
   }),
   nextElection: IsoDateSchema.nullable(),
-  lastElection: ElectionResultSchema.nullable(),
+  lastElection: ElectionResultV4Schema.nullable(),
   electionsSuspended: z.boolean(),
   levers: z.object({
     propagandaPctGdp: zb.float(),
@@ -229,7 +214,7 @@ export const NationPoliticsSchema = z.object({
   lowStabilityMonths: zb.uint(),
   fraudCoupUntil: IsoDateSchema.nullable(),
   coupRisk: zb.float(), // last monthly probability, for the screens
-  groupIdeologies: z.record(z.string(), IdeologyWireSchema),
+  groupIdeologies: z.record(z.string(), IdeologyWireV4Schema),
   // Counters for the metrics and the objectives.
   alternations: zb.uint(),
   coups: zb.uint(),
@@ -242,25 +227,25 @@ export const NationPoliticsSchema = z.object({
   regimeSince: IsoDateSchema,
   regimeBefore: RegimeSchema.nullable(),
 });
-export type NationPolitics = z.infer<typeof NationPoliticsSchema>;
+export type NationPoliticsV4 = z.infer<typeof NationPoliticsV4Schema>;
 
-export const PinnedObjectiveSchema = z.object({
+export const PinnedObjectiveV4Schema = z.object({
   id: z.string().min(1),
   since: IsoDateSchema,
   baseline: zb.float(), // value of the tracked quantity when pinned
   progress: zb.float(), // 0..1
   done: z.boolean(),
 });
-export type PinnedObjective = z.infer<typeof PinnedObjectiveSchema>;
+export type PinnedObjectiveV4 = z.infer<typeof PinnedObjectiveV4Schema>;
 
-export const EmbargoSchema = z.object({
+export const EmbargoV4Schema = z.object({
   from: z.string(), // exporter
   to: z.string(), // importer (a nation or ROW)
   good: z.string(),
 });
-export type Embargo = z.infer<typeof EmbargoSchema>;
+export type EmbargoV4 = z.infer<typeof EmbargoV4Schema>;
 
-export const MarketSchema = z.object({
+export const MarketV4Schema = z.object({
   prices: amounts, // world price
   // Price paid by the importers of the scenario: the world price plus a
   // premium when the scenario's demand is not covered (J3).
@@ -274,31 +259,31 @@ export const MarketSchema = z.object({
   rowEffectiveProduction: amounts,
   rowConsumption: amounts,
   rowSupplyShock: amounts, // AR(1), multiplicative
-  embargoes: z.array(EmbargoSchema),
+  embargoes: z.array(EmbargoV4Schema),
 });
-export type Market = z.infer<typeof MarketSchema>;
+export type MarketV4 = z.infer<typeof MarketV4Schema>;
 
-export const EconomyStateSchema = z.object({
-  market: MarketSchema,
-  nations: z.record(z.string(), NationEconomySchema),
+export const EconomyStateV4Schema = z.object({
+  market: MarketV4Schema,
+  nations: z.record(z.string(), NationEconomyV4Schema),
 });
-export type EconomyState = z.infer<typeof EconomyStateSchema>;
+export type EconomyStateV4 = z.infer<typeof EconomyStateV4Schema>;
 
-export const PoliticsStateSchema = z.object({
-  nations: z.record(z.string(), NationPoliticsSchema),
+export const PoliticsStateV4Schema = z.object({
+  nations: z.record(z.string(), NationPoliticsV4Schema),
   // True when the player's nation is run by the AI fiscal rule (headless).
   autopilot: z.boolean(),
   // The player's objectives and free-text notes (J4).
   player: z.object({
-    objectives: z.array(PinnedObjectiveSchema),
+    objectives: z.array(PinnedObjectiveV4Schema),
     notes: z.array(z.object({ date: IsoDateSchema, text: z.string() })),
   }),
 });
-export type PoliticsState = z.infer<typeof PoliticsStateSchema>;
+export type PoliticsStateV4 = z.infer<typeof PoliticsStateV4Schema>;
 
 // --- diplomacy (J3a) ---------------------------------------------------------
 
-export const PeaceTermsSchema = z.object({
+export const PeaceTermsV4Schema = z.object({
   // ceasefire: everyone keeps what it holds, no transfer; cession: the tiles
   // the winner holds stay with it, tagged contested; annexation: every tile
   // of the loser goes to the winner, the loser is exiled.
@@ -307,19 +292,19 @@ export const PeaceTermsSchema = z.object({
   reparationYears: zb.uint(),
   maxDivisions: zb.uint().nullable(), // demilitarisation of the loser
 });
-export type PeaceTerms = z.infer<typeof PeaceTermsSchema>;
+export type PeaceTermsV4 = z.infer<typeof PeaceTermsV4Schema>;
 
-export const PeaceOfferSchema = z.object({
+export const PeaceOfferV4Schema = z.object({
   id: zb.uint(),
   war: z.string(),
   from: NationIdSchema,
   to: NationIdSchema,
-  terms: PeaceTermsSchema,
+  terms: PeaceTermsV4Schema,
   date: IsoDateSchema,
 });
-export type PeaceOffer = z.infer<typeof PeaceOfferSchema>;
+export type PeaceOfferV4 = z.infer<typeof PeaceOfferV4Schema>;
 
-export const WarSchema = z.object({
+export const WarV4Schema = z.object({
   id: z.string().min(1),
   aggressors: z.array(NationIdSchema),
   defenders: z.array(NationIdSchema),
@@ -333,22 +318,22 @@ export const WarSchema = z.object({
   retreatMonths: z.record(z.string(), zb.uint()),
   tilesTaken: z.record(z.string(), zb.uint()),
   monthlyTiles: z.record(z.string(), zb.float()),
-  offers: z.array(PeaceOfferSchema),
+  offers: z.array(PeaceOfferV4Schema),
 });
-export type War = z.infer<typeof WarSchema>;
+export type WarV4 = z.infer<typeof WarV4Schema>;
 
-export const SanctionSchema = z.object({
+export const SanctionV4Schema = z.object({
   by: NationIdSchema,
   against: NationIdSchema,
   since: IsoDateSchema,
 });
-export type Sanction = z.infer<typeof SanctionSchema>;
+export type SanctionV4 = z.infer<typeof SanctionV4Schema>;
 
-export const DiplomacyStateSchema = z.object({
+export const DiplomacyStateV4Schema = z.object({
   // relations[a][b] for a < b (ids compared as strings), in [-100, 100].
   relations: z.record(z.string(), z.record(z.string(), zb.float())),
-  wars: z.array(WarSchema),
-  sanctions: z.array(SanctionSchema),
+  wars: z.array(WarV4Schema),
+  sanctions: z.array(SanctionV4Schema),
   // Coalition calls open against an aggressor: months left to answer.
   coalitionCalls: z.array(
     z.object({
@@ -380,11 +365,11 @@ export const DiplomacyStateSchema = z.object({
   nextOfferId: zb.uint(),
   nextWarId: zb.uint(),
 });
-export type DiplomacyState = z.infer<typeof DiplomacyStateSchema>;
+export type DiplomacyStateV4 = z.infer<typeof DiplomacyStateV4Schema>;
 
 // --- military (J3a) ----------------------------------------------------------
 
-export const DivisionSchema = z.object({
+export const DivisionV4Schema = z.object({
   id: zb.uint(),
   template: z.string(),
   men: zb.float(),
@@ -396,12 +381,12 @@ export const DivisionSchema = z.object({
   segment: zb.uint().nullable(),
   posture: z.enum(["defend", "attack", "breakthrough"]),
 });
-export type Division = z.infer<typeof DivisionSchema>;
+export type DivisionV4 = z.infer<typeof DivisionV4Schema>;
 
-export const NationMilitarySchema = z.object({
+export const NationMilitaryV4Schema = z.object({
   conscription: z.enum(["peace", "partial", "total"]),
   manpower: zb.float(), // men available in the pool
-  divisions: z.array(DivisionSchema),
+  divisions: z.array(DivisionV4Schema),
   nextDivisionId: zb.uint(),
   exhaustion: zb.float(), // 0..1
   training: zb.float(), // of new divisions
@@ -411,16 +396,16 @@ export const NationMilitarySchema = z.object({
   airPower: zb.float(),
   navalPower: zb.float(),
 });
-export type NationMilitary = z.infer<typeof NationMilitarySchema>;
+export type NationMilitaryV4 = z.infer<typeof NationMilitaryV4Schema>;
 
-export const MilitaryStateSchema = z.object({
-  nations: z.record(z.string(), NationMilitarySchema),
+export const MilitaryStateV4Schema = z.object({
+  nations: z.record(z.string(), NationMilitaryV4Schema),
 });
-export type MilitaryState = z.infer<typeof MilitaryStateSchema>;
+export type MilitaryStateV4 = z.infer<typeof MilitaryStateV4Schema>;
 
 // --- navy (J3b) ------------------------------------------------------------------
 
-export const NavalStateSchema = z.object({
+export const NavalStateV4Schema = z.object({
   // Where each nation projects its naval power: zone -> share (sum <= 1).
   // Empty = spread over its own coastal zones.
   deployments: z.record(z.string(), z.record(z.string(), zb.float())),
@@ -430,45 +415,24 @@ export const NavalStateSchema = z.object({
   // its coastal zones, 0..1.
   blockade: z.record(z.string(), zb.float()),
 });
-export type NavalState = z.infer<typeof NavalStateSchema>;
+export type NavalStateV4 = z.infer<typeof NavalStateV4Schema>;
 
-// --- territory (J5) -----------------------------------------------------------
-
-export const TerritoryStateSchema = z.object({
-  // Tiles of each nation on the first day of the campaign (nuclear threat:
-  // share of the territory lost).
-  initialTiles: z.record(z.string(), zb.uint()),
-});
-export type TerritoryState = z.infer<typeof TerritoryStateSchema>;
-
-export const SaveHeaderV5Schema = zb.object({
-  schemaVersion: z.literal(5),
+export const SaveHeaderV4Schema = zb.object({
+  schemaVersion: z.literal(4),
   seed: zb.uint(),
   rngState: z.tuple([zb.uint(), zb.uint(), zb.uint(), zb.uint()]),
   calendar: CalendarSchema,
   nations: z.array(NationStateSchema),
   blocs: z.array(z.object({ id: z.string() })),
   world: WorldStateSchema,
-  economy: EconomyStateSchema,
-  politics: PoliticsStateSchema,
-  diplomacy: DiplomacyStateSchema,
-  military: MilitaryStateSchema,
-  naval: NavalStateSchema,
-  territory: TerritoryStateSchema,
-  journal: z.array(JournalEntryV5Schema),
+  economy: EconomyStateV4Schema,
+  politics: PoliticsStateV4Schema,
+  diplomacy: DiplomacyStateV4Schema,
+  military: MilitaryStateV4Schema,
+  naval: NavalStateV4Schema,
+  journal: z.array(JournalEntryV4Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),
 });
-export type SaveHeaderV5 = z.infer<typeof SaveHeaderV5Schema>;
-// The tile grid, and since v5 the contest of each tile (a second block of
-// the .vsave container).
-export type SaveFileV5 = SaveHeaderV5 & {
-  tiles: Uint16Array;
-  contest: Uint16Array;
-};
-
-// Current version aliases: the rest of the code only uses these.
-export const SaveHeaderSchema = SaveHeaderV5Schema;
-export type SaveFile = SaveFileV5;
-export type JournalEntry = JournalEntryV5;
-export const JOURNAL_KINDS = JOURNAL_KINDS_V5;
+export type SaveHeaderV4 = z.infer<typeof SaveHeaderV4Schema>;
+export type SaveFileV4 = SaveHeaderV4 & { tiles: Uint16Array };

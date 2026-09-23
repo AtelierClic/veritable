@@ -4,7 +4,11 @@ import {
   SimEvent,
 } from "../sim/VeritableSim";
 import { DomainTiming } from "./perfProbe";
-import { SnapshotResult, VeritableRequest } from "./protocol";
+import {
+  MapOverlayResult,
+  SnapshotResult,
+  VeritableRequest,
+} from "./protocol";
 
 // What RemoteVeritableSim needs from src/core/worker/WorkerClient.
 export interface VeritableWorkerChannel {
@@ -40,6 +44,14 @@ export class RemoteVeritableSim {
   // Encoded .vsave of the campaign as it is now.
   snapshot(): Promise<SnapshotResult> {
     return this.request({ kind: "snapshot" }) as Promise<SnapshotResult>;
+  }
+
+  // The fronts on the map (J5).
+  mapOverlay(contestedVersion: number): Promise<MapOverlayResult> {
+    return this.request({
+      kind: "map-overlay",
+      contestedVersion,
+    }) as Promise<MapOverlayResult>;
   }
 
   // Time spent per domain clock since the campaign was opened.

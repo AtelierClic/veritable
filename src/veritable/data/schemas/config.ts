@@ -302,6 +302,16 @@ const WarConfigSchema = z.object({
     tileValue: z.number().min(0),
     lossValue: z.number().min(0),
   }),
+  // Contest of the tiles taken (J5): a contested tile is worth `valueShare`
+  // of a tile until a treaty cedes it and `cessionMonths` pass, or
+  // `warMonths` pass since its last capture.
+  contest: z.object({
+    valueShare: share,
+    cessionMonths: z.number().int().min(1),
+    warMonths: z.number().int().min(1),
+  }),
+  // Map overlay of the fronts (client): tiles per point of a segment line.
+  overlayStep: z.number().int().min(1),
   peace: z.object({
     exhaustionToAccept: share,
     retreatMonthsToAccept: z.number().int().min(1),

@@ -66,6 +66,11 @@ export class CampaignController {
     });
   }
 
+  // The simulation of the running campaign, null outside a campaign.
+  remote(): RemoteVeritableSim | null {
+    return this.sim;
+  }
+
   detach(): void {
     this.unsubscribe?.();
     this.unsubscribe = null;

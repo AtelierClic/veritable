@@ -1,3 +1,4 @@
+import { TILE_NATION_MASK } from "./schemas/saveV1";
 import { decodeTiles, encodeTiles } from "../save/tiles";
 
 // Rasterized borders of a scenario (data/veritable/borders/<scenario>.bin),
@@ -92,4 +93,11 @@ export function decodeBorders(bytes: Uint8Array): Borders {
     if (tiles[i] > count) fail(`tile ${i} references an unknown nation`);
   }
   return { width, height, nations, tiles };
+}
+
+// Tiles of each nation in the borders (the first day of the scenario).
+export function bordersTileCounts(borders: Borders): Record<string, number> {
+  const totals = new Array<number>(borders.nations.length + 1).fill(0);
+  for (const value of borders.tiles) totals[value & TILE_NATION_MASK]++;
+  return Object.fromEntries(borders.nations.map((id, i) => [id, totals[i + 1]]));
 }

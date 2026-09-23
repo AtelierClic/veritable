@@ -4,16 +4,18 @@ import { NationData } from "../../data/schemas/nation";
 import {
   SAVE_SCHEMA_VERSION,
   SaveFile,
-  SaveHeaderV4Schema,
+  SaveHeaderV5Schema,
 } from "../../data/schemas/save";
 import { SaveFileV1, SaveHeaderV1Schema } from "../../data/schemas/saveV1";
 import { SaveFileV2, SaveHeaderV2Schema } from "../../data/schemas/saveV2";
 import { SaveFileV3, SaveHeaderV3Schema } from "../../data/schemas/saveV3";
+import { SaveFileV4, SaveHeaderV4Schema } from "../../data/schemas/saveV4";
 import { Scenario } from "../../data/schemas/scenario";
 import { SimData } from "../../sim/economy/context";
 import { v1ToV2 } from "./v1-to-v2";
 import { v2ToV3 } from "./v2-to-v3";
 import { v3ToV4 } from "./v3-to-v4";
+import { v4ToV5 } from "./v4-to-v5";
 
 // A save as read from disk, before migration: the header decoded with the
 // frozen schema of ITS version, plus the raw tile grid.
@@ -32,6 +34,9 @@ export interface MigrationContext {
   // The scenario of the campaign (its wars and contested regions), when the
   // caller knows it.
   scenario?: Scenario;
+  // Tiles of each nation on the first day of the scenario (its rasterized
+  // borders), when the caller has them (v4 -> v5).
+  initialTiles?: Record<NationId, number>;
 }
 
 // One entry per change of shape of the save: `from` N produces N + 1.
@@ -54,6 +59,7 @@ export const HEADER_CODECS: Record<number, HeaderCodec> = {
   2: SaveHeaderV2Schema,
   3: SaveHeaderV3Schema,
   4: SaveHeaderV4Schema,
+  5: SaveHeaderV5Schema,
 };
 
 export class MigrationError extends Error {}
@@ -90,6 +96,15 @@ export const MIGRATIONS: Migration[] = [
         );
       }
       return v3ToV4(save as unknown as SaveFileV3, context) as VersionedSave;
+    },
+  },
+  {
+    from: 4,
+    migrate(save, context) {
+      return v4ToV5(
+        save as unknown as SaveFileV4,
+        context,
+      ) as unknown as VersionedSave;
     },
   },
 ];

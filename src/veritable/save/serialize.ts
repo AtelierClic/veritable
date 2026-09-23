@@ -22,12 +22,17 @@ import { decodeTiles, encodeTiles } from "./tiles";
 //   header                 zbin bytes of the SaveHeader of that version
 //   tilesLength            u32 LE
 //   tiles                  RLE tile block (see tiles.ts)
+//   contestLength          u32 LE   since v5
+//   contest                RLE block of the contest of each tile (v5,
+//                          sim/war/contest.ts)
 //
 // Encoding is deterministic: the same SaveFile always gives the same bytes.
 
 export const SAVE_MAGIC = "VRTB";
 export const SAVE_FILE_EXTENSION = ".vsave";
 const PREAMBLE_BYTES = 4 + 2 + 4;
+// First version whose file carries the contest block after the tiles.
+const CONTEST_BLOCK_SINCE = 5;
 
 export class SaveFormatError extends Error {}
 
@@ -35,6 +40,7 @@ export interface EncodedSaveStats {
   totalBytes: number;
   headerBytes: number;
   tileBytes: number;
+  contestBytes: number;
   rawTileBytes: number;
 }
 
@@ -46,15 +52,22 @@ export function encodeSaveWithStats(save: SaveFile): {
   bytes: Uint8Array;
   stats: EncodedSaveStats;
 } {
-  const { tiles, ...header } = save;
-  if (tiles.length !== header.tilesInfo.width * header.tilesInfo.height) {
+  const { tiles, contest, ...header } = save;
+  const size = header.tilesInfo.width * header.tilesInfo.height;
+  if (tiles.length !== size || contest.length !== size) {
     throw new SaveFormatError("tile grid does not match tilesInfo");
   }
   const headerBytes = SaveHeaderSchema.serialize(header);
   const tileBytes = encodeTiles(tiles);
+  const contestBytes = encodeTiles(contest);
 
   const bytes = new Uint8Array(
-    PREAMBLE_BYTES + headerBytes.length + 4 + tileBytes.length,
+    PREAMBLE_BYTES +
+      headerBytes.length +
+      4 +
+      tileBytes.length +
+      4 +
+      contestBytes.length,
   );
   const view = new DataView(bytes.buffer);
   for (let i = 0; i < 4; i++) bytes[i] = SAVE_MAGIC.charCodeAt(i);
@@ -63,6 +76,9 @@ export function encodeSaveWithStats(save: SaveFile): {
   bytes.set(headerBytes, PREAMBLE_BYTES);
   view.setUint32(PREAMBLE_BYTES + headerBytes.length, tileBytes.length, true);
   bytes.set(tileBytes, PREAMBLE_BYTES + headerBytes.length + 4);
+  const contestAt = PREAMBLE_BYTES + headerBytes.length + 4 + tileBytes.length;
+  view.setUint32(contestAt, contestBytes.length, true);
+  bytes.set(contestBytes, contestAt + 4);
 
   return {
     bytes,
@@ -70,6 +86,7 @@ export function encodeSaveWithStats(save: SaveFile): {
       totalBytes: bytes.length,
       headerBytes: headerBytes.length,
       tileBytes: tileBytes.length,
+      contestBytes: contestBytes.length,
       rawTileBytes: tiles.byteLength,
     },
   };
@@ -128,7 +145,18 @@ export function decodeSave(
     throw new SaveFormatError("truncated save (header)");
   }
   const tilesLength = view.getUint32(tilesLengthAt, true);
-  if (tilesLengthAt + 4 + tilesLength !== bytes.length) {
+  const tilesEnd = tilesLengthAt + 4 + tilesLength;
+  let contestAt = -1;
+  if (version >= CONTEST_BLOCK_SINCE) {
+    if (tilesEnd + 4 > bytes.length) {
+      throw new SaveFormatError("truncated save (tiles)");
+    }
+    contestAt = tilesEnd;
+    const contestLength = view.getUint32(contestAt, true);
+    if (contestAt + 4 + contestLength !== bytes.length) {
+      throw new SaveFormatError("truncated save (contest)");
+    }
+  } else if (tilesEnd !== bytes.length) {
     throw new SaveFormatError("truncated save (tiles)");
   }
 
@@ -141,13 +169,15 @@ export function decodeSave(
   if (header.tilesInfo === undefined) {
     throw new SaveFormatError("save header has no tilesInfo");
   }
-  const tiles = decodeTiles(
-    bytes.subarray(tilesLengthAt + 4),
-    header.tilesInfo.width * header.tilesInfo.height,
-  );
+  const size = header.tilesInfo.width * header.tilesInfo.height;
+  const tiles = decodeTiles(bytes.subarray(tilesLengthAt + 4, tilesEnd), size);
+  const contest =
+    contestAt < 0
+      ? undefined
+      : decodeTiles(bytes.subarray(contestAt + 4), size);
 
   const save = migrateToCurrent(
-    { ...header, tiles },
+    contest === undefined ? { ...header, tiles } : { ...header, tiles, contest },
     options.migrations ?? MIGRATIONS,
     options.targetVersion ?? SAVE_SCHEMA_VERSION,
     options.context,

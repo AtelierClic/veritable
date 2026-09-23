@@ -303,7 +303,7 @@
     "segmentTiles": 200,
     "advanceThreshold": 1.2,
     "v0": 0.1,
-    "vMax": 1,
+    "vMax": 3,
     "lambda": 0.7,
     "terrain": {
       "plains": 1,
@@ -330,6 +330,12 @@
       "tileValue": 0.001,
       "lossValue": 0.0001
     },
+    "contest": {
+      "valueShare": 0.5,
+      "cessionMonths": 60,
+      "warMonths": 120
+    },
+    "overlayStep": 12,
     "peace": {
       "exhaustionToAccept": 0.5,
       "retreatMonthsToAccept": 6,

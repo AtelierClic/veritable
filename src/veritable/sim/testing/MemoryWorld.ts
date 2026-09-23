@@ -18,6 +18,7 @@ import {
   segmentFront,
   Terrain,
 } from "../war/geometry";
+import { ContestLedger } from "../war/contest";
 
 // In-memory WorldPort: a tiled world without the OpenFront core. Used by the
 // simulation and save tests. Every tile is land; terrain is plains unless set;
@@ -25,7 +26,7 @@ import {
 export class MemoryWorld implements WorldPort {
   private owners: (NationId | null)[];
   private fallout: boolean[];
-  private contested: boolean[];
+  private ledger: ContestLedger;
   private terrain: Terrain[];
   private structures = new Map<number, number>(); // tile -> defence multiplier
   private segments = new Map<string, number[][]>(); // front id -> segment tiles
@@ -41,7 +42,7 @@ export class MemoryWorld implements WorldPort {
   ) {
     this.owners = new Array(width * height).fill(null);
     this.fallout = new Array(width * height).fill(false);
-    this.contested = new Array(width * height).fill(false);
+    this.ledger = new ContestLedger(width * height);
     this.terrain = new Array<Terrain>(width * height).fill("plains");
   }
 
@@ -54,7 +55,27 @@ export class MemoryWorld implements WorldPort {
   }
 
   isContested(tile: number): boolean {
-    return this.contested[tile];
+    return this.ledger.isContested(tile);
+  }
+
+  setMonth(month: number): void {
+    this.ledger.setMonth(month);
+  }
+
+  contestedCounts(): ReadonlyMap<NationId, number> {
+    return this.ledger.counts((tile) => this.owners[tile]);
+  }
+
+  cede(winner: NationId): number {
+    return this.ledger.cede((tile) => this.owners[tile] === winner);
+  }
+
+  settleContested(warMonths: number, cessionMonths: number): number {
+    return this.ledger.settle(
+      warMonths,
+      cessionMonths,
+      (tile) => this.owners[tile] !== null,
+    );
   }
 
   setFallout(tile: number, value: boolean): void {
@@ -81,7 +102,8 @@ export class MemoryWorld implements WorldPort {
     this.owners = this.owners.map((o, i) => {
       if (o !== from) return o;
       moved++;
-      this.contested[i] = to !== null;
+      if (to !== null) this.ledger.mark(i);
+      else this.ledger.clear(i);
       return to;
     });
     return moved;
@@ -98,16 +120,19 @@ export class MemoryWorld implements WorldPort {
   capture(nations: readonly NationId[]): { world: WorldState; grid: TileGrid } {
     const index = new Map(nations.map((id, i) => [id, i + 1]));
     const tiles = new Uint16Array(this.owners.length);
+    const contest = new Uint16Array(this.owners.length);
     this.owners.forEach((o, i) => {
       const owner = o === null ? 0 : (index.get(o) ?? 0);
+      const contested = owner !== 0 && this.ledger.isContested(i);
       tiles[i] =
         owner |
         (this.fallout[i] ? TILE_FALLOUT_BIT : 0) |
-        (owner !== 0 && this.contested[i] ? TILE_CONTESTED_BIT : 0);
+        (contested ? TILE_CONTESTED_BIT : 0);
+      if (contested) contest[i] = this.ledger.values[i];
     });
     return {
       world: { coreStart: this.coreStart, players: [] },
-      grid: { width: this.width, height: this.height, tiles },
+      grid: { width: this.width, height: this.height, tiles, contest },
     };
   }
 
@@ -124,8 +149,8 @@ export class MemoryWorld implements WorldPort {
       const owner = value & TILE_NATION_MASK;
       this.owners[i] = owner === 0 ? null : nations[owner - 1];
       this.fallout[i] = (value & TILE_FALLOUT_BIT) !== 0;
-      this.contested[i] = (value & TILE_CONTESTED_BIT) !== 0;
     });
+    this.ledger.load(grid.tiles, grid.contest);
     this.segments.clear();
   }
 
@@ -228,7 +253,7 @@ export class MemoryWorld implements WorldPort {
     const g = this.grid(nations);
     const taken = captureAlong(g, segments[segment], 1, 2, tiles, (tile) => {
       this.owners[tile] = winner;
-      this.contested[tile] = true;
+      this.ledger.mark(tile);
       this.fallout[tile] = false;
     });
     return taken.length;
@@ -252,7 +277,7 @@ export class MemoryWorld implements WorldPort {
     for (let i = 0; i < this.owners.length && taken < radius; i++) {
       if (this.owners[i] !== target) continue;
       this.owners[i] = attacker;
-      this.contested[i] = true;
+      this.ledger.mark(i);
       taken++;
     }
     return true;

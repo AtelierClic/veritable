@@ -7,6 +7,7 @@ import { fsDataFiles } from "../../../src/veritable/data/files.fs";
 import {
   CampaignResult,
   parseScript,
+  gainedTerritoryValue,
   parseShock,
   runCampaign,
   seriesCsv,
@@ -211,7 +212,15 @@ async function main(): Promise<void> {
       sanctionersAt6Months: at(run, "2027-07-01").sanctionsAgainst.FRA,
       warsAndJoins: run.wars,
       netTilesAt3Years: netTiles,
-      tileValueUsd: (start.gdp.ESP / start.tiles.ESP) * Math.max(0, netTiles),
+      contestedTilesAt3Years: end.contested.FRA,
+      // A contested tile counts for half a tile (J5).
+      tileValueUsd: gainedTerritoryValue(
+        start,
+        end,
+        "FRA",
+        start.gdp.ESP / start.tiles.ESP,
+        config.war.contest.valueShare,
+      ),
       gdpLossUsd:
         control.series[control.series.length - 1].gdp.FRA - end.gdp.FRA,
       frenchGdpRatio:

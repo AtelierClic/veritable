@@ -1,4 +1,4 @@
-import { SaveFileV4 } from "../../data/schemas/save";
+import { SaveFileV4 } from "../../data/schemas/saveV4";
 import { SaveFileV3 } from "../../data/schemas/saveV3";
 import { buildContext } from "../../sim/economy/context";
 import { initNationPolitics } from "../../sim/politics/state";

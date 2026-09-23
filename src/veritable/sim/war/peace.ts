@@ -44,7 +44,10 @@ export function offerCost(
   const cfg = ctx.config.war;
   let cost = 0;
   if (terms.kind === "cession") {
-    cost += (war.tilesTaken[from] ?? 0) * cfg.warScore.tileValue;
+    cost +=
+      (war.tilesTaken[from] ?? 0) *
+      cfg.warScore.tileValue *
+      cfg.contest.valueShare;
   } else if (terms.kind === "annexation") {
     cost += cfg.peace.annexationValue;
   }
@@ -137,6 +140,9 @@ export function signPeace(
   const events: PeaceEvent[] = [];
   const { from, to, terms } = offer;
   if (terms.kind === "cession" && (war.tilesTaken[from] ?? 0) > 0) {
+    // The treaty starts the (shorter) clock of the contested tiles the
+    // winner holds (J5).
+    world.cede(from);
     diplomacy.contestedRegions.push({
       region: `${war.id}-cession`,
       controller: from,
@@ -146,6 +152,7 @@ export function signPeace(
   }
   if (terms.kind === "annexation") {
     const moved = world.transferAll(to, from);
+    world.cede(from);
     diplomacy.contestedRegions.push({
       region: `${war.id}-annexation`,
       controller: from,

@@ -177,6 +177,7 @@ export interface MonthRow {
   maritimeTrade: Record<string, number>; // US$ per year
   blockade: Record<string, number>;
   tiles: Record<string, number>;
+  contested: Record<string, number>; // contested tiles held (J5)
   exhaustion: Record<string, number>;
   sanctionsAgainst: Record<string, number>; // nations sanctioning it
   atWar: Record<string, number>; // 1 when at war
@@ -278,6 +279,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       tiles: pick(
         (id) => view.nations.find((n) => n.id === id)?.tileCount ?? 0,
       ),
+      contested: pick((id) => view.contested[id] ?? 0),
       exhaustion: pick((id) => view.military.nations[id]?.exhaustion ?? 0),
       sanctionsAgainst: pick(
         (id) => view.diplomacy.sanctions.filter((s) => s.against === id).length,
@@ -468,6 +470,7 @@ export function seriesCsv(result: CampaignResult): string {
     ...nations.map((n) => `maritime_trade_${n}`),
     ...nations.map((n) => `blockade_${n}`),
     ...nations.map((n) => `tiles_${n}`),
+    ...nations.map((n) => `contested_${n}`),
     ...nations.map((n) => `exhaustion_${n}`),
     ...nations.map((n) => `sanctions_against_${n}`),
     ...nations.map((n) => `at_war_${n}`),
@@ -492,6 +495,7 @@ export function seriesCsv(result: CampaignResult): string {
         ...nations.map((n) => (row.maritimeTrade[n] / 1e9).toFixed(2)),
         ...nations.map((n) => row.blockade[n].toFixed(4)),
         ...nations.map((n) => String(row.tiles[n])),
+        ...nations.map((n) => String(row.contested[n])),
         ...nations.map((n) => row.exhaustion[n].toFixed(4)),
         ...nations.map((n) => String(row.sanctionsAgainst[n])),
         ...nations.map((n) => String(row.atWar[n])),
@@ -504,4 +508,19 @@ export function seriesCsv(result: CampaignResult): string {
     );
   }
   return lines.join("\n") + "\n";
+}
+
+// Value of the land a nation gained since `start` (J5): the tiles it holds
+// beyond its first count, at `valuePerTile` (US$ a year), a contested tile
+// counting for `contestedShare` of a tile (config.war.contest.valueShare).
+export function gainedTerritoryValue(
+  start: MonthRow,
+  end: MonthRow,
+  nation: string,
+  valuePerTile: number,
+  contestedShare: number,
+): number {
+  const net = Math.max(0, end.tiles[nation] - start.tiles[nation]);
+  const contested = Math.min(net, end.contested[nation] ?? 0);
+  return valuePerTile * (net - contested + contestedShare * contested);
 }

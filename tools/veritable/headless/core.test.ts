@@ -7,6 +7,7 @@ import { fsDataFiles } from "../../../src/veritable/data/files.fs";
 import { VeritableConfig } from "../../../src/veritable/data/schemas/config";
 import {
   CampaignResult,
+  gainedTerritoryValue,
   parseScript,
   runCampaign,
   ScriptEntry,
@@ -71,9 +72,16 @@ describe("delivery test 2: a war without casus belli does not pay", () => {
     const end = war.series[war.series.length - 1];
     expect(end.tiles.ESP).toBeLessThan(start.tiles.ESP);
     // Value of the tiles France holds at three years, at the Spanish GDP per
-    // tile of the first day, against the GDP France lost to the war.
-    const netTiles = end.tiles.FRA - start.tiles.FRA;
-    const tileValue = (start.gdp.ESP / start.tiles.ESP) * Math.max(0, netTiles);
+    // tile of the first day, a contested tile counting for half (J5),
+    // against the GDP France lost to the war.
+    expect(end.contested.FRA).toBeGreaterThan(0);
+    const tileValue = gainedTerritoryValue(
+      start,
+      end,
+      "FRA",
+      start.gdp.ESP / start.tiles.ESP,
+      config.war.contest.valueShare,
+    );
     const gdpLoss =
       control.series[control.series.length - 1].gdp.FRA - end.gdp.FRA;
     expect(gdpLoss).toBeGreaterThan(tileValue);

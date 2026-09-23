@@ -150,4 +150,19 @@ export class BordersWorld implements WorldPort {
   launchLanding(): boolean {
     return false;
   }
+
+  // Nothing is ever contested here: no front takes a tile.
+  setMonth(): void {}
+
+  contestedCounts(): ReadonlyMap<NationId, number> {
+    return new Map();
+  }
+
+  cede(): number {
+    return 0;
+  }
+
+  settleContested(): number {
+    return 0;
+  }
 }

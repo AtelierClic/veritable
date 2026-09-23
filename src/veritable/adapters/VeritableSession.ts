@@ -2,12 +2,17 @@ import { Game } from "../../core/game/Game";
 import { simpleHash } from "../../core/Util";
 import { loadVeritableConfig } from "../data/loadConfig";
 import { VeritableConfig } from "../data/schemas/config";
+import { bordersTileCounts } from "../data/bordersFile";
 import { decodeSave, encodeSaveWithStats } from "../save/serialize";
 import { SimEvent, VeritableSim } from "../sim/VeritableSim";
 import { VeritableSimImpl } from "../sim/VeritableSimImpl";
 import { CoreBridge } from "./CoreBridge";
 import { DomainTiming, PerformanceProbe } from "./perfProbe";
-import { SnapshotResult, VeritableRequest } from "./protocol";
+import {
+  MapOverlayResult,
+  SnapshotResult,
+  VeritableRequest,
+} from "./protocol";
 import {
   bindScenario,
   initialWorld,
@@ -81,6 +86,7 @@ export class VeritableSession {
             data: pack.data,
             nationData,
             scenario: pack.scenario,
+            initialTiles: bordersTileCounts(pack.borders),
           },
         }),
       );
@@ -122,6 +128,8 @@ export class VeritableSession {
         return this.snapshot();
       case "perf":
         return this.perf();
+      case "map-overlay":
+        return this.mapOverlay(request.contestedVersion);
     }
   }
 
@@ -129,6 +137,18 @@ export class VeritableSession {
     const save = this.sim.snapshot();
     const { bytes, stats } = encodeSaveWithStats(save);
     return { bytes, stats, gameDate: save.calendar.date };
+  }
+
+  mapOverlay(contestedVersion: number): MapOverlayResult {
+    const view = this.sim.read();
+    return {
+      overlay: this.bridge.overlay(
+        this.config.war.overlayStep,
+        contestedVersion,
+      ),
+      fronts: [...view.fronts],
+      player: view.playerNation,
+    };
   }
 
   perf(): Record<string, DomainTiming> {

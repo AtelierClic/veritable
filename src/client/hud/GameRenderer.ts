@@ -46,6 +46,7 @@ import { TutorialPanel } from "./layers/TutorialPanel";
 import { UnitDisplay } from "./layers/UnitDisplay";
 import { WinModal } from "./layers/WinModal";
 import { loadAllSprites } from "./SpriteLoader";
+import { FrontOverlayController } from "../../veritable/ui/FrontOverlay";
 
 export function createRenderer(
   inputEl: HTMLElement,
@@ -331,6 +332,11 @@ export function createRenderer(
     new SoundEffectController(game, eventBus),
     new AmbienceController(game, eventBus, transformHandler),
     ...(mapLayerController ? [mapLayerController] : []),
+    // VERITABLE: the fronts of a campaign drawn on the map (lines, force
+    // ratios, contested tiles, factors of a segment on click).
+    ...(isCampaign(game)
+      ? [new FrontOverlayController(eventBus, transformHandler)]
+      : []),
     eventsDisplay,
     actionableEvents,
     attacksDisplay,
@@ -371,6 +377,13 @@ export function createRenderer(
     layers,
     performanceOverlay,
   );
+}
+
+// VERITABLE: a campaign game (tolerant of the doubles of the OpenFront tests).
+function isCampaign(game: GameView): boolean {
+  const config = (game as { config?: () => { isVeritable?: () => boolean } })
+    .config?.();
+  return config?.isVeritable?.() === true;
 }
 
 export class GameRenderer {

@@ -12,6 +12,7 @@ import {
   FrontGeometry,
   FrontView,
   SegmentGeometry,
+  SegmentSide,
   WorldPort,
 } from "../VeritableSim";
 import { divisionStrength } from "./military";
@@ -73,6 +74,7 @@ interface SideState {
   attacking: boolean;
   breakthrough: boolean;
   supply: number;
+  air: number;
 }
 
 function divisionsOnFront(
@@ -147,11 +149,12 @@ export function resolveTick(
         ),
       );
       const [a, b] = states;
+      const terrain =
+        segment.terrain.plains * cfg.terrain.plains +
+        segment.terrain.highland * cfg.terrain.highland +
+        segment.terrain.mountain * cfg.terrain.mountain;
       const defenseOf = (s: SideState, segment: SegmentGeometry) =>
-        (segment.terrain.plains * cfg.terrain.plains +
-          segment.terrain.highland * cfg.terrain.highland +
-          segment.terrain.mountain * cfg.terrain.mountain) *
-        (segment.defense[s.nation] ?? 1);
+        terrain * (segment.defense[s.nation] ?? 1);
       const ratio = (att: SideState, def: SideState) =>
         att.attacking && att.force > 0
           ? att.force / Math.max(1e-9, def.force * defenseOf(def, segment))
@@ -193,6 +196,8 @@ export function resolveTick(
         applyLosses(ctx, military, war, a, b);
         applyLosses(ctx, military, war, b, a);
       }
+      const attacker =
+        rA > 0 && rA >= rB ? a.nation : rB > 0 ? b.nation : null;
       return {
         index: segment.index,
         tiles: segment.tiles,
@@ -200,15 +205,12 @@ export function resolveTick(
         sides: Object.fromEntries(
           states.map((s) => [
             s.nation,
-            {
-              divisions: s.engaged.reduce((sum, e) => sum + e.share, 0),
-              force: s.force,
-              attacking: s.attacking,
-              supply: s.supply,
-            },
+            sideView(s, terrain, segment.defense[s.nation] ?? 1),
           ]),
         ),
         ratio: b.force > 0 ? a.force / b.force : a.force > 0 ? Infinity : 1,
+        attacker,
+        attackRatio: attacker === null ? 0 : attacker === a.nation ? rA : rB,
         movedTo,
       };
     });
@@ -253,7 +255,46 @@ function sideState(
     if (division.posture === "breakthrough") breakthrough = true;
   }
   force *= supply * air;
-  return { nation, enemy, engaged, force, attacking, breakthrough, supply };
+  return {
+    nation,
+    enemy,
+    engaged,
+    force,
+    attacking,
+    breakthrough,
+    supply,
+    air,
+  };
+}
+
+// What the UI shows of a side on a segment: its force and the factors of it.
+function sideView(
+  s: SideState,
+  terrain: number,
+  structures: number,
+): SegmentSide {
+  let divisions = 0;
+  let men = 0;
+  let equipment = 0;
+  let training = 0;
+  for (const { division, share } of s.engaged) {
+    divisions += share;
+    men += division.men * share;
+    equipment += division.equipment * share;
+    training += division.training * share;
+  }
+  return {
+    divisions,
+    force: s.force,
+    attacking: s.attacking,
+    men,
+    equipment: divisions > 0 ? equipment / divisions : 0,
+    training: divisions > 0 ? training / divisions : 0,
+    supply: s.supply,
+    air: s.air,
+    terrain,
+    structures,
+  };
 }
 
 function recordTiles(
@@ -266,7 +307,10 @@ function recordTiles(
   war.tilesTaken[winner] = (war.tilesTaken[winner] ?? 0) + taken;
   war.monthlyTiles[winner] = (war.monthlyTiles[winner] ?? 0) + taken;
   war.monthlyTiles[loser] = (war.monthlyTiles[loser] ?? 0) - taken;
-  war.score[winner] = (war.score[winner] ?? 0) + taken * cfg.warScore.tileValue;
+  // Every tile taken is contested: it counts for a share of a tile (J5).
+  war.score[winner] =
+    (war.score[winner] ?? 0) +
+    taken * cfg.warScore.tileValue * cfg.contest.valueShare;
 }
 
 // `side` loses men and equipment in proportion to the enemy's force.

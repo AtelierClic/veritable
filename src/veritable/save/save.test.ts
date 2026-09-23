@@ -131,7 +131,11 @@ describe("save file (current version)", () => {
     const { stats } = encodeSaveWithStats(playedGame().sim.snapshot());
     expect(stats.rawTileBytes).toBe(40 * 25 * 2);
     expect(stats.tileBytes).toBeLessThan(40);
-    expect(stats.totalBytes).toBe(10 + stats.headerBytes + 4 + stats.tileBytes);
+    // Since v5, the contest of each tile follows the tiles.
+    expect(stats.contestBytes).toBeLessThan(40);
+    expect(stats.totalBytes).toBe(
+      10 + stats.headerBytes + 4 + stats.tileBytes + 4 + stats.contestBytes,
+    );
   });
 
   it("rejects foreign, truncated and inconsistent files", () => {

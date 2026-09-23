@@ -236,13 +236,28 @@ export interface SegmentView {
   index: number;
   tiles: number; // tiles of the segment (defender-side border)
   terrain: { plains: number; highland: number; mountain: number }; // shares
-  // Per side: divisions engaged, force, posture in effect, supply factor.
-  sides: Record<
-    NationId,
-    { divisions: number; force: number; attacking: boolean; supply: number }
-  >;
+  // Per side: divisions engaged, force, posture in effect, and the factors
+  // of its force (J5: what a click on a segment of the map shows).
+  sides: Record<NationId, SegmentSide>;
   ratio: number; // force of a / force of b, last tick
+  // The attack that counts on the segment: who attacks, and its force over
+  // the defender's (terrain and structures included); null when nobody
+  // attacks.
+  attacker: NationId | null;
+  attackRatio: number;
   movedTo: NationId | null; // who took tiles last tick
+}
+export interface SegmentSide {
+  divisions: number;
+  force: number; // with supply and air, without terrain and structures
+  attacking: boolean;
+  men: number;
+  equipment: number; // 0..1, mean of the engaged divisions
+  training: number; // mean of the engaged divisions
+  supply: number; // factor
+  air: number; // factor
+  terrain: number; // factor on its defence
+  structures: number; // factor on its defence (defence posts, cities)
 }
 
 export interface ReadonlyWorldView {
@@ -260,6 +275,9 @@ export interface ReadonlyWorldView {
   readonly military: Readonly<MilitaryState>;
   readonly naval: Readonly<NavalState>;
   readonly fronts: readonly FrontView[];
+  // Contested tiles each nation holds (J5), and its tiles on the first day.
+  readonly contested: Readonly<Record<NationId, number>>;
+  readonly initialTiles: Readonly<Record<NationId, number>>;
   // Casus belli the player could invoke against each other nation.
   readonly casusBelli: Readonly<Record<NationId, readonly string[]>>;
   // The political engine (J4): projected shares of the player's next
@@ -274,6 +292,10 @@ export interface TileGrid {
   height: number;
   // See TILE_NATION_MASK / TILE_FALLOUT_BIT in data/schemas/saveV1.ts.
   tiles: Uint16Array;
+  // Contest of each tile (sim/war/contest.ts), since v5; absent in a grid
+  // made from an older save, where the contested bit of `tiles` is all
+  // there is.
+  contest?: Uint16Array;
 }
 
 // Geometry of a front as the world computes it (J3a): the simulation reasons
@@ -342,6 +364,15 @@ export interface WorldPort {
   // Sends the landing: a transport that takes a beachhead of `radius` tiles
   // around the landing tile when it arrives. False when it cannot sail.
   launchLanding(attacker: NationId, target: NationId, radius: number): boolean;
+  // Contest of the tiles (J5, sim/war/contest.ts). The month is counted from
+  // the start of the campaign; the simulation sets it before any capture.
+  setMonth(month: number): void;
+  // Contested tiles each nation holds.
+  contestedCounts(): ReadonlyMap<NationId, number>;
+  // A treaty cedes to `winner` the contested tiles it holds.
+  cede(winner: NationId): number;
+  // Contests older than their delay end; returns how many.
+  settleContested(warMonths: number, cessionMonths: number): number;
 }
 
 export { NationIdSchema };

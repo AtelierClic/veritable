@@ -17,6 +17,7 @@ import {
   PoliticsState,
   SAVE_SCHEMA_VERSION,
   SaveFile,
+  TerritoryState,
   War,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
@@ -83,6 +84,7 @@ import {
 } from "./politics/objectives";
 import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
+import { monthIndex } from "./war/contest";
 import {
   ClockContext,
   DomainSystem,
@@ -204,6 +206,7 @@ export class VeritableSimImpl implements VeritableSim {
   private diplomacy!: DiplomacyState;
   private military!: MilitaryState;
   private naval!: NavalState;
+  private territory!: TerritoryState;
   private scenario!: Scenario;
   private ctx!: EconomyContext;
   private sheets = new Map<NationId, NationData>();
@@ -294,7 +297,15 @@ export class VeritableSimImpl implements VeritableSim {
     this.trade = null;
     this.invalidateFronts();
     this.initialized = true;
+    this.deps.world.setMonth(0);
     this.refreshTileCounts();
+    // The territory of the first day: what the nuclear threat measures
+    // losses against (J5).
+    this.territory = {
+      initialTiles: Object.fromEntries(
+        this.nations.map((n) => [n.id, n.tileCount]),
+      ),
+    };
   }
 
   restore(snapshot: SaveFile): void {
@@ -327,15 +338,23 @@ export class VeritableSimImpl implements VeritableSim {
     this.diplomacy = state.diplomacy;
     this.military = state.military;
     this.naval = state.naval;
+    this.territory = state.territory;
     this.trade = null;
     this.syncSuspensions();
     this.invalidateFronts();
     this.initialized = true;
+    this.deps.world.setMonth(this.currentMonth());
     this.deps.world.restore(this.nationIds(), state.world, {
       width: state.tilesInfo.width,
       height: state.tilesInfo.height,
       tiles: state.tiles,
+      contest: state.contest,
     });
+  }
+
+  // Months since the start of the campaign (the clock of the contest).
+  private currentMonth(): number {
+    return monthIndex(this.calendar.startDate, this.calendar.date);
   }
 
   snapshot(): SaveFile {
@@ -355,10 +374,12 @@ export class VeritableSimImpl implements VeritableSim {
       diplomacy: this.diplomacy,
       military: this.military,
       naval: this.naval,
+      territory: this.territory,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
       tiles: grid.tiles,
+      contest: grid.contest ?? new Uint16Array(grid.tiles.length),
     });
   }
 
@@ -650,6 +671,7 @@ export class VeritableSimImpl implements VeritableSim {
       this.calendar.startDate,
       this.calendar.elapsedGameMinutes,
     );
+    this.deps.world.setMonth(this.currentMonth());
     // Domain systems push what happened into `pending` while the clocks run;
     // events of the commands applied since the last advance are already there.
     for (const tick of this.scheduler.run(
@@ -725,6 +747,8 @@ export class VeritableSimImpl implements VeritableSim {
       military: this.military,
       naval: this.naval,
       fronts: this.frontViews,
+      contested: Object.fromEntries(this.deps.world.contestedCounts()),
+      initialTiles: this.territory.initialTiles,
       casusBelli,
       electionProjection:
         player === null
@@ -1138,6 +1162,10 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   private diplomacyMonth(clock: ClockContext): void {
+    // Contests old enough end (J5): 5 years after a cession, 10 after the
+    // last capture.
+    const contest = this.deps.config.war.contest;
+    this.deps.world.settleContested(contest.warMonths, contest.cessionMonths);
     for (const id of this.ctx.nationIds) {
       stepMilitaryMonth(
         this.ctx,

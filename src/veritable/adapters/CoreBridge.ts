@@ -25,6 +25,7 @@ import {
   WorldState,
 } from "../data/schemas/save";
 import { Zones } from "../data/zonesFile";
+import { ContestLedger } from "../sim/war/contest";
 import {
   FrontGeometry,
   NavalSnapshot,
@@ -68,7 +69,8 @@ export class CoreBridge implements WorldPort {
   private pending: PendingRestore | null = null;
   private restoredAtTick: number | null = null;
   private readonly coreStart: unknown;
-  private readonly contested: Uint8Array;
+  // Contest of each tile (J5): month of the last capture, ceded or not.
+  private readonly ledger: ContestLedger;
   // Segment tiles of the last computed geometry, by front id.
   private readonly segments = new Map<string, number[][]>();
 
@@ -83,8 +85,8 @@ export class CoreBridge implements WorldPort {
     private readonly logistics?: VeritableConfig["logistics"],
   ) {
     this.coreStart = canonicalJson(coreStart);
-    this.contested = new Uint8Array(game.width() * game.height());
-    if (zones !== null && zones.tiles.length !== this.contested.length) {
+    this.ledger = new ContestLedger(game.width() * game.height());
+    if (zones !== null && zones.tiles.length !== this.ledger.values.length) {
       throw new Error("maritime zones do not match the map");
     }
     // Landings take a beachhead around the landing tile (J3b).
@@ -119,7 +121,11 @@ export class CoreBridge implements WorldPort {
       // world IS the pending save.
       return {
         world: structuredClone(this.pending.world),
-        grid: { ...this.pending.grid, tiles: this.pending.grid.tiles.slice() },
+        grid: {
+          ...this.pending.grid,
+          tiles: this.pending.grid.tiles.slice(),
+          contest: this.pending.grid.contest?.slice(),
+        },
       };
     }
     const width = this.game.width();
@@ -132,12 +138,15 @@ export class CoreBridge implements WorldPort {
     }
 
     const tiles = new Uint16Array(width * height);
+    const contest = new Uint16Array(width * height);
     this.game.forEachTile((tile) => {
       // Tiles of non-nations (tribes) are saved unowned.
       let value = smallIdToIndex.get(this.game.ownerID(tile)) ?? 0;
       if (this.game.hasFallout(tile)) value |= TILE_FALLOUT_BIT;
-      if (value !== 0 && this.contested[tile] === 1)
+      if (value !== 0 && this.ledger.isContested(tile)) {
         value |= TILE_CONTESTED_BIT;
+        contest[tile] = this.ledger.values[tile];
+      }
       tiles[tile] = value;
     });
 
@@ -160,7 +169,7 @@ export class CoreBridge implements WorldPort {
 
     return {
       world: { coreStart: this.coreStart, players },
-      grid: { width, height, tiles },
+      grid: { width, height, tiles, contest },
     };
   }
 
@@ -209,10 +218,9 @@ export class CoreBridge implements WorldPort {
     const { nations, world, grid } = this.pending;
     const game = this.game;
 
+    this.ledger.load(grid.tiles, grid.contest);
     grid.tiles.forEach((value, tile) => {
       const owner = value & TILE_NATION_MASK;
-      this.contested[tile] =
-        owner !== 0 && (value & TILE_CONTESTED_BIT) !== 0 ? 1 : 0;
       if (owner !== 0) {
         const player = this.byNation.get(nations[owner - 1]);
         if (player === undefined) {
@@ -257,7 +265,79 @@ export class CoreBridge implements WorldPort {
   // --- fronts -------------------------------------------------------------------
 
   isContested(tile: number): boolean {
-    return this.contested[tile] === 1;
+    return this.ledger.isContested(tile);
+  }
+
+  // --- contest (J5) -------------------------------------------------------------
+
+  private nationAt(tile: number): NationId | null {
+    if (!this.game.hasOwner(tile)) return null;
+    return this.bySmallID.get(this.game.ownerID(tile)) ?? null;
+  }
+
+  setMonth(month: number): void {
+    this.ledger.setMonth(month);
+  }
+
+  contestedCounts(): ReadonlyMap<NationId, number> {
+    if (this.pending !== null) return new Map();
+    return this.ledger.counts((tile) => this.nationAt(tile));
+  }
+
+  cede(winner: NationId): number {
+    if (this.pending !== null) return 0;
+    return this.ledger.cede((tile) => this.nationAt(tile) === winner);
+  }
+
+  settleContested(warMonths: number, cessionMonths: number): number {
+    if (this.pending !== null) return 0;
+    return this.ledger.settle(
+      warMonths,
+      cessionMonths,
+      (tile) => this.nationAt(tile) !== null,
+    );
+  }
+
+  // What the map overlay draws (client, campaign): the line of every
+  // segment of the last computed geometry, as the centres of runs of `step`
+  // tiles along the line (the tiles of both sides alternate: a centre is
+  // smoother than the tiles), and the contested tiles, sent again only when
+  // they changed since `contestedVersion`.
+  overlay(step: number, contestedVersion: number): MapOverlay {
+    const fronts: MapOverlay["fronts"] = [];
+    const width = this.game.width();
+    for (const [id, segments] of this.segments) {
+      fronts.push({
+        id,
+        segments: segments.map((tiles, index) => {
+          const points: number[] = [];
+          for (let i = 0; i < tiles.length; i += step) {
+            const end = Math.min(tiles.length, i + step);
+            let x = 0;
+            let y = 0;
+            for (let j = i; j < end; j++) {
+              x += tiles[j] % width;
+              y += Math.floor(tiles[j] / width);
+            }
+            points.push(x / (end - i) + 0.5, y / (end - i) + 0.5);
+          }
+          const mid = Math.floor(points.length / 4) * 2;
+          return {
+            index,
+            points,
+            mid: [points[mid] ?? 0, points[mid + 1] ?? 0],
+          };
+        }),
+      });
+    }
+    const version = this.ledger.version();
+    return {
+      width,
+      height: this.game.height(),
+      fronts,
+      contestedVersion: version,
+      contested: version === contestedVersion ? null : this.ledger.tiles(),
+    };
   }
 
   private grid(nations: readonly NationId[]): GridAccess {
@@ -425,7 +505,7 @@ export class CoreBridge implements WorldPort {
     const g = this.grid([winner, loser]);
     const taken = captureAlong(g, segments[segment], 1, 2, tiles, (tile) => {
       player.conquer(tile);
-      this.contested[tile] = 1;
+      this.ledger.mark(tile);
     });
     if (taken.length > 0) this.sea = null;
     return taken.length;
@@ -565,7 +645,7 @@ export class CoreBridge implements WorldPort {
         if (!owner.isPlayer() || owner === player) continue;
         if (!this.bySmallID.has(owner.smallID())) continue;
         player.conquer(t);
-        this.contested[t] = 1;
+        this.ledger.mark(t);
       }
     }
     this.segments.clear();
@@ -579,7 +659,7 @@ export class CoreBridge implements WorldPort {
     const tiles = [...loser.tiles()];
     for (const tile of tiles) {
       winner.conquer(tile);
-      this.contested[tile] = 1;
+      this.ledger.mark(tile);
     }
     this.segments.clear();
     this.sea = null;
@@ -596,6 +676,20 @@ function terrainOf(type: TerrainType): Terrain {
     default:
       return "plains";
   }
+}
+
+// The map overlay of a campaign (client): lines of the fronts, contested
+// tiles.
+export interface MapOverlay {
+  width: number;
+  height: number;
+  fronts: {
+    id: string;
+    segments: { index: number; points: number[]; mid: [number, number] }[];
+  }[];
+  contestedVersion: number;
+  // Tile indices under contest; null when unchanged since the version asked.
+  contested: Uint32Array | null;
 }
 
 // Plain JSON value with object keys sorted: the same GameStartInfo always
