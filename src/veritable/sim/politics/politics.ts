@@ -76,13 +76,17 @@ export function stepPolitics(
   politics: NationPolitics,
   // War exhaustion of the nation, 0..1 (war/military.ts).
   exhaustion = 0,
+  // Share of the nation's trade partners that sanction it, 0..1: a
+  // sanctioned aggressor does not recover while the sanctions last.
+  sanctionedShare = 0,
 ): PoliticsEvent[] {
   const cfg = ctx.config.politics;
-  // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts); a war
-  // weighs on every group and on the AI proxy alike.
+  // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts); a war and
+  // the sanctions weigh on every group and on the AI proxy alike.
   const malus =
     politics.reprimandMalus +
-    ctx.config.war.exhaustion.opinionWeight * exhaustion;
+    ctx.config.war.exhaustion.opinionWeight * exhaustion +
+    cfg.sanctionsOpinionWeight * sanctionedShare;
 
   if (politics.groups !== null) {
     const weights = data?.interestGroups ?? cfg.groupWeights;

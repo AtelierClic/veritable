@@ -47,6 +47,17 @@ export const GoodSchema = z.object({
   shortageWeight: z.number().min(0).max(1),
   rent: z.boolean(), // resource: its production value is the base of rents
   industrial: z.boolean(), // its production suffers from electricity shortages
+  // Circumvention of an embargo on this good: share of the lost market an
+  // exporter re-routes at once, and per month embargoed (a fungible good
+  // shipped by sea re-routes faster than pipeline gas). Falls back to
+  // config.economy.circumvention.
+  circumvention: z
+    .object({
+      initial: z.number().min(0).max(1),
+      perMonth: z.number().min(0).max(1),
+      max: z.number().min(0).max(1), // ceiling: the discount never closes
+    })
+    .optional(),
 });
 export type Good = z.infer<typeof GoodSchema>;
 

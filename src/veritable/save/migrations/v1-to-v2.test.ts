@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { dataSource } from "../../data/catalog";
+import { SAVE_SCHEMA_VERSION } from "../../data/schemas/save";
 import { GOOD_IDS } from "../../data/schemas/goods";
 import { decodeSave, encodeSave, peekSchemaVersion } from "../serialize";
 import { MigrationContext } from "./index";
@@ -41,7 +42,7 @@ describe("migration v1 -> v2 on a real J1 save", () => {
   it("keeps the campaign and adds the economy and the politics", () => {
     // Migrated all the way to the current version (v1 -> v2 -> v3).
     const save = decodeSave(FIXTURE, { context: context() });
-    expect(save.schemaVersion).toBe(3);
+    expect(save.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
 
     // Untouched: calendar, nations, tiles, core world, Rng.
     expect(save.calendar).toEqual({
@@ -88,7 +89,7 @@ describe("migration v1 -> v2 on a real J1 save", () => {
     const a = encodeSave(decodeSave(FIXTURE, { context: context() }));
     const b = encodeSave(decodeSave(FIXTURE, { context: context() }));
     expect(a).toEqual(b);
-    expect(peekSchemaVersion(a)).toBe(3);
+    expect(peekSchemaVersion(a)).toBe(SAVE_SCHEMA_VERSION);
     expect(encodeSave(decodeSave(a))).toEqual(a);
   });
 

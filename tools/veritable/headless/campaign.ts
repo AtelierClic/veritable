@@ -2,6 +2,7 @@ import { BordersWorld } from "../../../src/veritable/adapters/BordersWorld";
 import { ScenarioPack } from "../../../src/veritable/adapters/scenarioWorld";
 import { VeritableConfig } from "../../../src/veritable/data/schemas/config";
 import { GOOD_IDS, GoodId } from "../../../src/veritable/data/schemas/goods";
+import { encodeSave } from "../../../src/veritable/save/serialize";
 import { MINUTES_PER_GAME_DAY } from "../../../src/veritable/sim/calendar";
 import {
   ClockKind,
@@ -109,6 +110,8 @@ export interface Driver {
   apply(command: PlayerCommand): void;
   advanceDay(): SimEvent[];
   perf(): Record<string, { calls: number; totalMs: number }>;
+  // The save file of the campaign as it stands (fixtures of the migrations).
+  snapshot(): Uint8Array;
 }
 
 export class TimingProbe implements PerfProbe {
@@ -146,6 +149,7 @@ export function simDriver(
     apply: (command) => sim.apply(command),
     advanceDay: () => sim.advance(MINUTES_PER_GAME_DAY),
     perf: () => probe.byDomain,
+    snapshot: () => encodeSave(sim.snapshot()),
   };
 }
 
@@ -269,7 +273,18 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       exportShare: pick(
         (id) => view.economies[id].exportsValue / view.economies[id].gdp,
       ),
-      circumvention: pick((id) => view.economies[id].circumvention),
+      // Export-weighted circumvention (engine.ts exportCircumvention).
+      circumvention: pick((id) => {
+        const e = view.economies[id];
+        let weighted = 0;
+        let total = 0;
+        for (const g of GOOD_IDS) {
+          const value = e.exports[g] * view.market.prices[g];
+          weighted += value * e.circumvention[g];
+          total += value;
+        }
+        return total > 0 ? weighted / total : 0;
+      }),
     };
     for (const g of GOOD_IDS) {
       priceRange[g][0] = Math.min(priceRange[g][0], row.prices[g]);

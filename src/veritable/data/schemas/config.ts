@@ -34,7 +34,8 @@ const EconomyConfigSchema = z.object({
   sanctionDiscount: share,
   // Circumvention of an embargoed exporter: the share of the market it lost
   // that it can re-route at once, rising every month it stays embargoed.
-  circumvention: z.object({ initial: share, perMonth: share }),
+  // Default of the goods that do not set their own (goods.json).
+  circumvention: z.object({ initial: share, perMonth: share, max: share }),
   // Trade dependence: GDP level lost = friction x openness x share of the
   // trade partners (by distance and GDP) that sanction or fight the nation
   // x (1 - circumvention); reached over adjustMonths.
@@ -118,6 +119,10 @@ const PoliticsConfigSchema = z.object({
     debtRuinousAt: z.number(),
     foodShortageWeight: z.number().min(1),
   }),
+  // Opinion lost, by every group and by the AI proxy, per share of the trade
+  // partners that sanction the nation: a sanctioned aggressor does not
+  // recover while the sanctions last.
+  sanctionsOpinionWeight: z.number().min(0),
   // Opinion proxy of AI nations (no interest groups).
   aiOpinion: z.object({
     growth: z.number().min(0),
@@ -133,7 +138,8 @@ const DiplomacyConfigSchema = z.object({
   blocRelation: z.number().min(0),
   blocRelationCap: z.number().min(0).max(100),
   warRelation: z.number().min(-100).max(0),
-  relationDecayPerMonth: z.number().min(0),
+  relationDecayPerMonth: z.number().min(0), // positive relations, towards 0
+  relationRecoveryPerMonth: z.number().min(0), // negative relations, towards 0
   // Satisfaction lost by the youth and business groups of an aggressor.
   declarationGroupHit: share,
   // Humanitarian casus belli: the target is in unrest below this stability.

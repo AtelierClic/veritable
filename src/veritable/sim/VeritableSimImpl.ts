@@ -600,9 +600,12 @@ export class VeritableSimImpl implements VeritableSim {
       airMultiplier(this.ctx, this.military, nation, enemy),
   };
 
-  // Share of the trade partners of a nation that sanction it or fight it.
-  private lostTradeShare(id: NationId): number {
-    const lost = new Set<NationId>(enemiesOf(this.diplomacy, id));
+  // Share of the trade partners of a nation that sanction it or fight it
+  // (or, with `sanctionsOnly`, that sanction it).
+  private lostTradeShare(id: NationId, sanctionsOnly = false): number {
+    const lost = new Set<NationId>(
+      sanctionsOnly ? [] : enemiesOf(this.diplomacy, id),
+    );
     for (const s of this.diplomacy.sanctions) {
       if (s.against === id) lost.add(s.by);
     }
@@ -683,6 +686,7 @@ export class VeritableSimImpl implements VeritableSim {
         this.economy.nations[id],
         this.politics.nations[id],
         this.military.nations[id]?.exhaustion ?? 0,
+        this.lostTradeShare(id, true),
       );
       for (const event of events) this.record(clock.date, event);
     }
@@ -783,7 +787,9 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   // An offer from `from` to `to`: an AI recipient answers at once, the player
-  // gets it as a pending offer (and an event).
+  // gets it as a pending offer (and an event). An offer between two AI
+  // nations only reaches the journal when it is signed: refused ones came
+  // every month of every AI war and drowned it.
   private offerPeace(
     war: War,
     from: NationId,
@@ -792,16 +798,21 @@ export class VeritableSimImpl implements VeritableSim {
     date: string,
   ): void {
     const offer = proposePeace(this.diplomacy, war, from, to, terms, date);
-    this.record(
-      date,
-      { type: "peace-offered", nation: from, war: war.id, offer: offer.id },
-      terms.kind,
-    );
-    if (!this.aiNations().includes(to)) return; // the player answers later
+    const ai = this.aiNations();
+    const betweenAi = ai.includes(from) && ai.includes(to);
+    if (!betweenAi) {
+      this.record(
+        date,
+        { type: "peace-offered", nation: from, war: war.id, offer: offer.id },
+        terms.kind,
+      );
+    }
+    if (!ai.includes(to)) return; // the player answers later
     if (aiAccepts(this.ctx, war, this.military, from, to, terms)) {
       this.sign(war, offer, date);
     } else {
-      this.record(date, refuseOffer(war, offer), terms.kind);
+      const refused = refuseOffer(war, offer);
+      if (!betweenAi) this.record(date, refused, terms.kind);
     }
   }
 

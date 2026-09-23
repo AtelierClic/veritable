@@ -136,7 +136,7 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     armsShort: false,
     strikeDamage: 0,
     maritimeTradeValue: 0,
-    circumvention: 0,
+    circumvention: perGood(() => 0),
     tradeOpenness: sheet.tradeOpenness.value,
     tradeFactor: 1,
   };

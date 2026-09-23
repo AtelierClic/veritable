@@ -11,7 +11,7 @@ import {
   TestNationOptions,
   testScenario,
 } from "../testing/nations";
-import { testRow, testSimData } from "../testing/simData";
+import { testGoods, testRow, testSimData } from "../testing/simData";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { buildContext } from "./context";
@@ -428,8 +428,11 @@ describe("J3 corrections of the J2", () => {
   };
 
   it("exports lost to an embargo cost growth through the export term, and the drag fades", () => {
-    const control = campaign(exporter);
-    const cut = campaign(exporter);
+    // No circumvention here: the export term alone.
+    const config = quietConfig();
+    config.economy.circumvention = { initial: 0, perMonth: 0, max: 0 };
+    const control = campaign({ ...exporter, config });
+    const cut = campaign({ ...exporter, config });
     for (const to of ["BBB", "ROW"]) {
       cut.sim.apply({
         type: "set-embargo",
@@ -451,7 +454,7 @@ describe("J3 corrections of the J2", () => {
     // The reference share has moved towards the new share: the drag fades.
     expect(a.exportShareReference).toBeLessThan(c.exportShareReference);
     const drag = (e: NationEconomy) => e.growthAnnual - c.growthBase;
-    const early = campaign(exporter);
+    const early = campaign({ ...exporter, config });
     for (const to of ["BBB", "ROW"]) {
       early.sim.apply({
         type: "set-embargo",
@@ -466,6 +469,110 @@ describe("J3 corrections of the J2", () => {
     expect(drag(a)).toBeLessThan(0);
     // Steady export growth costs nothing: the control grows on its trend.
     expect(c.growthAnnual).toBeCloseTo(c.growthBase, 2);
+  });
+
+  it("circumvention builds up per good in proportion to the market lost, narrows the discount, and fades once the good is free", () => {
+    // Oil re-routes fast and far, gas slowly and little (as in goods.json).
+    const goods = testGoods().map((g) =>
+      g.id === "oil"
+        ? { ...g, circumvention: { initial: 0.3, perMonth: 0.1, max: 0.8 } }
+        : g.id === "gas"
+          ? { ...g, circumvention: { initial: 0.05, perMonth: 0.01, max: 0.2 } }
+          : g,
+    );
+    const nations = {
+      AAA: {
+        production: { oil: 300, gas: 300 },
+        consumption: { oil: 100, gas: 100 },
+      },
+      BBB: {
+        production: { oil: 50, gas: 50 },
+        consumption: { oil: 150, gas: 150 },
+      },
+    };
+    const make = () => {
+      const ids = Object.keys(nations);
+      const sheets = new Map<string, NationData>(
+        ids.map((id) => [id, testNation(id, nations[id as "AAA"])]),
+      );
+      const sim = new VeritableSimImpl({
+        config: quietConfig(),
+        world: new MemoryWorld(4, 4),
+        data: testSimData(ids, { goods, row: testRow() }),
+        nationData: (id) => sheets.get(id),
+      });
+      sim.init(testScenario(ids), 7);
+      const months = (n: number) => {
+        for (let d = 0; d < 31 * n; d++) sim.advance(DAY);
+      };
+      return { sim, months };
+    };
+    const cut = make();
+    for (const good of ["oil", "gas"] as const) {
+      for (const to of ["BBB", "ROW"]) {
+        cut.sim.apply({
+          type: "set-embargo",
+          from: "AAA",
+          to,
+          good,
+          active: true,
+        });
+      }
+    }
+    cut.months(1);
+    let a = cut.sim.read().economies.AAA;
+    // The first month jumps to the initial index of each good; steel, never
+    // embargoed, stays at 0.
+    expect(a.circumvention.oil).toBeCloseTo(0.3 + 0.1, 6);
+    expect(a.circumvention.gas).toBeCloseTo(0.05 + 0.01, 6);
+    expect(a.circumvention.steel).toBe(0);
+    cut.months(11);
+    a = cut.sim.read().economies.AAA;
+    // Capped at the ceiling of the good.
+    expect(a.circumvention.oil).toBe(0.8);
+    expect(a.circumvention.gas).toBeCloseTo(0.05 + 12 * 0.01, 6);
+    // An exporter embargoed on oil alone keeps more of its export value
+    // than one embargoed on gas alone (same volumes lost): the discount on
+    // what is dumped narrows with the circumvention of the good.
+    const cutOil = make();
+    const cutGas = make();
+    for (const to of ["BBB", "ROW"]) {
+      cutOil.sim.apply({
+        type: "set-embargo",
+        from: "AAA",
+        to,
+        good: "oil",
+        active: true,
+      });
+      cutGas.sim.apply({
+        type: "set-embargo",
+        from: "AAA",
+        to,
+        good: "gas",
+        active: true,
+      });
+    }
+    cutOil.months(12);
+    cutGas.months(12);
+    expect(cutOil.sim.read().economies.AAA.exportsValue).toBeGreaterThan(
+      cutGas.sim.read().economies.AAA.exportsValue * 1.02,
+    );
+    // Lifted: the indices fade month after month.
+    for (const good of ["oil", "gas"] as const) {
+      for (const to of ["BBB", "ROW"]) {
+        cut.sim.apply({
+          type: "set-embargo",
+          from: "AAA",
+          to,
+          good,
+          active: false,
+        });
+      }
+    }
+    cut.months(3);
+    a = cut.sim.read().economies.AAA;
+    expect(a.circumvention.oil).toBeCloseTo(0.8 - 0.3, 6);
+    expect(a.circumvention.gas).toBeCloseTo(0.17 - 0.03, 6);
   });
 
   it("the rest of the world brings its price response on line with a lag, not instantly", () => {

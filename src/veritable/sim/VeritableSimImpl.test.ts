@@ -1,4 +1,5 @@
 import { loadVeritableConfig } from "../data/loadConfig";
+import { SAVE_SCHEMA_VERSION } from "../data/schemas/save";
 import { MemoryWorld } from "./testing/MemoryWorld";
 import { testNation, testScenario } from "./testing/nations";
 import { testSimData } from "./testing/simData";
@@ -135,7 +136,7 @@ describe("VeritableSimImpl", () => {
 
   it("refuses a save of another schema version", () => {
     const { sim } = newGame();
-    const saved = { ...sim.snapshot(), schemaVersion: 4 };
+    const saved = { ...sim.snapshot(), schemaVersion: SAVE_SCHEMA_VERSION + 1 };
     expect(() => sim.restore(saved as never)).toThrow(/migrated/);
   });
 });

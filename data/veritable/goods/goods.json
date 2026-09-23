@@ -16,7 +16,12 @@
     "eta": 0.15,
     "shortageWeight": 0.14,
     "rent": true,
-    "industrial": false
+    "industrial": false,
+    "circumvention": {
+      "initial": 0.2,
+      "perMonth": 0.03,
+      "max": 0.35
+    }
   },
   {
     "id": "gas",
@@ -35,7 +40,12 @@
     "eta": 0.15,
     "shortageWeight": 0.14,
     "rent": true,
-    "industrial": false
+    "industrial": false,
+    "circumvention": {
+      "initial": 0.05,
+      "perMonth": 0.01,
+      "max": 0.15
+    }
   },
   {
     "id": "coal",
@@ -54,7 +64,12 @@
     "eta": 0.3,
     "shortageWeight": 0.06,
     "rent": true,
-    "industrial": false
+    "industrial": false,
+    "circumvention": {
+      "initial": 0.2,
+      "perMonth": 0.03,
+      "max": 0.35
+    }
   },
   {
     "id": "electricity",
@@ -92,7 +107,12 @@
     "eta": 0.2,
     "shortageWeight": 0.16,
     "rent": false,
-    "industrial": false
+    "industrial": false,
+    "circumvention": {
+      "initial": 0.2,
+      "perMonth": 0.03,
+      "max": 0.4
+    }
   },
   {
     "id": "critical-minerals",
@@ -111,7 +131,12 @@
     "eta": 0.2,
     "shortageWeight": 0.05,
     "rent": true,
-    "industrial": false
+    "industrial": false,
+    "circumvention": {
+      "initial": 0.2,
+      "perMonth": 0.03,
+      "max": 0.4
+    }
   },
   {
     "id": "steel",
@@ -130,7 +155,12 @@
     "eta": 0.4,
     "shortageWeight": 0.05,
     "rent": false,
-    "industrial": true
+    "industrial": true,
+    "circumvention": {
+      "initial": 0.2,
+      "perMonth": 0.03,
+      "max": 0.4
+    }
   },
   {
     "id": "consumer-goods",

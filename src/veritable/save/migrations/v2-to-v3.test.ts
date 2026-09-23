@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { dataSource } from "../../data/catalog";
+import { SAVE_SCHEMA_VERSION } from "../../data/schemas/save";
 import { decodeSave, encodeSave, peekSchemaVersion } from "../serialize";
 import { MigrationContext } from "./index";
 
@@ -40,7 +41,7 @@ describe("migration v2 -> v3 on a real J2 save", () => {
 
   it("keeps the campaign and its economy, adds what the v3 tracks", () => {
     const save = decodeSave(FIXTURE, { context: context() });
-    expect(save.schemaVersion).toBe(3);
+    expect(save.schemaVersion).toBe(SAVE_SCHEMA_VERSION);
 
     // Untouched: calendar, nations, tiles, core world, the economy as played.
     expect(save.calendar.date).toBe("2026-03-10");
@@ -85,11 +86,11 @@ describe("migration v2 -> v3 on a real J2 save", () => {
     expect(save.military.nations.DEU.exhaustion).toBe(0);
   });
 
-  it("is deterministic, and the migrated save round-trips as version 3", () => {
+  it("is deterministic, and the migrated save round-trips in the current version", () => {
     const a = encodeSave(decodeSave(FIXTURE, { context: context() }));
     const b = encodeSave(decodeSave(FIXTURE, { context: context() }));
     expect(a).toEqual(b);
-    expect(peekSchemaVersion(a)).toBe(3);
+    expect(peekSchemaVersion(a)).toBe(SAVE_SCHEMA_VERSION);
     expect(encodeSave(decodeSave(a))).toEqual(a);
   });
 

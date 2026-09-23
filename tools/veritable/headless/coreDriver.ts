@@ -156,5 +156,6 @@ export async function coreDriver(
       ),
       "core:tick": { calls: coreTicks, totalMs: coreMs },
     }),
+    snapshot: () => session.snapshot().bytes,
   };
 }

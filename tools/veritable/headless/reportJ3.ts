@@ -100,8 +100,14 @@ const at = (r: CampaignResult, date: string) =>
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
-  const out = path.resolve(option(args, "out", path.join(HERE, "out/reportJ3")));
+  const out = path.resolve(
+    option(args, "out", path.join(HERE, "out/reportJ3")),
+  );
   const seed = Number(option(args, "seed", "42"));
+  // --only eu-embargo,war-fra-esp: the tests to (re)play; all by default.
+  const only = option(args, "only", "");
+  const wanted = (name: string) =>
+    only === "" || only.split(",").includes(name);
   fs.mkdirSync(out, { recursive: true });
   const source = createDataSource(fsDataFiles());
   const pack = await loadScenarioPackFrom(source, "europe-10");
@@ -132,7 +138,7 @@ async function main(): Promise<void> {
   const summary: Record<string, unknown> = {};
 
   // 1. EU embargo (simulation alone).
-  {
+  if (wanted("eu-embargo")) {
     const shock = parseShock("eu-embargo:RUS@2027-01");
     const control = runCampaign({ pack, config, seed, years: 4 });
     const run = runCampaign({ pack, config, seed, years: 4, shock });
@@ -180,7 +186,7 @@ async function main(): Promise<void> {
   }
 
   // 2. France attacks Spain (core).
-  {
+  if (wanted("war-fra-esp")) {
     const control = runCampaign({
       pack,
       config,
@@ -210,6 +216,11 @@ async function main(): Promise<void> {
         control.series[control.series.length - 1].gdp.FRA - end.gdp.FRA,
       frenchGdpRatio:
         end.gdp.FRA / control.series[control.series.length - 1].gdp.FRA,
+      // The aggressor's stability must not recover while sanctioned:
+      // at three years, at most the control's minus 0.08.
+      frenchStabilityAt3Years: end.stability.FRA,
+      controlStabilityAt3Years:
+        control.series[control.series.length - 1].stability.FRA,
     };
     write(
       "war-fra-esp",
@@ -242,7 +253,7 @@ async function main(): Promise<void> {
   }
 
   // 3. The United Kingdom blockades Norway (core).
-  {
+  if (wanted("blockade-gbr-nor")) {
     const control = runCampaign({
       pack,
       config,
@@ -297,7 +308,7 @@ async function main(): Promise<void> {
   }
 
   // 4. Italy is refused a landing in Spain (core).
-  {
+  if (wanted("landing-ita-esp")) {
     const run = runCampaign({
       pack,
       config,

@@ -73,7 +73,7 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 - [x] Zones maritimes ; contrôle par navires et ports ; blocus → commerce _(2026-09-22 — germes + partition par parcours sur l'eau, `borders/europe-10.zones.bin` ; présence = fiche projetée + navires + ports)_
 - [x] Débarquements (contrôle de zone puis prise d'un port) _(2026-09-22 — tête de pont par crochet du cœur ; contrôle mesuré entre belligérants)_
 - [x] Supériorité aérienne par région ; multiplicateur terrestre ; frappes _(2026-09-22 — par paire de belligérants, frappes mensuelles sur l'industrie et le ravitaillement)_
-- [x] Capacité de ravitaillement par segment ; force réduite au-delà _(2026-09-22 — base + infrastructures (ports et villes à portée : comptés à 0 sur le cœur, reste à faire))_
+- [x] Capacité de ravitaillement par segment ; force réduite au-delà _(2026-09-22 — base + infrastructures ; ports et villes à portée comptés sur le cœur le 2026-09-23)_
 
 **Livré quand** : un blocus se lit dans le commerce du bloqué ; un débarquement sans contrôle de zone échoue. — **Livré le 2026-09-22** (blocus britannique : commerce maritime norvégien −48 % à six mois ; débarquement italien en Espagne refusé).
 

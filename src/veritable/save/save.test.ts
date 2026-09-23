@@ -1,5 +1,5 @@
 import { loadVeritableConfig } from "../data/loadConfig";
-import { SaveFile } from "../data/schemas/save";
+import { SAVE_SCHEMA_VERSION, SaveFile } from "../data/schemas/save";
 import { MemoryWorld } from "../sim/testing/MemoryWorld";
 import { testNation, testScenario } from "../sim/testing/nations";
 import { testSimData } from "../sim/testing/simData";
@@ -123,7 +123,7 @@ describe("save file (current version)", () => {
 
   it("carries schemaVersion where it can be read before decoding", () => {
     const bytes = encodeSave(playedGame().sim.snapshot());
-    expect(peekSchemaVersion(bytes)).toBe(3);
+    expect(peekSchemaVersion(bytes)).toBe(SAVE_SCHEMA_VERSION);
     expect(String.fromCharCode(...bytes.subarray(0, 4))).toBe("VRTB");
   });
 

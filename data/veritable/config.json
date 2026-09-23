@@ -20,7 +20,8 @@
     "sanctionDiscount": 0.5,
     "circumvention": {
       "initial": 0.2,
-      "perMonth": 0.015
+      "perMonth": 0.015,
+      "max": 0.6
     },
     "sanctionFriction": 0.5,
     "tradeFactorAdjustMonths": 3,
@@ -164,6 +165,7 @@
       "debtRuinousAt": 2,
       "foodShortageWeight": 2
     },
+    "sanctionsOpinionWeight": 0.2,
     "aiOpinion": {
       "growth": 4,
       "shortage": 1.5,
@@ -175,6 +177,7 @@
     "blocRelationCap": 60,
     "warRelation": -100,
     "relationDecayPerMonth": 1,
+    "relationRecoveryPerMonth": 2,
     "declarationGroupHit": 0.1,
     "humanitarianStability": 0.3,
     "sanction": {

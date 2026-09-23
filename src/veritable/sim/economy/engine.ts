@@ -159,10 +159,16 @@ export function stepTrade(
     // (by affinity and deficit) that embargo it. Only what its circumvention
     // index allows is offered to new customers, at the sanction discount; the
     // rest is withheld: unsold, dumped, off the price-forming supply.
+    //
+    // The circumvention index of the good builds up in proportion to the
+    // market lost (a fungible good shipped by sea re-routes faster than
+    // pipeline gas, goods.json), and fades once the good is free again.
     const lostShare = new Map<string, number>();
     const withheld = new Map<string, number>();
+    const rate = good.circumvention ?? cfg.circumvention;
     for (const exporter of traders) {
-      if (exporter.surplus <= 0 || exporter.id === ROW_ID) continue;
+      if (exporter.id === ROW_ID) continue;
+      const nation = state.nations[exporter.id];
       let potential = 0;
       let blockedPotential = 0;
       for (const importer of traders) {
@@ -174,11 +180,22 @@ export function stepTrade(
           blockedPotential += w;
         }
       }
-      const lost = potential > 0 ? blockedPotential / potential : 0;
+      const lost =
+        exporter.surplus > 0 && potential > 0
+          ? blockedPotential / potential
+          : 0;
       lostShare.set(exporter.id, lost);
+      const current = nation.circumvention[good.id];
+      nation.circumvention[good.id] =
+        lost > 0
+          ? Math.min(
+              rate.max,
+              Math.max(rate.initial, current) + rate.perMonth * lost,
+            )
+          : Math.max(0, current - rate.perMonth);
       if (lost > 0) {
-        const circumvention = state.nations[exporter.id].circumvention;
-        const kept = exporter.surplus * lost * (1 - circumvention);
+        const kept =
+          exporter.surplus * lost * (1 - nation.circumvention[good.id]);
         exporter.surplus -= kept;
         withheld.set(exporter.id, kept);
       }
@@ -260,12 +277,17 @@ export function stepTrade(
           : Math.min(1, (Math.min(supply, demand) + received) / demand);
       importsValue[id] += received * importPrice * 1e6;
       const dumped = embargoed ? unsold : 0;
-      const rerouted = discount * (lostShare.get(id) ?? 0);
+      // What is re-routed or dumped sells at the discount, which narrows as
+      // the circumvention of the good builds up (new buyers, shadow fleet).
+      const circumvention = nation.circumvention[good.id];
+      const rerouted =
+        discount * (lostShare.get(id) ?? 0) * (1 - circumvention);
+      const dumpDiscount = discount * (1 - circumvention);
       exportsValue[id] +=
-        (shipped * (1 - rerouted) + dumped * (1 - discount)) * price * 1e6;
+        (shipped * (1 - rerouted) + dumped * (1 - dumpDiscount)) * price * 1e6;
       if (good.rent) {
         rentsValue[id] +=
-          (supply - dumped * discount - shipped * rerouted) * price * 1e6;
+          (supply - dumped * dumpDiscount - shipped * rerouted) * price * 1e6;
       }
       if (embargoed) stranded += unsold;
       void blockaded;
@@ -279,18 +301,8 @@ export function stepTrade(
     market.stranded[good.id] = stranded + blockaded;
   }
 
-  const circumvention = cfg.circumvention;
   for (const id of ctx.nationIds) {
     const nation = state.nations[id];
-    // Circumvention builds up while embargoed, fades once free.
-    const embargoedExporter = market.embargoes.some((e) => e.from === id);
-    nation.circumvention = embargoedExporter
-      ? Math.min(
-          1,
-          Math.max(circumvention.initial, nation.circumvention) +
-            circumvention.perMonth,
-        )
-      : Math.max(0, nation.circumvention - circumvention.perMonth);
     let shortage = 0;
     for (const good of ctx.goods) {
       shortage += good.shortageWeight * (1 - nation.coverage[good.id]);
@@ -302,6 +314,23 @@ export function stepTrade(
     nation.maritimeTradeValue = maritimeValue[id];
   }
   return { importsValue, rentsValue };
+}
+
+// Circumvention of a nation's exports as a whole: its per-good indices
+// weighted by the value of what it exports.
+export function exportCircumvention(
+  ctx: EconomyContext,
+  state: EconomyState,
+  nation: NationEconomy,
+): number {
+  let weighted = 0;
+  let total = 0;
+  for (const good of ctx.goods) {
+    const value = nation.exports[good.id] * state.market.prices[good.id];
+    weighted += value * nation.circumvention[good.id];
+    total += value;
+  }
+  return total > 0 ? weighted / total : 0;
 }
 
 // Once per game month, after the flows:
@@ -336,7 +365,7 @@ export function stepGrowth(
       cfg.sanctionFriction *
         nation.tradeOpenness *
         lostTradeShare(id) *
-        (1 - nation.circumvention);
+        (1 - exportCircumvention(ctx, state, nation));
     const before = nation.tradeFactor;
     nation.tradeFactor += (target - before) / cfg.tradeFactorAdjustMonths;
     const tradeStep = nation.tradeFactor / before - 1;

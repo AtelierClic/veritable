@@ -59,6 +59,7 @@ export class VeritableSession {
       config.war,
       pack.zones,
       config.naval,
+      config.logistics,
     );
 
     const probe = new PerformanceProbe();

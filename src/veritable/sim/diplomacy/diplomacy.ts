@@ -16,12 +16,15 @@ import { militaryPower } from "../war/military";
 //
 // relations[a][b] in [-100, 100]: +blocRelation per common bloc (capped) on
 // the first day, warRelation between belligerents, 0 otherwise; every month
-// they drift back towards 0 by relationDecayPerMonth.
+// positive relations fade towards 0 by relationDecayPerMonth and negative
+// ones heal by relationRecoveryPerMonth (after a peace, faster than they
+// fade).
 //
 // Declaring war costs relations with every nation: (cost of the casus belli)
-// x (1 + share of the aggressor in the total military power), at the
-// declaration and again every month of the war. Wars the scenario starts
-// with are already priced in: no monthly cost.
+// x (1 + share of the aggressor in the total military power), once at the
+// declaration. An aggressor WITHOUT casus belli pays it again every month of
+// the war. Defenders and coalition members pay nothing. Wars the scenario
+// starts with are already priced in: no monthly cost.
 //
 // Reaction of an AI nation, once a month: it sanctions an aggressor (every
 // good but the exempt ones, both ways) when its relations with it are under
@@ -452,14 +455,14 @@ export function stepDiplomacyMonth(
       const decayed =
         r > 0
           ? Math.max(0, r - cfg.relationDecayPerMonth)
-          : Math.min(0, r + cfg.relationDecayPerMonth);
+          : Math.min(0, r + cfg.relationRecoveryPerMonth);
       setRelation(state, a, b, decayed);
     }
   }
 
-  // 2. A war of aggression keeps costing relations.
+  // 2. A war of aggression without casus belli keeps costing relations.
   for (const war of state.wars) {
-    if (!war.declaredInCampaign) continue;
+    if (!war.declaredInCampaign || war.casusBelli !== null) continue;
     for (const aggressor of war.aggressors) {
       chargeAggressor(ctx, state, military, war, aggressor);
     }

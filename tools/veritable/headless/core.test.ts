@@ -78,8 +78,12 @@ describe("delivery test 2: a war without casus belli does not pay", () => {
       control.series[control.series.length - 1].gdp.FRA - end.gdp.FRA;
     expect(gdpLoss).toBeGreaterThan(tileValue);
     expect(gdpLoss).toBeGreaterThan(0.05 * end.gdp.FRA);
-    // Its people paid too: exhaustion up.
+    // Its people paid too: exhaustion up, and a stability that does not
+    // recover while the sanctions last (J3 correction 5).
     expect(end.exhaustion.FRA).toBeGreaterThan(0.2);
+    expect(end.stability.FRA).toBeLessThanOrEqual(
+      control.series[control.series.length - 1].stability.FRA - 0.08,
+    );
   }, 600_000);
 });
 

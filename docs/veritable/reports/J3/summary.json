@@ -1,9 +1,9 @@
 {
   "seed": 42,
   "eu-embargo": {
-    "gasImportPricePeakYear1": 1.3240017899081586,
-    "gasWorldPricePeakYear1": 1.054408335459166,
-    "russianGdpAt2Years": 0.9183294353121221
+    "gasImportPricePeakYear1": 1.341507239860989,
+    "gasWorldPricePeakYear1": 1.0582984600009198,
+    "russianGdpAt2Years": 0.9545540590617341
   },
   "war-fra-esp": {
     "sanctionersAt6Months": 8,
@@ -11,19 +11,20 @@
       "FRA>ESP@2027-01-01",
       "UKR>FRA@2027-04-01",
       "DEU>FRA@2028-02-01",
-      "GBR>FRA@2028-02-01",
-      "POL>FRA@2028-02-01",
-      "ITA>FRA@2028-03-01",
-      "NOR>FRA@2028-03-01"
+      "TUR>FRA@2028-02-01",
+      "GBR>FRA@2028-03-01",
+      "ITA>FRA@2028-03-01"
     ],
-    "netTilesAt3Years": 8260,
-    "tileValueUsd": 185872520410.39844,
-    "gdpLossUsd": 311524957181.2627,
-    "frenchGdpRatio": 0.9100889277227084
+    "netTilesAt3Years": 8256,
+    "tileValueUsd": 185785337362.054,
+    "gdpLossUsd": 419384301184.1006,
+    "frenchGdpRatio": 0.8789621389950223,
+    "frenchStabilityAt3Years": 0.4783773137779864,
+    "controlStabilityAt3Years": 0.5939316006826849
   },
   "blockade-gbr-nor": {
-    "norwegianBlockadeAt6Months": 0.3972595234709386,
-    "norwegianMaritimeTradeRatioAt6Months": 0.5212864059777799
+    "norwegianBlockadeAt6Months": 0.3972598629389006,
+    "norwegianMaritimeTradeRatioAt6Months": 0.533404408796953
   },
   "landing-ita-esp": {
     "landingsRefused": 1,

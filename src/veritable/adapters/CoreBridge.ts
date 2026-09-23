@@ -80,6 +80,7 @@ export class CoreBridge implements WorldPort {
     private readonly war: VeritableConfig["war"],
     private readonly zones: Zones | null = null,
     private readonly naval_?: VeritableConfig["naval"],
+    private readonly logistics?: VeritableConfig["logistics"],
   ) {
     this.coreStart = canonicalJson(coreStart);
     this.contested = new Uint8Array(game.width() * game.height());
@@ -287,6 +288,13 @@ export class CoreBridge implements WorldPort {
       if (pa === undefined || pb === undefined) continue;
       const nations = [a, b];
       const g = this.grid(nations);
+      // Ports and cities of each side, for the supply of the segments.
+      const depots = nations.map((n, i) =>
+        (i === 0 ? pa : pb)
+          .units(UnitType.Port, UnitType.City)
+          .map((u) => u.tile()),
+      );
+      const range = this.logistics?.range ?? 0;
       const candidates: number[] = [];
       pa.borderTiles().forEach((t) => candidates.push(t));
       pb.borderTiles().forEach((t) => candidates.push(t));
@@ -343,7 +351,8 @@ export class CoreBridge implements WorldPort {
                 : (1 +
                     (config.defensePostDefenseBonus() - 1) * (posts / held)) *
                   (1 + (this.war.cityDefense - 1) * (cities / held));
-            supply[n] = 0; // logistics: J3b
+            // Logistics: ports and cities of n within range of the segment.
+            supply[n] = this.depotsNear(depots[i], s.tiles, range);
           });
           return {
             index: s.index,
@@ -356,6 +365,49 @@ export class CoreBridge implements WorldPort {
       });
     }
     return out;
+  }
+
+  // Number of depots (port or city tiles) within `range` tiles (Chebyshev)
+  // of at least one tile of the segment.
+  private depotsNear(depots: number[], tiles: number[], range: number): number {
+    if (depots.length === 0 || range <= 0) return 0;
+    const width = this.game.width();
+    let minX = Number.POSITIVE_INFINITY;
+    let maxX = Number.NEGATIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+    let maxY = Number.NEGATIVE_INFINITY;
+    for (const tile of tiles) {
+      const x = tile % width;
+      const y = Math.floor(tile / width);
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
+    }
+    let count = 0;
+    for (const depot of depots) {
+      const dx = depot % width;
+      const dy = Math.floor(depot / width);
+      // Cheap rejection on the bounding box, then the exact test.
+      if (
+        dx < minX - range ||
+        dx > maxX + range ||
+        dy < minY - range ||
+        dy > maxY + range
+      ) {
+        continue;
+      }
+      for (const tile of tiles) {
+        if (
+          Math.abs((tile % width) - dx) <= range &&
+          Math.abs(Math.floor(tile / width) - dy) <= range
+        ) {
+          count++;
+          break;
+        }
+      }
+    }
+    return count;
   }
 
   advance(

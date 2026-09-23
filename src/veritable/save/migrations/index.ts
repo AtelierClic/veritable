@@ -4,14 +4,16 @@ import { NationData } from "../../data/schemas/nation";
 import {
   SAVE_SCHEMA_VERSION,
   SaveFile,
-  SaveHeaderV3Schema,
+  SaveHeaderV4Schema,
 } from "../../data/schemas/save";
 import { SaveFileV1, SaveHeaderV1Schema } from "../../data/schemas/saveV1";
 import { SaveFileV2, SaveHeaderV2Schema } from "../../data/schemas/saveV2";
+import { SaveFileV3, SaveHeaderV3Schema } from "../../data/schemas/saveV3";
 import { Scenario } from "../../data/schemas/scenario";
 import { SimData } from "../../sim/economy/context";
 import { v1ToV2 } from "./v1-to-v2";
 import { v2ToV3 } from "./v2-to-v3";
+import { v3ToV4 } from "./v3-to-v4";
 
 // A save as read from disk, before migration: the header decoded with the
 // frozen schema of ITS version, plus the raw tile grid.
@@ -51,6 +53,7 @@ export const HEADER_CODECS: Record<number, HeaderCodec> = {
   1: SaveHeaderV1Schema,
   2: SaveHeaderV2Schema,
   3: SaveHeaderV3Schema,
+  4: SaveHeaderV4Schema,
 };
 
 export class MigrationError extends Error {}
@@ -76,6 +79,17 @@ export const MIGRATIONS: Migration[] = [
         );
       }
       return v2ToV3(save as unknown as SaveFileV2, context) as VersionedSave;
+    },
+  },
+  {
+    from: 3,
+    migrate(save, context) {
+      if (context === undefined) {
+        throw new MigrationError(
+          "migration v3 -> v4 needs the campaign data (MigrationContext)",
+        );
+      }
+      return v3ToV4(save as unknown as SaveFileV3, context) as VersionedSave;
     },
   },
 ];

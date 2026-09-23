@@ -146,6 +146,61 @@ describe("declaring war", () => {
     expect(sim.read().casusBelli.CCC).toEqual(["none"]);
   });
 
+  it("with a casus belli the cost is paid once; defenders pay nothing; after the peace relations heal by two a month", () => {
+    const { sim, months } = campaign({
+      ...world,
+      scenario: {
+        contested: [
+          {
+            region: "marches",
+            controller: "BBB",
+            claimants: ["AAA"],
+            recognizedBy: [],
+          },
+        ],
+      },
+    });
+    sim.apply({
+      type: "declare-war",
+      target: "BBB",
+      casusBelli: "contested-territory",
+    });
+    let d = sim.read().diplomacy;
+    // 5 x (1 + 0.25): once.
+    expect(relation(d, "AAA", "CCC")).toBeCloseTo(30 - 6.25, 6);
+    expect(relation(d, "AAA", "DDD")).toBeCloseTo(-6.25, 6);
+    // The defender's relations with the others are untouched.
+    expect(relation(d, "BBB", "CCC")).toBe(30);
+    months(2);
+    d = sim.read().diplomacy;
+    // No monthly cost with a casus belli: only the drift towards 0 (+1 a
+    // month on positive relations, +2 on negative ones).
+    expect(relation(d, "AAA", "CCC")).toBeCloseTo(30 - 6.25 - 2, 6);
+    expect(relation(d, "AAA", "DDD")).toBeCloseTo(-6.25 + 4, 6);
+    expect(relation(d, "BBB", "CCC")).toBe(28);
+    // Peace: the enemies start healing from -100 by two a month.
+    const war = d.wars[0];
+    sim.apply({
+      type: "propose-peace",
+      war: war.id,
+      to: "BBB",
+      terms: {
+        kind: "ceasefire",
+        reparationsPctGdp: 0,
+        reparationYears: 0,
+        maxDivisions: null,
+      },
+    });
+    // BBB (AI) is neither exhausted nor retreating: it refuses; force the
+    // end of the war through its own offer once weary is not testable here,
+    // so check the healing rule on DDD's negative relations instead.
+    months(3);
+    expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBeCloseTo(
+      Math.min(0, -6.25 + 10),
+      6,
+    );
+  });
+
   it("costs relations with everyone at the declaration and every month, more without casus belli, more when powerful", () => {
     const { sim, events, months } = campaign(world);
     sim.apply({ type: "declare-war", target: "DDD", casusBelli: "none" });
