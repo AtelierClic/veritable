@@ -52,8 +52,11 @@ export function stepBudget(
   politics: NationPolitics,
   trade: MonthlyTrade,
   date: string,
-  // Net transfer received this month (reparations, J3a), US$.
+  // Net transfer received this month (reparations, J3a; the cost of the
+  // political levers, J4), US$.
   transfer = 0,
+  // Corruption leak on the programmes: they cost x (1 + leak) (J4).
+  leak = 0,
 ): BudgetEvent[] {
   const events: BudgetEvent[] = [];
   const cfg = ctx.config.budget;
@@ -86,7 +89,7 @@ export function stepBudget(
 
   let share = 0;
   for (const post of SPENDING_POSTS) share += nation.spending[post];
-  let programs = (nation.gdp / 12) * share;
+  let programs = (nation.gdp / 12) * share * (1 + leak);
 
   // After a default nobody lends: the posts are cut to what revenue allows.
   if (nation.noDeficitUntil !== null) {

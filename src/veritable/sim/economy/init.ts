@@ -1,4 +1,4 @@
-import { INTEREST_GROUPS, NationId } from "../../data/schemas/common";
+import { NationId } from "../../data/schemas/common";
 import { FOSSIL_FUELS, GOOD_IDS, GoodId } from "../../data/schemas/goods";
 import {
   NationData,
@@ -10,9 +10,10 @@ import { RowData } from "../../data/schemas/row";
 import {
   EconomyState,
   NationEconomy,
-  NationPolitics,
   PoliticsState,
 } from "../../data/schemas/save";
+import { initPoliticsState } from "../politics/state";
+import { Rng } from "../rng";
 import { EconomyContext } from "./context";
 
 // First day of the economy, from the nation sheets. Records are always built
@@ -114,6 +115,8 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     coverage: perGood(() => 1),
     imports,
     exports,
+    taxTargets: { ...taxes },
+    spendingTargets: { ...spending },
     exportsValue,
     exportShareReference: exportsValue / gdp,
     shortage: 0,
@@ -167,31 +170,10 @@ export function initPolitics(
   nations: readonly NationData[],
   playerNation: NationId | null,
   autopilot: boolean,
+  rng: Rng,
+  date: string,
 ): PoliticsState {
-  const s = ctx.config.politics.stability;
-  const entry = (data: NationData): NationPolitics => {
-    const debtHealth = debtHealthOf(ctx, data.debtToGdp.value);
-    return {
-      groups:
-        data.id === playerNation
-          ? Object.fromEntries(INTEREST_GROUPS.map((g) => [g, 0.5]))
-          : null,
-      opinion: 0.5,
-      stability:
-        s.opinion * 0.5 +
-        s.shortage * 1 +
-        s.debt * debtHealth +
-        s.legitimacy * s.legitimacyValue,
-      unrest: false,
-      reprimanded: false,
-      deficitBreachMonths: 0,
-      reprimandMalus: 0,
-    };
-  };
-  return {
-    nations: Object.fromEntries(nations.map((n) => [n.id, entry(n)])),
-    autopilot,
-  };
+  return initPoliticsState(ctx, rng, nations, playerNation, autopilot, date);
 }
 
 // 1 when debt/GDP is at or below the healthy mark, 0 at the ruinous one.

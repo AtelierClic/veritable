@@ -1,0 +1,521 @@
+import { loadVeritableConfig } from "../../data/loadConfig";
+import { VeritableConfig } from "../../data/schemas/config";
+import { NationData } from "../../data/schemas/nation";
+import { NationPolitics } from "../../data/schemas/save";
+import { decodeSave, encodeSave } from "../../save/serialize";
+import { Rng } from "../rng";
+import { MemoryWorld } from "../testing/MemoryWorld";
+import {
+  testNation,
+  TestNationOptions,
+  testScenario,
+} from "../testing/nations";
+import { testLeaders, testSimData } from "../testing/simData";
+import { SimEvent } from "../VeritableSim";
+import { VeritableSimImpl } from "../VeritableSimImpl";
+import { holdElection, projectShares } from "./elections";
+import { affinity, insideWindow } from "./ideology";
+import { ageAt } from "./leaders";
+
+const DAY = 1440;
+
+function quietConfig(): VeritableConfig {
+  const config = structuredClone(loadVeritableConfig());
+  config.economy.growth.noiseMonthlySd = 0;
+  config.economy.rowSupplyNoise.monthlySd = 0;
+  config.politics.aiShock.sd = 0;
+  return config;
+}
+
+interface Setup {
+  nations: Record<string, TestNationOptions>;
+  config?: VeritableConfig;
+  leaders?: Parameters<typeof testLeaders>[1];
+  seed?: number;
+}
+
+function campaign(setup: Setup) {
+  const ids = Object.keys(setup.nations);
+  const sheets = new Map<string, NationData>(
+    ids.map((id) => [id, testNation(id, setup.nations[id])]),
+  );
+  const sim = new VeritableSimImpl({
+    config: setup.config ?? quietConfig(),
+    world: new MemoryWorld(4, 4),
+    data: testSimData(ids, {
+      leaders: Object.fromEntries(
+        ids.map((id) => [id, testLeaders(id, setup.leaders)]),
+      ),
+    }),
+    nationData: (id) => sheets.get(id),
+  });
+  sim.init(testScenario(ids), setup.seed ?? 7);
+  const events: SimEvent[] = [];
+  const months = (n: number) => {
+    for (let d = 0; d < 31 * n; d++) {
+      events.push(...sim.advance(DAY).filter((e) => e.type !== "day-started"));
+    }
+  };
+  return { sim, events, months, sheets };
+}
+
+// AAA plays (parliamentary, election due 2028-01-01: last 2024-01-01 + 48).
+const two: Setup = { nations: { AAA: {}, BBB: {} } };
+
+describe("the political state of the first day", () => {
+  it("has a regime, a legitimacy at its base, a leader, parties, a government and a next election", () => {
+    const { sim } = campaign(two);
+    const p = live(sim, "AAA");
+    expect(p.regime).toBe("parliamentary");
+    expect(p.legitimacy).toBe(0.8);
+    expect(p.capital).toBe(30);
+    expect(p.leader.id).toBe("aaa-pm");
+    expect(p.leader.name).toEqual({ kind: "key", key: "leader.aaa.pm.parody" });
+    expect(p.parties.map((x) => x.id)).toEqual(["aaa-left", "aaa-right"]);
+    // A coalition regime: the left (55 %) governs alone.
+    expect(p.government.parties).toEqual(["aaa-left"]);
+    expect(p.nextElection).toBe("2028-01-01");
+    expect(p.laws).toEqual([]);
+    // Stability counts the legitimacy of the regime.
+    expect(p.stability).toBeCloseTo(0.25 + 0.2 + 0.15 + 0.15 * 0.8, 9);
+  });
+
+  it("the fictional name switch changes the key of a real leader", () => {
+    const config = quietConfig();
+    config.leaderNames = "fictional";
+    const { sim } = campaign({ ...two, config });
+    expect(sim.read().politics.AAA.leader.name).toEqual({
+      kind: "key",
+      key: "leader.aaa.pm.fictional",
+    });
+  });
+});
+
+describe("elections", () => {
+  it("affinity falls with the ideological distance and rises with charisma", () => {
+    const g = { economic: 0, authority: 0, sovereignty: 0 };
+    expect(affinity(g, g, 0, 0.9)).toBe(1);
+    expect(affinity(g, { ...g, economic: 0.9 }, 0, 0.9)).toBeCloseTo(
+      Math.exp(-1),
+      9,
+    );
+    expect(affinity(g, g, 0.5, 0.9)).toBe(1.5);
+  });
+
+  it("the projection sums to one and an unhappy electorate drops the incumbent", () => {
+    const { sim } = campaign(two);
+    const p = live(sim, "AAA");
+    const happy = projectShares(quietCtx(sim), p, undefined);
+    const total = Object.values(happy).reduce((a, b) => a + b, 0);
+    expect(total).toBeCloseTo(1, 9);
+    for (const g of Object.keys(p.groups!)) p.groups![g] = 0.1;
+    const unhappy = projectShares(quietCtx(sim), p, undefined);
+    expect(unhappy["aaa-left"]).toBeLessThan(happy["aaa-left"]);
+  });
+
+  it("a due election is held, forms a government and journals it; a victory earns capital", () => {
+    const { sim, months, events } = campaign(two);
+    months(25); // 2028-02
+    const p = live(sim, "AAA");
+    expect(p.lastElection).not.toBeNull();
+    expect(p.lastElection!.date).toBe("2028-01-01");
+    expect(p.nextElection).toBe("2032-01-01");
+    expect(events.map((e) => e.type)).toContain("election-held");
+    expect(events.map((e) => e.type)).toContain("government-formed");
+    const journal = sim.read().journal.map((j) => j.kind);
+    expect(journal).toContain("election-held");
+    // Both nations voted (the AI one on its proxy opinion).
+    expect(sim.read().politics.BBB.lastElection).not.toBeNull();
+  });
+
+  it("propaganda and fraud move shares to the incumbent; fraud with a free press is caught most of the time", () => {
+    const { sim } = campaign(two);
+    const ctx = quietCtx(sim);
+    const p = live(sim, "AAA");
+    const base = projectShares(ctx, p, undefined)["aaa-left"];
+    sim.apply({ type: "set-lever", propagandaPctGdp: 0.02 });
+    const propaganda = projectShares(ctx, p, undefined)["aaa-left"];
+    expect(propaganda).toBeGreaterThan(base + 0.05);
+    sim.apply({ type: "set-lever", propagandaPctGdp: 0, fraud: 0.2 });
+    const fraud = projectShares(ctx, p, undefined)["aaa-left"];
+    expect(fraud).toBeCloseTo(base + 0.2, 6);
+
+    // Delivery test: 20 % of fraud with a free press (0.9) is detected in
+    // more than 60 % of the elections.
+    let detected = 0;
+    const runs = 1000;
+    for (let i = 0; i < runs; i++) {
+      const trial = structuredClone(p);
+      trial.levers.fraud = 0.2;
+      const outcome = holdElection(
+        ctx,
+        new Rng(1000 + i),
+        "AAA",
+        trial,
+        undefined,
+        "2028-01-01",
+      );
+      if (outcome.events.some((e) => e.type === "fraud-detected")) detected++;
+    }
+    expect(detected / runs).toBeGreaterThan(0.6);
+    expect(detected / runs).toBeLessThan(0.9);
+
+    // A detected fraud costs legitimacy, stability and the democracies.
+    const trial = structuredClone(p);
+    trial.levers.fraud = 0.3;
+    trial.pressFreedom = 1;
+    const outcome = holdElection(
+      ctx,
+      new Rng(3),
+      "AAA",
+      trial,
+      undefined,
+      "2028-01-01",
+    );
+    expect(outcome.events.map((e) => e.type)).toContain("fraud-detected");
+    expect(trial.legitimacy).toBeCloseTo(0.8 - 0.3, 9);
+    expect(trial.fraudCoupUntil).toBe("2029-01-01");
+    expect(outcome.democracyRelations).toBe(-30);
+  });
+
+  it("an alternation brings a new leader, resets the capital and repeals the laws outside the new window", () => {
+    const { sim, months, events } = campaign({
+      ...two,
+      // The incumbent left governs alone with a dull leader: unhappy groups
+      // and a charismatic opposition bring the right to power.
+      leaders: { incumbentSupport: 0.55, charisma: 0 },
+    });
+    // The left government passes a left law before the election.
+    live(sim, "AAA").capital = 100;
+    sim.apply({ type: "enact-law", law: "wealth-tax" });
+    expect(sim.read().politics.AAA.laws.map((l) => l.id)).toEqual([
+      "wealth-tax",
+    ]);
+    for (const g of Object.keys(live(sim, "AAA").groups!)) {
+      live(sim, "AAA").groups![g] = 0.1;
+    }
+    months(25);
+    const p = live(sim, "AAA");
+    expect(p.lastElection!.alternation).toBe(true);
+    expect(p.government.parties[0]).toBe("aaa-right");
+    expect(p.leader.id).toBe("aaa-opposition");
+    expect(p.alternations).toBe(1);
+    // The wealth tax (window: economic <= -0.1) is outside the right's window.
+    expect(events.map((e) => e.type)).toContain("law-repeal-announced");
+    expect(p.repealing.map((r) => r.id)).toEqual(["wealth-tax"]);
+    months(13);
+    expect(sim.read().politics.AAA.laws).toEqual([]);
+    expect(sim.read().journal.map((j) => j.kind)).toContain("law-repealed");
+  });
+});
+
+describe("laws, capital and sliders", () => {
+  it("a law costs capital, is refused outside the window, by the regime, or without capital", () => {
+    const { sim } = campaign(two);
+    const p = live(sim, "AAA");
+    p.capital = 100;
+    sim.apply({ type: "enact-law", law: "housing-programme" });
+    expect(p.laws.map((l) => l.id)).toEqual(["housing-programme"]);
+    expect(p.capital).toBe(80);
+    // Once: social spending target up; while: youth offset.
+    expect(sim.read().economies.AAA.spendingTargets.social).toBeCloseTo(
+      0.18 + 0.005,
+      9,
+    );
+    // The left government (economic -0.4): a corporate tax cut (>= 0) is
+    // outside its window.
+    sim.apply({ type: "enact-law", law: "corporate-tax-cut" });
+    expect(p.laws.length).toBe(1);
+    expect(sim.read().journal[sim.read().journal.length - 1]).toMatchObject({
+      kind: "law-refused",
+      params: { law: "corporate-tax-cut", reason: "window" },
+    });
+    // Term limits: not for a parliamentary regime.
+    sim.apply({ type: "enact-law", law: "term-limits-removal" });
+    expect(
+      sim.read().journal[sim.read().journal.length - 1].params.reason,
+    ).toBe("regime");
+    p.capital = 5;
+    sim.apply({ type: "enact-law", law: "renewable-subsidies" });
+    expect(
+      sim.read().journal[sim.read().journal.length - 1].params.reason,
+    ).toBe("capital");
+    // Repeal by the player costs the reversal.
+    p.capital = 100;
+    sim.apply({ type: "repeal-law", law: "housing-programme" });
+    expect(p.laws).toEqual([]);
+    expect(p.capital).toBe(85);
+  });
+
+  it("laws in force shift the satisfaction targets of the groups", () => {
+    const withLaw = campaign(two);
+    const without = campaign(two);
+    live(withLaw.sim, "AAA").capital = 100;
+    withLaw.sim.apply({ type: "enact-law", law: "tuition-free-university" });
+    withLaw.months(6);
+    without.months(6);
+    expect(withLaw.sim.read().politics.AAA.groups!.youth).toBeGreaterThan(
+      without.sim.read().politics.AAA.groups!.youth + 0.03,
+    );
+  });
+
+  it("capital regenerates with charisma and opinion up to the cap", () => {
+    const { sim, months } = campaign(two);
+    const p = live(sim, "AAA");
+    p.capital = 0;
+    months(1);
+    // 3 x (0.5 + 0.5) x (0.5 + opinion ~0.5) = 3.
+    expect(p.capital).toBeCloseTo(3, 1);
+    p.capital = 99;
+    months(2);
+    expect(p.capital).toBe(100);
+  });
+
+  it("sliders reach their target progressively", () => {
+    const { sim, months } = campaign(two);
+    const e = sim.read().economies.AAA;
+    const before = e.taxes.vat;
+    sim.apply({ type: "set-tax", tax: "vat", rate: before + 0.06 });
+    expect(e.taxes.vat).toBe(before);
+    months(1);
+    expect(e.taxes.vat).toBeCloseTo(before + 0.01, 9);
+    months(12);
+    expect(e.taxes.vat).toBeGreaterThan(before + 0.05);
+  });
+
+  it("a constitutional reform needs legitimacy and changes the regime", () => {
+    const { sim } = campaign(two);
+    const p = live(sim, "AAA");
+    p.capital = 100;
+    p.legitimacy = 0.5;
+    sim.apply({ type: "enact-law", law: "constitutional-reform-presidential" });
+    expect(p.regime).toBe("parliamentary");
+    expect(
+      sim.read().journal[sim.read().journal.length - 1].params.reason,
+    ).toBe("legitimacy");
+    p.legitimacy = 0.8;
+    sim.apply({ type: "enact-law", law: "constitutional-reform-presidential" });
+    expect(p.regime).toBe("presidential");
+    expect(sim.read().journal.map((j) => j.kind)).toContain("regime-changed");
+  });
+});
+
+describe("coups, revolutions and the AI", () => {
+  it("a low-legitimacy, unstable state with angry soldiers falls to a coup, keeps its player, and is suspended by its bloc", () => {
+    const config = quietConfig();
+    config.politics.coups.failureShare = 0;
+    const blocs = [
+      {
+        id: "club",
+        name: "bloc.club",
+        members: [
+          { nation: "AAA", status: "full" as const },
+          { nation: "BBB", status: "full" as const },
+        ],
+        layer: 1,
+        tradeBonus: 1.5,
+        suspendsOnCoup: true,
+      },
+    ];
+    const ids = ["AAA", "BBB"];
+    const sheets = new Map(
+      ids.map((id) => [id, testNation(id, { blocs: ["club"] })]),
+    );
+    const sim = new VeritableSimImpl({
+      config,
+      world: new MemoryWorld(4, 4),
+      data: testSimData(ids, { blocs }),
+      nationData: (id) => sheets.get(id),
+    });
+    sim.init(testScenario(ids), 5);
+    const p = live(sim, "AAA");
+    p.legitimacy = 0;
+    p.stability = 0;
+    p.groups!.military = 0;
+    p.regime = "junta"; // coupBase 0.03 -> p = 0.03 x 4 x 3 x 1 = 0.36 a month
+    let coup = false;
+    for (let m = 0; m < 24 && !coup; m++) {
+      for (let d = 0; d < 31; d++) sim.advance(DAY);
+      coup = sim.read().politics.AAA.coups > 0;
+    }
+    expect(coup).toBe(true);
+    const after = sim.read().politics.AAA;
+    expect(after.regime).toBe("junta");
+    expect(after.leader.role).toBe("military-chief");
+    expect(after.leader.name.kind).toBe("literal");
+    expect(after.legitimacy).toBe(0.4);
+    expect(after.suspendedFrom).toEqual(["club"]);
+    expect(sim.read().playerNation).toBe("AAA");
+    expect(sim.read().journal.map((j) => j.kind)).toContain("coup-succeeded");
+    expect(sim.read().journal.map((j) => j.kind)).toContain("bloc-suspended");
+    // The nation's groups are still there: the player goes on.
+    expect(after.groups).not.toBeNull();
+  });
+
+  it("three angry groups and a long instability bring a revolution and elections in six months", () => {
+    const config = quietConfig();
+    config.politics.revolution.monthlyProbability = 1;
+    // The weekly step pulls the groups back towards their targets and
+    // recomputes the stability: loosen the thresholds so that the anger
+    // set below is still there at the month.
+    config.politics.revolution.angryBelow = 0.4;
+    config.politics.revolution.stabilityBelow = 1;
+    config.politics.revolution.lowStabilityMonths = 1;
+    const { sim, months } = campaign({ ...two, config });
+    const p = live(sim, "AAA");
+    for (let m = 0; m < 3; m++) {
+      p.groups!.youth = 0.1;
+      p.groups!.workers = 0.1;
+      p.groups!.minorities = 0.1;
+      months(1);
+    }
+    const after = sim.read().politics.AAA;
+    expect(after.revolutions).toBeGreaterThanOrEqual(1);
+    expect(after.legitimacy).toBe(0.5);
+    expect(sim.read().journal.map((j) => j.kind)).toContain("revolution");
+    expect(after.nextElection).not.toBeNull();
+  });
+
+  it("the leader ages and a dead leader is replaced by the party", () => {
+    expect(ageAt("1970-06-15", "2026-06-14")).toBe(55);
+    expect(ageAt("1970-06-15", "2026-06-15")).toBe(56);
+    const { sim, months } = campaign(two);
+    const p = live(sim, "AAA");
+    p.leader.born = "1850-01-01"; // far beyond any age: certain death
+    let died = false;
+    for (let m = 0; m < 120 && !died; m++) {
+      months(1);
+      died = sim.read().journal.some((j) => j.kind === "leader-died");
+    }
+    expect(died).toBe(true);
+    const after = sim.read().politics.AAA;
+    expect(after.leader.id).not.toBe("aaa-pm");
+    expect(after.leader.party).toBe("aaa-left");
+    expect(after.leader.name.kind).toBe("literal");
+    expect(sim.read().journal.map((j) => j.kind)).toContain("leader-succeeded");
+  });
+
+  it("AI nations take random opinion shocks in proportion to the fragility of their regime", () => {
+    const config = quietConfig();
+    config.politics.aiShock.sd = 0.1;
+    const fragile = campaign({
+      nations: { AAA: {}, BBB: { regime: "junta" } },
+      config,
+    });
+    const solid = campaign({ nations: { AAA: {}, BBB: {} }, config });
+    fragile.months(24);
+    solid.months(24);
+    // Same seed, same draws: the junta (legitimacy 0.4, coupBase 0.03)
+    // moves more than the parliamentary state (0.8, 0.001).
+    const f = fragile.sim.read().politics.BBB.opinion;
+    const s = solid.sim.read().politics.BBB.opinion;
+    expect(Math.abs(f - 0.5)).toBeGreaterThan(Math.abs(s - 0.5));
+  });
+});
+
+describe("objectives, notes and the save", () => {
+  it("pins up to five objectives, tracks progress, completes and rewards", () => {
+    const { sim, months } = campaign(two);
+    sim.apply({ type: "pin-objective", objective: "double-gdp" });
+    sim.apply({ type: "pin-objective", objective: "legitimate-state" });
+    expect(sim.read().objectives.map((o) => o.id)).toEqual([
+      "double-gdp",
+      "legitimate-state",
+    ]);
+    expect(() =>
+      sim.apply({ type: "pin-objective", objective: "no-such-objective" }),
+    ).toThrow(/unknown objective/);
+    for (const id of ["join-eu", "stable-five-years", "ten-years-peace"]) {
+      sim.apply({ type: "pin-objective", objective: id });
+    }
+    expect(() =>
+      sim.apply({ type: "pin-objective", objective: "debt-below-sixty" }),
+    ).toThrow(/five/);
+    sim.apply({ type: "unpin-objective", objective: "join-eu" });
+    expect(sim.read().objectives.map((o) => o.id)).not.toContain("join-eu");
+    const p = live(sim, "AAA");
+    p.legitimacy = 0.95;
+    const capital = p.capital;
+    months(1);
+    const done = sim
+      .read()
+      .objectives.find((o) => o.id === "legitimate-state")!;
+    expect(done.done).toBe(true);
+    expect(sim.read().politics.AAA.capital).toBeGreaterThan(capital + 15);
+    expect(sim.read().journal.map((j) => j.kind)).toContain(
+      "objective-completed",
+    );
+    // Progress of the GDP objective is a fraction of the way to x2.
+    const gdp = sim.read().objectives.find((o) => o.id === "double-gdp")!;
+    expect(gdp.progress).toBeGreaterThanOrEqual(0);
+    expect(gdp.progress).toBeLessThan(0.1);
+  });
+
+  it("notes go to the journal and the save", () => {
+    const { sim } = campaign(two);
+    sim.apply({ type: "add-note", text: "Ne pas oublier la Bretagne." });
+    expect(sim.read().notes).toEqual([
+      { date: "2026-01-01", text: "Ne pas oublier la Bretagne." },
+    ]);
+    expect(sim.read().journal[sim.read().journal.length - 1]).toMatchObject({
+      kind: "note",
+      params: { text: "Ne pas oublier la Bretagne." },
+    });
+  });
+
+  it("the political state round-trips through the save file and continues identically", () => {
+    const { sim, months } = campaign(two);
+    live(sim, "AAA").capital = 100;
+    sim.apply({ type: "enact-law", law: "housing-programme" });
+    sim.apply({
+      type: "set-lever",
+      propagandaPctGdp: 0.01,
+      clientelism: "youth",
+    });
+    sim.apply({ type: "pin-objective", objective: "double-gdp" });
+    sim.apply({ type: "add-note", text: "note" });
+    months(26); // past the election of 2028
+    const bytes = encodeSave(sim.snapshot());
+    const restored = new VeritableSimImpl({
+      config: quietConfig(),
+      world: new MemoryWorld(4, 4),
+      data: testSimData(["AAA", "BBB"]),
+      nationData: (id) => testNation(id),
+    });
+    restored.restore(decodeSave(bytes));
+    expect(encodeSave(restored.snapshot())).toEqual(bytes);
+    for (let d = 0; d < 31 * 3; d++) {
+      sim.advance(DAY);
+      restored.advance(DAY);
+    }
+    expect(encodeSave(restored.snapshot())).toEqual(encodeSave(sim.snapshot()));
+    expect(restored.read().politics.AAA.lastElection).not.toBeNull();
+    expect(restored.read().objectives.length).toBe(1);
+  });
+});
+
+// The live, mutable political state of a nation (the view is read-only by
+// type only: the simulation returns its own objects).
+function live(sim: VeritableSimImpl, id: string): NationPolitics {
+  return sim.read().politics[id] as NationPolitics;
+}
+
+// The context of a running simulation (a private field, read for the pure
+// helpers).
+function quietCtx(sim: VeritableSimImpl) {
+  return (sim as unknown as { ctx: Parameters<typeof projectShares>[0] }).ctx;
+}
+
+it("laws' windows are boxes on the three axes", () => {
+  const window = {
+    economic: [-1, 0.2] as [number, number],
+    authority: [-1, 1] as [number, number],
+    sovereignty: [-1, 1] as [number, number],
+  };
+  expect(
+    insideWindow(window, { economic: 0, authority: 0.9, sovereignty: -0.9 }),
+  ).toBe(true);
+  expect(
+    insideWindow(window, { economic: 0.3, authority: 0, sovereignty: 0 }),
+  ).toBe(false);
+});

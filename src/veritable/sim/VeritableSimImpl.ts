@@ -28,6 +28,7 @@ import {
   declareWar,
   DiplomacyEvent,
   enemiesOf,
+  hitDemocracyRelations,
   imposeSanctions,
   initDiplomacy,
   liftSanctions,
@@ -52,6 +53,29 @@ import {
   setBlockade,
   stepNavalDay,
 } from "./naval/naval";
+import { CoupEvent, stepCoups, stepRevolution } from "./politics/coups";
+import {
+  ElectionEvent,
+  holdElection,
+  projectShares,
+} from "./politics/elections";
+import { clamp01 } from "./politics/ideology";
+import {
+  enactLaw,
+  LawEvent,
+  lawModifiers,
+  repealLaw,
+  stepLawsMonth,
+  stepSliders,
+} from "./politics/laws";
+import { LeaderEvent, stepLeaderAgeing } from "./politics/leaders";
+import {
+  ObjectiveEvent,
+  ObjectiveWorld,
+  pinObjective,
+  stepObjectivesMonth,
+  unpinObjective,
+} from "./politics/objectives";
 import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
 import {
@@ -120,7 +144,35 @@ type DomainEvent =
   | BlocEvent
   | DiplomacyEvent
   | PeaceEvent
-  | NavalEvent;
+  | NavalEvent
+  | ElectionEvent
+  | LawEvent
+  | CoupEvent
+  | LeaderEvent
+  | ObjectiveEvent
+  | { type: "bloc-suspended"; nation: NationId; bloc: string }
+  | { type: "note"; nation: NationId; text: string };
+
+// Events of the political engine: they reach the client with their journal
+// parameters.
+const POLITICAL_EVENTS = new Set<string>([
+  "election-held",
+  "government-formed",
+  "elections-suspended",
+  "law-enacted",
+  "law-refused",
+  "law-repealed",
+  "law-repeal-announced",
+  "coup-attempted",
+  "coup-succeeded",
+  "revolution",
+  "leader-died",
+  "leader-succeeded",
+  "fraud-detected",
+  "objective-completed",
+  "regime-changed",
+  "bloc-suspended",
+]);
 
 const CEASEFIRE: PeaceTerms = {
   kind: "ceasefire",
@@ -192,7 +244,10 @@ export class VeritableSimImpl implements VeritableSim {
       {
         domain: "politics",
         onWeek: (c) => this.politicsWeek(c),
-        onMonth: (c) => this.budgetMonth(c),
+        onMonth: (c) => {
+          this.politicsMonth(c);
+          this.budgetMonth(c);
+        },
       },
       { domain: "blocs", onMonth: (c) => this.blocsMonth(c) },
       { domain: "save" },
@@ -219,7 +274,10 @@ export class VeritableSimImpl implements VeritableSim {
       sheets,
       scenario.playerDefault,
       this.deps.autopilot === true,
+      this.rng,
+      this.calendar.date,
     );
+    this.syncSuspensions();
     this.diplomacy = initDiplomacy(this.ctx, scenario);
     this.military = initMilitary(this.ctx, sheets);
     this.naval = initNaval();
@@ -264,6 +322,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.military = state.military;
     this.naval = state.naval;
     this.trade = null;
+    this.syncSuspensions();
     this.invalidateFronts();
     this.initialized = true;
     this.deps.world.restore(this.nationIds(), state.world, {
@@ -306,8 +365,10 @@ export class VeritableSimImpl implements VeritableSim {
         this.calendar.speed = cmd.speed;
         return;
       case "set-tax": {
+        // Sliders have a progressive effect (J4): the command sets the
+        // target, the value in effect follows it month after month.
         const economy = this.playerEconomy();
-        economy.taxes[cmd.tax] = Math.min(
+        economy.taxTargets[cmd.tax] = Math.min(
           cmd.rate,
           this.deps.config.budget.maxTaxRate[cmd.tax],
         );
@@ -315,7 +376,7 @@ export class VeritableSimImpl implements VeritableSim {
       }
       case "set-spending": {
         const economy = this.playerEconomy();
-        economy.spending[cmd.post] = Math.min(
+        economy.spendingTargets[cmd.post] = Math.min(
           cmd.share,
           spendingCeiling(this.ctx, economy, cmd.post),
         );
@@ -411,11 +472,20 @@ export class VeritableSimImpl implements VeritableSim {
         return;
       case "set-conscription": {
         const me = this.requirePlayer();
+        const ceiling = lawModifiers(
+          this.ctx,
+          this.politics.nations[me],
+        ).conscriptionCeiling;
+        const order = ["peace", "partial", "total"] as const;
+        const level =
+          ceiling !== null && order.indexOf(cmd.level) > order.indexOf(ceiling)
+            ? ceiling
+            : cmd.level;
         setConscription(
           this.ctx,
           this.military.nations[me],
           this.sheets.get(me)!.population.value,
-          cmd.level,
+          level,
         );
         return;
       }
@@ -489,6 +559,75 @@ export class VeritableSimImpl implements VeritableSim {
         }
         this.record(date, { type: "landing", nation: me, target: cmd.target });
         this.invalidateFronts();
+        return;
+      }
+      case "enact-law": {
+        const me = this.requirePlayer();
+        const law = this.ctx.law(cmd.law);
+        const { events, once } = enactLaw(
+          this.ctx,
+          me,
+          this.politics.nations[me],
+          this.economy.nations[me],
+          law,
+          date,
+        );
+        for (const event of events) this.record(date, event);
+        hitDemocracyRelations(
+          this.ctx,
+          this.diplomacy,
+          this.politics,
+          me,
+          once.democracyRelations,
+        );
+        this.syncSuspensions();
+        return;
+      }
+      case "repeal-law": {
+        const me = this.requirePlayer();
+        const events = repealLaw(
+          this.ctx,
+          me,
+          this.politics.nations[me],
+          this.ctx.law(cmd.law),
+          true,
+        );
+        for (const event of events) this.record(date, event);
+        return;
+      }
+      case "set-lever": {
+        const me = this.requirePlayer();
+        const cfg = this.deps.config.politics.elections;
+        const levers = this.politics.nations[me].levers;
+        if (cmd.propagandaPctGdp !== undefined) {
+          levers.propagandaPctGdp = Math.min(
+            cmd.propagandaPctGdp,
+            cfg.propagandaMaxPctGdp,
+          );
+        }
+        if (cmd.fraud !== undefined)
+          levers.fraud = Math.min(cmd.fraud, cfg.fraudMax);
+        if (cmd.clientelism !== undefined) levers.clientelism = cmd.clientelism;
+        return;
+      }
+      case "pin-objective": {
+        const me = this.requirePlayer();
+        pinObjective(
+          this.ctx,
+          this.politics,
+          cmd.objective,
+          this.objectiveWorld(me),
+        );
+        return;
+      }
+      case "unpin-objective":
+        this.requirePlayer();
+        unpinObjective(this.politics, cmd.objective);
+        return;
+      case "add-note": {
+        const me = this.requirePlayer();
+        this.politics.player.notes.push({ date, text: cmd.text });
+        this.record(date, { type: "note", nation: me, text: cmd.text });
         return;
       }
     }
@@ -581,6 +720,16 @@ export class VeritableSimImpl implements VeritableSim {
       naval: this.naval,
       fronts: this.frontViews,
       casusBelli,
+      electionProjection:
+        player === null
+          ? null
+          : projectShares(
+              this.ctx,
+              this.politics.nations[player],
+              this.sheets.get(player),
+            ),
+      objectives: this.politics.player.objectives,
+      notes: this.politics.player.notes,
     };
   }
 
@@ -687,9 +836,239 @@ export class VeritableSimImpl implements VeritableSim {
         this.politics.nations[id],
         this.military.nations[id]?.exhaustion ?? 0,
         this.lostTradeShare(id, true),
+        lawModifiers(this.ctx, this.politics.nations[id]).groups,
       );
       for (const event of events) this.record(clock.date, event);
     }
+  }
+
+  // --- the political engine (J4), once a month before the budget ------------
+
+  // Cost of the levers this month, taken from the budget (US$).
+  private leverCosts: Record<NationId, number> = {};
+
+  private politicsMonth(clock: ClockContext): void {
+    const cfg = this.deps.config.politics;
+    const player = this.playerNationId();
+    const date = clock.date;
+    this.leverCosts = {};
+    for (const id of this.ctx.nationIds) {
+      const politics = this.politics.nations[id];
+      const economy = this.economy.nations[id];
+      const sheet = this.sheets.get(id);
+      const regime = this.ctx.regime(politics.regime);
+      const modifiers = lawModifiers(this.ctx, politics);
+      const isAi = id !== player || this.politics.autopilot;
+
+      // Sliders move towards their targets.
+      stepSliders(this.ctx, economy);
+
+      // Political capital and legitimacy.
+      politics.capital = Math.min(
+        cfg.capital.max,
+        politics.capital +
+          cfg.capital.regenBase *
+            (0.5 + politics.leader.traits.charisma) *
+            (0.5 + politics.opinion),
+      );
+      const legitimacyBase = clamp01(
+        regime.legitimacyBase + modifiers.legitimacyBase,
+      );
+      politics.legitimacy = clamp01(
+        politics.legitimacy +
+          Math.sign(legitimacyBase - politics.legitimacy) *
+            Math.min(
+              cfg.legitimacy.recoveryPerMonth,
+              Math.abs(legitimacyBase - politics.legitimacy),
+            ),
+      );
+
+      // Laws: announced repeals fall due.
+      for (const event of stepLawsMonth(this.ctx, id, politics, date)) {
+        this.record(date, event);
+      }
+
+      // Levers of the player: propaganda and clientelism cost money every
+      // month; clientelism pleases its group and feeds corruption.
+      if (!isAi) {
+        let cost = (politics.levers.propagandaPctGdp * economy.gdp) / 12;
+        if (politics.levers.clientelism !== null && politics.groups !== null) {
+          const group = politics.levers.clientelism;
+          politics.groups[group] = clamp01(
+            politics.groups[group] + cfg.elections.clientelismSatisfaction,
+          );
+          politics.corruption = clamp01(
+            politics.corruption + cfg.elections.clientelismCorruption,
+          );
+          cost += (cfg.elections.clientelismCostPctGdp * economy.gdp) / 12;
+        }
+        this.leverCosts[id] = cost;
+      }
+
+      // Elections, when due and not suspended by a war at home.
+      if (politics.nextElection !== null && date >= politics.nextElection) {
+        const suspended =
+          (sheet?.politics.electionsSuspendedAtWarAtHome ?? false) &&
+          this.hasFrontAtHome(id);
+        if (suspended) {
+          if (!politics.electionsSuspended) {
+            politics.electionsSuspended = true;
+            this.record(date, {
+              type: "elections-suspended",
+              nation: id,
+              until: "war",
+            });
+          }
+        } else {
+          politics.electionsSuspended = false;
+          const outcome = holdElection(
+            this.ctx,
+            this.rng,
+            id,
+            politics,
+            sheet,
+            date,
+          );
+          for (const event of outcome.events) this.record(date, event);
+          hitDemocracyRelations(
+            this.ctx,
+            this.diplomacy,
+            this.politics,
+            id,
+            outcome.democracyRelations,
+          );
+          this.reinstateIfDemocratic(id);
+        }
+      }
+
+      // The leader ages; the regime names a successor.
+      for (const event of stepLeaderAgeing(
+        this.ctx,
+        this.rng,
+        id,
+        politics,
+        date,
+      )) {
+        this.record(date, event);
+      }
+
+      // Coups and revolutions.
+      const coup = stepCoups(
+        this.ctx,
+        this.rng,
+        id,
+        politics,
+        this.military.nations[id],
+        date,
+      );
+      for (const event of coup.events) this.record(date, event);
+      if (coup.suspendFromBlocs) {
+        hitDemocracyRelations(
+          this.ctx,
+          this.diplomacy,
+          this.politics,
+          id,
+          coup.democracyRelations,
+        );
+        for (const bloc of this.ctx.blocs) {
+          if (
+            bloc.suspendsOnCoup === true &&
+            this.ctx.isFullMember(bloc, id) &&
+            !politics.suspendedFrom.includes(bloc.id)
+          ) {
+            politics.suspendedFrom.push(bloc.id);
+            this.record(date, {
+              type: "bloc-suspended",
+              nation: id,
+              bloc: bloc.id,
+            });
+          }
+        }
+        this.syncSuspensions();
+      }
+      for (const event of stepRevolution(
+        this.ctx,
+        this.rng,
+        id,
+        politics,
+        economy,
+        sheet,
+        date,
+      )) {
+        this.record(date, event);
+      }
+      this.reinstateIfDemocratic(id);
+
+      // AI nations: random shocks in proportion to the fragility of the
+      // regime, so that they know unrest too.
+      if (politics.groups === null) {
+        const sd =
+          cfg.aiShock.sd *
+          (1 - politics.legitimacy) *
+          (1 + cfg.aiShock.coupScale * regime.coupBase);
+        politics.opinion = clamp01(
+          politics.opinion + sd * this.rng.nextGaussian(),
+        );
+      }
+    }
+
+    // The player's objectives.
+    if (player !== null) {
+      for (const event of stepObjectivesMonth(
+        this.ctx,
+        player,
+        this.politics,
+        this.objectiveWorld(player),
+      )) {
+        this.record(date, event);
+      }
+    }
+  }
+
+  // A front on the nation's own territory (any front it is part of).
+  private hasFrontAtHome(id: NationId): boolean {
+    return this.geometry.some((g) => g.a === id || g.b === id);
+  }
+
+  // A suspended member that is a democracy again gets back in.
+  private reinstateIfDemocratic(id: NationId): void {
+    const politics = this.politics.nations[id];
+    if (politics.suspendedFrom.length === 0) return;
+    if (!this.ctx.regime(politics.regime).democratic) return;
+    politics.suspendedFrom = [];
+    this.syncSuspensions();
+  }
+
+  // The context's view of the bloc suspensions follows the political state.
+  private syncSuspensions(): void {
+    this.ctx.suspensions.clear();
+    for (const [id, politics] of Object.entries(this.politics.nations)) {
+      for (const bloc of politics.suspendedFrom) {
+        this.ctx.suspensions.add(`${bloc}|${id}`);
+      }
+    }
+  }
+
+  private objectiveWorld(nation: NationId): ObjectiveWorld {
+    return {
+      date: this.calendar.date,
+      economy: this.economy.nations[nation],
+      politics: this.politics.nations[nation],
+      diplomacy: this.diplomacy,
+      scenario: this.scenario,
+      blocMembers: (bloc) => {
+        const entity = this.ctx.blocs.find((b) => b.id === bloc);
+        if (entity === undefined) return [];
+        return entity.members
+          .map((m) => m.nation)
+          .filter((n) => this.ctx.isFullMember(entity, n));
+      },
+      monthsSince: (date) => {
+        const [y, m] = date.split("-").map(Number);
+        const [cy, cm] = this.calendar.date.split("-").map(Number);
+        return (cy - y) * 12 + (cm - m);
+      },
+    };
   }
 
   private budgetMonth(clock: ClockContext): void {
@@ -710,14 +1089,19 @@ export class VeritableSimImpl implements VeritableSim {
     }
     for (const id of this.ctx.nationIds) {
       const economy = this.economy.nations[id];
+      const politics = this.politics.nations[id];
+      const corruption = clamp01(
+        politics.corruption + lawModifiers(this.ctx, politics).corruption,
+      );
       const events = stepBudget(
         this.ctx,
         id,
         economy,
-        this.politics.nations[id],
+        politics,
         trade,
         clock.date,
-        transfers[id] ?? 0,
+        (transfers[id] ?? 0) - (this.leverCosts[id] ?? 0),
+        this.deps.config.politics.corruptionLeakScale * corruption,
       );
       for (const event of events) this.record(clock.date, event);
       if (id !== player || this.politics.autopilot) {
@@ -747,6 +1131,7 @@ export class VeritableSimImpl implements VeritableSim {
         this.economy.nations[id],
         this.politics.nations[id],
         enemiesOf(this.diplomacy, id).length > 0,
+        1 + lawModifiers(this.ctx, this.politics.nations[id]).manpowerBonus,
       );
     }
     const before = this.diplomacy.wars.length;
@@ -755,6 +1140,7 @@ export class VeritableSimImpl implements VeritableSim {
       this.diplomacy,
       this.economy,
       this.military,
+      this.politics,
       this.rng,
       clock.date,
       this.aiNations(),
@@ -835,7 +1221,6 @@ export class VeritableSimImpl implements VeritableSim {
 
   // An event of a domain: returned by advance(), and written in the journal.
   private record(date: string, event: DomainEvent, terms?: string): void {
-    this.pending.push({ ...event, date } as SimEvent);
     let params: Record<string, string> = {};
     switch (event.type) {
       case "bloc-reprimand":
@@ -875,8 +1260,62 @@ export class VeritableSimImpl implements VeritableSim {
       case "landing-refused":
         params = { target: event.target };
         break;
+      case "election-held":
+        params = {
+          winner: event.winner,
+          share: (event.share * 100).toFixed(1),
+          alternation: String(event.alternation),
+        };
+        break;
+      case "government-formed":
+        params = { parties: event.parties.join(", "), leader: event.leader };
+        break;
+      case "elections-suspended":
+        params = { until: event.until };
+        break;
+      case "law-enacted":
+      case "law-repealed":
+        params = { law: event.law };
+        break;
+      case "law-refused":
+        params = { law: event.law, reason: event.reason };
+        break;
+      case "law-repeal-announced":
+        params = { law: event.law, at: event.at };
+        break;
+      case "coup-succeeded":
+      case "revolution":
+      case "leader-died":
+      case "leader-succeeded":
+        params = { leader: event.leader };
+        break;
+      case "fraud-detected":
+        params = { fraud: (event.fraud * 100).toFixed(0) };
+        break;
+      case "objective-completed":
+        params = { objective: event.objective };
+        break;
+      case "regime-changed":
+        params = { from: event.from, to: event.to };
+        break;
+      case "bloc-suspended":
+        params = { bloc: event.bloc };
+        break;
+      case "note":
+        params = { text: event.text };
+        break;
       default:
         break;
+    }
+    if (POLITICAL_EVENTS.has(event.type)) {
+      this.pending.push({
+        type: event.type,
+        date,
+        nation: event.nation,
+        params,
+      } as SimEvent);
+    } else if (event.type !== "note") {
+      this.pending.push({ ...event, date } as SimEvent);
     }
     this.journal.push({ date, kind: event.type, nation: event.nation, params });
   }

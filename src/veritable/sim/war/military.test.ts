@@ -151,9 +151,10 @@ describe("divisions and manpower", () => {
   it("defence spending above the first day trains the army", () => {
     const { sim, months } = campaign(30_000);
     sim.apply({ type: "set-spending", post: "defense", share: 0.05 }); // +3 points
-    months(2);
+    // The slider ramps over months (J4): wait for it to settle.
+    months(30);
     const m = sim.read().military.nations.AAA;
-    expect(m.training).toBeCloseTo(1.3, 6);
+    expect(m.training).toBeCloseTo(1.3, 1);
     expect(m.divisions[0].training).toBeGreaterThan(1);
   });
 });

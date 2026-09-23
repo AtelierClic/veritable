@@ -17,8 +17,9 @@ import { debtHealthOf } from "../economy/init";
 // a proxy of growth, shortages and prices.
 //
 //   stability = wO x opinion + wS x (1 - shortage) + wD x debt health
-//             + wL x legitimacy            (legitimacy is a constant at J2)
-// Unrest when stability < threshold.
+//             + wL x legitimacy            (a variable since the J4)
+// Unrest when stability < threshold. The laws in force shift the target of
+// each group (J4).
 
 export type PoliticsEvent = {
   type: "unrest-started" | "unrest-ended";
@@ -79,6 +80,8 @@ export function stepPolitics(
   // Share of the nation's trade partners that sanction it, 0..1: a
   // sanctioned aggressor does not recover while the sanctions last.
   sanctionedShare = 0,
+  // Offsets of the satisfaction targets from the laws in force (J4).
+  lawOffsets: Record<string, number> = {},
 ): PoliticsEvent[] {
   const cfg = ctx.config.politics;
   // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts); a war and
@@ -93,7 +96,7 @@ export function stepPolitics(
     let opinion = 0;
     let totalWeight = 0;
     for (const group of INTEREST_GROUPS) {
-      let target = 0.5 - malus;
+      let target = 0.5 - malus + (lawOffsets[group] ?? 0);
       for (const [key, weight] of Object.entries(cfg.drivers[group])) {
         target += weight * driverValue(ctx, key, economy);
       }
@@ -109,12 +112,15 @@ export function stepPolitics(
     politics.opinion = totalWeight > 0 ? opinion / totalWeight : 0.5;
   } else {
     const ai = cfg.aiOpinion;
+    let offsets = 0;
+    for (const v of Object.values(lawOffsets)) offsets += v;
     const target = clamp(
       0.5 +
         ai.growth * (economy.growthAnnual - economy.growthBase) -
         ai.shortage * economy.shortage -
         ai.prices * (economy.priceIndex - 1) -
-        malus,
+        malus +
+        offsets / INTEREST_GROUPS.length,
       0,
       1,
     );
@@ -136,7 +142,7 @@ export function stepPolitics(
     s.opinion * politics.opinion +
       s.shortage * (1 - shortage) +
       s.debt * debtHealthOf(ctx, economy.debt / economy.gdp) +
-      s.legitimacy * s.legitimacyValue,
+      s.legitimacy * politics.legitimacy,
     0,
     1,
   );

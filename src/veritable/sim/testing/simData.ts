@@ -1,6 +1,23 @@
+import rawDefense from "../../../../data/veritable/laws/defense.json";
+import rawEconomy from "../../../../data/veritable/laws/economy.json";
+import rawEnvironment from "../../../../data/veritable/laws/environment.json";
+import rawInstitutions from "../../../../data/veritable/laws/institutions.json";
+import rawSecurity from "../../../../data/veritable/laws/security.json";
+import rawSocial from "../../../../data/veritable/laws/social.json";
+import rawObjectives from "../../../../data/veritable/politics/objectives.json";
+import rawRegimes from "../../../../data/veritable/politics/regimes.json";
 import { Bloc } from "../../data/schemas/bloc";
 import { NationId } from "../../data/schemas/common";
 import { Good, GOOD_IDS, GoodId } from "../../data/schemas/goods";
+import { Law, LawsSchema } from "../../data/schemas/laws";
+import { LeadersData } from "../../data/schemas/leaders";
+import {
+  NamePool,
+  Objective,
+  ObjectivesSchema,
+  RegimeData,
+  RegimesSchema,
+} from "../../data/schemas/politics";
 import { RowData } from "../../data/schemas/row";
 import { SeaZone } from "../../data/schemas/seas";
 import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
@@ -125,6 +142,140 @@ export function testRow(
 
 // Simple world: every nation touches neutral land (so it can trade
 // electricity with the rest of the world), no land neighbours, no blocs.
+// The real regimes, laws and objectives: they are data, not balancing of a
+// test.
+export const TEST_REGIMES: RegimeData[] = RegimesSchema.parse(rawRegimes);
+export const TEST_LAWS: Law[] = LawsSchema.parse([
+  ...rawDefense,
+  ...rawEconomy,
+  ...rawEnvironment,
+  ...rawInstitutions,
+  ...rawSecurity,
+  ...rawSocial,
+]);
+export const TEST_OBJECTIVES: Objective[] =
+  ObjectivesSchema.parse(rawObjectives);
+
+// Two parties per nation (a left one in power, a right one in opposition),
+// a head of government leading the first, a head of state, and a military
+// chief. Ideologies and traits are plain numbers a test can reason about.
+export function testLeaders(
+  id: NationId,
+  options: {
+    incumbentSupport?: number;
+    incumbentIdeology?: {
+      economic: number;
+      authority: number;
+      sovereignty: number;
+    };
+    oppositionIdeology?: {
+      economic: number;
+      authority: number;
+      sovereignty: number;
+    };
+    charisma?: number;
+  } = {},
+): LeadersData {
+  const lower = id.toLowerCase();
+  const left = options.incumbentIdeology ?? {
+    economic: -0.4,
+    authority: -0.2,
+    sovereignty: -0.2,
+  };
+  const right = options.oppositionIdeology ?? {
+    economic: 0.5,
+    authority: 0.3,
+    sovereignty: 0.3,
+  };
+  const traits = (ideology: typeof left, charisma: number) => ({
+    ...ideology,
+    aggressiveness: 0.3,
+    corruption: 0.2,
+    charisma,
+    competence: 0.5,
+  });
+  const support = options.incumbentSupport ?? 0.55;
+  return {
+    nation: id,
+    actors: [
+      {
+        id: `${lower}-pm`,
+        role: "head-of-government",
+        names: {
+          parody: `leader.${lower}.pm.parody`,
+          fictional: `leader.${lower}.pm.fictional`,
+        },
+        born: "1970-06-15",
+        party: `${lower}-left`,
+        traits: traits(left, options.charisma ?? 0.5),
+        wikidata: null,
+        source: "test",
+        asOf: "2026-01-01",
+      },
+      {
+        id: `${lower}-president`,
+        role: "head-of-state",
+        names: {
+          parody: `leader.${lower}.president.parody`,
+          fictional: `leader.${lower}.president.fictional`,
+        },
+        born: "1960-03-01",
+        party: null,
+        traits: traits(left, 0.5),
+        wikidata: null,
+        source: "test",
+        asOf: "2026-01-01",
+      },
+      {
+        id: `${lower}-opposition`,
+        role: "party-leader",
+        names: {
+          parody: `leader.${lower}.opposition.parody`,
+          fictional: `leader.${lower}.opposition.fictional`,
+        },
+        born: "1975-09-20",
+        party: `${lower}-right`,
+        traits: traits(right, 0.5),
+        wikidata: null,
+        source: "test",
+        asOf: "2026-01-01",
+      },
+    ],
+    parties: [
+      {
+        id: `${lower}-left`,
+        name: `party.${lower}.left`,
+        wikidata: null,
+        ideologies: [],
+        ideology: left,
+        ideologySource: "test",
+        support,
+        supportSource: { source: "test", asOf: "2026-01-01" },
+        leader: `${lower}-pm`,
+      },
+      {
+        id: `${lower}-right`,
+        name: `party.${lower}.right`,
+        wikidata: null,
+        ideologies: [],
+        ideology: right,
+        ideologySource: "test",
+        support: 1 - support,
+        supportSource: { source: "test", asOf: "2026-01-01" },
+        leader: `${lower}-opposition`,
+      },
+    ],
+  };
+}
+
+export function testNames(id: NationId): NamePool {
+  return {
+    nation: id,
+    first: ["Alex", "Bo", "Cam", "Dana", "Eli", "Fay"],
+    last: ["Adler", "Brook", "Cole", "Dorn", "Elm", "Frost"],
+  };
+}
+
 export function testSimData(
   nations: NationId[],
   options: {
@@ -134,6 +285,8 @@ export function testSimData(
     landNeighbours?: [NationId, NationId][];
     bordersNeutralLand?: NationId[];
     seas?: SeaZone[];
+    laws?: Law[];
+    leaders?: Record<NationId, LeadersData>;
   } = {},
 ): SimData {
   return {
@@ -147,5 +300,12 @@ export function testSimData(
       landNeighbours: options.landNeighbours ?? [],
       bordersNeutralLand: options.bordersNeutralLand ?? nations,
     },
+    regimes: TEST_REGIMES,
+    laws: options.laws ?? TEST_LAWS,
+    objectives: TEST_OBJECTIVES,
+    leaders: Object.fromEntries(
+      nations.map((id) => [id, options.leaders?.[id] ?? testLeaders(id)]),
+    ),
+    names: Object.fromEntries(nations.map((id) => [id, testNames(id)])),
   };
 }

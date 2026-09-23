@@ -223,12 +223,15 @@ export function stepMilitaryMonth(
   economy: NationEconomy,
   politics: NationPolitics,
   atWar: boolean,
+  // Laws in force (J4): compulsory service widens the pool.
+  manpowerMultiplier = 1,
 ): void {
   const cfg = ctx.config.war;
   const population = data.population.value;
 
   // Manpower: the pool refills, then reinforces the divisions.
-  const ceiling = manpowerCeiling(ctx, population, nation.conscription);
+  const ceiling =
+    manpowerCeiling(ctx, population, nation.conscription) * manpowerMultiplier;
   nation.manpower = clamp(
     nation.manpower + cfg.manpowerRenewalPerMonth * ceiling,
     0,

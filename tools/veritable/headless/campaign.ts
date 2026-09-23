@@ -182,6 +182,24 @@ export interface MonthRow {
   atWar: Record<string, number>; // 1 when at war
   exportShare: Record<string, number>; // exports really sold / GDP
   circumvention: Record<string, number>;
+  // The political engine (J4).
+  regime: Record<string, string>;
+  legitimacy: Record<string, number>;
+  capital: Record<string, number>;
+}
+
+// Political counters of a nation over the campaign (J4).
+export interface PoliticsSummary {
+  elections: number;
+  alternations: number;
+  coups: number; // successful
+  coupAttempts: number;
+  revolutions: number;
+  fraudDetected: number;
+  unrestStarts: number;
+  juntaMonths: number;
+  regimes: string[]; // regimes seen, in order
+  finalRegime: string;
 }
 
 export interface CampaignResult {
@@ -198,6 +216,7 @@ export interface CampaignResult {
   defaults: string[];
   unrest: string[];
   wars: string[]; // declarations and joins, "nation>target@date"
+  politics: Record<string, PoliticsSummary>;
   final: {
     worldGdp: number;
     prices: Record<string, number>;
@@ -273,6 +292,11 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       exportShare: pick(
         (id) => view.economies[id].exportsValue / view.economies[id].gdp,
       ),
+      regime: Object.fromEntries(
+        pack.scenario.nations.map((id) => [id, view.politics[id].regime]),
+      ),
+      legitimacy: pick((id) => view.politics[id].legitimacy),
+      capital: pick((id) => view.politics[id].capital),
       // Export-weighted circumvention (engine.ts exportCircumvention).
       circumvention: pick((id) => {
         const e = view.economies[id];
@@ -297,9 +321,42 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   };
   sample(pack.scenario.startDate);
 
+  const politics: Record<string, PoliticsSummary> = Object.fromEntries(
+    pack.scenario.nations.map((id) => [
+      id,
+      {
+        elections: 0,
+        alternations: 0,
+        coups: 0,
+        coupAttempts: 0,
+        revolutions: 0,
+        fraudDetected: 0,
+        unrestStarts: 0,
+        juntaMonths: 0,
+        regimes: [driver.read().politics[id].regime],
+        finalRegime: driver.read().politics[id].regime,
+      },
+    ]),
+  );
   const onEvent = (event: SimEvent) => {
     if (event.type === "day-started") return;
     counts[event.type] = (counts[event.type] ?? 0) + 1;
+    if ("nation" in event && event.nation in politics) {
+      const p = politics[event.nation];
+      if (event.type === "election-held") {
+        p.elections += 1;
+        if ("params" in event && event.params.alternation === "true") {
+          p.alternations += 1;
+        }
+      } else if (event.type === "coup-succeeded") p.coups += 1;
+      else if (event.type === "coup-attempted") p.coupAttempts += 1;
+      else if (event.type === "revolution") p.revolutions += 1;
+      else if (event.type === "fraud-detected") p.fraudDetected += 1;
+      else if (event.type === "unrest-started") p.unrestStarts += 1;
+      else if (event.type === "regime-changed" && "params" in event) {
+        p.regimes.push(event.params.to);
+      }
+    }
     if (event.type === "sovereign-default") {
       defaults.push(`${event.nation}@${event.date}`);
     }
@@ -312,7 +369,13 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     if (event.type === "war-joined") {
       wars.push(`${event.nation}>${event.against}@${event.date}`);
     }
-    if (event.type === "month-started") sample(event.date);
+    if (event.type === "month-started") {
+      sample(event.date);
+      const view = driver.read();
+      for (const id of pack.scenario.nations) {
+        if (view.politics[id].regime === "junta") politics[id].juntaMonths++;
+      }
+    }
   };
 
   while (driver.read().date < endDate) {
@@ -353,6 +416,9 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
 
   const last = series[series.length - 1];
   const stabilities = Object.values(last.stability);
+  for (const id of pack.scenario.nations) {
+    politics[id].finalRegime = driver.read().politics[id].regime;
+  }
   return {
     scenario: pack.scenario.id,
     seed,
@@ -372,6 +438,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     defaults,
     unrest,
     wars,
+    politics,
     final: {
       worldGdp: Object.values(last.gdp).reduce((a, b) => a + b, 0),
       prices: last.prices,
@@ -406,6 +473,9 @@ export function seriesCsv(result: CampaignResult): string {
     ...nations.map((n) => `at_war_${n}`),
     ...nations.map((n) => `export_share_${n}`),
     ...nations.map((n) => `circumvention_${n}`),
+    ...nations.map((n) => `regime_${n}`),
+    ...nations.map((n) => `legitimacy_${n}`),
+    ...nations.map((n) => `capital_${n}`),
   ];
   const lines = [header.join(",")];
   for (const row of result.series) {
@@ -427,6 +497,9 @@ export function seriesCsv(result: CampaignResult): string {
         ...nations.map((n) => String(row.atWar[n])),
         ...nations.map((n) => row.exportShare[n].toFixed(4)),
         ...nations.map((n) => row.circumvention[n].toFixed(3)),
+        ...nations.map((n) => row.regime[n]),
+        ...nations.map((n) => row.legitimacy[n].toFixed(3)),
+        ...nations.map((n) => row.capital[n].toFixed(1)),
       ].join(","),
     );
   }

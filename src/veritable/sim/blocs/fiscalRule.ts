@@ -39,7 +39,7 @@ export function stepFiscalRules(
     const member = bloc.members.some(
       (m) => m.nation === id && m.status === "full",
     );
-    if (!member) continue;
+    if (!member || politics.suspendedFrom.includes(bloc.id)) continue;
     malus = Math.max(malus, rule.opinionMalus);
     fadeMonths = Math.max(fadeMonths, rule.malusFadeMonths);
     if (deficit > rule.maxDeficitToGdp) breach = true;

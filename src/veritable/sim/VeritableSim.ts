@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { NationId, NationIdSchema } from "../data/schemas/common";
+import {
+  INTEREST_GROUPS,
+  NationId,
+  NationIdSchema,
+} from "../data/schemas/common";
 import { GoodIdSchema } from "../data/schemas/goods";
 import { SPENDING_POSTS, TAX_IDS } from "../data/schemas/nation";
 import {
@@ -13,6 +17,7 @@ import {
   NationStatus,
   NavalState,
   PeaceTermsSchema,
+  PinnedObjective,
   SaveFile,
   SPEEDS,
   WorldState,
@@ -110,6 +115,23 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
   // A landing on the coast of an enemy: refused unless the zone of the
   // landing tile is controlled.
   z.object({ type: z.literal("landing"), target: NationIdSchema }),
+  // The political engine (J4). Laws of data/veritable/laws/; the electoral
+  // levers of the player; objectives of data/veritable/politics/
+  // objectives.json; free-text notes.
+  z.object({ type: z.literal("enact-law"), law: z.string().min(1) }),
+  z.object({ type: z.literal("repeal-law"), law: z.string().min(1) }),
+  z.object({
+    type: z.literal("set-lever"),
+    propagandaPctGdp: z.number().min(0).max(1).optional(),
+    fraud: z.number().min(0).max(1).optional(),
+    clientelism: z.enum(INTEREST_GROUPS).nullable().optional(),
+  }),
+  z.object({ type: z.literal("pin-objective"), objective: z.string().min(1) }),
+  z.object({
+    type: z.literal("unpin-objective"),
+    objective: z.string().min(1),
+  }),
+  z.object({ type: z.literal("add-note"), text: z.string().min(1).max(2000) }),
 ]);
 export type PlayerCommand = z.infer<typeof PlayerCommandSchema>;
 
@@ -176,6 +198,29 @@ export type SimEvent =
       date: string;
       nation: NationId;
       target: NationId;
+    }
+  // The political engine (J4); the parameters are those of the journal.
+  | {
+      type:
+        | "election-held"
+        | "government-formed"
+        | "elections-suspended"
+        | "law-enacted"
+        | "law-refused"
+        | "law-repealed"
+        | "law-repeal-announced"
+        | "coup-attempted"
+        | "coup-succeeded"
+        | "revolution"
+        | "leader-died"
+        | "leader-succeeded"
+        | "fraud-detected"
+        | "objective-completed"
+        | "regime-changed"
+        | "bloc-suspended";
+      date: string;
+      nation: NationId;
+      params: Record<string, string>;
     };
 
 // A front between two belligerents, as the simulation and the UI see it:
@@ -216,6 +261,11 @@ export interface ReadonlyWorldView {
   readonly fronts: readonly FrontView[];
   // Casus belli the player could invoke against each other nation.
   readonly casusBelli: Readonly<Record<NationId, readonly string[]>>;
+  // The political engine (J4): projected shares of the player's next
+  // election (levers applied, no draw), the pinned objectives and notes.
+  readonly electionProjection: Readonly<Record<string, number>> | null;
+  readonly objectives: readonly Readonly<PinnedObjective>[];
+  readonly notes: readonly Readonly<{ date: string; text: string }>[];
 }
 
 export interface TileGrid {

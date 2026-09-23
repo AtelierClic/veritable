@@ -4,8 +4,11 @@ import { RemoteVeritableSim } from "../adapters/RemoteVeritableSim";
 import { dataSource } from "../data/catalog";
 import { vt } from "../data/i18n";
 import { INTEREST_GROUPS } from "../data/schemas/common";
+import { Law } from "../data/schemas/laws";
 import { SPENDING_POSTS, TAX_IDS } from "../data/schemas/nation";
+import { Ideology } from "../data/schemas/politics";
 import {
+  ActorState,
   Division,
   NationEconomy,
   NationPolitics,
@@ -16,13 +19,26 @@ import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import { relation } from "../sim/diplomacy/diplomacy";
 import { FrontView, ReadonlyWorldView } from "../sim/VeritableSim";
 
-export type ScreenId = "economy" | "budget" | "opinion" | "war" | "diplomacy";
+export type ScreenId =
+  | "economy"
+  | "budget"
+  | "opinion"
+  | "war"
+  | "diplomacy"
+  | "politics"
+  | "election"
+  | "leaders"
+  | "objectives";
 export const SCREENS: ScreenId[] = [
   "economy",
   "budget",
   "opinion",
   "war",
   "diplomacy",
+  "politics",
+  "election",
+  "leaders",
+  "objectives",
 ];
 
 const REFRESH_MS = 1000;
@@ -57,6 +73,9 @@ export class VeritableScreens extends LitElement {
   private readonly config = dataSource.config();
   private readonly templates = dataSource.divisions();
   private readonly casusBelli = dataSource.casusBelli();
+  private readonly laws = dataSource.laws();
+  private readonly regimes = dataSource.regimes();
+  private readonly objectives = dataSource.objectives();
 
   createRenderRoot() {
     return this;
@@ -910,6 +929,692 @@ export class VeritableScreens extends LitElement {
     `;
   }
 
+  // --- politics (J4) --------------------------------------------------------------
+
+  private actorName(
+    name: { kind: "key"; key: string } | { kind: "literal"; text: string },
+  ): string {
+    return name.kind === "key" ? vt(name.key) : name.text;
+  }
+
+  private ideologyText(i: Ideology): string {
+    const f = (v: number) => (v >= 0 ? `+${v.toFixed(1)}` : v.toFixed(1));
+    return `${vt("trait.economic")} ${f(i.economic)} · ${vt("trait.authority")} ${f(i.authority)} · ${vt("trait.sovereignty")} ${f(i.sovereignty)}`;
+  }
+
+  private ageOf(born: string, date: string): number {
+    const [by, bm, bd] = born.split("-").map(Number);
+    const [y, m, d] = date.split("-").map(Number);
+    let age = y - by;
+    if (m < bm || (m === bm && d < bd)) age -= 1;
+    return age;
+  }
+
+  private lawRefusal(p: NationPolitics, law: Law): string | null {
+    const regime = this.regimes.find((r) => r.id === p.regime);
+    if (p.laws.some((l) => l.id === law.id)) return "in-force";
+    if (!law.regimes.includes(p.regime)) return "regime";
+    if (regime !== undefined && !regime.lawDomains.includes(law.domain)) {
+      return "domain";
+    }
+    const g = p.government.ideology;
+    const inside = (["economic", "authority", "sovereignty"] as const).every(
+      (axis) =>
+        g[axis] >= law.window[axis][0] && g[axis] <= law.window[axis][1],
+    );
+    if (!inside) return "window";
+    if (
+      law.requiresLegitimacy !== undefined &&
+      p.legitimacy < law.requiresLegitimacy
+    ) {
+      return "legitimacy";
+    }
+    if (p.capital < law.capitalCost) return "capital";
+    return null;
+  }
+
+  private renderPolitics(
+    view: ReadonlyWorldView,
+    p: NationPolitics,
+    e: NationEconomy,
+  ) {
+    const projection = view.electionProjection;
+    const partyLabel = (id: string) => {
+      const party = p.parties.find((x) => x.id === id);
+      return party === undefined ? id : this.actorName(party.name);
+    };
+    return html`
+      <div class="mb-1 flex flex-wrap gap-x-4">
+        <span
+          >${vt("screen.politics.regime")} :
+          <b>${vt(`regime.${p.regime}`)}</b></span
+        >
+        <span
+          >${vt("screen.politics.leader")} :
+          <b>${this.actorName(p.leader.name)}</b></span
+        >
+        <span
+          >${vt("screen.politics.government")} :
+          <b>${p.government.parties.map(partyLabel).join(" + ")}</b>
+          <span class="text-gray-400"
+            >(${this.ideologyText(p.government.ideology)})</span
+          ></span
+        >
+      </div>
+      ${this.bar(vt("screen.politics.legitimacy"), p.legitimacy, true)}
+      ${this.bar(
+        vt("screen.politics.capital"),
+        p.capital / this.config.politics.capital.max,
+        true,
+      )}
+      <div class="flex flex-wrap gap-x-4">
+        <span
+          >${vt("screen.politics.capital")} : <b>${p.capital.toFixed(0)}</b> /
+          ${this.config.politics.capital.max}</span
+        >
+        <span>${vt("trait.corruption")} : <b>${pct(p.corruption, 0)}</b></span>
+        <span
+          >${vt("screen.politics.press-freedom")} :
+          <b>${pct(p.pressFreedom, 0)}</b></span
+        >
+        <span
+          >${vt("screen.politics.media-control")} :
+          <b>${pct(p.mediaControl, 0)}</b></span
+        >
+        <span
+          >${vt("screen.politics.coup-risk")} :
+          <b>${pct(p.coupRisk, 2)}</b></span
+        >
+        ${p.suspendedFrom.length > 0
+          ? html`<span class="text-red-300"
+              >${vt("screen.politics.suspended", {
+                blocs: p.suspendedFrom.join(", "),
+              })}</span
+            >`
+          : nothing}
+      </div>
+      <div class="mt-1 font-bold">${vt("screen.politics.next-election")}</div>
+      <div>
+        ${p.nextElection === null
+          ? vt("screen.politics.no-election")
+          : html`${p.nextElection}${p.electionsSuspended
+              ? html` <span class="text-red-300"
+                  >${vt("screen.politics.suspended-war")}</span
+                >`
+              : nothing}`}
+        ${projection === null
+          ? nothing
+          : html` — ${vt("screen.politics.projection")} :
+            ${Object.entries(projection)
+              .sort((a, b) => b[1] - a[1])
+              .map(([id, share]) => `${partyLabel(id)} ${pct(share, 0)}`)
+              .join(", ")}`}
+      </div>
+      <div class="mt-1 font-bold">${vt("screen.politics.groups")}</div>
+      ${p.groups === null
+        ? nothing
+        : INTEREST_GROUPS.map(
+            (g) => html`
+              <div class="flex items-center gap-2">
+                <span class="w-32">${vt(`group.${g}`)}</span>
+                ${this.bar("", p.groups![g])}
+                <span class="w-72 text-gray-400"
+                  >${this.ideologyText(p.groupIdeologies[g])}</span
+                >
+              </div>
+            `,
+          )}
+      <div class="mt-1 font-bold">${vt("screen.politics.sliders")}</div>
+      <div class="flex flex-wrap gap-x-3 text-gray-300">
+        ${TAX_IDS.map(
+          (t) =>
+            html`<span
+              >${vt(`tax.${t}`)} ${pct(e.taxes[t])} →
+              ${pct(e.taxTargets[t])}</span
+            >`,
+        )}
+        ${SPENDING_POSTS.map(
+          (s) =>
+            html`<span
+              >${vt(`spending.${s}`)} ${pct(e.spending[s])} →
+              ${pct(e.spendingTargets[s])}</span
+            >`,
+        )}
+      </div>
+      <div class="mt-1 font-bold">${vt("screen.politics.laws")}</div>
+      <table class="w-full">
+        <thead>
+          <tr class="text-gray-300">
+            <th class="text-left">${vt("screen.politics.law")}</th>
+            <th class="text-left">${vt("screen.politics.domain")}</th>
+            <th class="text-right">${vt("screen.politics.cost")}</th>
+            <th class="text-left">${vt("screen.politics.window")}</th>
+            <th class="text-left">${vt("screen.politics.status")}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${this.laws.map((law) => {
+            const inForce = p.laws.find((l) => l.id === law.id);
+            const repeal = p.repealing.find((r) => r.id === law.id);
+            const refusal = this.lawRefusal(p, law);
+            const w = law.window;
+            const windowText = (
+              ["economic", "authority", "sovereignty"] as const
+            )
+              .filter((axis) => w[axis][0] > -1 || w[axis][1] < 1)
+              .map(
+                (axis) =>
+                  `${vt(`trait.${axis}`)} [${w[axis][0]}, ${w[axis][1]}]`,
+              )
+              .join(" · ");
+            return html`
+              <tr
+                class=${inForce !== undefined
+                  ? "text-green-300"
+                  : refusal === "window" ||
+                      refusal === "regime" ||
+                      refusal === "domain"
+                    ? "text-gray-500"
+                    : ""}
+              >
+                <td title=${vt(law.description)}>${vt(law.name)}</td>
+                <td>${vt(`law.domain.${law.domain}`)}</td>
+                <td class="text-right">
+                  ${law.capitalCost}${law.reversible === null
+                    ? " ∞"
+                    : ` / ${law.reversible.cost}`}
+                </td>
+                <td class="text-gray-400">
+                  ${windowText === "" ? "—" : windowText}
+                </td>
+                <td>
+                  ${inForce !== undefined
+                    ? html`${vt("screen.politics.in-force", {
+                        since: inForce.since,
+                      })}${repeal !== undefined
+                        ? html` <span class="text-red-300"
+                            >${vt("screen.politics.repeal-at", {
+                              at: repeal.at,
+                            })}</span
+                          >`
+                        : nothing}`
+                    : refusal === null
+                      ? vt("screen.politics.available")
+                      : vt(`law.reason.${refusal}`)}
+                </td>
+                <td>
+                  ${inForce !== undefined
+                    ? html`<button
+                        class="rounded bg-gray-700 px-2"
+                        ?disabled=${law.reversible === null}
+                        @click=${() =>
+                          this.command({ type: "repeal-law", law: law.id })}
+                      >
+                        ${vt("screen.politics.repeal")}
+                      </button>`
+                    : html`<button
+                        class="rounded bg-blue-700 px-2"
+                        ?disabled=${refusal !== null}
+                        @click=${() =>
+                          this.command({ type: "enact-law", law: law.id })}
+                      >
+                        ${vt("screen.politics.enact")}
+                      </button>`}
+                </td>
+              </tr>
+            `;
+          })}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // --- election (J4) ------------------------------------------------------------------
+
+  private renderElection(
+    view: ReadonlyWorldView,
+    p: NationPolitics,
+    e: NationEconomy,
+  ) {
+    const cfg = this.config.politics.elections;
+    const partyLabel = (id: string) => {
+      const party = p.parties.find((x) => x.id === id);
+      return party === undefined ? id : this.actorName(party.name);
+    };
+    const projection = view.electionProjection ?? {};
+    const incumbents = new Set(p.government.parties);
+    const last = p.lastElection;
+    return html`
+      <div class="mb-1">
+        ${vt("screen.election.next", {
+          date: p.nextElection ?? vt("screen.politics.no-election"),
+        })}
+        ${p.electionsSuspended
+          ? html`<span class="text-red-300">
+              ${vt("screen.politics.suspended-war")}</span
+            >`
+          : nothing}
+      </div>
+      <div class="mt-1 font-bold">${vt("screen.election.levers")}</div>
+      <div class="flex items-center gap-2">
+        <span class="w-56">${vt("screen.election.propaganda")}</span>
+        <input
+          type="range"
+          class="flex-1"
+          min="0"
+          max=${cfg.propagandaMaxPctGdp}
+          step="0.001"
+          .value=${String(p.levers.propagandaPctGdp)}
+          @change=${(ev: Event) =>
+            this.command({
+              type: "set-lever",
+              propagandaPctGdp: Number((ev.target as HTMLInputElement).value),
+            })}
+        />
+        <span class="w-40 text-right tabular-nums"
+          >${pct(p.levers.propagandaPctGdp, 2)}
+          (${money((p.levers.propagandaPctGdp * e.gdp) / 12)}/mois)</span
+        >
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-56">${vt("screen.election.fraud")}</span>
+        <input
+          type="range"
+          class="flex-1"
+          min="0"
+          max=${cfg.fraudMax}
+          step="0.01"
+          .value=${String(p.levers.fraud)}
+          @change=${(ev: Event) =>
+            this.command({
+              type: "set-lever",
+              fraud: Number((ev.target as HTMLInputElement).value),
+            })}
+        />
+        <span class="w-40 text-right tabular-nums"
+          >${pct(p.levers.fraud, 0)} —
+          ${vt("screen.election.detection", {
+            value: pct(
+              Math.min(
+                1,
+                cfg.fraudDetectionScale *
+                  p.levers.fraud *
+                  (1 - p.mediaControl) *
+                  p.pressFreedom,
+              ),
+              0,
+            ),
+          })}</span
+        >
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-56">${vt("screen.election.clientelism")}</span>
+        <select
+          class="bg-gray-800"
+          @change=${(ev: Event) => {
+            const value = (ev.target as HTMLSelectElement).value;
+            void this.command({
+              type: "set-lever",
+              clientelism:
+                value === ""
+                  ? null
+                  : (value as (typeof INTEREST_GROUPS)[number]),
+            });
+          }}
+        >
+          <option value="" ?selected=${p.levers.clientelism === null}>
+            ${vt("screen.election.none")}
+          </option>
+          ${INTEREST_GROUPS.map(
+            (g) =>
+              html`<option value=${g} ?selected=${p.levers.clientelism === g}>
+                ${vt(`group.${g}`)}
+              </option>`,
+          )}
+        </select>
+        <span class="text-gray-400"
+          >${vt("screen.election.clientelism-note")}</span
+        >
+      </div>
+      <div class="text-gray-400">
+        ${vt("screen.election.media", { value: pct(p.mediaControl, 0) })}
+      </div>
+      <div class="mt-1 font-bold">${vt("screen.politics.projection")}</div>
+      <table class="w-full">
+        <thead>
+          <tr class="text-gray-300">
+            <th class="text-left">${vt("screen.election.party")}</th>
+            <th class="text-left">${vt("screen.election.leader")}</th>
+            <th class="text-right">${vt("screen.election.projected")}</th>
+            <th class="text-right">${vt("screen.election.last")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${[...p.parties]
+            .sort((a, b) => (projection[b.id] ?? 0) - (projection[a.id] ?? 0))
+            .map(
+              (party) => html`
+                <tr class=${incumbents.has(party.id) ? "text-yellow-200" : ""}>
+                  <td title=${this.ideologyText(party.ideology)}>
+                    ${this.actorName(party.name)}${incumbents.has(party.id)
+                      ? " ★"
+                      : ""}
+                  </td>
+                  <td>${this.actorName(party.leader.name)}</td>
+                  <td class="text-right">${pct(projection[party.id] ?? 0)}</td>
+                  <td class="text-right">
+                    ${last === null
+                      ? pct(party.support)
+                      : pct(last.results[party.id] ?? 0)}
+                  </td>
+                </tr>
+              `,
+            )}
+        </tbody>
+      </table>
+      ${last === null
+        ? nothing
+        : html`<div class="mt-1 text-gray-300">
+            ${vt("screen.election.last-result", {
+              date: last.date,
+              winner: partyLabel(
+                Object.entries(last.results).sort(
+                  (a, b) => b[1] - a[1],
+                )[0]?.[0] ?? "",
+              ),
+              alternation: vt(`alternation.${last.alternation}`),
+            })}
+            ${last.fraudDetected
+              ? html`<span class="text-red-300">
+                  ${vt("screen.election.fraud-detected")}</span
+                >`
+              : nothing}
+          </div>`}
+      <div class="mt-1 text-gray-400">${vt("screen.election.note")}</div>
+    `;
+  }
+
+  // --- leaders (J4) -------------------------------------------------------------------
+
+  private renderActor(
+    view: ReadonlyWorldView,
+    a: ActorState,
+    partyLabel: (id: string | null) => string,
+  ) {
+    const traits = [
+      "aggressiveness",
+      "corruption",
+      "charisma",
+      "competence",
+    ] as const;
+    return html`
+      <div class="mb-1 rounded border border-gray-700 p-1">
+        <div>
+          <b>${this.actorName(a.name)}</b> — ${vt(`role.${a.role}`)},
+          ${this.ageOf(a.born, view.date)}
+          ${vt("screen.leaders.years")}${a.party === null
+            ? ""
+            : `, ${partyLabel(a.party)}`}
+        </div>
+        <div class="text-gray-400">${this.ideologyText(a.traits)}</div>
+        <div class="flex flex-wrap gap-x-3">
+          ${traits.map(
+            (t) =>
+              html`<span
+                >${vt(`trait.${t}`)} <b>${pct(a.traits[t], 0)}</b></span
+              >`,
+          )}
+        </div>
+      </div>
+    `;
+  }
+
+  private renderLeaders(view: ReadonlyWorldView, p: NationPolitics) {
+    const partyLabel = (id: string | null) => {
+      const party = p.parties.find((x) => x.id === id);
+      return party === undefined ? (id ?? "") : this.actorName(party.name);
+    };
+    const incumbents = new Set(p.government.parties);
+    return html`
+      <div class="font-bold">${vt("screen.leaders.leader")}</div>
+      ${this.renderActor(view, p.leader, partyLabel)}
+      <div class="mt-1 font-bold">${vt("screen.leaders.parties")}</div>
+      ${[...p.parties]
+        .sort((a, b) => b.support - a.support)
+        .map(
+          (party) => html`
+            <div
+              class="mb-1 rounded border border-gray-700 p-1 ${incumbents.has(
+                party.id,
+              )
+                ? "border-yellow-600"
+                : ""}"
+            >
+              <div>
+                <b>${this.actorName(party.name)}</b> ${pct(
+                  party.support,
+                )}${incumbents.has(party.id)
+                  ? html` <span class="text-yellow-200"
+                      >${vt("screen.leaders.in-government")}</span
+                    >`
+                  : html` <span class="text-gray-400"
+                      >${vt("screen.leaders.opposition")}</span
+                    >`}
+                <span class="text-gray-400"
+                  >— ${this.ideologyText(party.ideology)}</span
+                >
+              </div>
+              <div class="text-gray-300">
+                ${vt("screen.leaders.led-by")}
+                ${this.actorName(party.leader.name)} (${vt("trait.charisma")}
+                ${pct(party.leader.traits.charisma, 0)},
+                ${vt("trait.competence")}
+                ${pct(party.leader.traits.competence, 0)})
+              </div>
+            </div>
+          `,
+        )}
+      <div class="mt-1 font-bold">${vt("screen.leaders.world")}</div>
+      <table class="w-full">
+        <thead>
+          <tr class="text-gray-300">
+            <th class="text-left">${vt("screen.diplomacy.nation")}</th>
+            <th class="text-left">${vt("screen.politics.regime")}</th>
+            <th class="text-left">${vt("screen.leaders.leader")}</th>
+            <th class="text-right">${vt("screen.politics.legitimacy")}</th>
+            <th class="text-right">${vt("screen.opinion.stability")}</th>
+            <th class="text-left">${vt("screen.politics.next-election")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${view.nations
+            .filter((n) => !n.isPlayer)
+            .map((n) => {
+              const q = view.politics[n.id];
+              return html`
+                <tr>
+                  <td>${this.nationLabel(view, n.id)}</td>
+                  <td>${vt(`regime.${q.regime}`)}</td>
+                  <td title=${this.ideologyText(q.leader.traits)}>
+                    ${this.actorName(q.leader.name)}
+                  </td>
+                  <td class="text-right">${pct(q.legitimacy, 0)}</td>
+                  <td class="text-right">
+                    ${q.stability.toFixed(2)}${q.unrest ? " ⚠" : ""}
+                  </td>
+                  <td>
+                    ${q.nextElection ?? "—"}${q.electionsSuspended ? " ⏸" : ""}
+                  </td>
+                </tr>
+              `;
+            })}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // --- objectives and journal (J4) ----------------------------------------------------
+
+  @state() private journalFilter = "";
+  @state() private noteDraft = "";
+
+  private journalCategory(kind: string): string {
+    if (kind === "note") return "notes";
+    if (kind === "objective-completed") return "objectives";
+    if (/^(war|peace|annexation|landing)/.test(kind)) return "war";
+    if (/^sanctions/.test(kind)) return "diplomacy";
+    if (/^(austerity|sovereign|bloc-reprimand)/.test(kind)) return "economy";
+    if (kind === "campaign-started" || kind === "nation-status") return "other";
+    return "politics";
+  }
+
+  private renderObjectives(view: ReadonlyWorldView, p: NationPolitics) {
+    const pinned = view.objectives;
+    const active = pinned.filter((o) => !o.done).length;
+    const categories = [
+      "",
+      "politics",
+      "economy",
+      "war",
+      "diplomacy",
+      "objectives",
+      "notes",
+      "other",
+    ];
+    const entries = [...view.journal]
+      .reverse()
+      .filter(
+        (j) =>
+          this.journalFilter === "" ||
+          this.journalCategory(j.kind) === this.journalFilter,
+      )
+      .slice(0, 60);
+    void p;
+    return html`
+      <div class="font-bold">
+        ${vt("screen.objectives.pinned")} (${active}/5)
+      </div>
+      ${pinned.length === 0
+        ? html`<div class="text-gray-400">${vt("screen.objectives.none")}</div>`
+        : pinned.map((o) => {
+            const objective = this.objectives.find((x) => x.id === o.id);
+            return html`
+              <div class="flex items-center gap-2">
+                <span
+                  class="w-56 ${o.done ? "text-green-300" : ""}"
+                  title=${objective === undefined
+                    ? ""
+                    : vt(objective.description)}
+                  >${objective === undefined ? o.id : vt(objective.name)}</span
+                >
+                ${this.bar("", o.progress)}
+                <span class="w-12 text-right">${pct(o.progress, 0)}</span>
+                <span class="w-24 text-gray-400"
+                  >${vt("screen.objectives.since", { date: o.since })}</span
+                >
+                ${o.done
+                  ? html`<span class="text-green-300"
+                      >${vt("screen.objectives.done")}</span
+                    >`
+                  : html`<button
+                      class="rounded bg-gray-700 px-2"
+                      @click=${() =>
+                        this.command({
+                          type: "unpin-objective",
+                          objective: o.id,
+                        })}
+                    >
+                      ${vt("screen.objectives.unpin")}
+                    </button>`}
+              </div>
+            `;
+          })}
+      <div class="mt-1 font-bold">${vt("screen.objectives.catalogue")}</div>
+      <div class="flex flex-wrap gap-1">
+        ${this.objectives
+          .filter((o) => !pinned.some((x) => x.id === o.id))
+          .map(
+            (o) =>
+              html`<button
+                class="rounded bg-gray-700 px-2"
+                title=${vt(o.description)}
+                ?disabled=${active >= 5}
+                @click=${() =>
+                  this.command({ type: "pin-objective", objective: o.id })}
+              >
+                ${vt(o.name)}
+              </button>`,
+          )}
+      </div>
+      <div class="mt-1 font-bold">${vt("screen.objectives.notes")}</div>
+      <div class="flex gap-2">
+        <input
+          class="flex-1 bg-gray-800 px-1"
+          .value=${this.noteDraft}
+          placeholder=${vt("screen.objectives.note-placeholder")}
+          @input=${(ev: Event) =>
+            (this.noteDraft = (ev.target as HTMLInputElement).value)}
+        />
+        <button
+          class="rounded bg-blue-700 px-2"
+          ?disabled=${this.noteDraft.trim() === ""}
+          @click=${() => {
+            const text = this.noteDraft.trim();
+            this.noteDraft = "";
+            void this.command({ type: "add-note", text });
+          }}
+        >
+          ${vt("screen.objectives.add-note")}
+        </button>
+      </div>
+      <div class="mt-1 flex items-center gap-2">
+        <span class="font-bold">${vt("screen.objectives.journal")}</span>
+        <select
+          class="bg-gray-800"
+          @change=${(ev: Event) =>
+            (this.journalFilter = (ev.target as HTMLSelectElement).value)}
+        >
+          ${categories.map(
+            (c) =>
+              html`<option value=${c} ?selected=${this.journalFilter === c}>
+                ${c === ""
+                  ? vt("screen.objectives.all")
+                  : vt(`journal.category.${c}`)}
+              </option>`,
+          )}
+        </select>
+      </div>
+      <div class="max-h-64 overflow-y-auto">
+        ${entries.map(
+          (j) =>
+            html`<div class="text-gray-300">
+              <span class="tabular-nums text-gray-500">${j.date}</span>
+              ${vt(`journal.${j.kind}`, {
+                ...j.params,
+                nation:
+                  j.nation === undefined
+                    ? ""
+                    : this.nationLabel(view, j.nation),
+                ...(j.params.law === undefined
+                  ? {}
+                  : { law: vt(`law.${j.params.law}.name`) }),
+                ...(j.params.objective === undefined
+                  ? {}
+                  : { objective: vt(`objective.${j.params.objective}.name`) }),
+                ...(j.params.alternation === undefined
+                  ? {}
+                  : { alternation: vt(`alternation.${j.params.alternation}`) }),
+                ...(j.params.reason === undefined
+                  ? {}
+                  : { reason: vt(`law.reason.${j.params.reason}`) }),
+              })}
+            </div>`,
+        )}
+      </div>
+    `;
+  }
+
   render() {
     const { screen, view } = this;
     if (screen === null) return nothing;
@@ -943,7 +1648,15 @@ export class VeritableScreens extends LitElement {
                 ? this.renderOpinion(view, politics)
                 : screen === "war"
                   ? this.renderWar(view)
-                  : this.renderDiplomacy(view)}
+                  : screen === "diplomacy"
+                    ? this.renderDiplomacy(view)
+                    : screen === "politics"
+                      ? this.renderPolitics(view, politics, economy)
+                      : screen === "election"
+                        ? this.renderElection(view, politics, economy)
+                        : screen === "leaders"
+                          ? this.renderLeaders(view, politics)
+                          : this.renderObjectives(view, politics)}
       </div>
     `;
   }

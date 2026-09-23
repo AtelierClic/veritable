@@ -72,7 +72,7 @@ const world: Setup = {
 };
 
 describe("relations", () => {
-  it("start at +30 per common bloc, capped at 60, and drift back to 0 by one a month", () => {
+  it("start at +30 per common bloc, capped at 60, and drift towards the affinity (blocs and ideology)", () => {
     const { sim, months } = campaign(world);
     const d = sim.read().diplomacy;
     expect(relation(d, "AAA", "BBB")).toBe(60);
@@ -80,7 +80,13 @@ describe("relations", () => {
     expect(relation(d, "AAA", "DDD")).toBe(0);
     expect(relation(d, "BBB", "AAA")).toBe(60); // symmetric
     months(12);
-    expect(relation(sim.read().diplomacy, "AAA", "CCC")).toBe(18);
+    // Same governments everywhere (test data): affinity = 40 x common blocs
+    // + 20. AAA-CCC (one bloc): 60, reached from 30 at +2 a month.
+    expect(relation(sim.read().diplomacy, "AAA", "CCC")).toBe(54);
+    // AAA-BBB (two blocs): 100, from 60.
+    expect(relation(sim.read().diplomacy, "AAA", "BBB")).toBe(84);
+    // AAA-DDD (no bloc): 20, from 0.
+    expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBe(20);
   });
 
   it("a war of the scenario starts at -100; the world has priced it in, only its victim sanctions", () => {
@@ -105,7 +111,8 @@ describe("relations", () => {
     expect(d.wars[0].declaredInCampaign).toBe(false);
     expect(relation(d, "CCC", "DDD")).toBe(-100);
     months(3);
-    expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBe(0);
+    // No cost for a war of the scenario: only the drift to the affinity.
+    expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBe(6);
     expect(sim.read().diplomacy.sanctions).toEqual([
       { by: "CCC", against: "DDD", since: "2026-02-01" },
     ]);
@@ -173,11 +180,11 @@ describe("declaring war", () => {
     expect(relation(d, "BBB", "CCC")).toBe(30);
     months(2);
     d = sim.read().diplomacy;
-    // No monthly cost with a casus belli: only the drift towards 0 (+1 a
-    // month on positive relations, +2 on negative ones).
-    expect(relation(d, "AAA", "CCC")).toBeCloseTo(30 - 6.25 - 2, 6);
+    // No monthly cost with a casus belli: only the drift towards the
+    // affinity (+2 a month when below it, -0.5 when above).
+    expect(relation(d, "AAA", "CCC")).toBeCloseTo(30 - 6.25 + 4, 6);
     expect(relation(d, "AAA", "DDD")).toBeCloseTo(-6.25 + 4, 6);
-    expect(relation(d, "BBB", "CCC")).toBe(28);
+    expect(relation(d, "BBB", "CCC")).toBe(34);
     // Peace: the enemies start healing from -100 by two a month.
     const war = d.wars[0];
     sim.apply({
@@ -191,12 +198,12 @@ describe("declaring war", () => {
         maxDivisions: null,
       },
     });
-    // BBB (AI) is neither exhausted nor retreating: it refuses; force the
-    // end of the war through its own offer once weary is not testable here,
-    // so check the healing rule on DDD's negative relations instead.
+    // BBB (AI) is neither exhausted nor retreating: it refuses; check the
+    // healing rule on DDD's relations instead (+2 a month up to the
+    // affinity of 20).
     months(3);
     expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBeCloseTo(
-      Math.min(0, -6.25 + 10),
+      -6.25 + 10,
       6,
     );
   });
@@ -228,8 +235,9 @@ describe("declaring war", () => {
     // Every month of war costs the same again; the event of a command comes
     // out with the next advance.
     months(1);
+    // (Minus the drift back towards the affinity, at most +2.)
     expect(60 - relation(sim.read().diplomacy, "AAA", "BBB")).toBeGreaterThan(
-      2 * hit - 2,
+      2 * hit - 2.5,
     );
     expect(events.filter((e) => e.type === "war-declared")).toHaveLength(1);
   });

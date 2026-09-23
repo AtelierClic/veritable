@@ -14,7 +14,8 @@ import { EconomyContext } from "../sim/economy/context";
 // Consolidating = every post trimmed a little each month; income tax and VAT
 // also go up when the deficit is more than twice the limit. Once the deficit
 // is small and debt no longer rises, posts and taxes drift back towards their
-// values of the first day, never beyond.
+// values of the first day, never beyond. Since the J4 the rule moves the
+// targets of the sliders; the values in effect follow them.
 export function stepFiscalRule(
   ctx: EconomyContext,
   nation: NationEconomy,
@@ -30,13 +31,13 @@ export function stepFiscalRule(
   if (deficit > rule.maxDeficitToGdp || debtDrifting) {
     for (const post of SPENDING_POSTS) {
       if (rule.sparedPosts.includes(post)) continue;
-      nation.spending[post] *= 1 - step;
+      nation.spendingTargets[post] *= 1 - step;
     }
     if (deficit > 2 * rule.maxDeficitToGdp) {
       for (const tax of ["income", "vat"] as const) {
-        nation.taxes[tax] = Math.min(
+        nation.taxTargets[tax] = Math.min(
           ctx.config.budget.maxTaxRate[tax],
-          nation.taxes[tax] * (1 + step),
+          nation.taxTargets[tax] * (1 + step),
         );
       }
     }
@@ -44,16 +45,16 @@ export function stepFiscalRule(
   }
   if (deficit < rule.relaxBelowDeficit && nation.debtRisingMonths === 0) {
     for (const post of SPENDING_POSTS) {
-      nation.spending[post] = Math.min(
+      nation.spendingTargets[post] = Math.min(
         nation.spending0[post],
         spendingCeiling(ctx, nation, post),
-        nation.spending[post] * (1 + step / 2),
+        nation.spendingTargets[post] * (1 + step / 2),
       );
     }
     for (const tax of ["income", "vat"] as const) {
-      nation.taxes[tax] = Math.max(
+      nation.taxTargets[tax] = Math.max(
         nation.taxes0[tax],
-        nation.taxes[tax] * (1 - step / 2),
+        nation.taxTargets[tax] * (1 - step / 2),
       );
     }
   }

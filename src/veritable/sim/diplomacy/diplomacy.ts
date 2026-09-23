@@ -9,6 +9,7 @@ import {
 } from "../../data/schemas/save";
 import { Scenario } from "../../data/schemas/scenario";
 import { EconomyContext } from "../economy/context";
+import { ideologyDistance, MAX_IDEOLOGY_DISTANCE } from "../politics/ideology";
 import { Rng } from "../rng";
 import { militaryPower } from "../war/military";
 
@@ -16,9 +17,10 @@ import { militaryPower } from "../war/military";
 //
 // relations[a][b] in [-100, 100]: +blocRelation per common bloc (capped) on
 // the first day, warRelation between belligerents, 0 otherwise; every month
-// positive relations fade towards 0 by relationDecayPerMonth and negative
-// ones heal by relationRecoveryPerMonth (after a peace, faster than they
-// fade).
+// they drift towards an affinity (J4: affinityPerBloc x common blocs +
+// affinityIdeology x (1 - ideological distance of the governments / max)),
+// by relationDecayPerMonth when above it and relationRecoveryPerMonth when
+// below it (after a peace, relations heal faster than they fade).
 //
 // Declaring war costs relations with every nation: (cost of the casus belli)
 // x (1 + share of the aggressor in the total military power), once at the
@@ -429,11 +431,55 @@ export function liftSanctions(
 
 // --- the monthly reaction ---------------------------------------------------------------
 
+// Where the relations of two nations settle: common blocs and the
+// ideological proximity of their governments (J4).
+export function affinityOf(
+  ctx: EconomyContext,
+  politics: PoliticsState,
+  a: NationId,
+  b: NationId,
+): number {
+  const cfg = ctx.config.diplomacy;
+  const pa = politics.nations[a];
+  const pb = politics.nations[b];
+  const proximity =
+    pa === undefined || pb === undefined
+      ? 0.5
+      : 1 -
+        ideologyDistance(pa.government.ideology, pb.government.ideology) /
+          MAX_IDEOLOGY_DISTANCE;
+  return clamp(
+    cfg.affinityPerBloc * commonBlocs(ctx.sheet(a), ctx.sheet(b)) +
+      cfg.affinityIdeology * proximity,
+    -100,
+    100,
+  );
+}
+
+// Relations of a nation with every democracy move by `delta` (media
+// control, detected fraud, coup).
+export function hitDemocracyRelations(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  politics: PoliticsState,
+  nation: NationId,
+  delta: number,
+): void {
+  if (delta === 0) return;
+  for (const other of ctx.nationIds) {
+    if (other === nation) continue;
+    const p = politics.nations[other];
+    if (p === undefined || !ctx.regime(p.regime).democratic) continue;
+    addRelation(state, nation, other, delta);
+  }
+}
+
 export function stepDiplomacyMonth(
   ctx: EconomyContext,
   state: DiplomacyState,
   economy: EconomyState,
   military: MilitaryState,
+  politics: PoliticsState,
   rng: Rng,
   date: string,
   // Nations run by the AI (everyone but the player, or everyone in autopilot).
@@ -443,7 +489,8 @@ export function stepDiplomacyMonth(
   const events: DiplomacyEvent[] = [];
   const ids = ctx.nationIds;
 
-  // 1. Relations drift back towards 0; belligerents stay at warRelation.
+  // 1. Relations drift towards their affinity; belligerents stay at
+  //    warRelation.
   for (const a of ids) {
     for (const b of ids) {
       if (!(a < b)) continue;
@@ -452,11 +499,12 @@ export function stepDiplomacyMonth(
         continue;
       }
       const r = relation(state, a, b);
-      const decayed =
-        r > 0
-          ? Math.max(0, r - cfg.relationDecayPerMonth)
-          : Math.min(0, r + cfg.relationRecoveryPerMonth);
-      setRelation(state, a, b, decayed);
+      const target = affinityOf(ctx, politics, a, b);
+      const next =
+        r > target
+          ? Math.max(target, r - cfg.relationDecayPerMonth)
+          : Math.min(target, r + cfg.relationRecoveryPerMonth);
+      setRelation(state, a, b, next);
     }
   }
 
@@ -505,6 +553,7 @@ export function stepDiplomacyMonth(
           .filter(
             (n) =>
               ids.includes(n) &&
+              ctx.isFullMember(bloc, n) &&
               n !== aggressor &&
               warSide(war, n) !== "aggressors",
           );

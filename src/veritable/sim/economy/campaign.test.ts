@@ -147,7 +147,7 @@ describe("player commands and the political core", () => {
     expect(politics.BBB.groups).toBeNull();
     expect(politics.AAA.opinion).toBe(0.5);
     // 0.5 x opinion + 0.2 x (1 - shortage) + 0.15 x debt health + 0.15 x 0.7
-    expect(politics.AAA.stability).toBeCloseTo(0.25 + 0.2 + 0.15 + 0.105, 9);
+    expect(politics.AAA.stability).toBeCloseTo(0.25 + 0.2 + 0.15 + 0.12, 9);
   });
 
   it("raising VAT brings money in and angers workers; opinion and stability follow", () => {
@@ -156,7 +156,8 @@ describe("player commands and the political core", () => {
     const before = structuredClone(sim.read()); // read() is a live view
     const vat = before.economies.AAA.taxes.vat;
     sim.apply({ type: "set-tax", tax: "vat", rate: vat + 0.08 });
-    months(3);
+    // Sliders ramp (J4): the value in effect follows the target over months.
+    months(9);
     const after = sim.read();
     expect(after.economies.AAA.revenue).toBeGreaterThan(
       before.economies.AAA.revenue * 1.05,
@@ -206,8 +207,10 @@ describe("player commands and the political core", () => {
     const max = loadVeritableConfig().budget;
     sim.apply({ type: "set-tax", tax: "vat", rate: 0.95 });
     sim.apply({ type: "set-spending", post: "social", share: 0.9 });
-    expect(sim.read().economies.AAA.taxes.vat).toBe(max.maxTaxRate.vat);
-    expect(sim.read().economies.AAA.spending.social).toBe(max.maxSpendingShare);
+    expect(sim.read().economies.AAA.taxTargets.vat).toBe(max.maxTaxRate.vat);
+    expect(sim.read().economies.AAA.spendingTargets.social).toBe(
+      max.maxSpendingShare,
+    );
     expect(() =>
       sim.apply({
         type: "set-embargo",
@@ -377,7 +380,14 @@ describe("blocs and AI", () => {
     const nations = [testNation("AAA", { debtToGdp: 0.3 })];
     const ctx = buildContext(config, testSimData(["AAA"]), nations);
     const economy = initEconomy(ctx, nations, testRow()).nations.AAA;
-    const politics = initPolitics(ctx, nations, "AAA", false).nations.AAA;
+    const politics = initPolitics(
+      ctx,
+      nations,
+      "AAA",
+      false,
+      new Rng(1),
+      "2026-01-01",
+    ).nations.AAA;
     politics.reprimanded = true;
     politics.reprimandMalus = 0.03;
     const malus: number[] = [];
@@ -630,7 +640,14 @@ describe("J3 corrections of the J2", () => {
     const nations = [testNation("AAA")];
     const ctx = buildContext(config, testSimData(["AAA"]), nations);
     const economy = initEconomy(ctx, nations, testRow());
-    const politics = initPolitics(ctx, nations, "AAA", false);
+    const politics = initPolitics(
+      ctx,
+      nations,
+      "AAA",
+      false,
+      new Rng(1),
+      "2026-01-01",
+    );
     stepTrade(ctx, economy);
     stepGrowth(ctx, economy, politics, new Rng(1));
     expect(economy.nations.AAA.growthAnnual).toBeCloseTo(0.02, 6);

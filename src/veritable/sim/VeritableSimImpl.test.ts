@@ -78,11 +78,12 @@ describe("VeritableSimImpl", () => {
 
     world.setOwner(0, "beta");
     expect(sim.advance(72)).toMatchObject([{ nation: "beta", to: "active" }]);
-    expect(sim.read().journal.map((j) => j.kind)).toEqual([
-      "campaign-started",
-      "nation-status",
-      "nation-status",
-    ]);
+    // (Ten years of politics wrote elections and governments in between.)
+    expect(
+      sim.read().journal
+        .map((j) => j.kind)
+        .filter((k) => k === "campaign-started" || k === "nation-status"),
+    ).toEqual(["campaign-started", "nation-status", "nation-status"]);
   });
 
   it("the player's own nation survives zero tiles too", () => {

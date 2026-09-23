@@ -26,6 +26,10 @@ export interface TestNationOptions {
   blocs?: string[];
   lon?: number;
   lat?: number;
+  regime?: NationData["regime"];
+  electionIntervalMonths?: number;
+  lastElection?: string;
+  electionsSuspendedAtWarAtHome?: boolean;
 }
 
 const DEFAULT_SPENDING: Record<SpendingPost, number> = {
@@ -55,7 +59,7 @@ export function testNation(
       source: "test",
       asOf: "2026-01-01",
     },
-    regime: "parliamentary",
+    regime: options.regime ?? "parliamentary",
     regimeSource: { source: "test", asOf: "2026-01-01" },
     blocs: options.blocs ?? [],
     nuclear: null,
@@ -110,6 +114,14 @@ export function testNation(
       asOf: "2026-01-01",
     },
     startingTech: [],
+    politics: {
+      electionIntervalMonths: options.electionIntervalMonths ?? 48,
+      lastElection: options.lastElection ?? "2024-01-01",
+      electionsSuspendedAtWarAtHome:
+        options.electionsSuspendedAtWarAtHome ?? false,
+      source: "test",
+      asOf: "2026-01-01",
+    },
   };
 }
 
