@@ -9,7 +9,7 @@
         "fictional": "leader.rus-mikhail-michoustine.fictional"
       },
       "born": "1966-03-03",
-      "party": null,
+      "party": "rus-russie-unie",
       "traits": {
         "economic": 0.3,
         "authority": 0.6,
@@ -32,7 +32,7 @@
         "fictional": "leader.rus-vladimir-poutine.fictional"
       },
       "born": "1952-10-07",
-      "party": null,
+      "party": "rus-russie-unie",
       "traits": {
         "economic": 0.2,
         "authority": 0.9,
@@ -45,7 +45,7 @@
       "wikidata": "Q7747",
       "source": "estimate",
       "asOf": "2026-09-23",
-      "note": "Autocrate (autorité +0,9), souverainiste et eurasiste (+0,9), guerre d'agression en cours (agressivité 0,9) ; corruption systémique du régime (0,7) ; charisme et compétence solides dans son registre."
+      "note": "Autocrate (autorité +0,9), souverainiste et eurasiste (+0,9), guerre d'agression en cours (agressivité 0,9) ; corruption systémique du régime (0,7) ; charisme et compétence solides dans son registre. Wikidata : sans parti ; rattaché à Russie unie, qu'il a fondée."
     },
     {
       "id": "rus-dmitri-medvedev",

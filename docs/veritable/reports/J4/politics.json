@@ -1,0 +1,1494 @@
+[
+  {
+    "seed": 42,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 2,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 68,
+        "regimes": [
+          "parliamentary",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "RUS": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 2,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 66,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "electoral-authoritarian"
+        ],
+        "finalRegime": "electoral-authoritarian"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 43,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 1,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 3,
+        "juntaMonths": 30,
+        "regimes": [
+          "semi-presidential",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "RUS": {
+        "elections": 0,
+        "alternations": 0,
+        "coups": 2,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 72,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 51,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 44,
+    "politics": {
+      "FRA": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 2,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 70,
+        "regimes": [
+          "semi-presidential",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "RUS": {
+        "elections": 0,
+        "alternations": 0,
+        "coups": 2,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 76,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 29,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 45,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 1,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 3,
+        "juntaMonths": 39,
+        "regimes": [
+          "semi-presidential",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "RUS": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 20,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "electoral-authoritarian"
+        ],
+        "finalRegime": "electoral-authoritarian"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 46,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "RUS": {
+        "elections": 0,
+        "alternations": 0,
+        "coups": 2,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 71,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "electoral-authoritarian"
+        ],
+        "finalRegime": "electoral-authoritarian"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 47,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 1,
+        "coupAttempts": 3,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 3,
+        "juntaMonths": 43,
+        "regimes": [
+          "semi-presidential",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "RUS": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 2,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 70,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "electoral-authoritarian"
+        ],
+        "finalRegime": "electoral-authoritarian"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 48,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "RUS": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 3,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "electoral-authoritarian"
+        ],
+        "finalRegime": "electoral-authoritarian"
+      },
+      "TUR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "electoral-authoritarian"
+        ],
+        "finalRegime": "electoral-authoritarian"
+      },
+      "NOR": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 34,
+        "regimes": [
+          "parliamentary",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 49,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 1,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 4,
+        "juntaMonths": 31,
+        "regimes": [
+          "semi-presidential",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "RUS": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 31,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 2,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 81,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 50,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 3,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "RUS": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 3,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 21,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 2,
+        "coupAttempts": 1,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 76,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  },
+  {
+    "seed": 51,
+    "politics": {
+      "FRA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 1,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 43,
+        "regimes": [
+          "semi-presidential",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "DEU": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "GBR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ITA": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "ESP": {
+        "elections": 3,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      },
+      "POL": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 49,
+        "regimes": [
+          "semi-presidential",
+          "junta",
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "UKR": {
+        "elections": 2,
+        "alternations": 2,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "semi-presidential"
+        ],
+        "finalRegime": "semi-presidential"
+      },
+      "RUS": {
+        "elections": 1,
+        "alternations": 1,
+        "coups": 1,
+        "coupAttempts": 2,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 2,
+        "regimes": [
+          "electoral-authoritarian",
+          "junta"
+        ],
+        "finalRegime": "junta"
+      },
+      "TUR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "electoral-authoritarian"
+        ],
+        "finalRegime": "electoral-authoritarian"
+      },
+      "NOR": {
+        "elections": 2,
+        "alternations": 1,
+        "coups": 0,
+        "coupAttempts": 0,
+        "revolutions": 0,
+        "fraudDetected": 0,
+        "unrestStarts": 0,
+        "juntaMonths": 0,
+        "regimes": [
+          "parliamentary"
+        ],
+        "finalRegime": "parliamentary"
+      }
+    },
+    "wars": []
+  }
+]

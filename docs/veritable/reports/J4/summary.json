@@ -1,0 +1,282 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "years": 10,
+  "alternationNations": [
+    "FRA",
+    "DEU",
+    "GBR",
+    "ITA",
+    "ESP",
+    "POL",
+    "UKR",
+    "RUS",
+    "TUR",
+    "NOR"
+  ],
+  "alternationNationsCount": 10,
+  "perCampaignAlternationNations": [
+    10,
+    9,
+    9,
+    10,
+    9,
+    10,
+    10,
+    10,
+    10,
+    10
+  ],
+  "crisisCampaigns": 10,
+  "campaigns": 10,
+  "unexplainedJuntas": [],
+  "juntaMonths": [
+    {
+      "nation": "ITA",
+      "seed": 42,
+      "months": 68
+    },
+    {
+      "nation": "RUS",
+      "seed": 42,
+      "months": 66
+    },
+    {
+      "nation": "UKR",
+      "seed": 43,
+      "months": 30
+    },
+    {
+      "nation": "RUS",
+      "seed": 43,
+      "months": 72
+    },
+    {
+      "nation": "TUR",
+      "seed": 43,
+      "months": 51
+    },
+    {
+      "nation": "FRA",
+      "seed": 44,
+      "months": 70
+    },
+    {
+      "nation": "RUS",
+      "seed": 44,
+      "months": 76
+    },
+    {
+      "nation": "TUR",
+      "seed": 44,
+      "months": 29
+    },
+    {
+      "nation": "UKR",
+      "seed": 45,
+      "months": 39
+    },
+    {
+      "nation": "RUS",
+      "seed": 45,
+      "months": 20
+    },
+    {
+      "nation": "RUS",
+      "seed": 46,
+      "months": 71
+    },
+    {
+      "nation": "UKR",
+      "seed": 47,
+      "months": 43
+    },
+    {
+      "nation": "RUS",
+      "seed": 47,
+      "months": 70
+    },
+    {
+      "nation": "NOR",
+      "seed": 48,
+      "months": 34
+    },
+    {
+      "nation": "UKR",
+      "seed": 49,
+      "months": 31
+    },
+    {
+      "nation": "RUS",
+      "seed": 49,
+      "months": 31
+    },
+    {
+      "nation": "TUR",
+      "seed": 49,
+      "months": 81
+    },
+    {
+      "nation": "RUS",
+      "seed": 50,
+      "months": 21
+    },
+    {
+      "nation": "TUR",
+      "seed": 50,
+      "months": 76
+    },
+    {
+      "nation": "FRA",
+      "seed": 51,
+      "months": 43
+    },
+    {
+      "nation": "POL",
+      "seed": 51,
+      "months": 49
+    },
+    {
+      "nation": "RUS",
+      "seed": 51,
+      "months": 2
+    }
+  ],
+  "criteria": {
+    "alternationInSevenNations": true,
+    "crisisInHalfOfCampaigns": true,
+    "noUnexplainedJunta": true
+  },
+  "events": [
+    {
+      "month-started": 120,
+      "election-held": 20,
+      "government-formed": 20,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 23,
+      "coup-attempted": 2,
+      "coup-succeeded": 4,
+      "regime-changed": 4,
+      "bloc-suspended": 1
+    },
+    {
+      "month-started": 120,
+      "election-held": 19,
+      "government-formed": 19,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 28,
+      "coup-succeeded": 4,
+      "regime-changed": 4,
+      "leader-died": 1,
+      "leader-succeeded": 1,
+      "coup-attempted": 2,
+      "unrest-started": 3,
+      "unrest-ended": 2
+    },
+    {
+      "month-started": 120,
+      "election-held": 19,
+      "government-formed": 19,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 20,
+      "coup-attempted": 3,
+      "coup-succeeded": 5,
+      "regime-changed": 5,
+      "bloc-suspended": 1
+    },
+    {
+      "month-started": 120,
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 27,
+      "austerity-started": 1,
+      "austerity-ended": 1,
+      "coup-succeeded": 2,
+      "regime-changed": 2,
+      "leader-died": 1,
+      "leader-succeeded": 1,
+      "unrest-started": 3,
+      "unrest-ended": 2
+    },
+    {
+      "month-started": 120,
+      "election-held": 20,
+      "government-formed": 20,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 24,
+      "coup-succeeded": 2,
+      "regime-changed": 2,
+      "coup-attempted": 2
+    },
+    {
+      "month-started": 120,
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 27,
+      "coup-succeeded": 3,
+      "regime-changed": 3,
+      "coup-attempted": 4,
+      "unrest-started": 3,
+      "unrest-ended": 3
+    },
+    {
+      "month-started": 120,
+      "election-held": 20,
+      "government-formed": 20,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 27,
+      "coup-attempted": 4,
+      "coup-succeeded": 1,
+      "regime-changed": 1
+    },
+    {
+      "month-started": 120,
+      "election-held": 20,
+      "government-formed": 20,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 28,
+      "coup-succeeded": 4,
+      "regime-changed": 4,
+      "coup-attempted": 1,
+      "unrest-started": 4,
+      "unrest-ended": 4
+    },
+    {
+      "month-started": 120,
+      "election-held": 20,
+      "government-formed": 20,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 28,
+      "coup-attempted": 5,
+      "coup-succeeded": 3,
+      "regime-changed": 3,
+      "austerity-started": 2,
+      "austerity-ended": 1
+    },
+    {
+      "month-started": 120,
+      "election-held": 20,
+      "government-formed": 20,
+      "sanctions-imposed": 1,
+      "bloc-reprimand": 25,
+      "coup-attempted": 2,
+      "coup-succeeded": 3,
+      "regime-changed": 4,
+      "bloc-suspended": 2,
+      "civilian-transition": 1
+    }
+  ],
+  "meanWallMs": 594
+}

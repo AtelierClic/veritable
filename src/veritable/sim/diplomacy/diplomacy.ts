@@ -448,8 +448,13 @@ export function affinityOf(
       : 1 -
         ideologyDistance(pa.government.ideology, pb.government.ideology) /
           MAX_IDEOLOGY_DISTANCE;
+  // The bloc term is capped like the first-day relations (blocRelationCap):
+  // four common blocs are not worth more than two.
   return clamp(
-    cfg.affinityPerBloc * commonBlocs(ctx.sheet(a), ctx.sheet(b)) +
+    Math.min(
+      cfg.blocRelationCap,
+      cfg.affinityPerBloc * commonBlocs(ctx.sheet(a), ctx.sheet(b)),
+    ) +
       cfg.affinityIdeology * proximity,
     -100,
     100,
@@ -490,7 +495,13 @@ export function stepDiplomacyMonth(
   const ids = ctx.nationIds;
 
   // 1. Relations drift towards their affinity; belligerents stay at
-  //    warRelation.
+  //    warRelation. An aggressor without casus belli mends nothing while its
+  //    war lasts: its relations only erode.
+  const unjustAggressors = new Set<NationId>();
+  for (const war of state.wars) {
+    if (!war.declaredInCampaign || war.casusBelli !== null) continue;
+    for (const a of war.aggressors) unjustAggressors.add(a);
+  }
   for (const a of ids) {
     for (const b of ids) {
       if (!(a < b)) continue;
@@ -500,10 +511,13 @@ export function stepDiplomacyMonth(
       }
       const r = relation(state, a, b);
       const target = affinityOf(ctx, politics, a, b);
+      const mending = !unjustAggressors.has(a) && !unjustAggressors.has(b);
       const next =
         r > target
           ? Math.max(target, r - cfg.relationDecayPerMonth)
-          : Math.min(target, r + cfg.relationRecoveryPerMonth);
+          : mending
+            ? Math.min(target, r + cfg.relationRecoveryPerMonth)
+            : r;
       setRelation(state, a, b, next);
     }
   }
@@ -594,15 +608,18 @@ export function stepDiplomacyMonth(
     }
   }
 
-  // 5. Coalitions against an aggressor without casus belli that outweighs its victim.
+  // 5. Coalitions against an aggressor without casus belli that outweighs its
+  //    victim. The victim is the nation attacked (the first defender of a war
+  //    declared in the campaign), not the coalition that joined it: a
+  //    coalition member does not keep the others out.
   for (const war of state.wars) {
     if (war.casusBelli !== null || !war.declaredInCampaign) continue;
     const aggressorPower = war.aggressors.reduce(
       (s, n) => s + power.get(n)!,
       0,
     );
-    const defenderPower = war.defenders.reduce((s, n) => s + power.get(n)!, 0);
-    if (aggressorPower <= cfg.coalition.powerRatio * defenderPower) continue;
+    const victimPower = power.get(war.defenders[0]) ?? 0;
+    if (aggressorPower <= cfg.coalition.powerRatio * victimPower) continue;
     for (const nation of aiNations) {
       if (warSide(war, nation) !== null) continue;
       const hostile = war.aggressors.some(

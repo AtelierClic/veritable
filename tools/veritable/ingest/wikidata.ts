@@ -12,6 +12,8 @@ import { jsonSha256, Lock, LOCK_FILE, readLock, SNAPSHOT_DIR } from "./sources";
 //
 // The parties come from parties.json (labels, vote shares); their QIDs are
 // resolved once through the search API and written back into parties.json.
+// Party memberships (P102) are read without an end date (P582): a former
+// party is not the current one.
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const PARTIES_FILE = path.join(HERE, "parties.json");
@@ -157,7 +159,10 @@ SELECT ?role ?person ?personFr ?personEn ?born ?party WHERE {
   UNION
   { BIND("head-of-government" AS ?role) wd:${country} wdt:P6 ?person }
   OPTIONAL { ?person wdt:P569 ?born }
-  OPTIONAL { ?person wdt:P102 ?party }
+  OPTIONAL {
+    ?person p:P102 ?membership . ?membership ps:P102 ?party .
+    FILTER NOT EXISTS { ?membership pq:P582 ?ended }
+  }
   ${LABELS("?person")}
 }`);
   const heads: WikidataSnapshot["heads"] = [];
@@ -187,7 +192,10 @@ SELECT ?partyFr ?partyEn ?ideology ?ideologyFr ?ideologyEn ?leader ?leaderFr ?le
   OPTIONAL {
     ?party wdt:P488 ?leader
     OPTIONAL { ?leader wdt:P569 ?leaderBorn }
-    OPTIONAL { ?leader wdt:P102 ?leaderParty }
+    OPTIONAL {
+      ?leader p:P102 ?leaderMembership . ?leaderMembership ps:P102 ?leaderParty .
+      FILTER NOT EXISTS { ?leaderMembership pq:P582 ?leaderEnded }
+    }
     ${LABELS("?leader")}
   }
 }`);

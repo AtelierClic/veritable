@@ -9,7 +9,7 @@
         "fictional": "leader.ukr-serhii-koretskyi.fictional"
       },
       "born": "1978-03-14",
-      "party": null,
+      "party": "ukr-serviteur-du-peuple",
       "traits": {
         "economic": 0.3,
         "authority": 0.1,
@@ -32,7 +32,7 @@
         "fictional": "leader.ukr-volodymyr-zelensky.fictional"
       },
       "born": "1978-01-25",
-      "party": null,
+      "party": "ukr-serviteur-du-peuple",
       "traits": {
         "economic": 0.1,
         "authority": 0.2,
@@ -45,7 +45,7 @@
       "wikidata": "Q3874799",
       "source": "estimate",
       "asOf": "2026-09-23",
-      "note": "Président en guerre : charisme exceptionnel (0,85), agressivité élevée par nécessité (0,6), centralisation du pouvoir en temps de guerre (autorité +0,2) ; corruption systémique du pays mais personnelle modérée (0,2)."
+      "note": "Président en guerre : charisme exceptionnel (0,85), agressivité élevée par nécessité (0,6), centralisation du pouvoir en temps de guerre (autorité +0,2) ; corruption systémique du pays mais personnelle modérée (0,2). Wikidata : sans parti ; rattaché à Serviteur du peuple, son parti d'origine."
     },
     {
       "id": "ukr-olena-chouliak",

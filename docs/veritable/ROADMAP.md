@@ -79,15 +79,15 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 
 ## J4 — Le moteur
 
-- [ ] `regimes.json` : 9 archétypes, succession, coups, lois accessibles
-- [ ] Élections : offre politique, opinion par groupe, 4 leviers (propagande, médias, fraude, clientélisme) et leurs risques
-- [ ] Catalogue de lois par domaine ; capital politique ; réversibilité ; curseurs à effet progressif
-- [ ] Coups et révolutions ; changement de régime ; le joueur continue
-- [ ] Dirigeants : ingestion Wikidata, traits, vieillissement, succession ; interrupteur parodie/fictif
-- [ ] Objectifs épinglables (catalogue) + texte libre ; journal de campagne automatique
-- [ ] Écrans : politique (groupes, élections, lois, curseurs), dirigeants, journal
+- [x] `regimes.json` : 9 archétypes, succession, coups, lois accessibles _(2026-09-23 — plus intervalle d'élection, formation du gouvernement, presse et médias structurels, drapeau `democratic`)_
+- [x] Élections : offre politique, opinion par groupe, 4 leviers (propagande, médias, fraude, clientélisme) et leurs risques _(2026-09-23 — projection sans tirage exposée à l'écran ; 20 % de fraude avec presse libre détectés dans ~72 % des cas)_
+- [x] Catalogue de lois par domaine ; capital politique ; réversibilité ; curseurs à effet progressif _(2026-09-23 — 46 lois, fenêtres idéologiques, abrogation différée par le gouvernement suivant, rampe exponentielle des curseurs)_
+- [x] Coups et révolutions ; changement de régime ; le joueur continue _(2026-09-23 — formule de la consigne, période de grâce de 36 mois, junte qui rend le pouvoir après quatre ans, suspension par l'UE)_
+- [x] Dirigeants : ingestion Wikidata, traits, vieillissement, succession ; interrupteur parodie/fictif _(2026-09-23 — instantanés SPARQL épinglés, 71 acteurs et 60 partis, traits des dix-neuf chefs d'État et de gouvernement écrits à la main (Erdoğan cumule les deux))_
+- [x] Objectifs épinglables (catalogue) + texte libre ; journal de campagne automatique _(2026-09-23 — 14 objectifs, notes, journal filtrable par catégorie)_
+- [x] Écrans : politique (groupes, élections, lois, curseurs), dirigeants, journal _(2026-09-23 — quatre écrans : Politique, Élection, Dirigeants, Objectifs et journal ; vérifiés dans le navigateur)_
 
-**Livré quand** : une campagne de dix ans produit au moins une alternance, une crise politique et un choix douloureux sans aucun script.
+**Livré quand** : une campagne de dix ans produit au moins une alternance, une crise politique et un choix douloureux sans aucun script. — **Livré le 2026-09-23** (10 ans × 10 graines : les dix nations connaissent une alternance, 9 ou 10 par campagne ; crises dans les dix campagnes (31 coups, 25 tentatives, 13 troubles) ; aucune junte sans cause ; `docs/veritable/reports/J4/`).
 
 ## J5 — Profondeur
 

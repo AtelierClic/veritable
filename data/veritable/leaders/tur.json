@@ -25,13 +25,13 @@
       "note": "Régime présidentiel : le chef de l'État est aussi chef du gouvernement ; mêmes traits."
     },
     {
-      "id": "tur-hikmet-cetin",
+      "id": "tur-deniz-baykal",
       "role": "party-leader",
       "names": {
-        "parody": "leader.tur-hikmet-cetin.parody",
-        "fictional": "leader.tur-hikmet-cetin.fictional"
+        "parody": "leader.tur-deniz-baykal.parody",
+        "fictional": "leader.tur-deniz-baykal.fictional"
       },
-      "born": "1937-08-10",
+      "born": "1938-07-20",
       "party": "tur-parti-republicain-du-peuple",
       "traits": {
         "economic": -0.175,
@@ -42,7 +42,7 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "wikidata": "Q351674",
+      "wikidata": "Q381297",
       "source": "derived",
       "asOf": "2026-09-23",
       "note": "Traits dérivés de l'idéologie du parti."
@@ -167,7 +167,7 @@
         "asOf": "2026-09-23",
         "note": "Milletvekili genel seçimi 2023 (YSK)"
       },
-      "leader": "tur-hikmet-cetin"
+      "leader": "tur-deniz-baykal"
     },
     {
       "id": "tur-parti-d-action-nationaliste",

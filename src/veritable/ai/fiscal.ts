@@ -14,12 +14,24 @@ import { EconomyContext } from "../sim/economy/context";
 // Consolidating = every post trimmed a little each month; income tax and VAT
 // also go up when the deficit is more than twice the limit. Once the deficit
 // is small and debt no longer rises, posts and taxes drift back towards their
-// values of the first day, never beyond. Since the J4 the rule moves the
-// targets of the sliders; the values in effect follow them.
+// values of the first day, never beyond. Since the J4 the sliders have
+// targets; the rule sets them and applies them at once (a technocratic
+// consolidation does not wait for the ramp: with the six-month lag the loop
+// under-reacted and Italian debt diverged over fifty years).
 export function stepFiscalRule(
   ctx: EconomyContext,
   nation: NationEconomy,
 ): void {
+  adjustTargets(ctx, nation);
+  for (const post of SPENDING_POSTS) {
+    nation.spending[post] = nation.spendingTargets[post];
+  }
+  for (const tax of Object.keys(nation.taxTargets)) {
+    nation.taxes[tax] = nation.taxTargets[tax];
+  }
+}
+
+function adjustTargets(ctx: EconomyContext, nation: NationEconomy): void {
   const rule = ctx.config.ai.fiscal;
   const deficit = deficitToGdp(nation);
   const step = rule.adjustPerMonth;

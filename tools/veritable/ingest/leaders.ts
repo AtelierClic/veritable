@@ -38,6 +38,10 @@ export interface LeaderTraitEstimate {
   person: string; // as labelled by Wikidata at the time of writing
   traits: Traits;
   note: string;
+  // Party of the head when Wikidata gives none of the listed ones (an
+  // "independent" president backed by a party, a leader who left the party
+  // chair): a QID of parties.json.
+  partyQid?: string;
 }
 
 export function slug(label: string): string {
@@ -232,7 +236,8 @@ export function buildLeaders(
     for (const head of snapshot.heads) {
       const key = `${nation}/${head.role}`;
       const estimate = estimates.leaderTraits[key];
-      const partyId = partyOf(head.person.party);
+      const partyId =
+        partyOf(head.person.party) ?? partyOf(estimate?.partyQid ?? null);
       if (estimate !== undefined) {
         if (estimate.person !== head.person.label) {
           warnings.push(
@@ -279,7 +284,7 @@ export function buildLeaders(
         "Traits dérivés de l'idéologie du parti.",
       );
       party.leader = actor.id;
-      if (actor.party === null) actor.party = partyId;
+      actor.party ??= partyId;
     }
     files[nation] = LeadersDataSchema.parse({
       nation,

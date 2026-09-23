@@ -2,6 +2,7 @@ import { loadVeritableConfig } from "../../data/loadConfig";
 import { Bloc } from "../../data/schemas/bloc";
 import { VeritableConfig } from "../../data/schemas/config";
 import { NationData } from "../../data/schemas/nation";
+import { DiplomacyState } from "../../data/schemas/save";
 import { Scenario } from "../../data/schemas/scenario";
 import { MemoryWorld } from "../testing/MemoryWorld";
 import {
@@ -12,7 +13,7 @@ import {
 import { testSimData } from "../testing/simData";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
-import { relation } from "./diplomacy";
+import { relation, setRelation } from "./diplomacy";
 
 const DAY = 1440;
 
@@ -83,8 +84,8 @@ describe("relations", () => {
     // Same governments everywhere (test data): affinity = 40 x common blocs
     // + 20. AAA-CCC (one bloc): 60, reached from 30 at +2 a month.
     expect(relation(sim.read().diplomacy, "AAA", "CCC")).toBe(54);
-    // AAA-BBB (two blocs): 100, from 60.
-    expect(relation(sim.read().diplomacy, "AAA", "BBB")).toBe(84);
+    // AAA-BBB (two blocs): min(60, 80) + 20 = 80, from 60.
+    expect(relation(sim.read().diplomacy, "AAA", "BBB")).toBe(80);
     // AAA-DDD (no bloc): 20, from 0.
     expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBe(20);
   });
@@ -346,6 +347,40 @@ describe("international reaction", () => {
       expect(relation(sim.read().diplomacy, "AAA", d)).toBe(-100);
     }
     expect(sim.read().journal.some((j) => j.kind === "war-joined")).toBe(true);
+  });
+
+  it("the aggressor is weighed against its victim, not the coalition: a big coalition member does not keep the others out", () => {
+    const { sim, months } = campaign({
+      nations: {
+        AAA: { personnel: 400_000 },
+        BBB: { personnel: 100_000 },
+        CCC: { personnel: 900_000 },
+        DDD: { personnel: 100_000 },
+      },
+    });
+    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    // CCC, far stronger than the aggressor, has already joined the victim.
+    const d = sim.read().diplomacy as DiplomacyState;
+    const war = d.wars[0];
+    war.defenders.push("CCC");
+    for (const record of [
+      war.score,
+      war.retreatMonths,
+      war.tilesTaken,
+      war.monthlyTiles,
+    ]) {
+      record.CCC = 0;
+    }
+    // DDD is hostile enough to join.
+    setRelation(d, "AAA", "DDD", -90);
+    months(1);
+    // AAA (400 k) outweighs its victim (100 k) by far, though not the
+    // victim and CCC together: DDD is called (or already in).
+    const after = sim.read().diplomacy;
+    expect(
+      after.coalitionCalls.some((c) => c.nation === "DDD") ||
+        after.wars[0].defenders.includes("DDD"),
+    ).toBe(true);
   });
 
   it("no coalition with a casus belli, however strong the aggressor", () => {

@@ -32,7 +32,7 @@
         "fictional": "leader.ita-sergio-mattarella.fictional"
       },
       "born": "1941-07-23",
-      "party": "ita-parti-democrate",
+      "party": null,
       "traits": {
         "economic": -0.1,
         "authority": -0.3,

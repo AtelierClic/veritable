@@ -264,8 +264,8 @@ export function changeRegime(
   politics.regimeSince = date;
   if (regime.electionIntervalMonths === null) {
     politics.nextElection = null;
-  } else if (politics.nextElection === null) {
-    politics.nextElection = addMonths(date, regime.electionIntervalMonths);
+  } else {
+    politics.nextElection ??= addMonths(date, regime.electionIntervalMonths);
   }
   // Laws the new regime does not allow go at once.
   politics.laws = politics.laws.filter((l) => {

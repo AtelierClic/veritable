@@ -9,7 +9,7 @@
         "fictional": "leader.fra-sebastien-lecornu.fictional"
       },
       "born": "1986-06-11",
-      "party": null,
+      "party": "fra-renaissance",
       "traits": {
         "economic": 0.3,
         "authority": 0,
@@ -32,7 +32,7 @@
         "fictional": "leader.fra-emmanuel-macron.fictional"
       },
       "born": "1977-12-21",
-      "party": "fra-parti-socialiste",
+      "party": "fra-renaissance",
       "traits": {
         "economic": 0.3,
         "authority": -0.1,

@@ -211,7 +211,7 @@
       "coupValue": 0.4,
       "revolutionValue": 0.5
     },
-    "corruptionLeakScale": 0.2,
+    "corruptionLeakScale": 0.1,
     "laws": {
       "repealDelayMonths": 12,
       "rampMonths": 6

@@ -221,7 +221,8 @@
         "charisma": 0.6,
         "competence": 0.55
       },
-      "note": "Travailliste de l'aile gauche modérée, ancien maire du Grand Manchester ; charisme régional reconnu (0,6) ; peu agressif ; internationalisme prudent après le Brexit."
+      "note": "Travailliste de l'aile gauche modérée, ancien maire du Grand Manchester ; charisme régional reconnu (0,6) ; peu agressif ; internationalisme prudent après le Brexit.",
+      "partyQid": "Q9630"
     },
     "ITA/head-of-state": {
       "person": "Sergio Mattarella",
@@ -299,7 +300,8 @@
         "charisma": 0.6,
         "competence": 0.65
       },
-      "note": "Libéral pro-européen, ancien président du Conseil européen (compétence 0,65) ; ferme face à la Russie (agressivité 0,4) ; charisme 0,6."
+      "note": "Libéral pro-européen, ancien président du Conseil européen (compétence 0,65) ; ferme face à la Russie (agressivité 0,4) ; charisme 0,6. Wikidata le rattache à la Plate-forme civique (PO, hors liste) : rattaché à la Coalition civique qu'il conduit.",
+      "partyQid": "Q1021144"
     },
     "UKR/head-of-state": {
       "person": "Volodymyr Zelensky",
@@ -312,7 +314,8 @@
         "charisma": 0.85,
         "competence": 0.6
       },
-      "note": "Président en guerre : charisme exceptionnel (0,85), agressivité élevée par nécessité (0,6), centralisation du pouvoir en temps de guerre (autorité +0,2) ; corruption systémique du pays mais personnelle modérée (0,2)."
+      "note": "Président en guerre : charisme exceptionnel (0,85), agressivité élevée par nécessité (0,6), centralisation du pouvoir en temps de guerre (autorité +0,2) ; corruption systémique du pays mais personnelle modérée (0,2). Wikidata : sans parti ; rattaché à Serviteur du peuple, son parti d'origine.",
+      "partyQid": "Q52292915"
     },
     "UKR/head-of-government": {
       "person": "Serhiï Koretskyï",
@@ -325,7 +328,8 @@
         "charisma": 0.4,
         "competence": 0.6
       },
-      "note": "Premier ministre au 2026-09-23 selon Wikidata ; profil de technocrate de guerre supposé : libéral en économie, discret (charisme 0,4), compétent (0,6)."
+      "note": "Premier ministre au 2026-09-23 selon Wikidata ; profil de technocrate de guerre supposé : libéral en économie, discret (charisme 0,4), compétent (0,6).",
+      "partyQid": "Q52292915"
     },
     "RUS/head-of-state": {
       "person": "Vladimir Poutine",
@@ -338,7 +342,8 @@
         "charisma": 0.6,
         "competence": 0.6
       },
-      "note": "Autocrate (autorité +0,9), souverainiste et eurasiste (+0,9), guerre d'agression en cours (agressivité 0,9) ; corruption systémique du régime (0,7) ; charisme et compétence solides dans son registre."
+      "note": "Autocrate (autorité +0,9), souverainiste et eurasiste (+0,9), guerre d'agression en cours (agressivité 0,9) ; corruption systémique du régime (0,7) ; charisme et compétence solides dans son registre. Wikidata : sans parti ; rattaché à Russie unie, qu'il a fondée.",
+      "partyQid": "Q151469"
     },
     "RUS/head-of-government": {
       "person": "Mikhaïl Michoustine",
@@ -351,7 +356,8 @@
         "charisma": 0.3,
         "competence": 0.7
       },
-      "note": "Technocrate fiscal, exécutant du président (charisme 0,3, compétence 0,7) ; corruption du système (0,5) ; agressivité faible en propre."
+      "note": "Technocrate fiscal, exécutant du président (charisme 0,3, compétence 0,7) ; corruption du système (0,5) ; agressivité faible en propre.",
+      "partyQid": "Q151469"
     },
     "TUR/head-of-state": {
       "person": "Recep Tayyip Erdoğan",

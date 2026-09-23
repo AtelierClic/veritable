@@ -58,8 +58,22 @@ describe("fifty years headless", () => {
         expect(low, `${good} seed ${seed}`).toBeGreaterThan(0.5);
         expect(high, `${good} seed ${seed}`).toBeLessThan(2);
       }
-      expect(result.defaults, `seed ${seed}`).toEqual([]);
+      // Since the J4 a nation can fall to a junta (legitimacy 0.4, unrest,
+      // suspension by the EU): its interest rate climbs and, over decades,
+      // it may default. A default is only tolerated there; a stable state
+      // never defaults and its debt does not diverge.
+      const shaken = new Set(
+        Object.entries(result.politics)
+          .filter(([, p]) => p.coups > 0 || p.revolutions > 0)
+          .map(([id]) => id),
+      );
+      for (const entry of result.defaults) {
+        expect(shaken.has(entry.split("@")[0]), `${entry} seed ${seed}`).toBe(
+          true,
+        );
+      }
       for (const [nation, debt] of Object.entries(result.final.maxDebtToGdp)) {
+        if (shaken.has(nation)) continue;
         expect(debt, `${nation} seed ${seed}`).toBeLessThan(
           config.budget.default.debtToGdp,
         );
@@ -69,6 +83,7 @@ describe("fifty years headless", () => {
       const first = result.series[0].debtToGdp;
       const prudent = config.ai.fiscal.prudentDebtToGdp;
       for (const [nation, debt] of Object.entries(result.final.debtToGdp)) {
+        if (shaken.has(nation)) continue;
         expect(debt, `${nation} seed ${seed}`).toBeLessThan(
           Math.max(first[nation], prudent) + 0.2,
         );
@@ -117,7 +132,9 @@ describe("cutting a gas supplier shows in the curves", () => {
     const later = at("2029-01-01", cut);
     const laterControl = at("2029-01-01", control);
     expect(later.prices.gas).toBeGreaterThan(laterControl.prices.gas * 1.04);
-    expect(later.gasCoverage.DEU).toBeGreaterThan(0.95);
+    // Pipeline gas re-routes little (circumvention cap of the J3 close-out):
+    // part of the Russian gas stays withheld, the world covers most of it.
+    expect(later.gasCoverage.DEU).toBeGreaterThan(0.9);
     // ...but the growth lost is lost.
     expect(later.gdp.DEU).toBeLessThan(laterControl.gdp.DEU * 0.998);
     expect(cut.series[cut.series.length - 1].gdp.DEU).toBeLessThan(

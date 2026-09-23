@@ -73,7 +73,7 @@
     "qid": "Q55917",
     "label": "Jarosław Kaczyński",
     "born": "1949-06-18",
-    "party": "Q156874"
+    "party": "Q1475388"
    }
   },
   {
@@ -81,10 +81,10 @@
    "label": "Coalition civique",
    "ideologies": [],
    "leader": {
-    "qid": "Q946",
-    "label": "Donald Tusk",
-    "born": "1957-04-22",
-    "party": "Q156868"
+    "qid": "Q21282134",
+    "label": "Adam Szłapka",
+    "born": "1984-12-06",
+    "party": "Q20738981"
    }
   },
   {
@@ -105,9 +105,9 @@
     }
    ],
    "leader": {
-    "qid": "Q9352644",
-    "label": "Szymon Hołownia",
-    "born": "1976-09-03",
+    "qid": "Q11778888",
+    "label": "Michał Kobosko",
+    "born": "1968-04-15",
     "party": "Q100979832"
    }
   },
@@ -133,10 +133,10 @@
     }
    ],
    "leader": {
-    "qid": "Q3509201",
-    "label": "Janusz Wojciechowski",
-    "born": "1954-12-06",
-    "party": "Q156874"
+    "qid": "Q1374797",
+    "label": "Władysław Kosiniak-Kamysz",
+    "born": "1981-08-10",
+    "party": "Q218477"
    }
   },
   {
@@ -156,7 +156,7 @@
     "qid": "Q174491",
     "label": "Robert Biedroń",
     "born": "1976-04-13",
-    "party": "Q953174"
+    "party": "Q107418166"
    }
   },
   {
@@ -200,7 +200,7 @@
     "qid": "Q5423758",
     "label": "Krzysztof Bosak",
     "born": "1982-06-13",
-    "party": "Q687574"
+    "party": "Q16597751"
    }
   }
  ]
