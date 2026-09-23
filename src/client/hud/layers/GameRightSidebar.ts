@@ -368,12 +368,14 @@ export class GameRightSidebar extends LitElement implements Controller {
         @contextmenu=${(e: Event) => e.preventDefault()}
       >
         <!-- In-game time -->
-        <div data-game-timer class=${timerClass}>
-          ${this.secondsToHms(this.timer)}
-        </div>
+        ${this.isCampaign()
+          ? ""
+          : html`<div data-game-timer class=${timerClass}>
+              ${this.secondsToHms(this.timer)}
+            </div>`}
 
         <!-- Buttons -->
-        ${this.maybeRenderReplayButtons()}
+        ${this.isCampaign() ? "" : this.maybeRenderReplayButtons()}
 
         <div class="cursor-pointer" @click=${this.onSettingsButtonClick}>
           <img src=${settingsIcon} alt="settings" width="20" height="20" />
@@ -410,6 +412,16 @@ export class GameRightSidebar extends LitElement implements Controller {
         .refreshKey=${this.timer}
       ></overtime-panel>
     `;
+  }
+
+  // VERITABLE: in a campaign the Véritable top bar carries the date and the
+  // speeds (pause, x1, x2, x5): the legacy timer, pause and replay speed are
+  // hidden; settings, fullscreen and exit stay.
+  private isCampaign(): boolean {
+    const config = (
+      this.game as { config?: () => { isVeritable?: () => boolean } } | undefined
+    )?.config?.();
+    return config?.isVeritable?.() === true;
   }
 
   maybeRenderReplayButtons() {

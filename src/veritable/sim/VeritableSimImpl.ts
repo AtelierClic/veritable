@@ -305,6 +305,8 @@ export class VeritableSimImpl implements VeritableSim {
       initialTiles: Object.fromEntries(
         this.nations.map((n) => [n.id, n.tileCount]),
       ),
+      structures: Object.fromEntries(this.deps.world.structureCounts()),
+      constructionCost: {},
     };
   }
 
@@ -749,6 +751,7 @@ export class VeritableSimImpl implements VeritableSim {
       fronts: this.frontViews,
       contested: Object.fromEntries(this.deps.world.contestedCounts()),
       initialTiles: this.territory.initialTiles,
+      constructionCost: this.territory.constructionCost,
       casusBelli,
       electionProjection:
         player === null
@@ -1126,6 +1129,10 @@ export class VeritableSimImpl implements VeritableSim {
       transfers[r.from] = (transfers[r.from] ?? 0) - amount;
       transfers[r.to] = (transfers[r.to] ?? 0) + amount;
     }
+    // What was built on the map since last month (J5).
+    for (const [id, cost] of Object.entries(this.constructionMonth())) {
+      transfers[id] = (transfers[id] ?? 0) - cost;
+    }
     for (const id of this.ctx.nationIds) {
       const economy = this.economy.nations[id];
       const politics = this.politics.nations[id];
@@ -1147,6 +1154,25 @@ export class VeritableSimImpl implements VeritableSim {
         stepFiscalRule(this.ctx, economy);
       }
     }
+  }
+
+  // Structures built since the last count, at their cost: the legacy gold is
+  // no resource in a campaign, the national budget pays (J5).
+  private constructionMonth(): Record<NationId, number> {
+    const prices = this.deps.config.budget.structureCostUsd;
+    const counts = this.deps.world.structureCounts();
+    const costs: Record<NationId, number> = {};
+    for (const [id, count] of counts) {
+      const before = this.territory.structures[id] ?? {};
+      let cost = 0;
+      for (const [type, n] of Object.entries(count)) {
+        cost += Math.max(0, n - (before[type] ?? 0)) * (prices[type] ?? 0);
+      }
+      costs[id] = cost;
+    }
+    this.territory.structures = Object.fromEntries(counts);
+    this.territory.constructionCost = costs;
+    return costs;
   }
 
   private blocsMonth(clock: ClockContext): void {

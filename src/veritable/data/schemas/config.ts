@@ -93,6 +93,9 @@ const BudgetConfigSchema = z.object({
     satisfactionHit: share,
     stabilityHit: share,
   }),
+  // What a structure (or a level of it) built on the map costs the national
+  // budget, US$, charged the month after (J5). Keys: OpenFront unit types.
+  structureCostUsd: z.record(z.string(), z.number().min(0)),
 });
 
 const PoliticsConfigSchema = z.object({

@@ -314,6 +314,15 @@ export function createRenderer(
   tutorialPanel.userSettings = userSettings;
   tutorialPanel.uiState = uiState;
 
+  // VERITABLE: in a campaign, the legacy panels that show gold, troops and
+  // tile shares, send legacy attacks or alliances, or teach the legacy game
+  // are hidden (inventory in docs/veritable/plans/J5.md); those that act on
+  // input or load ads do not run at all.
+  const campaign = isCampaign(game);
+  if (campaign) hideLegacyPanels();
+  const legacy = <T extends Controller>(layer: T): T[] =>
+    campaign ? [] : [layer];
+
   const layers: Controller[] = [
     new WarshipSelectionController(game, eventBus, transformHandler, view),
     new BuildPreviewController(
@@ -342,14 +351,16 @@ export function createRenderer(
     attacksDisplay,
     chatDisplay,
     buildMenu,
-    new MainRadialMenu(
-      eventBus,
-      game,
-      transformHandler,
-      emojiTable as EmojiTable,
-      buildMenu,
-      uiState,
-      playerPanel,
+    ...legacy(
+      new MainRadialMenu(
+        eventBus,
+        game,
+        transformHandler,
+        emojiTable as EmojiTable,
+        buildMenu,
+        uiState,
+        playerPanel,
+      ),
     ),
     spawnTimer,
     immunityTimer,
@@ -358,15 +369,15 @@ export function createRenderer(
     gameRightSidebar,
     controlPanel,
     playerInfo,
-    winModal,
+    ...legacy(winModal),
     newLobbyPrompt,
     replayPanel,
     settingsModal,
     playerPanel,
     headsUpMessage,
     multiTabModal,
-    inGamePromo,
-    tutorialPanel,
+    inGamePromo, // VERITABLE: no corner ad in a campaign (InGamePromo)
+    ...legacy(tutorialPanel),
     alertFrame,
     performanceOverlay,
   ];
@@ -377,6 +388,39 @@ export function createRenderer(
     layers,
     performanceOverlay,
   );
+}
+
+// VERITABLE: legacy panels hidden in a campaign, by tag (a stylesheet rather
+// than an inline style: several of them toggle their own visibility).
+const LEGACY_PANELS = [
+  "game-left-sidebar", // leaderboard by share of tiles
+  "control-panel", // troops, gold, attack ratio
+  "player-info-overlay", // troops and gold on hover
+  "player-panel", // legacy alliances, trade, embargo, donations
+  "send-resource-modal",
+  "events-display", // legacy event feed (attacks, alliances)
+  "actionable-events",
+  "attacks-display",
+  "chat-display",
+  "chat-modal",
+  "emoji-table",
+  "replay-panel", // speeds: the Véritable top bar has them
+  "tutorial-panel", // teaches the legacy game
+  "spawn-timer", // no spawn phase in a campaign
+  "immunity-timer",
+  "heads-up-message",
+  "win-modal", // no victory
+  "alert-frame", // alerts of legacy attacks
+  "in-game-promo",
+];
+
+function hideLegacyPanels(): void {
+  const id = "veritable-legacy-panels";
+  if (document.getElementById(id) !== null) return;
+  const style = document.createElement("style");
+  style.id = id;
+  style.textContent = `${LEGACY_PANELS.join(", ")} { display: none !important; }`;
+  document.head.appendChild(style);
 }
 
 // VERITABLE: a campaign game (tolerant of the doubles of the OpenFront tests).

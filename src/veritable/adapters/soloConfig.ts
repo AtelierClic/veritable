@@ -3,7 +3,7 @@ import {
   GameStartInfo,
   GameStartInfoSchema,
 } from "../../core/Schemas";
-import { GameMapSize, GameMapType } from "../../core/game/Game";
+import { GameMapSize, GameMapType, UnitType } from "../../core/game/Game";
 import { loadScenario } from "../data/catalog";
 import { peekCoreStart } from "../save/serialize";
 import { LEGACY_SAVE_ERROR } from "./campaign";
@@ -45,6 +45,17 @@ export function veritableSoloConfig(
     overtime: undefined,
     // The Doomsday Clock is an elimination mechanic.
     doomsdayClock: undefined,
+    // J5: the factory only fed the legacy economy, and warheads go through
+    // the Véritable nuclear system (doctrines, dead hand), never the build
+    // bar. The legacy gold is no resource any more: what the player builds
+    // is paid by its national budget (config.budget.structureCostUsd).
+    disabledUnits: [
+      UnitType.Factory,
+      UnitType.AtomBomb,
+      UnitType.HydrogenBomb,
+      UnitType.MIRV,
+    ],
+    infiniteGold: true,
   };
 }
 

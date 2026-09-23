@@ -278,6 +278,8 @@ export interface ReadonlyWorldView {
   // Contested tiles each nation holds (J5), and its tiles on the first day.
   readonly contested: Readonly<Record<NationId, number>>;
   readonly initialTiles: Readonly<Record<NationId, number>>;
+  // What the structures built on the map cost each budget last month (US$).
+  readonly constructionCost: Readonly<Record<NationId, number>>;
   // Casus belli the player could invoke against each other nation.
   readonly casusBelli: Readonly<Record<NationId, readonly string[]>>;
   // The political engine (J4): projected shares of the player's next
@@ -373,6 +375,9 @@ export interface WorldPort {
   cede(winner: NationId): number;
   // Contests older than their delay end; returns how many.
   settleContested(warMonths: number, cessionMonths: number): number;
+  // Structures each nation has on the map, levels summed, by OpenFront unit
+  // type (J5: what it builds is paid by its budget).
+  structureCounts(): ReadonlyMap<NationId, Record<string, number>>;
 }
 
 export { NationIdSchema };

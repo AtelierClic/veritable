@@ -33,7 +33,12 @@ export class InGamePromo extends LitElement implements Controller {
         this.bottomRailDestroyed = true;
         this.destroyBottomRail();
       }
-      if (!this.cornerAdShown) {
+      // VERITABLE: a campaign shows no corner ad (the bottom rail of the
+      // home page is still torn down above).
+      const config = (
+        this.game as { config?: () => { isVeritable?: () => boolean } }
+      ).config?.();
+      if (!this.cornerAdShown && config?.isVeritable?.() !== true) {
         this.cornerAdShown = true;
         console.log("[InGamePromo] Spawn phase ended, triggering showAd");
         this.showAd();

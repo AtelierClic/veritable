@@ -438,6 +438,11 @@ export const TerritoryStateSchema = z.object({
   // Tiles of each nation on the first day of the campaign (nuclear threat:
   // share of the territory lost).
   initialTiles: z.record(z.string(), zb.uint()),
+  // Structures each nation has built on the map (levels summed, by OpenFront
+  // unit type) at the last monthly count, and what the new ones cost its
+  // budget that month (US$).
+  structures: z.record(z.string(), z.record(z.string(), zb.uint())),
+  constructionCost: z.record(z.string(), zb.float()),
 });
 export type TerritoryState = z.infer<typeof TerritoryStateSchema>;
 

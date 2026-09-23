@@ -236,7 +236,11 @@ export class VeritableScreens extends LitElement {
     `;
   }
 
-  private renderBudget(e: NationEconomy, p: NationPolitics) {
+  private renderBudget(
+    e: NationEconomy,
+    p: NationPolitics,
+    constructionCost: number,
+  ) {
     const yearly = (monthly: number) => (monthly * 12) / e.gdp;
     const balance = e.revenue - e.expenditure;
     const budget = this.config.budget;
@@ -260,6 +264,10 @@ export class VeritableScreens extends LitElement {
         <span
           >${vt("screen.budget.debt")} :
           <b>${pct(e.debt / e.gdp, 0)}</b> (${money(e.debt)})</span
+        >
+        <span
+          >${vt("screen.budget.constructions")} :
+          <b>${money(constructionCost)}</b></span
         >
         <span class="text-yellow-300">
           ${e.austerity ? vt("screen.budget.austerity") : nothing}
@@ -1643,7 +1651,11 @@ export class VeritableScreens extends LitElement {
           : screen === "economy"
             ? this.renderEconomy(view, economy)
             : screen === "budget"
-              ? this.renderBudget(economy, politics)
+              ? this.renderBudget(
+                  economy,
+                  politics,
+                  view.constructionCost[view.playerNation ?? ""] ?? 0,
+                )
               : screen === "opinion"
                 ? this.renderOpinion(view, politics)
                 : screen === "war"

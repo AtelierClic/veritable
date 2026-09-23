@@ -112,6 +112,7 @@
   "screen.budget.balance": "Solde",
   "screen.budget.interest": "Intérêts (taux)",
   "screen.budget.debt": "Dette / PIB",
+  "screen.budget.constructions": "Constructions sur la carte, mois dernier",
   "screen.budget.austerity": "Austérité forcée : postes plafonnés.",
   "screen.budget.no-deficit": "Défaut : aucun déficit financé jusqu'au {date}.",
   "screen.budget.reprimanded": "Réprimande de l'UE (3 % / 60 %).",

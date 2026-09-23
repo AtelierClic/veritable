@@ -14,7 +14,10 @@ import { MigrationContext } from "./index";
 //     contested ten years from then (the v4 did not know since when);
 //   - the territory of the first day: the tiles of each nation in the
 //     scenario borders when the caller has them, else its tiles in the save
-//     (a nation at war then measures its later losses from that day).
+//     (a nation at war then measures its later losses from that day);
+//   - the structures of each nation, counted from the core state of the save
+//     (levels summed): only those built after the migration are charged to
+//     its budget.
 export function v4ToV5(
   save: SaveFileV4,
   context: MigrationContext | undefined,
@@ -37,10 +40,18 @@ export function v4ToV5(
       context?.initialTiles?.[n.id] ?? counts[n.id],
     ]),
   );
+  const structures: Record<NationId, Record<string, number>> = {};
+  for (const player of save.world.players) {
+    const count: Record<string, number> = {};
+    for (const s of player.structures) {
+      count[s.type] = (count[s.type] ?? 0) + Math.max(1, s.level);
+    }
+    structures[player.nation] = count;
+  }
   return {
     ...save,
     schemaVersion: 5,
-    territory: { initialTiles },
+    territory: { initialTiles, structures, constructionCost: {} },
     contest,
   } as SaveFileV5;
 }

@@ -75,6 +75,14 @@
       "noDeficitYears": 5,
       "satisfactionHit": 0.15,
       "stabilityHit": 0.15
+    },
+    "structureCostUsd": {
+      "City": 5000000000,
+      "Port": 2000000000,
+      "DefensePost": 500000000,
+      "SAMLauncher": 1000000000,
+      "MissileSilo": 3000000000,
+      "Warship": 1500000000
     }
   },
   "politics": {

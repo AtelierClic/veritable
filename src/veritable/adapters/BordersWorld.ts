@@ -165,4 +165,8 @@ export class BordersWorld implements WorldPort {
   settleContested(): number {
     return 0;
   }
+
+  structureCounts(): ReadonlyMap<NationId, Record<string, number>> {
+    return new Map();
+  }
 }

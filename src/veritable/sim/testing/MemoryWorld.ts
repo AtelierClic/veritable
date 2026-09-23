@@ -70,6 +70,13 @@ export class MemoryWorld implements WorldPort {
     return this.ledger.cede((tile) => this.owners[tile] === winner);
   }
 
+  // Structures on the map, set by the tests.
+  readonly built = new Map<NationId, Record<string, number>>();
+
+  structureCounts(): ReadonlyMap<NationId, Record<string, number>> {
+    return this.built;
+  }
+
   settleContested(warMonths: number, cessionMonths: number): number {
     return this.ledger.settle(
       warMonths,

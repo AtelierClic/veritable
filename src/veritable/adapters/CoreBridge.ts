@@ -298,6 +298,22 @@ export class CoreBridge implements WorldPort {
     );
   }
 
+  structureCounts(): ReadonlyMap<NationId, Record<string, number>> {
+    const counts = new Map<NationId, Record<string, number>>();
+    if (this.pending !== null) return counts;
+    for (const [id, player] of this.byNation) {
+      const count: Record<string, number> = {};
+      for (const unit of player.units()) {
+        const type = unit.type();
+        if (!unit.isActive()) continue;
+        if (!Structures.has(type) && type !== UnitType.Warship) continue;
+        count[type] = (count[type] ?? 0) + Math.max(1, unit.level());
+      }
+      counts.set(id, count);
+    }
+    return counts;
+  }
+
   // What the map overlay draws (client, campaign): the line of every
   // segment of the last computed geometry, as the centres of runs of `step`
   // tiles along the line (the tiles of both sides alternate: a centre is

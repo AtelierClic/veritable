@@ -994,22 +994,27 @@ export class ClientGameRunner {
     this.eventBus.on(MouseUpEvent, this.inputEvent.bind(this));
     this.eventBus.on(MouseMoveEvent, this.onMouseMove.bind(this));
     this.eventBus.on(AutoUpgradeEvent, this.autoUpgradeEvent.bind(this));
-    this.eventBus.on(
-      DoBoatAttackEvent,
-      this.doBoatAttackUnderCursor.bind(this),
-    );
-    this.eventBus.on(
-      DoGroundAttackEvent,
-      this.doGroundAttackUnderCursor.bind(this),
-    );
-    this.eventBus.on(
-      DoRetaliateAttackEvent,
-      this.doRetaliateAttackMostRecent.bind(this),
-    );
-    this.eventBus.on(
-      DoRequestAllianceEvent,
-      this.doRequestAllianceUnderCursor.bind(this),
-    );
+    // VERITABLE: in a campaign the hotkeys of the legacy ground attack,
+    // boat, retaliation and alliance are blocked like the click: the fronts,
+    // divisions and the Véritable diplomacy do that.
+    if (!this.isCampaign()) {
+      this.eventBus.on(
+        DoBoatAttackEvent,
+        this.doBoatAttackUnderCursor.bind(this),
+      );
+      this.eventBus.on(
+        DoGroundAttackEvent,
+        this.doGroundAttackUnderCursor.bind(this),
+      );
+      this.eventBus.on(
+        DoRetaliateAttackEvent,
+        this.doRetaliateAttackMostRecent.bind(this),
+      );
+      this.eventBus.on(
+        DoRequestAllianceEvent,
+        this.doRequestAllianceUnderCursor.bind(this),
+      );
+    }
     this.eventBus.on(
       DoBreakAllianceEvent,
       this.doBreakAllianceUnderCursor.bind(this),
@@ -1238,10 +1243,7 @@ export class ClientGameRunner {
     // VERITABLE: in a campaign the fronts and divisions move the lines
     // (declared and ordered from the Véritable screens); a click on the map
     // never sends the legacy attack or boat.
-    const config = (
-      this.gameView as { config?: () => { isVeritable?: () => boolean } }
-    ).config?.();
-    if (config?.isVeritable?.() === true) {
+    if (this.isCampaign()) {
       return;
     }
     if (this.myPlayer === null) {
@@ -1377,6 +1379,14 @@ export class ClientGameRunner {
       .catch((error) => {
         console.warn("Failed to check structure upgrade actions:", error);
       });
+  }
+
+  // VERITABLE: a campaign game (tolerant of the doubles of the tests).
+  private isCampaign(): boolean {
+    const config = (
+      this.gameView as { config?: () => { isVeritable?: () => boolean } }
+    ).config?.();
+    return config?.isVeritable?.() === true;
   }
 
   private doBoatAttackUnderCursor(): void {
