@@ -1,0 +1,230 @@
+{
+ "nation": "ESP",
+ "country": "Q29",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6070218",
+    "label": "Pedro Sánchez",
+    "born": "1972-02-29",
+    "party": "Q138198"
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q191045",
+    "label": "Philippe VI d'Espagne",
+    "born": "1968-01-30",
+    "party": null
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q185088",
+   "label": "Parti populaire",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q2457783",
+    "label": "Alberto Núñez Feijóo",
+    "born": "1961-09-10",
+    "party": "Q185088"
+   }
+  },
+  {
+   "qid": "Q138198",
+   "label": "Parti socialiste ouvrier espagnol",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2984396",
+    "label": "Cristina Narbona",
+    "born": "1951-07-29",
+    "party": "Q138198"
+   }
+  },
+  {
+   "qid": "Q15630787",
+   "label": "Vox",
+   "ideologies": [
+    {
+     "qid": "Q1757356",
+     "label": "centralisme"
+    },
+    {
+     "qid": "Q575220",
+     "label": "antiféminisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q7573482",
+     "label": "unionisme espagnol"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    },
+    {
+     "qid": "Q9091203",
+     "label": "ultraconservatisme"
+    },
+    {
+     "qid": "Q948731",
+     "label": "nationalisme espagnol"
+    }
+   ],
+   "leader": {
+    "qid": "Q11703587",
+    "label": "Santiago Abascal",
+    "born": "1976-04-14",
+    "party": "Q185088"
+   }
+  },
+  {
+   "qid": "Q112098527",
+   "label": "Sumar",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q150068",
+   "label": "Gauche républicaine de Catalogne",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1377153",
+     "label": "européisme"
+    },
+    {
+     "qid": "Q1735599",
+     "label": "nationalisme catalan"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q275595",
+     "label": "écosocialisme"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q7252",
+     "label": "féminisme"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    },
+    {
+     "qid": "Q893331",
+     "label": "indépendantisme catalan"
+    }
+   ],
+   "leader": {
+    "qid": "Q116812",
+    "label": "Oriol Junqueras",
+    "born": "1969-04-11",
+    "party": "Q150068"
+   }
+  },
+  {
+   "qid": "Q97155800",
+   "label": "Ensemble pour la Catalogne",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1377153",
+     "label": "européisme"
+    },
+    {
+     "qid": "Q1735599",
+     "label": "nationalisme catalan"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q785893",
+     "label": "unilateralism"
+    },
+    {
+     "qid": "Q893331",
+     "label": "indépendantisme catalan"
+    }
+   ],
+   "leader": {
+    "qid": "Q4740163",
+    "label": "Carles Puigdemont",
+    "born": "1962-12-29",
+    "party": "Q97155800"
+   }
+  }
+ ]
+}

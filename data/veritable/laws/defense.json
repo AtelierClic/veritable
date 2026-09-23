@@ -1,0 +1,281 @@
+[
+  {
+    "id": "defense-spending-target",
+    "name": "law.defense-spending-target.name",
+    "description": "law.defense-spending-target.desc",
+    "domain": "defense",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.defense",
+        "op": "add",
+        "value": 0.01,
+        "mode": "once"
+      },
+      {
+        "target": "groups.military",
+        "op": "add",
+        "value": 0.06,
+        "mode": "while"
+      },
+      {
+        "target": "groups.retirees",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "conscription-abolition",
+    "name": "law.conscription-abolition.name",
+    "description": "law.conscription-abolition.desc",
+    "domain": "defense",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 30,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 0.2],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "conscriptionCeiling",
+        "op": "set",
+        "value": "peace",
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      },
+      {
+        "target": "groups.military",
+        "op": "add",
+        "value": -0.04,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "compulsory-military-service",
+    "name": "law.compulsory-military-service.name",
+    "description": "law.compulsory-military-service.desc",
+    "domain": "defense",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 25,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": -0.05,
+        "mode": "while"
+      },
+      {
+        "target": "groups.military",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      },
+      {
+        "target": "manpowerBonus",
+        "op": "add",
+        "value": 0.2,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "arms-export-liberalisation",
+    "name": "law.arms-export-liberalisation.name",
+    "description": "law.arms-export-liberalisation.desc",
+    "domain": "defense",
+    "capitalCost": 15,
+    "reversible": {
+      "cost": 10,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": 0.0005,
+        "mode": "while"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -5,
+        "mode": "once"
+      }
+    ]
+  },
+  {
+    "id": "alliance-integration-programme",
+    "name": "law.alliance-integration-programme.name",
+    "description": "law.alliance-integration-programme.desc",
+    "domain": "defense",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 0.3]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.military",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": -0.0005,
+        "mode": "while"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": 10,
+        "mode": "once"
+      }
+    ]
+  },
+  {
+    "id": "army-purge",
+    "name": "law.army-purge.name",
+    "description": "law.army-purge.desc",
+    "domain": "defense",
+    "capitalCost": 35,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.4, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "coupRisk",
+        "op": "mul",
+        "value": 0.6,
+        "mode": "while"
+      },
+      {
+        "target": "groups.military",
+        "op": "add",
+        "value": -0.1,
+        "mode": "while"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.05,
+        "mode": "once"
+      }
+    ]
+  }
+]

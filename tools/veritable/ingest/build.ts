@@ -318,6 +318,7 @@ export function build(scenarioId: string): void {
       capital: existing.capital,
       regime: existing.regime,
       regimeSource: existing.regimeSource,
+      politics: existing.politics,
       blocs: existing.blocs,
       nuclear:
         nuclear === undefined

@@ -1,0 +1,256 @@
+{
+ "nation": "RUS",
+ "country": "Q159",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q4298520",
+    "label": "Mikhaïl Michoustine",
+    "born": "1966-03-03",
+    "party": null
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q7747",
+    "label": "Vladimir Poutine",
+    "born": "1952-10-07",
+    "party": null
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q151469",
+   "label": "Russie unie",
+   "ideologies": [
+    {
+     "qid": "Q1207817",
+     "label": "poutinisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q2354258",
+     "label": "Nationalisme russe"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q23530",
+    "label": "Dmitri Medvedev",
+    "born": "1965-09-14",
+    "party": "Q79854"
+   }
+  },
+  {
+   "qid": "Q192187",
+   "label": "Parti communiste de la fédération de Russie",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q125750162",
+     "label": "conservatisme de gauche"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q1977701",
+     "label": "néo-Stalinisme"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    },
+    {
+     "qid": "Q574827",
+     "label": "antiaméricanisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    },
+    {
+     "qid": "Q621761",
+     "label": "nostalgie de l'Union soviétique"
+    },
+    {
+     "qid": "Q6241",
+     "label": "patriotisme"
+    },
+    {
+     "qid": "Q7272",
+     "label": "socialisme"
+    },
+    {
+     "qid": "Q7571792",
+     "label": "patriotisme soviétique"
+    },
+    {
+     "qid": "Q8881",
+     "label": "socialisme du XXIe siècle"
+    }
+   ],
+   "leader": {
+    "qid": "Q182452",
+    "label": "Guennadi Ziouganov",
+    "born": "1944-06-26",
+    "party": "Q79854"
+   }
+  },
+  {
+   "qid": "Q212115",
+   "label": "Parti libéral-démocrate de Russie",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q15680807",
+     "label": "irrédentisme russe"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q182267",
+     "label": "panslavisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q2354258",
+     "label": "Nationalisme russe"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q38352698",
+     "label": "ultranationalisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q696116",
+     "label": "néofascisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2037108",
+    "label": "Leonid Sloutski",
+    "born": "1968-01-04",
+    "party": "Q212115"
+   }
+  },
+  {
+   "qid": "Q210692",
+   "label": "Russie juste",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q1822939",
+     "label": "socialisme libéral"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q2354258",
+     "label": "Nationalisme russe"
+    }
+   ],
+   "leader": {
+    "qid": "Q4415436",
+    "label": "Guennadi Semiguine",
+    "born": "1964-03-23",
+    "party": "Q79854"
+   }
+  },
+  {
+   "qid": "Q98842815",
+   "label": "Nouvelles Personnes",
+   "ideologies": [
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    },
+    {
+     "qid": "Q324530",
+     "label": "communautarisme"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q107311193",
+    "label": "Alexeï Netchaïev",
+    "born": "1966-08-30",
+    "party": "Q98842815"
+   }
+  }
+ ]
+}

@@ -1,7 +1,13 @@
 import { z } from "zod";
 import { zb } from "../../../../zbin";
-import { IsoDateSchema, NationIdSchema } from "./common";
-import { CalendarSchema, NationStateSchema, WorldStateSchema } from "./saveV1";
+import { IsoDateSchema, NationIdSchema, RegimeSchema } from "./common";
+import { ActorRoleSchema } from "./leaders";
+import {
+  CalendarSchema,
+  NationNameSchema,
+  NationStateSchema,
+  WorldStateSchema,
+} from "./saveV1";
 
 // Save file, CURRENT version: schemaVersion 4 (J4: circumvention per good,
 // the political engine — regimes, leaders, parties, elections, laws,
@@ -43,6 +49,24 @@ export const JOURNAL_KINDS_V4 = [
   "annexation",
   "landing-refused",
   "landing",
+  // The political engine (J4).
+  "election-held",
+  "government-formed",
+  "elections-suspended",
+  "law-enacted",
+  "law-refused",
+  "law-repealed",
+  "law-repeal-announced",
+  "coup-attempted",
+  "coup-succeeded",
+  "revolution",
+  "leader-died",
+  "leader-succeeded",
+  "fraud-detected",
+  "objective-completed",
+  "regime-changed",
+  "bloc-suspended",
+  "note",
 ] as const;
 export const JournalEntryV4Schema = z.object({
   date: IsoDateSchema,
@@ -78,10 +102,14 @@ export const NationEconomySchema = z.object({
   exportShareReference: zb.float(),
   shortage: zb.float(), // weighted lack of coverage, 0..1
   priceIndex: zb.float(), // consumer basket, 1 = base prices
-  taxes: amounts,
+  taxes: amounts, // in effect
   taxes0: amounts,
-  spending: amounts, // shares of GDP
+  spending: amounts, // shares of GDP, in effect
   spending0: amounts,
+  // Sliders with a progressive effect (J4): what the player or the AI set;
+  // the values in effect reach them over laws.rampMonths.
+  taxTargets: amounts,
+  spendingTargets: amounts,
   grantsPctGdp: zb.float(),
   investmentReference: zb.float(), // infrastructure + research on day one
   revenue: zb.float(), // last month, US$
@@ -111,6 +139,53 @@ export const NationEconomySchema = z.object({
 });
 export type NationEconomy = z.infer<typeof NationEconomySchema>;
 
+// --- the political engine (J4) --------------------------------------------
+
+// Wire versions of the ideology and traits of politics.ts / leaders.ts (zbin
+// wants explicit number encodings).
+export const IdeologyWireSchema = z.object({
+  economic: zb.float(),
+  authority: zb.float(),
+  sovereignty: zb.float(),
+});
+export const TraitsWireSchema = IdeologyWireSchema.extend({
+  aggressiveness: zb.float(),
+  corruption: zb.float(),
+  charisma: zb.float(),
+  competence: zb.float(),
+});
+
+// A political actor in play: the leader of the nation or of a party. Real
+// ones carry an i18n key (parody or fictional name, per config), generated
+// ones a literal name drawn from the name pools.
+export const ActorStateSchema = z.object({
+  id: z.string().min(1),
+  name: NationNameSchema,
+  born: IsoDateSchema,
+  party: z.string().nullable(),
+  role: ActorRoleSchema,
+  traits: TraitsWireSchema,
+});
+export type ActorState = z.infer<typeof ActorStateSchema>;
+
+export const PartyStateSchema = z.object({
+  id: z.string().min(1),
+  name: NationNameSchema,
+  ideology: IdeologyWireSchema,
+  support: zb.float(), // share at the last election
+  leader: ActorStateSchema,
+});
+export type PartyState = z.infer<typeof PartyStateSchema>;
+
+export const ElectionResultSchema = z.object({
+  date: IsoDateSchema,
+  results: amounts, // party -> share
+  incumbentShare: zb.float(),
+  alternation: z.boolean(),
+  fraudDetected: z.boolean(),
+});
+export type ElectionResult = z.infer<typeof ElectionResultSchema>;
+
 export const NationPoliticsSchema = z.object({
   // Eight interest groups: the player's nation only (asymmetric simulation).
   groups: amounts.nullable(),
@@ -123,8 +198,54 @@ export const NationPoliticsSchema = z.object({
   // which fades out over some months once the reprimand is lifted.
   deficitBreachMonths: zb.uint(),
   reprimandMalus: zb.float(),
+  // The political engine (J4). The regime in play (a coup or a reform
+  // changes it), legitimacy, political capital, corruption of the leader,
+  // press freedom and media control in effect.
+  regime: RegimeSchema,
+  legitimacy: zb.float(),
+  capital: zb.float(),
+  corruption: zb.float(),
+  pressFreedom: zb.float(),
+  mediaControl: zb.float(),
+  leader: ActorStateSchema,
+  parties: z.array(PartyStateSchema),
+  government: z.object({
+    parties: z.array(z.string()),
+    since: IsoDateSchema,
+    ideology: IdeologyWireSchema,
+  }),
+  nextElection: IsoDateSchema.nullable(),
+  lastElection: ElectionResultSchema.nullable(),
+  electionsSuspended: z.boolean(),
+  levers: z.object({
+    propagandaPctGdp: zb.float(),
+    fraud: zb.float(),
+    clientelism: z.string().nullable(), // targeted group
+  }),
+  laws: z.array(z.object({ id: z.string(), since: IsoDateSchema })),
+  repealing: z.array(z.object({ id: z.string(), at: IsoDateSchema })),
+  lowStabilityMonths: zb.uint(),
+  fraudCoupUntil: IsoDateSchema.nullable(),
+  coupRisk: zb.float(), // last monthly probability, for the screens
+  groupIdeologies: z.record(z.string(), IdeologyWireSchema),
+  // Counters for the metrics and the objectives.
+  alternations: zb.uint(),
+  coups: zb.uint(),
+  revolutions: zb.uint(),
+  electionsWon: zb.uint(),
+  // Blocs with a democratic criterion that suspended the nation (coup).
+  suspendedFrom: z.array(z.string()),
 });
 export type NationPolitics = z.infer<typeof NationPoliticsSchema>;
+
+export const PinnedObjectiveSchema = z.object({
+  id: z.string().min(1),
+  since: IsoDateSchema,
+  baseline: zb.float(), // value of the tracked quantity when pinned
+  progress: zb.float(), // 0..1
+  done: z.boolean(),
+});
+export type PinnedObjective = z.infer<typeof PinnedObjectiveSchema>;
 
 export const EmbargoSchema = z.object({
   from: z.string(), // exporter
@@ -161,6 +282,11 @@ export const PoliticsStateSchema = z.object({
   nations: z.record(z.string(), NationPoliticsSchema),
   // True when the player's nation is run by the AI fiscal rule (headless).
   autopilot: z.boolean(),
+  // The player's objectives and free-text notes (J4).
+  player: z.object({
+    objectives: z.array(PinnedObjectiveSchema),
+    notes: z.array(z.object({ date: IsoDateSchema, text: z.string() })),
+  }),
 });
 export type PoliticsState = z.infer<typeof PoliticsStateSchema>;
 

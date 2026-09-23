@@ -1,0 +1,207 @@
+{
+ "nation": "POL",
+ "country": "Q36",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q946",
+    "label": "Donald Tusk",
+    "born": "1957-04-22",
+    "party": "Q156868"
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q17704749",
+    "label": "Karol Nawrocki",
+    "born": "1983-03-03",
+    "party": "Q327591"
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q156874",
+   "label": "Droit et justice",
+   "ideologies": [
+    {
+     "qid": "Q1322213",
+     "label": "droite chrétienne"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q2483698",
+     "label": "solidarisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    },
+    {
+     "qid": "Q7210053",
+     "label": "nationalisme polonais"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q55917",
+    "label": "Jarosław Kaczyński",
+    "born": "1949-06-18",
+    "party": "Q156874"
+   }
+  },
+  {
+   "qid": "Q1021144",
+   "label": "Coalition civique",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q946",
+    "label": "Donald Tusk",
+    "born": "1957-04-22",
+    "party": "Q156868"
+   }
+  },
+  {
+   "qid": "Q100979832",
+   "label": "Pologne 2050",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q9352644",
+    "label": "Szymon Hołownia",
+    "born": "1976-09-03",
+    "party": "Q100979832"
+   }
+  },
+  {
+   "qid": "Q218477",
+   "label": "Parti paysan polonais",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q179073",
+     "label": "protectionnisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q3509201",
+    "label": "Janusz Wojciechowski",
+    "born": "1954-12-06",
+    "party": "Q156874"
+   }
+  },
+  {
+   "qid": "Q107418166",
+   "label": "Nouvelle Gauche",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q174491",
+    "label": "Robert Biedroń",
+    "born": "1976-04-13",
+    "party": "Q953174"
+   }
+  },
+  {
+   "qid": "Q61568052",
+   "label": "Confédération",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q1129261",
+     "label": "mouvement anti-avortement"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q2258474",
+     "label": "doctrine catholique"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q46607",
+     "label": "libre marché"
+    },
+    {
+     "qid": "Q56641686",
+     "label": "antivaccination"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q5423758",
+    "label": "Krzysztof Bosak",
+    "born": "1982-06-13",
+    "party": "Q687574"
+   }
+  }
+ ]
+}

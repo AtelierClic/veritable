@@ -1,0 +1,247 @@
+{
+ "nation": "DEU",
+ "country": "Q183",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q566257",
+    "label": "Friedrich Merz",
+    "born": "1955-11-11",
+    "party": "Q49762"
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q76658",
+    "label": "Frank-Walter Steinmeier",
+    "born": "1956-01-05",
+    "party": "Q49768"
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q49762",
+   "label": "Union chrétienne-démocrate d'Allemagne",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q566257",
+    "label": "Friedrich Merz",
+    "born": "1955-11-11",
+    "party": "Q49762"
+   }
+  },
+  {
+   "qid": "Q6721203",
+   "label": "Alternative pour l'Allemagne",
+   "ideologies": [
+    {
+     "qid": "Q1931364",
+     "label": "déni du réchauffement climatique"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q22649",
+     "label": "antisémitisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q370744",
+     "label": "nationalisme allemand"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q486296",
+     "label": "islamophobie"
+    },
+    {
+     "qid": "Q575220",
+     "label": "antiféminisme"
+    },
+    {
+     "qid": "Q637251",
+     "label": "nationalisme ethnique"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q27975838",
+    "label": "Alice Weidel",
+    "born": "1979-02-06",
+    "party": "Q6721203"
+   }
+  },
+  {
+   "qid": "Q49768",
+   "label": "Parti social-démocrate d'Allemagne",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q210189",
+     "label": "antifascisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1806261",
+    "label": "Lars Klingbeil",
+    "born": "1978-02-23",
+    "party": "Q49768"
+   }
+  },
+  {
+   "qid": "Q49766",
+   "label": "Alliance 90 / Les Verts",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q7252",
+     "label": "féminisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q76265",
+    "label": "Franziska Brantner",
+    "born": "1979-08-24",
+    "party": "Q49766"
+   }
+  },
+  {
+   "qid": "Q49764",
+   "label": "La Gauche",
+   "ideologies": [
+    {
+     "qid": "Q1058263",
+     "label": "néomarxisme"
+    },
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q210189",
+     "label": "antifascisme"
+    },
+    {
+     "qid": "Q58848",
+     "label": "pacifisme"
+    },
+    {
+     "qid": "Q7252",
+     "label": "féminisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q112428905",
+    "label": "Ines Schwerdtner",
+    "born": "1989-08-26",
+    "party": "Q49764"
+   }
+  },
+  {
+   "qid": "Q49763",
+   "label": "Union chrétienne-sociale en Bavière",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    },
+    {
+     "qid": "Q980",
+     "label": "Bavière"
+    }
+   ],
+   "leader": {
+    "qid": "Q50664",
+    "label": "Markus Söder",
+    "born": "1967-01-05",
+    "party": "Q49763"
+   }
+  },
+  {
+   "qid": "Q123121346",
+   "label": "Alliance Sahra Wagenknecht - Pour la raison et la justice",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q77193",
+    "label": "Sahra Wagenknecht",
+    "born": "1969-07-16",
+    "party": "Q123121346"
+   }
+  }
+ ]
+}

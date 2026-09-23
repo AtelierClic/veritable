@@ -1,0 +1,396 @@
+[
+  {
+    "id": "minimum-wage-raise",
+    "name": "law.minimum-wage-raise.name",
+    "description": "law.minimum-wage-raise.desc",
+    "domain": "economy",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 0.2],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.05,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": -0.001,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "corporate-tax-cut",
+    "name": "law.corporate-tax-cut.name",
+    "description": "law.corporate-tax-cut.desc",
+    "domain": "economy",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [0, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "taxes.corporate",
+        "op": "add",
+        "value": -0.03,
+        "mode": "once"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "wealth-tax",
+    "name": "law.wealth-tax.name",
+    "description": "law.wealth-tax.desc",
+    "domain": "economy",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, -0.1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "taxes.income",
+        "op": "add",
+        "value": 0.02,
+        "mode": "once"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.06,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "privatisation-programme",
+    "name": "law.privatisation-programme.name",
+    "description": "law.privatisation-programme.desc",
+    "domain": "economy",
+    "capitalCost": 30,
+    "reversible": {
+      "cost": 40,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [0.2, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.subsidies",
+        "op": "add",
+        "value": -0.01,
+        "mode": "once"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.04,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": -0.04,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": 0.002,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "nationalisation-energy",
+    "name": "law.nationalisation-energy.name",
+    "description": "law.nationalisation-energy.desc",
+    "domain": "economy",
+    "capitalCost": 40,
+    "reversible": {
+      "cost": 50,
+      "delayMonths": 24
+    },
+    "window": {
+      "economic": [-1, -0.3],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.06,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": -0.002,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "free-trade-agreements",
+    "name": "law.free-trade-agreements.name",
+    "description": "law.free-trade-agreements.desc",
+    "domain": "economy",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 0.2]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": 0.002,
+        "mode": "while"
+      },
+      {
+        "target": "groups.farmers",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "protective-tariffs",
+    "name": "law.protective-tariffs.name",
+    "description": "law.protective-tariffs.desc",
+    "domain": "economy",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [0.1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "taxes.tariffs",
+        "op": "add",
+        "value": 0.05,
+        "mode": "once"
+      },
+      {
+        "target": "groups.farmers",
+        "op": "add",
+        "value": 0.04,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": -0.001,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "green-investment-plan",
+    "name": "law.green-investment-plan.name",
+    "description": "law.green-investment-plan.desc",
+    "domain": "economy",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 0.3],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 0.5]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.infrastructure",
+        "op": "add",
+        "value": 0.01,
+        "mode": "once"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.01,
+        "mode": "while"
+      }
+    ]
+  }
+]

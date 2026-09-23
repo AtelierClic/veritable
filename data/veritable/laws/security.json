@@ -1,0 +1,267 @@
+[
+  {
+    "id": "police-powers-expansion",
+    "name": "law.police-powers-expansion.name",
+    "description": "law.police-powers-expansion.desc",
+    "domain": "security",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.military",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      },
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": -0.04,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "coupRisk",
+        "op": "mul",
+        "value": 0.9,
+        "mode": "while"
+      },
+      {
+        "target": "legitimacyBase",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "surveillance-act",
+    "name": "law.surveillance-act.name",
+    "description": "law.surveillance-act.desc",
+    "domain": "security",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 30,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.3, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "pressFreedom",
+        "op": "add",
+        "value": -0.2,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": -0.04,
+        "mode": "while"
+      },
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -10,
+        "mode": "once"
+      }
+    ]
+  },
+  {
+    "id": "state-of-emergency",
+    "name": "law.state-of-emergency.name",
+    "description": "law.state-of-emergency.desc",
+    "domain": "security",
+    "capitalCost": 30,
+    "reversible": {
+      "cost": 10,
+      "delayMonths": 3
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.2, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "pressFreedom",
+        "op": "add",
+        "value": -0.3,
+        "mode": "while"
+      },
+      {
+        "target": "mediaControl",
+        "op": "add",
+        "value": 0.2,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      },
+      {
+        "target": "coupRisk",
+        "op": "mul",
+        "value": 0.8,
+        "mode": "while"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.05,
+        "mode": "once"
+      }
+    ]
+  },
+  {
+    "id": "judicial-independence-guarantee",
+    "name": "law.judicial-independence-guarantee.name",
+    "description": "law.judicial-independence-guarantee.desc",
+    "domain": "security",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 25,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 0.2],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "legitimacyBase",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      },
+      {
+        "target": "corruption",
+        "op": "add",
+        "value": -0.1,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "anti-corruption-agency",
+    "name": "law.anti-corruption-agency.name",
+    "description": "law.anti-corruption-agency.desc",
+    "domain": "security",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "corruption",
+        "op": "add",
+        "value": -0.15,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      },
+      {
+        "target": "legitimacyBase",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      }
+    ]
+  }
+]

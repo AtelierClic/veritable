@@ -1,0 +1,523 @@
+[
+  {
+    "id": "media-control",
+    "name": "law.media-control.name",
+    "description": "law.media-control.desc",
+    "domain": "institutions",
+    "capitalCost": 30,
+    "reversible": {
+      "cost": 60,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.2, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "mediaControl",
+        "op": "set",
+        "value": 0.5,
+        "mode": "while"
+      },
+      {
+        "target": "pressFreedom",
+        "op": "add",
+        "value": -0.4,
+        "mode": "while"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.1,
+        "mode": "once"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -20,
+        "mode": "once"
+      }
+    ]
+  },
+  {
+    "id": "press-freedom-guarantee",
+    "name": "law.press-freedom-guarantee.name",
+    "description": "law.press-freedom-guarantee.desc",
+    "domain": "institutions",
+    "capitalCost": 15,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 0.1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "pressFreedom",
+        "op": "add",
+        "value": 0.2,
+        "mode": "while"
+      },
+      {
+        "target": "mediaControl",
+        "op": "set",
+        "value": 0,
+        "mode": "while"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": 0.05,
+        "mode": "once"
+      }
+    ]
+  },
+  {
+    "id": "electoral-reform-proportional",
+    "name": "law.electoral-reform-proportional.name",
+    "description": "law.electoral-reform-proportional.desc",
+    "domain": "institutions",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 25,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 0.3],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian"
+    ],
+    "effects": [
+      {
+        "target": "legitimacyBase",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "term-limits-removal",
+    "name": "law.term-limits-removal.name",
+    "description": "law.term-limits-removal.desc",
+    "domain": "institutions",
+    "capitalCost": 40,
+    "reversible": {
+      "cost": 40,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.3, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": ["presidential", "semi-presidential", "electoral-authoritarian"],
+    "effects": [
+      {
+        "target": "coupRisk",
+        "op": "mul",
+        "value": 1.2,
+        "mode": "while"
+      },
+      {
+        "target": "electionIntervalMonths",
+        "op": "add",
+        "value": 24,
+        "mode": "while"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.1,
+        "mode": "once"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -15,
+        "mode": "once"
+      }
+    ]
+  },
+  {
+    "id": "decentralisation-act",
+    "name": "law.decentralisation-act.name",
+    "description": "law.decentralisation-act.desc",
+    "domain": "institutions",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 0.5]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "constitutional-reform-parliamentary",
+    "name": "law.constitutional-reform-parliamentary.name",
+    "description": "law.constitutional-reform-parliamentary.desc",
+    "domain": "institutions",
+    "capitalCost": 80,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 0.3],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "parliamentary",
+        "mode": "once"
+      }
+    ],
+    "requiresLegitimacy": 0.6
+  },
+  {
+    "id": "constitutional-reform-presidential",
+    "name": "law.constitutional-reform-presidential.name",
+    "description": "law.constitutional-reform-presidential.desc",
+    "domain": "institutions",
+    "capitalCost": 80,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-0.5, 0.6],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "presidential",
+        "mode": "once"
+      }
+    ],
+    "requiresLegitimacy": 0.6
+  },
+  {
+    "id": "constitutional-reform-semi-presidential",
+    "name": "law.constitutional-reform-semi-presidential.name",
+    "description": "law.constitutional-reform-semi-presidential.desc",
+    "domain": "institutions",
+    "capitalCost": 80,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-0.5, 0.6],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "semi-presidential",
+        "mode": "once"
+      }
+    ],
+    "requiresLegitimacy": 0.6
+  },
+  {
+    "id": "constitutional-reform-electoral-authoritarian",
+    "name": "law.constitutional-reform-electoral-authoritarian.name",
+    "description": "law.constitutional-reform-electoral-authoritarian.desc",
+    "domain": "institutions",
+    "capitalCost": 80,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.3, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "electoral-authoritarian",
+        "mode": "once"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.1,
+        "mode": "once"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -20,
+        "mode": "once"
+      }
+    ],
+    "requiresLegitimacy": 0.6
+  },
+  {
+    "id": "constitutional-reform-single-party",
+    "name": "law.constitutional-reform-single-party.name",
+    "description": "law.constitutional-reform-single-party.desc",
+    "domain": "institutions",
+    "capitalCost": 80,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.6, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "single-party",
+        "mode": "once"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.15,
+        "mode": "once"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -30,
+        "mode": "once"
+      }
+    ],
+    "requiresLegitimacy": 0.6
+  },
+  {
+    "id": "constitutional-reform-absolute-monarchy",
+    "name": "law.constitutional-reform-absolute-monarchy.name",
+    "description": "law.constitutional-reform-absolute-monarchy.desc",
+    "domain": "institutions",
+    "capitalCost": 80,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.5, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "absolute-monarchy",
+        "mode": "once"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.15,
+        "mode": "once"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -30,
+        "mode": "once"
+      }
+    ],
+    "requiresLegitimacy": 0.6
+  },
+  {
+    "id": "constitutional-reform-theocracy",
+    "name": "law.constitutional-reform-theocracy.name",
+    "description": "law.constitutional-reform-theocracy.desc",
+    "domain": "institutions",
+    "capitalCost": 80,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0.5, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "theocracy",
+        "mode": "once"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": -0.15,
+        "mode": "once"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": -30,
+        "mode": "once"
+      },
+      {
+        "target": "groups.religious",
+        "op": "add",
+        "value": 0.1,
+        "mode": "while"
+      }
+    ],
+    "requiresLegitimacy": 0.6
+  },
+  {
+    "id": "civilian-transition",
+    "name": "law.civilian-transition.name",
+    "description": "law.civilian-transition.desc",
+    "domain": "institutions",
+    "capitalCost": 50,
+    "reversible": null,
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 0.5],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": ["junta", "failed-state"],
+    "effects": [
+      {
+        "target": "regime",
+        "op": "set",
+        "value": "parliamentary",
+        "mode": "once"
+      },
+      {
+        "target": "legitimacy",
+        "op": "add",
+        "value": 0.1,
+        "mode": "once"
+      },
+      {
+        "target": "relations.democracies",
+        "op": "add",
+        "value": 20,
+        "mode": "once"
+      }
+    ],
+    "requiresLegitimacy": 0.3
+  }
+]

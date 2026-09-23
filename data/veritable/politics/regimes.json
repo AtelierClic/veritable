@@ -1,0 +1,147 @@
+[
+  {
+    "id": "parliamentary",
+    "name": "regime.parliamentary",
+    "electionIntervalMonths": 48,
+    "successionRule": "election",
+    "government": "coalition",
+    "democratic": true,
+    "coupBase": 0.001,
+    "legitimacyBase": 0.8,
+    "pressFreedom": 0.9,
+    "mediaControl": 0,
+    "lawDomains": [
+      "economy",
+      "social",
+      "security",
+      "institutions",
+      "environment",
+      "defense"
+    ]
+  },
+  {
+    "id": "presidential",
+    "name": "regime.presidential",
+    "electionIntervalMonths": 48,
+    "successionRule": "election",
+    "government": "leading-party",
+    "democratic": true,
+    "coupBase": 0.002,
+    "legitimacyBase": 0.8,
+    "pressFreedom": 0.85,
+    "mediaControl": 0,
+    "lawDomains": [
+      "economy",
+      "social",
+      "security",
+      "institutions",
+      "environment",
+      "defense"
+    ]
+  },
+  {
+    "id": "semi-presidential",
+    "name": "regime.semi-presidential",
+    "electionIntervalMonths": 60,
+    "successionRule": "election",
+    "government": "leading-party",
+    "democratic": true,
+    "coupBase": 0.002,
+    "legitimacyBase": 0.8,
+    "pressFreedom": 0.85,
+    "mediaControl": 0,
+    "lawDomains": [
+      "economy",
+      "social",
+      "security",
+      "institutions",
+      "environment",
+      "defense"
+    ]
+  },
+  {
+    "id": "electoral-authoritarian",
+    "name": "regime.electoral-authoritarian",
+    "electionIntervalMonths": 60,
+    "successionRule": "election",
+    "government": "leading-party",
+    "democratic": false,
+    "coupBase": 0.01,
+    "legitimacyBase": 0.5,
+    "pressFreedom": 0.3,
+    "mediaControl": 0.5,
+    "lawDomains": [
+      "economy",
+      "social",
+      "security",
+      "institutions",
+      "environment",
+      "defense"
+    ]
+  },
+  {
+    "id": "single-party",
+    "name": "regime.single-party",
+    "electionIntervalMonths": null,
+    "successionRule": "party",
+    "government": "appointed",
+    "democratic": false,
+    "coupBase": 0.005,
+    "legitimacyBase": 0.6,
+    "pressFreedom": 0.1,
+    "mediaControl": 0.8,
+    "lawDomains": ["economy", "social", "security", "environment", "defense"]
+  },
+  {
+    "id": "absolute-monarchy",
+    "name": "regime.absolute-monarchy",
+    "electionIntervalMonths": null,
+    "successionRule": "hereditary",
+    "government": "appointed",
+    "democratic": false,
+    "coupBase": 0.005,
+    "legitimacyBase": 0.6,
+    "pressFreedom": 0.2,
+    "mediaControl": 0.7,
+    "lawDomains": ["economy", "social", "security", "environment", "defense"]
+  },
+  {
+    "id": "junta",
+    "name": "regime.junta",
+    "electionIntervalMonths": null,
+    "successionRule": "military-council",
+    "government": "appointed",
+    "democratic": false,
+    "coupBase": 0.03,
+    "legitimacyBase": 0.4,
+    "pressFreedom": 0.1,
+    "mediaControl": 0.8,
+    "lawDomains": ["economy", "security", "institutions", "defense"]
+  },
+  {
+    "id": "theocracy",
+    "name": "regime.theocracy",
+    "electionIntervalMonths": null,
+    "successionRule": "clerical",
+    "government": "appointed",
+    "democratic": false,
+    "coupBase": 0.005,
+    "legitimacyBase": 0.6,
+    "pressFreedom": 0.15,
+    "mediaControl": 0.7,
+    "lawDomains": ["economy", "social", "security", "environment", "defense"]
+  },
+  {
+    "id": "failed-state",
+    "name": "regime.failed-state",
+    "electionIntervalMonths": null,
+    "successionRule": "warlord",
+    "government": "appointed",
+    "democratic": false,
+    "coupBase": 0.05,
+    "legitimacyBase": 0.2,
+    "pressFreedom": 0.4,
+    "mediaControl": 0.2,
+    "lawDomains": ["security", "defense"]
+  }
+]

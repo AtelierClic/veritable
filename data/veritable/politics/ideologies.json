@@ -1,0 +1,968 @@
+{
+  "Q3781399": {
+    "label": "europhilie",
+    "economic": 0.0,
+    "authority": -0.2,
+    "sovereignty": -0.8
+  },
+  "Q223200": {
+    "label": "euroscepticisme",
+    "economic": 0.1,
+    "authority": 0.2,
+    "sovereignty": 0.8
+  },
+  "Q436860": {
+    "label": "populisme de droite",
+    "economic": 0.3,
+    "authority": 0.6,
+    "sovereignty": 0.7
+  },
+  "Q729119": {
+    "label": "libéralisme économique",
+    "economic": 0.8,
+    "authority": -0.2,
+    "sovereignty": -0.3
+  },
+  "Q852739": {
+    "label": "national-conservatisme",
+    "economic": 0.4,
+    "authority": 0.6,
+    "sovereignty": 0.8
+  },
+  "Q121254": {
+    "label": "social-démocratie",
+    "economic": -0.5,
+    "authority": -0.3,
+    "sovereignty": -0.3
+  },
+  "Q1661415": {
+    "label": "écologie politique",
+    "economic": -0.4,
+    "authority": -0.4,
+    "sovereignty": -0.4
+  },
+  "Q201712": {
+    "label": "social-libéralisme",
+    "economic": 0.1,
+    "authority": -0.5,
+    "sovereignty": -0.5
+  },
+  "Q1043096": {
+    "label": "libéral-conservatisme",
+    "economic": 0.6,
+    "authority": 0.1,
+    "sovereignty": -0.1
+  },
+  "Q878445": {
+    "label": "réformisme",
+    "economic": -0.2,
+    "authority": -0.3,
+    "sovereignty": -0.2
+  },
+  "Q209158": {
+    "label": "démocratie chrétienne",
+    "economic": 0.3,
+    "authority": 0.2,
+    "sovereignty": -0.2
+  },
+  "Q7169": {
+    "label": "conservatisme",
+    "economic": 0.4,
+    "authority": 0.4,
+    "sovereignty": 0.3
+  },
+  "Q388698": {
+    "label": "atlantisme",
+    "economic": 0.3,
+    "authority": 0.1,
+    "sovereignty": -0.5
+  },
+  "Q189280": {
+    "label": "socialisme démocratique",
+    "economic": -0.7,
+    "authority": -0.3,
+    "sovereignty": -0.1
+  },
+  "Q1414298": {
+    "label": "conservatisme social",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.4
+  },
+  "Q912036": {
+    "label": "souverainisme",
+    "economic": 0.0,
+    "authority": 0.3,
+    "sovereignty": 0.9
+  },
+  "Q210189": {
+    "label": "antifascisme",
+    "economic": -0.5,
+    "authority": -0.6,
+    "sovereignty": -0.3
+  },
+  "Q7252": {
+    "label": "féminisme",
+    "economic": -0.3,
+    "authority": -0.6,
+    "sovereignty": -0.3
+  },
+  "Q58848": {
+    "label": "pacifisme",
+    "economic": -0.3,
+    "authority": -0.5,
+    "sovereignty": -0.4
+  },
+  "Q2684060": {
+    "label": "régionalisme",
+    "economic": 0.0,
+    "authority": -0.2,
+    "sovereignty": 0.2
+  },
+  "Q130472842": {
+    "label": "antiglobalisme de droite",
+    "economic": 0.3,
+    "authority": 0.5,
+    "sovereignty": 0.9
+  },
+  "Q179073": {
+    "label": "protectionnisme",
+    "economic": -0.1,
+    "authority": 0.2,
+    "sovereignty": 0.7
+  },
+  "Q2385364": {
+    "label": "altermondialisme",
+    "economic": -0.7,
+    "authority": -0.4,
+    "sovereignty": 0.1
+  },
+  "Q275595": {
+    "label": "écosocialisme",
+    "economic": -0.8,
+    "authority": -0.4,
+    "sovereignty": -0.2
+  },
+  "Q6093359": {
+    "label": "nationalisme italien",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.8
+  },
+  "Q180490": {
+    "label": "populisme",
+    "economic": -0.1,
+    "authority": 0.4,
+    "sovereignty": 0.5
+  },
+  "Q1086839": {
+    "label": "popolarismo",
+    "economic": 0.2,
+    "authority": 0.1,
+    "sovereignty": -0.2
+  },
+  "Q1931364": {
+    "label": "déni du réchauffement climatique",
+    "economic": 0.5,
+    "authority": 0.4,
+    "sovereignty": 0.4
+  },
+  "Q22649": {
+    "label": "antisémitisme",
+    "economic": 0.1,
+    "authority": 0.9,
+    "sovereignty": 0.8
+  },
+  "Q3700346": {
+    "label": "opposition à l'immigration",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.8
+  },
+  "Q370744": {
+    "label": "nationalisme allemand",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q486296": {
+    "label": "islamophobie",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.7
+  },
+  "Q575220": {
+    "label": "antiféminisme",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.4
+  },
+  "Q637251": {
+    "label": "nationalisme ethnique",
+    "economic": 0.1,
+    "authority": 0.8,
+    "sovereignty": 0.9
+  },
+  "Q1058263": {
+    "label": "néomarxisme",
+    "economic": -0.9,
+    "authority": -0.3,
+    "sovereignty": -0.2
+  },
+  "Q980": {
+    "label": "Bavière (régionalisme bavarois)",
+    "economic": 0.3,
+    "authority": 0.3,
+    "sovereignty": 0.3
+  },
+  "Q322294": {
+    "label": "étatisme",
+    "economic": -0.4,
+    "authority": 0.5,
+    "sovereignty": 0.4
+  },
+  "Q3874022": {
+    "label": "nationalisme en France",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.9
+  },
+  "Q700386": {
+    "label": "russophilie",
+    "economic": 0.0,
+    "authority": 0.5,
+    "sovereignty": 0.6
+  },
+  "Q7247692": {
+    "label": "productivisme",
+    "economic": 0.3,
+    "authority": 0.3,
+    "sovereignty": 0.5
+  },
+  "Q389647": {
+    "label": "anticapitalisme",
+    "economic": -0.9,
+    "authority": -0.3,
+    "sovereignty": -0.1
+  },
+  "Q57204579": {
+    "label": "écologie sociale",
+    "economic": -0.6,
+    "authority": -0.6,
+    "sovereignty": -0.3
+  },
+  "Q770215": {
+    "label": "gaullisme",
+    "economic": 0.2,
+    "authority": 0.4,
+    "sovereignty": 0.6
+  },
+  "Q188961": {
+    "label": "décentralisation",
+    "economic": 0.0,
+    "authority": -0.4,
+    "sovereignty": 0.0
+  },
+  "Q192139": {
+    "label": "néo-conservatisme",
+    "economic": 0.6,
+    "authority": 0.5,
+    "sovereignty": 0.0
+  },
+  "Q3401913": {
+    "label": "unionisme au Royaume-Uni",
+    "economic": 0.3,
+    "authority": 0.3,
+    "sovereignty": 0.4
+  },
+  "Q50685643": {
+    "label": "pérennialisme",
+    "economic": 0.3,
+    "authority": 0.5,
+    "sovereignty": 0.4
+  },
+  "Q6216": {
+    "label": "libéralisme",
+    "economic": 0.4,
+    "authority": -0.6,
+    "sovereignty": -0.4
+  },
+  "Q3336993": {
+    "label": "nationalisme écossais",
+    "economic": -0.3,
+    "authority": -0.3,
+    "sovereignty": 0.3
+  },
+  "Q891905": {
+    "label": "indépendantisme écossais",
+    "economic": -0.3,
+    "authority": -0.3,
+    "sovereignty": 0.4
+  },
+  "Q3909427": {
+    "label": "post-fascisme",
+    "economic": 0.3,
+    "authority": 0.8,
+    "sovereignty": 0.8
+  },
+  "Q6235": {
+    "label": "nationalisme",
+    "economic": 0.1,
+    "authority": 0.5,
+    "sovereignty": 0.9
+  },
+  "Q696116": {
+    "label": "néofascisme",
+    "economic": 0.2,
+    "authority": 0.9,
+    "sovereignty": 0.9
+  },
+  "Q1080800": {
+    "label": "gauche chrétienne",
+    "economic": -0.5,
+    "authority": -0.1,
+    "sovereignty": -0.2
+  },
+  "Q739609": {
+    "label": "christianisme social",
+    "economic": -0.2,
+    "authority": 0.1,
+    "sovereignty": -0.1
+  },
+  "Q171174": {
+    "label": "démocratie directe",
+    "economic": -0.1,
+    "authority": -0.6,
+    "sovereignty": 0.2
+  },
+  "Q2855609": {
+    "label": "écologisme",
+    "economic": -0.4,
+    "authority": -0.4,
+    "sovereignty": -0.3
+  },
+  "Q60741353": {
+    "label": "anti-corruption",
+    "economic": 0.0,
+    "authority": -0.2,
+    "sovereignty": 0.0
+  },
+  "Q611217": {
+    "label": "décroissance",
+    "economic": -0.7,
+    "authority": -0.4,
+    "sovereignty": -0.1
+  },
+  "Q855175": {
+    "label": "cyberdémocratie",
+    "economic": -0.1,
+    "authority": -0.6,
+    "sovereignty": -0.1
+  },
+  "Q1324153": {
+    "label": "critique de l'islam",
+    "economic": 0.2,
+    "authority": 0.5,
+    "sovereignty": 0.5
+  },
+  "Q191442": {
+    "label": "mouvement antimondialisation",
+    "economic": -0.6,
+    "authority": -0.2,
+    "sovereignty": 0.4
+  },
+  "Q1969722": {
+    "label": "nativisme",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q204886": {
+    "label": "fédéralisme",
+    "economic": 0.0,
+    "authority": -0.3,
+    "sovereignty": -0.5
+  },
+  "Q2914650": {
+    "label": "politiques d'identité",
+    "economic": -0.2,
+    "authority": 0.0,
+    "sovereignty": 0.1
+  },
+  "Q182121": {
+    "label": "anticommunisme",
+    "economic": 0.6,
+    "authority": 0.3,
+    "sovereignty": 0.3
+  },
+  "Q821964": {
+    "label": "berlusconisme",
+    "economic": 0.6,
+    "authority": 0.3,
+    "sovereignty": 0.1
+  },
+  "Q1822939": {
+    "label": "socialisme libéral",
+    "economic": -0.4,
+    "authority": -0.5,
+    "sovereignty": -0.4
+  },
+  "Q821102": {
+    "label": "progressisme",
+    "economic": -0.4,
+    "authority": -0.5,
+    "sovereignty": -0.4
+  },
+  "Q728697": {
+    "label": "laïcisme",
+    "economic": -0.1,
+    "authority": -0.3,
+    "sovereignty": 0.0
+  },
+  "Q6186": {
+    "label": "communisme",
+    "economic": -0.9,
+    "authority": 0.5,
+    "sovereignty": 0.2
+  },
+  "Q5165": {
+    "label": "marxisme-léninisme",
+    "economic": -0.9,
+    "authority": 0.7,
+    "sovereignty": 0.3
+  },
+  "Q7272": {
+    "label": "socialisme",
+    "economic": -0.7,
+    "authority": -0.1,
+    "sovereignty": 0.0
+  },
+  "Q1123765": {
+    "label": "conservatisme national (variante)",
+    "economic": 0.4,
+    "authority": 0.6,
+    "sovereignty": 0.8
+  },
+  "Q1128630": {
+    "label": "libéralisme conservateur",
+    "economic": 0.6,
+    "authority": 0.2,
+    "sovereignty": 0.0
+  },
+  "Q10859": {
+    "label": "kémalisme",
+    "economic": -0.1,
+    "authority": 0.4,
+    "sovereignty": 0.5
+  },
+  "Q189746": {
+    "label": "islamisme",
+    "economic": 0.1,
+    "authority": 0.8,
+    "sovereignty": 0.6
+  },
+  "Q1414263": {
+    "label": "conservatisme islamique",
+    "economic": 0.3,
+    "authority": 0.7,
+    "sovereignty": 0.6
+  },
+  "Q1233363": {
+    "label": "nationalisme turc",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q327591": {
+    "label": "agrarisme",
+    "economic": -0.1,
+    "authority": 0.2,
+    "sovereignty": 0.5
+  },
+  "Q11031": {
+    "label": "libertarianisme",
+    "economic": 0.9,
+    "authority": -0.8,
+    "sovereignty": 0.2
+  },
+  "Q210981": {
+    "label": "monarchisme",
+    "economic": 0.4,
+    "authority": 0.6,
+    "sovereignty": 0.5
+  },
+  "Q60559": {
+    "label": "nationalisme civique",
+    "economic": 0.0,
+    "authority": 0.1,
+    "sovereignty": 0.5
+  },
+  "Q1128615": {
+    "label": "nationalisme ukrainien",
+    "economic": 0.1,
+    "authority": 0.4,
+    "sovereignty": 0.8
+  },
+  "Q11103": {
+    "label": "nationalisme russe",
+    "economic": 0.1,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q1213256": {
+    "label": "centrisme",
+    "economic": 0.0,
+    "authority": -0.2,
+    "sovereignty": -0.2
+  },
+  "Q29051": {
+    "label": "social-conservatisme (variante)",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.4
+  },
+  "Q1150962": {
+    "label": "pro-européanisme",
+    "economic": 0.0,
+    "authority": -0.2,
+    "sovereignty": -0.8
+  },
+  "Q1338175": {
+    "label": "europhobie",
+    "economic": 0.1,
+    "authority": 0.4,
+    "sovereignty": 0.9
+  },
+  "Q1075027": {
+    "label": "vert (politique)",
+    "economic": -0.4,
+    "authority": -0.4,
+    "sovereignty": -0.3
+  },
+  "Q1133470": {
+    "label": "gauche radicale",
+    "economic": -0.9,
+    "authority": -0.3,
+    "sovereignty": 0.0
+  },
+  "Q2011959": {
+    "label": "droite radicale",
+    "economic": 0.4,
+    "authority": 0.8,
+    "sovereignty": 0.8
+  },
+  "Q7222": {
+    "label": "catholicisme politique",
+    "economic": 0.2,
+    "authority": 0.5,
+    "sovereignty": 0.3
+  },
+  "Q1249931": {
+    "label": "libéralisme classique",
+    "economic": 0.8,
+    "authority": -0.5,
+    "sovereignty": -0.2
+  },
+  "Q191159": {
+    "label": "populisme de gauche",
+    "economic": -0.7,
+    "authority": 0.1,
+    "sovereignty": 0.4
+  },
+  "Q152234": {
+    "label": "panslavisme",
+    "economic": 0.0,
+    "authority": 0.5,
+    "sovereignty": 0.7
+  },
+  "Q3063868": {
+    "label": "eurasisme",
+    "economic": 0.0,
+    "authority": 0.8,
+    "sovereignty": 0.9
+  },
+  "Q1194871": {
+    "label": "étatisme conservateur",
+    "economic": 0.0,
+    "authority": 0.7,
+    "sovereignty": 0.7
+  },
+  "Q1400": {
+    "label": "Ukraine (pro-)",
+    "economic": 0.0,
+    "authority": 0.2,
+    "sovereignty": 0.6
+  },
+  "Q15243209": {
+    "label": "national-libéralisme",
+    "economic": 0.6,
+    "authority": 0.3,
+    "sovereignty": 0.6
+  },
+  "Q19856702": {
+    "label": "nationalisme polonais",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.9
+  },
+  "Q2532": {
+    "label": "catholicisme",
+    "economic": 0.2,
+    "authority": 0.5,
+    "sovereignty": 0.3
+  },
+  "Q3211": {
+    "label": "libéralisme européen",
+    "economic": 0.4,
+    "authority": -0.5,
+    "sovereignty": -0.7
+  },
+  "Q1183": {
+    "label": "panturquisme",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q4818226": {
+    "label": "gauche (politique)",
+    "economic": -0.6,
+    "authority": -0.2,
+    "sovereignty": -0.1
+  },
+  "Q4821017": {
+    "label": "droite (politique)",
+    "economic": 0.6,
+    "authority": 0.3,
+    "sovereignty": 0.3
+  },
+  "Q9160": {
+    "label": "anarchisme",
+    "economic": -0.8,
+    "authority": -0.9,
+    "sovereignty": -0.3
+  },
+  "Q207166": {
+    "label": "solidarisme",
+    "economic": -0.2,
+    "authority": 0.3,
+    "sovereignty": 0.3
+  },
+  "Q617609": {
+    "label": "libéral-conservatisme",
+    "economic": 0.6,
+    "authority": 0.1,
+    "sovereignty": -0.1
+  },
+  "Q877848": {
+    "label": "républicanisme",
+    "economic": -0.1,
+    "authority": -0.3,
+    "sovereignty": 0.0
+  },
+  "Q1757356": {
+    "label": "centralisme",
+    "economic": 0.1,
+    "authority": 0.5,
+    "sovereignty": 0.4
+  },
+  "Q7573482": {
+    "label": "unionisme espagnol",
+    "economic": 0.3,
+    "authority": 0.4,
+    "sovereignty": 0.5
+  },
+  "Q9091203": {
+    "label": "ultraconservatisme",
+    "economic": 0.5,
+    "authority": 0.9,
+    "sovereignty": 0.7
+  },
+  "Q948731": {
+    "label": "nationalisme espagnol",
+    "economic": 0.3,
+    "authority": 0.6,
+    "sovereignty": 0.8
+  },
+  "Q1202972": {
+    "label": "nationalisme de gauche",
+    "economic": -0.6,
+    "authority": 0.0,
+    "sovereignty": 0.6
+  },
+  "Q1377153": {
+    "label": "européisme",
+    "economic": 0.0,
+    "authority": -0.2,
+    "sovereignty": -0.8
+  },
+  "Q1735599": {
+    "label": "nationalisme catalan",
+    "economic": -0.2,
+    "authority": -0.2,
+    "sovereignty": 0.4
+  },
+  "Q893331": {
+    "label": "indépendantisme catalan",
+    "economic": -0.2,
+    "authority": -0.2,
+    "sovereignty": 0.5
+  },
+  "Q785893": {
+    "label": "unilatéralisme",
+    "economic": 0.0,
+    "authority": 0.3,
+    "sovereignty": 0.6
+  },
+  "Q492050": {
+    "label": "néo-ruralisme",
+    "economic": -0.1,
+    "authority": 0.2,
+    "sovereignty": 0.5
+  },
+  "Q555887": {
+    "label": "patriotisme économique",
+    "economic": -0.1,
+    "authority": 0.3,
+    "sovereignty": 0.8
+  },
+  "Q2120936": {
+    "label": "socialisme révolutionnaire",
+    "economic": -0.9,
+    "authority": 0.1,
+    "sovereignty": 0.0
+  },
+  "Q7264": {
+    "label": "marxisme",
+    "economic": -0.9,
+    "authority": 0.2,
+    "sovereignty": 0.0
+  },
+  "Q1321721": {
+    "label": "libéralisme vert",
+    "economic": 0.2,
+    "authority": -0.6,
+    "sovereignty": -0.5
+  },
+  "Q3664326": {
+    "label": "parti pirate",
+    "economic": -0.2,
+    "authority": -0.8,
+    "sovereignty": -0.4
+  },
+  "Q1322213": {
+    "label": "droite chrétienne",
+    "economic": 0.3,
+    "authority": 0.7,
+    "sovereignty": 0.5
+  },
+  "Q2483698": {
+    "label": "solidarisme",
+    "economic": -0.2,
+    "authority": 0.3,
+    "sovereignty": 0.3
+  },
+  "Q7210053": {
+    "label": "nationalisme polonais",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.9
+  },
+  "Q1129261": {
+    "label": "mouvement anti-avortement",
+    "economic": 0.2,
+    "authority": 0.8,
+    "sovereignty": 0.4
+  },
+  "Q2258474": {
+    "label": "doctrine catholique",
+    "economic": 0.1,
+    "authority": 0.6,
+    "sovereignty": 0.3
+  },
+  "Q46607": {
+    "label": "libre marché",
+    "economic": 0.9,
+    "authority": -0.4,
+    "sovereignty": -0.2
+  },
+  "Q56641686": {
+    "label": "antivaccination",
+    "economic": 0.1,
+    "authority": 0.2,
+    "sovereignty": 0.5
+  },
+  "Q1207817": {
+    "label": "poutinisme",
+    "economic": 0.2,
+    "authority": 0.9,
+    "sovereignty": 0.9
+  },
+  "Q2354258": {
+    "label": "nationalisme russe",
+    "economic": 0.1,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q11900614": {
+    "label": "populisme de gauche",
+    "economic": -0.7,
+    "authority": 0.1,
+    "sovereignty": 0.4
+  },
+  "Q125750162": {
+    "label": "conservatisme de gauche",
+    "economic": -0.6,
+    "authority": 0.5,
+    "sovereignty": 0.6
+  },
+  "Q1977701": {
+    "label": "néo-stalinisme",
+    "economic": -0.9,
+    "authority": 0.9,
+    "sovereignty": 0.7
+  },
+  "Q211930": {
+    "label": "marxisme-léninisme",
+    "economic": -0.9,
+    "authority": 0.7,
+    "sovereignty": 0.3
+  },
+  "Q574827": {
+    "label": "antiaméricanisme",
+    "economic": -0.2,
+    "authority": 0.4,
+    "sovereignty": 0.8
+  },
+  "Q621761": {
+    "label": "nostalgie soviétique",
+    "economic": -0.7,
+    "authority": 0.6,
+    "sovereignty": 0.6
+  },
+  "Q6241": {
+    "label": "patriotisme",
+    "economic": 0.0,
+    "authority": 0.4,
+    "sovereignty": 0.7
+  },
+  "Q7571792": {
+    "label": "patriotisme soviétique",
+    "economic": -0.7,
+    "authority": 0.7,
+    "sovereignty": 0.6
+  },
+  "Q8881": {
+    "label": "socialisme du XXIe siècle",
+    "economic": -0.8,
+    "authority": 0.3,
+    "sovereignty": 0.3
+  },
+  "Q15680807": {
+    "label": "irrédentisme russe",
+    "economic": 0.1,
+    "authority": 0.8,
+    "sovereignty": 0.9
+  },
+  "Q182267": {
+    "label": "panslavisme",
+    "economic": 0.0,
+    "authority": 0.5,
+    "sovereignty": 0.7
+  },
+  "Q38352698": {
+    "label": "ultranationalisme",
+    "economic": 0.2,
+    "authority": 0.9,
+    "sovereignty": 0.9
+  },
+  "Q324530": {
+    "label": "communautarisme",
+    "economic": 0.0,
+    "authority": 0.2,
+    "sovereignty": 0.2
+  },
+  "Q20988334": {
+    "label": "démocratie conservatrice",
+    "economic": 0.3,
+    "authority": 0.5,
+    "sovereignty": 0.4
+  },
+  "Q26258121": {
+    "label": "erdoganisme",
+    "economic": 0.2,
+    "authority": 0.8,
+    "sovereignty": 0.7
+  },
+  "Q27337474": {
+    "label": "conservatisme turc",
+    "economic": 0.3,
+    "authority": 0.6,
+    "sovereignty": 0.5
+  },
+  "Q583047": {
+    "label": "néo-ottomanisme",
+    "economic": 0.2,
+    "authority": 0.6,
+    "sovereignty": 0.8
+  },
+  "Q216920": {
+    "label": "sécularisme",
+    "economic": -0.1,
+    "authority": -0.3,
+    "sovereignty": 0.0
+  },
+  "Q269443": {
+    "label": "kémalisme",
+    "economic": -0.1,
+    "authority": 0.4,
+    "sovereignty": 0.5
+  },
+  "Q1993616": {
+    "label": "nationalisme culturel",
+    "economic": 0.1,
+    "authority": 0.6,
+    "sovereignty": 0.7
+  },
+  "Q19966154": {
+    "label": "idéalisme turc",
+    "economic": 0.2,
+    "authority": 0.8,
+    "sovereignty": 0.9
+  },
+  "Q269248": {
+    "label": "touranisme",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q3568928": {
+    "label": "nationalisme turc",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q83280": {
+    "label": "panturquisme",
+    "economic": 0.2,
+    "authority": 0.7,
+    "sovereignty": 0.9
+  },
+  "Q1852084": {
+    "label": "socialisme libertaire",
+    "economic": -0.8,
+    "authority": -0.8,
+    "sovereignty": -0.2
+  },
+  "Q3448005": {
+    "label": "centrisme radical",
+    "economic": 0.1,
+    "authority": -0.3,
+    "sovereignty": -0.2
+  },
+  "Q59599": {
+    "label": "nationalisme civique",
+    "economic": 0.0,
+    "authority": 0.1,
+    "sovereignty": 0.5
+  }
+}

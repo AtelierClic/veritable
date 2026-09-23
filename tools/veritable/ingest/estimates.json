@@ -143,5 +143,302 @@
       "pharma": 0.05
     },
     "armsShareOfMilitarySpending": 0.25
-  }
+  },
+  "leaderTraits": {
+    "FRA/head-of-state": {
+      "person": "Emmanuel Macron",
+      "traits": {
+        "economic": 0.3,
+        "authority": -0.1,
+        "sovereignty": -0.7,
+        "aggressiveness": 0.4,
+        "corruption": 0.15,
+        "charisma": 0.6,
+        "competence": 0.6
+      },
+      "note": "Libéral pro-européen (souveraineté −0,7, économie +0,3) ; volontariste en politique étrangère (agressivité 0,4) ; charisme et compétence au-dessus de la moyenne après deux mandats ; corruption faible (affaires marginales)."
+    },
+    "FRA/head-of-government": {
+      "person": "Sébastien Lecornu",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.0,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.3,
+        "corruption": 0.15,
+        "charisma": 0.4,
+        "competence": 0.55
+      },
+      "note": "Ancien ministre des Armées, centre-droit macroniste ; profil de gestionnaire discret : charisme 0,4, compétence 0,55, agressivité modérée."
+    },
+    "DEU/head-of-state": {
+      "person": "Frank-Walter Steinmeier",
+      "traits": {
+        "economic": -0.2,
+        "authority": -0.3,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.2,
+        "corruption": 0.1,
+        "charisma": 0.45,
+        "competence": 0.65
+      },
+      "note": "Social-démocrate, président fédéral au rôle protocolaire ; internationaliste convaincu ; peu agressif ; compétence élevée (deux fois ministre des Affaires étrangères)."
+    },
+    "DEU/head-of-government": {
+      "person": "Friedrich Merz",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.2,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.4,
+        "corruption": 0.2,
+        "charisma": 0.45,
+        "competence": 0.55
+      },
+      "note": "Chrétien-démocrate libéral en économie (+0,6), atlantiste et pro-européen (−0,4) ; ton plus dur sur l'immigration (autorité +0,2) et le réarmement (agressivité 0,4) ; passé dans la finance : corruption 0,2."
+    },
+    "GBR/head-of-state": {
+      "person": "Charles III",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.1,
+        "corruption": 0.05,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "note": "Monarque constitutionnel sans pouvoir politique : traits neutres, agressivité et corruption minimales."
+    },
+    "GBR/head-of-government": {
+      "person": "Andy Burnham",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.2,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.25,
+        "corruption": 0.15,
+        "charisma": 0.6,
+        "competence": 0.55
+      },
+      "note": "Travailliste de l'aile gauche modérée, ancien maire du Grand Manchester ; charisme régional reconnu (0,6) ; peu agressif ; internationalisme prudent après le Brexit."
+    },
+    "ITA/head-of-state": {
+      "person": "Sergio Mattarella",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.3,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.1,
+        "corruption": 0.05,
+        "charisma": 0.5,
+        "competence": 0.7
+      },
+      "note": "Président garant des institutions, démocrate-chrétien de gauche, europhile ; intégrité reconnue (corruption 0,05), grande compétence, agressivité nulle."
+    },
+    "ITA/head-of-government": {
+      "person": "Giorgia Meloni",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.5,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.45,
+        "corruption": 0.2,
+        "charisma": 0.7,
+        "competence": 0.55
+      },
+      "note": "Droite nationale-conservatrice (autorité +0,5, souveraineté +0,5), atlantiste malgré tout ; forte charisme (0,7) ; fermeté migratoire et soutien à l'Ukraine (agressivité 0,45)."
+    },
+    "ESP/head-of-state": {
+      "person": "Philippe VI d'Espagne",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.0,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.1,
+        "corruption": 0.05,
+        "charisma": 0.55,
+        "competence": 0.5
+      },
+      "note": "Monarque constitutionnel ; traits neutres, légèrement pro-européen ; charisme correct, agressivité et corruption minimales."
+    },
+    "ESP/head-of-government": {
+      "person": "Pedro Sánchez",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.2,
+        "sovereignty": -0.5,
+        "aggressiveness": 0.3,
+        "corruption": 0.3,
+        "charisma": 0.6,
+        "competence": 0.55
+      },
+      "note": "Socialiste pro-européen ; habile manœuvrier (charisme 0,6) ; entouré d'affaires en 2024-2025 (corruption 0,3) ; agressivité modérée."
+    },
+    "POL/head-of-state": {
+      "person": "Karol Nawrocki",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.6,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.5,
+        "corruption": 0.25,
+        "charisma": 0.55,
+        "competence": 0.4
+      },
+      "note": "Président conservateur soutenu par le PiS, souverainiste (+0,7), autoritaire (+0,6) ; ton belliqueux envers la Russie et Bruxelles (agressivité 0,5) ; peu d'expérience exécutive (compétence 0,4)."
+    },
+    "POL/head-of-government": {
+      "person": "Donald Tusk",
+      "traits": {
+        "economic": 0.3,
+        "authority": -0.2,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.4,
+        "corruption": 0.15,
+        "charisma": 0.6,
+        "competence": 0.65
+      },
+      "note": "Libéral pro-européen, ancien président du Conseil européen (compétence 0,65) ; ferme face à la Russie (agressivité 0,4) ; charisme 0,6."
+    },
+    "UKR/head-of-state": {
+      "person": "Volodymyr Zelensky",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.6,
+        "corruption": 0.2,
+        "charisma": 0.85,
+        "competence": 0.6
+      },
+      "note": "Président en guerre : charisme exceptionnel (0,85), agressivité élevée par nécessité (0,6), centralisation du pouvoir en temps de guerre (autorité +0,2) ; corruption systémique du pays mais personnelle modérée (0,2)."
+    },
+    "UKR/head-of-government": {
+      "person": "Serhiï Koretskyï",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.2,
+        "charisma": 0.4,
+        "competence": 0.6
+      },
+      "note": "Premier ministre au 2026-09-23 selon Wikidata ; profil de technocrate de guerre supposé : libéral en économie, discret (charisme 0,4), compétent (0,6)."
+    },
+    "RUS/head-of-state": {
+      "person": "Vladimir Poutine",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.9,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.9,
+        "corruption": 0.7,
+        "charisma": 0.6,
+        "competence": 0.6
+      },
+      "note": "Autocrate (autorité +0,9), souverainiste et eurasiste (+0,9), guerre d'agression en cours (agressivité 0,9) ; corruption systémique du régime (0,7) ; charisme et compétence solides dans son registre."
+    },
+    "RUS/head-of-government": {
+      "person": "Mikhaïl Michoustine",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.6,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.3,
+        "corruption": 0.5,
+        "charisma": 0.3,
+        "competence": 0.7
+      },
+      "note": "Technocrate fiscal, exécutant du président (charisme 0,3, compétence 0,7) ; corruption du système (0,5) ; agressivité faible en propre."
+    },
+    "TUR/head-of-state": {
+      "person": "Recep Tayyip Erdoğan",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.8,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.6,
+        "corruption": 0.6,
+        "charisma": 0.75,
+        "competence": 0.55
+      },
+      "note": "Autoritaire électoral (autorité +0,8), islamo-conservateur souverainiste (+0,7), interventions régionales (agressivité 0,6) ; clientélisme et affaires (corruption 0,6) ; charisme élevé (0,75)."
+    },
+    "TUR/head-of-government": {
+      "person": "Recep Tayyip Erdoğan",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.8,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.6,
+        "corruption": 0.6,
+        "charisma": 0.75,
+        "competence": 0.55
+      },
+      "note": "Régime présidentiel : le chef de l'État est aussi chef du gouvernement ; mêmes traits."
+    },
+    "NOR/head-of-state": {
+      "person": "Haakon VIII",
+      "traits": {
+        "economic": 0.0,
+        "authority": 0.0,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.05,
+        "corruption": 0.05,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "note": "Monarque constitutionnel (Wikidata au 2026-09-23 : Haakon VIII) ; traits neutres, agressivité et corruption minimales."
+    },
+    "NOR/head-of-government": {
+      "person": "Jonas Gahr Støre",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.3,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.2,
+        "corruption": 0.15,
+        "charisma": 0.45,
+        "competence": 0.6
+      },
+      "note": "Social-démocrate atlantiste, ancien ministre des Affaires étrangères (compétence 0,6) ; peu charismatique (0,45), peu agressif."
+    }
+  },
+  "partyIdeologies": {
+    "Q123121346": {
+      "ideology": {
+        "economic": -0.6,
+        "authority": 0.3,
+        "sovereignty": 0.6
+      },
+      "note": "BSW : gauche économique, conservatisme sociétal, souverainisme et russophilie ; aucune idéologie renseignée sur Wikidata."
+    },
+    "Q113168799": {
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.4,
+        "sovereignty": -0.3
+      },
+      "note": "AVS : alliance rouge-verte italienne."
+    },
+    "Q112098527": {
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.5,
+        "sovereignty": -0.4
+      },
+      "note": "Sumar : gauche écologiste et féministe espagnole."
+    },
+    "Q1021144": {
+      "ideology": {
+        "economic": 0.3,
+        "authority": -0.3,
+        "sovereignty": -0.6
+      },
+      "note": "Coalition civique : libéraux pro-européens."
+    }
+  },
+  "_leaderTraitsNote": "leaderTraits : traits des chefs d'État et de gouvernement des dix nations, écrits à la main le 2026-09-23 et justifiés ; clé <iso3>/<rôle>, `person` = libellé Wikidata au moment de l'écriture (l'outil signale un changement). partyIdeologies : idéologie manuelle des partis sans P1142 exploitable."
 }

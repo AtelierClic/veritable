@@ -48,5 +48,9 @@ export const BlocSchema = z.object({
     .optional(),
   // Weight multiplier of trade flows between two full members.
   tradeBonus: z.number().min(1).optional(),
+  // Democratic criterion (layer 1, J4): a member that falls to a coup is
+  // suspended (no trade bonus, no alignment, no fiscal rule) until it is a
+  // democracy again.
+  suspendsOnCoup: z.boolean().optional(),
 });
 export type Bloc = z.infer<typeof BlocSchema>;

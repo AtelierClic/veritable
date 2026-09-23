@@ -1,0 +1,204 @@
+{
+ "nation": "FRA",
+ "country": "Q142",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q20089181",
+    "label": "Sébastien Lecornu",
+    "born": "1986-06-11",
+    "party": "Q173152"
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3052772",
+    "label": "Emmanuel Macron",
+    "born": "1977-12-21",
+    "party": "Q170972"
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q205150",
+   "label": "Rassemblement national",
+   "ideologies": [
+    {
+     "qid": "Q130472842",
+     "label": "antiglobalisme de droite"
+    },
+    {
+     "qid": "Q179073",
+     "label": "protectionnisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q3874022",
+     "label": "nationalisme en France"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    },
+    {
+     "qid": "Q7247692",
+     "label": "Producérisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    },
+    {
+     "qid": "Q912036",
+     "label": "souverainisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q40655898",
+    "label": "Jordan Bardella",
+    "born": "1995-09-13",
+    "party": "Q205150"
+   }
+  },
+  {
+   "qid": "Q23731823",
+   "label": "Renaissance",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q878445",
+     "label": "réformisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q30339350",
+    "label": "Gabriel Attal",
+    "born": "1989-03-16",
+    "party": "Q170972"
+   }
+  },
+  {
+   "qid": "Q27978402",
+   "label": "La France insoumise",
+   "ideologies": [
+    {
+     "qid": "Q2385364",
+     "label": "altermondialisme"
+    },
+    {
+     "qid": "Q275595",
+     "label": "écosocialisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    },
+    {
+     "qid": "Q912036",
+     "label": "souverainisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q29575749",
+    "label": "Manuel Bompard",
+    "born": "1986-03-30",
+    "party": "Q922707"
+   }
+  },
+  {
+   "qid": "Q170972",
+   "label": "Parti socialiste",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q57204579",
+     "label": "écologie sociale"
+    }
+   ],
+   "leader": {
+    "qid": "Q3351018",
+    "label": "Olivier Faure",
+    "born": "1968-08-18",
+    "party": "Q170972"
+   }
+  },
+  {
+   "qid": "Q20012759",
+   "label": "Les Républicains",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q770215",
+     "label": "gaullisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2926942",
+    "label": "Bruno Retailleau",
+    "born": "1960-11-20",
+    "party": "Q173152"
+   }
+  },
+  {
+   "qid": "Q613786",
+   "label": "Les Écologistes – Europe Écologie Les Verts",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q188961",
+     "label": "décentralisation"
+    },
+    {
+     "qid": "Q2385364",
+     "label": "altermondialisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q29917987",
+    "label": "Marine Tondelier",
+    "born": "1986-08-23",
+    "party": "Q613786"
+   }
+  }
+ ]
+}

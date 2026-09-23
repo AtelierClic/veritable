@@ -1,0 +1,196 @@
+{
+ "nation": "NOR",
+ "country": "Q20",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q467948",
+    "label": "Jonas Gahr Støre",
+    "born": "1960-08-25",
+    "party": "Q190219"
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q165241",
+    "label": "Haakon VIII",
+    "born": "1973-07-20",
+    "party": null
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q190219",
+   "label": "Parti travailliste",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q467948",
+    "label": "Jonas Gahr Støre",
+    "born": "1960-08-25",
+    "party": "Q190219"
+   }
+  },
+  {
+   "qid": "Q485665",
+   "label": "Parti du progrès",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q7660866",
+    "label": "Sylvi Listhaug",
+    "born": "1977-12-25",
+    "party": "Q485665"
+   }
+  },
+  {
+   "qid": "Q586364",
+   "label": "Parti conservateur",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1770992",
+    "label": "Ine Marie Eriksen Søreide",
+    "born": "1976-05-02",
+    "party": "Q586364"
+   }
+  },
+  {
+   "qid": "Q493685",
+   "label": "Parti du centre",
+   "ideologies": [
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    },
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q548001",
+    "label": "Trygve Slagsvold Vedum",
+    "born": "1978-12-01",
+    "party": "Q493685"
+   }
+  },
+  {
+   "qid": "Q488418",
+   "label": "Parti socialiste de gauche",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q4581573",
+    "label": "Kirsti Bergstø",
+    "born": "1981-07-01",
+    "party": "Q488418"
+   }
+  },
+  {
+   "qid": "Q1512994",
+   "label": "Rouge",
+   "ideologies": [
+    {
+     "qid": "Q2120936",
+     "label": "socialisme révolutionnaire"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q275595",
+     "label": "écosocialisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    },
+    {
+     "qid": "Q7252",
+     "label": "féminisme"
+    },
+    {
+     "qid": "Q7264",
+     "label": "marxisme"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11988277",
+    "label": "Marie Sneve Martinussen",
+    "born": "1985-12-30",
+    "party": "Q1512994"
+   }
+  },
+  {
+   "qid": "Q1518568",
+   "label": "Les Verts",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    }
+   ],
+   "leader": {
+    "qid": "Q11958683",
+    "label": "Arild Hermstad",
+    "born": "1966-10-15",
+    "party": "Q1518568"
+   }
+  },
+  {
+   "qid": "Q500190",
+   "label": "Venstre",
+   "ideologies": [
+    {
+     "qid": "Q1321721",
+     "label": "libéralisme vert"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3664326",
+     "label": "parti pirate"
+    }
+   ],
+   "leader": {
+    "qid": "Q5620064",
+    "label": "Guri Melby",
+    "born": "1981-02-03",
+    "party": "Q500190"
+   }
+  }
+ ]
+}

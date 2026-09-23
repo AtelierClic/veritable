@@ -1,0 +1,249 @@
+[
+  {
+    "id": "carbon-tax",
+    "name": "law.carbon-tax.name",
+    "description": "law.carbon-tax.desc",
+    "domain": "environment",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 0.5],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "taxes.vat",
+        "op": "add",
+        "value": 0.01,
+        "mode": "once"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.04,
+        "mode": "while"
+      },
+      {
+        "target": "groups.farmers",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.04,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": -0.0005,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "renewable-subsidies",
+    "name": "law.renewable-subsidies.name",
+    "description": "law.renewable-subsidies.desc",
+    "domain": "environment",
+    "capitalCost": 15,
+    "reversible": {
+      "cost": 10,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.subsidies",
+        "op": "add",
+        "value": 0.005,
+        "mode": "once"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.01,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "coal-phase-out",
+    "name": "law.coal-phase-out.name",
+    "description": "law.coal-phase-out.desc",
+    "domain": "environment",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 30,
+      "delayMonths": 24
+    },
+    "window": {
+      "economic": [-1, 0.5],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.04,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": -0.001,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "nuclear-programme",
+    "name": "law.nuclear-programme.name",
+    "description": "law.nuclear-programme.desc",
+    "domain": "environment",
+    "capitalCost": 30,
+    "reversible": {
+      "cost": 40,
+      "delayMonths": 24
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.infrastructure",
+        "op": "add",
+        "value": 0.005,
+        "mode": "once"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "environmental-deregulation",
+    "name": "law.environmental-deregulation.name",
+    "description": "law.environmental-deregulation.desc",
+    "domain": "environment",
+    "capitalCost": 15,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [0.2, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.04,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": -0.05,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": 0.001,
+        "mode": "while"
+      }
+    ]
+  }
+]

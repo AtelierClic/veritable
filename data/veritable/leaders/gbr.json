@@ -1,0 +1,290 @@
+{
+  "nation": "GBR",
+  "actors": [
+    {
+      "id": "gbr-andy-burnham",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.gbr-andy-burnham.parody",
+        "fictional": "leader.gbr-andy-burnham.fictional"
+      },
+      "born": "1970-01-07",
+      "party": "gbr-parti-travailliste",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.2,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.25,
+        "corruption": 0.15,
+        "charisma": 0.6,
+        "competence": 0.55
+      },
+      "wikidata": "Q269909",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Travailliste de l'aile gauche modérée, ancien maire du Grand Manchester ; charisme régional reconnu (0,6) ; peu agressif ; internationalisme prudent après le Brexit."
+    },
+    {
+      "id": "gbr-charles-iii",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.gbr-charles-iii.parody",
+        "fictional": "leader.gbr-charles-iii.fictional"
+      },
+      "born": "1948-11-14",
+      "party": null,
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.1,
+        "corruption": 0.05,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q43274",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Monarque constitutionnel sans pouvoir politique : traits neutres, agressivité et corruption minimales."
+    },
+    {
+      "id": "gbr-kemi-badenoch",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gbr-kemi-badenoch.parody",
+        "fictional": "leader.gbr-kemi-badenoch.fictional"
+      },
+      "born": "1980-01-02",
+      "party": "gbr-parti-conservateur",
+      "traits": {
+        "economic": 0.457,
+        "authority": 0.314,
+        "sovereignty": 0.157,
+        "aggressiveness": 0.3942,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q21592171",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "gbr-nigel-farage",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gbr-nigel-farage.parody",
+        "fictional": "leader.gbr-nigel-farage.fictional"
+      },
+      "born": "1964-04-03",
+      "party": "gbr-reform-uk",
+      "traits": {
+        "economic": 0.28,
+        "authority": 0.18,
+        "sovereignty": 0.36,
+        "aggressiveness": 0.408,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q318471",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "gbr-nick-clegg",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gbr-nick-clegg.parody",
+        "fictional": "leader.gbr-nick-clegg.fictional"
+      },
+      "born": "1967-01-07",
+      "party": "gbr-liberaux-democrates",
+      "traits": {
+        "economic": 0.167,
+        "authority": -0.433,
+        "sovereignty": -0.567,
+        "aggressiveness": 0.09999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q189947",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "gbr-zack-polanski",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gbr-zack-polanski.parody",
+        "fictional": "leader.gbr-zack-polanski.fictional"
+      },
+      "born": "1982-11-02",
+      "party": "gbr-parti-vert-de-l-angleterre-et-du-pays-de-galles",
+      "traits": {
+        "economic": -0.8,
+        "authority": -0.4,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.17999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q75974863",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "gbr-john-swinney",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gbr-john-swinney.parody",
+        "fictional": "leader.gbr-john-swinney.fictional"
+      },
+      "born": "1964-04-13",
+      "party": "gbr-parti-national-ecossais",
+      "traits": {
+        "economic": -0.275,
+        "authority": -0.275,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.22499999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q333811",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "gbr-parti-travailliste",
+      "name": "party.gbr-parti-travailliste",
+      "wikidata": "Q9630",
+      "ideologies": ["Q121254", "Q189280"],
+      "ideology": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.337,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "General election 2024, vote share (House of Commons Library)"
+      },
+      "leader": "gbr-andy-burnham"
+    },
+    {
+      "id": "gbr-parti-conservateur",
+      "name": "party.gbr-parti-conservateur",
+      "wikidata": "Q9626",
+      "ideologies": [
+        "Q1043096",
+        "Q1414298",
+        "Q192139",
+        "Q3401913",
+        "Q50685643",
+        "Q7169",
+        "Q729119"
+      ],
+      "ideology": {
+        "economic": 0.457,
+        "authority": 0.314,
+        "sovereignty": 0.157
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (7 of 7)",
+      "support": 0.237,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "General election 2024, vote share (House of Commons Library)"
+      },
+      "leader": "gbr-kemi-badenoch"
+    },
+    {
+      "id": "gbr-reform-uk",
+      "name": "party.gbr-reform-uk",
+      "wikidata": "Q104721252",
+      "ideologies": ["Q223200", "Q436860", "Q729119", "Q852739", "Q878445"],
+      "ideology": {
+        "economic": 0.28,
+        "authority": 0.18,
+        "sovereignty": 0.36
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 5)",
+      "support": 0.143,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "General election 2024, vote share (House of Commons Library)"
+      },
+      "leader": "gbr-nigel-farage"
+    },
+    {
+      "id": "gbr-liberaux-democrates",
+      "name": "party.gbr-liberaux-democrates",
+      "wikidata": "Q9624",
+      "ideologies": ["Q201712", "Q3781399", "Q6216"],
+      "ideology": {
+        "economic": 0.167,
+        "authority": -0.433,
+        "sovereignty": -0.567
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.122,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "General election 2024, vote share (House of Commons Library)"
+      },
+      "leader": "gbr-nick-clegg"
+    },
+    {
+      "id": "gbr-parti-vert-de-l-angleterre-et-du-pays-de-galles",
+      "name": "party.gbr-parti-vert-de-l-angleterre-et-du-pays-de-galles",
+      "wikidata": "Q9669",
+      "ideologies": ["Q275595"],
+      "ideology": {
+        "economic": -0.8,
+        "authority": -0.4,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.067,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "General election 2024, vote share (House of Commons Library)"
+      },
+      "leader": "gbr-zack-polanski"
+    },
+    {
+      "id": "gbr-parti-national-ecossais",
+      "name": "party.gbr-parti-national-ecossais",
+      "wikidata": "Q10658",
+      "ideologies": ["Q121254", "Q3336993", "Q3781399", "Q891905"],
+      "ideology": {
+        "economic": -0.275,
+        "authority": -0.275,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.025,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "General election 2024, vote share (House of Commons Library)"
+      },
+      "leader": "gbr-john-swinney"
+    }
+  ]
+}

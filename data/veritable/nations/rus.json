@@ -310,5 +310,13 @@
     "asOf": "2026-01-01",
     "note": "Effectifs d'active et puissances aérienne et navale relatives (0 à 1) : ordres de grandeur publics. La source de référence (IISS Military Balance) est sous licence fermée et n'est pas utilisée. Sans effet au J2. spendingPctGdp : Banque mondiale MS.MIL.XPND.GD.ZS (source primaire SIPRI)."
   },
-  "startingTech": []
+  "startingTech": [],
+  "politics": {
+    "electionIntervalMonths": 72,
+    "lastElection": "2024-03-17",
+    "electionsSuspendedAtWarAtHome": false,
+    "source": "manual",
+    "asOf": "2026-09-23",
+    "note": "Présidentielle 2024. Intervalle : mandat présidentiel de six ans."
+  }
 }

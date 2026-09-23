@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { simDataFrom } from "../../adapters/scenarioPackFrom";
 import { dataSource } from "../../data/catalog";
 import { SAVE_SCHEMA_VERSION } from "../../data/schemas/save";
 import { decodeSave, encodeSave, peekSchemaVersion } from "../serialize";
@@ -15,23 +16,11 @@ const FIXTURE = new Uint8Array(
 
 function context(): MigrationContext {
   const scenario = dataSource.scenario("europe-10");
-  const meta = dataSource.bordersMeta(scenario);
   return {
     config: dataSource.config(),
     nationData: (id) => dataSource.nation(id),
     scenario,
-    data: {
-      goods: dataSource.goods(),
-      row: dataSource.row(),
-      blocs: dataSource.blocs(),
-      divisions: dataSource.divisions(),
-      casusBelli: dataSource.casusBelli(),
-      seas: dataSource.seas(scenario.map).zones,
-      geography: {
-        landNeighbours: meta.landNeighbours,
-        bordersNeutralLand: meta.bordersNeutralLand,
-      },
-    },
+    data: simDataFrom(dataSource, scenario),
   };
 }
 
@@ -86,6 +75,24 @@ describe("migration v3 -> v4 on a real J3 save", () => {
     expect(
       new Set(Object.values(save.economy.nations.NOR.circumvention)),
     ).toEqual(new Set([0]));
+    // The sliders get targets equal to the values in effect.
+    expect(france.taxTargets).toEqual(france.taxes);
+    expect(france.spendingTargets).toEqual(france.spending);
+
+    // Added by the v4: the political engine, from the sheets and the leaders
+    // data, with the opinion and stability of the v3 kept.
+    const politics = save.politics.nations.FRA;
+    expect(politics.groups).not.toBeNull();
+    expect(politics.regime).toBe("semi-presidential");
+    expect(politics.legitimacy).toBe(0.8);
+    expect(politics.leader.role).toBe("head-of-state");
+    expect(politics.parties.length).toBeGreaterThan(3);
+    expect(politics.nextElection).toBe("2027-04-24");
+    expect(politics.laws).toEqual([]);
+    expect(save.politics.nations.RUS.regime).toBe("electoral-authoritarian");
+    expect(save.politics.player).toEqual({ objectives: [], notes: [] });
+    // Stability and unrest as saved by the J3, not recomputed.
+    expect(politics.stability).toBeLessThan(0.6);
   });
 
   it("is deterministic, and the migrated save round-trips in the current version", () => {

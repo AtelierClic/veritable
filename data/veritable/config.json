@@ -159,7 +159,6 @@
       "shortage": 0.2,
       "debt": 0.15,
       "legitimacy": 0.15,
-      "legitimacyValue": 0.7,
       "unrestThreshold": 0.35,
       "debtHealthyAt": 0.6,
       "debtRuinousAt": 2,
@@ -170,14 +169,92 @@
       "growth": 4,
       "shortage": 1.5,
       "prices": 0.5
+    },
+    "groupIdeologies": {
+      "business": { "economic": 0.6, "authority": 0.1, "sovereignty": -0.3 },
+      "workers": { "economic": -0.5, "authority": 0, "sovereignty": 0.1 },
+      "farmers": { "economic": 0.2, "authority": 0.3, "sovereignty": 0.5 },
+      "military": { "economic": 0.3, "authority": 0.6, "sovereignty": 0.5 },
+      "religious": { "economic": 0.2, "authority": 0.5, "sovereignty": 0.4 },
+      "youth": { "economic": -0.3, "authority": -0.5, "sovereignty": -0.4 },
+      "retirees": { "economic": 0.1, "authority": 0.3, "sovereignty": 0.3 },
+      "minorities": { "economic": -0.3, "authority": -0.4, "sovereignty": -0.5 }
+    },
+    "elections": {
+      "sigma": 0.9,
+      "incumbentBase": 0.5,
+      "propagandaWeight": 5,
+      "propagandaMaxPctGdp": 0.02,
+      "mediaControlBonus": 1.2,
+      "fraudMax": 0.3,
+      "fraudDetectionScale": 4,
+      "fraudLegitimacyHit": 0.3,
+      "fraudStabilityHit": 0.15,
+      "fraudCoupMultiplier": 2,
+      "fraudCoupMonths": 12,
+      "fraudDemocracyRelations": -30,
+      "clientelismSatisfaction": 0.02,
+      "clientelismCorruption": 0.01,
+      "clientelismCostPctGdp": 0.003,
+      "coalitionMajority": 0.5,
+      "victoryCapital": 30,
+      "newGovernmentCapital": 30
+    },
+    "capital": {
+      "regenBase": 3,
+      "max": 100,
+      "objectiveBonus": 20
+    },
+    "legitimacy": {
+      "recoveryPerMonth": 0.01,
+      "objectiveBonus": 0.05,
+      "coupValue": 0.4,
+      "revolutionValue": 0.5
+    },
+    "corruptionLeakScale": 0.2,
+    "laws": {
+      "repealDelayMonths": 12,
+      "rampMonths": 6
+    },
+    "coups": {
+      "militaryWeight": 3,
+      "stabilityWeight": 2,
+      "failureShare": 0.5,
+      "democracyRelationsHit": -30,
+      "failedStabilityHit": 0.1,
+      "failedMilitaryHit": 0.1
+    },
+    "revolution": {
+      "angryGroups": 3,
+      "angryBelow": 0.25,
+      "shortageAbove": 0.3,
+      "stabilityBelow": 0.3,
+      "lowStabilityMonths": 6,
+      "monthlyProbability": 0.05,
+      "gdpHit": 0.05,
+      "stabilityHit": 0.2,
+      "electionDelayMonths": 6
+    },
+    "leaders": {
+      "deathBase": 0.0001,
+      "deathExponent": 0.085,
+      "deathAgeOffset": 30,
+      "traitNoise": 0.15,
+      "successorAge": 52
+    },
+    "aiShock": {
+      "sd": 0.06,
+      "coupScale": 10
     }
   },
   "diplomacy": {
     "blocRelation": 30,
     "blocRelationCap": 60,
     "warRelation": -100,
-    "relationDecayPerMonth": 1,
+    "relationDecayPerMonth": 0.5,
     "relationRecoveryPerMonth": 2,
+    "affinityPerBloc": 40,
+    "affinityIdeology": 20,
     "declarationGroupHit": 0.1,
     "humanitarianStability": 0.3,
     "sanction": {

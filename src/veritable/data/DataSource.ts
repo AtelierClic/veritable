@@ -3,7 +3,19 @@ import { Bloc, BlocSchema } from "./schemas/bloc";
 import { NationId } from "./schemas/common";
 import { VeritableConfig, VeritableConfigSchema } from "./schemas/config";
 import { Good, GoodsSchema } from "./schemas/goods";
+import { Law, LawsSchema } from "./schemas/laws";
+import { LeadersData, LeadersDataSchema } from "./schemas/leaders";
 import { NationData, NationDataSchema } from "./schemas/nation";
+import {
+  IdeologyTable,
+  IdeologyTableSchema,
+  NamePool,
+  NamePoolSchema,
+  Objective,
+  ObjectivesSchema,
+  RegimeData,
+  RegimesSchema,
+} from "./schemas/politics";
 import { RowData, RowSchema } from "./schemas/row";
 import { Scenario, ScenarioSchema } from "./schemas/scenario";
 import { Seas, SeasSchema } from "./schemas/seas";
@@ -55,6 +67,13 @@ export interface DataSource {
   // Maritime zones (J3b): the seeds of the map, and their rasterization.
   seas(map: string): Seas;
   zones(scenario: Scenario): Promise<Zones>;
+  // The political engine (J4).
+  regimes(): RegimeData[];
+  ideologies(): IdeologyTable;
+  objectives(): Objective[];
+  laws(): Law[];
+  names(id: NationId): NamePool;
+  leaders(id: NationId): LeadersData;
 }
 
 export function createDataSource(files: RawDataFiles): DataSource {
@@ -118,6 +137,38 @@ export function createDataSource(files: RawDataFiles): DataSource {
       once(`seas:${map}`, () =>
         SeasSchema.parse(files.json(`maps/${map}.seas.json`)),
       ),
+    regimes: () =>
+      once("regimes", () =>
+        RegimesSchema.parse(files.json("politics/regimes.json")),
+      ),
+    ideologies: () =>
+      once("ideologies", () =>
+        IdeologyTableSchema.parse(files.json("politics/ideologies.json")),
+      ),
+    objectives: () =>
+      once("objectives", () =>
+        ObjectivesSchema.parse(files.json("politics/objectives.json")),
+      ),
+    laws: () =>
+      once("laws", () =>
+        files
+          .list("laws", ".json")
+          .sort()
+          .flatMap((path) => LawsSchema.parse(files.json(path))),
+      ),
+    names: (id) =>
+      once(`names:${id}`, () =>
+        NamePoolSchema.parse(files.json(`names/${id.toLowerCase()}.json`)),
+      ),
+    leaders: (id) =>
+      once(`leaders:${id}`, () => {
+        const data = LeadersDataSchema.parse(
+          files.json(`leaders/${id.toLowerCase()}.json`),
+        );
+        if (data.nation !== id)
+          throw new Error(`leaders file ${id}: nation is ${data.nation}`);
+        return data;
+      }),
     zones: async (scenario) =>
       decodeZones(await files.bytes(`borders/${scenario.id}.zones.bin`)),
   };

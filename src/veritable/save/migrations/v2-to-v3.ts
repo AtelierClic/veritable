@@ -1,5 +1,5 @@
-import { SaveFileV3 } from "../../data/schemas/saveV3";
 import { SaveFileV2 } from "../../data/schemas/saveV2";
+import { SaveFileV3 } from "../../data/schemas/saveV3";
 import { initDiplomacy } from "../../sim/diplomacy/diplomacy";
 import { buildContext } from "../../sim/economy/context";
 import { initNaval } from "../../sim/naval/naval";

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { INTEREST_GROUPS, IsoDateSchema } from "./common";
 import { GoodIdSchema } from "./goods";
 import { SPENDING_POSTS, TAX_IDS } from "./nation";
+import { GroupIdeologiesSchema } from "./politics";
 import { CONSCRIPTION_LEVELS, DIVISION_TEMPLATE_IDS } from "./war";
 
 // Shape of data/veritable/config.json: every balancing constant has a name
@@ -112,8 +113,7 @@ const PoliticsConfigSchema = z.object({
     opinion: share,
     shortage: share,
     debt: share,
-    legitimacy: share,
-    legitimacyValue: share,
+    legitimacy: share, // x the legitimacy of the regime in play (J4)
     unrestThreshold: share,
     debtHealthyAt: z.number(),
     debtRuinousAt: z.number(),
@@ -129,6 +129,91 @@ const PoliticsConfigSchema = z.object({
     shortage: z.number().min(0),
     prices: z.number().min(0),
   }),
+  // --- the political engine (J4) ---
+  // Default ideology of the eight groups (a sheet may override it).
+  groupIdeologies: GroupIdeologiesSchema,
+  elections: z.object({
+    // Affinity of a group for a party: exp(-d^2 / sigma^2) x (1 + charisma).
+    sigma: positive,
+    // Vote for the incumbent x (incumbentBase + satisfaction of the group).
+    incumbentBase: share,
+    // Propaganda: +propagandaWeight x (% of GDP spent) to the incumbent.
+    propagandaWeight: z.number().min(0),
+    propagandaMaxPctGdp: share,
+    mediaControlBonus: z.number().min(1), // x on the incumbent's share
+    fraudMax: share, // shares moved to the incumbent
+    // Detection probability = min(1, scale x fraud x (1 - media control)
+    // x press freedom).
+    fraudDetectionScale: z.number().min(0),
+    fraudLegitimacyHit: share,
+    fraudStabilityHit: share,
+    fraudCoupMultiplier: z.number().min(1),
+    fraudCoupMonths: z.number().int().min(1),
+    fraudDemocracyRelations: z.number(),
+    // Clientelism: monthly satisfaction of the targeted group, corruption
+    // rise, and the budget leak (share of GDP).
+    clientelismSatisfaction: share,
+    clientelismCorruption: share,
+    clientelismCostPctGdp: share,
+    coalitionMajority: share,
+    victoryCapital: z.number().min(0),
+    newGovernmentCapital: z.number().min(0),
+  }),
+  capital: z.object({
+    // Monthly regeneration = base x (0.5 + charisma) x (0.5 + opinion).
+    regenBase: z.number().min(0),
+    max: positive,
+    objectiveBonus: z.number().min(0),
+  }),
+  legitimacy: z.object({
+    recoveryPerMonth: share, // towards the base of the regime
+    objectiveBonus: share,
+    coupValue: share,
+    revolutionValue: share,
+  }),
+  // Corruption of the leader = leak on the spending: cost x (1 + scale x c).
+  corruptionLeakScale: z.number().min(0),
+  laws: z.object({
+    repealDelayMonths: z.number().int().min(0),
+    // Sliders reach their target linearly over this many months.
+    rampMonths: z.number().min(1),
+  }),
+  coups: z.object({
+    // p = coupBase x (1 + militaryWeight x (1 - s_military))
+    //     x (1 + stabilityWeight x (1 - stability)) x (1 - legitimacy)
+    //     x (1 + exhaustion)
+    militaryWeight: z.number().min(0),
+    stabilityWeight: z.number().min(0),
+    failureShare: share, // share of the attempts that fail
+    democracyRelationsHit: z.number(),
+    failedStabilityHit: share,
+    failedMilitaryHit: share,
+  }),
+  revolution: z.object({
+    angryGroups: z.number().int().min(1),
+    angryBelow: share,
+    shortageAbove: share,
+    stabilityBelow: share,
+    lowStabilityMonths: z.number().int().min(1),
+    monthlyProbability: share,
+    gdpHit: share,
+    stabilityHit: share,
+    electionDelayMonths: z.number().int().min(1),
+  }),
+  leaders: z.object({
+    // Annual death probability = base x e^(exponent x (age - offset)).
+    deathBase: z.number().min(0),
+    deathExponent: z.number().min(0),
+    deathAgeOffset: z.number(),
+    traitNoise: share, // sd of the generated traits around their rule
+    successorAge: z.number().int().positive(),
+  }),
+  aiShock: z.object({
+    // Monthly opinion shock of an AI nation: N(0, sd x (1 - legitimacy)
+    // x (1 + coupScale x coupBase)).
+    sd: share,
+    coupScale: z.number().min(0),
+  }),
 });
 
 const DiplomacyConfigSchema = z.object({
@@ -138,8 +223,12 @@ const DiplomacyConfigSchema = z.object({
   blocRelation: z.number().min(0),
   blocRelationCap: z.number().min(0).max(100),
   warRelation: z.number().min(-100).max(0),
-  relationDecayPerMonth: z.number().min(0), // positive relations, towards 0
-  relationRecoveryPerMonth: z.number().min(0), // negative relations, towards 0
+  relationDecayPerMonth: z.number().min(0), // above the affinity, towards it
+  relationRecoveryPerMonth: z.number().min(0), // below the affinity, towards it
+  // Affinity (J4): affinityPerBloc x common blocs + affinityIdeology x
+  // (1 - ideological distance of the leaders / max distance).
+  affinityPerBloc: z.number().min(0),
+  affinityIdeology: z.number().min(0),
   // Satisfaction lost by the youth and business groups of an aggressor.
   declarationGroupHit: share,
   // Humanitarian casus belli: the target is in unrest below this stability.

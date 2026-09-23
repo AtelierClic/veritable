@@ -1,0 +1,302 @@
+{
+  "nation": "POL",
+  "actors": [
+    {
+      "id": "pol-donald-tusk",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.pol-donald-tusk.parody",
+        "fictional": "leader.pol-donald-tusk.fictional"
+      },
+      "born": "1957-04-22",
+      "party": "pol-coalition-civique",
+      "traits": {
+        "economic": 0.3,
+        "authority": -0.2,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.4,
+        "corruption": 0.15,
+        "charisma": 0.6,
+        "competence": 0.65
+      },
+      "wikidata": "Q946",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Libéral pro-européen, ancien président du Conseil européen (compétence 0,65) ; ferme face à la Russie (agressivité 0,4) ; charisme 0,6."
+    },
+    {
+      "id": "pol-karol-nawrocki",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.pol-karol-nawrocki.parody",
+        "fictional": "leader.pol-karol-nawrocki.fictional"
+      },
+      "born": "1983-03-03",
+      "party": null,
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.6,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.5,
+        "corruption": 0.25,
+        "charisma": 0.55,
+        "competence": 0.4
+      },
+      "wikidata": "Q17704749",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Président conservateur soutenu par le PiS, souverainiste (+0,7), autoritaire (+0,6) ; ton belliqueux envers la Russie et Bruxelles (agressivité 0,5) ; peu d'expérience exécutive (compétence 0,4)."
+    },
+    {
+      "id": "pol-jaroslaw-kaczynski",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pol-jaroslaw-kaczynski.parody",
+        "fictional": "leader.pol-jaroslaw-kaczynski.fictional"
+      },
+      "born": "1949-06-18",
+      "party": "pol-droit-et-justice",
+      "traits": {
+        "economic": 0.14,
+        "authority": 0.47,
+        "sovereignty": 0.59,
+        "aggressiveness": 0.512,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q55917",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pol-szymon-holownia",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pol-szymon-holownia.parody",
+        "fictional": "leader.pol-szymon-holownia.fictional"
+      },
+      "born": "1976-09-03",
+      "party": "pol-pologne-2050",
+      "traits": {
+        "economic": -0.033,
+        "authority": -0.133,
+        "sovereignty": -0.433,
+        "aggressiveness": 0.18679999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q9352644",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pol-janusz-wojciechowski",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pol-janusz-wojciechowski.parody",
+        "fictional": "leader.pol-janusz-wojciechowski.fictional"
+      },
+      "born": "1954-12-06",
+      "party": "pol-parti-paysan-polonais",
+      "traits": {
+        "economic": 0.075,
+        "authority": 0.3,
+        "sovereignty": 0.35,
+        "aggressiveness": 0.43,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q3509201",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pol-robert-biedron",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pol-robert-biedron.parody",
+        "fictional": "leader.pol-robert-biedron.fictional"
+      },
+      "born": "1976-04-13",
+      "party": "pol-nouvelle-gauche",
+      "traits": {
+        "economic": -0.25,
+        "authority": -0.25,
+        "sovereignty": -0.55,
+        "aggressiveness": 0.13999999999999999,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q174491",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pol-krzysztof-bosak",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pol-krzysztof-bosak.parody",
+        "fictional": "leader.pol-krzysztof-bosak.fictional"
+      },
+      "born": "1982-06-13",
+      "party": "pol-confederation",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.325,
+        "sovereignty": 0.413,
+        "aggressiveness": 0.4476,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5423758",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "pol-droit-et-justice",
+      "name": "party.pol-droit-et-justice",
+      "wikidata": "Q156874",
+      "ideologies": [
+        "Q1322213",
+        "Q1414298",
+        "Q182121",
+        "Q223200",
+        "Q2483698",
+        "Q322294",
+        "Q436860",
+        "Q555887",
+        "Q7210053",
+        "Q852739"
+      ],
+      "ideology": {
+        "economic": 0.14,
+        "authority": 0.47,
+        "sovereignty": 0.59
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (10 of 10)",
+      "support": 0.354,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Wybory parlamentarne 2023, Sejm (PKW)"
+      },
+      "leader": "pol-jaroslaw-kaczynski"
+    },
+    {
+      "id": "pol-coalition-civique",
+      "name": "party.pol-coalition-civique",
+      "wikidata": "Q1021144",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.3,
+        "authority": -0.3,
+        "sovereignty": -0.6
+      },
+      "ideologySource": "estimate: Coalition civique : libéraux pro-européens.",
+      "support": 0.307,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Wybory parlamentarne 2023, Sejm (PKW)"
+      },
+      "leader": "pol-donald-tusk"
+    },
+    {
+      "id": "pol-pologne-2050",
+      "name": "party.pol-pologne-2050",
+      "wikidata": "Q100979832",
+      "ideologies": ["Q209158", "Q2855609", "Q3781399"],
+      "ideology": {
+        "economic": -0.033,
+        "authority": -0.133,
+        "sovereignty": -0.433
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.08,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Wybory parlamentarne 2023, Sejm (PKW)"
+      },
+      "leader": "pol-szymon-holownia"
+    },
+    {
+      "id": "pol-parti-paysan-polonais",
+      "name": "party.pol-parti-paysan-polonais",
+      "wikidata": "Q218477",
+      "ideologies": ["Q1414298", "Q179073", "Q209158", "Q492050"],
+      "ideology": {
+        "economic": 0.075,
+        "authority": 0.3,
+        "sovereignty": 0.35
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.064,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Wybory parlamentarne 2023, Sejm (PKW)"
+      },
+      "leader": "pol-janusz-wojciechowski"
+    },
+    {
+      "id": "pol-nouvelle-gauche",
+      "name": "party.pol-nouvelle-gauche",
+      "wikidata": "Q107418166",
+      "ideologies": ["Q121254", "Q3781399"],
+      "ideology": {
+        "economic": -0.25,
+        "authority": -0.25,
+        "sovereignty": -0.55
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.086,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Wybory parlamentarne 2023, Sejm (PKW)"
+      },
+      "leader": "pol-robert-biedron"
+    },
+    {
+      "id": "pol-confederation",
+      "name": "party.pol-confederation",
+      "wikidata": "Q61568052",
+      "ideologies": [
+        "Q1043096",
+        "Q1129261",
+        "Q223200",
+        "Q2258474",
+        "Q436860",
+        "Q46607",
+        "Q56641686",
+        "Q6235"
+      ],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.325,
+        "sovereignty": 0.413
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (8 of 8)",
+      "support": 0.072,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Wybory parlamentarne 2023, Sejm (PKW)"
+      },
+      "leader": "pol-krzysztof-bosak"
+    }
+  ]
+}

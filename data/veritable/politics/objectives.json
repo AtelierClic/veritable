@@ -1,0 +1,86 @@
+[
+  {
+    "id": "double-gdp",
+    "name": "objective.double-gdp.name",
+    "description": "objective.double-gdp.desc",
+    "condition": { "kind": "gdp-ratio", "value": 2 }
+  },
+  {
+    "id": "gdp-plus-half",
+    "name": "objective.gdp-plus-half.name",
+    "description": "objective.gdp-plus-half.desc",
+    "condition": { "kind": "gdp-ratio", "value": 1.5 }
+  },
+  {
+    "id": "join-eu",
+    "name": "objective.join-eu.name",
+    "description": "objective.join-eu.desc",
+    "condition": { "kind": "join-bloc", "bloc": "eu" }
+  },
+  {
+    "id": "stable-five-years",
+    "name": "objective.stable-five-years.name",
+    "description": "objective.stable-five-years.desc",
+    "condition": { "kind": "stability-above", "value": 0.7, "years": 5 }
+  },
+  {
+    "id": "retake-region",
+    "name": "objective.retake-region.name",
+    "description": "objective.retake-region.desc",
+    "condition": { "kind": "retake-region" }
+  },
+  {
+    "id": "twenty-years-peace",
+    "name": "objective.twenty-years-peace.name",
+    "description": "objective.twenty-years-peace.desc",
+    "condition": { "kind": "no-war", "years": 20 }
+  },
+  {
+    "id": "ten-years-peace",
+    "name": "objective.ten-years-peace.name",
+    "description": "objective.ten-years-peace.desc",
+    "condition": { "kind": "no-war", "years": 10 }
+  },
+  {
+    "id": "debt-below-sixty",
+    "name": "objective.debt-below-sixty.name",
+    "description": "objective.debt-below-sixty.desc",
+    "condition": { "kind": "debt-below", "value": 0.6 }
+  },
+  {
+    "id": "energy-independence",
+    "name": "objective.energy-independence.name",
+    "description": "objective.energy-independence.desc",
+    "condition": { "kind": "self-sufficient", "good": "electricity" }
+  },
+  {
+    "id": "food-independence",
+    "name": "objective.food-independence.name",
+    "description": "objective.food-independence.desc",
+    "condition": { "kind": "self-sufficient", "good": "food" }
+  },
+  {
+    "id": "legitimate-state",
+    "name": "objective.legitimate-state.name",
+    "description": "objective.legitimate-state.desc",
+    "condition": { "kind": "legitimacy-above", "value": 0.9 }
+  },
+  {
+    "id": "win-election",
+    "name": "objective.win-election.name",
+    "description": "objective.win-election.desc",
+    "condition": { "kind": "win-election" }
+  },
+  {
+    "id": "no-shortage-five-years",
+    "name": "objective.no-shortage-five-years.name",
+    "description": "objective.no-shortage-five-years.desc",
+    "condition": { "kind": "shortage-below", "value": 0.02, "years": 5 }
+  },
+  {
+    "id": "arms-exporter",
+    "name": "objective.arms-exporter.name",
+    "description": "objective.arms-exporter.desc",
+    "condition": { "kind": "export-share", "good": "arms", "value": 0.1 }
+  }
+]

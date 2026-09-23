@@ -2,6 +2,7 @@ import { SaveFileV1 } from "../../data/schemas/saveV1";
 import { SaveFileV2 } from "../../data/schemas/saveV2";
 import { buildContext } from "../../sim/economy/context";
 import { initEconomy, initPolitics } from "../../sim/economy/init";
+import { Rng } from "../../sim/rng";
 import { MigrationContext } from "./index";
 
 // v1 (J0-J1) -> v2 (J2): the save gains its `economy` and `politics` sections.
@@ -30,6 +31,13 @@ export function v1ToV2(
     ...save,
     schemaVersion: 2,
     economy: initEconomy(ctx, sheets, context.data.row),
-    politics: initPolitics(ctx, sheets, player, false),
+    politics: initPolitics(
+      ctx,
+      sheets,
+      player,
+      false,
+      new Rng(save.seed),
+      save.calendar.date,
+    ),
   } as SaveFileV2;
 }

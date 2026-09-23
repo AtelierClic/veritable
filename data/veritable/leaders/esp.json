@@ -1,0 +1,315 @@
+{
+  "nation": "ESP",
+  "actors": [
+    {
+      "id": "esp-pedro-sanchez",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.esp-pedro-sanchez.parody",
+        "fictional": "leader.esp-pedro-sanchez.fictional"
+      },
+      "born": "1972-02-29",
+      "party": "esp-parti-socialiste-ouvrier-espagnol",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.2,
+        "sovereignty": -0.5,
+        "aggressiveness": 0.3,
+        "corruption": 0.3,
+        "charisma": 0.6,
+        "competence": 0.55
+      },
+      "wikidata": "Q6070218",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Socialiste pro-européen ; habile manœuvrier (charisme 0,6) ; entouré d'affaires en 2024-2025 (corruption 0,3) ; agressivité modérée."
+    },
+    {
+      "id": "esp-philippe-vi-d-espagne",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.esp-philippe-vi-d-espagne.parody",
+        "fictional": "leader.esp-philippe-vi-d-espagne.fictional"
+      },
+      "born": "1968-01-30",
+      "party": null,
+      "traits": {
+        "economic": 0.1,
+        "authority": 0,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.1,
+        "corruption": 0.05,
+        "charisma": 0.55,
+        "competence": 0.5
+      },
+      "wikidata": "Q191045",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Monarque constitutionnel ; traits neutres, légèrement pro-européen ; charisme correct, agressivité et corruption minimales."
+    },
+    {
+      "id": "esp-alberto-nunez-feijoo",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.esp-alberto-nunez-feijoo.parody",
+        "fictional": "leader.esp-alberto-nunez-feijoo.fictional"
+      },
+      "born": "1961-09-10",
+      "party": "esp-parti-populaire",
+      "traits": {
+        "economic": 0.42,
+        "authority": -0.14,
+        "sovereignty": -0.36,
+        "aggressiveness": 0.19999999999999996,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2457783",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "esp-cristina-narbona",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.esp-cristina-narbona.parody",
+        "fictional": "leader.esp-cristina-narbona.fictional"
+      },
+      "born": "1951-07-29",
+      "party": "esp-parti-socialiste-ouvrier-espagnol",
+      "traits": {
+        "economic": -0.283,
+        "authority": -0.317,
+        "sovereignty": -0.35,
+        "aggressiveness": 0.16659999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2984396",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "esp-santiago-abascal",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.esp-santiago-abascal.parody",
+        "fictional": "leader.esp-santiago-abascal.fictional"
+      },
+      "born": "1976-04-14",
+      "party": "esp-vox",
+      "traits": {
+        "economic": 0.371,
+        "authority": 0.5,
+        "sovereignty": 0.471,
+        "aggressiveness": 0.49420000000000003,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q11703587",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "esp-oriol-junqueras",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.esp-oriol-junqueras.parody",
+        "fictional": "leader.esp-oriol-junqueras.fictional"
+      },
+      "born": "1969-04-11",
+      "party": "esp-gauche-republicaine-de-catalogne",
+      "traits": {
+        "economic": -0.38,
+        "authority": -0.29,
+        "sovereignty": -0.05,
+        "aggressiveness": 0.23199999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q116812",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "esp-carles-puigdemont",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.esp-carles-puigdemont.parody",
+        "fictional": "leader.esp-carles-puigdemont.fictional"
+      },
+      "born": "1962-12-29",
+      "party": "esp-ensemble-pour-la-catalogne",
+      "traits": {
+        "economic": -0.017,
+        "authority": -0.133,
+        "sovereignty": 0.017,
+        "aggressiveness": 0.2768,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4740163",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "esp-parti-populaire",
+      "name": "party.esp-parti-populaire",
+      "wikidata": "Q185088",
+      "ideologies": ["Q209158", "Q3781399", "Q617609", "Q6216", "Q729119"],
+      "ideology": {
+        "economic": 0.42,
+        "authority": -0.14,
+        "sovereignty": -0.36
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 5)",
+      "support": 0.331,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
+      },
+      "leader": "esp-alberto-nunez-feijoo"
+    },
+    {
+      "id": "esp-parti-socialiste-ouvrier-espagnol",
+      "name": "party.esp-parti-socialiste-ouvrier-espagnol",
+      "wikidata": "Q138198",
+      "ideologies": [
+        "Q121254",
+        "Q189280",
+        "Q204886",
+        "Q3781399",
+        "Q821102",
+        "Q877848"
+      ],
+      "ideology": {
+        "economic": -0.283,
+        "authority": -0.317,
+        "sovereignty": -0.35
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (6 of 6)",
+      "support": 0.317,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
+      },
+      "leader": "esp-cristina-narbona"
+    },
+    {
+      "id": "esp-vox",
+      "name": "party.esp-vox",
+      "wikidata": "Q15630787",
+      "ideologies": [
+        "Q1757356",
+        "Q575220",
+        "Q729119",
+        "Q7573482",
+        "Q852739",
+        "Q9091203",
+        "Q948731"
+      ],
+      "ideology": {
+        "economic": 0.371,
+        "authority": 0.5,
+        "sovereignty": 0.471
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (7 of 7)",
+      "support": 0.124,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
+      },
+      "leader": "esp-santiago-abascal"
+    },
+    {
+      "id": "esp-sumar",
+      "name": "party.esp-sumar",
+      "wikidata": "Q112098527",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.5,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "estimate: Sumar : gauche écologiste et féministe espagnole.",
+      "support": 0.123,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
+      },
+      "leader": null
+    },
+    {
+      "id": "esp-gauche-republicaine-de-catalogne",
+      "name": "party.esp-gauche-republicaine-de-catalogne",
+      "wikidata": "Q150068",
+      "ideologies": [
+        "Q1202972",
+        "Q121254",
+        "Q1377153",
+        "Q1735599",
+        "Q189280",
+        "Q275595",
+        "Q2855609",
+        "Q7252",
+        "Q877848",
+        "Q893331"
+      ],
+      "ideology": {
+        "economic": -0.38,
+        "authority": -0.29,
+        "sovereignty": -0.05
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (10 of 10)",
+      "support": 0.019,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
+      },
+      "leader": "esp-oriol-junqueras"
+    },
+    {
+      "id": "esp-ensemble-pour-la-catalogne",
+      "name": "party.esp-ensemble-pour-la-catalogne",
+      "wikidata": "Q97155800",
+      "ideologies": [
+        "Q121254",
+        "Q1377153",
+        "Q1735599",
+        "Q729119",
+        "Q785893",
+        "Q893331"
+      ],
+      "ideology": {
+        "economic": -0.017,
+        "authority": -0.133,
+        "sovereignty": 0.017
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (6 of 6)",
+      "support": 0.016,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
+      },
+      "leader": "esp-carles-puigdemont"
+    }
+  ]
+}

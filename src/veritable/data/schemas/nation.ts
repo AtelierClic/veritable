@@ -9,6 +9,7 @@ import {
   TileCoordSchema,
 } from "./common";
 import { GOOD_IDS, ProvenanceSchema } from "./goods";
+import { NationPoliticsDataSchema } from "./politics";
 
 // Shape of data/veritable/nations/<iso3>.json.
 
@@ -140,6 +141,9 @@ export const NationDataSchema = z.object({
     note: z.string().optional(),
   }),
   startingTech: z.array(z.string()),
+  // Elections (J4): interval, last real election, suspension at war at home,
+  // ideology of the groups (override of config.json).
+  politics: NationPoliticsDataSchema,
   interestGroups: InterestGroupsSchema.optional(),
   aiAgenda: z
     .array(

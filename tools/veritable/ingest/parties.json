@@ -1,0 +1,426 @@
+{
+  "_comment": "Partis principaux par nation (au plus huit), listés à la main : Wikidata ne donne pas de résultats électoraux exploitables sans une modélisation par élection. `support` = part des voix à la dernière élection législative nationale (source dans `election`), marquée estimate dans les fiches ; le reste des voix va aux petits partis, ignorés. `qid` : identifiant Wikidata, résolu par l'outil depuis `label` (recherche wbsearchentities, langue `lang`) quand il manque, puis figé ici après vérification. `wikidataCountry` : QID de la nation (P35 chef d'État, P6 chef de gouvernement).",
+  "asOf": "2026-09-23",
+  "nations": {
+    "FRA": {
+      "wikidataCountry": "Q142",
+      "election": "Législatives 2024, premier tour (ministère de l'Intérieur)",
+      "parties": [
+        {
+          "label": "Rassemblement national",
+          "lang": "fr",
+          "support": 0.33,
+          "qid": "Q205150"
+        },
+        {
+          "label": "Renaissance",
+          "lang": "fr",
+          "qid": "Q23731823",
+          "support": 0.2
+        },
+        {
+          "label": "La France insoumise",
+          "lang": "fr",
+          "support": 0.12,
+          "qid": "Q27978402"
+        },
+        {
+          "label": "Parti socialiste",
+          "lang": "fr",
+          "qid": "Q170972",
+          "support": 0.09
+        },
+        {
+          "label": "Les Républicains",
+          "lang": "fr",
+          "support": 0.07,
+          "qid": "Q20012759"
+        },
+        {
+          "label": "Les Écologistes",
+          "lang": "fr",
+          "qid": "Q613786",
+          "support": 0.05
+        }
+      ]
+    },
+    "DEU": {
+      "wikidataCountry": "Q183",
+      "election": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)",
+      "parties": [
+        {
+          "label": "Christlich Demokratische Union Deutschlands",
+          "lang": "de",
+          "support": 0.225,
+          "qid": "Q49762"
+        },
+        {
+          "label": "Alternative für Deutschland",
+          "lang": "de",
+          "support": 0.208,
+          "qid": "Q6721203"
+        },
+        {
+          "label": "Sozialdemokratische Partei Deutschlands",
+          "lang": "de",
+          "support": 0.164,
+          "qid": "Q49768"
+        },
+        {
+          "label": "Bündnis 90/Die Grünen",
+          "lang": "de",
+          "support": 0.116,
+          "qid": "Q49766"
+        },
+        {
+          "label": "Die Linke",
+          "lang": "de",
+          "support": 0.088,
+          "qid": "Q49764"
+        },
+        {
+          "label": "Christlich-Soziale Union in Bayern",
+          "lang": "de",
+          "support": 0.06,
+          "qid": "Q49763"
+        },
+        {
+          "label": "Bündnis Sahra Wagenknecht",
+          "lang": "de",
+          "support": 0.05,
+          "qid": "Q123121346"
+        }
+      ]
+    },
+    "GBR": {
+      "wikidataCountry": "Q145",
+      "election": "General election 2024, vote share (House of Commons Library)",
+      "parties": [
+        {
+          "label": "Labour Party",
+          "lang": "en",
+          "qid": "Q9630",
+          "support": 0.337
+        },
+        {
+          "label": "Conservative Party",
+          "lang": "en",
+          "qid": "Q9626",
+          "support": 0.237
+        },
+        {
+          "label": "Reform UK",
+          "lang": "en",
+          "support": 0.143,
+          "qid": "Q104721252"
+        },
+        {
+          "label": "Liberal Democrats",
+          "lang": "en",
+          "qid": "Q9624",
+          "support": 0.122
+        },
+        {
+          "label": "Green Party of England and Wales",
+          "lang": "en",
+          "support": 0.067,
+          "qid": "Q9669"
+        },
+        {
+          "label": "Scottish National Party",
+          "lang": "en",
+          "support": 0.025,
+          "qid": "Q10658"
+        }
+      ]
+    },
+    "ITA": {
+      "wikidataCountry": "Q38",
+      "election": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)",
+      "parties": [
+        {
+          "label": "Fratelli d'Italia",
+          "lang": "it",
+          "support": 0.26,
+          "qid": "Q1757843"
+        },
+        {
+          "label": "Partito Democratico",
+          "lang": "it",
+          "qid": "Q47729",
+          "support": 0.19
+        },
+        {
+          "label": "Movimento 5 Stelle",
+          "lang": "it",
+          "support": 0.154,
+          "qid": "Q47817"
+        },
+        {
+          "label": "Lega per Salvini Premier",
+          "lang": "it",
+          "support": 0.088,
+          "qid": "Q85776185"
+        },
+        {
+          "label": "Forza Italia",
+          "lang": "it",
+          "qid": "Q14924303",
+          "support": 0.081
+        },
+        {
+          "label": "Azione",
+          "lang": "it",
+          "support": 0.078,
+          "qid": "Q63926676"
+        },
+        {
+          "label": "Alleanza Verdi e Sinistra",
+          "lang": "it",
+          "support": 0.036,
+          "qid": "Q113168799"
+        }
+      ]
+    },
+    "ESP": {
+      "wikidataCountry": "Q29",
+      "election": "Elecciones generales 2023, Congreso (Ministerio del Interior)",
+      "parties": [
+        {
+          "label": "Partido Popular",
+          "lang": "es",
+          "support": 0.331,
+          "qid": "Q185088"
+        },
+        {
+          "label": "Partido Socialista Obrero Español",
+          "lang": "es",
+          "support": 0.317,
+          "qid": "Q138198"
+        },
+        {
+          "label": "Vox",
+          "lang": "es",
+          "support": 0.124,
+          "qid": "Q15630787"
+        },
+        {
+          "label": "Sumar",
+          "lang": "es",
+          "qid": "Q112098527",
+          "support": 0.123
+        },
+        {
+          "label": "Esquerra Republicana de Catalunya",
+          "lang": "es",
+          "support": 0.019,
+          "qid": "Q150068"
+        },
+        {
+          "label": "Junts per Catalunya",
+          "lang": "es",
+          "support": 0.016,
+          "qid": "Q97155800"
+        }
+      ]
+    },
+    "POL": {
+      "wikidataCountry": "Q36",
+      "election": "Wybory parlamentarne 2023, Sejm (PKW)",
+      "parties": [
+        {
+          "label": "Prawo i Sprawiedliwość",
+          "lang": "pl",
+          "support": 0.354,
+          "qid": "Q156874"
+        },
+        {
+          "label": "Koalicja Obywatelska",
+          "lang": "pl",
+          "qid": "Q1021144",
+          "support": 0.307
+        },
+        {
+          "label": "Polska 2050",
+          "lang": "pl",
+          "support": 0.08,
+          "qid": "Q100979832"
+        },
+        {
+          "label": "Polskie Stronnictwo Ludowe",
+          "lang": "pl",
+          "support": 0.064,
+          "qid": "Q218477"
+        },
+        {
+          "label": "Nowa Lewica",
+          "lang": "pl",
+          "support": 0.086,
+          "qid": "Q107418166"
+        },
+        {
+          "label": "Konfederacja Wolność i Niepodległość",
+          "lang": "pl",
+          "support": 0.072,
+          "qid": "Q61568052"
+        }
+      ]
+    },
+    "UKR": {
+      "wikidataCountry": "Q212",
+      "election": "Вибори 2019, Верховна Рада, списки (ЦВК) ; partis interdits depuis 2022 retirés",
+      "parties": [
+        {
+          "label": "Слуга народу",
+          "lang": "uk",
+          "support": 0.432,
+          "qid": "Q52292915"
+        },
+        {
+          "label": "Європейська Солідарність",
+          "lang": "uk",
+          "support": 0.081,
+          "qid": "Q4349891"
+        },
+        {
+          "label": "Батьківщина",
+          "lang": "uk",
+          "support": 0.082,
+          "qid": "Q45376"
+        },
+        {
+          "label": "Голос",
+          "lang": "uk",
+          "support": 0.058,
+          "qid": "Q63869413"
+        }
+      ]
+    },
+    "RUS": {
+      "wikidataCountry": "Q159",
+      "election": "Выборы в Государственную думу 2021, списки (ЦИК)",
+      "parties": [
+        {
+          "label": "Единая Россия",
+          "lang": "ru",
+          "support": 0.498,
+          "qid": "Q151469"
+        },
+        {
+          "label": "Коммунистическая партия Российской Федерации",
+          "lang": "ru",
+          "support": 0.189,
+          "qid": "Q192187"
+        },
+        {
+          "label": "ЛДПР",
+          "lang": "ru",
+          "support": 0.076,
+          "qid": "Q212115"
+        },
+        {
+          "label": "Справедливая Россия — За правду",
+          "lang": "ru",
+          "support": 0.075,
+          "qid": "Q210692"
+        },
+        {
+          "label": "Новые люди",
+          "lang": "ru",
+          "support": 0.053,
+          "qid": "Q98842815"
+        }
+      ]
+    },
+    "TUR": {
+      "wikidataCountry": "Q43",
+      "election": "Milletvekili genel seçimi 2023 (YSK)",
+      "parties": [
+        {
+          "label": "Adalet ve Kalkınma Partisi",
+          "lang": "tr",
+          "support": 0.356,
+          "qid": "Q19077"
+        },
+        {
+          "label": "Cumhuriyet Halk Partisi",
+          "lang": "tr",
+          "support": 0.254,
+          "qid": "Q19079"
+        },
+        {
+          "label": "Milliyetçi Hareket Partisi",
+          "lang": "tr",
+          "support": 0.101,
+          "qid": "Q251077"
+        },
+        {
+          "label": "İyi Parti",
+          "lang": "tr",
+          "support": 0.097,
+          "qid": "Q42313794"
+        },
+        {
+          "label": "Halkların Eşitlik ve Demokrasi Partisi",
+          "lang": "tr",
+          "support": 0.088,
+          "qid": "Q725173"
+        }
+      ]
+    },
+    "NOR": {
+      "wikidataCountry": "Q20",
+      "election": "Stortingsvalget 2025 (Valgdirektoratet)",
+      "parties": [
+        {
+          "label": "Arbeiderpartiet",
+          "lang": "nb",
+          "qid": "Q190219",
+          "support": 0.282
+        },
+        {
+          "label": "Fremskrittspartiet",
+          "lang": "nb",
+          "support": 0.239,
+          "qid": "Q485665"
+        },
+        {
+          "label": "Høyre",
+          "lang": "nb",
+          "support": 0.146,
+          "qid": "Q586364"
+        },
+        {
+          "label": "Senterpartiet",
+          "lang": "nb",
+          "support": 0.056,
+          "qid": "Q493685"
+        },
+        {
+          "label": "Sosialistisk Venstreparti",
+          "lang": "nb",
+          "support": 0.056,
+          "qid": "Q488418"
+        },
+        {
+          "label": "Rødt",
+          "lang": "nb",
+          "support": 0.053,
+          "qid": "Q1512994"
+        },
+        {
+          "label": "Miljøpartiet De Grønne",
+          "lang": "nb",
+          "support": 0.047,
+          "qid": "Q1518568"
+        },
+        {
+          "label": "Venstre",
+          "lang": "nb",
+          "support": 0.036,
+          "qid": "Q500190"
+        }
+      ]
+    }
+  }
+}

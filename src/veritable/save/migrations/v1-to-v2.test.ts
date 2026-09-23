@@ -1,8 +1,9 @@
 import fs from "fs";
 import path from "path";
+import { simDataFrom } from "../../adapters/scenarioPackFrom";
 import { dataSource } from "../../data/catalog";
-import { SAVE_SCHEMA_VERSION } from "../../data/schemas/save";
 import { GOOD_IDS } from "../../data/schemas/goods";
+import { SAVE_SCHEMA_VERSION } from "../../data/schemas/save";
 import { decodeSave, encodeSave, peekSchemaVersion } from "../serialize";
 import { MigrationContext } from "./index";
 
@@ -14,23 +15,11 @@ const FIXTURE = new Uint8Array(
 
 function context(): MigrationContext {
   const scenario = dataSource.scenario("europe-10");
-  const meta = dataSource.bordersMeta(scenario);
   return {
     config: dataSource.config(),
     nationData: (id) => dataSource.nation(id),
     scenario,
-    data: {
-      goods: dataSource.goods(),
-      row: dataSource.row(),
-      blocs: dataSource.blocs(),
-      divisions: dataSource.divisions(),
-      casusBelli: dataSource.casusBelli(),
-      seas: dataSource.seas(scenario.map).zones,
-      geography: {
-        landNeighbours: meta.landNeighbours,
-        bordersNeutralLand: meta.bordersNeutralLand,
-      },
-    },
+    data: simDataFrom(dataSource, scenario),
   };
 }
 

@@ -66,5 +66,6 @@
     "opinionMalus": 0.03,
     "malusFadeMonths": 6
   },
-  "tradeBonus": 1.5
+  "tradeBonus": 1.5,
+  "suspendsOnCoup": true
 }

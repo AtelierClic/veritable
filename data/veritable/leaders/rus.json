@@ -1,0 +1,299 @@
+{
+  "nation": "RUS",
+  "actors": [
+    {
+      "id": "rus-mikhail-michoustine",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.rus-mikhail-michoustine.parody",
+        "fictional": "leader.rus-mikhail-michoustine.fictional"
+      },
+      "born": "1966-03-03",
+      "party": null,
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.6,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.3,
+        "corruption": 0.5,
+        "charisma": 0.3,
+        "competence": 0.7
+      },
+      "wikidata": "Q4298520",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Technocrate fiscal, exécutant du président (charisme 0,3, compétence 0,7) ; corruption du système (0,5) ; agressivité faible en propre."
+    },
+    {
+      "id": "rus-vladimir-poutine",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.rus-vladimir-poutine.parody",
+        "fictional": "leader.rus-vladimir-poutine.fictional"
+      },
+      "born": "1952-10-07",
+      "party": null,
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.9,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.9,
+        "corruption": 0.7,
+        "charisma": 0.6,
+        "competence": 0.6
+      },
+      "wikidata": "Q7747",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Autocrate (autorité +0,9), souverainiste et eurasiste (+0,9), guerre d'agression en cours (agressivité 0,9) ; corruption systémique du régime (0,7) ; charisme et compétence solides dans son registre."
+    },
+    {
+      "id": "rus-dmitri-medvedev",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.rus-dmitri-medvedev.parody",
+        "fictional": "leader.rus-dmitri-medvedev.fictional"
+      },
+      "born": "1965-09-14",
+      "party": "rus-russie-unie",
+      "traits": {
+        "economic": 0.025,
+        "authority": 0.675,
+        "sovereignty": 0.65,
+        "aggressiveness": 0.565,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q23530",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "rus-guennadi-ziouganov",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.rus-guennadi-ziouganov.parody",
+        "fictional": "leader.rus-guennadi-ziouganov.fictional"
+      },
+      "born": "1944-06-26",
+      "party": "rus-parti-communiste-de-la-federation-de-russie",
+      "traits": {
+        "economic": -0.6,
+        "authority": 0.379,
+        "sovereignty": 0.436,
+        "aggressiveness": 0.463,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q182452",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "rus-leonid-sloutski",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.rus-leonid-sloutski.parody",
+        "fictional": "leader.rus-leonid-sloutski.fictional"
+      },
+      "born": "1968-01-04",
+      "party": "rus-parti-liberal-democrate-de-russie",
+      "traits": {
+        "economic": 0.118,
+        "authority": 0.582,
+        "sovereignty": 0.673,
+        "aggressiveness": 0.551,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2037108",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "rus-guennadi-semiguine",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.rus-guennadi-semiguine.parody",
+        "fictional": "leader.rus-guennadi-semiguine.fictional"
+      },
+      "born": "1964-03-23",
+      "party": "rus-russie-juste",
+      "traits": {
+        "economic": -0.337,
+        "authority": 0.088,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.3676,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4415436",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "rus-alexei-netchaiev",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.rus-alexei-netchaiev.parody",
+        "fictional": "leader.rus-alexei-netchaiev.fictional"
+      },
+      "born": "1966-08-30",
+      "party": "rus-nouvelles-personnes",
+      "traits": {
+        "economic": 0.12,
+        "authority": -0.2,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.24,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q107311193",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "rus-russie-unie",
+      "name": "party.rus-russie-unie",
+      "wikidata": "Q151469",
+      "ideologies": ["Q1207817", "Q1414298", "Q2354258", "Q322294"],
+      "ideology": {
+        "economic": 0.025,
+        "authority": 0.675,
+        "sovereignty": 0.65
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.498,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
+      },
+      "leader": "rus-dmitri-medvedev"
+    },
+    {
+      "id": "rus-parti-communiste-de-la-federation-de-russie",
+      "name": "party.rus-parti-communiste-de-la-federation-de-russie",
+      "wikidata": "Q192187",
+      "ideologies": [
+        "Q11900614",
+        "Q1202972",
+        "Q125750162",
+        "Q1414298",
+        "Q1977701",
+        "Q211930",
+        "Q389647",
+        "Q574827",
+        "Q6186",
+        "Q621761",
+        "Q6241",
+        "Q7272",
+        "Q7571792",
+        "Q8881"
+      ],
+      "ideology": {
+        "economic": -0.6,
+        "authority": 0.379,
+        "sovereignty": 0.436
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (14 of 14)",
+      "support": 0.189,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
+      },
+      "leader": "rus-guennadi-ziouganov"
+    },
+    {
+      "id": "rus-parti-liberal-democrate-de-russie",
+      "name": "party.rus-parti-liberal-democrate-de-russie",
+      "wikidata": "Q212115",
+      "ideologies": [
+        "Q1414298",
+        "Q15680807",
+        "Q180490",
+        "Q182121",
+        "Q182267",
+        "Q223200",
+        "Q2354258",
+        "Q322294",
+        "Q38352698",
+        "Q436860",
+        "Q696116"
+      ],
+      "ideology": {
+        "economic": 0.118,
+        "authority": 0.582,
+        "sovereignty": 0.673
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (11 of 11)",
+      "support": 0.076,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
+      },
+      "leader": "rus-leonid-sloutski"
+    },
+    {
+      "id": "rus-russie-juste",
+      "name": "party.rus-russie-juste",
+      "wikidata": "Q210692",
+      "ideologies": [
+        "Q11900614",
+        "Q1202972",
+        "Q121254",
+        "Q1414298",
+        "Q180490",
+        "Q1822939",
+        "Q189280",
+        "Q2354258"
+      ],
+      "ideology": {
+        "economic": -0.337,
+        "authority": 0.088,
+        "sovereignty": 0.25
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (8 of 8)",
+      "support": 0.075,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
+      },
+      "leader": "rus-guennadi-semiguine"
+    },
+    {
+      "id": "rus-nouvelles-personnes",
+      "name": "party.rus-nouvelles-personnes",
+      "wikidata": "Q98842815",
+      "ideologies": ["Q2684060", "Q324530", "Q617609", "Q6216", "Q821102"],
+      "ideology": {
+        "economic": 0.12,
+        "authority": -0.2,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 5)",
+      "support": 0.053,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
+      },
+      "leader": "rus-alexei-netchaiev"
+    }
+  ]
+}

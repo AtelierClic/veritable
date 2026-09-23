@@ -1,0 +1,188 @@
+{
+ "nation": "GBR",
+ "country": "Q145",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q269909",
+    "label": "Andy Burnham",
+    "born": "1970-01-07",
+    "party": "Q9630"
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "party": null
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q9630",
+   "label": "Parti travailliste",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q269909",
+    "label": "Andy Burnham",
+    "born": "1970-01-07",
+    "party": "Q9630"
+   }
+  },
+  {
+   "qid": "Q9626",
+   "label": "Parti conservateur",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q192139",
+     "label": "néo-conservatisme"
+    },
+    {
+     "qid": "Q3401913",
+     "label": "unionisme au Royaume-Uni"
+    },
+    {
+     "qid": "Q50685643",
+     "label": "pérennialisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q21592171",
+    "label": "Kemi Badenoch",
+    "born": "1980-01-02",
+    "party": "Q9626"
+   }
+  },
+  {
+   "qid": "Q104721252",
+   "label": "Reform UK",
+   "ideologies": [
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    },
+    {
+     "qid": "Q878445",
+     "label": "réformisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q318471",
+    "label": "Nigel Farage",
+    "born": "1964-04-03",
+    "party": "Q104721252"
+   }
+  },
+  {
+   "qid": "Q9624",
+   "label": "Libéraux-démocrates",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q189947",
+    "label": "Nick Clegg",
+    "born": "1967-01-07",
+    "party": "Q9624"
+   }
+  },
+  {
+   "qid": "Q9669",
+   "label": "Parti vert de l'Angleterre et du pays de Galles",
+   "ideologies": [
+    {
+     "qid": "Q275595",
+     "label": "écosocialisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q75974863",
+    "label": "Zack Polanski",
+    "born": "1982-11-02",
+    "party": "Q9624"
+   }
+  },
+  {
+   "qid": "Q10658",
+   "label": "Parti national écossais",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q3336993",
+     "label": "nationalisme écossais"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q891905",
+     "label": "indépendantisme écossais"
+    }
+   ],
+   "leader": {
+    "qid": "Q333811",
+    "label": "John Swinney",
+    "born": "1964-04-13",
+    "party": "Q10658"
+   }
+  }
+ ]
+}

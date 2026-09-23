@@ -1,0 +1,322 @@
+{
+ "nation": "ITA",
+ "country": "Q38",
+ "fetchedAt": "2026-09-23",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q451791",
+    "label": "Giorgia Meloni",
+    "born": "1977-01-15",
+    "party": "Q1757843"
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3956186",
+    "label": "Sergio Mattarella",
+    "born": "1941-07-23",
+    "party": "Q47729"
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1757843",
+   "label": "Frères d'Italie",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    },
+    {
+     "qid": "Q3909427",
+     "label": "post-fascisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q6093359",
+     "label": "nationalisme italien"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q696116",
+     "label": "néofascisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q451791",
+    "label": "Giorgia Meloni",
+    "born": "1977-01-15",
+    "party": "Q1757843"
+   }
+  },
+  {
+   "qid": "Q47729",
+   "label": "Parti démocrate",
+   "ideologies": [
+    {
+     "qid": "Q1080800",
+     "label": "gauche chrétienne"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q739609",
+     "label": "christianisme social"
+    },
+    {
+     "qid": "Q878445",
+     "label": "réformisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q18590052",
+    "label": "Stefano Bonaccini",
+    "born": "1967-01-01",
+    "party": "Q47729"
+   }
+  },
+  {
+   "qid": "Q47817",
+   "label": "Mouvement 5 Étoiles",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q171174",
+     "label": "démocratie directe"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q60741353",
+     "label": "anti-corruption"
+    },
+    {
+     "qid": "Q611217",
+     "label": "décroissance"
+    },
+    {
+     "qid": "Q855175",
+     "label": "cyberdémocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q53844829",
+    "label": "Giuseppe Conte",
+    "born": "1964-08-08",
+    "party": "Q47817"
+   }
+  },
+  {
+   "qid": "Q85776185",
+   "label": "Lega per Salvini Premier",
+   "ideologies": [
+    {
+     "qid": "Q130472842",
+     "label": "antiglobalisme de droite"
+    },
+    {
+     "qid": "Q1324153",
+     "label": "critique de l'islam"
+    },
+    {
+     "qid": "Q179073",
+     "label": "protectionnisme"
+    },
+    {
+     "qid": "Q191442",
+     "label": "mouvement antimondialisation"
+    },
+    {
+     "qid": "Q1969722",
+     "label": "nativisme"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    },
+    {
+     "qid": "Q2914650",
+     "label": "politiques d'identité"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q6093359",
+     "label": "nationalisme italien"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    },
+    {
+     "qid": "Q912036",
+     "label": "souverainisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q78185671",
+    "label": "Giulio Centemero",
+    "born": "1979-01-30",
+    "party": "Q47750"
+   }
+  },
+  {
+   "qid": "Q14924303",
+   "label": "Forza Italia",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q1086839",
+     "label": "Popolarismo"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q821964",
+     "label": "Berlusconisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q440710",
+    "label": "Antonio Tajani",
+    "born": "1953-08-04",
+    "party": "Q47720"
+   }
+  },
+  {
+   "qid": "Q63926676",
+   "label": "Action",
+   "ideologies": [
+    {
+     "qid": "Q1086839",
+     "label": "Popolarismo"
+    },
+    {
+     "qid": "Q1822939",
+     "label": "socialisme libéral"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    },
+    {
+     "qid": "Q878445",
+     "label": "réformisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q113168799",
+   "label": "Alliance des Verts et de la gauche",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q58848",
+     "label": "pacifisme"
+    },
+    {
+     "qid": "Q728697",
+     "label": "laïcisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

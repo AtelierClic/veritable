@@ -1,0 +1,329 @@
+{
+  "nation": "ITA",
+  "actors": [
+    {
+      "id": "ita-giorgia-meloni",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.ita-giorgia-meloni.parody",
+        "fictional": "leader.ita-giorgia-meloni.fictional"
+      },
+      "born": "1977-01-15",
+      "party": "ita-freres-d-italie",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.5,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.45,
+        "corruption": 0.2,
+        "charisma": 0.7,
+        "competence": 0.55
+      },
+      "wikidata": "Q451791",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Droite nationale-conservatrice (autorité +0,5, souveraineté +0,5), atlantiste malgré tout ; forte charisme (0,7) ; fermeté migratoire et soutien à l'Ukraine (agressivité 0,45)."
+    },
+    {
+      "id": "ita-sergio-mattarella",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.ita-sergio-mattarella.parody",
+        "fictional": "leader.ita-sergio-mattarella.fictional"
+      },
+      "born": "1941-07-23",
+      "party": "ita-parti-democrate",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.3,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.1,
+        "corruption": 0.05,
+        "charisma": 0.5,
+        "competence": 0.7
+      },
+      "wikidata": "Q3956186",
+      "source": "estimate",
+      "asOf": "2026-09-23",
+      "note": "Président garant des institutions, démocrate-chrétien de gauche, europhile ; intégrité reconnue (corruption 0,05), grande compétence, agressivité nulle."
+    },
+    {
+      "id": "ita-stefano-bonaccini",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ita-stefano-bonaccini.parody",
+        "fictional": "leader.ita-stefano-bonaccini.fictional"
+      },
+      "born": "1967-01-01",
+      "party": "ita-parti-democrate",
+      "traits": {
+        "economic": -0.28,
+        "authority": -0.16,
+        "sovereignty": -0.32,
+        "aggressiveness": 0.20400000000000001,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q18590052",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ita-giuseppe-conte",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ita-giuseppe-conte.parody",
+        "fictional": "leader.ita-giuseppe-conte.fictional"
+      },
+      "born": "1964-08-08",
+      "party": "ita-mouvement-5-etoiles",
+      "traits": {
+        "economic": -0.213,
+        "authority": -0.25,
+        "sovereignty": 0.075,
+        "aggressiveness": 0.265,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q53844829",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ita-giulio-centemero",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ita-giulio-centemero.parody",
+        "fictional": "leader.ita-giulio-centemero.fictional"
+      },
+      "born": "1979-01-30",
+      "party": "ita-lega-per-salvini-premier",
+      "traits": {
+        "economic": 0.062,
+        "authority": 0.269,
+        "sovereignty": 0.554,
+        "aggressiveness": 0.4646,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q78185671",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ita-antonio-tajani",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ita-antonio-tajani.parody",
+        "fictional": "leader.ita-antonio-tajani.fictional"
+      },
+      "born": "1953-08-04",
+      "party": "ita-forza-italia",
+      "traits": {
+        "economic": 0.311,
+        "authority": 0.211,
+        "sovereignty": -0.022,
+        "aggressiveness": 0.3378,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q440710",
+      "source": "derived",
+      "asOf": "2026-09-23",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "ita-freres-d-italie",
+      "name": "party.ita-freres-d-italie",
+      "wikidata": "Q1757843",
+      "ideologies": [
+        "Q1414298",
+        "Q223200",
+        "Q388698",
+        "Q3909427",
+        "Q436860",
+        "Q6093359",
+        "Q6235",
+        "Q696116",
+        "Q729119",
+        "Q852739"
+      ],
+      "ideology": {
+        "economic": 0.29,
+        "authority": 0.47,
+        "sovereignty": 0.53
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (10 of 10)",
+      "support": 0.26,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)"
+      },
+      "leader": "ita-giorgia-meloni"
+    },
+    {
+      "id": "ita-parti-democrate",
+      "name": "party.ita-parti-democrate",
+      "wikidata": "Q47729",
+      "ideologies": ["Q1080800", "Q121254", "Q3781399", "Q739609", "Q878445"],
+      "ideology": {
+        "economic": -0.28,
+        "authority": -0.16,
+        "sovereignty": -0.32
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 5)",
+      "support": 0.19,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)"
+      },
+      "leader": "ita-stefano-bonaccini"
+    },
+    {
+      "id": "ita-mouvement-5-etoiles",
+      "name": "party.ita-mouvement-5-etoiles",
+      "wikidata": "Q47817",
+      "ideologies": [
+        "Q1661415",
+        "Q171174",
+        "Q180490",
+        "Q223200",
+        "Q2855609",
+        "Q60741353",
+        "Q611217",
+        "Q855175"
+      ],
+      "ideology": {
+        "economic": -0.213,
+        "authority": -0.25,
+        "sovereignty": 0.075
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (8 of 8)",
+      "support": 0.154,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)"
+      },
+      "leader": "ita-giuseppe-conte"
+    },
+    {
+      "id": "ita-lega-per-salvini-premier",
+      "name": "party.ita-lega-per-salvini-premier",
+      "wikidata": "Q85776185",
+      "ideologies": [
+        "Q130472842",
+        "Q1324153",
+        "Q179073",
+        "Q191442",
+        "Q1969722",
+        "Q204886",
+        "Q223200",
+        "Q2684060",
+        "Q2914650",
+        "Q436860",
+        "Q6093359",
+        "Q852739",
+        "Q912036"
+      ],
+      "ideology": {
+        "economic": 0.062,
+        "authority": 0.269,
+        "sovereignty": 0.554
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (13 of 13)",
+      "support": 0.088,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)"
+      },
+      "leader": "ita-giulio-centemero"
+    },
+    {
+      "id": "ita-forza-italia",
+      "name": "party.ita-forza-italia",
+      "wikidata": "Q14924303",
+      "ideologies": [
+        "Q1043096",
+        "Q1086839",
+        "Q180490",
+        "Q182121",
+        "Q209158",
+        "Q3781399",
+        "Q388698",
+        "Q436860",
+        "Q821964"
+      ],
+      "ideology": {
+        "economic": 0.311,
+        "authority": 0.211,
+        "sovereignty": -0.022
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (9 of 9)",
+      "support": 0.081,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)"
+      },
+      "leader": "ita-antonio-tajani"
+    },
+    {
+      "id": "ita-action",
+      "name": "party.ita-action",
+      "wikidata": "Q63926676",
+      "ideologies": [
+        "Q1086839",
+        "Q1822939",
+        "Q201712",
+        "Q3781399",
+        "Q821102",
+        "Q878445"
+      ],
+      "ideology": {
+        "economic": -0.117,
+        "authority": -0.317,
+        "sovereignty": -0.417
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (6 of 6)",
+      "support": 0.078,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)"
+      },
+      "leader": null
+    },
+    {
+      "id": "ita-alliance-des-verts-et-de-la-gauche",
+      "name": "party.ita-alliance-des-verts-et-de-la-gauche",
+      "wikidata": "Q113168799",
+      "ideologies": ["Q1661415", "Q189280", "Q58848", "Q728697"],
+      "ideology": {
+        "economic": -0.375,
+        "authority": -0.375,
+        "sovereignty": -0.225
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.036,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-09-23",
+        "note": "Elezioni politiche 2022, Camera, quota proporzionale (Ministero dell'Interno)"
+      },
+      "leader": null
+    }
+  ]
+}

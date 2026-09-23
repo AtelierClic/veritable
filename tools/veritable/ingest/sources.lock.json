@@ -15,5 +15,15 @@
   "snapshots/worldbank/AG.PRD.CREL.MT.json": "cbaac18e8f871958492812dd8eadf038dfe2b7e5536f7e9ef5cad2fc5cffd3de",
   "cache/owid-energy-data.csv@7e387a16f70a510e433f8aac7efeac6faa1e5059": "266f2e2baad7975351bc9bb4aa061d22b1da9fe4c47d51d2ac6071e01e171f76",
   "cache/imf-weo-GGXWDG_NGDP.json": "4d768fd28271249775c93fd4623e16b9e37ca164ab228616c43f560e4e199ae9",
-  "snapshots/worldbank/NE.TRD.GNFS.ZS.json": "dd07b349123800793c9dfa0b68c778014ad55028c99a1a07aa120ff5d0f80944"
+  "snapshots/worldbank/NE.TRD.GNFS.ZS.json": "dd07b349123800793c9dfa0b68c778014ad55028c99a1a07aa120ff5d0f80944",
+  "snapshots/wikidata/fra.json": "35e24414553531d918ac2f954e1f5d8d7a49650cfbd96263c3e26b97b9852d3d",
+  "snapshots/wikidata/deu.json": "ac75738dc0b865c306be197f61d11a6e507022c441d1b7bb985f40f6299e1c0f",
+  "snapshots/wikidata/gbr.json": "8314031ddb8e97f782eaa49a54f2de94455328ffdc6683185c32b6461826a552",
+  "snapshots/wikidata/ita.json": "88c47d24f7fcd19b871073251b5ecb77cd21bf2eb834f5d69e6d928fee1fcf8a",
+  "snapshots/wikidata/esp.json": "8033c57804990998978ed25a66f595c81e9b22bf4002cd63f8d00ff9b6e57f0c",
+  "snapshots/wikidata/pol.json": "71eeee92656d7e4f73db768b042a2be439f33b58dcfba744266ce050b3f1250e",
+  "snapshots/wikidata/ukr.json": "de5cd6c9cc362957409e6607a000bd3f63d8e66c93b093bdeece71d9d3d90ba5",
+  "snapshots/wikidata/rus.json": "088e8a965ce09d847c37386a861e69a5aac855246e626781d6fdf4e6c8716f93",
+  "snapshots/wikidata/tur.json": "5600e6c0d1345a75a98f900cf75c7555f29f51ed753deab858d2d3fb164d4364",
+  "snapshots/wikidata/nor.json": "87a99a60cb7e45fc8edcd0bf2eae8602b1ab412084baed8afea99f591077c778"
 }

@@ -1,0 +1,455 @@
+[
+  {
+    "id": "pension-age-raise",
+    "name": "law.pension-age-raise.name",
+    "description": "law.pension-age-raise.desc",
+    "domain": "social",
+    "capitalCost": 35,
+    "reversible": {
+      "cost": 30,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [0, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.social",
+        "op": "add",
+        "value": -0.01,
+        "mode": "once"
+      },
+      {
+        "target": "groups.retirees",
+        "op": "add",
+        "value": -0.08,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": 0.001,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "pension-age-lower",
+    "name": "law.pension-age-lower.name",
+    "description": "law.pension-age-lower.desc",
+    "domain": "social",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 30,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 0],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.social",
+        "op": "add",
+        "value": 0.01,
+        "mode": "once"
+      },
+      {
+        "target": "groups.retirees",
+        "op": "add",
+        "value": 0.06,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "universal-healthcare-expansion",
+    "name": "law.universal-healthcare-expansion.name",
+    "description": "law.universal-healthcare-expansion.desc",
+    "domain": "social",
+    "capitalCost": 25,
+    "reversible": {
+      "cost": 30,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 0.3],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.healthEducation",
+        "op": "add",
+        "value": 0.01,
+        "mode": "once"
+      },
+      {
+        "target": "groups.retirees",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": 0.03,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "housing-programme",
+    "name": "law.housing-programme.name",
+    "description": "law.housing-programme.desc",
+    "domain": "social",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 0.4],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.social",
+        "op": "add",
+        "value": 0.005,
+        "mode": "once"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      },
+      {
+        "target": "groups.workers",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "immigration-restriction",
+    "name": "law.immigration-restriction.name",
+    "description": "law.immigration-restriction.desc",
+    "domain": "social",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0, 1],
+      "sovereignty": [0.2, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": -0.08,
+        "mode": "while"
+      },
+      {
+        "target": "groups.religious",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": -0.001,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "immigration-opening",
+    "name": "law.immigration-opening.name",
+    "description": "law.immigration-opening.desc",
+    "domain": "social",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 0]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": 0.05,
+        "mode": "while"
+      },
+      {
+        "target": "groups.business",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      },
+      {
+        "target": "groups.religious",
+        "op": "add",
+        "value": -0.03,
+        "mode": "while"
+      },
+      {
+        "target": "growthBase",
+        "op": "add",
+        "value": 0.001,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "religious-education-support",
+    "name": "law.religious-education-support.name",
+    "description": "law.religious-education-support.desc",
+    "domain": "social",
+    "capitalCost": 15,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [0, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.religious",
+        "op": "add",
+        "value": 0.06,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      },
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": -0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "secular-charter",
+    "name": "law.secular-charter.name",
+    "description": "law.secular-charter.desc",
+    "domain": "social",
+    "capitalCost": 15,
+    "reversible": {
+      "cost": 15,
+      "delayMonths": 6
+    },
+    "window": {
+      "economic": [-1, 1],
+      "authority": [-1, 0.3],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "groups.religious",
+        "op": "add",
+        "value": -0.05,
+        "mode": "while"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      },
+      {
+        "target": "groups.minorities",
+        "op": "add",
+        "value": 0.02,
+        "mode": "while"
+      }
+    ]
+  },
+  {
+    "id": "tuition-free-university",
+    "name": "law.tuition-free-university.name",
+    "description": "law.tuition-free-university.desc",
+    "domain": "social",
+    "capitalCost": 20,
+    "reversible": {
+      "cost": 20,
+      "delayMonths": 12
+    },
+    "window": {
+      "economic": [-1, 0.2],
+      "authority": [-1, 1],
+      "sovereignty": [-1, 1]
+    },
+    "regimes": [
+      "parliamentary",
+      "presidential",
+      "semi-presidential",
+      "electoral-authoritarian",
+      "single-party",
+      "absolute-monarchy",
+      "junta",
+      "theocracy",
+      "failed-state"
+    ],
+    "effects": [
+      {
+        "target": "spending.healthEducation",
+        "op": "add",
+        "value": 0.005,
+        "mode": "once"
+      },
+      {
+        "target": "groups.youth",
+        "op": "add",
+        "value": 0.06,
+        "mode": "while"
+      }
+    ]
+  }
+]
