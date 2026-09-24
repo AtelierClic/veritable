@@ -112,6 +112,9 @@ async function main(): Promise<void> {
   fs.mkdirSync(out, { recursive: true });
   const source = createDataSource(fsDataFiles());
   const pack = await loadScenarioPackFrom(source, "europe-10");
+  // Each test compares a run with its control, all else equal: without the
+  // events (J5), whose draws follow the state and would part the two.
+  pack.data.events = [];
   const config = structuredClone(source.config());
   config.economy.growth.noiseMonthlySd = 0;
   config.economy.rowSupplyNoise.monthlySd = 0;

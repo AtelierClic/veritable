@@ -1,0 +1,129 @@
+{
+  "campaigns": 100,
+  "criteria": {
+    "noShotInYearOne": true,
+    "shotsInAtMost5pct": true,
+    "neverBelowLevel2": true,
+    "noThreeWayExchange": true,
+    "warsMedian1to4": true,
+    "warsMax10": true,
+    "under30pctWithoutCasusBelli": true,
+    "atLeastOneRevolution": true,
+    "crisisInHalfAt10Years": true,
+    "rusJuntaAtMost20pct": true,
+    "turJuntaAtMost20pct": true,
+    "pricesBounded": true,
+    "noDefaultInStableNation": true
+  },
+  "wars": {
+    "median": 2,
+    "max": 3,
+    "total": 134,
+    "withoutCasusBelli": 0,
+    "byCasusBelli": {
+      "contested-territory": 133,
+      "grievance": 1
+    },
+    "byAggressor": {
+      "RUS": 133,
+      "UKR": 1
+    },
+    "perCampaign": {
+      "0": 27,
+      "1": 20,
+      "2": 45,
+      "3": 8
+    }
+  },
+  "nuclear": {
+    "campaignsWithShots": 0,
+    "shots": 0,
+    "byShooter": {},
+    "byThreat": {},
+    "list": [],
+    "threeWayCampaigns": []
+  },
+  "politics": {
+    "revolutions": [
+      "UKR@2034-02-01",
+      "UKR@2033-09-01",
+      "UKR@2028-11-01",
+      "UKR@2033-11-01",
+      "UKR@2029-03-01",
+      "UKR@2033-05-01"
+    ],
+    "crisisBy10Years": 93,
+    "juntaAt10Years": {
+      "RUS": 7,
+      "TUR": 1
+    },
+    "coups": 65
+  },
+  "prices": {
+    "low": 0.868211271989314,
+    "high": 1.3855787968702882
+  },
+  "defaults": {
+    "total": 0,
+    "inStableNations": []
+  },
+  "technology": {
+    "FRA": {
+      "completed": 100,
+      "median": "2038-08-01",
+      "shareIn2035": 0.9180327868852459
+    },
+    "DEU": {
+      "completed": 100,
+      "median": "2038-10-01",
+      "shareIn2035": 0.8688524590163934
+    },
+    "GBR": {
+      "completed": 100,
+      "median": "2035-12-01",
+      "shareIn2035": 0.9508196721311475
+    },
+    "ITA": {
+      "completed": 100,
+      "median": "2043-02-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "ESP": {
+      "completed": 100,
+      "median": "2042-10-01",
+      "shareIn2035": 0.6885245901639344
+    },
+    "POL": {
+      "completed": 100,
+      "median": "2042-09-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "UKR": {
+      "completed": 100,
+      "median": "2070-11-01",
+      "shareIn2035": 0.3770491803278688
+    },
+    "RUS": {
+      "completed": 100,
+      "median": "2044-05-01",
+      "shareIn2035": 0.7213114754098361
+    },
+    "TUR": {
+      "completed": 100,
+      "median": "2043-01-01",
+      "shareIn2035": 0.6885245901639344
+    },
+    "NOR": {
+      "completed": 100,
+      "median": "2038-10-01",
+      "shareIn2035": 0.8524590163934426
+    }
+  },
+  "events": {
+    "mean": 54.54
+  },
+  "blocs": {
+    "decisionsMean": 36
+  },
+  "wallMsMean": 90024.05
+}

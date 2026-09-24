@@ -92,14 +92,15 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 ## J5 — Profondeur
 
 - [x] Blocs couche 2 (budget, votes, décisions) puis couche 3 (leadership joueur) ; 12 blocs du palier 1 _(2026-09-24 — listes de membres des 195 pays, seuls les membres simulés votent (artefact europe-10, J6) ; majorité qualifiée de l'UE, article 5 de l'OTAN, budget et transferts, adhésion et sortie, présidence tournante et puissance dominante, huit mesures ; l'écran Blocs est livré, les écrans arbre et événements viennent au J5c)_
-- [ ] Arbre technologique : tronc commun paliers 1 et 2 ; branches de doctrine par bloc
-- [ ] 50 événements scriptés 2026-2030 ; gabarits procéduraux ; moteur de déclenchement unique
+- [x] Arbre technologique : tronc commun paliers 1 et 2 ; branches de doctrine par bloc _(2026-09-24 — 61 + 40 nœuds sur dix domaines, branches UE, OTAN, BRICS, OCS ; nœuds de départ par l'indice de développement ; 3 % de R&D termine le palier 1 vers 2035-2038 ; effets à l'échelle de l'avance sur le monde)_
+- [x] 50 événements scriptés 2026-2030 ; gabarits procéduraux ; moteur de déclenchement unique _(2026-09-24 — 50 scriptés, 34 gabarits ; fonctions et jamais de personnes réelles ; fenêtres qui mettent en pause, deux par mois ; griefs = casus belli ; troubles qui peuvent mener à la révolution)_
 - [x] Doctrines nucléaires ; probabilité de tir ; main morte ; retombées → production _(2026-09-24 — niveaux de menace, dissuasion, silos OpenFront dès le premier jour, tirs par `NukeExecution`, paria et coalition, main morte qui reporte l'annexion d'un jour, section Nucléaire de l'écran des fronts ; calibrage sur la campagne de livraison du J5c)_
 - [x] IA des nations réécrite : agenda, traits, échelonnement, niveau de détail variable _(2026-09-24 — revue d'un dixième des nations par tick, mensuelle ou hebdomadaire selon l'enjeu ; défense selon la menace, déclarations de guerre sous conditions, livraisons d'armes, blocus et débarquements ; fréquence des guerres à calibrer au J5c avec les événements)_
 - [x] Corrections du J4 : dirigeants au 1er janvier 2026, formule des coups, mortalité ; fronts lisibles sur la carte et valeur des tuiles contestées ; interface héritée masquée en campagne _(2026-09-24 — tâches ajoutées au jalon)_
-- [ ] Écrans : blocs, arbre, événements
+- [x] Écrans : blocs, arbre, événements _(2026-09-24 — vérifiés dans le navigateur ; section Nucléaire de l'écran des fronts au J5a)_
+- [x] Sauvegarde `schemaVersion: 5` complète (contestation, territoire, nucléaire, IA, blocs, technologie, événements, griefs) et migration `v4-to-v5.ts` testée sur une vraie sauvegarde J4 ; livraison headless en processus enfants (`tools/veritable/headless/delivery.ts`) _(2026-09-24 — tâches ajoutées au jalon)_
 
-**Livré quand** : sur 100 campagnes headless de 50 ans, aucune guerre nucléaire généralisée en année 1 et une distribution des guerres plausible.
+**Livré quand** : sur 100 campagnes headless de 50 ans, aucune guerre nucléaire généralisée en année 1 et une distribution des guerres plausible. — **Livré le 2026-09-24** (100 campagnes × 50 ans sur le cœur : aucun tir nucléaire ; guerres nouvelles médiane 2, maximum 3, toutes avec casus belli, presque toutes des reprises de la guerre russo-ukrainienne ; 6 révolutions ; crise à dix ans dans 93 campagnes ; junte à dix ans : Russie 7 %, Turquie 1 % ; prix entre 0,87 et 1,39 ; aucun défaut ; `docs/veritable/reports/J5/`).
 
 ## J6 — Échelle
 

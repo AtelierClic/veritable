@@ -1,0 +1,101 @@
+seed,new_wars,wars_without_casus_belli,wars,nuclear_shots,shots,revolutions,crisis_by_10_years,rus_regime_10y,tur_regime_10y,coups,unrest_starts,defaults,price_low,price_high,tier1_gbr,tier1_deu,tier1_fra,events_journaled,bloc_decisions,wall_s
+1,2,0,RUS>UKR@2031-11:contested-territory RUS>UKR@2039-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,6,,0.908,1.342,2035-12-01,2038-10-01,2039-06-01,52,37,112
+2,1,0,RUS>UKR@2031-02:contested-territory,0,,UKR@2034-02-01,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.911,1.267,2035-12-01,2038-10-01,2038-07-01,51,34,102
+3,1,0,RUS>UKR@2031-09:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,,0.911,1.330,2035-12-01,2038-10-01,2039-03-01,56,33,107
+4,2,0,RUS>UKR@2031-12:contested-territory RUS>UKR@2039-02:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,7,,0.915,1.211,2035-12-01,2038-11-01,2038-06-01,57,31,112
+5,2,0,RUS>UKR@2030-12:contested-territory RUS>UKR@2037-04:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,,0.923,1.265,2035-12-01,2038-10-01,2038-04-01,56,32,112
+6,3,0,RUS>UKR@2031-04:contested-territory RUS>UKR@2037-08:contested-territory RUS>UKR@2043-06:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,,0.896,1.289,2035-12-01,2038-09-01,2038-06-01,61,33,102
+7,2,0,RUS>UKR@2030-10:contested-territory RUS>UKR@2036-05:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,12,,0.890,1.179,2035-12-01,2038-10-01,2039-01-01,43,50,101
+8,2,0,RUS>UKR@2031-12:contested-territory RUS>UKR@2038-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,,0.919,1.218,2035-12-01,2038-10-01,2039-02-01,59,40,101
+9,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,2,3,,0.868,1.309,2035-12-01,2038-10-01,2038-04-01,58,31,78
+10,2,0,RUS>UKR@2031-08:contested-territory RUS>UKR@2038-03:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,2,12,,0.893,1.209,2035-12-01,2038-11-01,2038-06-01,54,33,100
+11,2,0,RUS>UKR@2032-09:contested-territory RUS>UKR@2039-07:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,6,,0.916,1.153,2035-12-01,2038-10-01,2038-07-01,47,33,95
+12,2,0,RUS>UKR@2033-07:contested-territory RUS>UKR@2040-08:contested-territory,0,,,1,parliamentary,electoral-authoritarian,1,1,,0.890,1.335,2035-12-01,2038-09-01,2038-05-01,54,34,96
+13,0,0,,0,,,0,electoral-authoritarian,electoral-authoritarian,0,0,,0.928,1.194,2035-12-01,2038-10-01,2038-12-01,49,41,75
+14,2,0,RUS>UKR@2031-11:contested-territory RUS>UKR@2039-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,,0.913,1.158,2035-12-01,2038-10-01,2038-06-01,52,34,97
+15,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,,0.906,1.191,2035-12-01,2038-10-01,2038-08-01,57,37,72
+16,2,0,RUS>UKR@2031-12:contested-territory RUS>UKR@2038-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,4,,0.879,1.173,2035-12-01,2038-10-01,2039-02-01,47,36,106
+17,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.912,1.262,2035-12-01,2038-09-01,2038-04-01,61,33,76
+18,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,,0.870,1.188,2035-12-01,2038-09-01,2038-09-01,55,31,73
+19,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,10,,0.895,1.273,2035-12-01,2038-10-01,2039-01-01,57,35,74
+20,3,0,RUS>UKR@2032-05:contested-territory RUS>UKR@2038-03:contested-territory RUS>UKR@2045-03:contested-territory,0,,,1,junta,electoral-authoritarian,3,4,,0.904,1.178,2035-12-01,2038-10-01,2038-06-01,50,38,106
+21,1,0,RUS>UKR@2032-01:contested-territory,0,,,1,electoral-authoritarian,parliamentary,1,11,,0.887,1.168,2035-12-01,2038-10-01,2038-07-01,48,36,107
+22,3,0,RUS>UKR@2031-11:contested-territory RUS>UKR@2037-11:contested-territory RUS>UKR@2043-07:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,7,,0.933,1.205,2035-12-01,2038-10-01,2038-08-01,60,37,129
+23,1,0,RUS>UKR@2032-10:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,13,,0.890,1.172,2035-12-01,2038-10-01,2038-08-01,46,30,118
+24,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,,0.912,1.296,2035-12-01,2038-10-01,2038-04-01,56,34,106
+25,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,4,,0.896,1.184,2035-12-01,2038-10-01,2039-02-01,50,36,99
+26,2,0,RUS>UKR@2033-01:contested-territory RUS>UKR@2040-05:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,5,,0.907,1.272,2035-12-01,2038-10-01,2038-06-01,52,35,105
+27,2,0,RUS>UKR@2030-10:contested-territory RUS>UKR@2036-10:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.905,1.205,2035-12-01,2038-09-01,2038-07-01,60,35,102
+28,0,0,,0,,,0,electoral-authoritarian,electoral-authoritarian,0,1,,0.899,1.233,2035-12-01,2038-10-01,2038-08-01,54,37,79
+29,2,0,RUS>UKR@2037-08:contested-territory RUS>UKR@2043-07:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,2,4,,0.908,1.238,2035-12-01,2038-10-01,2038-07-01,53,36,103
+30,2,0,RUS>UKR@2033-03:contested-territory RUS>UKR@2038-11:contested-territory,0,,,1,junta,electoral-authoritarian,1,5,,0.927,1.307,2035-12-01,2038-10-01,2039-06-01,59,39,101
+31,1,0,UKR>POL@2050-10:grievance,0,,,1,junta,electoral-authoritarian,2,2,,0.875,1.143,2036-01-01,2038-09-01,2038-06-01,52,47,96
+32,2,0,RUS>UKR@2030-11:contested-territory RUS>UKR@2035-11:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,10,,0.923,1.186,2035-12-01,2038-10-01,2039-01-01,53,45,94
+33,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,1,,0.887,1.339,2035-12-01,2038-10-01,2038-04-01,60,34,79
+34,1,0,RUS>UKR@2031-10:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.921,1.219,2035-12-01,2038-10-01,2038-04-01,57,33,92
+35,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,,0.879,1.177,2035-12-01,2038-10-01,2038-08-01,50,33,76
+36,3,0,RUS>UKR@2031-04:contested-territory RUS>UKR@2036-12:contested-territory RUS>UKR@2044-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.930,1.308,2035-12-01,2038-09-01,2038-08-01,54,35,101
+37,2,0,RUS>UKR@2032-05:contested-territory RUS>UKR@2038-09:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,,0.873,1.219,2035-12-01,2038-10-01,2039-07-01,59,40,96
+38,2,0,RUS>UKR@2031-02:contested-territory RUS>UKR@2036-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,,0.875,1.245,2035-12-01,2038-11-01,2038-04-01,51,39,93
+39,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.914,1.196,2035-12-01,2038-10-01,2038-02-01,55,30,74
+40,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.885,1.171,2035-12-01,2038-10-01,2038-07-01,56,33,77
+41,2,0,RUS>UKR@2031-11:contested-territory RUS>UKR@2039-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,2,6,,0.907,1.119,2035-12-01,2038-10-01,2038-04-01,51,41,92
+42,2,0,RUS>UKR@2033-07:contested-territory RUS>UKR@2040-10:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,8,,0.908,1.376,2035-12-01,2038-10-01,2039-06-01,58,36,94
+43,0,0,,0,,,0,electoral-authoritarian,electoral-authoritarian,0,0,,0.892,1.183,2035-12-01,2038-10-01,2038-05-01,51,29,73
+44,1,0,RUS>UKR@2032-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,,0.878,1.325,2035-12-01,2038-10-01,2039-01-01,51,38,88
+45,2,0,RUS>UKR@2031-10:contested-territory RUS>UKR@2038-04:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,10,,0.906,1.325,2035-12-01,2038-09-01,2038-12-01,53,45,97
+46,2,0,RUS>UKR@2030-08:contested-territory RUS>UKR@2035-09:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,2,13,,0.910,1.213,2035-12-01,2038-10-01,2038-04-01,70,34,93
+47,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.912,1.190,2036-01-01,2038-11-01,2037-10-01,48,33,74
+48,1,0,RUS>UKR@2032-02:contested-territory,0,,UKR@2033-09-01,1,electoral-authoritarian,electoral-authoritarian,3,5,,0.908,1.174,2035-12-01,2038-10-01,2039-02-01,60,38,88
+49,2,0,RUS>UKR@2031-06:contested-territory RUS>UKR@2037-11:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.886,1.247,2035-12-01,2038-09-01,2038-08-01,55,36,92
+50,3,0,RUS>UKR@2031-03:contested-territory RUS>UKR@2036-07:contested-territory RUS>UKR@2042-10:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,2,8,,0.925,1.247,2035-12-01,2038-09-01,2038-08-01,64,35,96
+51,1,0,RUS>UKR@2032-09:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,,0.906,1.251,2035-12-01,2038-10-01,2038-12-01,54,34,86
+52,0,0,,0,,,1,junta,electoral-authoritarian,1,2,,0.925,1.162,2035-12-01,2038-09-01,2038-07-01,57,36,72
+53,1,0,RUS>UKR@2030-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,8,,0.922,1.208,2035-12-01,2038-10-01,2038-07-01,52,36,86
+54,2,0,RUS>UKR@2032-03:contested-territory RUS>UKR@2037-09:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,10,,0.916,1.356,2035-12-01,2038-10-01,2038-03-01,59,30,94
+55,1,0,RUS>UKR@2032-12:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,,0.893,1.226,2035-12-01,2038-10-01,2039-03-01,57,38,90
+56,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.901,1.195,2035-12-01,2038-09-01,2038-08-01,60,34,74
+57,1,0,RUS>UKR@2031-06:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,9,,0.913,1.234,2035-12-01,2038-10-01,2039-05-01,53,38,86
+58,2,0,RUS>UKR@2032-10:contested-territory RUS>UKR@2039-02:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,,0.910,1.165,2035-12-01,2038-10-01,2038-06-01,45,31,96
+59,1,0,RUS>UKR@2032-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,5,,0.919,1.371,2035-12-01,2038-10-01,2038-10-01,56,26,86
+60,0,0,,0,,,0,electoral-authoritarian,electoral-authoritarian,1,0,,0.920,1.234,2035-12-01,2038-09-01,2038-08-01,51,39,71
+61,1,0,RUS>UKR@2031-07:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,2,,0.920,1.222,2035-12-01,2038-10-01,2038-08-01,50,33,88
+62,1,0,RUS>UKR@2030-12:contested-territory,0,,,1,junta,electoral-authoritarian,2,0,,0.898,1.239,2035-12-01,2038-10-01,2038-08-01,55,41,87
+63,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,2,,0.921,1.206,2035-12-01,2038-09-01,2038-10-01,53,33,76
+64,2,0,RUS>UKR@2031-09:contested-territory RUS>UKR@2039-05:contested-territory,0,,UKR@2028-11-01,1,electoral-authoritarian,electoral-authoritarian,2,7,,0.908,1.205,2035-12-01,2038-09-01,2038-09-01,51,47,96
+65,2,0,RUS>UKR@2030-12:contested-territory RUS>UKR@2037-10:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,3,5,,0.886,1.193,2035-12-01,2038-11-01,2039-04-01,56,42,95
+66,2,0,RUS>UKR@2032-08:contested-territory RUS>UKR@2040-02:contested-territory,0,,UKR@2033-11-01,1,junta,electoral-authoritarian,1,10,,0.928,1.294,2035-11-01,2038-10-01,2038-07-01,59,34,91
+67,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,,0.930,1.207,2035-12-01,2038-09-01,2038-08-01,57,32,71
+68,2,0,RUS>UKR@2031-04:contested-territory RUS>UKR@2036-09:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,7,,0.914,1.292,2035-12-01,2038-10-01,2038-06-01,47,34,92
+69,1,0,RUS>UKR@2031-02:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,7,,0.918,1.222,2035-12-01,2038-10-01,2038-12-01,55,41,87
+70,1,0,RUS>UKR@2033-02:contested-territory,0,,,1,parliamentary,electoral-authoritarian,2,0,,0.908,1.235,2035-12-01,2038-10-01,2039-06-01,61,45,88
+71,0,0,,0,,,0,electoral-authoritarian,electoral-authoritarian,0,0,,0.914,1.357,2035-12-01,2038-10-01,2038-08-01,63,30,75
+72,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,,0.915,1.145,2035-12-01,2038-10-01,2038-07-01,50,35,72
+73,0,0,,0,,,1,electoral-authoritarian,junta,2,1,,0.900,1.215,2035-12-01,2038-10-01,2038-10-01,53,44,75
+74,2,0,RUS>UKR@2032-05:contested-territory RUS>UKR@2038-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,,0.931,1.295,2035-12-01,2038-09-01,2038-12-01,55,36,89
+75,2,0,RUS>UKR@2032-05:contested-territory RUS>UKR@2039-05:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,7,,0.920,1.198,2035-12-01,2038-10-01,2038-07-01,58,34,90
+76,1,0,RUS>UKR@2031-11:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,,0.901,1.232,2035-12-01,2038-10-01,2038-08-01,52,36,83
+77,2,0,RUS>UKR@2033-06:contested-territory RUS>UKR@2039-03:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,8,,0.913,1.263,2035-12-01,2038-10-01,2038-08-01,60,31,91
+78,2,0,RUS>UKR@2032-05:contested-territory RUS>UKR@2040-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,5,,0.900,1.223,2035-12-01,2038-10-01,2038-07-01,52,32,90
+79,2,0,RUS>UKR@2031-07:contested-territory RUS>UKR@2038-04:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,6,6,,0.907,1.185,2035-12-01,2038-10-01,2038-08-01,41,41,92
+80,2,0,RUS>UKR@2031-09:contested-territory RUS>UKR@2038-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,,0.890,1.216,2035-12-01,2038-10-01,2038-07-01,58,35,91
+81,2,0,RUS>UKR@2031-09:contested-territory RUS>UKR@2037-02:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,1,8,,0.917,1.282,2035-12-01,2038-10-01,2038-04-01,53,40,91
+82,3,0,RUS>UKR@2032-04:contested-territory RUS>UKR@2037-11:contested-territory RUS>UKR@2043-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,,0.900,1.175,2035-12-01,2038-10-01,2038-05-01,52,33,95
+83,3,0,RUS>UKR@2031-04:contested-territory RUS>UKR@2036-04:contested-territory RUS>UKR@2041-06:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,,0.923,1.176,2035-12-01,2038-10-01,2038-08-01,54,33,92
+84,3,0,RUS>UKR@2030-09:contested-territory RUS>UKR@2036-01:contested-territory RUS>UKR@2042-03:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,6,,0.900,1.192,2035-12-01,2038-09-01,2038-09-01,52,33,97
+85,1,0,RUS>UKR@2031-12:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,,0.915,1.249,2035-12-01,2038-09-01,2038-10-01,56,33,86
+86,2,0,RUS>UKR@2031-10:contested-territory RUS>UKR@2039-03:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,7,,0.921,1.202,2035-12-01,2038-10-01,2038-06-01,52,32,89
+87,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,7,,0.909,1.187,2035-12-01,2038-10-01,2038-04-01,58,38,75
+88,2,0,RUS>UKR@2031-07:contested-territory RUS>UKR@2037-01:contested-territory,0,,,1,junta,electoral-authoritarian,1,17,,0.889,1.193,2035-12-01,2038-09-01,2038-09-01,61,39,90
+89,2,0,RUS>UKR@2032-04:contested-territory RUS>UKR@2038-03:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,14,,0.923,1.231,2035-12-01,2038-10-01,2038-07-01,52,35,91
+90,2,0,RUS>UKR@2031-04:contested-territory RUS>UKR@2038-09:contested-territory,0,,UKR@2029-03-01,1,electoral-authoritarian,electoral-authoritarian,0,3,,0.909,1.386,2035-12-01,2038-10-01,2038-02-01,61,35,91
+91,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,2,,0.896,1.201,2035-12-01,2038-09-01,2038-06-01,52,31,71
+92,0,0,,0,,,0,electoral-authoritarian,electoral-authoritarian,0,0,,0.908,1.187,2035-12-01,2038-10-01,2039-01-01,57,39,75
+93,1,0,RUS>UKR@2032-12:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,,0.895,1.267,2035-12-01,2038-10-01,2039-05-01,53,40,86
+94,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,7,,0.905,1.290,2035-12-01,2038-10-01,2039-05-01,63,39,72
+95,2,0,RUS>UKR@2031-05:contested-territory RUS>UKR@2036-08:contested-territory,0,,UKR@2033-05-01,1,electoral-authoritarian,electoral-authoritarian,0,9,,0.914,1.269,2035-12-01,2038-10-01,2039-04-01,58,37,88
+96,2,0,RUS>UKR@2031-10:contested-territory RUS>UKR@2038-07:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,4,9,,0.908,1.206,2035-11-01,2038-10-01,2038-08-01,51,38,83
+97,2,0,RUS>UKR@2032-09:contested-territory RUS>UKR@2039-08:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,9,,0.917,1.248,2035-12-01,2038-11-01,2038-06-01,55,32,91
+98,2,0,RUS>UKR@2032-05:contested-territory RUS>UKR@2039-06:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,9,,0.921,1.213,2035-12-01,2038-10-01,2038-12-01,61,44,92
+99,2,0,RUS>UKR@2030-10:contested-territory RUS>UKR@2036-01:contested-territory,0,,,0,electoral-authoritarian,electoral-authoritarian,0,0,,0.898,1.222,2035-12-01,2038-10-01,2039-05-01,49,41,88
+100,2,0,RUS>UKR@2032-07:contested-territory RUS>UKR@2040-01:contested-territory,0,,,1,electoral-authoritarian,electoral-authoritarian,0,6,,0.929,1.148,2036-01-01,2038-10-01,2038-05-01,52,35,87

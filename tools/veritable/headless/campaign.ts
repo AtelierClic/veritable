@@ -207,6 +207,26 @@ export interface PoliticsSummary {
   coupsInStableDemocracy: string[];
 }
 
+// What the delivery of the J5 measures in a campaign.
+export interface DeliveryMetrics {
+  // Wars declared in the campaign (not the scenario's), with their casus
+  // belli ("none" without).
+  newWars: { by: string; target: string; date: string; casusBelli: string }[];
+  nuclearShots: { by: string; target: string; date: string; threat: number }[];
+  revolutions: string[]; // "nation@date"
+  // A coup (successful or foiled), unrest or a revolution in the first ten
+  // years.
+  crisisBy10Years: boolean;
+  regimeAt10Years: Record<string, string>;
+  // First month each nation had the whole tier 1 of the trunk; its share
+  // of it on 1 January 2035.
+  tier1CompleteAt: Record<string, string | null>;
+  tier1ShareIn2035: Record<string, number>;
+  techCompleted: number;
+  eventsOccurred: number;
+  blocDecisions: number;
+}
+
 export interface CampaignResult {
   scenario: string;
   seed: number;
@@ -222,6 +242,7 @@ export interface CampaignResult {
   unrest: string[];
   wars: string[]; // declarations and joins, "nation>target@date"
   politics: Record<string, PoliticsSummary>;
+  delivery: DeliveryMetrics;
   final: {
     worldGdp: number;
     prices: Record<string, number>;
@@ -352,9 +373,65 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   );
   const history: Record<string, { regime: string; stability: number }[]> =
     Object.fromEntries(pack.scenario.nations.map((id) => [id, []]));
+  const startYear0 = Number(pack.scenario.startDate.slice(0, 4));
+  const tenYears = `${startYear0 + 10}${pack.scenario.startDate.slice(4)}`;
+  const tier1 = pack.data.tech
+    .filter((n) => n.tier === 1 && n.bloc === undefined)
+    .map((n) => n.id);
+  const delivery: DeliveryMetrics = {
+    newWars: [],
+    nuclearShots: [],
+    revolutions: [],
+    crisisBy10Years: false,
+    regimeAt10Years: {},
+    tier1CompleteAt: Object.fromEntries(
+      pack.scenario.nations.map((id) => [id, null]),
+    ),
+    tier1ShareIn2035: {},
+    techCompleted: 0,
+    eventsOccurred: 0,
+    blocDecisions: 0,
+  };
+  const tierShare = (id: string) => {
+    const done = driver.read().tech.nations[id]?.done ?? [];
+    return tier1.length === 0
+      ? 0
+      : tier1.filter((n) => done.includes(n)).length / tier1.length;
+  };
   const onEvent = (event: SimEvent) => {
     if (event.type === "day-started") return;
     counts[event.type] = (counts[event.type] ?? 0) + 1;
+    if (
+      event.date < tenYears &&
+      (event.type === "coup-succeeded" ||
+        event.type === "coup-attempted" ||
+        event.type === "unrest-started" ||
+        event.type === "revolution")
+    ) {
+      delivery.crisisBy10Years = true;
+    }
+    if (event.type === "revolution") {
+      delivery.revolutions.push(`${event.nation}@${event.date}`);
+    }
+    if (event.type === "war-declared") {
+      delivery.newWars.push({
+        by: event.nation,
+        target: event.target,
+        date: event.date,
+        casusBelli: event.casusBelli ?? "none",
+      });
+    }
+    if (event.type === "nuclear-launch" && "params" in event) {
+      delivery.nuclearShots.push({
+        by: event.nation,
+        target: event.params.target,
+        date: event.date,
+        threat: Number(event.params.threat),
+      });
+    }
+    if (event.type === "tech-completed") delivery.techCompleted += 1;
+    if (event.type === "event-occurred") delivery.eventsOccurred += 1;
+    if (event.type === "bloc-decision") delivery.blocDecisions += 1;
     if ("nation" in event && event.nation in politics) {
       const p = politics[event.nation];
       if (event.type === "election-held") {
@@ -401,6 +478,17 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       sample(event.date);
       const view = driver.read();
       for (const id of pack.scenario.nations) {
+        if (delivery.tier1CompleteAt[id] === null && tierShare(id) >= 1) {
+          delivery.tier1CompleteAt[id] = event.date;
+        }
+        if (event.date === `${startYear0 + 9}-01-01`) {
+          delivery.tier1ShareIn2035[id] = tierShare(id);
+        }
+        if (event.date === tenYears) {
+          delivery.regimeAt10Years[id] = view.politics[id].regime;
+        }
+      }
+      for (const id of pack.scenario.nations) {
         if (view.politics[id].regime === "junta") politics[id].juntaMonths++;
         const past = history[id];
         past.push({
@@ -412,8 +500,10 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     }
   };
 
-  while (driver.read().date < endDate) {
-    const date = driver.read().date;
+  // The date follows the days that start: reading the whole view every day
+  // would cost more than the simulation (J5: blocs, technology).
+  let date = driver.read().date;
+  while (date < endDate) {
     if (
       shock !== undefined &&
       !shockApplied &&
@@ -445,7 +535,10 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         }
       }
     }
-    for (const event of driver.advanceDay()) onEvent(event);
+    for (const event of driver.advanceDay()) {
+      if (event.type === "day-started") date = event.date;
+      onEvent(event);
+    }
   }
 
   const last = series[series.length - 1];
@@ -473,6 +566,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     unrest,
     wars,
     politics,
+    delivery,
     final: {
       worldGdp: Object.values(last.gdp).reduce((a, b) => a + b, 0),
       prices: last.prices,

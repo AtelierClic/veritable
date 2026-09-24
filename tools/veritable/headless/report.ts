@@ -96,6 +96,8 @@ async function main(): Promise<void> {
 
   const source = createDataSource(fsDataFiles());
   const pack = await loadScenarioPackFrom(source, scenarioId);
+  // A shock against its control, all else equal: without the events (J5).
+  pack.data.events = [];
   const config = source.config();
   const control = runCampaign({ pack, config, seed, years });
   const cut = runCampaign({ pack, config, seed, years, shock });
