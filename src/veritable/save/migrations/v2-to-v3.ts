@@ -108,9 +108,39 @@ export function v2ToV3(
       nations: economyNations,
     },
     politics: { ...save.politics, nations: politicsNations },
-    diplomacy: initDiplomacy(ctx, scenario),
+    diplomacy: v3Diplomacy(initDiplomacy(ctx, scenario)),
     military: initMilitary(ctx, sheets),
     naval: initNaval(),
+  };
+}
+
+// The first-day diplomacy of the current build, cut to the v3 shape (the
+// later migrations add what the later versions carry).
+function v3Diplomacy(
+  d: ReturnType<typeof initDiplomacy>,
+): SaveFileV3["diplomacy"] {
+  return {
+    relations: d.relations,
+    wars: d.wars.map((w) => ({
+      id: w.id,
+      aggressors: w.aggressors,
+      defenders: w.defenders,
+      casusBelli: w.casusBelli,
+      since: w.since,
+      declaredInCampaign: w.declaredInCampaign,
+      score: w.score,
+      retreatMonths: w.retreatMonths,
+      tilesTaken: w.tilesTaken,
+      monthlyTiles: w.monthlyTiles,
+      offers: w.offers,
+    })),
+    sanctions: d.sanctions,
+    coalitionCalls: [],
+    contestedRegions: [],
+    reparations: d.reparations,
+    demilitarized: d.demilitarized,
+    nextOfferId: d.nextOfferId,
+    nextWarId: d.nextWarId,
   };
 }
 

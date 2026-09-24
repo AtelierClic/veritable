@@ -18,6 +18,11 @@ export const SOURCES = {
     file: "ne_10m_admin_0_disputed_areas.geojson",
     sha256: "9cafef8b7dfb6b164dc58f218f981f4ace9f716f6c03795d4c62d1ac9f3d50f5",
   },
+  // J6: provinces, for regions defined by their ISO 3166-2 codes.
+  admin1: {
+    file: "ne_10m_admin_1_states_provinces.geojson",
+    sha256: "22d0e3ad85eb3e27f17cabf8ba2d50e554fbc27a87796ff891d958185da62fb5",
+  },
 } as const;
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -83,6 +88,17 @@ export function parseFeatures(
 export async function loadCountries(): Promise<Feature[]> {
   const file = await fetchSource("countries");
   return parseFeatures(fs.readFileSync(file, "utf8"), "ADM0_A3", "ADMIN");
+}
+
+// Provinces keyed by their ISO 3166-2 code (J6).
+export async function loadAdmin1(): Promise<Map<string, Feature>> {
+  const file = await fetchSource("admin1");
+  const features = parseFeatures(
+    fs.readFileSync(file, "utf8"),
+    "iso_3166_2",
+    "name",
+  );
+  return new Map(features.map((f) => [f.id, f]));
 }
 
 export interface LonLatBox {

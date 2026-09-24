@@ -112,6 +112,9 @@ export interface Driver {
   perf(): Record<string, { calls: number; totalMs: number }>;
   // The save file of the campaign as it stands (fixtures of the migrations).
   snapshot(): Uint8Array;
+  // The simulation itself, for the harnesses that script AI nations (J6
+  // nuclear tests); not for the runner.
+  sim?: unknown;
 }
 
 export class TimingProbe implements PerfProbe {
@@ -136,7 +139,7 @@ export function simDriver(
   const probe = new TimingProbe();
   const sim = new VeritableSimImpl({
     config,
-    world: new BordersWorld(pack.borders, pack.zones),
+    world: new BordersWorld(pack.borders, pack.zones, undefined, pack.regions),
     data: pack.data,
     nationData: (id) => pack.nations.find((n) => n.id === id),
     scenario: pack.scenario,
@@ -211,7 +214,15 @@ export interface PoliticsSummary {
 export interface DeliveryMetrics {
   // Wars declared in the campaign (not the scenario's), with their casus
   // belli ("none" without).
-  newWars: { by: string; target: string; date: string; casusBelli: string }[];
+  newWars: {
+    by: string;
+    target: string;
+    date: string;
+    casusBelli: string;
+    war: string;
+  }[];
+  // Peaces signed (J6: the RUS-UKR loop), the war they ended.
+  peaces: { war: string; date: string }[];
   nuclearShots: { by: string; target: string; date: string; threat: number }[];
   revolutions: string[]; // "nation@date"
   // A coup (successful or foiled), unrest or a revolution in the first ten
@@ -380,6 +391,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     .map((n) => n.id);
   const delivery: DeliveryMetrics = {
     newWars: [],
+    peaces: [],
     nuclearShots: [],
     revolutions: [],
     crisisBy10Years: false,
@@ -419,7 +431,11 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         target: event.target,
         date: event.date,
         casusBelli: event.casusBelli ?? "none",
+        war: event.war,
       });
+    }
+    if (event.type === "peace-signed") {
+      delivery.peaces.push({ war: event.war, date: event.date });
     }
     if (event.type === "nuclear-launch" && "params" in event) {
       delivery.nuclearShots.push({

@@ -61,6 +61,11 @@ export class VeritableSession {
       pack.zones,
       config.naval,
       config.logistics,
+      {
+        regions: pack.regions ?? new Map(),
+        firstDay: pack.borders.tiles,
+        nations: pack.borders.nations,
+      },
     );
 
     const probe = new PerformanceProbe();

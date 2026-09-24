@@ -11,6 +11,12 @@ import { EconomyContext } from "../economy/context";
 import { ideologyDistance, MAX_IDEOLOGY_DISTANCE } from "../politics/ideology";
 import { Rng } from "../rng";
 import { militaryPower } from "../war/military";
+import {
+  claimsAgainst,
+  initClaims,
+  scenarioWarClaims,
+  warClaims,
+} from "./claims";
 
 // Diplomacy and the international reaction (J3a).
 //
@@ -142,7 +148,8 @@ export function initDiplomacy(
     grievances: [],
     pariahs: [],
     pendingAnnexations: [],
-    contestedRegions: [],
+    claims: initClaims(scenario),
+    warMemory: {},
     reparations: [],
     demilitarized: [],
     nextOfferId: 1,
@@ -162,9 +169,17 @@ export function initDiplomacy(
     const [aggressors, defenders] = war.belligerents;
     const known = (id: string) => ctx.nationIds.includes(id);
     if (!aggressors.every(known) || !defenders.every(known)) continue;
-    state.wars.push(
-      newWar(state, war.id, aggressors, defenders, null, war.since, false),
+    const started = newWar(
+      state,
+      war.id,
+      aggressors,
+      defenders,
+      null,
+      war.since,
+      false,
     );
+    started.claims = scenarioWarClaims(scenario, aggressors, defenders);
+    state.wars.push(started);
     for (const a of aggressors) {
       for (const d of defenders) setRelation(state, a, d, cfg.warRelation);
     }
@@ -194,6 +209,8 @@ function newWar(
     tilesTaken: Object.fromEntries(all.map((n) => [n, 0])),
     monthlyTiles: Object.fromEntries(all.map((n) => [n, 0])),
     offers: [],
+    losses: Object.fromEntries(all.map((n) => [n, 0])),
+    claims: [],
   };
 }
 
@@ -213,18 +230,10 @@ export function casusBelliValid(
   switch (entry.check) {
     case "none":
       return true;
-    case "contested-territory": {
-      const regions = [
-        ...scenario.contested.map((r) => ({
-          controller: r.controller,
-          claimants: r.claimants,
-        })),
-        ...state.contestedRegions,
-      ];
-      return regions.some(
-        (r) => r.controller === target && r.claimants.includes(declarer),
-      );
-    }
+    // J6: a claim of the declarer on land the target holds now (read on
+    // the map), treaty-settled tiles excluded.
+    case "contested-territory":
+      return claimsAgainst(ctx, state, declarer, target).length > 0;
     // Expired grievances are pruned by the events every month.
     case "grievance":
       return state.grievances.some(
@@ -350,6 +359,9 @@ export function declareWar(
     true,
   );
   state.nextWarId += 1;
+  // J6: the claims of the aggressor on land of the target, whatever the
+  // casus belli put forward: a white or lost war weakens them.
+  war.claims = warClaims(ctx, state, [aggressor], [target]);
   state.wars.push(war);
   setRelation(state, aggressor, target, ctx.config.diplomacy.warRelation);
   chargeAggressor(ctx, state, military, war, aggressor);
@@ -494,6 +506,9 @@ export function stepDiplomacyMonth(
   const cfg = ctx.config.diplomacy;
   const events: DiplomacyEvent[] = [];
   const ids = ctx.nationIds;
+
+  // 0. War memory fades (J6): halves every halfLifeYears.
+  decayWarMemory(ctx, state);
 
   // 1. Relations drift towards their affinity; belligerents stay at
   //    warRelation. An aggressor without casus belli mends nothing while its
@@ -663,6 +678,54 @@ export function stepDiplomacyMonth(
   return events;
 }
 
+// --- war memory (J6) -------------------------------------------------------------
+
+const MEMORY_FLOOR = 0.001;
+
+export function decayWarMemory(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+): void {
+  const halfLife = ctx.config.ai.nations.war.memory.halfLifeYears;
+  const factor = Math.pow(0.5, 1 / (12 * halfLife));
+  for (const id of Object.keys(state.warMemory)) {
+    const next = state.warMemory[id] * factor;
+    if (next < MEMORY_FLOOR) delete state.warMemory[id];
+    else state.warMemory[id] = next;
+  }
+}
+
+// The end of a war: each belligerent remembers its losses (share of its
+// population) and the years it lasted.
+export function rememberWar(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  war: War,
+  date: string,
+): void {
+  const cfg = ctx.config.ai.nations.war.memory;
+  const years = Math.max(0, yearsBetween(war.since, date));
+  for (const id of [...war.aggressors, ...war.defenders]) {
+    const population = ctx.sheet(id).population.value;
+    const losses = war.losses[id] ?? 0;
+    const add =
+      cfg.lossesWeight * (population > 0 ? losses / population : 0) +
+      cfg.yearsWeight * years;
+    if (add <= 0) continue;
+    state.warMemory[id] = (state.warMemory[id] ?? 0) + add;
+  }
+}
+
+export function warMemoryOf(state: DiplomacyState, id: NationId): number {
+  return state.warMemory[id] ?? 0;
+}
+
+function yearsBetween(from: string, to: string): number {
+  const [fy, fm, fd] = from.split("-").map(Number);
+  const [ty, tm, td] = to.split("-").map(Number);
+  return ty - fy + (tm - fm) / 12 + (td - fd) / 365;
+}
+
 export function joinWar(
   ctx: EconomyContext,
   state: DiplomacyState,
@@ -675,6 +738,7 @@ export function joinWar(
   war.retreatMonths[nation] = 0;
   war.tilesTaken[nation] = 0;
   war.monthlyTiles[nation] = 0;
+  war.losses[nation] = 0;
   const enemies = side === "aggressors" ? war.defenders : war.aggressors;
   for (const enemy of enemies) {
     setRelation(state, nation, enemy, ctx.config.diplomacy.warRelation);

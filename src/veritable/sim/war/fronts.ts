@@ -341,6 +341,8 @@ function applyLosses(
   const nation = military.nations[side.nation];
   nation.losses += lost;
   nation.lossesLastMonth += lost;
+  // J6: the losses of this war, the war memory of the nation at its end.
+  war.losses[side.nation] = (war.losses[side.nation] ?? 0) + lost;
   war.score[side.nation] =
     (war.score[side.nation] ?? 0) - lost * cfg.warScore.lossValue;
   war.score[enemy.nation] =

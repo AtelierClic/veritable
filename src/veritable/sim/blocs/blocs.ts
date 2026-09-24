@@ -1034,6 +1034,41 @@ function collectiveDefense(env: BlocEnv): BlocStepEvent[] {
   return events;
 }
 
+// Members of the collective-defence blocs of `victim` that would enter a war
+// `aggressor` declares on it, with the chance each honours the clause (the
+// rule of collectiveDefense above; J6: the expected cost of a war for the
+// AI). A bloc does not defend a member against another member.
+export function defenseGuarantors(
+  ctx: EconomyContext,
+  state: BlocsState,
+  politics: PoliticsState,
+  victim: NationId,
+  aggressor: NationId,
+): { nation: NationId; probability: number }[] {
+  const cfg = ctx.config.blocs;
+  const best = new Map<NationId, number>();
+  for (const bloc of state.blocs) {
+    const data = blocData(ctx, bloc.id);
+    const clause =
+      data.collectiveDefense ??
+      (bloc.commonDefense ? cfg.commonDefense : undefined);
+    if (clause === undefined) continue;
+    const members = ctx.membersOf(bloc.id);
+    if (!members.includes(victim) || members.includes(aggressor)) continue;
+    for (const m of simulatedMembers(ctx, bloc.id)) {
+      if (m === victim) continue;
+      const sovereignty =
+        politics.nations[m]?.government.ideology.sovereignty ?? 0;
+      const p =
+        sovereignty > clause.sovereigntyAbove
+          ? clause.sovereignJoinProbability
+          : clause.joinProbability;
+      best.set(m, Math.max(best.get(m) ?? 0, p));
+    }
+  }
+  return [...best].map(([nation, probability]) => ({ nation, probability }));
+}
+
 // Contributions in % of GDP (x the budget scale) of the simulated members,
 // shared out by the shares of the data: structural funds to the members
 // under a share of the bloc's GDP per head, in proportion to what they lack;

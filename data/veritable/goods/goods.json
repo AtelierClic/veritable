@@ -118,14 +118,14 @@
     "id": "critical-minerals",
     "name": "good.critical-minerals",
     "tier": 1,
-    "unit": "indice (M$ par point)",
+    "unit": "Md$ (valeur 2024)",
     "transport": "normal",
     "storable": true,
-    "basePrice": 600,
+    "basePrice": 1000,
     "basePriceSource": {
       "source": "derived",
       "asOf": "2025",
-      "note": "Aucune série ouverte agrégée des minerais critiques. Parts de la production des dix nations (indice 100) d'après les positions connues : Russie (nickel, palladium, cobalt, aluminium), Turquie (bore, chrome), Ukraine (titane, manganèse), Norvège (graphite, titane, silicium), Pologne (cuivre, argent), Espagne (cuivre). Les dix pèsent environ 8 % de la production mondiale en valeur : indice mondial 1 250. Valeur de la production des dix : environ 60 Md$."
+      "note": "Bien mesuré en valeur : une unité = un milliard de dollars de production au prix de base (J6 ; indice avant le J6)."
     },
     "epsilon": 0.3,
     "eta": 0.2,
@@ -142,14 +142,14 @@
     "id": "steel",
     "name": "good.steel",
     "tier": 1,
-    "unit": "indice (M$ par point)",
+    "unit": "Md$ (valeur 2024)",
     "transport": "normal",
     "storable": true,
-    "basePrice": 1731.49,
+    "basePrice": 1000,
     "basePriceSource": {
       "source": "derived",
       "asOf": "2025",
-      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.06 (part du bien, estimation) / 100."
+      "note": "Bien mesuré en valeur : une unité = un milliard de dollars de production au prix de base (J6 ; indice avant le J6)."
     },
     "epsilon": 0.4,
     "eta": 0.4,
@@ -166,14 +166,14 @@
     "id": "consumer-goods",
     "name": "good.consumer-goods",
     "tier": 1,
-    "unit": "indice (M$ par point)",
+    "unit": "Md$ (valeur 2024)",
     "transport": "normal",
     "storable": true,
-    "basePrice": 12986.2,
+    "basePrice": 1000,
     "basePriceSource": {
       "source": "derived",
       "asOf": "2025",
-      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.45 (part du bien, estimation) / 100."
+      "note": "Bien mesuré en valeur : une unité = un milliard de dollars de production au prix de base (J6 ; indice avant le J6)."
     },
     "epsilon": 0.6,
     "eta": 0.6,
@@ -185,14 +185,14 @@
     "id": "electronics",
     "name": "good.electronics",
     "tier": 1,
-    "unit": "indice (M$ par point)",
+    "unit": "Md$ (valeur 2024)",
     "transport": "normal",
     "storable": true,
-    "basePrice": 3462.97,
+    "basePrice": 1000,
     "basePriceSource": {
       "source": "derived",
       "asOf": "2025",
-      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.12 (part du bien, estimation) / 100."
+      "note": "Bien mesuré en valeur : une unité = un milliard de dollars de production au prix de base (J6 ; indice avant le J6)."
     },
     "epsilon": 0.6,
     "eta": 0.5,
@@ -204,14 +204,14 @@
     "id": "arms",
     "name": "good.arms",
     "tier": 1,
-    "unit": "indice (M$ par point)",
+    "unit": "Md$ (valeur 2024)",
     "transport": "normal",
     "storable": true,
-    "basePrice": 1658.88,
+    "basePrice": 1000,
     "basePriceSource": {
       "source": "derived",
       "asOf": "2025",
-      "note": "Dépenses militaires des dix (Banque mondiale) × 0.25 (part d'équipement, estimation) / 100."
+      "note": "Bien mesuré en valeur : une unité = un milliard de dollars de production au prix de base (J6 ; indice avant le J6)."
     },
     "epsilon": 0.2,
     "eta": 0.3,
@@ -223,14 +223,14 @@
     "id": "pharma",
     "name": "good.pharma",
     "tier": 1,
-    "unit": "indice (M$ par point)",
+    "unit": "Md$ (valeur 2024)",
     "transport": "normal",
     "storable": true,
-    "basePrice": 1442.91,
+    "basePrice": 1000,
     "basePriceSource": {
       "source": "derived",
       "asOf": "2025",
-      "note": "Valeur ajoutée manufacturière des dix (Banque mondiale) × 0.05 (part du bien, estimation) / 100."
+      "note": "Bien mesuré en valeur : une unité = un milliard de dollars de production au prix de base (J6 ; indice avant le J6)."
     },
     "epsilon": 0.2,
     "eta": 0.4,
@@ -242,14 +242,14 @@
     "id": "services",
     "name": "good.services",
     "tier": 1,
-    "unit": "indice (M$ par point)",
+    "unit": "Md$ (valeur 2024)",
     "transport": "free",
     "storable": false,
-    "basePrice": 150147,
+    "basePrice": 1000,
     "basePriceSource": {
       "source": "derived",
       "asOf": "2025",
-      "note": "Valeur ajoutée des services des dix nations (Banque mondiale) / 100."
+      "note": "Bien mesuré en valeur : une unité = un milliard de dollars de production au prix de base (J6 ; indice avant le J6)."
     },
     "epsilon": 0.5,
     "eta": 0.5,

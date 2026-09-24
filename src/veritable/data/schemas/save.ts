@@ -15,19 +15,20 @@ import {
   WorldStateSchema,
 } from "./saveV1";
 
-// Save file, CURRENT version: schemaVersion 5 (J5: contest of each tile,
-// territory, nuclear, nation AI, blocs, technology, events).
+// Save file, CURRENT version: schemaVersion 6 (J6: war memory, losses and
+// claims of each war, dynamic claims with their weight, tiles settled by
+// treaty in the tile block).
 //
 // zbin has no version byte and no field tags: the schema IS the format. Once
 // a save of this version exists in the wild, any change of shape means a new
-// version: freeze this file as saveV5.ts, write the new one here, and add
-// migrations/v5-to-v6.ts (ARCHITECTURE.md, invariant 2).
+// version: freeze this file as saveV6.ts, write the new one here, and add
+// migrations/v6-to-v7.ts (ARCHITECTURE.md, invariant 2).
 //
 // Pieces imported from saveV1.ts are unchanged since then; the frozen files
-// (saveV1.ts to saveV4.ts) are never edited: a piece that must change is
+// (saveV1.ts to saveV5.ts) are never edited: a piece that must change is
 // redefined here.
 
-export const SAVE_SCHEMA_VERSION = 5;
+export const SAVE_SCHEMA_VERSION = 6;
 
 export * from "./saveV1";
 
@@ -36,8 +37,11 @@ export * from "./saveV1";
 // block of the file says since when and how (sim/war/contest.ts); the bit is
 // kept equal to "contest != 0".
 export const TILE_CONTESTED_BIT = 1 << 12;
+// Tile bit set on land a peace treaty settled (J6): no claim covers it any
+// more, whoever holds it (sim/diplomacy/claims.ts).
+export const TILE_SETTLED_BIT = 1 << 14;
 
-export const JOURNAL_KINDS_V5 = [
+export const JOURNAL_KINDS_V6 = [
   "campaign-started",
   "nation-status",
   "unrest-started",
@@ -99,14 +103,17 @@ export const JOURNAL_KINDS_V5 = [
   // Technology and events (J5).
   "tech-completed",
   "event-occurred",
+  // Claims (J6).
+  "claim-weakened",
+  "claims-settled",
 ] as const;
-export const JournalEntryV5Schema = z.object({
+export const JournalEntryV6Schema = z.object({
   date: IsoDateSchema,
-  kind: z.enum(JOURNAL_KINDS_V5),
+  kind: z.enum(JOURNAL_KINDS_V6),
   nation: NationIdSchema.optional(),
   params: z.record(z.string(), z.string()),
 });
-export type JournalEntryV5 = z.infer<typeof JournalEntryV5Schema>;
+export type JournalEntryV6 = z.infer<typeof JournalEntryV6Schema>;
 
 // Quantities keyed by good, tax, spending post or interest group. Key order
 // is part of the bytes: records are always built in the order of the ids.
@@ -364,8 +371,25 @@ export const WarSchema = z.object({
   tilesTaken: z.record(z.string(), zb.uint()),
   monthlyTiles: z.record(z.string(), zb.float()),
   offers: z.array(PeaceOfferSchema),
+  // J6: men each belligerent lost in this war (its war memory at the end),
+  // and the claims of the aggressors it was declared on (a white or lost
+  // war weakens them).
+  losses: z.record(z.string(), zb.float()),
+  claims: z.array(z.string()),
 });
 export type War = z.infer<typeof WarSchema>;
+
+// A claim of a nation on a region (J6): a region of the scenario, or
+// "homeland:<ISO3>" (the first-day land of that nation, claimed by it).
+// Two white or lost wars on a claim halve its weight, which scales the
+// motive of a war on it.
+export const ClaimSchema = z.object({
+  region: z.string(),
+  claimant: NationIdSchema,
+  weight: zb.float(),
+  failures: zb.uint(),
+});
+export type Claim = z.infer<typeof ClaimSchema>;
 
 export const SanctionSchema = z.object({
   by: NationIdSchema,
@@ -412,15 +436,12 @@ export const DiplomacyStateSchema = z.object({
       at: IsoDateSchema,
     }),
   ),
-  // Regions created by cessions, claimed by the loser.
-  contestedRegions: z.array(
-    z.object({
-      region: z.string(),
-      controller: NationIdSchema,
-      claimants: z.array(NationIdSchema),
-      tiles: zb.uint(),
-    }),
-  ),
+  // Claims whose weight or failures differ from the default (J6; the
+  // scenario's claims are all listed from the first day).
+  claims: z.array(ClaimSchema),
+  // War memory of each nation (J6): raises the gain it asks of a new war,
+  // halves every config.ai.nations.war.memory.halfLifeYears.
+  warMemory: z.record(z.string(), zb.float()),
   reparations: z.array(
     z.object({
       from: NationIdSchema,
@@ -717,8 +738,8 @@ export const TerritoryStateSchema = z.object({
 });
 export type TerritoryState = z.infer<typeof TerritoryStateSchema>;
 
-export const SaveHeaderV5Schema = zb.object({
-  schemaVersion: z.literal(5),
+export const SaveHeaderV6Schema = zb.object({
+  schemaVersion: z.literal(6),
   seed: zb.uint(),
   rngState: z.tuple([zb.uint(), zb.uint(), zb.uint(), zb.uint()]),
   calendar: CalendarSchema,
@@ -735,20 +756,20 @@ export const SaveHeaderV5Schema = zb.object({
   ai: AiStateSchema,
   tech: TechStateSchema,
   events: EventsStateSchema,
-  journal: z.array(JournalEntryV5Schema),
+  journal: z.array(JournalEntryV6Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),
 });
-export type SaveHeaderV5 = z.infer<typeof SaveHeaderV5Schema>;
+export type SaveHeaderV6 = z.infer<typeof SaveHeaderV6Schema>;
 // The tile grid, and since v5 the contest of each tile (a second block of
 // the .vsave container).
-export type SaveFileV5 = SaveHeaderV5 & {
+export type SaveFileV6 = SaveHeaderV6 & {
   tiles: Uint16Array;
   contest: Uint16Array;
 };
 
 // Current version aliases: the rest of the code only uses these.
-export const SaveHeaderSchema = SaveHeaderV5Schema;
-export type SaveFile = SaveFileV5;
-export type JournalEntry = JournalEntryV5;
-export const JOURNAL_KINDS = JOURNAL_KINDS_V5;
+export const SaveHeaderSchema = SaveHeaderV6Schema;
+export type SaveFile = SaveFileV6;
+export type JournalEntry = JournalEntryV6;
+export const JOURNAL_KINDS = JOURNAL_KINDS_V6;

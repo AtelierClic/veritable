@@ -105,5 +105,10 @@
       "controller": "RUS",
       "tiles": 17119
     }
-  ]
+  ],
+  "regions": {
+    "crimea": 4739,
+    "ukraine-occupied-mainland": 17119,
+    "ukraine-oblasts-claimed-by-russia": 20084
+  }
 }

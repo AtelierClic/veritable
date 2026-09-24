@@ -264,7 +264,7 @@ export function stepMilitaryMonth(
     deficit +=
       (1 - division.equipment) *
       ctx.template(division.template).arms *
-      cfg.armsIndexPerEquipmentUnit;
+      cfg.armsPerEquipmentUnit;
   }
   if (deficit > 0 && available > 0) {
     const ratio = Math.min(1, available / deficit);

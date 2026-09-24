@@ -4,21 +4,31 @@ import {
   Borders,
   encodeBorders,
 } from "../../../src/veritable/data/bordersFile";
+import { encodeRegions } from "../../../src/veritable/data/regionsFile";
 import { SeasSchema } from "../../../src/veritable/data/schemas/seas";
 import { encodeZones } from "../../../src/veritable/data/zonesFile";
-import { buildBorders, Inset, Override } from "./buildBorders";
+import {
+  buildBorders,
+  buildRegions,
+  Inset,
+  Override,
+  RegionSpec,
+} from "./buildBorders";
 import { calibrate, loadLandMask, prepare } from "./calibrate";
 import { bordersImage, controlImage } from "./control";
 import {
   CACHE_DIR,
   clipToBox,
+  Feature,
+  fetchSource,
+  loadAdmin1,
   loadCountries,
   NATURAL_EARTH_TAG,
   parseFeatures,
   REPO_ROOT,
   SOURCES,
 } from "./geodata";
-import { toTile } from "./projections";
+import { ProjectionKind, toTile, WORLD_PROJECTIONS } from "./projections";
 import { nearestWater, partitionWater } from "./zones";
 
 // Natural Earth (de facto, 1:10m) -> tiles. Replayable:
@@ -60,7 +70,30 @@ async function runCalibrate(args: string[]): Promise<void> {
 
   // Starting point: the hand-placed nations of the map manifest, matched by
   // name to Natural Earth label points. Crude, only used to seed the search.
+  // J6: every name field of Natural Earth (the world maps say "United
+  // States", Natural Earth's ADMIN says "United States of America").
   const byName = new Map(countries.map((c) => [c.name.toLowerCase(), c]));
+  const byId = new Map(countries.map((c) => [c.id, c]));
+  const raw = JSON.parse(
+    fs.readFileSync(await fetchSource("countries"), "utf8"),
+  ).features as { properties: Record<string, unknown> }[];
+  for (const f of raw) {
+    const country = byId.get(String(f.properties.ADM0_A3));
+    if (country === undefined) continue;
+    for (const field of [
+      "NAME",
+      "NAME_LONG",
+      "NAME_EN",
+      "SOVEREIGNT",
+      "FORMAL_EN",
+      "NAME_SORT",
+    ]) {
+      const value = f.properties[field];
+      if (typeof value === "string" && !byName.has(value.toLowerCase())) {
+        byName.set(value.toLowerCase(), country);
+      }
+    }
+  }
   const anchors = (
     manifest.nations as { name: string; coordinates?: number[] }[]
   ).flatMap((n) => {
@@ -78,6 +111,8 @@ async function runCalibrate(args: string[]): Promise<void> {
     `${map}: ${mask.width}x${mask.height}, ${anchors.length} seed anchors`,
   );
 
+  // A world map (J6): every country, and the world projections only.
+  const worldMap = mask.width / mask.height >= 1.8;
   const lons = anchors.map((a) => a.lon);
   const lats = anchors.map((a) => a.lat);
   const box = {
@@ -86,10 +121,21 @@ async function runCalibrate(args: string[]): Promise<void> {
     south: Math.max(-85, Math.min(...lats) - 25),
     north: Math.min(89, Math.max(...lats) + 25),
   };
-  const land = prepare(clipToBox(countries, box));
+  const land = prepare(worldMap ? countries : clipToBox(countries, box));
+  const requested = args.includes("--projections")
+    ? (option(args, "projections").split(",") as ProjectionKind[])
+    : worldMap
+      ? (["eqc", ...WORLD_PROJECTIONS] as ProjectionKind[])
+      : undefined;
 
   const started = Date.now();
-  const result = calibrate(mask, land, anchors, (line) => console.log(line));
+  const result = calibrate(
+    mask,
+    land,
+    anchors,
+    (line) => console.log(line),
+    requested,
+  );
   console.log(
     `retained ${result.georef.projection}, IoU ${result.iou.toFixed(4)} at full resolution (${Math.round((Date.now() - started) / 1000)} s)`,
   );
@@ -214,6 +260,66 @@ export function nearestTileOf(
 // Orphan land further than this from any Natural Earth country stays neutral.
 const MAX_ORPHAN_DISTANCE_TILES = 60;
 
+// Features of data/veritable/borders/overrides/<map>.geojson. Each one is a
+// contested region; unless `kind` is "region", it also reassigns to its
+// `controller` the tiles whose Natural Earth owner is in `from`. A feature
+// without geometry takes the polygons of the provinces listed in `admin1`
+// (ISO 3166-2 codes, Natural Earth). `regionWithin` filters the tiles of the
+// region on their Natural Earth country: absent = `from` (the reassigned
+// tiles) for an override and no filter for a region, null = no filter.
+async function loadOverrides(
+  file: string,
+): Promise<{ overrides: Override[]; regions: RegionSpec[] }> {
+  if (!fs.existsSync(file)) return { overrides: [], regions: [] };
+  const raw = JSON.parse(fs.readFileSync(file, "utf8")).features as {
+    geometry: unknown;
+    properties: Record<string, unknown> & { id: string };
+  }[];
+  let admin1: Map<string, Feature> | null = null;
+  const overrides: Override[] = [];
+  const regions: RegionSpec[] = [];
+  for (const f of raw) {
+    const p = f.properties;
+    let feature: Feature;
+    if (f.geometry === null) {
+      admin1 ??= await loadAdmin1();
+      const codes = (p.admin1 ?? []) as string[];
+      const provinces = admin1;
+      feature = {
+        id: p.id,
+        name: p.id,
+        label: null,
+        polygons: codes.flatMap((code) => {
+          const province = provinces.get(code);
+          if (province === undefined) {
+            throw new Error(`region ${p.id}: unknown province ${code}`);
+          }
+          return province.polygons;
+        }),
+      };
+    } else {
+      feature = parseFeatures(JSON.stringify({ features: [f] }), "id", "id")[0];
+    }
+    const isRegion = p.kind === "region";
+    if (!isRegion) {
+      overrides.push({
+        id: p.id,
+        controller: p.controller as string,
+        from: p.from as string[],
+        feature,
+        status: p.status as string | undefined,
+      });
+    }
+    const within =
+      p.regionWithin === null
+        ? undefined
+        : ((p.regionWithin as string[] | undefined) ??
+          (isRegion ? undefined : (p.from as string[])));
+    regions.push({ id: p.id, feature, within });
+  }
+  return { overrides, regions };
+}
+
 async function runRasterize(args: string[]): Promise<void> {
   const scenarioId = option(args, "scenario");
   const data = path.join(REPO_ROOT, "data/veritable");
@@ -230,18 +336,10 @@ async function runRasterize(args: string[]): Promise<void> {
 
   const countries = await loadCountries();
   const overridesFile = path.join(data, "borders/overrides", `${map}.geojson`);
-  const overrides: Override[] = fs.existsSync(overridesFile)
-    ? parseFeatures(fs.readFileSync(overridesFile, "utf8"), "id", "id").map(
-        (feature, i) => {
-          const p = JSON.parse(fs.readFileSync(overridesFile, "utf8")).features[
-            i
-          ].properties;
-          return { id: p.id, controller: p.controller, from: p.from, feature };
-        },
-      )
-    : [];
+  const { overrides, regions: regionSpecs } =
+    await loadOverrides(overridesFile);
 
-  const { borders, report } = buildBorders(
+  const { borders, report, natural } = buildBorders(
     mask,
     stored,
     countries,
@@ -255,6 +353,30 @@ async function runRasterize(args: string[]): Promise<void> {
   fs.mkdirSync(path.dirname(bin), { recursive: true });
   const bytes = encodeBorders(borders);
   fs.writeFileSync(bin, bytes);
+
+  // Contested regions (J6): every region of the map's overrides file; each
+  // region the scenario names must exist.
+  const regionTiles: Record<string, number> = {};
+  if (scenario.borders.regions !== undefined) {
+    const regions = buildRegions(
+      mask,
+      stored,
+      countries,
+      natural,
+      insets,
+      regionSpecs,
+    );
+    for (const c of scenario.contested as { region: string }[]) {
+      if (!regions.has(c.region)) {
+        throw new Error(`contested region ${c.region} has no polygon`);
+      }
+    }
+    for (const [id, tiles] of regions) regionTiles[id] = tiles.length;
+    fs.writeFileSync(
+      path.join(data, scenario.borders.regions),
+      encodeRegions({ width: mask.width, height: mask.height, regions }),
+    );
+  }
   const reportFile = bin.replace(/\.bin$/, ".report.json");
   fs.writeFileSync(
     reportFile,
@@ -267,6 +389,7 @@ async function runRasterize(args: string[]): Promise<void> {
         maxOrphanDistanceTiles: MAX_ORPHAN_DISTANCE_TILES,
         fileBytes: bytes.length,
         ...report,
+        regions: regionTiles,
       },
       null,
       2,
@@ -319,9 +442,8 @@ async function runRasterize(args: string[]): Promise<void> {
   );
 
   // Zoom on every override marked approximate: those are checked by eye.
-  overrides.forEach((o, i) => {
-    const raw = JSON.parse(fs.readFileSync(overridesFile, "utf8")).features[i];
-    if (raw.properties.status !== "approximate") return;
+  overrides.forEach((o) => {
+    if (o.status !== "approximate") return;
     const lons = o.feature.polygons.flat(2).map((p) => p[0]);
     const lats = o.feature.polygons.flat(2).map((p) => p[1]);
     const zoomFile = path.join(CACHE_DIR, `${scenarioId}-${o.id}.png`);

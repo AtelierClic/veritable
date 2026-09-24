@@ -2287,13 +2287,24 @@ export class VeritableScreens extends LitElement {
   @state() private journalFilter = "";
   @state() private noteDraft = "";
 
+  // A claimed region (J6): a region of the scenario, or the homeland of a
+  // nation ("homeland:<id>").
+  private regionLabel(view: ReadonlyWorldView, region: string): string {
+    if (region.startsWith("homeland:")) {
+      return vt("region.homeland", {
+        nation: this.nationLabel(view, region.slice("homeland:".length)),
+      });
+    }
+    return vt(`region.${region}`);
+  }
+
   private journalCategory(kind: string): string {
     if (kind === "note") return "notes";
     if (kind === "objective-completed") return "objectives";
     if (/^(war|peace|annexation|landing|nuclear|dead-hand)/.test(kind)) {
       return "war";
     }
-    if (/^sanctions/.test(kind)) return "diplomacy";
+    if (/^(sanctions|claim)/.test(kind)) return "diplomacy";
     if (/^bloc-(?!reprimand|suspended)/.test(kind)) return "diplomacy";
     if (kind === "tech-completed") return "economy";
     if (kind === "event-occurred") return "other";
@@ -2459,6 +2470,9 @@ export class VeritableScreens extends LitElement {
                 ...(j.params.bloc === undefined
                   ? {}
                   : { bloc: vt(`bloc.${j.params.bloc}.name`) }),
+                ...(j.params.region === undefined
+                  ? {}
+                  : { region: this.regionLabel(view, j.params.region) }),
                 ...(j.params.kind === undefined
                   ? {}
                   : {

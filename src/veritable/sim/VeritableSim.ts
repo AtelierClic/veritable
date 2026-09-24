@@ -529,6 +529,18 @@ export interface WorldPort {
   // Tiles from the capital of the nation to the nearest front it fights on
   // (last computed geometry); null without a front.
   capitalFrontDistance(nation: NationId): number | null;
+  // Claims (J6, sim/war/claimTiles.ts): tiles of a region (a region of the
+  // scenario, or "homeland:<nation>") each nation holds, settled tiles
+  // excluded.
+  claimHolders(region: string): ReadonlyMap<NationId, number>;
+  // A treaty in which `loser` cedes land to `winner`: the tiles the winner
+  // holds of the loser's first-day land or of `regions` (the loser's
+  // claims) are settled; returns how many.
+  settleClaims(
+    winner: NationId,
+    loser: NationId,
+    regions: readonly string[],
+  ): number;
 }
 
 export type NukeAim =

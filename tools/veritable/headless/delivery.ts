@@ -95,8 +95,53 @@ function histogram(values: number[]): Record<string, number> {
   );
 }
 
+// The RUS-UKR loop (J6): relaunches of the war by Russia, and whether the
+// end of the war of the scenario was followed by fifteen years without a
+// new war between the two (either way).
+export function rusUkrLoop(campaigns: Campaign[]) {
+  const relaunches = campaigns.map(
+    (c) =>
+      c.delivery.newWars.filter((w) => w.by === "RUS" && w.target === "UKR")
+        .length,
+  );
+  const window = (date: string) =>
+    `${Number(date.slice(0, 4)) + 15}${date.slice(4)}`;
+  let ended = 0;
+  let calm = 0;
+  const reprises: number[] = [];
+  for (const c of campaigns) {
+    const peace = (c.delivery.peaces ?? []).find(
+      (p) => p.war === "rus-ukr-2022",
+    );
+    if (peace === undefined) continue;
+    ended++;
+    const next = c.delivery.newWars.find(
+      (w) =>
+        ((w.by === "RUS" && w.target === "UKR") ||
+          (w.by === "UKR" && w.target === "RUS")) &&
+        w.date > peace.date,
+    );
+    if (next === undefined || next.date > window(peace.date)) calm++;
+    if (next !== undefined) {
+      reprises.push(
+        Number(next.date.slice(0, 4)) - Number(peace.date.slice(0, 4)),
+      );
+    }
+  }
+  return {
+    relaunchMedian: median(relaunches),
+    relaunchMax: Math.max(0, ...relaunches),
+    relaunchesPerCampaign: histogram(relaunches),
+    scenarioWarEnded: ended,
+    calm15Years: calm,
+    calmShare: campaigns.length === 0 ? 0 : calm / campaigns.length,
+    yearsToReprise: histogram(reprises),
+  };
+}
+
 export function aggregate(campaigns: Campaign[]) {
   const n = campaigns.length;
+  const loop = rusUkrLoop(campaigns);
   const start = campaigns[0]?.startDate ?? "2026-01-01";
   const yearOne = `${Number(start.slice(0, 4)) + 1}${start.slice(4)}`;
   const wars = campaigns.map((c) => c.delivery.newWars.length);
@@ -175,10 +220,14 @@ export function aggregate(campaigns: Campaign[]) {
     turJuntaAtMost20pct: junta("TUR") <= 0.2 * n,
     pricesBounded: low >= 0.5 && high <= 2,
     noDefaultInStableNation: unstableDefaults.length === 0,
+    // J6: the RUS-UKR loop.
+    rusUkrRelaunchMedianAtMost1: loop.relaunchMedian <= 1,
+    calm15YearsInAtLeast40pct: loop.calmShare >= 0.4,
   };
   return {
     campaigns: n,
     criteria,
+    loop,
     wars: {
       median: median(wars),
       max: Math.max(0, ...wars),
@@ -340,7 +389,7 @@ async function main(): Promise<void> {
     );
   }
   process.stdout.write(
-    `${JSON.stringify({ criteria: summary.criteria, wars: summary.wars, nuclear: { campaignsWithShots: summary.nuclear.campaignsWithShots, shots: summary.nuclear.shots, byThreat: summary.nuclear.byThreat }, politics: summary.politics, prices: summary.prices, technology: summary.technology }, null, 1)}\n`,
+    `${JSON.stringify({ criteria: summary.criteria, loop: summary.loop, wars: summary.wars, nuclear: { campaignsWithShots: summary.nuclear.campaignsWithShots, shots: summary.nuclear.shots, byThreat: summary.nuclear.byThreat }, politics: summary.politics, prices: summary.prices, technology: summary.technology }, null, 1)}\n`,
   );
 }
 

@@ -87,6 +87,9 @@ export interface EconomyContext {
   commonBlocs(a: string, b: string): number;
   // Trade agreements of the blocs (J5): "exporter|importer" -> multiplier.
   pairBonus: Map<string, number>;
+  // Claims (J6): tiles of a region each nation holds, settled tiles excluded
+  // (the world's WorldPort.claimHolders; empty for a context without world).
+  claimHolders(region: string): ReadonlyMap<string, number>;
 }
 
 export function buildContext(
@@ -197,6 +200,7 @@ export function buildContext(
     isFullMember: (bloc, nation) => full(bloc.id, nation),
     memberships,
     pairBonus,
+    claimHolders: () => new Map(),
     membersOf: (bloc) =>
       [...(memberships.get(bloc)?.keys() ?? [])].filter((n) => full(bloc, n)),
     blocsOf,

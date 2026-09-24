@@ -59,6 +59,7 @@ import {
 } from "./blocs/blocs";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
 import { dateAfter, dayIndex } from "./calendar";
+import { claimsOf } from "./diplomacy/claims";
 import {
   availableCasusBelli,
   declareWar,
@@ -1542,6 +1543,11 @@ export class VeritableSimImpl implements VeritableSim {
       politics: this.politics.nations[nation],
       diplomacy: this.diplomacy,
       scenario: this.scenario,
+      claims: claimsOf(this.diplomacy, nation).map((c) => ({
+        region: c.region,
+        claimant: c.claimant,
+        holders: Object.fromEntries(this.ctx.claimHolders(c.region)),
+      })),
       blocMembers: (bloc) => this.ctx.membersOf(bloc),
       monthsSince: (date) => {
         const [y, m] = date.split("-").map(Number);
@@ -1806,6 +1812,13 @@ export class VeritableSimImpl implements VeritableSim {
       case "annexation":
         params = { by: event.by };
         break;
+      // Claims (J6).
+      case "claims-settled":
+        params = { by: event.by, tiles: String(event.tiles) };
+        break;
+      case "claim-weakened":
+        params = { region: event.region, weight: event.weight.toFixed(2) };
+        break;
       case "landing":
       case "landing-refused":
         params = { target: event.target };
@@ -1923,6 +1936,7 @@ export class VeritableSimImpl implements VeritableSim {
     });
     this.sheets = new Map(sheets.map((s) => [s.id, s]));
     this.ctx = buildContext(this.deps.config, this.deps.data, sheets);
+    this.ctx.claimHolders = (region) => this.deps.world.claimHolders(region);
     return sheets;
   }
 
@@ -1950,6 +1964,7 @@ export class VeritableSimImpl implements VeritableSim {
       politics: this.politics,
       naval: this.naval,
       nuclear: this.nuclear,
+      blocs: this.blocs,
       nations: this.nations,
       sheets: this.sheets,
       scenario: this.scenario,

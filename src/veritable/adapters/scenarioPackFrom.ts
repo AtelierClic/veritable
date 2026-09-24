@@ -23,12 +23,22 @@ export async function loadScenarioPackFrom(
       `zones of ${scenarioId} are stale: re-run veritable:borders zones`,
     );
   }
+  const regions = await source.regions(scenario);
+  if (
+    regions !== null &&
+    (regions.width !== borders.width || regions.height !== borders.height)
+  ) {
+    throw new Error(
+      `regions of ${scenarioId} are stale: re-run veritable:borders rasterize`,
+    );
+  }
   return {
     scenario,
     nations: scenario.nations.map((id) => source.nation(id)),
     borders,
     meta,
     zones,
+    regions: regions?.regions ?? new Map(),
     data: simDataFrom(source, scenario),
   };
 }

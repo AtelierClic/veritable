@@ -2,6 +2,7 @@ import { NationId } from "../data/schemas/common";
 import { NationData } from "../data/schemas/nation";
 import {
   AiState,
+  BlocsState,
   DiplomacyState,
   EconomyState,
   MilitaryState,
@@ -12,13 +13,16 @@ import {
   PoliticsState,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
+import { defenseGuarantors } from "../sim/blocs/blocs";
 import { dateOfDay } from "../sim/calendar";
+import { claimWeight } from "../sim/diplomacy/claims";
 import {
   availableCasusBelli,
   declareWar,
   DiplomacyEvent,
   enemiesOf,
   relation,
+  warMemoryOf,
 } from "../sim/diplomacy/diplomacy";
 import { EconomyContext } from "../sim/economy/context";
 import { landingControl, setBlockade } from "../sim/naval/naval";
@@ -41,6 +45,11 @@ import { militaryPower } from "../sim/war/military";
 // peace may send arms to a friend at war with a foe. Sanctions, peace,
 // conscription and the fronts keep their rules (diplomacy.ts, peace.ts,
 // ai/war.ts).
+//
+// J6: a nation remembers its wars (the gain it asks of a new war rises with
+// its war memory), weighs the claim it would fight for (weakened by past
+// failures), and counts the help its target would get: arms from its friends
+// and the members of its collective-defence blocs.
 
 export type AiEvent =
   | DiplomacyEvent
@@ -59,6 +68,7 @@ export interface AiEnv {
   politics: PoliticsState;
   naval: NavalState;
   nuclear: NuclearState;
+  blocs: BlocsState;
   nations: readonly NationState[];
   sheets: ReadonlyMap<NationId, NationData>;
   scenario: Scenario;
@@ -196,11 +206,55 @@ function setDefenseGoal(env: AiEnv, id: NationId): void {
 export interface WarAppraisal {
   target: NationId;
   casusBelli: string;
+  // Own power over the power the target would field, the help it would get
+  // included (J6).
   powerRatio: number;
   // US$ in total: the land over the gain horizon, the costs over the
   // expected war.
   gain: number;
   cost: number;
+  // War memory of the nation (J6): the war is worth it when gain > cost x
+  // (1 + memory).
+  memory: number;
+}
+
+// Power the target of a war would field (J6): its own, raised by the arms
+// its friends would send (nations above the arms-aid mark with it: their
+// monthly share of arms over its own arms, capped), plus the members of its
+// collective-defence blocs weighted by the chance they honour the clause.
+function defendedPower(env: AiEnv, id: NationId, target: NationId): number {
+  const cfg = env.ctx.config.ai.nations;
+  const own = militaryPower(env.ctx, env.military, target);
+  const armsOf = (n: NationId) => {
+    const e = env.economy.nations[n];
+    return e === undefined ? 0 : e.production.arms * e.coverage.arms;
+  };
+  let donated = 0;
+  for (const other of env.ctx.nationIds) {
+    if (other === id || other === target) continue;
+    if (relation(env.diplomacy, other, target) <= cfg.armsAid.donorRelations)
+      continue;
+    donated += cfg.armsAid.share * armsOf(other);
+  }
+  const ownArms = armsOf(target);
+  const boost =
+    donated <= 0
+      ? 0
+      : ownArms > 0
+        ? Math.min(cfg.war.aid.armsBoostCap, donated / ownArms)
+        : cfg.war.aid.armsBoostCap;
+  let guarantees = 0;
+  for (const g of defenseGuarantors(
+    env.ctx,
+    env.blocs,
+    env.politics,
+    target,
+    id,
+  )) {
+    guarantees +=
+      g.probability * militaryPower(env.ctx, env.military, g.nation);
+  }
+  return own * (1 + boost) + guarantees;
 }
 
 // Share of the partners of `id` (trade weights) likely to sanction it for a
@@ -246,7 +300,8 @@ export function appraiseWar(
     casusBelli = "none";
   else return null;
   const mine = militaryPower(env.ctx, env.military, id);
-  const theirs = militaryPower(env.ctx, env.military, target);
+  const alone = militaryPower(env.ctx, env.military, target);
+  const theirs = defendedPower(env, id, target);
   const powerRatio = theirs > 0 ? mine / theirs : Infinity;
   if (powerRatio < cfg.powerRatio) return null;
   const own = env.economy.nations[id];
@@ -256,8 +311,23 @@ export function appraiseWar(
     cfg.maxLandShare,
     cfg.landSharePerPowerRatio * (Math.min(powerRatio, 10) - 1),
   );
+  // A justified war also serves the government at home (J5); a claim
+  // weakened by failed wars less so (J6).
+  const motive =
+    casusBelli === "none"
+      ? 1
+      : casusBelli === "contested-territory"
+        ? 1 +
+          (cfg.casusBelliMotive - 1) *
+            claimWeight(env.ctx, env.diplomacy, id, target)
+        : cfg.casusBelliMotive;
+  // Help to the target lengthens the war (J6).
+  const duration =
+    alone > 0
+      ? Math.min(cfg.aid.durationCap, theirs / alone)
+      : cfg.aid.durationCap;
   const gain =
-    (casusBelli === "none" ? 1 : cfg.casusBelliMotive) *
+    motive *
     cfg.gainHorizonYears *
     landShare *
     their.gdp *
@@ -271,12 +341,20 @@ export function appraiseWar(
     expectedSanctions(env, id, target);
   const cost =
     cfg.expectedWarYears *
+    duration *
     own.gdp *
     (sanctions +
       cfg.exhaustionCostPctGdp +
       cfg.reputationCostPctGdp * (casusBelli === "none" ? 3 : 1)) *
     (0.5 + agenda(env, id, "growth"));
-  return { target, casusBelli, powerRatio, gain, cost };
+  return {
+    target,
+    casusBelli,
+    powerRatio,
+    gain,
+    cost,
+    memory: warMemoryOf(env.diplomacy, id),
+  };
 }
 
 function considerWar(env: AiEnv, id: NationId): DiplomacyEvent | null {
@@ -293,7 +371,9 @@ function considerWar(env: AiEnv, id: NationId): DiplomacyEvent | null {
   const options = env.ctx.nationIds
     .filter((t) => t !== id)
     .map((t) => appraiseWar(env, id, t))
-    .filter((a): a is WarAppraisal => a !== null && a.gain > a.cost)
+    .filter(
+      (a): a is WarAppraisal => a !== null && a.gain > a.cost * (1 + a.memory),
+    )
     .sort((a, b) => b.gain - b.cost - (a.gain - a.cost));
   if (options.length === 0) return null;
   // Even a war that pays is not declared on a whim.

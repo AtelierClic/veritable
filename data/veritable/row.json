@@ -82,13 +82,13 @@
     },
     "steel": {
       "production": {
-        "value": 509.918,
+        "value": 882.916,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins celle des dix nations."
       },
       "consumption": {
-        "value": 492.331,
+        "value": 852.464,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
@@ -96,13 +96,13 @@
     },
     "consumer-goods": {
       "production": {
-        "value": 509.918,
+        "value": 6621.87,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins celle des dix nations."
       },
       "consumption": {
-        "value": 492.331,
+        "value": 6393.48,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
@@ -110,13 +110,13 @@
     },
     "pharma": {
       "production": {
-        "value": 509.918,
+        "value": 735.763,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins celle des dix nations."
       },
       "consumption": {
-        "value": 492.331,
+        "value": 710.387,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
@@ -124,13 +124,13 @@
     },
     "electronics": {
       "production": {
-        "value": 496.086,
+        "value": 1757.8,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins celle des dix nations."
       },
       "consumption": {
-        "value": 481.166,
+        "value": 1704.93,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
@@ -138,13 +138,13 @@
     },
     "services": {
       "production": {
-        "value": 370.798,
+        "value": 55674.1,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins celle des dix nations."
       },
       "consumption": {
-        "value": 380.032,
+        "value": 57060.6,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
@@ -152,13 +152,13 @@
     },
     "arms": {
       "production": {
-        "value": 341.184,
+        "value": 565.982,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins celle des dix nations."
       },
       "consumption": {
-        "value": 341.184,
+        "value": 565.982,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (derived) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."
@@ -166,13 +166,13 @@
     },
     "critical-minerals": {
       "production": {
-        "value": 1150,
+        "value": 690,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (estimate) moins celle des dix nations."
       },
       "consumption": {
-        "value": 1009.01,
+        "value": 605.406,
         "source": "derived",
         "asOf": "2025",
         "note": "Production mondiale (estimate) moins la consommation des dix nations : le reste du monde ferme le bilan, écarts statistiques compris."

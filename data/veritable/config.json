@@ -282,6 +282,10 @@
       "powerRatio": 1.5,
       "monthlyProbability": 0.3,
       "windowMonths": 3
+    },
+    "claims": {
+      "minTiles": 1,
+      "failuresPerHalving": 2
     }
   },
   "war": {
@@ -298,7 +302,7 @@
     },
     "manpowerRenewalPerMonth": 0.05,
     "raisedDivisionEquipment": 0.5,
-    "armsIndexPerEquipmentUnit": 0.25,
+    "armsPerEquipmentUnit": 0.41472,
     "armsToDivisionsShare": 0.5,
     "training": {
       "base": 1,
@@ -531,7 +535,16 @@
         "minMonthsBetweenWars": 60,
         "gainHorizonYears": 10,
         "casusBelliMotive": 2,
-        "expectedWarYears": 3
+        "expectedWarYears": 3,
+        "memory": {
+          "lossesWeight": 200,
+          "yearsWeight": 0.1,
+          "halfLifeYears": 8
+        },
+        "aid": {
+          "armsBoostCap": 2,
+          "durationCap": 3
+        }
       },
       "armsAid": {
         "share": 0.1,

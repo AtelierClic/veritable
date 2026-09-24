@@ -6,6 +6,7 @@ import {
   PROJECTION_KINDS,
   ProjectionKind,
   toTile,
+  WORLD_PROJECTIONS,
 } from "./projections";
 import { fillPolygon } from "./raster";
 
@@ -75,6 +76,70 @@ export function prepare(features: readonly Feature[]): PreparedPolygon[] {
   );
 }
 
+// A ring of lon/lat pairs cut at the seam of a world projection: its
+// longitudes relative to lon0 are made continuous along the ring, then the
+// ring and its copies shifted by a full turn are clipped to [-180, 180]
+// (Sutherland-Hodgman against two meridians). Returns lon/lat rings whose
+// relative longitude never crosses the seam; lon0 is added back.
+export function cutAtSeam(ring: Float64Array, lon0: number): Float64Array[] {
+  const n = ring.length / 2;
+  const rel = new Float64Array(ring.length);
+  let previous = 0;
+  for (let i = 0; i < n; i++) {
+    let d = ring[2 * i] - lon0;
+    d = ((((d + 180) % 360) + 360) % 360) - 180;
+    if (i > 0) {
+      while (d - previous > 180) d -= 360;
+      while (d - previous < -180) d += 360;
+    }
+    rel[2 * i] = d;
+    rel[2 * i + 1] = ring[2 * i + 1];
+    previous = d;
+  }
+  let min = Infinity;
+  let max = -Infinity;
+  for (let i = 0; i < n; i++) {
+    min = Math.min(min, rel[2 * i]);
+    max = Math.max(max, rel[2 * i]);
+  }
+  const out: Float64Array[] = [];
+  for (let shift = -360; shift <= 360; shift += 360) {
+    if (max + shift <= -180 || min + shift >= 180) continue;
+    let points: number[] = [];
+    for (let i = 0; i < n; i++) points.push(rel[2 * i] + shift, rel[2 * i + 1]);
+    for (const [bound, keepAbove] of [
+      [-180, true],
+      [180, false],
+    ] as const) {
+      const next: number[] = [];
+      const m = points.length / 2;
+      for (let i = 0; i < m; i++) {
+        const ax = points[2 * i];
+        const ay = points[2 * i + 1];
+        const bx = points[2 * ((i + 1) % m)];
+        const by = points[2 * ((i + 1) % m) + 1];
+        const aIn = keepAbove ? ax >= bound : ax <= bound;
+        const bIn = keepAbove ? bx >= bound : bx <= bound;
+        if (aIn) next.push(ax, ay);
+        if (aIn !== bIn) {
+          const t = (bound - ax) / (bx - ax);
+          next.push(bound, ay + t * (by - ay));
+        }
+      }
+      points = next;
+      if (points.length < 6) break;
+    }
+    if (points.length < 6) continue;
+    const clipped = new Float64Array(points.length);
+    for (let i = 0; i < points.length; i += 2) {
+      clipped[i] = points[i] + lon0;
+      clipped[i + 1] = points[i + 1];
+    }
+    out.push(clipped);
+  }
+  return out;
+}
+
 export function rasterize(
   polygons: readonly PreparedPolygon[],
   georef: Georef,
@@ -84,7 +149,11 @@ export function rasterize(
   paint: (index: number, polygonIndex: number) => void,
 ): void {
   const project = toTile(georef);
-  polygons.forEach((polygon, polygonIndex) => {
+  const world = WORLD_PROJECTIONS.includes(georef.projection);
+  polygons.forEach((source, polygonIndex) => {
+    const polygon = world
+      ? { rings: source.rings.flatMap((ring) => cutAtSeam(ring, georef.lon0)) }
+      : source;
     const rings = polygon.rings.map((ring) => {
       const out = new Float64Array(ring.length);
       for (let i = 0; i < ring.length; i += 2) {
@@ -195,6 +264,9 @@ function searchKeys(kind: ProjectionKind): Key[] {
   // For eqc the centre is redundant with the translation.
   const placement: Key[] = ["tx", "ty", "scale", "aspect", "rotation"];
   if (kind === "eqc") return placement;
+  // A world projection: the central meridian (where the seam falls); its
+  // latitude of origin is the equator.
+  if (WORLD_PROJECTIONS.includes(kind)) return [...placement, "lon0"];
   const common: Key[] = [...placement, "lon0", "lat0"];
   return kind === "lcc" || kind === "albers"
     ? [...common, "lat1", "lat2"]
@@ -240,6 +312,24 @@ export function refine(
   return { georef: best, iou: bestIou };
 }
 
+// The longitude at the horizontal middle of a world map, from a straight
+// line through the anchors (x against longitude).
+function centralLongitude(
+  anchors: readonly { lon: number; x: number }[],
+  width: number,
+): number {
+  const n = anchors.length;
+  const mx = anchors.reduce((s, p) => s + p.x, 0) / n;
+  const ml = anchors.reduce((s, p) => s + p.lon, 0) / n;
+  let sxl = 0;
+  let sxx = 0;
+  for (const p of anchors) {
+    sxl += (p.x - mx) * (p.lon - ml);
+    sxx += (p.x - mx) * (p.x - mx);
+  }
+  return ml + (sxl / sxx) * (width / 2 - mx);
+}
+
 export interface CalibrationResult {
   georef: Georef;
   iou: number; // at full resolution
@@ -251,15 +341,21 @@ export function calibrate(
   land: readonly PreparedPolygon[],
   anchors: readonly { lon: number; lat: number; x: number; y: number }[],
   log: (line: string) => void = () => {},
+  kinds: readonly ProjectionKind[] = PROJECTION_KINDS,
 ): CalibrationResult {
   const coarse = downsample(mask, 8);
   const medium = downsample(mask, 4);
   const candidates: { georef: Georef; iou: number }[] = [];
 
-  for (const projection of PROJECTION_KINDS) {
+  for (const projection of kinds) {
     log(`projection ${projection}`);
-    const lonMid = anchors.reduce((s, p) => s + p.lon, 0) / anchors.length;
-    const latMid = anchors.reduce((s, p) => s + p.lat, 0) / anchors.length;
+    const world = WORLD_PROJECTIONS.includes(projection);
+    const lonMid = world
+      ? centralLongitude(anchors, mask.width)
+      : anchors.reduce((s, p) => s + p.lon, 0) / anchors.length;
+    const latMid = world
+      ? 0
+      : anchors.reduce((s, p) => s + p.lat, 0) / anchors.length;
     const base: Georef = {
       projection,
       lon0: Math.round(lonMid),

@@ -16,7 +16,8 @@
   ],
   "borders": {
     "source": "natural-earth-de-facto",
-    "rasterized": "borders/europe-10.bin"
+    "rasterized": "borders/europe-10.bin",
+    "regions": "borders/europe-10.regions.bin"
   },
   "contested": [
     {

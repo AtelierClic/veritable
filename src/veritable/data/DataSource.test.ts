@@ -90,16 +90,30 @@ describe("J2 data", () => {
     }
   });
 
-  it("index goods: the ten nations produce 100", () => {
+  it("goods measured in value (J6): 1 unit = 1 bn US$ priced 1000 M$, the ten and the rest of the world make the world", () => {
     const scenario = dataSource.scenario("europe-10");
+    const goods = dataSource.goods();
     for (const good of ["steel", "services", "critical-minerals"] as const) {
-      const total = scenario.nations.reduce(
+      expect(goods.find((g) => g.id === good)!.basePrice).toBe(1000);
+      const ten = scenario.nations.reduce(
         (s, id) =>
           s + dataSource.nation(id).economy.goods[good].production.value,
         0,
       );
-      expect(total).toBeCloseTo(100, 1);
+      expect(ten).toBeGreaterThan(0);
+      expect(dataSource.row().goods[good].production.value).toBeGreaterThan(
+        ten,
+      );
     }
+    // Critical minerals: the ten produce the 60 bn$ of the estimate.
+    const minerals = scenario.nations.reduce(
+      (s, id) =>
+        s +
+        dataSource.nation(id).economy.goods["critical-minerals"].production
+          .value,
+      0,
+    );
+    expect(minerals).toBeCloseTo(60, 1);
   });
 
   it("the EU carries its fiscal rule, and land adjacency is in the borders meta", () => {

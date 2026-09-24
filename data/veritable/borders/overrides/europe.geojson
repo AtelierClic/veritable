@@ -12,7 +12,8 @@
         "asOf": "2026-01-01",
         "status": "reference",
         "source": "Natural Earth v5.1.2, ne_10m_admin_0_disputed_areas, NAME=Crimea (domaine public)",
-        "note": "Natural Earth attribue déjà la Crimée à la Russie (de facto) : surcharge sans effet sur les tuiles, conservée pour définir la région contestée."
+        "note": "Natural Earth attribue déjà la Crimée à la Russie (de facto) : surcharge sans effet sur les tuiles, conservée pour définir la région contestée.",
+        "regionWithin": null
       },
       "geometry": {
         "type": "Polygon",
@@ -504,6 +505,20 @@
             [37.6, 50.12]
           ]
         ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "id": "ukraine-oblasts-claimed-by-russia",
+        "kind": "region",
+        "admin1": ["UA-14", "UA-09", "UA-23", "UA-65"],
+        "regionWithin": ["UKR"],
+        "asOf": "2026-01-01",
+        "status": "reference",
+        "source": "Natural Earth v5.1.2, ne_10m_admin_1_states_provinces (oblasts de Donetsk UA-14, Louhansk UA-09, Zaporijjia UA-23 et Kherson UA-65), domaine public",
+        "note": "Région revendiquée par la Russie (annexion proclamée en 2022 des quatre oblasts entiers) ; validée par Lukas le 2026-09-24. Tuiles que Natural Earth attribue à l'Ukraine, y compris la partie occupée : le détenteur de chaque tuile est lu sur la carte."
       }
     }
   ]

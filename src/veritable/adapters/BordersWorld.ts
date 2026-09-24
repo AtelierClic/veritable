@@ -9,6 +9,7 @@ import {
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
+import { ClaimTiles } from "../sim/war/claimTiles";
 
 // The tiled world WITHOUT the OpenFront core: nations sit on the rasterized
 // borders of their scenario and nothing moves. Used by the headless runner v1
@@ -21,11 +22,15 @@ export class BordersWorld implements WorldPort {
   private coreStart: unknown;
   private readonly zones: Zones | null;
   private sea: NavalSnapshot | null = null;
+  // Claims (J6): the regions of the scenario, the borders as the first day.
+  private readonly claims: ClaimTiles;
+  private ownerChanges = 0;
 
   constructor(
     borders: Borders,
     zones: Zones | null = null,
     coreStart: unknown = { headless: true },
+    regions: ReadonlyMap<string, Uint32Array> = new Map(),
   ) {
     this.tiles = borders.tiles.slice();
     this.nations = [...borders.nations];
@@ -33,6 +38,30 @@ export class BordersWorld implements WorldPort {
     this.width = borders.width;
     this.height = borders.height;
     this.zones = zones;
+    this.claims = new ClaimTiles(borders.tiles.length, {
+      regions,
+      firstDay: borders.tiles.slice(),
+      nations: [...borders.nations],
+    });
+  }
+
+  private nationAt(tile: number): NationId | null {
+    const owner = this.tiles[tile] & TILE_NATION_MASK;
+    return owner === 0 ? null : this.nations[owner - 1];
+  }
+
+  claimHolders(region: string): ReadonlyMap<NationId, number> {
+    return this.claims.holders(region, `${this.ownerChanges}`, (t) =>
+      this.nationAt(t),
+    );
+  }
+
+  settleClaims(
+    winner: NationId,
+    loser: NationId,
+    regions: readonly string[],
+  ): number {
+    return this.claims.settle(winner, loser, regions, (t) => this.nationAt(t));
   }
 
   readonly width: number;
@@ -57,6 +86,7 @@ export class BordersWorld implements WorldPort {
       const owner = this.tiles[i] & TILE_NATION_MASK;
       tiles[i] = owner === 0 ? 0 : remap[owner - 1];
     }
+    this.claims.write(tiles);
     return {
       world: { coreStart: this.coreStart, players: [] },
       grid: { width: this.width, height: this.height, tiles },
@@ -76,6 +106,8 @@ export class BordersWorld implements WorldPort {
     this.coreStart = world.coreStart;
     this.counts = null;
     this.sea = null;
+    this.claims.load(grid.tiles);
+    this.ownerChanges++;
   }
 
   // No terrain, no structures: this world has no fronts. Wars declared in it
@@ -101,6 +133,7 @@ export class BordersWorld implements WorldPort {
     }
     this.counts = null;
     this.sea = null;
+    this.ownerChanges++;
     return moved;
   }
 

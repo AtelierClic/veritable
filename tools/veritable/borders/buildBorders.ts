@@ -21,6 +21,7 @@ export interface Override {
   controller: string;
   from: string[];
   feature: Feature;
+  status?: string; // "approximate": zoom image checked by eye
 }
 
 export interface Inset {
@@ -57,7 +58,13 @@ export function buildBorders(
   insets: readonly Inset[],
   nations: readonly string[],
   maxOrphanDistance: number,
-): { borders: Borders; report: BordersReport } {
+): {
+  borders: Borders;
+  report: BordersReport;
+  // Natural Earth country of each land tile before the overrides (index in
+  // `countries`, -1 = none): regions filter their tiles on it (J6).
+  natural: Int32Array;
+} {
   const { width, height, land } = mask;
   const owner = new Int32Array(width * height).fill(NONE);
   const indexOf = new Map(countries.map((c, i) => [c.id, i]));
@@ -68,6 +75,7 @@ export function buildBorders(
     });
   });
   const fromPolygons = countTiles(owner, countries.length);
+  const natural = owner.slice();
 
   const gained = new Array(countries.length).fill(0);
   const lost = new Array(countries.length).fill(0);
@@ -174,7 +182,59 @@ export function buildBorders(
     orphansReattached: fromOrphans.reduce((a, b) => a + b, 0),
     overrides: overrideReport,
   };
-  return { borders: { width, height, nations: [...nations], tiles }, report };
+  return {
+    borders: { width, height, nations: [...nations], tiles },
+    report,
+    natural,
+  };
+}
+
+// A contested region of a scenario (J6): the land tiles inside its polygons,
+// outside the insets, whose Natural Earth country (before the overrides) is
+// one of `within` when given.
+export interface RegionSpec {
+  id: string;
+  feature: Feature;
+  within?: readonly string[];
+}
+
+export function buildRegions(
+  mask: LandMask,
+  georef: Georef,
+  countries: readonly Feature[],
+  natural: Int32Array,
+  insets: readonly Inset[],
+  specs: readonly RegionSpec[],
+): Map<string, Uint32Array> {
+  const { width, height, land } = mask;
+  const inInset = (i: number) => {
+    const x = i % width;
+    const y = (i - x) / width;
+    return insets.some(
+      ({ box }) => x >= box[0] && x <= box[2] && y >= box[1] && y <= box[3],
+    );
+  };
+  const regions = new Map<string, Uint32Array>();
+  for (const spec of specs) {
+    const within =
+      spec.within === undefined
+        ? null
+        : new Set(
+            spec.within.map((id) => {
+              const c = countries.findIndex((country) => country.id === id);
+              if (c < 0) throw new Error(`region ${spec.id}: unknown ${id}`);
+              return c;
+            }),
+          );
+    const tiles = new Set<number>();
+    rasterize(prepare([spec.feature]), georef, width, height, 1, (i) => {
+      if (land[i] !== 1 || inInset(i)) return;
+      if (within !== null && !within.has(natural[i])) return;
+      tiles.add(i);
+    });
+    regions.set(spec.id, Uint32Array.from([...tiles].sort((a, b) => a - b)));
+  }
+  return regions;
 }
 
 function countTiles(owner: Int32Array, count: number): number[] {

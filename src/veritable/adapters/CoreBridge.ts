@@ -34,6 +34,7 @@ import {
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
+import { ClaimTiles, ClaimTilesInput } from "../sim/war/claimTiles";
 import { ContestLedger } from "../sim/war/contest";
 import {
   captureAlong,
@@ -74,6 +75,8 @@ export class CoreBridge implements WorldPort {
   private readonly coreStart: unknown;
   // Contest of each tile (J5): month of the last capture, ceded or not.
   private readonly ledger: ContestLedger;
+  // Claims (J6): regions of the scenario, first-day owners, settled tiles.
+  private readonly claims: ClaimTiles;
   // Segment tiles of the last computed geometry, by front id.
   private readonly segments = new Map<string, number[][]>();
   // Warheads launched (J5): their execution, and who owned each tile within
@@ -93,9 +96,11 @@ export class CoreBridge implements WorldPort {
     private readonly zones: Zones | null = null,
     private readonly naval_?: VeritableConfig["naval"],
     private readonly logistics?: VeritableConfig["logistics"],
+    claims: ClaimTilesInput | null = null,
   ) {
     this.coreStart = canonicalJson(coreStart);
     this.ledger = new ContestLedger(game.width() * game.height());
+    this.claims = new ClaimTiles(game.width() * game.height(), claims);
     if (zones !== null && zones.tiles.length !== this.ledger.values.length) {
       throw new Error("maritime zones do not match the map");
     }
@@ -159,6 +164,7 @@ export class CoreBridge implements WorldPort {
       }
       tiles[tile] = value;
     });
+    this.claims.write(tiles);
 
     const players: CorePlayerState[] = [];
     for (const id of nations) {
@@ -229,6 +235,7 @@ export class CoreBridge implements WorldPort {
     const game = this.game;
 
     this.ledger.load(grid.tiles, grid.contest);
+    this.claims.load(grid.tiles);
     this.contestedCache = null;
     grid.tiles.forEach((value, tile) => {
       const owner = value & TILE_NATION_MASK;
@@ -315,6 +322,30 @@ export class CoreBridge implements WorldPort {
   cede(winner: NationId): number {
     if (this.pending !== null) return 0;
     return this.ledger.cede((tile) => this.nationAt(tile) === winner);
+  }
+
+  // --- claims (J6) -------------------------------------------------------------------
+
+  // Counted again when the ledger changes (every capture marks it) or the
+  // month turns; nothing to count before the restore of the first tick.
+  claimHolders(region: string): ReadonlyMap<NationId, number> {
+    if (this.pending !== null) return new Map();
+    return this.claims.holders(
+      region,
+      `${this.ledger.version()}:${this.ledger.currentMonth()}`,
+      (tile) => this.nationAt(tile),
+    );
+  }
+
+  settleClaims(
+    winner: NationId,
+    loser: NationId,
+    regions: readonly string[],
+  ): number {
+    if (this.pending !== null) return 0;
+    return this.claims.settle(winner, loser, regions, (tile) =>
+      this.nationAt(tile),
+    );
   }
 
   settleContested(warMonths: number, cessionMonths: number): number {

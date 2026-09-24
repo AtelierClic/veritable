@@ -97,12 +97,285 @@
         "activePersonnel": 25000,
         "airPower": 0.3,
         "navalPower": 0.4
+      },
+      "USA": {
+        "activePersonnel": 1330000,
+        "airPower": 1.0,
+        "navalPower": 1.0
+      },
+      "CHN": {
+        "activePersonnel": 2035000,
+        "airPower": 0.85,
+        "navalPower": 0.9
+      },
+      "IND": {
+        "activePersonnel": 1455000,
+        "airPower": 0.6,
+        "navalPower": 0.55
+      },
+      "JPN": {
+        "activePersonnel": 247000,
+        "airPower": 0.55,
+        "navalPower": 0.7
+      },
+      "KOR": {
+        "activePersonnel": 500000,
+        "airPower": 0.55,
+        "navalPower": 0.5
+      },
+      "PRK": {
+        "activePersonnel": 1280000,
+        "airPower": 0.25,
+        "navalPower": 0.2
+      },
+      "PAK": {
+        "activePersonnel": 660000,
+        "airPower": 0.45,
+        "navalPower": 0.3
+      },
+      "IRN": {
+        "activePersonnel": 610000,
+        "airPower": 0.35,
+        "navalPower": 0.3
+      },
+      "ISR": {
+        "activePersonnel": 170000,
+        "airPower": 0.65,
+        "navalPower": 0.3
+      },
+      "EGY": {
+        "activePersonnel": 440000,
+        "airPower": 0.45,
+        "navalPower": 0.35
+      },
+      "SAU": {
+        "activePersonnel": 257000,
+        "airPower": 0.55,
+        "navalPower": 0.3
+      },
+      "ARE": {
+        "activePersonnel": 65000,
+        "airPower": 0.45,
+        "navalPower": 0.25
+      },
+      "BRA": {
+        "activePersonnel": 366000,
+        "airPower": 0.4,
+        "navalPower": 0.4
+      },
+      "AUS": {
+        "activePersonnel": 58000,
+        "airPower": 0.5,
+        "navalPower": 0.45
+      },
+      "CAN": {
+        "activePersonnel": 67000,
+        "airPower": 0.4,
+        "navalPower": 0.35
+      },
+      "IDN": {
+        "activePersonnel": 404000,
+        "airPower": 0.35,
+        "navalPower": 0.4
+      },
+      "VNM": {
+        "activePersonnel": 450000,
+        "airPower": 0.3,
+        "navalPower": 0.3
+      },
+      "THA": {
+        "activePersonnel": 361000,
+        "airPower": 0.35,
+        "navalPower": 0.3
+      },
+      "DZA": {
+        "activePersonnel": 139000,
+        "airPower": 0.4,
+        "navalPower": 0.3
+      },
+      "MEX": {
+        "activePersonnel": 216000,
+        "airPower": 0.2,
+        "navalPower": 0.25
+      },
+      "ZAF": {
+        "activePersonnel": 73000,
+        "airPower": 0.25,
+        "navalPower": 0.2
+      },
+      "NGA": {
+        "activePersonnel": 143000,
+        "airPower": 0.15,
+        "navalPower": 0.15
+      },
+      "ETH": {
+        "activePersonnel": 138000,
+        "airPower": 0.15,
+        "navalPower": 0.0
+      },
+      "ARG": {
+        "activePersonnel": 72000,
+        "airPower": 0.15,
+        "navalPower": 0.15
+      },
+      "VEN": {
+        "activePersonnel": 123000,
+        "airPower": 0.2,
+        "navalPower": 0.15
+      },
+      "PHL": {
+        "activePersonnel": 146000,
+        "airPower": 0.15,
+        "navalPower": 0.2
+      },
+      "BGD": {
+        "activePersonnel": 163000,
+        "airPower": 0.15,
+        "navalPower": 0.2
+      },
+      "KAZ": {
+        "activePersonnel": 39000,
+        "airPower": 0.2,
+        "navalPower": 0.0
+      },
+      "NLD": {
+        "activePersonnel": 33000,
+        "airPower": 0.4,
+        "navalPower": 0.4
+      },
+      "SWE": {
+        "activePersonnel": 15000,
+        "airPower": 0.45,
+        "navalPower": 0.35
+      },
+      "GRC": {
+        "activePersonnel": 132000,
+        "airPower": 0.45,
+        "navalPower": 0.4
+      },
+      "CHL": {
+        "activePersonnel": 68000,
+        "airPower": 0.3,
+        "navalPower": 0.35
+      },
+      "COL": {
+        "activePersonnel": 257000,
+        "airPower": 0.25,
+        "navalPower": 0.2
+      },
+      "MAR": {
+        "activePersonnel": 196000,
+        "airPower": 0.3,
+        "navalPower": 0.25
+      },
+      "IRQ": {
+        "activePersonnel": 193000,
+        "airPower": 0.2,
+        "navalPower": 0.05
+      },
+      "SYR": {
+        "activePersonnel": 70000,
+        "airPower": 0.1,
+        "navalPower": 0.05
+      },
+      "SGP": {
+        "activePersonnel": 51000,
+        "airPower": 0.45,
+        "navalPower": 0.35
+      },
+      "MYS": {
+        "activePersonnel": 113000,
+        "airPower": 0.3,
+        "navalPower": 0.3
+      },
+      "FIN": {
+        "activePersonnel": 24000,
+        "airPower": 0.4,
+        "navalPower": 0.2
+      },
+      "BLR": {
+        "activePersonnel": 48000,
+        "airPower": 0.25,
+        "navalPower": 0.0
+      },
+      "AZE": {
+        "activePersonnel": 64000,
+        "airPower": 0.25,
+        "navalPower": 0.0
+      },
+      "ARM": {
+        "activePersonnel": 42000,
+        "airPower": 0.15,
+        "navalPower": 0.0
+      },
+      "GEO": {
+        "activePersonnel": 20000,
+        "airPower": 0.1,
+        "navalPower": 0.05
+      },
+      "SRB": {
+        "activePersonnel": 28000,
+        "airPower": 0.2,
+        "navalPower": 0.0
+      },
+      "CUB": {
+        "activePersonnel": 49000,
+        "airPower": 0.1,
+        "navalPower": 0.1
+      },
+      "MMR": {
+        "activePersonnel": 150000,
+        "airPower": 0.15,
+        "navalPower": 0.15
+      },
+      "SDN": {
+        "activePersonnel": 100000,
+        "airPower": 0.1,
+        "navalPower": 0.05
+      },
+      "LBY": {
+        "activePersonnel": 30000,
+        "airPower": 0.1,
+        "navalPower": 0.05
+      },
+      "QAT": {
+        "activePersonnel": 16500,
+        "airPower": 0.35,
+        "navalPower": 0.2
+      },
+      "KWT": {
+        "activePersonnel": 17500,
+        "airPower": 0.3,
+        "navalPower": 0.15
+      },
+      "OMN": {
+        "activePersonnel": 42600,
+        "airPower": 0.3,
+        "navalPower": 0.25
+      },
+      "JOR": {
+        "activePersonnel": 100000,
+        "airPower": 0.3,
+        "navalPower": 0.05
       }
-    }
+    },
+    "justificationWorld": "J6 : grandes et moyennes puissances hors europe-10, écrites à la main sur la même échelle relative (0 à 1) que les dix nations du J2 : États-Unis 1 et 1 (référence), Chine 0,85 et 0,9 (première flotte en nombre de coques), Inde, Japon, Corée du Sud entre 0,5 et 0,7, etc. Effectifs d'active : ordres de grandeur publics de 2024-2025 (hors paramilitaires et réserves). À valider."
   },
   "nuclear": {
-    "justification": "Nombre d'ogives : ordres de grandeur publics (inventaires totaux). Doctrines : lecture des postures déclarées. Sans effet avant le J5.",
+    "justification": "Inventaires totaux d'ogives en janvier 2025 : SIPRI Yearbook 2025, chapitre « World nuclear forces » (https://www.sipri.org/yearbook/2025/06), recoupé avec la FAS, « Status of World Nuclear Forces 2025 » ; valeurs isolées attribuées (les conditions du SIPRI et de la FAS ne permettent pas de redistribuer leurs tableaux). Doctrines fixées par la consigne du J6 : États-Unis, Russie, Pakistan emploi en premier possible (Nuclear Posture Review 2022 ; Fondements de la politique d'État en matière de dissuasion nucléaire, révision de 2024 ; dissuasion « à spectre complet ») ; Chine et Inde non-emploi en premier (déclarations officielles, doctrine indienne de 2003) ; Israël non déclarée (opacité) ; Corée du Nord imprévisible (loi de 2022 sur la politique des forces nucléaires) ; France et Royaume-Uni inchangées. La Russie passe de 5 500 (J2, de mémoire) à 5 459 (SIPRI).",
     "values": {
+      "USA": {
+        "warheads": 5177,
+        "doctrine": "first-use-possible"
+      },
+      "RUS": {
+        "warheads": 5459,
+        "doctrine": "first-use-possible"
+      },
+      "CHN": {
+        "warheads": 600,
+        "doctrine": "no-first-use"
+      },
       "FRA": {
         "warheads": 290,
         "doctrine": "first-use-possible"
@@ -111,9 +384,21 @@
         "warheads": 225,
         "doctrine": "first-use-possible"
       },
-      "RUS": {
-        "warheads": 5500,
+      "IND": {
+        "warheads": 180,
+        "doctrine": "no-first-use"
+      },
+      "PAK": {
+        "warheads": 170,
         "doctrine": "first-use-possible"
+      },
+      "ISR": {
+        "warheads": 90,
+        "doctrine": "undeclared"
+      },
+      "PRK": {
+        "warheads": 50,
+        "doctrine": "unpredictable"
       }
     }
   },
@@ -629,6 +914,267 @@
           "goal": "ideology",
           "weight": 0.1
         }
+      ]
+    }
+  },
+  "worldRules": {
+    "justification": "Règles du J6 pour les nations sans estimation écrite à la main (toutes sauf les dix d'europe-10) : chaque valeur manquante dans les sources ouvertes est remplacée par la règle indiquée, et la fiche porte `source: \"estimate\"` avec la règle en note. Ordres de grandeur, à valider.",
+    "asOf": "2026-09-24",
+    "growthDefault": 0.02,
+    "tradeOpennessDefault": 0.8,
+    "manufacturingShareOfGdp": 0.12,
+    "servicesShareOfGdp": 0.55,
+    "healthPctGdp": 0.03,
+    "educationPctGdp": 0.04,
+    "researchPctGdp": 0.003,
+    "revenuePctGdp": 0.25,
+    "expensePctGdp": 0.27,
+    "rents": {
+      "factor": 0.8,
+      "cap": 0.75,
+      "note": "Part des rentes dans les recettes = 0,8 × rentes des ressources naturelles (Banque mondiale NY.GDP.TOTL.RT.ZS, % du PIB) / recettes (% du PIB), plafonnée à 0,75 : les recettes des exportateurs d'hydrocarbures viennent surtout des rentes."
+    },
+    "military": {
+      "personnelShareOfWorldBank": 0.85,
+      "personnelPerPopulation": 0.002,
+      "air": {
+        "base": 0.05,
+        "perLog10Bn": 0.25,
+        "max": 0.6
+      },
+      "navalIslandFactor": 0.5,
+      "note": "Effectifs d'active = 0,85 × effectifs armés de la Banque mondiale (MS.MIL.TOTL.P1, source IISS, paramilitaires compris), sinon 0,2 % de la population. Puissance aérienne = 0,05 + 0,25 × log10(1 + dépense militaire en Md$), plafonnée à 0,6 (calée sur les dix d'europe-10 : Norvège 11 Md$ → 0,31, Espagne 27 Md$ → 0,41) ; navale = aérienne, nulle pour un pays enclavé, moitié pour un petit État insulaire. Les grandes puissances ont des valeurs écrites à la main (`military.values`)."
+    },
+    "noArmy": {
+      "values": [
+        "AND",
+        "CRI",
+        "DMA",
+        "GRD",
+        "ISL",
+        "KIR",
+        "LCA",
+        "LIE",
+        "MCO",
+        "MHL",
+        "FSM",
+        "NRU",
+        "PAN",
+        "PLW",
+        "SMR",
+        "SLB",
+        "TUV",
+        "VCT",
+        "VUT",
+        "WSM",
+        "VAT",
+        "PSE"
+      ],
+      "note": "Pas d'armée (ou seulement une police, une garde côtière, une garde) : dépense militaire et effectifs nuls. Panama et le Costa Rica ont aboli leur armée ; l'Islande n'a qu'une garde côtière ; la Palestine a des forces de sécurité, pas d'armée."
+    },
+    "militaryPctGdp": {
+      "values": {
+        "PRK": 0.2,
+        "ERI": 0.1,
+        "TKM": 0.015,
+        "BTN": 0.01,
+        "COM": 0.01,
+        "DJI": 0.03,
+        "STP": 0.005,
+        "SUR": 0.006,
+        "TON": 0.01,
+        "BHS": 0.006,
+        "BRB": 0.006,
+        "ATG": 0.005,
+        "KNA": 0.005,
+        "MDV": 0.01
+      },
+      "note": "Dépense militaire absente de la Banque mondiale : Corée du Nord 20 % du PIB (ordre de grandeur des estimations publiques, 15 à 25 %), Érythrée 10 % (mobilisation permanente), petits États 0,5 à 3 %."
+    },
+    "gdpUsd": {
+      "values": {
+        "PRK": 28000000000,
+        "VAT": 300000000
+      },
+      "note": "PIB absent de la Banque mondiale et du FMI : Corée du Nord environ 28 Md$ (ordre de grandeur des estimations de la Banque de Corée), Vatican environ 0,3 Md$ (ordre de grandeur de son budget)."
+    },
+    "population": {
+      "values": {
+        "VAT": 800
+      },
+      "note": "Population absente de la Banque mondiale : Vatican environ 800 habitants."
+    },
+    "debtToGdp": {
+      "values": {
+        "CUB": 1.2,
+        "PRK": 0.3,
+        "LBY": 0.8,
+        "MCO": 0,
+        "SOM": 0.35,
+        "YEM": 0.8,
+        "VAT": 0,
+        "PSE": 0.35
+      },
+      "note": "Dette publique absente des Perspectives de l'économie mondiale du FMI : ordres de grandeur publics (Cuba environ 120 % du PIB, Libye et Yémen environ 80 %, Somalie après l'allègement PPTE de 2023 environ 35 %, Palestine environ 35 %, Monaco et le Vatican sans dette notable, Corée du Nord inconnue, 30 %)."
+    },
+    "landlocked": {
+      "values": [
+        "AFG",
+        "AND",
+        "ARM",
+        "AUT",
+        "AZE",
+        "BLR",
+        "BTN",
+        "BOL",
+        "BWA",
+        "BFA",
+        "BDI",
+        "CAF",
+        "TCD",
+        "CZE",
+        "SWZ",
+        "ETH",
+        "HUN",
+        "KAZ",
+        "KGZ",
+        "LAO",
+        "LSO",
+        "LIE",
+        "LUX",
+        "MWI",
+        "MLI",
+        "MDA",
+        "MNG",
+        "NPL",
+        "NER",
+        "MKD",
+        "PRY",
+        "RWA",
+        "SMR",
+        "SRB",
+        "SVK",
+        "SSD",
+        "CHE",
+        "TJK",
+        "TKM",
+        "UGA",
+        "UZB",
+        "VAT",
+        "ZMB",
+        "ZWE"
+      ],
+      "note": "Pays sans accès à la haute mer (l'Azerbaïdjan, le Kazakhstan et le Turkménistan bordent la Caspienne, sans marine de haute mer) : puissance navale nulle."
+    },
+    "smallIslands": {
+      "values": [
+        "ATG",
+        "BHS",
+        "BRB",
+        "BHR",
+        "CPV",
+        "COM",
+        "DMA",
+        "FJI",
+        "GRD",
+        "KIR",
+        "MDV",
+        "MLT",
+        "MHL",
+        "MUS",
+        "FSM",
+        "NRU",
+        "PLW",
+        "KNA",
+        "LCA",
+        "VCT",
+        "WSM",
+        "STP",
+        "SYC",
+        "SGP",
+        "SLB",
+        "TON",
+        "TTO",
+        "TUV",
+        "VUT"
+      ],
+      "note": "Petits États insulaires : puissance navale moitié de l'aérienne (garde côtière, patrouilleurs)."
+    },
+    "capitals": {
+      "values": {
+        "BEN": "Porto-Novo",
+        "BOL": "La Paz",
+        "CHL": "Santiago",
+        "CIV": "Yamoussoukro",
+        "SWZ": "Mbabane",
+        "ISR": "Jerusalem",
+        "JPN": "Tokyo",
+        "MYS": "Kuala Lumpur",
+        "MAR": "Rabat",
+        "MMR": "Naypyidaw",
+        "NLD": "Amsterdam",
+        "NGA": "Abuja",
+        "PHL": "Manila",
+        "ZAF": "Pretoria",
+        "LKA": "Sri Jayawardenepura Kotte",
+        "TZA": "Dodoma"
+      },
+      "extra": {
+        "NRU": {
+          "name": "Yaren",
+          "nameFr": "Yaren",
+          "lon": 166.9209,
+          "lat": -0.5467
+        },
+        "PSE": {
+          "name": "Ramallah",
+          "nameFr": "Ramallah",
+          "lon": 35.2044,
+          "lat": 31.9038
+        }
+      },
+      "note": "Capitales : Natural Earth (villes « Admin-0 capital »). Où Natural Earth en donne plusieurs, la capitale politique (siège du gouvernement ou capitale officielle) ; Nauru n'a pas de capitale officielle (district de Yaren, siège du Parlement) ; Palestine : Ramallah, siège de l'Autorité palestinienne (Jérusalem-Est revendiquée)."
+    },
+    "aiAgenda": {
+      "note": "Agenda des nations sans agenda écrit à la main, par règles : sécurité 0,3 (+0,2 pour une nation en guerre ou voisine d'une guerre au 1er janvier 2026, +0,1 pour une autocratie), croissance 0,35 (+0,1 pour une démocratie), influence régionale 0,2 (+0,15 pour une des vingt premières économies ou armées), idéologie 0,15 (+0,2 pour une théocratie ou un parti unique) ; normalisé à 1.",
+      "conflictNations": [
+        "UKR",
+        "RUS",
+        "SDN",
+        "SSD",
+        "MMR",
+        "COD",
+        "RWA",
+        "SOM",
+        "YEM",
+        "SYR",
+        "ISR",
+        "PSE",
+        "LBN",
+        "IRN",
+        "LBY",
+        "MLI",
+        "BFA",
+        "NER",
+        "NGA",
+        "TCD",
+        "CMR",
+        "CAF",
+        "ETH",
+        "ERI",
+        "HTI",
+        "AFG",
+        "PAK",
+        "IND",
+        "ARM",
+        "AZE",
+        "KOR",
+        "PRK",
+        "THA",
+        "KHM",
+        "VEN",
+        "COL",
+        "MOZ"
       ]
     }
   }

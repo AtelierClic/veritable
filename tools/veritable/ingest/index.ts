@@ -11,12 +11,17 @@ import {
   WorldBankKey,
 } from "./sources";
 import { fetchWikidata, relockWikidata } from "./wikidata";
+import { fetchWorld } from "./world";
 
 // Open sources -> data/veritable/. Replayable:
 //
 //   npm run veritable:ingest -- fetch --scenario europe-10
 //       downloads World Bank and OWID data, rewrites the committed snapshots
 //       and sources.lock.json (sha256).
+//   npm run veritable:ingest -- fetch-world --scenario world-2026
+//       every nation of the world (J6): World Bank CSV snapshots, IMF cache,
+//       V-Dem regimes (OWID), Natural Earth capitals; see world.ts
+//
 //   npm run veritable:ingest -- fetch-imf --scenario europe-10
 //       downloads the IMF WEO debt series into the cache (outside git) and
 //       records its sha256 in sources.lock.json.
@@ -55,6 +60,8 @@ async function main(): Promise<void> {
       return fetchAll(scenario.nations);
     case "fetch-imf":
       return fetchImf(scenario.nations);
+    case "fetch-world":
+      return fetchWorld(scenario.nations);
     case "fetch-wikidata": {
       // --only FRA,DEU: those nations only, the others' snapshots untouched.
       const only = option(args, "only")?.split(",");

@@ -15,11 +15,11 @@
     "note": "Posé à la main au J1 ; à réviser au J4 avec V-Dem."
   },
   "blocs": ["eu", "nato", "g7", "g20"],
-  "nuclear": null,
   "territory": {
     "kind": "tiles"
   },
   "contested": [],
+  "nuclear": null,
   "population": {
     "value": 58915700,
     "source": "worldbank:SP.POP.TOTL",
@@ -34,7 +34,7 @@
     "value": 1.371,
     "source": "imf-weo:GGXWDG_NGDP",
     "asOf": "2025",
-    "note": "Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper, extraction du 2026-09-22) ; la valeur 2025 est une estimation du FMI."
+    "note": "Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper) ; la valeur 2025 est une estimation du FMI."
   },
   "economy": {
     "tradeOpenness": {
@@ -112,100 +112,100 @@
       },
       "steel": {
         "production": {
-          "value": 13.264,
+          "value": 22.9664,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée manufacturière (Banque mondiale)."
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.06 (Banque mondiale)."
         },
         "consumption": {
-          "value": 13.1495,
+          "value": 22.7682,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
         }
       },
       "consumer-goods": {
         "production": {
-          "value": 13.264,
+          "value": 172.248,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée manufacturière (Banque mondiale)."
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.45 (Banque mondiale)."
         },
         "consumption": {
-          "value": 13.1495,
+          "value": 170.761,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
         }
       },
       "pharma": {
         "production": {
-          "value": 13.264,
+          "value": 19.1387,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée manufacturière (Banque mondiale)."
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.05 (Banque mondiale)."
         },
         "consumption": {
-          "value": 13.1495,
+          "value": 18.9735,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
         }
       },
       "electronics": {
         "production": {
-          "value": 10.0292,
+          "value": 35.5367,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice 100 = production des dix nations ; part d'après exportations de haute technologie (Banque mondiale)."
+          "note": "Md$ de production, d'après exportations de haute technologie × 0.59073 (part électronique de la valeur ajoutée manufacturière mondiale) (Banque mondiale)."
         },
         "consumption": {
-          "value": 12.8513,
+          "value": 45.5363,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
         }
       },
       "services": {
         "production": {
-          "value": 10.9634,
+          "value": 1646.12,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice 100 = production des dix nations ; part d'après valeur ajoutée des services (Banque mondiale)."
+          "note": "Md$ de production, d'après valeur ajoutée des services (Banque mondiale)."
         },
         "consumption": {
-          "value": 10.1501,
+          "value": 1524.01,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice mondial × part du PIB mondial (Banque mondiale)."
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
         }
       },
       "arms": {
         "production": {
-          "value": 6.18804,
+          "value": 10.2652,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice 100 = production des dix nations ; part d'après dépenses militaires en dollars (Banque mondiale)."
+          "note": "Md$ de production, d'après dépenses militaires × 0.25 (part d'équipement) (Banque mondiale)."
         },
         "consumption": {
-          "value": 6.18804,
+          "value": 10.2652,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice mondial × part des dépenses militaires mondiales (Banque mondiale)."
+          "note": "Valeur mondiale × part des dépenses militaires mondiales (Banque mondiale), Md$."
         }
       },
       "critical-minerals": {
         "production": {
-          "value": 1,
+          "value": 0.6,
           "source": "estimate",
           "asOf": "2026-01-01",
           "note": "Aucune série ouverte agrégée des minerais critiques. Parts de la production des dix nations (indice 100) d'après les positions connues : Russie (nickel, palladium, cobalt, aluminium), Turquie (bore, chrome), Ukraine (titane, manganèse), Norvège (graphite, titane, silicium), Pologne (cuivre, argent), Espagne (cuivre). Les dix pèsent environ 8 % de la production mondiale en valeur : indice mondial 1 250. Valeur de la production des dix : environ 60 Md$."
         },
         "consumption": {
-          "value": 26.9493,
+          "value": 16.1696,
           "source": "derived",
           "asOf": "2025",
-          "note": "Indice mondial (estimation) × part du PIB mondial (Banque mondiale)."
+          "note": "Valeur mondiale (estimation) × part du PIB mondial (Banque mondiale), Md$."
         }
       }
     },
@@ -266,7 +266,7 @@
           "value": 0.102103,
           "source": "derived",
           "asOf": "2023",
-          "note": "Dépenses publiques de santé + d'éducation (Banque mondiale SH.XPD.GHED.GD.ZS + SE.XPD.TOTL.GD.ZS)."
+          "note": "Dépenses publiques de santé + d'éducation (Banque mondiale SH.XPD.GHED.GD.ZS + SE.XPD.TOTL.GD.ZS, estimations à défaut)."
         },
         "research": {
           "value": 0.00482772,

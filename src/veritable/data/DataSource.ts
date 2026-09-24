@@ -1,4 +1,5 @@
 import { Borders, decodeBorders } from "./bordersFile";
+import { decodeRegions, Regions } from "./regionsFile";
 import { Bloc, BlocSchema } from "./schemas/bloc";
 import { NationId } from "./schemas/common";
 import { VeritableConfig, VeritableConfigSchema } from "./schemas/config";
@@ -69,6 +70,8 @@ export interface DataSource {
   // Maritime zones (J3b): the seeds of the map, and their rasterization.
   seas(map: string): Seas;
   zones(scenario: Scenario): Promise<Zones>;
+  // Contested regions (J6): null when the scenario has no regions file.
+  regions(scenario: Scenario): Promise<Regions | null>;
   // The political engine (J4).
   regimes(): RegimeData[];
   ideologies(): IdeologyTable;
@@ -176,6 +179,10 @@ export function createDataSource(files: RawDataFiles): DataSource {
       }),
     zones: async (scenario) =>
       decodeZones(await files.bytes(`borders/${scenario.id}.zones.bin`)),
+    regions: async (scenario) =>
+      scenario.borders.regions === undefined
+        ? null
+        : decodeRegions(await files.bytes(scenario.borders.regions)),
     // The trunk, then the branches in file order.
     tech: () =>
       once("tech", () => [

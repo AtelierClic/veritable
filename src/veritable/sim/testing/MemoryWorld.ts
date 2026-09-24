@@ -13,6 +13,7 @@ import {
   TileGrid,
   WorldPort,
 } from "../VeritableSim";
+import { ClaimTiles, ClaimTilesInput } from "../war/claimTiles";
 import { ContestLedger } from "../war/contest";
 import {
   captureAlong,
@@ -29,6 +30,7 @@ export class MemoryWorld implements WorldPort {
   private owners: (NationId | null)[];
   private fallout: boolean[];
   private ledger: ContestLedger;
+  private claims: ClaimTiles;
   private terrain: Terrain[];
   private structures = new Map<number, number>(); // tile -> defence multiplier
   private segments = new Map<string, number[][]>(); // front id -> segment tiles
@@ -45,11 +47,51 @@ export class MemoryWorld implements WorldPort {
     this.owners = new Array(width * height).fill(null);
     this.fallout = new Array(width * height).fill(false);
     this.ledger = new ContestLedger(width * height);
+    this.claims = new ClaimTiles(width * height, null);
     this.terrain = new Array<Terrain>(width * height).fill("plains");
   }
 
+  // Claims (J6): the regions the test declares, and the owners of the
+  // tiles as they are now taken as the first day.
+  setClaims(regions: ReadonlyMap<string, Uint32Array>): void {
+    const nations: NationId[] = [];
+    const firstDay = new Uint16Array(this.owners.length);
+    this.owners.forEach((o, i) => {
+      if (o === null) return;
+      let index = nations.indexOf(o);
+      if (index < 0) index = nations.push(o) - 1;
+      firstDay[i] = index + 1;
+    });
+    const input: ClaimTilesInput = { regions, firstDay, nations };
+    this.claims = new ClaimTiles(this.owners.length, input);
+  }
+
+  isSettled(tile: number): boolean {
+    return this.claims.isSettled(tile);
+  }
+
+  claimHolders(region: string): ReadonlyMap<NationId, number> {
+    return this.claims.holders(
+      region,
+      `${this.ownerChanges}`,
+      (tile) => this.owners[tile],
+    );
+  }
+
+  settleClaims(
+    winner: NationId,
+    loser: NationId,
+    regions: readonly string[],
+  ): number {
+    return this.claims.settle(winner, loser, regions, (t) => this.owners[t]);
+  }
+
+  // Bumped whenever an owner changes (claim counts are cached on it).
+  private ownerChanges = 0;
+
   setOwner(tile: number, nation: NationId | null): void {
     this.owners[tile] = nation;
+    this.ownerChanges++;
   }
 
   ownerOf(tile: number): NationId | null {
@@ -140,6 +182,7 @@ export class MemoryWorld implements WorldPort {
             if (owner === null) continue;
             hits[owner] = (hits[owner] ?? 0) + 1;
             this.owners[tile] = null;
+            this.ownerChanges++;
             this.fallout[tile] = true;
             this.ledger.clear(tile);
           }
@@ -193,6 +236,7 @@ export class MemoryWorld implements WorldPort {
   // Gives every tile of `from` to `to` (or to nobody).
   transferAll(from: NationId, to: NationId | null): number {
     let moved = 0;
+    this.ownerChanges++;
     this.owners = this.owners.map((o, i) => {
       if (o !== from) return o;
       moved++;
@@ -224,6 +268,7 @@ export class MemoryWorld implements WorldPort {
         (contested ? TILE_CONTESTED_BIT : 0);
       if (contested) contest[i] = this.ledger.values[i];
     });
+    this.claims.write(tiles);
     return {
       world: { coreStart: this.coreStart, players: [] },
       grid: { width: this.width, height: this.height, tiles, contest },
@@ -245,6 +290,8 @@ export class MemoryWorld implements WorldPort {
       this.fallout[i] = (value & TILE_FALLOUT_BIT) !== 0;
     });
     this.ledger.load(grid.tiles, grid.contest);
+    this.claims.load(grid.tiles);
+    this.ownerChanges++;
     this.segments.clear();
   }
 
@@ -347,6 +394,7 @@ export class MemoryWorld implements WorldPort {
     const g = this.grid(nations);
     const taken = captureAlong(g, segments[segment], 1, 2, tiles, (tile) => {
       this.owners[tile] = winner;
+      this.ownerChanges++;
       this.ledger.mark(tile);
       this.fallout[tile] = false;
     });
@@ -371,6 +419,7 @@ export class MemoryWorld implements WorldPort {
     for (let i = 0; i < this.owners.length && taken < radius; i++) {
       if (this.owners[i] !== target) continue;
       this.owners[i] = attacker;
+      this.ownerChanges++;
       this.ledger.mark(i);
       taken++;
     }

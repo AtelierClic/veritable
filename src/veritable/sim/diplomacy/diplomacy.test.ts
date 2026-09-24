@@ -43,9 +43,25 @@ function campaign(setup: Setup) {
     }),
   );
   const scenario = { ...testScenario(ids), ...setup.scenario };
+  // J6: claims are read on the map. With contested regions, each nation
+  // holds a row of the world and a region is two tiles of its controller.
+  const memory = new MemoryWorld(4, 4);
+  if (scenario.contested.length > 0) {
+    ids.forEach((id, row) => {
+      for (let x = 0; x < 4; x++) memory.setOwner(row * 4 + x, id);
+    });
+    memory.setClaims(
+      new Map(
+        scenario.contested.map((r) => {
+          const row = ids.indexOf(r.controller);
+          return [r.region, Uint32Array.from([row * 4, row * 4 + 1])];
+        }),
+      ),
+    );
+  }
   const sim = new VeritableSimImpl({
     config: setup.config ?? quietConfig(),
-    world: new MemoryWorld(4, 4),
+    world: memory,
     data: testSimData(ids, { blocs: setup.blocsData }),
     nationData: (id) => sheets.get(id),
     scenario,

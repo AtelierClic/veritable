@@ -17,8 +17,8 @@ export const DivisionTemplateSchema = z.object({
   attack: z.number().positive(),
   defense: z.number().positive(),
   men: z.number().int().positive(), // full strength
-  // Arms (index points of the good "arms") a full re-equipment costs, in
-  // units of config.war.armsIndexPerEquipmentUnit.
+  // Arms a full re-equipment costs, in units of
+  // config.war.armsPerEquipmentUnit (bn US$ of the good "arms").
   arms: z.number().positive(),
 });
 export type DivisionTemplate = z.infer<typeof DivisionTemplateSchema>;

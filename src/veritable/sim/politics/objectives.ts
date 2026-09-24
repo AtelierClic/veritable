@@ -29,6 +29,12 @@ export interface ObjectiveWorld {
   politics: NationPolitics;
   diplomacy: DiplomacyState;
   scenario: Scenario;
+  // Claims of the nation (J6) and the tiles of each held by every nation.
+  claims: {
+    region: string;
+    claimant: NationId;
+    holders: Record<NationId, number>;
+  }[];
   // Full members of a bloc (suspended ones excluded).
   blocMembers(bloc: string): readonly NationId[];
   monthsSince(date: string): number;
@@ -80,13 +86,21 @@ export function objectiveProgress(
       const held = Math.round(pinned.progress * months);
       return ok ? clamp((held + 1) / months) : 0;
     }
+    // J6: the claims of the nation (its homeland aside) with their holders
+    // read on the map; done when it holds one of them entirely.
     case "retake-region": {
-      const claimed = [
-        ...world.scenario.contested,
-        ...world.diplomacy.contestedRegions,
-      ].filter((r) => r.claimants.includes(nation));
+      const claimed = world.claims.filter(
+        (c) => c.claimant === nation && !c.region.startsWith("homeland:"),
+      );
       if (claimed.length === 0) return 0;
-      return claimed.some((r) => r.controller === nation) ? 1 : 0;
+      return clamp(
+        Math.max(
+          ...claimed.map((c) => {
+            const total = Object.values(c.holders).reduce((a, b) => a + b, 0);
+            return total > 0 ? (c.holders[nation] ?? 0) / total : 0;
+          }),
+        ),
+      );
     }
     case "no-war": {
       const atWar = world.diplomacy.wars.some(

@@ -28,6 +28,8 @@ export interface ScenarioPack {
   borders: Borders;
   meta: BordersMeta;
   zones: Zones; // maritime zones of the map (J3b)
+  // Tiles of the contested regions (J6, claims); none without a regions file.
+  regions?: ReadonlyMap<string, Uint32Array>;
   data: SimData; // goods, rest of the world, blocs, geography
 }
 

@@ -39,6 +39,8 @@ function twoNations(options: Options = {}) {
       world.setOwner(y * width + x, x < width / 2 ? "AAA" : "BBB");
     }
   }
+  // Claims (J6): these owners are the first day.
+  world.setClaims(new Map());
   const sheets = new Map<string, NationData>();
   for (const id of ["AAA", "BBB"]) {
     const sheet = testNation(id);
@@ -352,11 +354,19 @@ describe("peace", () => {
     sim.apply({ type: "propose-peace", war: "war-1", to: "BBB", terms: fair });
     const d = sim.read().diplomacy;
     expect(d.wars).toEqual([]);
-    expect(d.contestedRegions).toHaveLength(1);
-    expect(d.contestedRegions[0]).toMatchObject({
-      controller: "AAA",
-      claimants: ["BBB"],
-    });
+    // J6: the cession settles the land BBB gave up: BBB claims nothing AAA
+    // holds any more; the winner's claims are untouched.
+    const { world } = c;
+    expect(world.claimHolders("homeland:BBB").get("AAA") ?? 0).toBe(0);
+    let taken = 0;
+    for (let tile = 0; tile < 200 * 100; tile++) {
+      if (tile % 200 >= 100 && world.ownerOf(tile) === "AAA") {
+        taken++;
+        expect(world.isSettled(tile)).toBe(true);
+      }
+    }
+    expect(taken).toBeGreaterThan(0);
+    expect(d.claims).toEqual([]);
     expect(d.reparations).toEqual([
       {
         from: "BBB",
@@ -373,9 +383,9 @@ describe("peace", () => {
     const before = sim.read().economies.AAA.revenue;
     days(31);
     expect(sim.read().economies.AAA.revenue).toBeGreaterThan(before);
-    // The cession gives BBB a casus belli against AAA (seen from BBB's side
-    // through the regions); the player only sees its own.
-    expect(d.contestedRegions[0].tiles).toBeGreaterThan(0);
+    // Both remember the war (J6).
+    expect(d.warMemory.AAA).toBeGreaterThan(0);
+    expect(d.warMemory.BBB).toBeGreaterThan(0);
   });
 
   it("annexation: every tile goes to the winner, the loser survives in exile", () => {

@@ -1,12 +1,11 @@
 import { initAi } from "../../ai/nations";
 import { NationId } from "../../data/schemas/common";
-import {
-  BlocsState,
-  SaveFileV5,
-  TILE_CONTESTED_BIT,
-  TILE_NATION_MASK,
-} from "../../data/schemas/save";
+import { TILE_CONTESTED_BIT, TILE_NATION_MASK } from "../../data/schemas/save";
 import { SaveFileV4 } from "../../data/schemas/saveV4";
+import {
+  BlocsStateV5 as BlocsState,
+  SaveFileV5,
+} from "../../data/schemas/saveV5";
 import { computeLeader, initBlocs, syncBlocs } from "../../sim/blocs/blocs";
 import { buildContext } from "../../sim/economy/context";
 import { initEvents } from "../../sim/events/events";

@@ -262,6 +262,14 @@ const DiplomacyConfigSchema = z.object({
     monthlyProbability: share,
     windowMonths: z.number().int().min(1),
   }),
+  // Claims (J6, sim/diplomacy/claims.ts): a territorial casus belli needs
+  // the target to hold at least `minTiles` unsettled tiles of the claim;
+  // every `failuresPerHalving` white or lost wars on a claim halve its
+  // weight.
+  claims: z.object({
+    minTiles: z.number().int().min(1),
+    failuresPerHalving: z.number().int().min(1),
+  }),
 });
 
 const WarConfigSchema = z.object({
@@ -271,8 +279,9 @@ const WarConfigSchema = z.object({
   conscription: record(CONSCRIPTION_LEVELS, share),
   manpowerRenewalPerMonth: share, // of the manpower ceiling
   raisedDivisionEquipment: share, // equipment of a freshly raised division
-  // Index points of arms per unit of a template's `arms` at full equipment.
-  armsIndexPerEquipmentUnit: positive,
+  // Arms (bn US$ of the good "arms", J6; index points before) per unit of a
+  // template's `arms` at full equipment.
+  armsPerEquipmentUnit: positive,
   armsToDivisionsShare: share, // of the arms available in the month
   training: z.object({
     base: positive,
@@ -575,6 +584,25 @@ export const VeritableConfigSchema = z.object({
         // expects: a justified war also serves the government at home (J5).
         casusBelliMotive: z.number().min(1),
         expectedWarYears: z.number().min(0),
+        // War memory (J6): at the end of a war each belligerent adds
+        // lossesWeight x men lost / population + yearsWeight x years of war;
+        // it halves every halfLifeYears. A war is declared only if the gain
+        // beats the cost x (1 + memory).
+        memory: z.object({
+          lossesWeight: z.number().min(0),
+          yearsWeight: z.number().min(0),
+          halfLifeYears: positive,
+        }),
+        // Help the target would get (J6): arms from the nations above
+        // config.ai.nations.armsAid.donorRelations with it (the monthly
+        // share of their arms, over its own, capped), and the members of
+        // its collective-defence blocs weighted by the chance they honour
+        // the clause. Both add to its power; the war is expected to last
+        // longer in proportion, up to durationCap times.
+        aid: z.object({
+          armsBoostCap: z.number().min(0),
+          durationCap: z.number().min(1),
+        }),
       }),
       armsAid: z.object({
         share: share,
