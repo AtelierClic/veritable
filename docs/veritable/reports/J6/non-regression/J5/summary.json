@@ -21,75 +21,77 @@
     "pairShareMax": 1,
     "pairShareMedian": 0,
     "pairAbove40pct": [
-      "seed 5: RUS-UKR 1/1",
-      "seed 15: RUS-UKR 1/1",
+      "seed 1: RUS-UKR 1/1",
+      "seed 4: RUS-UKR 1/1",
+      "seed 12: RUS-UKR 1/1",
+      "seed 16: RUS-UKR 1/1",
+      "seed 18: RUS-UKR 1/1",
       "seed 27: RUS-UKR 1/1",
-      "seed 40: RUS-UKR 1/1",
-      "seed 44: RUS-UKR 1/1",
-      "seed 45: RUS-UKR 1/1",
-      "seed 48: RUS-UKR 2/2",
-      "seed 50: RUS-UKR 1/1",
-      "seed 51: RUS-UKR 1/1",
-      "seed 84: RUS-UKR 1/1",
-      "seed 90: RUS-UKR 1/1",
-      "seed 97: RUS-UKR 1/1"
+      "seed 35: RUS-UKR 1/1",
+      "seed 42: RUS-UKR 1/1",
+      "seed 46: RUS-UKR 1/1",
+      "seed 55: RUS-UKR 1/1",
+      "seed 64: RUS-UKR 1/1",
+      "seed 71: RUS-UKR 1/1",
+      "seed 77: RUS-UKR 1/1",
+      "seed 92: RUS-UKR 1/1",
+      "seed 93: RUS-UKR 1/1"
     ],
     "regionsMin": 0,
     "regionsPerCampaign": {
-      "0": 88,
-      "1": 12
+      "0": 85,
+      "1": 15
     },
     "warsByRegion": {
-      "europe": 13
+      "europe": 15
     },
     "pairs": {
-      "RUS-UKR": 13
+      "RUS-UKR": 15
     },
-    "coups": 62,
+    "coups": 61,
     "coupsByRegime": {
-      "electoral-authoritarian": 38,
-      "semi-presidential": 11,
-      "junta": 7,
-      "parliamentary": 6
+      "electoral-authoritarian": 41,
+      "semi-presidential": 9,
+      "junta": 9,
+      "parliamentary": 2
     },
-    "fragileCoupShare": 0.7258064516129032,
+    "fragileCoupShare": 0.819672131147541,
     "defaults": 0,
     "otherDefaults": [],
     "nonFinite": []
   },
   "loop": {
     "relaunchMedian": 0,
-    "relaunchMax": 2,
+    "relaunchMax": 1,
     "relaunchesPerCampaign": {
-      "0": 88,
-      "1": 11,
-      "2": 1
+      "0": 85,
+      "1": 15
     },
     "scenarioWarEnded": 100,
-    "calm15Years": 88,
-    "calmShare": 0.88,
+    "calm15Years": 85,
+    "calmShare": 0.85,
     "yearsToReprise": {
-      "1": 1,
-      "2": 4,
-      "3": 2,
-      "4": 5
+      "2": 8,
+      "3": 3,
+      "4": 1,
+      "5": 2,
+      "6": 1
     }
   },
   "wars": {
     "median": 0,
-    "max": 2,
-    "total": 13,
+    "max": 1,
+    "total": 15,
     "withoutCasusBelli": 0,
     "byCasusBelli": {
-      "grievance": 13
+      "grievance": 15
     },
     "byAggressor": {
-      "RUS": 13
+      "RUS": 15
     },
     "perCampaign": {
-      "0": 88,
-      "1": 11,
-      "2": 1
+      "0": 85,
+      "1": 15
     }
   },
   "nuclear": {
@@ -102,21 +104,19 @@
   },
   "politics": {
     "revolutions": [
-      "UKR@2029-09-01",
-      "UKR@2028-01-01",
-      "UKR@2028-04-01",
-      "UKR@2028-08-01"
+      "UKR@2028-09-01",
+      "UKR@2028-01-01"
     ],
-    "crisisBy10Years": 86,
+    "crisisBy10Years": 84,
     "juntaAt10Years": {
-      "RUS": 2,
-      "TUR": 4
+      "RUS": 1,
+      "TUR": 2
     },
-    "coups": 62
+    "coups": 61
   },
   "prices": {
-    "low": 0.8341904562144475,
-    "high": 1.4830249817823622
+    "low": 0.8363592706448412,
+    "high": 1.465162263390443
   },
   "defaults": {
     "total": 0,
@@ -125,7 +125,7 @@
   "technology": {
     "FRA": {
       "completed": 100,
-      "median": "2038-07-01",
+      "median": "2038-06-01",
       "shareIn2035": 0.9016393442622951
     },
     "DEU": {
@@ -145,28 +145,28 @@
     },
     "ESP": {
       "completed": 100,
-      "median": "2042-11-01",
+      "median": "2042-10-01",
       "shareIn2035": 0.6885245901639344
     },
     "POL": {
       "completed": 100,
-      "median": "2042-11-01",
+      "median": "2042-10-01",
       "shareIn2035": 0.7049180327868853
     },
     "UKR": {
       "completed": 100,
-      "median": "2072-12-01",
+      "median": "2073-01-01",
       "shareIn2035": 0.3770491803278688
     },
     "RUS": {
       "completed": 100,
-      "median": "2044-06-01",
+      "median": "2043-11-01",
       "shareIn2035": 0.7213114754098361
     },
     "TUR": {
       "completed": 100,
       "median": "2043-03-01",
-      "shareIn2035": 0.6721311475409836
+      "shareIn2035": 0.6885245901639344
     },
     "NOR": {
       "completed": 100,
@@ -175,10 +175,10 @@
     }
   },
   "events": {
-    "mean": 53.15
+    "mean": 53.62
   },
   "blocs": {
-    "decisionsMean": 35.99
+    "decisionsMean": 35.21
   },
-  "wallMsMean": 96137.85
+  "wallMsMean": 34402.88
 }
