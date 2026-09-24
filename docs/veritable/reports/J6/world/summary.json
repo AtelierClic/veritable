@@ -1,0 +1,1254 @@
+{
+  "campaigns": 30,
+  "criteria": {
+    "warsMedian10to30": true,
+    "noPairAbove40pct": true,
+    "warsInAtLeast3Regions": true,
+    "under30pctWithoutCasusBelli": true,
+    "noShotInYearOne": true,
+    "shotsInAtMost10pct": true,
+    "neverBelowLevel2": true,
+    "noThreeWayExchange": true,
+    "atLeast70pctCoupsInFragileRegimes": true,
+    "pricesBounded": true,
+    "defaultsOnlyInIndebtedOrUnstable": true,
+    "noNonFiniteDebt": true
+  },
+  "world": {
+    "pairShareMax": 0.38461538461538464,
+    "pairShareMedian": 0.26969696969696966,
+    "pairAbove40pct": [],
+    "regionsMin": 3,
+    "regionsPerCampaign": {
+      "3": 29,
+      "4": 1
+    },
+    "warsByRegion": {
+      "africa": 162,
+      "asia": 128,
+      "europe": 89,
+      "americas": 1
+    },
+    "pairs": {
+      "RUS-UKR": 86,
+      "SOL-SOM": 65,
+      "SDN-SDR": 44,
+      "IND-PAK": 38,
+      "YEH-YEM": 37,
+      "COD-M23": 36,
+      "ISR-PSE": 21,
+      "DZA-MLI": 10,
+      "AFG-PAK": 10,
+      "ISR-LBN": 7,
+      "RJV-SYR": 4,
+      "ARM-AZE": 4,
+      "COD-RWA": 3,
+      "AZE-GEO": 3,
+      "KAZ-RUS": 2,
+      "LBE-LBY": 2,
+      "ISR-SYR": 2,
+      "ARM-TUR": 2,
+      "GEO-RUS": 1,
+      "ERI-ETH": 1,
+      "HND-NIC": 1,
+      "DZA-MAR": 1
+    },
+    "coups": 1035,
+    "coupsByRegime": {
+      "electoral-authoritarian": 447,
+      "junta": 259,
+      "failed-state": 210,
+      "presidential": 25,
+      "parliamentary": 22,
+      "single-party": 21,
+      "absolute-monarchy": 19,
+      "theocracy": 17,
+      "semi-presidential": 15
+    },
+    "fragileCoupShare": 0.885024154589372,
+    "defaults": 34,
+    "otherDefaults": [],
+    "nonFinite": []
+  },
+  "loop": {
+    "relaunchMedian": 3,
+    "relaunchMax": 4,
+    "relaunchesPerCampaign": {
+      "2": 10,
+      "3": 14,
+      "4": 6
+    },
+    "scenarioWarEnded": 30,
+    "calm15Years": 0,
+    "calmShare": 0,
+    "yearsToReprise": {
+      "1": 7,
+      "2": 21,
+      "3": 1,
+      "4": 1
+    }
+  },
+  "wars": {
+    "median": 12,
+    "max": 21,
+    "total": 380,
+    "withoutCasusBelli": 7,
+    "byCasusBelli": {
+      "contested-territory": 188,
+      "grievance": 185,
+      "none": 7
+    },
+    "byAggressor": {
+      "RUS": 89,
+      "SOM": 65,
+      "SDN": 44,
+      "COD": 39,
+      "IND": 38,
+      "ISR": 30,
+      "YEH": 28,
+      "DZA": 11,
+      "PAK": 10,
+      "YEM": 9,
+      "AZE": 7,
+      "SYR": 4,
+      "LBE": 2,
+      "TUR": 2,
+      "ETH": 1,
+      "HND": 1
+    },
+    "perCampaign": {
+      "8": 2,
+      "9": 1,
+      "10": 2,
+      "11": 5,
+      "12": 6,
+      "13": 5,
+      "14": 4,
+      "15": 2,
+      "16": 1,
+      "20": 1,
+      "21": 1
+    }
+  },
+  "nuclear": {
+    "campaignsWithShots": 2,
+    "shots": 3,
+    "byShooter": {
+      "PAK": 2,
+      "RUS": 1
+    },
+    "byThreat": {
+      "2": 1,
+      "3": 2
+    },
+    "list": [
+      "RUS>MNG@2049-01-24 (level 2, seed 5)",
+      "PAK>AFG@2061-06-12 (level 3, seed 30)",
+      "PAK>AFG@2061-12-16 (level 3, seed 30)"
+    ],
+    "threeWayCampaigns": []
+  },
+  "politics": {
+    "revolutions": [
+      "UKR@2033-05-01",
+      "UKR@2038-04-01",
+      "VEN@2030-10-01",
+      "UKR@2033-02-01",
+      "UKR@2033-11-01",
+      "UKR@2035-10-01",
+      "UKR@2032-05-01",
+      "UKR@2032-09-01",
+      "UKR@2033-06-01",
+      "UKR@2035-01-01",
+      "VEN@2029-01-01",
+      "VEN@2072-01-01",
+      "UKR@2027-09-01",
+      "VEN@2029-07-01",
+      "UKR@2033-07-01",
+      "VEN@2040-02-01",
+      "UKR@2033-11-01"
+    ],
+    "crisisBy10Years": 30,
+    "juntaAt10Years": {
+      "RUS": 5,
+      "TUR": 0
+    },
+    "coups": 1035
+  },
+  "prices": {
+    "low": 0.6697531712841285,
+    "high": 1.6304635488268304
+  },
+  "defaults": {
+    "total": 34,
+    "inStableNations": [
+      "CUB@2031-01-01 (seed 2)",
+      "UKR@2036-06-01 (seed 2)",
+      "CUB@2031-05-01 (seed 4)",
+      "VEN@2032-05-01 (seed 4)",
+      "UKR@2034-11-01 (seed 5)",
+      "UKR@2035-05-01 (seed 6)",
+      "UKR@2037-01-01 (seed 8)",
+      "CUB@2031-04-01 (seed 10)",
+      "PSE@2068-02-01 (seed 11)",
+      "CUB@2031-01-01 (seed 13)",
+      "UKR@2037-12-01 (seed 16)",
+      "UKR@2037-08-01 (seed 18)",
+      "CUB@2031-01-01 (seed 19)",
+      "UKR@2038-03-01 (seed 20)",
+      "PSE@2069-07-01 (seed 20)",
+      "UKR@2035-10-01 (seed 21)",
+      "CUB@2031-01-01 (seed 22)",
+      "UKR@2037-01-01 (seed 23)"
+    ]
+  },
+  "technology": {
+    "AFG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ALB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "DZA": {
+      "completed": 13,
+      "median": "2071-12-01",
+      "shareIn2035": 0.19672131147540983
+    },
+    "AND": {
+      "completed": 11,
+      "median": "2067-05-01",
+      "shareIn2035": 0.19672131147540983
+    },
+    "AGO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "ATG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ARG": {
+      "completed": 30,
+      "median": "2074-04-01",
+      "shareIn2035": 0.2786885245901639
+    },
+    "ARM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "AUS": {
+      "completed": 30,
+      "median": "2039-11-01",
+      "shareIn2035": 0.8032786885245902
+    },
+    "AUT": {
+      "completed": 30,
+      "median": "2039-02-01",
+      "shareIn2035": 0.8360655737704918
+    },
+    "AZE": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "BHS": {
+      "completed": 1,
+      "median": "2074-01-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "BHR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "BGD": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "BRB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "BLR": {
+      "completed": 27,
+      "median": "2064-06-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "BEL": {
+      "completed": 30,
+      "median": "2040-02-01",
+      "shareIn2035": 0.819672131147541
+    },
+    "BLZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "BEN": {
+      "completed": 14,
+      "median": "2065-10-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "BTN": {
+      "completed": 3,
+      "median": "2073-01-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "BOL": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "BIH": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "BWA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.22950819672131148
+    },
+    "BRA": {
+      "completed": 30,
+      "median": "2055-04-01",
+      "shareIn2035": 0.4180327868852459
+    },
+    "BRN": {
+      "completed": 4,
+      "median": "2059-02-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "BGR": {
+      "completed": 30,
+      "median": "2066-03-01",
+      "shareIn2035": 0.3114754098360656
+    },
+    "BFA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "BDI": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "CPV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "KHM": {
+      "completed": 1,
+      "median": "2057-09-01",
+      "shareIn2035": 0.03278688524590164
+    },
+    "CMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "CAN": {
+      "completed": 30,
+      "median": "2041-08-01",
+      "shareIn2035": 0.7868852459016393
+    },
+    "CAF": {
+      "completed": 17,
+      "median": "2070-10-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "TCD": {
+      "completed": 3,
+      "median": "2057-06-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "CHL": {
+      "completed": 13,
+      "median": "2066-12-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "CHN": {
+      "completed": 30,
+      "median": "2037-10-01",
+      "shareIn2035": 0.8852459016393442
+    },
+    "COL": {
+      "completed": 12,
+      "median": "2065-06-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "COM": {
+      "completed": 17,
+      "median": "2067-01-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "COG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "CRI": {
+      "completed": 2,
+      "median": "2075-04-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "CIV": {
+      "completed": 18,
+      "median": "2069-01-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "HRV": {
+      "completed": 30,
+      "median": "2050-03-01",
+      "shareIn2035": 0.5081967213114754
+    },
+    "CUB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.18032786885245902
+    },
+    "CYP": {
+      "completed": 30,
+      "median": "2068-11-01",
+      "shareIn2035": 0.3114754098360656
+    },
+    "CZE": {
+      "completed": 30,
+      "median": "2044-02-01",
+      "shareIn2035": 0.6721311475409836
+    },
+    "PRK": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "COD": {
+      "completed": 6,
+      "median": "2071-09-01",
+      "shareIn2035": 0.18032786885245902
+    },
+    "DNK": {
+      "completed": 30,
+      "median": "2039-04-01",
+      "shareIn2035": 0.8360655737704918
+    },
+    "DJI": {
+      "completed": 20,
+      "median": "2062-09-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "DMA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "DOM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ECU": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.19672131147540983
+    },
+    "EGY": {
+      "completed": 30,
+      "median": "2059-08-01",
+      "shareIn2035": 0.3770491803278688
+    },
+    "SLV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "GNQ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ERI": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "EST": {
+      "completed": 30,
+      "median": "2044-04-01",
+      "shareIn2035": 0.6721311475409836
+    },
+    "SWZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ETH": {
+      "completed": 15,
+      "median": "2068-11-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "FJI": {
+      "completed": 1,
+      "median": "2071-01-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "FIN": {
+      "completed": 30,
+      "median": "2039-08-01",
+      "shareIn2035": 0.8360655737704918
+    },
+    "FRA": {
+      "completed": 30,
+      "median": "2038-07-01",
+      "shareIn2035": 0.8852459016393442
+    },
+    "GAB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "GMB": {
+      "completed": 9,
+      "median": "2064-09-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "GEO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "DEU": {
+      "completed": 30,
+      "median": "2039-03-01",
+      "shareIn2035": 0.8524590163934426
+    },
+    "GHA": {
+      "completed": 22,
+      "median": "2066-01-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "GRC": {
+      "completed": 30,
+      "median": "2048-07-01",
+      "shareIn2035": 0.5245901639344263
+    },
+    "GRD": {
+      "completed": 6,
+      "median": "2073-07-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "GTM": {
+      "completed": 11,
+      "median": "2068-09-01",
+      "shareIn2035": 0
+    },
+    "GIN": {
+      "completed": 18,
+      "median": "2064-03-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "GNB": {
+      "completed": 7,
+      "median": "2064-02-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "GUY": {
+      "completed": 8,
+      "median": "2065-02-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "HTI": {
+      "completed": 18,
+      "median": "2066-02-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "HND": {
+      "completed": 12,
+      "median": "2070-01-01",
+      "shareIn2035": 0.01639344262295082
+    },
+    "HUN": {
+      "completed": 30,
+      "median": "2050-03-01",
+      "shareIn2035": 0.5245901639344263
+    },
+    "ISL": {
+      "completed": 30,
+      "median": "2038-07-01",
+      "shareIn2035": 0.8688524590163934
+    },
+    "IND": {
+      "completed": 29,
+      "median": "2071-10-01",
+      "shareIn2035": 0.3360655737704918
+    },
+    "IDN": {
+      "completed": 14,
+      "median": "2062-02-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "IRN": {
+      "completed": 30,
+      "median": "2062-08-01",
+      "shareIn2035": 0.3442622950819672
+    },
+    "IRQ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "IRL": {
+      "completed": 30,
+      "median": "2043-02-01",
+      "shareIn2035": 0.7377049180327869
+    },
+    "ISR": {
+      "completed": 30,
+      "median": "2036-03-01",
+      "shareIn2035": 0.9344262295081968
+    },
+    "ITA": {
+      "completed": 30,
+      "median": "2047-01-01",
+      "shareIn2035": 0.6065573770491803
+    },
+    "JAM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "JPN": {
+      "completed": 30,
+      "median": "2036-02-01",
+      "shareIn2035": 0.9508196721311475
+    },
+    "JOR": {
+      "completed": 30,
+      "median": "2068-02-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "KAZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "KEN": {
+      "completed": 30,
+      "median": "2061-02-01",
+      "shareIn2035": 0.29508196721311475
+    },
+    "KIR": {
+      "completed": 18,
+      "median": "2063-12-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "KWT": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "KGZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.01639344262295082
+    },
+    "LAO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "LVA": {
+      "completed": 30,
+      "median": "2064-07-01",
+      "shareIn2035": 0.3114754098360656
+    },
+    "LBN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "LSO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "LBR": {
+      "completed": 18,
+      "median": "2064-08-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "LBY": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "LIE": {
+      "completed": 30,
+      "median": "2037-04-01",
+      "shareIn2035": 0.9016393442622951
+    },
+    "LTU": {
+      "completed": 30,
+      "median": "2057-03-01",
+      "shareIn2035": 0.4098360655737705
+    },
+    "LUX": {
+      "completed": 30,
+      "median": "2051-12-01",
+      "shareIn2035": 0.5901639344262295
+    },
+    "MDG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "MWI": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "MYS": {
+      "completed": 30,
+      "median": "2058-09-01",
+      "shareIn2035": 0.3442622950819672
+    },
+    "MDV": {
+      "completed": 9,
+      "median": "2072-02-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "MLI": {
+      "completed": 7,
+      "median": "2066-10-01",
+      "shareIn2035": 0.08196721311475409
+    },
+    "MLT": {
+      "completed": 30,
+      "median": "2057-11-01",
+      "shareIn2035": 0.36065573770491804
+    },
+    "MHL": {
+      "completed": 16,
+      "median": "2065-12-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "MRT": {
+      "completed": 7,
+      "median": "2070-07-01",
+      "shareIn2035": 0
+    },
+    "MUS": {
+      "completed": 8,
+      "median": "2072-12-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "MEX": {
+      "completed": 5,
+      "median": "2067-08-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "FSM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "MCO": {
+      "completed": 15,
+      "median": "2059-01-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "MNG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "MNE": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "MAR": {
+      "completed": 30,
+      "median": "2070-04-01",
+      "shareIn2035": 0.2459016393442623
+    },
+    "MOZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "MMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "NAM": {
+      "completed": 30,
+      "median": "2073-04-01",
+      "shareIn2035": 0.2459016393442623
+    },
+    "NRU": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "NPL": {
+      "completed": 21,
+      "median": "2065-06-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "NLD": {
+      "completed": 30,
+      "median": "2039-07-01",
+      "shareIn2035": 0.8524590163934426
+    },
+    "NZL": {
+      "completed": 30,
+      "median": "2045-09-01",
+      "shareIn2035": 0.5901639344262295
+    },
+    "NIC": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "NER": {
+      "completed": 4,
+      "median": "2067-07-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "NGA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "MKD": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "NOR": {
+      "completed": 30,
+      "median": "2040-03-01",
+      "shareIn2035": 0.8360655737704918
+    },
+    "OMN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "PAK": {
+      "completed": 6,
+      "median": "2069-03-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "PLW": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "PAN": {
+      "completed": 3,
+      "median": "2071-02-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "PNG": {
+      "completed": 10,
+      "median": "2068-09-01",
+      "shareIn2035": 0
+    },
+    "PRY": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "PER": {
+      "completed": 10,
+      "median": "2071-08-01",
+      "shareIn2035": 0.09836065573770492
+    },
+    "PHL": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "POL": {
+      "completed": 30,
+      "median": "2044-10-01",
+      "shareIn2035": 0.6311475409836066
+    },
+    "PRT": {
+      "completed": 30,
+      "median": "2044-10-01",
+      "shareIn2035": 0.6721311475409836
+    },
+    "QAT": {
+      "completed": 30,
+      "median": "2066-11-01",
+      "shareIn2035": 0.39344262295081966
+    },
+    "KOR": {
+      "completed": 30,
+      "median": "2035-10-01",
+      "shareIn2035": 0.9672131147540983
+    },
+    "MDA": {
+      "completed": 12,
+      "median": "2067-11-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "ROU": {
+      "completed": 22,
+      "median": "2064-01-01",
+      "shareIn2035": 0.2459016393442623
+    },
+    "RUS": {
+      "completed": 30,
+      "median": "2052-02-01",
+      "shareIn2035": 0.6065573770491803
+    },
+    "RWA": {
+      "completed": 30,
+      "median": "2066-01-01",
+      "shareIn2035": 0.29508196721311475
+    },
+    "KNA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "LCA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "VCT": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "WSM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "SMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.26229508196721313
+    },
+    "STP": {
+      "completed": 15,
+      "median": "2063-06-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "SAU": {
+      "completed": 30,
+      "median": "2072-02-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "SEN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.22950819672131148
+    },
+    "SRB": {
+      "completed": 30,
+      "median": "2060-09-01",
+      "shareIn2035": 0.3442622950819672
+    },
+    "SYC": {
+      "completed": 4,
+      "median": "2067-03-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "SLE": {
+      "completed": 23,
+      "median": "2066-03-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "SGP": {
+      "completed": 30,
+      "median": "2040-08-01",
+      "shareIn2035": 0.7868852459016393
+    },
+    "SVK": {
+      "completed": 30,
+      "median": "2057-05-01",
+      "shareIn2035": 0.4098360655737705
+    },
+    "SVN": {
+      "completed": 30,
+      "median": "2042-10-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "SLB": {
+      "completed": 10,
+      "median": "2071-09-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "SOM": {
+      "completed": 16,
+      "median": "2069-02-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "ZAF": {
+      "completed": 14,
+      "median": "2072-11-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "SSD": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "ESP": {
+      "completed": 30,
+      "median": "2046-10-01",
+      "shareIn2035": 0.6065573770491803
+    },
+    "LKA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "SDN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "SUR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "SWE": {
+      "completed": 30,
+      "median": "2040-02-01",
+      "shareIn2035": 0.819672131147541
+    },
+    "CHE": {
+      "completed": 30,
+      "median": "2037-01-01",
+      "shareIn2035": 0.9180327868852459
+    },
+    "SYR": {
+      "completed": 2,
+      "median": "2070-06-01",
+      "shareIn2035": 0
+    },
+    "TJK": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "THA": {
+      "completed": 30,
+      "median": "2058-06-01",
+      "shareIn2035": 0.3442622950819672
+    },
+    "TLS": {
+      "completed": 4,
+      "median": "2074-01-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "TGO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "TON": {
+      "completed": 11,
+      "median": "2073-09-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "TTO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.01639344262295082
+    },
+    "TUN": {
+      "completed": 30,
+      "median": "2067-02-01",
+      "shareIn2035": 0.29508196721311475
+    },
+    "TUR": {
+      "completed": 30,
+      "median": "2048-05-01",
+      "shareIn2035": 0.5409836065573771
+    },
+    "TKM": {
+      "completed": 10,
+      "median": "2073-05-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "TUV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "UGA": {
+      "completed": 21,
+      "median": "2061-10-01",
+      "shareIn2035": 0.19672131147540983
+    },
+    "UKR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.32786885245901637
+    },
+    "ARE": {
+      "completed": 30,
+      "median": "2046-05-01",
+      "shareIn2035": 0.5737704918032787
+    },
+    "GBR": {
+      "completed": 30,
+      "median": "2035-12-01",
+      "shareIn2035": 0.9508196721311475
+    },
+    "TZA": {
+      "completed": 19,
+      "median": "2060-08-01",
+      "shareIn2035": 0.21311475409836064
+    },
+    "USA": {
+      "completed": 30,
+      "median": "2033-10-01",
+      "shareIn2035": 1
+    },
+    "URY": {
+      "completed": 30,
+      "median": "2069-09-01",
+      "shareIn2035": 0.2786885245901639
+    },
+    "UZB": {
+      "completed": 14,
+      "median": "2070-06-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "VUT": {
+      "completed": 18,
+      "median": "2067-10-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "VEN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "VNM": {
+      "completed": 22,
+      "median": "2062-12-01",
+      "shareIn2035": 0.18032786885245902
+    },
+    "YEM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "ZMB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ZWE": {
+      "completed": 8,
+      "median": "2072-01-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "VAT": {
+      "completed": 15,
+      "median": "2061-02-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "PSE": {
+      "completed": 13,
+      "median": "2067-08-01",
+      "shareIn2035": 0.18032786885245902
+    },
+    "TWN": {
+      "completed": 30,
+      "median": "2037-01-01",
+      "shareIn2035": 0.9180327868852459
+    },
+    "XKX": {
+      "completed": 12,
+      "median": "2063-08-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "CYN": {
+      "completed": 15,
+      "median": "2067-02-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "ABK": {
+      "completed": 4,
+      "median": "2070-06-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "SOS": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "PMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "SOL": {
+      "completed": 18,
+      "median": "2065-04-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "ESH": {
+      "completed": 5,
+      "median": "2059-05-01",
+      "shareIn2035": 0
+    },
+    "YEH": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "LBE": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "SDR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "RJV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "M23": {
+      "completed": 14,
+      "median": "2064-10-01",
+      "shareIn2035": 0.16393442622950818
+    }
+  },
+  "events": {
+    "mean": 198.63333333333333
+  },
+  "blocs": {
+    "decisionsMean": 49.166666666666664
+  },
+  "wallMsMean": 751955.2
+}
