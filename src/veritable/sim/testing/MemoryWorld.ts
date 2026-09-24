@@ -8,6 +8,8 @@ import {
 import {
   FrontGeometry,
   NavalSnapshot,
+  NukeAim,
+  NukeOutcome,
   TileGrid,
   WorldPort,
 } from "../VeritableSim";
@@ -72,6 +74,83 @@ export class MemoryWorld implements WorldPort {
 
   // Structures on the map, set by the tests.
   readonly built = new Map<NationId, Record<string, number>>();
+
+  // Nuclear weapons (J5), as the tests declare them: capitals (tile index),
+  // distance of a capital to its fronts, warheads that cannot leave, the
+  // number of the next ones intercepted, and the radius a warhead burns
+  // around its aim (the capital of the target, or its first tile).
+  readonly capitals = new Map<NationId, number>();
+  readonly frontDistances = new Map<NationId, number>();
+  nukesBlocked = false;
+  interceptNext = 0;
+  nukeRadius = 1;
+  readonly launched: {
+    id: number;
+    by: NationId;
+    target: NationId;
+    aim: NukeAim;
+    weapon: "atom" | "hydrogen";
+  }[] = [];
+  private inFlight: MemoryWorld["launched"] = [];
+
+  launchNuke(
+    id: number,
+    by: NationId,
+    target: NationId,
+    aim: NukeAim,
+    weapon: "atom" | "hydrogen",
+  ): boolean {
+    if (this.nukesBlocked) return false;
+    const launch = { id, by, target, aim, weapon };
+    this.launched.push(launch);
+    this.inFlight.push(launch);
+    return true;
+  }
+
+  // Resolved at the next call: the tiles within the radius of the aim burn
+  // (owner lost, fallout).
+  nukeOutcomes(): NukeOutcome[] {
+    const out: NukeOutcome[] = [];
+    for (const launch of this.inFlight) {
+      if (this.interceptNext > 0) {
+        this.interceptNext -= 1;
+        out.push({ id: launch.id, status: "intercepted", hits: {} });
+        continue;
+      }
+      const aim =
+        this.capitals.get(launch.target) ??
+        this.owners.findIndex((o) => o === launch.target);
+      const hits: Record<NationId, number> = {};
+      if (aim >= 0) {
+        const ax = aim % this.width;
+        const ay = Math.floor(aim / this.width);
+        const r = this.nukeRadius;
+        for (let y = Math.max(0, ay - r); y <= Math.min(this.height - 1, ay + r); y++) {
+          for (let x = Math.max(0, ax - r); x <= Math.min(this.width - 1, ax + r); x++) {
+            const tile = y * this.width + x;
+            const owner = this.owners[tile];
+            if (owner === null) continue;
+            hits[owner] = (hits[owner] ?? 0) + 1;
+            this.owners[tile] = null;
+            this.fallout[tile] = true;
+            this.ledger.clear(tile);
+          }
+        }
+      }
+      out.push({ id: launch.id, status: "detonated", hits });
+    }
+    this.inFlight = [];
+    return out;
+  }
+
+  capitalHeld(nation: NationId): boolean {
+    const tile = this.capitals.get(nation);
+    return tile === undefined || this.owners[tile] === nation;
+  }
+
+  capitalFrontDistance(nation: NationId): number | null {
+    return this.frontDistances.get(nation) ?? null;
+  }
 
   structureCounts(): ReadonlyMap<NationId, Record<string, number>> {
     return this.built;

@@ -5,6 +5,7 @@ import { Zones } from "../data/zonesFile";
 import {
   FrontGeometry,
   NavalSnapshot,
+  NukeOutcome,
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
@@ -168,5 +169,22 @@ export class BordersWorld implements WorldPort {
 
   structureCounts(): ReadonlyMap<NationId, Record<string, number>> {
     return new Map();
+  }
+
+  // No core, no silo: this world launches no warhead.
+  launchNuke(): boolean {
+    return false;
+  }
+
+  nukeOutcomes(): NukeOutcome[] {
+    return [];
+  }
+
+  capitalHeld(): boolean {
+    return true;
+  }
+
+  capitalFrontDistance(): number | null {
+    return null;
   }
 }

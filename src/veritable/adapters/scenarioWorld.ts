@@ -133,6 +133,29 @@ export function unclaimableMask(game: Game, pack: ScenarioPack): Uint8Array {
 
 // State of the world on the first day: every nation on its borders, a city on
 // its capital. Expressed like a save, and applied by the same restore path.
+// The first land tile of the nation (owner index `owner` in `tiles`) on the
+// rings around its capital, from 6 tiles out: where its silo stands.
+function siloTile(
+  game: Game,
+  tiles: Uint16Array,
+  capital: number,
+  owner: number,
+): number | null {
+  const cx = game.x(capital);
+  const cy = game.y(capital);
+  for (let r = 6; r <= 40; r++) {
+    for (let dy = -r; dy <= r; dy++) {
+      for (let dx = -r; dx <= r; dx++) {
+        if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
+        if (!game.isValidCoord(cx + dx, cy + dy)) continue;
+        const tile = game.ref(cx + dx, cy + dy);
+        if (tiles[tile] === owner && owner !== 0) return tile;
+      }
+    }
+  }
+  return null;
+}
+
 export function initialWorld(
   game: Game,
   pack: ScenarioPack,
@@ -154,12 +177,22 @@ export function initialWorld(
       players: bindings.map(({ nationId, player }) => {
         const [x, y] = pack.meta.capitals[nationId];
         const capital = game.ref(x, y);
+        const structures = [{ type: UnitType.City, tile: capital, level: 1 }];
+        // J5: a nuclear nation has a missile silo near its capital, the
+        // vector of its warheads (the Véritable nuclear system fires them).
+        const sheet = pack.nations.find((n) => n.id === nationId);
+        if ((sheet?.nuclear?.warheads ?? 0) > 0) {
+          const silo = siloTile(game, tiles, capital, tiles[capital]);
+          if (silo !== null) {
+            structures.push({ type: UnitType.MissileSilo, tile: silo, level: 1 });
+          }
+        }
         return {
           nation: nationId,
           troops: player.troops(),
           gold: player.gold(),
           spawnTile: capital,
-          structures: [{ type: UnitType.City, tile: capital, level: 1 }],
+          structures,
         };
       }),
     },

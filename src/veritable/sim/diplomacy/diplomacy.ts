@@ -144,6 +144,8 @@ export function initDiplomacy(
     wars: [],
     sanctions: [],
     coalitionCalls: [],
+    pariahs: [],
+    pendingAnnexations: [],
     contestedRegions: [],
     reparations: [],
     demilitarized: [],
@@ -612,17 +614,31 @@ export function stepDiplomacyMonth(
   //    victim. The victim is the nation attacked (the first defender of a war
   //    declared in the campaign), not the coalition that joined it: a
   //    coalition member does not keep the others out.
+  //    J5: against a nation that fired a nuclear weapon, whatever its side,
+  //    its power or its casus belli.
   for (const war of state.wars) {
-    if (war.casusBelli !== null || !war.declaredInCampaign) continue;
-    const aggressorPower = war.aggressors.reduce(
-      (s, n) => s + power.get(n)!,
-      0,
-    );
-    const victimPower = power.get(war.defenders[0]) ?? 0;
-    if (aggressorPower <= cfg.coalition.powerRatio * victimPower) continue;
+    const pariahSide = war.aggressors.some((n) => state.pariahs.includes(n))
+      ? "aggressors"
+      : war.defenders.some((n) => state.pariahs.includes(n))
+        ? "defenders"
+        : null;
+    let against: "aggressors" | "defenders";
+    if (pariahSide !== null) {
+      against = pariahSide;
+    } else {
+      if (war.casusBelli !== null || !war.declaredInCampaign) continue;
+      const aggressorPower = war.aggressors.reduce(
+        (s, n) => s + power.get(n)!,
+        0,
+      );
+      const victimPower = power.get(war.defenders[0]) ?? 0;
+      if (aggressorPower <= cfg.coalition.powerRatio * victimPower) continue;
+      against = "aggressors";
+    }
+    const side = against === "aggressors" ? "defenders" : "aggressors";
     for (const nation of aiNations) {
       if (warSide(war, nation) !== null) continue;
-      const hostile = war.aggressors.some(
+      const hostile = war[against].some(
         (a) => relation(state, nation, a) < cfg.coalition.relationsBelow,
       );
       if (!hostile) continue;
@@ -635,6 +651,7 @@ export function stepDiplomacyMonth(
           war: war.id,
           nation,
           monthsLeft: cfg.coalition.windowMonths,
+          side,
         });
       }
     }
@@ -648,12 +665,13 @@ export function stepDiplomacyMonth(
       continue;
     }
     if (rng.next() < cfg.coalition.monthlyProbability) {
-      joinWar(ctx, state, war, call.nation, "defenders");
+      joinWar(ctx, state, war, call.nation, call.side);
       events.push({
         type: "war-joined",
         nation: call.nation,
         war: war.id,
-        against: war.aggressors[0],
+        against:
+          call.side === "defenders" ? war.aggressors[0] : war.defenders[0],
       });
       remove();
       continue;

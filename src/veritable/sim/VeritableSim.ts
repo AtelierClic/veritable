@@ -16,6 +16,7 @@ import {
   NationState,
   NationStatus,
   NavalState,
+  NuclearState,
   PeaceTermsSchema,
   PinnedObjective,
   SaveFile,
@@ -132,6 +133,15 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
     objective: z.string().min(1),
   }),
   z.object({ type: z.literal("add-note"), text: z.string().min(1).max(2000) }),
+  // Nuclear weapons (J5): a warhead of the player's nation at an enemy, at the
+  // concentration of its divisions on their front or at its capital. The
+  // screen asks twice; the command carries the second answer.
+  z.object({
+    type: z.literal("nuclear-launch"),
+    target: NationIdSchema,
+    aim: z.enum(["front", "capital"]),
+    confirmed: z.literal(true),
+  }),
 ]);
 export type PlayerCommand = z.infer<typeof PlayerCommandSchema>;
 
@@ -218,7 +228,12 @@ export type SimEvent =
         | "objective-completed"
         | "regime-changed"
         | "bloc-suspended"
-        | "civilian-transition";
+        | "civilian-transition"
+        // Nuclear weapons (J5).
+        | "nuclear-launch"
+        | "nuclear-detonation"
+        | "nuclear-intercepted"
+        | "dead-hand";
       date: string;
       nation: NationId;
       params: Record<string, string>;
@@ -275,6 +290,13 @@ export interface ReadonlyWorldView {
   readonly military: Readonly<MilitaryState>;
   readonly naval: Readonly<NavalState>;
   readonly fronts: readonly FrontView[];
+  // Nuclear weapons (J5): arsenals, threat levels, strikes, fallout; the
+  // probability that the dead hand of each nuclear nation strikes its
+  // annexer; the daily probability of a shot of each nuclear nation nobody
+  // plays at the enemy that threatens it most.
+  readonly nuclear: Readonly<NuclearState>;
+  readonly deadHand: Readonly<Record<NationId, number>>;
+  readonly nuclearRisk: Readonly<Record<NationId, number>>;
   // Contested tiles each nation holds (J5), and its tiles on the first day.
   readonly contested: Readonly<Record<NationId, number>>;
   readonly initialTiles: Readonly<Record<NationId, number>>;
@@ -378,6 +400,35 @@ export interface WorldPort {
   // Structures each nation has on the map, levels summed, by OpenFront unit
   // type (J5: what it builds is paid by its budget).
   structureCounts(): ReadonlyMap<NationId, Record<string, number>>;
+  // Nuclear weapons (J5). A warhead of `by` towards `target`, from a silo near
+  // its capital (built if it has none); false when the world cannot launch
+  // it. Its outcome comes later, through nukeOutcomes().
+  launchNuke(
+    id: number,
+    by: NationId,
+    target: NationId,
+    aim: NukeAim,
+    weapon: "atom" | "hydrogen",
+  ): boolean;
+  // Launches resolved since the last call: tiles hit by nation, or
+  // intercepted, or never launched.
+  nukeOutcomes(): NukeOutcome[];
+  // Does the nation still hold its capital?
+  capitalHeld(nation: NationId): boolean;
+  // Tiles from the capital of the nation to the nearest front it fights on
+  // (last computed geometry); null without a front.
+  capitalFrontDistance(nation: NationId): number | null;
+}
+
+export type NukeAim =
+  | { kind: "front"; front: string; segment: number }
+  | { kind: "capital" }
+  | { kind: "city"; index: number };
+
+export interface NukeOutcome {
+  id: number;
+  status: "detonated" | "intercepted" | "failed";
+  hits: Record<NationId, number>;
 }
 
 export { NationIdSchema };

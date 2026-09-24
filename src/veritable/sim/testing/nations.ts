@@ -1,4 +1,4 @@
-import { NationId } from "../../data/schemas/common";
+import { NationId, NUCLEAR_DOCTRINES } from "../../data/schemas/common";
 import { GOOD_IDS, GoodId } from "../../data/schemas/goods";
 import {
   NationData,
@@ -30,6 +30,10 @@ export interface TestNationOptions {
   electionIntervalMonths?: number;
   lastElection?: string;
   electionsSuspendedAtWarAtHome?: boolean;
+  nuclear?: {
+    warheads: number;
+    doctrine: (typeof NUCLEAR_DOCTRINES)[number];
+  };
 }
 
 const DEFAULT_SPENDING: Record<SpendingPost, number> = {
@@ -62,7 +66,14 @@ export function testNation(
     regime: options.regime ?? "parliamentary",
     regimeSource: { source: "test", asOf: "2026-01-01" },
     blocs: options.blocs ?? [],
-    nuclear: null,
+    nuclear:
+      options.nuclear === undefined
+        ? null
+        : {
+            ...options.nuclear,
+            source: "test",
+            asOf: "2026-01-01",
+          },
     territory: { kind: "tiles" },
     contested: [],
     population: sourced(10_000_000),

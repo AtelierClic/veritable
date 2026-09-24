@@ -2,6 +2,7 @@ import { CityExecution } from "../../core/execution/CityExecution";
 import { DefensePostExecution } from "../../core/execution/DefensePostExecution";
 import { FactoryExecution } from "../../core/execution/FactoryExecution";
 import { MissileSiloExecution } from "../../core/execution/MissileSiloExecution";
+import { NukeExecution } from "../../core/execution/NukeExecution";
 import { PlayerExecution } from "../../core/execution/PlayerExecution";
 import { PortExecution } from "../../core/execution/PortExecution";
 import { SAMLauncherExecution } from "../../core/execution/SAMLauncherExecution";
@@ -29,6 +30,8 @@ import { ContestLedger } from "../sim/war/contest";
 import {
   FrontGeometry,
   NavalSnapshot,
+  NukeAim,
+  NukeOutcome,
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
@@ -73,6 +76,13 @@ export class CoreBridge implements WorldPort {
   private readonly ledger: ContestLedger;
   // Segment tiles of the last computed geometry, by front id.
   private readonly segments = new Map<string, number[][]>();
+  // Warheads launched (J5): their execution, and who owned each tile within
+  // their blast radius at the launch (fallout tiles excluded), to count the
+  // tiles each nation lost once the warhead has landed.
+  private readonly launches = new Map<
+    number,
+    { exec: NukeExecution; before: Map<number, NationId> }
+  >();
 
   constructor(
     private readonly game: Game,
@@ -296,6 +306,147 @@ export class CoreBridge implements WorldPort {
       cessionMonths,
       (tile) => this.nationAt(tile) !== null,
     );
+  }
+
+  // --- nuclear weapons (J5) ------------------------------------------------------
+
+  capitalHeld(nation: NationId): boolean {
+    const player = this.byNation.get(nation);
+    const capital = player?.spawnTile();
+    if (player === undefined || capital === undefined) return true;
+    return this.game.owner(capital) === player;
+  }
+
+  capitalFrontDistance(nation: NationId): number | null {
+    const capital = this.byNation.get(nation)?.spawnTile();
+    if (capital === undefined) return null;
+    const g = this.game;
+    const cx = g.x(capital);
+    const cy = g.y(capital);
+    let best: number | null = null;
+    for (const [id, segments] of this.segments) {
+      if (!id.split("|").includes(nation)) continue;
+      for (const tiles of segments) {
+        for (const tile of tiles) {
+          const d = Math.max(Math.abs(g.x(tile) - cx), Math.abs(g.y(tile) - cy));
+          if (best === null || d < best) best = d;
+        }
+      }
+    }
+    return best;
+  }
+
+  launchNuke(
+    id: number,
+    by: NationId,
+    target: NationId,
+    aim: NukeAim,
+    weapon: "atom" | "hydrogen",
+  ): boolean {
+    if (this.pending !== null) return false;
+    const player = this.byNation.get(by);
+    const enemy = this.byNation.get(target);
+    if (player === undefined || enemy === undefined) return false;
+    const dst = this.nukeTarget(enemy, aim);
+    if (dst === null || !this.ensureSilo(player)) return false;
+    const type = weapon === "atom" ? UnitType.AtomBomb : UnitType.HydrogenBomb;
+    const g = this.game;
+    // The warhead is the Véritable arsenal's, not bought with legacy gold.
+    player.addGold(g.unitInfo(type).cost(g, player));
+    const before = new Map<number, NationId>();
+    const radius = g.config().nukeMagnitudes(type).outer;
+    const x0 = g.x(dst);
+    const y0 = g.y(dst);
+    for (let y = Math.max(0, y0 - radius); y <= Math.min(g.height() - 1, y0 + radius); y++) {
+      for (let x = Math.max(0, x0 - radius); x <= Math.min(g.width() - 1, x0 + radius); x++) {
+        const tile = g.ref(x, y);
+        if (!g.hasOwner(tile) || g.hasFallout(tile)) continue;
+        const owner = this.bySmallID.get(g.ownerID(tile));
+        if (owner !== undefined) before.set(tile, owner);
+      }
+    }
+    const exec = new NukeExecution(type, player, dst);
+    g.addExecution(exec);
+    this.launches.set(id, { exec, before });
+    return true;
+  }
+
+  nukeOutcomes(): NukeOutcome[] {
+    const out: NukeOutcome[] = [];
+    for (const [id, launch] of [...this.launches].sort((a, b) => a[0] - b[0])) {
+      if (launch.exec.isActive()) continue;
+      this.launches.delete(id);
+      if (launch.exec.getNuke() === null) {
+        out.push({ id, status: "failed", hits: {} });
+        continue;
+      }
+      const hits: Record<NationId, number> = {};
+      for (const [tile, owner] of launch.before) {
+        if (this.game.hasFallout(tile)) hits[owner] = (hits[owner] ?? 0) + 1;
+      }
+      const landed = Object.keys(hits).length > 0;
+      out.push({ id, status: landed ? "detonated" : "intercepted", hits });
+    }
+    return out;
+  }
+
+  // The tile a warhead aims at: the middle of the enemy's side of a front
+  // segment, its capital, or one of its cities (the largest first).
+  private nukeTarget(enemy: Player, aim: NukeAim): number | null {
+    const g = this.game;
+    if (aim.kind === "front") {
+      const tiles = (this.segments.get(aim.front)?.[aim.segment] ?? []).filter(
+        (t) => g.owner(t) === enemy,
+      );
+      if (tiles.length > 0) return tiles[Math.floor(tiles.length / 2)];
+    }
+    const capital = enemy.spawnTile();
+    if (aim.kind !== "city" && capital !== undefined && g.owner(capital) === enemy) {
+      return capital;
+    }
+    const cities = enemy
+      .units(UnitType.City)
+      .filter((u) => u.isActive())
+      .sort((a, b) => b.level() - a.level() || a.tile() - b.tile());
+    if (cities.length > 0) {
+      const index = aim.kind === "city" ? aim.index : 0;
+      return cities[index % cities.length].tile();
+    }
+    if (capital !== undefined && g.owner(capital) === enemy) return capital;
+    return null;
+  }
+
+  // A silo near the capital, built at once when the nation has none (a save
+  // made before the J5, or a silo lost to the war).
+  private ensureSilo(player: Player): boolean {
+    if (player.units(UnitType.MissileSilo).some((u) => u.isActive())) {
+      return true;
+    }
+    const g = this.game;
+    const capital = player.spawnTile();
+    if (capital === undefined) return false;
+    const cx = g.x(capital);
+    const cy = g.y(capital);
+    for (let r = 4; r <= 40; r++) {
+      for (let dy = -r; dy <= r; dy++) {
+        for (let dx = -r; dx <= r; dx++) {
+          if (Math.max(Math.abs(dx), Math.abs(dy)) !== r) continue;
+          const x = cx + dx;
+          const y = cy + dy;
+          if (!g.isValidCoord(x, y)) continue;
+          const tile = g.ref(x, y);
+          if (g.owner(tile) !== player || !g.isLand(tile)) continue;
+          player.addGold(g.unitInfo(UnitType.MissileSilo).cost(g, player));
+          const spawn = player.canBuild(UnitType.MissileSilo, tile);
+          if (spawn === false) continue;
+          const unit = player.buildUnit(UnitType.MissileSilo, spawn, {});
+          const exec = structureExecution(g, player, unit);
+          if (exec !== null) g.addExecution(exec);
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   structureCounts(): ReadonlyMap<NationId, Record<string, number>> {

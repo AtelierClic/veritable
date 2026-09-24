@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { zb } from "../../../../zbin";
-import { IsoDateSchema, NationIdSchema, RegimeSchema } from "./common";
+import {
+  IsoDateSchema,
+  NationIdSchema,
+  NuclearDoctrineSchema,
+  RegimeSchema,
+} from "./common";
 import { ActorRoleSchema } from "./leaders";
 import {
   CalendarSchema,
@@ -69,6 +74,11 @@ export const JOURNAL_KINDS_V5 = [
   "bloc-suspended",
   "civilian-transition",
   "note",
+  // Nuclear weapons (J5).
+  "nuclear-launch",
+  "nuclear-detonation",
+  "nuclear-intercepted",
+  "dead-hand",
 ] as const;
 export const JournalEntryV5Schema = z.object({
   date: IsoDateSchema,
@@ -349,12 +359,28 @@ export const DiplomacyStateSchema = z.object({
   relations: z.record(z.string(), z.record(z.string(), zb.float())),
   wars: z.array(WarSchema),
   sanctions: z.array(SanctionSchema),
-  // Coalition calls open against an aggressor: months left to answer.
+  // Coalition calls open against an aggressor: months left to answer, and
+  // the side the nation would join (J5: against a nuclear shooter, whatever
+  // its side).
   coalitionCalls: z.array(
     z.object({
       war: z.string(),
       nation: NationIdSchema,
       monthsLeft: zb.uint(),
+      side: z.enum(["aggressors", "defenders"]),
+    }),
+  ),
+  // Nations that fired a nuclear weapon (J5): a coalition may form against
+  // them whatever their power.
+  pariahs: z.array(NationIdSchema),
+  // Annexations signed while the dead hand of the annexed nation fired: the
+  // land changes hands the next day, once the warhead has left its silo.
+  pendingAnnexations: z.array(
+    z.object({
+      war: z.string(),
+      nation: NationIdSchema,
+      by: NationIdSchema,
+      at: IsoDateSchema,
     }),
   ),
   // Regions created by cessions, claimed by the loser.
@@ -432,6 +458,41 @@ export const NavalStateSchema = z.object({
 });
 export type NavalState = z.infer<typeof NavalStateSchema>;
 
+// --- nuclear weapons (J5) -------------------------------------------------------
+
+export const NationNuclearSchema = z.object({
+  doctrine: NuclearDoctrineSchema,
+  warheads: zb.uint(),
+  threat: zb.uint(), // 0 to 3, today
+  shots: zb.uint(), // warheads fired in the campaign
+});
+export type NationNuclear = z.infer<typeof NationNuclearSchema>;
+
+export const NuclearStrikeSchema = z.object({
+  id: zb.uint(),
+  date: IsoDateSchema,
+  by: NationIdSchema,
+  target: NationIdSchema,
+  aim: z.enum(["front", "capital", "city", "dead-hand"]),
+  weapon: z.enum(["atom", "hydrogen"]),
+  // In flight until the world reports it; "lost" when a save was reloaded
+  // while it flew (warheads in flight are not saved).
+  status: z.enum(["in-flight", "detonated", "intercepted", "failed", "lost"]),
+  hits: z.record(z.string(), zb.uint()), // tiles hit, by nation
+});
+export type NuclearStrike = z.infer<typeof NuclearStrikeSchema>;
+
+export const NuclearStateSchema = z.object({
+  // Nuclear powers only.
+  nations: z.record(z.string(), NationNuclearSchema),
+  strikes: z.array(NuclearStrikeSchema),
+  nextStrikeId: zb.uint(),
+  // What fallout left of each nation hit: production, GDP and population
+  // factor (1 = untouched), no reconstruction before the J7.
+  fallout: z.record(z.string(), zb.float()),
+});
+export type NuclearState = z.infer<typeof NuclearStateSchema>;
+
 // --- territory (J5) -----------------------------------------------------------
 
 export const TerritoryStateSchema = z.object({
@@ -460,6 +521,7 @@ export const SaveHeaderV5Schema = zb.object({
   military: MilitaryStateSchema,
   naval: NavalStateSchema,
   territory: TerritoryStateSchema,
+  nuclear: NuclearStateSchema,
   journal: z.array(JournalEntryV5Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),

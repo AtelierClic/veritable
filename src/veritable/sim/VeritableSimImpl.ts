@@ -12,6 +12,7 @@ import {
   MilitaryState,
   NationState,
   NavalState,
+  NuclearState,
   PeaceOffer,
   PeaceTerms,
   PoliticsState,
@@ -86,6 +87,19 @@ import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
 import { monthIndex } from "./war/contest";
 import {
+  aimOf,
+  deadHandProbability,
+  fireProbability,
+  initNuclear,
+  launch,
+  loseStrikesInFlight,
+  mainThreat,
+  NuclearEnv,
+  NuclearEvent,
+  stepDeadHand,
+  stepNuclearDay,
+} from "./nuclear/nuclear";
+import {
   ClockContext,
   DomainSystem,
   NULL_PROBE,
@@ -120,6 +134,7 @@ import {
 } from "./war/military";
 import {
   aiAccepts,
+  completeAnnexation,
   findOffer,
   PeaceEvent,
   proposePeace,
@@ -157,6 +172,7 @@ type DomainEvent =
   | CoupEvent
   | LeaderEvent
   | ObjectiveEvent
+  | NuclearEvent
   | { type: "bloc-suspended"; nation: NationId; bloc: string }
   | { type: "note"; nation: NationId; text: string };
 
@@ -180,6 +196,10 @@ const POLITICAL_EVENTS = new Set<string>([
   "regime-changed",
   "bloc-suspended",
   "civilian-transition",
+  "nuclear-launch",
+  "nuclear-detonation",
+  "nuclear-intercepted",
+  "dead-hand",
 ]);
 
 const CEASEFIRE: PeaceTerms = {
@@ -207,6 +227,7 @@ export class VeritableSimImpl implements VeritableSim {
   private military!: MilitaryState;
   private naval!: NavalState;
   private territory!: TerritoryState;
+  private nuclear!: NuclearState;
   private scenario!: Scenario;
   private ctx!: EconomyContext;
   private sheets = new Map<NationId, NationData>();
@@ -290,6 +311,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.diplomacy = initDiplomacy(this.ctx, scenario);
     this.military = initMilitary(this.ctx, sheets);
     this.naval = initNaval();
+    this.nuclear = initNuclear(sheets);
     this.journal = [
       { date: this.calendar.date, kind: "campaign-started", params: {} },
     ];
@@ -341,6 +363,8 @@ export class VeritableSimImpl implements VeritableSim {
     this.military = state.military;
     this.naval = state.naval;
     this.territory = state.territory;
+    this.nuclear = state.nuclear;
+    loseStrikesInFlight(this.nuclear);
     this.trade = null;
     this.syncSuspensions();
     this.invalidateFronts();
@@ -377,6 +401,7 @@ export class VeritableSimImpl implements VeritableSim {
       military: this.military,
       naval: this.naval,
       territory: this.territory,
+      nuclear: this.nuclear,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -653,6 +678,23 @@ export class VeritableSimImpl implements VeritableSim {
         this.requirePlayer();
         unpinObjective(this.politics, cmd.objective);
         return;
+      case "nuclear-launch": {
+        const me = this.requirePlayer();
+        if (!enemiesOf(this.diplomacy, me).includes(cmd.target)) {
+          throw new Error("nuclear-launch: not at war with the target");
+        }
+        const env = this.nuclearEnv(date);
+        const chosen =
+          cmd.aim === "front"
+            ? aimOf(env, me, cmd.target)
+            : { aim: { kind: "capital" as const }, kind: "capital" as const };
+        const events = launch(env, me, cmd.target, chosen.aim, chosen.kind);
+        if (events.length === 0) {
+          throw new Error("nuclear-launch: no warhead or no vector");
+        }
+        for (const event of events) this.record(date, event);
+        return;
+      }
       case "add-note": {
         const me = this.requirePlayer();
         this.politics.player.notes.push({ date, text: cmd.text });
@@ -749,6 +791,14 @@ export class VeritableSimImpl implements VeritableSim {
       military: this.military,
       naval: this.naval,
       fronts: this.frontViews,
+      nuclear: this.nuclear,
+      deadHand: Object.fromEntries(
+        Object.keys(this.nuclear.nations).map((id) => [
+          id,
+          deadHandProbability(this.nuclearEnv(this.calendar.date), id),
+        ]),
+      ),
+      nuclearRisk: this.nuclearRisk(),
       contested: Object.fromEntries(this.deps.world.contestedCounts()),
       initialTiles: this.territory.initialTiles,
       constructionCost: this.territory.constructionCost,
@@ -764,6 +814,18 @@ export class VeritableSimImpl implements VeritableSim {
       objectives: this.politics.player.objectives,
       notes: this.politics.player.notes,
     };
+  }
+
+  // Daily probability of a shot of each nuclear nation at the enemy that
+  // threatens it most (what the nuclear panel shows).
+  private nuclearRisk(): Record<NationId, number> {
+    const env = this.nuclearEnv(this.calendar.date);
+    const risk: Record<NationId, number> = {};
+    for (const id of Object.keys(this.nuclear.nations)) {
+      const target = mainThreat(env, id);
+      risk[id] = target === null ? 0 : fireProbability(env, id, target);
+    }
+    return risk;
   }
 
   // Logistics and air, read by the resolution of the fronts.
@@ -803,6 +865,31 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   private navalDay(): void {
+    const date = this.calendar.date;
+    // Annexations the dead hand delayed: the land changes hands the day
+    // after the signature (J5).
+    const due = this.diplomacy.pendingAnnexations.filter((p) => p.at < date);
+    for (const pending of due) {
+      this.diplomacy.pendingAnnexations.splice(
+        this.diplomacy.pendingAnnexations.indexOf(pending),
+        1,
+      );
+      this.record(
+        date,
+        completeAnnexation(
+          this.deps.world,
+          this.diplomacy,
+          this.military,
+          pending.war,
+          pending.nation,
+          pending.by,
+        ),
+      );
+      this.invalidateFronts();
+    }
+    for (const event of stepNuclearDay(this.nuclearEnv(date))) {
+      this.record(date, event);
+    }
     stepNavalDay(
       this.ctx,
       this.naval,
@@ -1205,7 +1292,8 @@ export class VeritableSimImpl implements VeritableSim {
         this.economy.nations[id],
         this.politics.nations[id],
         enemiesOf(this.diplomacy, id).length > 0,
-        1 + lawModifiers(this.ctx, this.politics.nations[id]).manpowerBonus,
+        (1 + lawModifiers(this.ctx, this.politics.nations[id]).manpowerBonus) *
+          (this.nuclear.fallout[id] ?? 1),
       );
     }
     const before = this.diplomacy.wars.length;
@@ -1277,6 +1365,14 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   private sign(war: War, offer: PeaceOffer, date: string): void {
+    // J5: the dead hand of a nuclear nation about to be annexed may strike
+    // the capital of the annexer; the land then changes hands the next day.
+    let defer = false;
+    if (offer.terms.kind === "annexation") {
+      const hand = stepDeadHand(this.nuclearEnv(date), offer.to, offer.from);
+      defer = hand.fired;
+      for (const event of hand.events) this.record(date, event);
+    }
     const events = signPeace(
       this.ctx,
       this.deps.world,
@@ -1286,6 +1382,7 @@ export class VeritableSimImpl implements VeritableSim {
       war,
       offer,
       date,
+      defer,
     );
     for (const event of events) this.record(date, event, offer.terms.kind);
     // Divisions facing a former enemy go home.
@@ -1381,6 +1478,22 @@ export class VeritableSimImpl implements VeritableSim {
       case "note":
         params = { text: event.text };
         break;
+      case "nuclear-launch":
+        params = {
+          target: event.target,
+          aim: event.aim,
+          threat: String(event.threat),
+        };
+        break;
+      case "nuclear-detonation":
+        params = { by: event.by, tiles: String(event.tiles) };
+        break;
+      case "nuclear-intercepted":
+        params = { by: event.by };
+        break;
+      case "dead-hand":
+        params = { target: event.target };
+        break;
       default:
         break;
     }
@@ -1424,6 +1537,25 @@ export class VeritableSimImpl implements VeritableSim {
 
   // Nations run by the AI rules: everyone but the player, or everyone when
   // nobody plays (headless autopilot).
+  private nuclearEnv(date: string): NuclearEnv {
+    return {
+      ctx: this.ctx,
+      world: this.deps.world,
+      rng: this.rng,
+      nuclear: this.nuclear,
+      diplomacy: this.diplomacy,
+      economy: this.economy,
+      military: this.military,
+      politics: this.politics,
+      territory: this.territory,
+      nations: this.nations,
+      sheets: this.sheets,
+      fronts: this.frontViews,
+      aiNations: this.aiNations(),
+      date,
+    };
+  }
+
   private aiNations(): NationId[] {
     const player = this.playerNationId();
     return this.ctx.nationIds.filter(

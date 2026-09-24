@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { INTEREST_GROUPS, IsoDateSchema } from "./common";
+import {
+  INTEREST_GROUPS,
+  IsoDateSchema,
+  NUCLEAR_DOCTRINES,
+} from "./common";
 import { GoodIdSchema } from "./goods";
 import { SPENDING_POSTS, TAX_IDS } from "./nation";
 import { GroupIdeologiesSchema } from "./politics";
@@ -365,6 +369,34 @@ const LogisticsConfigSchema = z.object({
   range: z.number().int().positive(), // tiles
 });
 
+// Nuclear weapons (J5). Threat level of a nuclear nation: 0 at peace, 1 at
+// war, 2 when an enemy took land from it in a war going on or its capital is
+// within `capitalFrontTiles` of a front, 3 when it lost more than
+// `lostTerritoryShare` of its first-day land, its capital, or its stability
+// fell under `collapseStability`. Daily probability of a shot =
+// base[doctrine][level] x (0.5 + aggressiveness of the leader) x deterrence.
+const NuclearConfigSchema = z.object({
+  base: z.record(
+    z.enum(NUCLEAR_DOCTRINES),
+    z.tuple([share, share, share, share]),
+  ),
+  // Deterrence: the target has warheads of its own, or belongs to a
+  // collective-defence bloc with a nuclear member.
+  deterrence: share,
+  collectiveDefenseBlocs: z.array(z.string()),
+  capitalFrontTiles: z.number().int().min(0),
+  lostTerritoryShare: share,
+  collapseStability: share,
+  // Dead hand: at the annexation of a nuclear nation, p = deadHand[doctrine]
+  // x (0.5 + aggressiveness) that it strikes the capital of the annexer.
+  deadHand: z.record(z.enum(NUCLEAR_DOCTRINES), share),
+  // After any shot: relations of everyone with the shooter at most this.
+  relationsCap: z.number().min(-100).max(0),
+  // Production, GDP and population of a nation hit x (1 - falloutLoss x share
+  // of its tiles hit).
+  falloutLoss: share,
+});
+
 export const VeritableConfigSchema = z.object({
   leaderNames: z.enum(["parody", "fictional"]),
   time: z.object({
@@ -386,8 +418,8 @@ export const VeritableConfigSchema = z.object({
   naval: NavalConfigSchema,
   air: AirConfigSchema,
   logistics: LogisticsConfigSchema,
+  nuclear: NuclearConfigSchema,
   ai: z.object({
-    // Minimal fiscal rule of nations nobody plays (not the J5 AI).
     fiscal: z.object({
       maxDeficitToGdp: share,
       adjustPerMonth: share,

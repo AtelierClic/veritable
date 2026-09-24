@@ -1380,7 +1380,11 @@ export class PlayerImpl implements Player {
     spawnTile: TileRef,
     params: UnitParams<T>,
   ): Unit {
-    if (this.mg.config().isUnitDisabled(type)) {
+    // VERITABLE: warheads of the Véritable nuclear system (isVeritableWarhead).
+    if (
+      this.mg.config().isUnitDisabled(type) &&
+      !this.isVeritableWarhead(type)
+    ) {
       throw new Error(
         `Attempted to build disabled unit ${type} at tile ${spawnTile} by player ${this.name()}`,
       );
@@ -1432,11 +1436,26 @@ export class PlayerImpl implements Player {
     return closest?.unit ?? false;
   }
 
+  // VERITABLE: in a campaign the atom and hydrogen bombs are disabled for
+  // construction (ConstructionExecution refuses them, the build bar hides
+  // them), but the Véritable nuclear system (doctrines, dead hand) launches
+  // them through NukeExecution, which builds them here.
+  private isVeritableWarhead(unitType: UnitType): boolean {
+    return (
+      (unitType === UnitType.AtomBomb || unitType === UnitType.HydrogenBomb) &&
+      this.mg.config().isVeritable()
+    );
+  }
+
   private canBuildUnitType(
     unitType: UnitType,
     knownCost: Gold | null = null,
   ): boolean {
-    if (this.mg.config().isUnitDisabled(unitType)) {
+    // VERITABLE: warheads of the Véritable nuclear system (isVeritableWarhead).
+    if (
+      this.mg.config().isUnitDisabled(unitType) &&
+      !this.isVeritableWarhead(unitType)
+    ) {
       return false;
     }
     const cost = knownCost ?? this.mg.unitInfo(unitType).cost(this.mg, this);

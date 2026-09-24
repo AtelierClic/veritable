@@ -376,6 +376,27 @@
     "infrastructureScale": 50,
     "range": 40
   },
+  "nuclear": {
+    "base": {
+      "first-use-possible": [0, 0.000001, 0.0001, 0.002],
+      "no-first-use": [0, 0, 0.00002, 0.001],
+      "undeclared": [0, 0.000001, 0.0001, 0.002],
+      "unpredictable": [0, 0.000005, 0.0003, 0.004]
+    },
+    "deterrence": 0.1,
+    "collectiveDefenseBlocs": ["nato"],
+    "capitalFrontTiles": 100,
+    "lostTerritoryShare": 0.5,
+    "collapseStability": 0.15,
+    "deadHand": {
+      "first-use-possible": 0.5,
+      "no-first-use": 0.3,
+      "undeclared": 0.5,
+      "unpredictable": 0.8
+    },
+    "relationsCap": -80,
+    "falloutLoss": 0.9
+  },
   "ai": {
     "fiscal": {
       "maxDeficitToGdp": 0.03,

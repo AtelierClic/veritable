@@ -66,6 +66,10 @@ export class VeritableScreens extends LitElement {
     maxDivisions: null,
   };
   @state() private error: string | null = null;
+  // Nuclear shot of the player (J5): the first click arms it, the second
+  // fires.
+  @state() private armedShot: { target: string; aim: "front" | "capital" } | null =
+    null;
 
   private sim: RemoteVeritableSim | null = null;
   private timer: ReturnType<typeof setInterval> | null = null;
@@ -515,6 +519,7 @@ export class VeritableScreens extends LitElement {
       ${wars.length === 0
         ? html`<div class="text-gray-400">${vt("screen.war.no-war")}</div>`
         : wars.map((w) => this.renderWarEntry(view, w))}
+      ${this.renderNuclear(view)}
       <div class="mt-1 font-bold">${vt("screen.war.fronts")}</div>
       ${fronts.length === 0
         ? html`<div class="text-gray-400">${vt("screen.war.no-front")}</div>`
@@ -539,6 +544,106 @@ export class VeritableScreens extends LitElement {
           ${m.divisions.map((d) => this.renderDivision(view, d))}
         </tbody>
       </table>
+    `;
+  }
+
+  // Nuclear weapons (J5): the arsenal of the player, its threat level, the
+  // risk that each nuclear power fires today, the dead hand of the enemies,
+  // and the shot (two clicks).
+  private renderNuclear(view: ReadonlyWorldView): TemplateResult {
+    const me = view.playerNation!;
+    const mine = view.nuclear.nations[me];
+    const enemies = view.diplomacy.wars.flatMap((w) =>
+      w.aggressors.includes(me)
+        ? w.defenders
+        : w.defenders.includes(me)
+          ? w.aggressors
+          : [],
+    );
+    const powers = Object.entries(view.nuclear.nations);
+    const shot = (target: string, aim: "front" | "capital") => {
+      const armed =
+        this.armedShot?.target === target && this.armedShot.aim === aim;
+      return html`<button
+        class="rounded px-2 ${armed ? "bg-red-600" : "bg-red-900"}"
+        @click=${() => {
+          if (!armed) {
+            this.armedShot = { target, aim };
+            return;
+          }
+          this.armedShot = null;
+          void this.command({
+            type: "nuclear-launch",
+            target,
+            aim,
+            confirmed: true,
+          });
+        }}
+      >
+        ${vt(armed ? "screen.nuclear.confirm" : `screen.nuclear.fire-${aim}`, {
+          nation: this.nationLabel(view, target),
+        })}
+      </button>`;
+    };
+    return html`
+      <div class="mt-1 font-bold">${vt("screen.nuclear.title")}</div>
+      ${mine === undefined
+        ? html`<div class="text-gray-400">${vt("screen.nuclear.none")}</div>`
+        : html`<div>
+            ${vt("screen.nuclear.arsenal", {
+              warheads: mine.warheads,
+              doctrine: vt(`doctrine.${mine.doctrine}`),
+              threat: vt(`screen.nuclear.threat-${mine.threat}`),
+            })}
+          </div>`}
+      <table class="w-full text-right">
+        <thead>
+          <tr class="text-gray-300">
+            <th class="text-left">${vt("screen.nuclear.power")}</th>
+            <th>${vt("screen.nuclear.warheads")}</th>
+            <th>${vt("screen.nuclear.doctrine")}</th>
+            <th>${vt("screen.nuclear.threat")}</th>
+            <th>${vt("screen.nuclear.risk")}</th>
+            <th>${vt("screen.nuclear.dead-hand")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${powers.map(
+            ([id, n]) =>
+              html`<tr>
+                <td class="text-left">${this.nationLabel(view, id)}</td>
+                <td>${n.warheads}</td>
+                <td>${vt(`doctrine.${n.doctrine}`)}</td>
+                <td>${vt(`screen.nuclear.threat-${n.threat}`)}</td>
+                <td>${pct(365 * (view.nuclearRisk[id] ?? 0), 2)}</td>
+                <td>${pct(view.deadHand[id] ?? 0, 0)}</td>
+              </tr>`,
+          )}
+        </tbody>
+      </table>
+      <div class="text-gray-400">${vt("screen.nuclear.risk-note")}</div>
+      ${mine !== undefined && mine.warheads > 0 && enemies.length > 0
+        ? html`<div class="mt-1 flex flex-wrap gap-1">
+            ${[...new Set(enemies)].map(
+              (enemy) => html`${shot(enemy, "front")}${shot(enemy, "capital")}`,
+            )}
+          </div>`
+        : nothing}
+      ${view.nuclear.strikes.length > 0
+        ? html`<div class="mt-1">
+            ${view.nuclear.strikes.slice(-5).map(
+              (s) =>
+                html`<div>
+                  ${vt("screen.nuclear.strike", {
+                    date: s.date,
+                    by: this.nationLabel(view, s.by),
+                    target: this.nationLabel(view, s.target),
+                    status: vt(`screen.nuclear.status-${s.status}`),
+                  })}
+                </div>`,
+            )}
+          </div>`
+        : nothing}
     `;
   }
 
@@ -676,6 +781,19 @@ export class VeritableScreens extends LitElement {
               </button>`,
           )}
         </div>
+        ${this.peaceTerms.kind === "annexation"
+          ? enemies
+              .filter((enemy) => (view.deadHand[enemy] ?? 0) > 0)
+              .map(
+                (enemy) =>
+                  html`<div class="text-red-300">
+                    ${vt("screen.nuclear.dead-hand-warning", {
+                      nation: this.nationLabel(view, enemy),
+                      probability: pct(view.deadHand[enemy], 0),
+                    })}
+                  </div>`,
+              )
+          : nothing}
       </div>
     `;
   }
@@ -1470,7 +1588,9 @@ export class VeritableScreens extends LitElement {
   private journalCategory(kind: string): string {
     if (kind === "note") return "notes";
     if (kind === "objective-completed") return "objectives";
-    if (/^(war|peace|annexation|landing)/.test(kind)) return "war";
+    if (/^(war|peace|annexation|landing|nuclear|dead-hand)/.test(kind)) {
+      return "war";
+    }
     if (/^sanctions/.test(kind)) return "diplomacy";
     if (/^(austerity|sovereign|bloc-reprimand)/.test(kind)) return "economy";
     if (kind === "campaign-started" || kind === "nation-status") return "other";
@@ -1616,6 +1736,21 @@ export class VeritableScreens extends LitElement {
                 ...(j.params.reason === undefined
                   ? {}
                   : { reason: vt(`law.reason.${j.params.reason}`) }),
+                ...(j.params.aim === undefined
+                  ? {}
+                  : { aim: vt(`screen.nuclear.aim-${j.params.aim}`) }),
+                ...(j.params.target === undefined
+                  ? {}
+                  : { target: this.nationLabel(view, j.params.target) }),
+                ...(j.params.by === undefined
+                  ? {}
+                  : { by: this.nationLabel(view, j.params.by) }),
+                ...(j.params.to === undefined
+                  ? {}
+                  : { to: this.nationLabel(view, j.params.to) }),
+                ...(j.params.against === undefined
+                  ? {}
+                  : { against: this.nationLabel(view, j.params.against) }),
               })}
             </div>`,
         )}

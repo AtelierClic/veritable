@@ -126,7 +126,37 @@ export function refuseOffer(war: War, offer: PeaceOffer): PeaceEvent {
   };
 }
 
-// Applies the terms and ends the war.
+// The land of an annexed nation changes hands (J3a; J5: after the dead hand
+// may have fired, see signPeace).
+export function completeAnnexation(
+  world: WorldPort,
+  diplomacy: DiplomacyState,
+  military: MilitaryState,
+  war: string,
+  nation: NationId,
+  by: NationId,
+): PeaceEvent {
+  const moved = world.transferAll(nation, by);
+  world.cede(by);
+  diplomacy.contestedRegions.push({
+    region: `${war}-annexation`,
+    controller: by,
+    claimants: [nation],
+    tiles: moved,
+  });
+  const loser = military.nations[nation];
+  if (loser !== undefined) {
+    for (const division of loser.divisions) {
+      division.front = null;
+      division.segment = null;
+    }
+  }
+  return { type: "annexation", nation, by };
+}
+
+// Applies the terms and ends the war. With `deferAnnexation` (the dead hand
+// of the annexed nation fired, J5), the land changes hands the next day, once
+// the warhead has left its silo: the annexation is queued in the diplomacy.
 export function signPeace(
   ctx: EconomyContext,
   world: WorldPort,
@@ -136,6 +166,7 @@ export function signPeace(
   war: War,
   offer: PeaceOffer,
   date: string,
+  deferAnnexation = false,
 ): PeaceEvent[] {
   const events: PeaceEvent[] = [];
   const { from, to, terms } = offer;
@@ -151,22 +182,18 @@ export function signPeace(
     });
   }
   if (terms.kind === "annexation") {
-    const moved = world.transferAll(to, from);
-    world.cede(from);
-    diplomacy.contestedRegions.push({
-      region: `${war.id}-annexation`,
-      controller: from,
-      claimants: [to],
-      tiles: moved,
-    });
-    const loser = military.nations[to];
-    if (loser !== undefined) {
-      for (const division of loser.divisions) {
-        division.front = null;
-        division.segment = null;
-      }
+    if (deferAnnexation) {
+      diplomacy.pendingAnnexations.push({
+        war: war.id,
+        nation: to,
+        by: from,
+        at: date,
+      });
+    } else {
+      events.push(
+        completeAnnexation(world, diplomacy, military, war.id, to, from),
+      );
     }
-    events.push({ type: "annexation", nation: to, by: from });
   }
   if (terms.reparationsPctGdp > 0 && terms.reparationYears > 0) {
     diplomacy.reparations.push({

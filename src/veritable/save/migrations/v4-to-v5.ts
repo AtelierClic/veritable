@@ -5,6 +5,7 @@ import {
   TILE_NATION_MASK,
 } from "../../data/schemas/save";
 import { SaveFileV4 } from "../../data/schemas/saveV4";
+import { initNuclear } from "../../sim/nuclear/nuclear";
 import { monthIndex } from "../../sim/war/contest";
 import { MigrationContext } from "./index";
 
@@ -17,7 +18,10 @@ import { MigrationContext } from "./index";
 //     (a nation at war then measures its later losses from that day);
 //   - the structures of each nation, counted from the core state of the save
 //     (levels summed): only those built after the migration are charged to
-//     its budget.
+//     its budget;
+//   - nuclear weapons: the arsenals of the sheets, untouched (nobody fired
+//     before the J5), no pariah, no delayed annexation; the coalition calls
+//     open in the v4 were all for the defenders.
 export function v4ToV5(
   save: SaveFileV4,
   context: MigrationContext | undefined,
@@ -48,10 +52,23 @@ export function v4ToV5(
     }
     structures[player.nation] = count;
   }
+  const sheets = save.nations
+    .map((n) => context?.nationData(n.id))
+    .filter((s) => s !== undefined);
   return {
     ...save,
     schemaVersion: 5,
+    diplomacy: {
+      ...save.diplomacy,
+      coalitionCalls: save.diplomacy.coalitionCalls.map((c) => ({
+        ...c,
+        side: "defenders" as const,
+      })),
+      pariahs: [],
+      pendingAnnexations: [],
+    },
     territory: { initialTiles, structures, constructionCost: {} },
+    nuclear: initNuclear(sheets),
     contest,
   } as SaveFileV5;
 }
