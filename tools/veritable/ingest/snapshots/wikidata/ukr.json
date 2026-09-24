@@ -1,16 +1,18 @@
 {
  "nation": "UKR",
  "country": "Q212",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
   {
    "role": "head-of-government",
    "person": {
-    "qid": "Q124101558",
-    "label": "Serhiï Koretskyï",
-    "born": "1978-03-14",
-    "party": null
+    "qid": "Q61112536",
+    "label": "Ioulia Svyrydenko",
+    "born": "1985-12-25",
+    "died": null,
+    "parties": []
    }
   },
   {
@@ -19,7 +21,10 @@
     "qid": "Q3874799",
     "label": "Volodymyr Zelensky",
     "born": "1978-01-25",
-    "party": "Q327591"
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
    }
   }
  ],
@@ -50,10 +55,13 @@
     }
    ],
    "leader": {
-    "qid": "Q55107948",
-    "label": "Olena Chouliak",
-    "born": "1976-01-24",
-    "party": "Q52292915"
+    "qid": "Q65199339",
+    "label": "Olexandre Kornienko",
+    "born": "1984-05-12",
+    "died": null,
+    "parties": [
+     "Q52292915"
+    ]
    }
   },
   {
@@ -77,7 +85,10 @@
     "qid": "Q31919",
     "label": "Vitali Klitschko",
     "born": "1971-07-19",
-    "party": "Q4349891"
+    "died": null,
+    "parties": [
+     "Q4349891"
+    ]
    }
   },
   {
@@ -117,7 +128,10 @@
     "qid": "Q48283",
     "label": "Ioulia Tymochenko",
     "born": "1960-11-27",
-    "party": "Q45376"
+    "died": null,
+    "parties": [
+     "Q45376"
+    ]
    }
   },
   {
@@ -138,10 +152,13 @@
     }
    ],
    "leader": {
-    "qid": "Q2622781",
-    "label": "Sviatoslav Vakartchouk",
-    "born": "1975-05-14",
-    "party": "Q63869413"
+    "qid": "Q94633869",
+    "label": "Kira Roudyk",
+    "born": "1985-10-14",
+    "died": null,
+    "parties": [
+     "Q63869413"
+    ]
    }
   }
  ]

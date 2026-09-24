@@ -21,17 +21,17 @@
       },
       "wikidata": "Q39259",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Régime présidentiel : le chef de l'État est aussi chef du gouvernement ; mêmes traits."
     },
     {
-      "id": "tur-deniz-baykal",
+      "id": "tur-ozgur-ozel",
       "role": "party-leader",
       "names": {
-        "parody": "leader.tur-deniz-baykal.parody",
-        "fictional": "leader.tur-deniz-baykal.fictional"
+        "parody": "leader.tur-ozgur-ozel.parody",
+        "fictional": "leader.tur-ozgur-ozel.fictional"
       },
-      "born": "1938-07-20",
+      "born": "1974-09-21",
       "party": "tur-parti-republicain-du-peuple",
       "traits": {
         "economic": -0.175,
@@ -42,9 +42,9 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "wikidata": "Q381297",
+      "wikidata": "Q17046812",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -67,17 +67,17 @@
       },
       "wikidata": "Q1206951",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
-      "id": "tur-meral-aksener",
+      "id": "tur-musavat-dervisoglu",
       "role": "party-leader",
       "names": {
-        "parody": "leader.tur-meral-aksener.parody",
-        "fictional": "leader.tur-meral-aksener.fictional"
+        "parody": "leader.tur-musavat-dervisoglu.parody",
+        "fictional": "leader.tur-musavat-dervisoglu.fictional"
       },
-      "born": "1956-07-08",
+      "born": "1960-02-01",
       "party": "tur-le-bon-parti",
       "traits": {
         "economic": 0.175,
@@ -88,19 +88,19 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "wikidata": "Q434923",
+      "wikidata": "Q61075939",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
-      "id": "tur-tuncer-bakirhan",
+      "id": "tur-tulay-hatimogullari-oruc",
       "role": "party-leader",
       "names": {
-        "parody": "leader.tur-tuncer-bakirhan.parody",
-        "fictional": "leader.tur-tuncer-bakirhan.fictional"
+        "parody": "leader.tur-tulay-hatimogullari-oruc.parody",
+        "fictional": "leader.tur-tulay-hatimogullari-oruc.fictional"
       },
-      "born": "1970-01-01",
+      "born": "1977-01-01",
       "party": "tur-parti-de-la-gauche-verte",
       "traits": {
         "economic": -0.8,
@@ -111,9 +111,9 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "wikidata": "Q6041643",
+      "wikidata": "Q106132584",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     }
   ],
@@ -145,7 +145,7 @@
       "support": 0.356,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Milletvekili genel seçimi 2023 (YSK)"
       },
       "leader": "tur-recep-tayyip-erdogan"
@@ -164,10 +164,10 @@
       "support": 0.254,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Milletvekili genel seçimi 2023 (YSK)"
       },
-      "leader": "tur-deniz-baykal"
+      "leader": "tur-ozgur-ozel"
     },
     {
       "id": "tur-parti-d-action-nationaliste",
@@ -195,7 +195,7 @@
       "support": 0.101,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Milletvekili genel seçimi 2023 (YSK)"
       },
       "leader": "tur-devlet-bahceli"
@@ -214,10 +214,10 @@
       "support": 0.097,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Milletvekili genel seçimi 2023 (YSK)"
       },
-      "leader": "tur-meral-aksener"
+      "leader": "tur-musavat-dervisoglu"
     },
     {
       "id": "tur-parti-de-la-gauche-verte",
@@ -233,10 +233,10 @@
       "support": 0.088,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Milletvekili genel seçimi 2023 (YSK)"
       },
-      "leader": "tur-tuncer-bakirhan"
+      "leader": "tur-tulay-hatimogullari-oruc"
     }
   ]
 }

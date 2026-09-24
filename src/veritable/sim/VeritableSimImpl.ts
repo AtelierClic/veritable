@@ -1136,6 +1136,11 @@ export class VeritableSimImpl implements VeritableSim {
     for (const id of this.ctx.nationIds) {
       const economy = this.economy.nations[id];
       const politics = this.politics.nations[id];
+      // War aid fades at peace (J5).
+      if (enemiesOf(this.diplomacy, id).length === 0) {
+        economy.grantsPctGdp *=
+          1 - this.deps.config.budget.grantsPeaceDecayPerMonth;
+      }
       const corruption = clamp01(
         politics.corruption + lawModifiers(this.ctx, politics).corruption,
       );

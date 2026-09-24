@@ -52,7 +52,6 @@ async function main(): Promise<void> {
     const crises = Object.values(result.politics).map(
       (p) =>
         p.unrestStarts +
-        p.coups +
         p.coupAttempts +
         p.fraudDetected +
         p.revolutions,
@@ -78,7 +77,6 @@ async function main(): Promise<void> {
     Object.values(r.politics).some(
       (p) =>
         p.unrestStarts +
-          p.coups +
           p.coupAttempts +
           p.fraudDetected +
           p.revolutions >
@@ -106,6 +104,25 @@ async function main(): Promise<void> {
         months: r.politics[id].juntaMonths,
       })),
   );
+  // J5 targets of the coup formula: juntas in Russia and Turkey in at most
+  // two seeds each, no coup in a democracy that stayed stable.
+  const juntaSeeds = Object.fromEntries(
+    nations.map((id) => [
+      id,
+      {
+        ever: results.filter((r) => r.politics[id].juntaMonths > 0).length,
+        atEnd: results.filter((r) => r.politics[id].finalRegime === "junta")
+          .length,
+      },
+    ]),
+  );
+  const coupsInStableDemocracies = results.flatMap((r) =>
+    nations.flatMap((id) =>
+      r.politics[id].coupsInStableDemocracy.map(
+        (date) => `${id}@${date}@seed${r.seed}`,
+      ),
+    ),
+  );
   const summary = {
     seeds: results.map((r) => r.seed),
     years,
@@ -116,7 +133,23 @@ async function main(): Promise<void> {
     campaigns: results.length,
     unexplainedJuntas,
     juntaMonths,
+    juntaSeeds,
+    coupsInStableDemocracies,
+    coups: {
+      successful: results.reduce(
+        (s, r) => s + nations.reduce((t, id) => t + r.politics[id].coups, 0),
+        0,
+      ),
+      attempts: results.reduce(
+        (s, r) =>
+          s + nations.reduce((t, id) => t + r.politics[id].coupAttempts, 0),
+        0,
+      ),
+    },
     criteria: {
+      russiaTurkeyJuntaInAtMostTwoSeeds:
+        juntaSeeds.RUS.ever <= 2 && juntaSeeds.TUR.ever <= 2,
+      noCoupInAStableDemocracy: coupsInStableDemocracies.length === 0,
       alternationInSevenNations: alternationNations.length >= 7,
       crisisInHalfOfCampaigns: crisisCampaigns * 2 >= results.length,
       noUnexplainedJunta: unexplainedJuntas.length === 0,

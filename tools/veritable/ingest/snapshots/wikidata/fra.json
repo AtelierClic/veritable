@@ -1,6 +1,7 @@
 {
  "nation": "FRA",
  "country": "Q142",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
@@ -10,7 +11,10 @@
     "qid": "Q20089181",
     "label": "Sébastien Lecornu",
     "born": "1986-06-11",
-    "party": "Q23731823"
+    "died": null,
+    "parties": [
+     "Q23731823"
+    ]
    }
   },
   {
@@ -19,7 +23,10 @@
     "qid": "Q3052772",
     "label": "Emmanuel Macron",
     "born": "1977-12-21",
-    "party": "Q23731823"
+    "died": null,
+    "parties": [
+     "Q23731823"
+    ]
    }
   }
  ],
@@ -73,7 +80,10 @@
     "qid": "Q40655898",
     "label": "Jordan Bardella",
     "born": "1995-09-13",
-    "party": "Q205150"
+    "died": null,
+    "parties": [
+     "Q205150"
+    ]
    }
   },
   {
@@ -97,7 +107,10 @@
     "qid": "Q30339350",
     "label": "Gabriel Attal",
     "born": "1989-03-16",
-    "party": "Q23731823"
+    "died": null,
+    "parties": [
+     "Q23731823"
+    ]
    }
   },
   {
@@ -125,7 +138,11 @@
     "qid": "Q29575749",
     "label": "Manuel Bompard",
     "born": "1986-03-30",
-    "party": "Q922707"
+    "died": null,
+    "parties": [
+     "Q27978402",
+     "Q922707"
+    ]
    }
   },
   {
@@ -149,7 +166,10 @@
     "qid": "Q3351018",
     "label": "Olivier Faure",
     "born": "1968-08-18",
-    "party": "Q170972"
+    "died": null,
+    "parties": [
+     "Q170972"
+    ]
    }
   },
   {
@@ -169,7 +189,10 @@
     "qid": "Q2926942",
     "label": "Bruno Retailleau",
     "born": "1960-11-20",
-    "party": "Q20012759"
+    "died": null,
+    "parties": [
+     "Q20012759"
+    ]
    }
   },
   {
@@ -197,7 +220,10 @@
     "qid": "Q29917987",
     "label": "Marine Tondelier",
     "born": "1986-08-23",
-    "party": "Q613786"
+    "died": null,
+    "parties": [
+     "Q613786"
+    ]
    }
   }
  ]

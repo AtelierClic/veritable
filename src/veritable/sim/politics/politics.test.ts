@@ -15,7 +15,7 @@ import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { holdElection, projectShares } from "./elections";
 import { affinity, insideWindow } from "./ideology";
-import { ageAt } from "./leaders";
+import { ageAt, yearlyDeathProbability } from "./leaders";
 
 const DAY = 1440;
 
@@ -332,10 +332,12 @@ describe("coups, revolutions and the AI", () => {
     p.legitimacy = 0;
     p.stability = 0;
     p.groups!.military = 0;
-    p.regime = "junta"; // coupBase 0.03 -> p = 0.03 x 4 x 3 x 1 = 0.36 a month
-    p.regimeSince = "2020-01-01"; // past the grace period
+    // coupBase 0.02 -> p = 0.02 x 4 x (1 - 0)^2 x (1 + 2 x 1) x (1 - 0)
+    //                     x (1 + 0) = 0.24 a month
+    p.regime = "failed-state";
+    p.regimeSince = "2020-01-01";
     let coup = false;
-    for (let m = 0; m < 24 && !coup; m++) {
+    for (let m = 0; m < 36 && !coup; m++) {
       for (let d = 0; d < 31; d++) sim.advance(DAY);
       coup = sim.read().politics.AAA.coups > 0;
     }
@@ -353,7 +355,7 @@ describe("coups, revolutions and the AI", () => {
     expect(after.groups).not.toBeNull();
   });
 
-  it("no coup during the grace period of a new regime; a junta hands power back after a while", () => {
+  it("no coup in the twelve months after a regime change; a junta hands power back after a while", () => {
     const config = quietConfig();
     config.politics.coups.failureShare = 0;
     config.politics.coups.juntaTransitionMonths = 12;
@@ -364,18 +366,49 @@ describe("coups, revolutions and the AI", () => {
     p.stability = 0;
     p.groups!.military = 0;
     p.regime = "junta";
+    p.regimeBefore = "presidential";
     p.regimeSince = "2026-01-01";
-    months(12);
-    // Grace: 36 months without any attempt, whatever the odds.
+    months(11);
+    // Consolidation: twelve months without any attempt, whatever the odds.
     expect(p.coups).toBe(0);
     expect(p.coupRisk).toBe(0);
+    months(1);
     // Then the junta (started 2026-01) hands power back to civilians: the
-    // regime before it is unknown here, so a parliamentary one.
+    // democratic regime it overthrew.
     expect(sim.read().journal.map((j) => j.kind)).toContain(
       "civilian-transition",
     );
-    expect(p.regime).toBe("parliamentary");
+    expect(p.regime).toBe("presidential");
     expect(p.nextElection).not.toBeNull();
+  });
+
+  it("the J5 coup formula: no grace at the start of the campaign, and a stable democracy with content soldiers hardly ever falls", () => {
+    const config = quietConfig();
+    const { sim, months } = campaign({ ...two, config });
+    const p = live(sim, "AAA");
+    // A regime that was there on the first day has no consolidation.
+    p.regime = "junta";
+    p.regimeBefore = null;
+    p.regimeSince = "2026-01-01";
+    p.legitimacy = 0.4;
+    p.stability = 0.5;
+    p.groups!.military = 0.5;
+    months(1);
+    // 0.005 x 4 x 0.5^2 x (1 + 2 x (1 - s)) x (1 - 0.4) x (1 + 0), with the
+    // stability of the month (the weekly step moves it).
+    const s = p.stability;
+    expect(p.coupRisk).toBeCloseTo(
+      0.005 * 4 * 0.25 * (1 + 2 * (1 - s)) * 0.6,
+      6,
+    );
+    // Parliamentary, stability 0.8, legitimacy 0.8, soldiers at 0.6: about
+    // one chance in a hundred thousand a month.
+    p.regime = "parliamentary";
+    p.legitimacy = 0.8;
+    p.stability = 0.8;
+    p.groups!.military = 0.6;
+    months(1);
+    expect(p.coupRisk).toBeLessThan(1e-4);
   });
 
   it("three angry groups and a long instability bring a revolution and elections in six months", () => {
@@ -405,6 +438,11 @@ describe("coups, revolutions and the AI", () => {
   it("the leader ages and a dead leader is replaced by the party", () => {
     expect(ageAt("1970-06-15", "2026-06-14")).toBe(55);
     expect(ageAt("1970-06-15", "2026-06-15")).toBe(56);
+    // J5 mortality: 0.001 x e^(0.085 x (age - 30)), about 7 % a year at 80.
+    const leaders = quietConfig().politics.leaders;
+    expect(yearlyDeathProbability(leaders, 30)).toBeCloseTo(0.001, 6);
+    expect(yearlyDeathProbability(leaders, 80)).toBeGreaterThan(0.065);
+    expect(yearlyDeathProbability(leaders, 80)).toBeLessThan(0.075);
     const { sim, months } = campaign(two);
     const p = live(sim, "AAA");
     p.leader.born = "1850-01-01"; // far beyond any age: certain death

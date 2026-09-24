@@ -22,6 +22,17 @@ export function actorFromData(
   };
 }
 
+// Yearly probability that a leader of `age` dies (J5: about 7 % at 80),
+// drawn once a month (divided by 12).
+export function yearlyDeathProbability(
+  cfg: EconomyContext["config"]["politics"]["leaders"],
+  age: number,
+): number {
+  return (
+    cfg.deathBase * Math.exp(cfg.deathExponent * (age - cfg.deathAgeOffset))
+  );
+}
+
 export function ageAt(born: string, date: string): number {
   const [by, bm, bd] = born.split("-").map(Number);
   const [y, m, d] = date.split("-").map(Number);
@@ -108,10 +119,8 @@ export function stepLeaderAgeing(
   politics: NationPolitics,
   date: string,
 ): LeaderEvent[] {
-  const cfg = ctx.config.politics.leaders;
   const age = ageAt(politics.leader.born, date);
-  const yearly =
-    cfg.deathBase * Math.exp(cfg.deathExponent * (age - cfg.deathAgeOffset));
+  const yearly = yearlyDeathProbability(ctx.config.politics.leaders, age);
   if (rng.next() >= Math.min(1, yearly / 12)) return [];
   const dead = politics.leader;
   const events: LeaderEvent[] = [

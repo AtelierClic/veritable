@@ -1,16 +1,20 @@
 {
  "nation": "GBR",
  "country": "Q145",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
   {
    "role": "head-of-government",
    "person": {
-    "qid": "Q269909",
-    "label": "Andy Burnham",
-    "born": "1970-01-07",
-    "party": "Q9630"
+    "qid": "Q6383803",
+    "label": "Keir Starmer",
+    "born": "1962-09-02",
+    "died": null,
+    "parties": [
+     "Q9630"
+    ]
    }
   },
   {
@@ -19,7 +23,8 @@
     "qid": "Q43274",
     "label": "Charles III",
     "born": "1948-11-14",
-    "party": null
+    "died": null,
+    "parties": []
    }
   }
  ],
@@ -38,10 +43,13 @@
     }
    ],
    "leader": {
-    "qid": "Q269909",
-    "label": "Andy Burnham",
-    "born": "1970-01-07",
-    "party": "Q9630"
+    "qid": "Q6383803",
+    "label": "Keir Starmer",
+    "born": "1962-09-02",
+    "died": null,
+    "parties": [
+     "Q9630"
+    ]
    }
   },
   {
@@ -81,7 +89,10 @@
     "qid": "Q21592171",
     "label": "Kemi Badenoch",
     "born": "1980-01-02",
-    "party": "Q9626"
+    "died": null,
+    "parties": [
+     "Q9626"
+    ]
    }
   },
   {
@@ -113,7 +124,10 @@
     "qid": "Q318471",
     "label": "Nigel Farage",
     "born": "1964-04-03",
-    "party": "Q104721252"
+    "died": null,
+    "parties": [
+     "Q104721252"
+    ]
    }
   },
   {
@@ -137,7 +151,10 @@
     "qid": "Q296689",
     "label": "Edward Davey",
     "born": "1965-12-25",
-    "party": "Q9624"
+    "died": null,
+    "parties": [
+     "Q9624"
+    ]
    }
   },
   {
@@ -153,7 +170,10 @@
     "qid": "Q75974863",
     "label": "Zack Polanski",
     "born": "1982-11-02",
-    "party": "Q9669"
+    "died": null,
+    "parties": [
+     "Q9669"
+    ]
    }
   },
   {
@@ -181,7 +201,10 @@
     "qid": "Q333811",
     "label": "John Swinney",
     "born": "1964-04-13",
-    "party": "Q10658"
+    "died": null,
+    "parties": [
+     "Q10658"
+    ]
    }
   }
  ]

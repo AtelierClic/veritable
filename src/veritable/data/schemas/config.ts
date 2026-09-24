@@ -96,6 +96,9 @@ const BudgetConfigSchema = z.object({
   // What a structure (or a level of it) built on the map costs the national
   // budget, US$, charged the month after (J5). Keys: OpenFront unit types.
   structureCostUsd: z.record(z.string(), z.number().min(0)),
+  // Foreign grants of the sheet are war aid (Ukraine): at peace they fade by
+  // this share a month (J5).
+  grantsPeaceDecayPerMonth: share,
 });
 
 const PoliticsConfigSchema = z.object({
@@ -182,18 +185,21 @@ const PoliticsConfigSchema = z.object({
     rampMonths: z.number().min(1),
   }),
   coups: z.object({
-    // p = coupBase x (1 + militaryWeight x (1 - s_military))
+    // p = coupBase x militaryScale x (1 - s_military)^militaryExponent
     //     x (1 + stabilityWeight x (1 - stability)) x (1 - legitimacy)
-    //     x (1 + exhaustion)
-    militaryWeight: z.number().min(0),
+    //     x (1 + exhaustion) x (fraud detected within the year ? 2 : 1)
+    //     x the laws in force (J5 formula)
+    militaryScale: z.number().min(0),
+    militaryExponent: z.number().min(0),
     stabilityWeight: z.number().min(0),
     failureShare: share, // share of the attempts that fail
     democracyRelationsHit: z.number(),
     failedStabilityHit: share,
     failedMilitaryHit: share,
-    // No coup attempt in the months after a regime change (a new regime
-    // settles in), and a junta hands power back after a while.
-    graceMonths: z.number().int().min(0),
+    // No coup attempt in the months after a regime change that happened in
+    // the campaign (the new regime consolidates; the regime of the first
+    // day is not new), and a junta hands power back after a while.
+    consolidationMonths: z.number().int().min(0),
     juntaTransitionMonths: z.number().int().min(0),
     juntaTransitionMonthlyProbability: share,
   }),

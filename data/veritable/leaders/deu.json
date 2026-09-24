@@ -21,7 +21,7 @@
       },
       "wikidata": "Q566257",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Chrétien-démocrate libéral en économie (+0,6), atlantiste et pro-européen (−0,4) ; ton plus dur sur l'immigration (autorité +0,2) et le réarmement (agressivité 0,4) ; passé dans la finance : corruption 0,2."
     },
     {
@@ -44,7 +44,7 @@
       },
       "wikidata": "Q76658",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Social-démocrate, président fédéral au rôle protocolaire ; internationaliste convaincu ; peu agressif ; compétence élevée (deux fois ministre des Affaires étrangères)."
     },
     {
@@ -67,17 +67,17 @@
       },
       "wikidata": "Q27975838",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
-      "id": "deu-saskia-esken",
+      "id": "deu-lars-klingbeil",
       "role": "party-leader",
       "names": {
-        "parody": "leader.deu-saskia-esken.parody",
-        "fictional": "leader.deu-saskia-esken.fictional"
+        "parody": "leader.deu-lars-klingbeil.parody",
+        "fictional": "leader.deu-lars-klingbeil.fictional"
       },
-      "born": "1961-08-28",
+      "born": "1978-02-23",
       "party": "deu-parti-social-democrate-d-allemagne",
       "traits": {
         "economic": -0.175,
@@ -88,19 +88,19 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "wikidata": "Q15813082",
+      "wikidata": "Q1806261",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
-      "id": "deu-franziska-brantner",
+      "id": "deu-felix-banaszak",
       "role": "party-leader",
       "names": {
-        "parody": "leader.deu-franziska-brantner.parody",
-        "fictional": "leader.deu-franziska-brantner.fictional"
+        "parody": "leader.deu-felix-banaszak.parody",
+        "fictional": "leader.deu-felix-banaszak.fictional"
       },
-      "born": "1979-08-24",
+      "born": "1989-10-24",
       "party": "deu-alliance-90-les-verts",
       "traits": {
         "economic": -0.2,
@@ -111,9 +111,9 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "wikidata": "Q76265",
+      "wikidata": "Q17591264",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -136,7 +136,7 @@
       },
       "wikidata": "Q112428905",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -159,7 +159,7 @@
       },
       "wikidata": "Q50664",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -182,7 +182,7 @@
       },
       "wikidata": "Q77193",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     }
   ],
@@ -201,7 +201,7 @@
       "support": 0.225,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)"
       },
       "leader": "deu-friedrich-merz"
@@ -232,7 +232,7 @@
       "support": 0.208,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)"
       },
       "leader": "deu-alice-weidel"
@@ -251,10 +251,10 @@
       "support": 0.164,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)"
       },
-      "leader": "deu-saskia-esken"
+      "leader": "deu-lars-klingbeil"
     },
     {
       "id": "deu-alliance-90-les-verts",
@@ -270,10 +270,10 @@
       "support": 0.116,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)"
       },
-      "leader": "deu-franziska-brantner"
+      "leader": "deu-felix-banaszak"
     },
     {
       "id": "deu-la-gauche",
@@ -296,7 +296,7 @@
       "support": 0.088,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)"
       },
       "leader": "deu-ines-schwerdtner"
@@ -315,7 +315,7 @@
       "support": 0.06,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)"
       },
       "leader": "deu-markus-soder"
@@ -334,7 +334,7 @@
       "support": 0.05,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Bundestagswahl 2025, Zweitstimmen (Bundeswahlleiterin)"
       },
       "leader": "deu-sahra-wagenknecht"

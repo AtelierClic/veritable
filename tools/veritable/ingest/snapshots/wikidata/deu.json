@@ -1,6 +1,7 @@
 {
  "nation": "DEU",
  "country": "Q183",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
@@ -10,7 +11,10 @@
     "qid": "Q566257",
     "label": "Friedrich Merz",
     "born": "1955-11-11",
-    "party": "Q49762"
+    "died": null,
+    "parties": [
+     "Q49762"
+    ]
    }
   },
   {
@@ -19,7 +23,10 @@
     "qid": "Q76658",
     "label": "Frank-Walter Steinmeier",
     "born": "1956-01-05",
-    "party": "Q49768"
+    "died": null,
+    "parties": [
+     "Q49768"
+    ]
    }
   }
  ],
@@ -53,7 +60,10 @@
     "qid": "Q566257",
     "label": "Friedrich Merz",
     "born": "1955-11-11",
-    "party": "Q49762"
+    "died": null,
+    "parties": [
+     "Q49762"
+    ]
    }
   },
   {
@@ -109,7 +119,10 @@
     "qid": "Q27975838",
     "label": "Alice Weidel",
     "born": "1979-02-06",
-    "party": "Q6721203"
+    "died": null,
+    "parties": [
+     "Q6721203"
+    ]
    }
   },
   {
@@ -134,10 +147,13 @@
     }
    ],
    "leader": {
-    "qid": "Q15813082",
-    "label": "Saskia Esken",
-    "born": "1961-08-28",
-    "party": "Q49768"
+    "qid": "Q1806261",
+    "label": "Lars Klingbeil",
+    "born": "1978-02-23",
+    "died": null,
+    "parties": [
+     "Q49768"
+    ]
    }
   },
   {
@@ -158,10 +174,13 @@
     }
    ],
    "leader": {
-    "qid": "Q76265",
-    "label": "Franziska Brantner",
-    "born": "1979-08-24",
-    "party": "Q49766"
+    "qid": "Q17591264",
+    "label": "Felix Banaszak",
+    "born": "1989-10-24",
+    "died": null,
+    "parties": [
+     "Q49766"
+    ]
    }
   },
   {
@@ -197,7 +216,10 @@
     "qid": "Q112428905",
     "label": "Ines Schwerdtner",
     "born": "1989-08-26",
-    "party": "Q49764"
+    "died": null,
+    "parties": [
+     "Q49764"
+    ]
    }
   },
   {
@@ -229,7 +251,10 @@
     "qid": "Q50664",
     "label": "Markus Söder",
     "born": "1967-01-05",
-    "party": "Q49763"
+    "died": null,
+    "parties": [
+     "Q49763"
+    ]
    }
   },
   {
@@ -240,7 +265,12 @@
     "qid": "Q77193",
     "label": "Sahra Wagenknecht",
     "born": "1969-07-16",
-    "party": "Q123121346"
+    "died": null,
+    "parties": [
+     "Q123121346",
+     "Q152554",
+     "Q49750"
+    ]
    }
   }
  ]

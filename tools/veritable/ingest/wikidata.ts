@@ -12,8 +12,9 @@ import { jsonSha256, Lock, LOCK_FILE, readLock, SNAPSHOT_DIR } from "./sources";
 //
 // The parties come from parties.json (labels, vote shares); their QIDs are
 // resolved once through the search API and written back into parties.json.
-// Party memberships (P102) are read without an end date (P582): a former
-// party is not the current one.
+// Every mandate (P35, P6, P488) and party membership (P102) is read as it
+// stood on the start date of the scenario, through the qualifiers P580 and
+// P582: no data of the scenario dates from after its first day.
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const PARTIES_FILE = path.join(HERE, "parties.json");
@@ -41,7 +42,12 @@ export interface WikidataPerson {
   qid: string;
   label: string; // fr, else en
   born: string | null; // ISO date
-  party: string | null; // QID
+  // Date of death (P570), when Wikidata has one: nobody who died before the
+  // reference date holds an office at it.
+  died?: string | null;
+  // Party memberships (P102) valid at the reference date, QIDs sorted;
+  // the build keeps the first that is one of the listed parties.
+  parties: string[];
 }
 export interface WikidataParty {
   qid: string;
@@ -52,6 +58,9 @@ export interface WikidataParty {
 export interface WikidataSnapshot {
   nation: string;
   country: string; // QID
+  // Every mandate and membership is read as it stood on this date (the
+  // start of the scenario): P580 (start) <= date < P582 (end).
+  referenceDate: string;
   fetchedAt: string;
   license: "CC0 1.0, Wikidata";
   heads: {
@@ -74,7 +83,16 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 async function request(url: string, init: RequestInit): Promise<Response> {
   for (let attempt = 0; ; attempt++) {
     await sleep(PAUSE_MS);
-    const response = await fetch(url, init);
+    let response: Response;
+    try {
+      response = await fetch(url, init);
+    } catch (error) {
+      // A connection the server closed (it happens on a long run): again,
+      // after a pause, like a 5xx.
+      if (attempt >= 4) throw error;
+      await sleep(PAUSE_MS * 4 * (attempt + 1));
+      continue;
+    }
     if (response.ok) return response;
     if (attempt >= 4 || (response.status < 500 && response.status !== 429)) {
       throw new Error(
@@ -152,52 +170,121 @@ SELECT DISTINCT ?party ?partyEn WHERE {
   return hit.id;
 }
 
-async function fetchHeads(country: string): Promise<WikidataSnapshot["heads"]> {
-  const rows = await sparql(`
-SELECT ?role ?person ?personFr ?personEn ?born ?party WHERE {
-  { BIND("head-of-state" AS ?role) wd:${country} wdt:P35 ?person }
-  UNION
-  { BIND("head-of-government" AS ?role) wd:${country} wdt:P6 ?person }
-  OPTIONAL { ?person wdt:P569 ?born }
-  OPTIONAL {
-    ?person p:P102 ?membership . ?membership ps:P102 ?party .
-    FILTER NOT EXISTS { ?membership pq:P582 ?ended }
-  }
-  ${LABELS("?person")}
-}`);
-  const heads: WikidataSnapshot["heads"] = [];
-  for (const b of rows) {
-    const role = b.role.value as "head-of-state" | "head-of-government";
-    const qid = qidOf(b.person.value);
-    if (heads.some((h) => h.role === role && h.person.qid === qid)) continue;
-    heads.push({
-      role,
-      person: {
-        qid,
-        label: label(b, "person"),
-        born: dateOf(b.born?.value),
-        party: b.party === undefined ? null : qidOf(b.party.value),
-      },
-    });
-  }
-  return heads.sort((a, b) => a.role.localeCompare(b.role));
+// Statements are fetched with their rank and qualifiers, and filtered here:
+// the same filters written in SPARQL time out on the public endpoint.
+interface Dated {
+  start: string | null;
+  end: string | null;
+  rank: string;
 }
 
-async function fetchParty(qid: string): Promise<WikidataParty> {
+// Valid on `date`: not deprecated, started on or before it (or undated),
+// not ended by it.
+function validAt(s: Dated, date: string): boolean {
+  if (s.rank.endsWith("DeprecatedRank")) return false;
+  if (s.start !== null && s.start > date) return false;
+  if (s.end !== null && s.end <= date) return false;
+  return true;
+}
+
+// Among the valid statements: the preferred-rank one first (Wikidata marks
+// the current holder so; former chairs often keep a statement without an end
+// date), then the one that started last; ties by QID for determinism.
+function latest<T extends Dated & { qid: string }>(
+  items: T[],
+  date: string,
+): T | undefined {
+  const preferred = (i: T) => (i.rank.endsWith("PreferredRank") ? 1 : 0);
+  return items
+    .filter((i) => validAt(i, date))
+    .sort(
+      (a, b) =>
+        preferred(b) - preferred(a) ||
+        (b.start ?? "").localeCompare(a.start ?? "") ||
+        a.qid.localeCompare(b.qid),
+    )[0];
+}
+
+const datedOf = (b: Binding) => ({
+  start: dateOf(b.start?.value),
+  end: dateOf(b.end?.value),
+  rank: b.rank?.value ?? "",
+});
+
+// Holders of a property of an item, with their qualifiers.
+async function holders(
+  item: string,
+  property: string,
+): Promise<(Dated & { qid: string })[]> {
   const rows = await sparql(`
-SELECT ?partyFr ?partyEn ?ideology ?ideologyFr ?ideologyEn ?leader ?leaderFr ?leaderEn ?leaderBorn ?leaderParty WHERE {
+SELECT ?holder ?start ?end ?rank WHERE {
+  wd:${item} p:${property} ?st . ?st ps:${property} ?holder .
+  ?st wikibase:rank ?rank .
+  OPTIONAL { ?st pq:P580 ?start }
+  OPTIONAL { ?st pq:P582 ?end }
+}`);
+  return rows.map((b) => ({ qid: qidOf(b.holder.value), ...datedOf(b) }));
+}
+
+// Label, birth date and party memberships valid at the date of a person.
+async function person(qid: string, date: string): Promise<WikidataPerson> {
+  const rows = await sparql(`
+SELECT ?personFr ?personEn ?born ?died ?party ?start ?end ?rank WHERE {
+  BIND(wd:${qid} AS ?person)
+  ${LABELS("?person")}
+  OPTIONAL { ?person wdt:P569 ?born }
+  OPTIONAL { ?person wdt:P570 ?died }
+  OPTIONAL {
+    ?person p:P102 ?m . ?m ps:P102 ?party . ?m wikibase:rank ?rank .
+    OPTIONAL { ?m pq:P580 ?start }
+    OPTIONAL { ?m pq:P582 ?end }
+  }
+}`);
+  const parties = new Set<string>();
+  for (const b of rows) {
+    if (b.party !== undefined && validAt(datedOf(b), date)) {
+      parties.add(qidOf(b.party.value));
+    }
+  }
+  const first = rows[0];
+  return {
+    qid,
+    label: first?.personFr?.value ?? first?.personEn?.value ?? qid,
+    born: dateOf(first?.born?.value),
+    died: dateOf(first?.died?.value),
+    parties: [...parties].sort(),
+  };
+}
+
+async function fetchHeads(
+  country: string,
+  date: string,
+): Promise<WikidataSnapshot["heads"]> {
+  const heads: WikidataSnapshot["heads"] = [];
+  for (const [role, property] of [
+    ["head-of-government", "P6"],
+    ["head-of-state", "P35"],
+  ] as const) {
+    const all = await holders(country, property);
+    const valid = all.filter((h) => validAt(h, date));
+    const chosen = latest(all, date);
+    if (chosen === undefined) continue;
+    if (new Set(valid.map((v) => v.qid)).size > 1) {
+      console.log(
+        `  ${role}: ${valid.length} statements valid on ${date}, kept ${chosen.qid} (start ${chosen.start ?? "undated"})`,
+      );
+    }
+    heads.push({ role, person: await person(chosen.qid, date) });
+  }
+  return heads;
+}
+
+async function fetchParty(qid: string, date: string): Promise<WikidataParty> {
+  const rows = await sparql(`
+SELECT ?partyFr ?partyEn ?ideology ?ideologyFr ?ideologyEn WHERE {
   BIND(wd:${qid} AS ?party)
   ${LABELS("?party")}
   OPTIONAL { ?party wdt:P1142 ?ideology ${LABELS("?ideology")} }
-  OPTIONAL {
-    ?party wdt:P488 ?leader
-    OPTIONAL { ?leader wdt:P569 ?leaderBorn }
-    OPTIONAL {
-      ?leader p:P102 ?leaderMembership . ?leaderMembership ps:P102 ?leaderParty .
-      FILTER NOT EXISTS { ?leaderMembership pq:P582 ?leaderEnded }
-    }
-    ${LABELS("?leader")}
-  }
 }`);
   const party: WikidataParty = {
     qid,
@@ -213,16 +300,35 @@ SELECT ?partyFr ?partyEn ?ideology ?ideologyFr ?ideologyEn ?leader ?leaderFr ?le
         party.ideologies.push({ qid: id, label: label(b, "ideology") });
       }
     }
-    if (b.leader !== undefined && party.leader === null) {
-      party.leader = {
-        qid: qidOf(b.leader.value),
-        label: label(b, "leader"),
-        born: dateOf(b.leaderBorn?.value),
-        party: b.leaderParty === undefined ? null : qidOf(b.leaderParty.value),
-      };
-    }
   }
   party.ideologies.sort((a, b) => a.qid.localeCompare(b.qid));
+  // Chair (P488) at the date; co-chairs: the preferred one, then the one
+  // who started last.
+  // A chair who died before the date is skipped (a statement never closed
+  // after the death), and the next valid one taken.
+  const chairs = await holders(qid, "P488");
+  const valid = chairs.filter((c) => validAt(c, date));
+  party.leader = null;
+  const tried: string[] = [];
+  while (party.leader === null) {
+    const chair = latest(
+      chairs.filter((c) => !tried.includes(c.qid)),
+      date,
+    );
+    if (chair === undefined) break;
+    tried.push(chair.qid);
+    const p = await person(chair.qid, date);
+    if (p.died !== null && p.died !== undefined && p.died <= date) {
+      console.log(`  ${qid} chair ${p.label} died ${p.died}: skipped`);
+      continue;
+    }
+    party.leader = p;
+  }
+  if (valid.length > 1) {
+    console.log(
+      `  ${qid} chairs valid on ${date}: ${valid.map((c) => `${c.qid}${c.rank.endsWith("PreferredRank") ? "*" : ""}@${c.start ?? "?"}`).join(", ")} -> ${party.leader?.qid ?? "none"}`,
+    );
+  }
   return party;
 }
 
@@ -265,6 +371,8 @@ async function fillLabels(snapshot: WikidataSnapshot): Promise<void> {
 
 export async function fetchWikidata(
   countries: readonly string[],
+  // Start of the scenario: the date every mandate is read at.
+  referenceDate: string,
 ): Promise<void> {
   const parties = JSON.parse(
     fs.readFileSync(PARTIES_FILE, "utf8"),
@@ -282,23 +390,38 @@ export async function fetchWikidata(
     const snapshot: WikidataSnapshot = {
       nation,
       country: entry.wikidataCountry,
+      referenceDate,
       fetchedAt,
       license: "CC0 1.0, Wikidata",
-      heads: await fetchHeads(entry.wikidataCountry),
+      heads: await fetchHeads(entry.wikidataCountry, referenceDate),
       parties: [],
     };
     for (const party of entry.parties) {
-      snapshot.parties.push(await fetchParty(party.qid!));
+      snapshot.parties.push(await fetchParty(party.qid!, referenceDate));
     }
     await fillLabels(snapshot);
     const text = JSON.stringify(snapshot, null, 1) + "\n";
     fs.writeFileSync(wikidataSnapshot(nation), text);
     lock[`snapshots/wikidata/${nation.toLowerCase()}.json`] = jsonSha256(text);
+    // The lock after every nation: an interrupted run keeps what it fetched.
+    fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
     console.log(
       `  heads: ${snapshot.heads.map((h) => `${h.role}=${h.person.label}`).join(", ")}; parties: ${snapshot.parties.map((p) => `${p.label} [${p.ideologies.length} ideologies, leader ${p.leader?.label ?? "?"}]`).join("; ")}`,
     );
   }
   fs.writeFileSync(PARTIES_FILE, JSON.stringify(parties, null, 2) + "\n");
+  fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
+}
+
+// The sha256 of snapshots already on disk, into the lock: for a run that
+// wrote them and was cut off before its lock (before the lock was written
+// after every nation).
+export function relockWikidata(countries: readonly string[]): void {
+  const lock = readLock();
+  for (const nation of countries) {
+    const text = fs.readFileSync(wikidataSnapshot(nation), "utf8");
+    lock[`snapshots/wikidata/${nation.toLowerCase()}.json`] = jsonSha256(text);
+  }
   fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
 }
 

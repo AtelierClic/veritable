@@ -83,7 +83,8 @@
       "SAMLauncher": 1000000000,
       "MissileSilo": 3000000000,
       "Warship": 1500000000
-    }
+    },
+    "grantsPeaceDecayPerMonth": 0.05
   },
   "politics": {
     "convergencePerWeek": 0.1,
@@ -225,13 +226,14 @@
       "rampMonths": 6
     },
     "coups": {
-      "militaryWeight": 3,
+      "militaryScale": 4,
+      "militaryExponent": 2,
       "stabilityWeight": 2,
       "failureShare": 0.5,
       "democracyRelationsHit": -30,
       "failedStabilityHit": 0.1,
       "failedMilitaryHit": 0.1,
-      "graceMonths": 36,
+      "consolidationMonths": 12,
       "juntaTransitionMonths": 48,
       "juntaTransitionMonthlyProbability": 0.05
     },
@@ -247,7 +249,7 @@
       "electionDelayMonths": 6
     },
     "leaders": {
-      "deathBase": 0.0001,
+      "deathBase": 0.001,
       "deathExponent": 0.085,
       "deathAgeOffset": 30,
       "traitNoise": 0.15,

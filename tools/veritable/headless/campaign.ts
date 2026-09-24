@@ -194,13 +194,17 @@ export interface PoliticsSummary {
   elections: number;
   alternations: number;
   coups: number; // successful
-  coupAttempts: number;
+  coupAttempts: number; // every attempt, successful or foiled
+  coupsFoiled: number;
   revolutions: number;
   fraudDetected: number;
   unrestStarts: number;
   juntaMonths: number;
   regimes: string[]; // regimes seen, in order
   finalRegime: string;
+  // Successful coups in a democracy whose stability had stayed at or above
+  // 0.5 over the twelve months before (J5 target: none), as dates.
+  coupsInStableDemocracy: string[];
 }
 
 export interface CampaignResult {
@@ -331,15 +335,23 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         alternations: 0,
         coups: 0,
         coupAttempts: 0,
+        coupsFoiled: 0,
         revolutions: 0,
         fraudDetected: 0,
         unrestStarts: 0,
         juntaMonths: 0,
         regimes: [driver.read().politics[id].regime],
         finalRegime: driver.read().politics[id].regime,
+        coupsInStableDemocracy: [],
       },
     ]),
   );
+  // Regime and stability of each nation over the last twelve month starts.
+  const democratic = new Set<string>(
+    pack.data.regimes.filter((r) => r.democratic).map((r) => r.id),
+  );
+  const history: Record<string, { regime: string; stability: number }[]> =
+    Object.fromEntries(pack.scenario.nations.map((id) => [id, []]));
   const onEvent = (event: SimEvent) => {
     if (event.type === "day-started") return;
     counts[event.type] = (counts[event.type] ?? 0) + 1;
@@ -350,8 +362,23 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         if ("params" in event && event.params.alternation === "true") {
           p.alternations += 1;
         }
-      } else if (event.type === "coup-succeeded") p.coups += 1;
-      else if (event.type === "coup-attempted") p.coupAttempts += 1;
+      } else if (event.type === "coup-succeeded") {
+        // The journal kind "coup-attempted" is a foiled attempt; a
+        // successful one only emits "coup-succeeded".
+        p.coups += 1;
+        p.coupAttempts += 1;
+        const past = history[event.nation];
+        if (
+          past.length > 0 &&
+          democratic.has(past[past.length - 1].regime) &&
+          past.every((h) => h.stability >= 0.5)
+        ) {
+          p.coupsInStableDemocracy.push(event.date);
+        }
+      } else if (event.type === "coup-attempted") {
+        p.coupsFoiled += 1;
+        p.coupAttempts += 1;
+      }
       else if (event.type === "revolution") p.revolutions += 1;
       else if (event.type === "fraud-detected") p.fraudDetected += 1;
       else if (event.type === "unrest-started") p.unrestStarts += 1;
@@ -376,6 +403,12 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       const view = driver.read();
       for (const id of pack.scenario.nations) {
         if (view.politics[id].regime === "junta") politics[id].juntaMonths++;
+        const past = history[id];
+        past.push({
+          regime: view.politics[id].regime,
+          stability: view.politics[id].stability,
+        });
+        if (past.length > 12) past.shift();
       }
     }
   };

@@ -1,6 +1,11 @@
 import { NationId } from "../data/schemas/common";
 import { NationData } from "../data/schemas/nation";
-import { DiplomacyState, MilitaryState, War } from "../data/schemas/save";
+import {
+  DiplomacyState,
+  MilitaryState,
+  NationMilitary,
+  War,
+} from "../data/schemas/save";
 import { DIVISION_TEMPLATE_IDS } from "../data/schemas/war";
 import { enemiesOf, warSide } from "../sim/diplomacy/diplomacy";
 import { EconomyContext } from "../sim/economy/context";
@@ -112,14 +117,59 @@ export function stepWarAi(
       (f.a === id && enemies.includes(f.b)) ||
       (f.b === id && enemies.includes(f.a)),
   );
+  // Without a front (no common border, or a world without fronts: the
+  // headless runner without the core), the divisions stay in reserve; the
+  // peace rule below still applies (J5: before, a war without a front never
+  // ended).
   if (fronts.length === 0) {
     for (const d of me.divisions) {
       d.front = null;
       d.segment = null;
       d.posture = "defend";
     }
-    return orders;
+  } else {
+    deploy(ctx, military, me, id, fronts);
   }
+
+  // Peace: a ceasefire to every enemy leader when weary or retreating.
+  const peace = cfg.peace;
+  for (const war of diplomacy.wars) {
+    const side = warSide(war, id);
+    if (side === null) continue;
+    const weary =
+      me.exhaustion > peace.exhaustionToAccept ||
+      (war.retreatMonths[id] ?? 0) >= peace.retreatMonthsToAccept;
+    if (!weary) continue;
+    const leader = (side === "aggressors" ? war.defenders : war.aggressors)[0];
+    if (leader !== undefined) orders.ceasefireTo.push(leader);
+  }
+  return orders;
+}
+
+// Share of the nation's tiles it lost in this war (net), relative to what it
+// holds now plus what it lost.
+function lostTilesShare(war: War, id: NationId, data: NationData): number {
+  void data;
+  let lost = 0;
+  const enemies = war.aggressors.includes(id) ? war.defenders : war.aggressors;
+  for (const e of enemies) lost += war.tilesTaken[e] ?? 0;
+  const won = war.tilesTaken[id] ?? 0;
+  const net = lost - won;
+  return net <= 0 ? 0 : net / (net + 1e6);
+}
+
+export { frontId };
+
+// Every division over the segments of the fronts in proportion to the
+// threat; attack where the ratio beats the attack ratio.
+function deploy(
+  ctx: EconomyContext,
+  military: MilitaryState,
+  me: NationMilitary,
+  id: NationId,
+  fronts: readonly FrontGeometry[],
+): void {
+  const cfg = ctx.config.war;
   const threats = fronts.map((f) => {
     const enemy = f.a === id ? f.b : f.a;
     return f.segments.map(
@@ -172,32 +222,4 @@ export function stepWarAi(
       }
     }
   }
-
-  // Peace: a ceasefire to every enemy leader when weary or retreating.
-  const peace = cfg.peace;
-  for (const war of diplomacy.wars) {
-    const side = warSide(war, id);
-    if (side === null) continue;
-    const weary =
-      me.exhaustion > peace.exhaustionToAccept ||
-      (war.retreatMonths[id] ?? 0) >= peace.retreatMonthsToAccept;
-    if (!weary) continue;
-    const leader = (side === "aggressors" ? war.defenders : war.aggressors)[0];
-    if (leader !== undefined) orders.ceasefireTo.push(leader);
-  }
-  return orders;
 }
-
-// Share of the nation's tiles it lost in this war (net), relative to what it
-// holds now plus what it lost.
-function lostTilesShare(war: War, id: NationId, data: NationData): number {
-  void data;
-  let lost = 0;
-  const enemies = war.aggressors.includes(id) ? war.defenders : war.aggressors;
-  for (const e of enemies) lost += war.tilesTaken[e] ?? 0;
-  const won = war.tilesTaken[id] ?? 0;
-  const net = lost - won;
-  return net <= 0 ? 0 : net / (net + 1e6);
-}
-
-export { frontId };

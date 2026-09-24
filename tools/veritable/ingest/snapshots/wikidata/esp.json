@@ -1,6 +1,7 @@
 {
  "nation": "ESP",
  "country": "Q29",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
@@ -10,7 +11,10 @@
     "qid": "Q6070218",
     "label": "Pedro Sánchez",
     "born": "1972-02-29",
-    "party": "Q138198"
+    "died": null,
+    "parties": [
+     "Q138198"
+    ]
    }
   },
   {
@@ -19,7 +23,8 @@
     "qid": "Q191045",
     "label": "Philippe VI d'Espagne",
     "born": "1968-01-30",
-    "party": null
+    "died": null,
+    "parties": []
    }
   }
  ],
@@ -53,7 +58,10 @@
     "qid": "Q2457783",
     "label": "Alberto Núñez Feijóo",
     "born": "1961-09-10",
-    "party": "Q185088"
+    "died": null,
+    "parties": [
+     "Q185088"
+    ]
    }
   },
   {
@@ -89,7 +97,10 @@
     "qid": "Q2984396",
     "label": "Cristina Narbona",
     "born": "1951-07-29",
-    "party": "Q138198"
+    "died": null,
+    "parties": [
+     "Q138198"
+    ]
    }
   },
   {
@@ -129,7 +140,10 @@
     "qid": "Q11703587",
     "label": "Santiago Abascal",
     "born": "1976-04-14",
-    "party": "Q15630787"
+    "died": null,
+    "parties": [
+     "Q15630787"
+    ]
    }
   },
   {
@@ -187,7 +201,10 @@
     "qid": "Q116812",
     "label": "Oriol Junqueras",
     "born": "1969-04-11",
-    "party": "Q150068"
+    "died": null,
+    "parties": [
+     "Q150068"
+    ]
    }
   },
   {
@@ -223,7 +240,10 @@
     "qid": "Q4740163",
     "label": "Carles Puigdemont",
     "born": "1962-12-29",
-    "party": "Q97155800"
+    "died": null,
+    "parties": [
+     "Q97155800"
+    ]
    }
   }
  ]

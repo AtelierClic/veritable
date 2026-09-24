@@ -10,7 +10,7 @@ import {
   WORLD_BANK_INDICATORS,
   WorldBankKey,
 } from "./sources";
-import { fetchWikidata } from "./wikidata";
+import { fetchWikidata, relockWikidata } from "./wikidata";
 
 // Open sources -> data/veritable/. Replayable:
 //
@@ -20,9 +20,12 @@ import { fetchWikidata } from "./wikidata";
 //   npm run veritable:ingest -- fetch-imf --scenario europe-10
 //       downloads the IMF WEO debt series into the cache (outside git) and
 //       records its sha256 in sources.lock.json.
-//   npm run veritable:ingest -- fetch-wikidata --scenario europe-10
+//   npm run veritable:ingest -- fetch-wikidata --scenario europe-10 [--only NOR]
 //       heads of state and government, main parties (parties.json), their
-//       leaders and ideologies; committed snapshots, sha256 in the lock.
+//       leaders and ideologies, at the start date of the scenario; committed
+//       snapshots, sha256 in the lock (written after every nation).
+//   npm run veritable:ingest -- relock-wikidata --scenario europe-10 --only FRA,DEU
+//       the sha256 of snapshots a cut-off run wrote without its lock.
 //   npm run veritable:ingest -- build --scenario europe-10
 //       rebuilds the nation sheets, row.json and the index-good prices from
 //       the snapshots, offline, after checking every sha256.
@@ -52,8 +55,20 @@ async function main(): Promise<void> {
       return fetchAll(scenario.nations);
     case "fetch-imf":
       return fetchImf(scenario.nations);
-    case "fetch-wikidata":
-      return fetchWikidata(scenario.nations);
+    case "fetch-wikidata": {
+      // --only FRA,DEU: those nations only, the others' snapshots untouched.
+      const only = option(args, "only")?.split(",");
+      return fetchWikidata(
+        only === undefined
+          ? scenario.nations
+          : scenario.nations.filter((n: string) => only.includes(n)),
+        scenario.startDate,
+      );
+    }
+    case "relock-wikidata":
+      return relockWikidata(
+        option(args, "only")?.split(",") ?? scenario.nations,
+      );
     case "fetch-wb": {
       // One World Bank indicator, the others untouched.
       const key = option(args, "key") as WorldBankKey;

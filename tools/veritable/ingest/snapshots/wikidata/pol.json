@@ -1,6 +1,7 @@
 {
  "nation": "POL",
  "country": "Q36",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
@@ -10,7 +11,11 @@
     "qid": "Q946",
     "label": "Donald Tusk",
     "born": "1957-04-22",
-    "party": "Q156868"
+    "died": null,
+    "parties": [
+     "Q156868",
+     "Q208242"
+    ]
    }
   },
   {
@@ -19,7 +24,10 @@
     "qid": "Q17704749",
     "label": "Karol Nawrocki",
     "born": "1983-03-03",
-    "party": "Q327591"
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
    }
   }
  ],
@@ -73,7 +81,12 @@
     "qid": "Q55917",
     "label": "Jarosław Kaczyński",
     "born": "1949-06-18",
-    "party": "Q1475388"
+    "died": null,
+    "parties": [
+     "Q1271959",
+     "Q1475388",
+     "Q156874"
+    ]
    }
   },
   {
@@ -81,10 +94,14 @@
    "label": "Coalition civique",
    "ideologies": [],
    "leader": {
-    "qid": "Q21282134",
-    "label": "Adam Szłapka",
-    "born": "1984-12-06",
-    "party": "Q20738981"
+    "qid": "Q20278674",
+    "label": "Barbara Nowacka",
+    "born": "1975-05-10",
+    "died": null,
+    "parties": [
+     "Q1506868",
+     "Q73386729"
+    ]
    }
   },
   {
@@ -108,7 +125,10 @@
     "qid": "Q11778888",
     "label": "Michał Kobosko",
     "born": "1968-04-15",
-    "party": "Q100979832"
+    "died": null,
+    "parties": [
+     "Q100979832"
+    ]
    }
   },
   {
@@ -136,7 +156,10 @@
     "qid": "Q1374797",
     "label": "Władysław Kosiniak-Kamysz",
     "born": "1981-08-10",
-    "party": "Q218477"
+    "died": null,
+    "parties": [
+     "Q218477"
+    ]
    }
   },
   {
@@ -156,7 +179,13 @@
     "qid": "Q174491",
     "label": "Robert Biedroń",
     "born": "1976-04-13",
-    "party": "Q107418166"
+    "died": null,
+    "parties": [
+     "Q107418166",
+     "Q1628291",
+     "Q61452057",
+     "Q953174"
+    ]
    }
   },
   {
@@ -200,7 +229,12 @@
     "qid": "Q5423758",
     "label": "Krzysztof Bosak",
     "born": "1982-06-13",
-    "party": "Q16597751"
+    "died": null,
+    "parties": [
+     "Q16597751",
+     "Q61568052",
+     "Q687574"
+    ]
    }
   }
  ]

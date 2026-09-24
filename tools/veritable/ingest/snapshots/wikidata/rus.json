@@ -1,6 +1,7 @@
 {
  "nation": "RUS",
  "country": "Q159",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
@@ -10,7 +11,8 @@
     "qid": "Q4298520",
     "label": "Mikhaïl Michoustine",
     "born": "1966-03-03",
-    "party": null
+    "died": null,
+    "parties": []
    }
   },
   {
@@ -19,7 +21,8 @@
     "qid": "Q7747",
     "label": "Vladimir Poutine",
     "born": "1952-10-07",
-    "party": null
+    "died": null,
+    "parties": []
    }
   }
  ],
@@ -49,7 +52,10 @@
     "qid": "Q23530",
     "label": "Dmitri Medvedev",
     "born": "1965-09-14",
-    "party": "Q151469"
+    "died": null,
+    "parties": [
+     "Q151469"
+    ]
    }
   },
   {
@@ -117,7 +123,10 @@
     "qid": "Q182452",
     "label": "Guennadi Ziouganov",
     "born": "1944-06-26",
-    "party": "Q192187"
+    "died": null,
+    "parties": [
+     "Q192187"
+    ]
    }
   },
   {
@@ -173,7 +182,10 @@
     "qid": "Q2037108",
     "label": "Leonid Sloutski",
     "born": "1968-01-04",
-    "party": "Q212115"
+    "died": null,
+    "parties": [
+     "Q212115"
+    ]
    }
   },
   {
@@ -214,10 +226,15 @@
     }
    ],
    "leader": {
-    "qid": "Q4415436",
-    "label": "Guennadi Semiguine",
-    "born": "1964-03-23",
-    "party": "Q192187"
+    "qid": "Q1530559",
+    "label": "Zakhar Prilepine",
+    "born": "1975-07-07",
+    "died": null,
+    "parties": [
+     "Q210692",
+     "Q321022",
+     "Q85860365"
+    ]
    }
   },
   {
@@ -249,7 +266,10 @@
     "qid": "Q107311193",
     "label": "Alexeï Netchaïev",
     "born": "1966-08-30",
-    "party": "Q98842815"
+    "died": null,
+    "parties": [
+     "Q98842815"
+    ]
    }
   }
  ]

@@ -1,6 +1,7 @@
 {
  "nation": "ITA",
  "country": "Q38",
+ "referenceDate": "2026-01-01",
  "fetchedAt": "2026-09-23",
  "license": "CC0 1.0, Wikidata",
  "heads": [
@@ -10,7 +11,10 @@
     "qid": "Q451791",
     "label": "Giorgia Meloni",
     "born": "1977-01-15",
-    "party": "Q1757843"
+    "died": null,
+    "parties": [
+     "Q1757843"
+    ]
    }
   },
   {
@@ -19,7 +23,10 @@
     "qid": "Q3956186",
     "label": "Sergio Mattarella",
     "born": "1941-07-23",
-    "party": "Q327591"
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
    }
   }
  ],
@@ -73,7 +80,10 @@
     "qid": "Q451791",
     "label": "Giorgia Meloni",
     "born": "1977-01-15",
-    "party": "Q1757843"
+    "died": null,
+    "parties": [
+     "Q1757843"
+    ]
    }
   },
   {
@@ -105,7 +115,10 @@
     "qid": "Q18590052",
     "label": "Stefano Bonaccini",
     "born": "1967-01-01",
-    "party": "Q47729"
+    "died": null,
+    "parties": [
+     "Q47729"
+    ]
    }
   },
   {
@@ -149,7 +162,10 @@
     "qid": "Q53844829",
     "label": "Giuseppe Conte",
     "born": "1964-08-08",
-    "party": "Q47817"
+    "died": null,
+    "parties": [
+     "Q47817"
+    ]
    }
   },
   {
@@ -213,7 +229,11 @@
     "qid": "Q78185671",
     "label": "Giulio Centemero",
     "born": "1979-01-30",
-    "party": "Q85776185"
+    "died": null,
+    "parties": [
+     "Q47750",
+     "Q85776185"
+    ]
    }
   },
   {
@@ -261,7 +281,11 @@
     "qid": "Q440710",
     "label": "Antonio Tajani",
     "born": "1953-08-04",
-    "party": "Q14924303"
+    "died": null,
+    "parties": [
+     "Q14924303",
+     "Q4004898"
+    ]
    }
   },
   {

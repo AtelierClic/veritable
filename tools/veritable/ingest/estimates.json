@@ -211,17 +211,17 @@
       "note": "Monarque constitutionnel sans pouvoir politique : traits neutres, agressivité et corruption minimales."
     },
     "GBR/head-of-government": {
-      "person": "Andy Burnham",
+      "person": "Keir Starmer",
       "traits": {
-        "economic": -0.4,
-        "authority": -0.2,
-        "sovereignty": -0.2,
+        "economic": -0.2,
+        "authority": 0.1,
+        "sovereignty": -0.3,
         "aggressiveness": 0.25,
-        "corruption": 0.15,
-        "charisma": 0.6,
-        "competence": 0.55
+        "corruption": 0.1,
+        "charisma": 0.35,
+        "competence": 0.6
       },
-      "note": "Travailliste de l'aile gauche modérée, ancien maire du Grand Manchester ; charisme régional reconnu (0,6) ; peu agressif ; internationalisme prudent après le Brexit.",
+      "note": "Premier ministre au 1er janvier 2026 selon Wikidata. Travailliste du centre, ancien directeur des poursuites publiques (compétence 0,6, autorité légèrement positive) ; rapprochement prudent avec l'Union européenne, atlantiste ; réputation de dirigeant peu charismatique (0,35), peu agressif.",
       "partyQid": "Q9630"
     },
     "ITA/head-of-state": {
@@ -318,17 +318,17 @@
       "partyQid": "Q52292915"
     },
     "UKR/head-of-government": {
-      "person": "Serhiï Koretskyï",
+      "person": "Ioulia Svyrydenko",
       "traits": {
-        "economic": 0.3,
+        "economic": 0.4,
         "authority": 0.1,
         "sovereignty": 0.1,
         "aggressiveness": 0.3,
-        "corruption": 0.2,
+        "corruption": 0.15,
         "charisma": 0.4,
-        "competence": 0.6
+        "competence": 0.65
       },
-      "note": "Premier ministre au 2026-09-23 selon Wikidata ; profil de technocrate de guerre supposé : libéral en économie, discret (charisme 0,4), compétent (0,6).",
+      "note": "Première ministre au 1er janvier 2026 selon Wikidata. Économiste, ancienne ministre de l'Économie : libérale en économie (0,4), gestionnaire de guerre discrète (charisme 0,4), compétente (0,65).",
       "partyQid": "Q52292915"
     },
     "RUS/head-of-state": {
@@ -386,7 +386,7 @@
       "note": "Régime présidentiel : le chef de l'État est aussi chef du gouvernement ; mêmes traits."
     },
     "NOR/head-of-state": {
-      "person": "Haakon VIII",
+      "person": "Harald V de Norvège",
       "traits": {
         "economic": 0.0,
         "authority": 0.0,
@@ -396,7 +396,7 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "note": "Monarque constitutionnel (Wikidata au 2026-09-23 : Haakon VIII) ; traits neutres, agressivité et corruption minimales."
+      "note": "Monarque constitutionnel (Wikidata au 1er janvier 2026 : Harald V) ; traits neutres, agressivité et corruption minimales."
     },
     "NOR/head-of-government": {
       "person": "Jonas Gahr Støre",
@@ -446,5 +446,5 @@
       "note": "Coalition civique : libéraux pro-européens."
     }
   },
-  "_leaderTraitsNote": "leaderTraits : traits des chefs d'État et de gouvernement des dix nations, écrits à la main le 2026-09-23 et justifiés ; clé <iso3>/<rôle>, `person` = libellé Wikidata au moment de l'écriture (l'outil signale un changement). partyIdeologies : idéologie manuelle des partis sans P1142 exploitable."
+  "_leaderTraitsNote": "leaderTraits : traits des chefs d'État et de gouvernement des dix nations, écrits à la main et justifiés pour les titulaires au 1er janvier 2026 ; clé <iso3>/<rôle>, `person` = libellé Wikidata au moment de l'écriture (l'outil signale un changement). partyIdeologies : idéologie manuelle des partis sans P1142 exploitable."
 }

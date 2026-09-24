@@ -6,7 +6,7 @@
     "successionRule": "election",
     "government": "coalition",
     "democratic": true,
-    "coupBase": 0.001,
+    "coupBase": 0.0001,
     "legitimacyBase": 0.8,
     "pressFreedom": 0.9,
     "mediaControl": 0,
@@ -26,7 +26,7 @@
     "successionRule": "election",
     "government": "leading-party",
     "democratic": true,
-    "coupBase": 0.002,
+    "coupBase": 0.0003,
     "legitimacyBase": 0.8,
     "pressFreedom": 0.85,
     "mediaControl": 0,
@@ -46,7 +46,7 @@
     "successionRule": "election",
     "government": "leading-party",
     "democratic": true,
-    "coupBase": 0.002,
+    "coupBase": 0.0002,
     "legitimacyBase": 0.8,
     "pressFreedom": 0.85,
     "mediaControl": 0,
@@ -66,7 +66,7 @@
     "successionRule": "election",
     "government": "leading-party",
     "democratic": false,
-    "coupBase": 0.01,
+    "coupBase": 0.001,
     "legitimacyBase": 0.5,
     "pressFreedom": 0.3,
     "mediaControl": 0.5,
@@ -86,11 +86,17 @@
     "successionRule": "party",
     "government": "appointed",
     "democratic": false,
-    "coupBase": 0.005,
+    "coupBase": 0.0005,
     "legitimacyBase": 0.6,
     "pressFreedom": 0.1,
     "mediaControl": 0.8,
-    "lawDomains": ["economy", "social", "security", "environment", "defense"]
+    "lawDomains": [
+      "economy",
+      "social",
+      "security",
+      "environment",
+      "defense"
+    ]
   },
   {
     "id": "absolute-monarchy",
@@ -99,11 +105,17 @@
     "successionRule": "hereditary",
     "government": "appointed",
     "democratic": false,
-    "coupBase": 0.005,
+    "coupBase": 0.0005,
     "legitimacyBase": 0.6,
     "pressFreedom": 0.2,
     "mediaControl": 0.7,
-    "lawDomains": ["economy", "social", "security", "environment", "defense"]
+    "lawDomains": [
+      "economy",
+      "social",
+      "security",
+      "environment",
+      "defense"
+    ]
   },
   {
     "id": "junta",
@@ -112,11 +124,16 @@
     "successionRule": "military-council",
     "government": "appointed",
     "democratic": false,
-    "coupBase": 0.03,
+    "coupBase": 0.005,
     "legitimacyBase": 0.4,
     "pressFreedom": 0.1,
     "mediaControl": 0.8,
-    "lawDomains": ["economy", "security", "institutions", "defense"]
+    "lawDomains": [
+      "economy",
+      "security",
+      "institutions",
+      "defense"
+    ]
   },
   {
     "id": "theocracy",
@@ -125,11 +142,17 @@
     "successionRule": "clerical",
     "government": "appointed",
     "democratic": false,
-    "coupBase": 0.005,
+    "coupBase": 0.0005,
     "legitimacyBase": 0.6,
     "pressFreedom": 0.15,
     "mediaControl": 0.7,
-    "lawDomains": ["economy", "social", "security", "environment", "defense"]
+    "lawDomains": [
+      "economy",
+      "social",
+      "security",
+      "environment",
+      "defense"
+    ]
   },
   {
     "id": "failed-state",
@@ -138,10 +161,13 @@
     "successionRule": "warlord",
     "government": "appointed",
     "democratic": false,
-    "coupBase": 0.05,
+    "coupBase": 0.02,
     "legitimacyBase": 0.2,
     "pressFreedom": 0.4,
     "mediaControl": 0.2,
-    "lawDomains": ["security", "defense"]
+    "lawDomains": [
+      "security",
+      "defense"
+    ]
   }
 ]

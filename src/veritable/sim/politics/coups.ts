@@ -15,11 +15,13 @@ import { addMonths } from "./state";
 
 // Coups and revolutions (J4), once a month.
 //
-// Coup: p = coupBase x (1 + a x (1 - s_military)) x (1 + b x (1 - stability))
-//         x (1 - legitimacy) x (1 + exhaustion), doubled for a year after a
-//         detected fraud, times the laws in force. Success: junta, a military
-//         chief in power, legitimacy reset, relations with the democracies
-//         hit, suspension by the blocs with a democratic criterion.
+// Coup (J5 formula): p = coupBase x 4 x (1 - s_military)^2
+//         x (1 + 2 x (1 - stability)) x (1 - legitimacy) x (1 + exhaustion),
+//         doubled for a year after a detected fraud, times the laws in force;
+//         none in the twelve months after a regime change of the campaign.
+//         Success: junta, a military chief in power, legitimacy reset,
+//         relations with the democracies hit, suspension by the blocs with a
+//         democratic criterion.
 // Revolution: three groups under a threshold and (shortage above a threshold
 //         or stability under one for six months): p per month. Provisional
 //         government, elections in six months, legitimacy reset, GDP and
@@ -56,7 +58,8 @@ export function coupProbability(
   const satisfaction = groupSatisfaction(politics);
   let p =
     regime.coupBase *
-    (1 + cfg.militaryWeight * (1 - satisfaction.military)) *
+    cfg.militaryScale *
+    Math.pow(1 - satisfaction.military, cfg.militaryExponent) *
     (1 + cfg.stabilityWeight * (1 - politics.stability)) *
     (1 - politics.legitimacy) *
     (1 + (military?.exhaustion ?? 0));
@@ -85,8 +88,11 @@ export function stepCoups(
   if (politics.fraudCoupUntil !== null && date >= politics.fraudCoupUntil) {
     politics.fraudCoupUntil = null;
   }
-  // A new regime settles in: no attempt during the grace period.
-  if (monthsSince(politics.regimeSince, date) < cfg.graceMonths) {
+  // A regime born in the campaign consolidates: no attempt for a while.
+  if (
+    politics.regimeBefore !== null &&
+    monthsSince(politics.regimeSince, date) < cfg.consolidationMonths
+  ) {
     politics.coupRisk = 0;
     return out;
   }

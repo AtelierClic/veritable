@@ -2,27 +2,27 @@
   "nation": "GBR",
   "actors": [
     {
-      "id": "gbr-andy-burnham",
+      "id": "gbr-keir-starmer",
       "role": "head-of-government",
       "names": {
-        "parody": "leader.gbr-andy-burnham.parody",
-        "fictional": "leader.gbr-andy-burnham.fictional"
+        "parody": "leader.gbr-keir-starmer.parody",
+        "fictional": "leader.gbr-keir-starmer.fictional"
       },
-      "born": "1970-01-07",
+      "born": "1962-09-02",
       "party": "gbr-parti-travailliste",
       "traits": {
-        "economic": -0.4,
-        "authority": -0.2,
-        "sovereignty": -0.2,
+        "economic": -0.2,
+        "authority": 0.1,
+        "sovereignty": -0.3,
         "aggressiveness": 0.25,
-        "corruption": 0.15,
-        "charisma": 0.6,
-        "competence": 0.55
+        "corruption": 0.1,
+        "charisma": 0.35,
+        "competence": 0.6
       },
-      "wikidata": "Q269909",
+      "wikidata": "Q6383803",
       "source": "estimate",
-      "asOf": "2026-09-23",
-      "note": "Travailliste de l'aile gauche modérée, ancien maire du Grand Manchester ; charisme régional reconnu (0,6) ; peu agressif ; internationalisme prudent après le Brexit."
+      "asOf": "2026-01-01",
+      "note": "Premier ministre au 1er janvier 2026 selon Wikidata. Travailliste du centre, ancien directeur des poursuites publiques (compétence 0,6, autorité légèrement positive) ; rapprochement prudent avec l'Union européenne, atlantiste ; réputation de dirigeant peu charismatique (0,35), peu agressif."
     },
     {
       "id": "gbr-charles-iii",
@@ -44,7 +44,7 @@
       },
       "wikidata": "Q43274",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Monarque constitutionnel sans pouvoir politique : traits neutres, agressivité et corruption minimales."
     },
     {
@@ -67,7 +67,7 @@
       },
       "wikidata": "Q21592171",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -90,7 +90,7 @@
       },
       "wikidata": "Q318471",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -113,7 +113,7 @@
       },
       "wikidata": "Q296689",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -136,7 +136,7 @@
       },
       "wikidata": "Q75974863",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -159,7 +159,7 @@
       },
       "wikidata": "Q333811",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     }
   ],
@@ -178,10 +178,10 @@
       "support": 0.337,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "General election 2024, vote share (House of Commons Library)"
       },
-      "leader": "gbr-andy-burnham"
+      "leader": "gbr-keir-starmer"
     },
     {
       "id": "gbr-parti-conservateur",
@@ -205,7 +205,7 @@
       "support": 0.237,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "General election 2024, vote share (House of Commons Library)"
       },
       "leader": "gbr-kemi-badenoch"
@@ -224,7 +224,7 @@
       "support": 0.143,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "General election 2024, vote share (House of Commons Library)"
       },
       "leader": "gbr-nigel-farage"
@@ -243,7 +243,7 @@
       "support": 0.122,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "General election 2024, vote share (House of Commons Library)"
       },
       "leader": "gbr-edward-davey"
@@ -262,7 +262,7 @@
       "support": 0.067,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "General election 2024, vote share (House of Commons Library)"
       },
       "leader": "gbr-zack-polanski"
@@ -281,7 +281,7 @@
       "support": 0.025,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "General election 2024, vote share (House of Commons Library)"
       },
       "leader": "gbr-john-swinney"

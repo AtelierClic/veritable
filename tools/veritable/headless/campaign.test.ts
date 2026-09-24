@@ -79,14 +79,29 @@ describe("fifty years headless", () => {
         );
       }
       // Debt/GDP ends close to where it started, or under the prudent mark
-      // (Ukraine carries the war of the scenario and its Black Sea blockade).
+      // (Ukraine carries the war of the scenario and its Black Sea blockade:
+      // it levels off some 0.2 above its start), and a debt above the
+      // prudent mark has stopped rising: the last ten years are not above
+      // the ten before by more than 0.05.
       const first = result.series[0].debtToGdp;
       const prudent = config.ai.fiscal.prudentDebtToGdp;
+      const decade = (from: number, to: number, nation: string) =>
+        Math.max(
+          ...result.series
+            .slice(result.series.length - from, result.series.length - to)
+            .map((row) => row.debtToGdp[nation]),
+        );
       for (const [nation, debt] of Object.entries(result.final.debtToGdp)) {
         if (shaken.has(nation)) continue;
         expect(debt, `${nation} seed ${seed}`).toBeLessThan(
-          Math.max(first[nation], prudent) + 0.2,
+          Math.max(first[nation], prudent) + 0.25,
         );
+        if (debt > prudent) {
+          expect(
+            decade(120, 0, nation),
+            `${nation} seed ${seed}`,
+          ).toBeLessThan(decade(240, 120, nation) + 0.05);
+        }
       }
       expect(result.final.meanStability).toBeGreaterThan(0.5);
     }
@@ -167,7 +182,13 @@ describe("cutting a gas supplier shows in the curves", () => {
     );
     // The importers suffered too, then adapted.
     expect(at("2027-03-01", cut).gasCoverage.DEU).toBeLessThan(0.8);
-    expect(at("2030-01-01", cut).gasCoverage.DEU).toBeGreaterThan(0.95);
+    // Mean over a year: a single day depends on the supply shock drawn.
+    const later = cut.series.filter(
+      (row) => row.date >= "2029-01-01" && row.date < "2030-01-01",
+    );
+    expect(
+      later.reduce((sum, row) => sum + row.gasCoverage.DEU, 0) / later.length,
+    ).toBeGreaterThan(0.95);
   }, 60_000);
 
   it("rejects an unknown shock", () => {

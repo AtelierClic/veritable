@@ -21,7 +21,7 @@
       },
       "wikidata": "Q4298520",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Technocrate fiscal, exécutant du président (charisme 0,3, compétence 0,7) ; corruption du système (0,5) ; agressivité faible en propre."
     },
     {
@@ -44,7 +44,7 @@
       },
       "wikidata": "Q7747",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Autocrate (autorité +0,9), souverainiste et eurasiste (+0,9), guerre d'agression en cours (agressivité 0,9) ; corruption systémique du régime (0,7) ; charisme et compétence solides dans son registre. Wikidata : sans parti ; rattaché à Russie unie, qu'il a fondée."
     },
     {
@@ -67,7 +67,7 @@
       },
       "wikidata": "Q23530",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -90,7 +90,7 @@
       },
       "wikidata": "Q182452",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -113,17 +113,17 @@
       },
       "wikidata": "Q2037108",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
-      "id": "rus-guennadi-semiguine",
+      "id": "rus-zakhar-prilepine",
       "role": "party-leader",
       "names": {
-        "parody": "leader.rus-guennadi-semiguine.parody",
-        "fictional": "leader.rus-guennadi-semiguine.fictional"
+        "parody": "leader.rus-zakhar-prilepine.parody",
+        "fictional": "leader.rus-zakhar-prilepine.fictional"
       },
-      "born": "1964-03-23",
+      "born": "1975-07-07",
       "party": "rus-russie-juste",
       "traits": {
         "economic": -0.337,
@@ -134,9 +134,9 @@
         "charisma": 0.5,
         "competence": 0.5
       },
-      "wikidata": "Q4415436",
+      "wikidata": "Q1530559",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -159,7 +159,7 @@
       },
       "wikidata": "Q107311193",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     }
   ],
@@ -178,7 +178,7 @@
       "support": 0.498,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
       },
       "leader": "rus-dmitri-medvedev"
@@ -212,7 +212,7 @@
       "support": 0.189,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
       },
       "leader": "rus-guennadi-ziouganov"
@@ -243,7 +243,7 @@
       "support": 0.076,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
       },
       "leader": "rus-leonid-sloutski"
@@ -271,10 +271,10 @@
       "support": 0.075,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
       },
-      "leader": "rus-guennadi-semiguine"
+      "leader": "rus-zakhar-prilepine"
     },
     {
       "id": "rus-nouvelles-personnes",
@@ -290,7 +290,7 @@
       "support": 0.053,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Выборы в Государственную думу 2021, списки (ЦИК)"
       },
       "leader": "rus-alexei-netchaiev"

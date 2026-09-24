@@ -1,7 +1,8 @@
 {
  "nation": "NOR",
  "country": "Q20",
- "fetchedAt": "2026-09-23",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
  "license": "CC0 1.0, Wikidata",
  "heads": [
   {
@@ -10,16 +11,20 @@
     "qid": "Q467948",
     "label": "Jonas Gahr Støre",
     "born": "1960-08-25",
-    "party": "Q190219"
+    "died": null,
+    "parties": [
+     "Q190219"
+    ]
    }
   },
   {
    "role": "head-of-state",
    "person": {
-    "qid": "Q165241",
-    "label": "Haakon VIII",
-    "born": "1973-07-20",
-    "party": null
+    "qid": "Q57287",
+    "label": "Harald V de Norvège",
+    "born": "1937-02-21",
+    "died": "2026-08-28",
+    "parties": []
    }
   }
  ],
@@ -37,7 +42,10 @@
     "qid": "Q467948",
     "label": "Jonas Gahr Støre",
     "born": "1960-08-25",
-    "party": "Q190219"
+    "died": null,
+    "parties": [
+     "Q190219"
+    ]
    }
   },
   {
@@ -53,7 +61,10 @@
     "qid": "Q7660866",
     "label": "Sylvi Listhaug",
     "born": "1977-12-25",
-    "party": "Q485665"
+    "died": null,
+    "parties": [
+     "Q485665"
+    ]
    }
   },
   {
@@ -69,7 +80,10 @@
     "qid": "Q1770992",
     "label": "Ine Marie Eriksen Søreide",
     "born": "1976-05-02",
-    "party": "Q586364"
+    "died": null,
+    "parties": [
+     "Q586364"
+    ]
    }
   },
   {
@@ -93,7 +107,10 @@
     "qid": "Q548001",
     "label": "Trygve Slagsvold Vedum",
     "born": "1978-12-01",
-    "party": "Q493685"
+    "died": null,
+    "parties": [
+     "Q493685"
+    ]
    }
   },
   {
@@ -109,7 +126,10 @@
     "qid": "Q4581573",
     "label": "Kirsti Bergstø",
     "born": "1981-07-01",
-    "party": "Q488418"
+    "died": null,
+    "parties": [
+     "Q488418"
+    ]
    }
   },
   {
@@ -149,7 +169,10 @@
     "qid": "Q11988277",
     "label": "Marie Sneve Martinussen",
     "born": "1985-12-30",
-    "party": "Q1512994"
+    "died": null,
+    "parties": [
+     "Q1512994"
+    ]
    }
   },
   {
@@ -165,7 +188,10 @@
     "qid": "Q11958683",
     "label": "Arild Hermstad",
     "born": "1966-10-15",
-    "party": "Q1518568"
+    "died": null,
+    "parties": [
+     "Q1518568"
+    ]
    }
   },
   {
@@ -189,7 +215,10 @@
     "qid": "Q5620064",
     "label": "Guri Melby",
     "born": "1981-02-03",
-    "party": "Q500190"
+    "died": null,
+    "parties": [
+     "Q500190"
+    ]
    }
   }
  ]

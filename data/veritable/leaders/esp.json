@@ -21,7 +21,7 @@
       },
       "wikidata": "Q6070218",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Socialiste pro-européen ; habile manœuvrier (charisme 0,6) ; entouré d'affaires en 2024-2025 (corruption 0,3) ; agressivité modérée."
     },
     {
@@ -44,7 +44,7 @@
       },
       "wikidata": "Q191045",
       "source": "estimate",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Monarque constitutionnel ; traits neutres, légèrement pro-européen ; charisme correct, agressivité et corruption minimales."
     },
     {
@@ -67,7 +67,7 @@
       },
       "wikidata": "Q2457783",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -90,7 +90,7 @@
       },
       "wikidata": "Q2984396",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -113,7 +113,7 @@
       },
       "wikidata": "Q11703587",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -136,7 +136,7 @@
       },
       "wikidata": "Q116812",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     },
     {
@@ -159,7 +159,7 @@
       },
       "wikidata": "Q4740163",
       "source": "derived",
-      "asOf": "2026-09-23",
+      "asOf": "2026-01-01",
       "note": "Traits dérivés de l'idéologie du parti."
     }
   ],
@@ -178,7 +178,7 @@
       "support": 0.331,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
       },
       "leader": "esp-alberto-nunez-feijoo"
@@ -204,7 +204,7 @@
       "support": 0.317,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
       },
       "leader": "esp-cristina-narbona"
@@ -231,7 +231,7 @@
       "support": 0.124,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
       },
       "leader": "esp-santiago-abascal"
@@ -250,7 +250,7 @@
       "support": 0.123,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
       },
       "leader": null
@@ -280,7 +280,7 @@
       "support": 0.019,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
       },
       "leader": "esp-oriol-junqueras"
@@ -306,7 +306,7 @@
       "support": 0.016,
       "supportSource": {
         "source": "estimate",
-        "asOf": "2026-09-23",
+        "asOf": "2026-01-01",
         "note": "Elecciones generales 2023, Congreso (Ministerio del Interior)"
       },
       "leader": "esp-carles-puigdemont"

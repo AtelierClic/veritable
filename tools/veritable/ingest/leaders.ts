@@ -20,6 +20,7 @@ import {
   loadWikidata,
   PARTIES_FILE,
   PartiesFile,
+  WikidataPerson,
   WikidataSnapshot,
 } from "./wikidata";
 
@@ -169,7 +170,7 @@ export function buildLeaders(
         support: listed.support,
         supportSource: {
           source: "estimate",
-          asOf: parties.asOf,
+          asOf: snapshot.referenceDate,
           note: entry.election,
         },
         leader: null,
@@ -179,12 +180,7 @@ export function buildLeaders(
     // Actors: heads, then party leaders. One actor per person.
     const byQid = new Map<string, ActorData>();
     const addActor = (
-      person: {
-        qid: string;
-        label: string;
-        born: string | null;
-        party: string | null;
-      },
+      person: WikidataPerson,
       role: ActorData["role"],
       partyId: string | null,
       traits: Traits,
@@ -217,7 +213,8 @@ export function buildLeaders(
         traits,
         wikidata: person.qid,
         source,
-        asOf: snapshot.fetchedAt,
+        // Validity date of the data: the start of the scenario.
+        asOf: snapshot.referenceDate,
         ...(note === undefined ? {} : { note }),
       };
       byQid.set(person.qid, actor);
@@ -237,7 +234,8 @@ export function buildLeaders(
       const key = `${nation}/${head.role}`;
       const estimate = estimates.leaderTraits[key];
       const partyId =
-        partyOf(head.person.party) ?? partyOf(estimate?.partyQid ?? null);
+        head.person.parties.map(partyOf).find((p) => p !== null) ??
+        partyOf(estimate?.partyQid ?? null);
       if (estimate !== undefined) {
         if (estimate.person !== head.person.label) {
           warnings.push(
