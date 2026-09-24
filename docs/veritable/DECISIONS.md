@@ -677,18 +677,19 @@ Plan, liste « à valider » (points 28 à 38) et écarts : `docs/veritable/plan
 
 Mesure finale (`docs/veritable/reports/J6/perf/`, cœur, graine 42, 50 ans en 4 min 42 s) :
 
-| Fenêtre d'un an | Tick p99 | Tick maximum | Ticks > 100 ms | Sauvegarde au début | Tas au début |
-| --- | --- | --- | --- | --- | --- |
-| 2026 | 5,8 ms | 113 ms | 1 (premier pas mensuel de la session) | 1,41 Mo | 66 Mo |
-| 2040 | 4,0 ms | 53 ms | 0 | 1,73 Mo | 75 Mo |
-| 2060 | 4,1 ms | 53 ms | 0 | 1,91 Mo | 76 Mo |
-| 2075 | 3,8 ms | 54 ms | 0 | 2,00 Mo | 76 Mo |
+| Fenêtre d'un an | Tick p99 | Tick maximum | Ticks > 100 ms                        | Sauvegarde au début | Tas au début |
+| --------------- | -------- | ------------ | ------------------------------------- | ------------------- | ------------ |
+| 2026            | 5,8 ms   | 113 ms       | 1 (premier pas mensuel de la session) | 1,41 Mo             | 66 Mo        |
+| 2040            | 4,0 ms   | 53 ms        | 0                                     | 1,73 Mo             | 75 Mo        |
+| 2060            | 4,1 ms   | 53 ms        | 0                                     | 1,91 Mo             | 76 Mo        |
+| 2075            | 3,8 ms   | 54 ms        | 0                                     | 2,00 Mo             | 76 Mo        |
 
 Sauvegarde de 2,01 Mo au bout de 50 ans (critère : moins de 5 Mo) ; tas de 67 Mo au départ à 76 Mo à la fin (stable) ; chargement en 2,8 s. **Exception** : le premier pas mensuel d'une session (le 1er février 2026 d'une nouvelle campagne, ou le premier mois qui suit un chargement) prend 113 à 124 ms, code encore froid ; ensuite 50 à 76 ms. Le préchauffage au chargement (commerce, croissance et diplomatie sur des copies, deux fois) le ramène de 666 ms ; préchauffer aussi les blocs et les événements ferait tourner des étapes qui mettent à jour la vue partagée des adhésions : écarté.
 
 **Dans le navigateur** (navigateur intégré, build de dev, en chargeant les sauvegardes de la mesure headless, fenêtres de 12 s à ×5) : 49,9, 49,8, 50,0 et 49,6 ticks/s à partir du 1er janvier 2026, 2040, 2060 et 2075 ; 49,3, 49,4, 49,5 et 49,4 sur une fenêtre qui traverse le 1er mars (pas mensuel et sauvegarde automatique compris), une fois le premier mois passé. Critère : au moins 49.
 
 Ce qui a été corrigé pour y arriver, après le calibrage des guerres (qui avait porté le p99 de 2026 à 11,5 ms et le maximum à 275 ms) :
+
 - **la côte d'une nation dont le territoire a changé est relue au plus une fois par mois de jeu** (`COAST_REFRESH_TICKS`) : une nation en guerre change de territoire à chaque tick, chaque capture invalidait l'instantané naval, et la lecture complète de sa frontière coûtait plusieurs millisecondes à chaque fois ;
 - la marine de l'IA ne lit l'instantané naval que pour une nation en guerre ou en blocus ;
 - la dérive mensuelle des relations parcourt les paires dans leur ordre de stockage, lit chaque ligne une fois et n'écrit que ce qui bouge (mêmes relations, au bit près) ;
@@ -729,7 +730,7 @@ RÉSULTATS À COMPLÉTER.
 
 ### Non-régression sur europe-10 (J6c.6)
 
-- **J3** (`docs/veritable/reports/J6/non-regression/J3/`, cœur, graine 42) : embargo UE, gaz à l'import +37 % la première année, PIB russe −5,5 % à deux ans ; France → Espagne sans casus belli, 5 sanctionneurs à six mois, coalition de six, 447 Md$ de PIB perdus contre 11 Md$ de terres prises, stabilité 0,48 contre 0,62 ; blocus britannique, commerce maritime norvégien −53 % ; débarquement italien refusé. Les quatre critères tiennent.
+- **J3** (`docs/veritable/reports/J6/non-regression/J3/`, cœur, graine 42, code final) : embargo UE, gaz à l'import +37 % la première année, PIB russe −5,5 % à deux ans ; France → Espagne sans casus belli, 5 sanctionneurs à six mois, coalition de six (l'Ukraine et la Russie n'y entrent plus : ni frontière avec la France ni alliance avec l'Espagne), 453 Md$ de PIB perdus contre 91 Md$ de terres prises, stabilité 0,48 contre 0,62 ; blocus britannique, commerce maritime norvégien −53 % ; débarquement italien refusé. Les quatre critères tiennent.
 - **J4** (`docs/veritable/reports/J6/non-regression/J4/`) : les cinq critères tiennent.
 - **J5** : À COMPLÉTER.
 
@@ -746,6 +747,7 @@ Guides rejoués dans Edge sans fenêtre (serveur de développement, build de dev
 #### Écarts aux guides (non corrigés, à trancher)
 
 Guide J4 (élection française d'avril 2027) :
+
 - **Projection** : les six partis sont serrés entre 15 et 19 % ; Les Républicains en tête (19 %), le Rassemblement national à 16 % alors qu'il a fait 33 % au dernier scrutin.
 - **Opinion lente** : TVA +8 points et social −5 : salariés 50 → 50 % à trois mois, 38 % à quinze mois (guide : 30-35 % en trois mois) ; retraités 47 % puis 41 %.
 - **TVA plafonnée à 40 %** (la cible demandée, 41,3 %, est ramenée au plafond).
@@ -755,6 +757,7 @@ Guide J4 (élection française d'avril 2027) :
 - **Risque de coup** affiché 0,00 à 0,01 % par mois (formule du J5, sans période de grâce).
 
 Guide J5 :
+
 - **28 points de recherche par mois** au lieu d'environ 35 : la recherche publique française est à 0,8 % du PIB depuis que les intérêts ont quitté les postes de dépense (J6b).
 - **Programme technologique** adopté le 1er du mois suivant (5 voix contre 0) ; le bonus de +25 % n'a pas été relevé (mon script relevait les points trop tôt).
 - **Sanctions contre la France agresseur** : en 2027 elles viennent du G7 (présidence britannique) et de quatre nations, pas encore de la présidence polonaise de l'UE à la date du relevé.
@@ -772,8 +775,8 @@ Guide J6 : aucun écart. Le clic sur la petite carte, qui ne passe pas dans Edge
 
 ### Modifications de `src/core` au J6c
 
-| Fichier | Modification | Raison |
-| --- | --- | --- |
+| Fichier                                | Modification                                                                                           | Raison                                       |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------- |
 | `src/core/game/Game.ts`, `GameImpl.ts` | `setVeritableTileOwnerListener(listener)`, appelé par `conquer` et `relinquish` ; refusé hors campagne | Terres revendiquées comptées au fil de l'eau |
 
 ### Schémas (sauvegarde `schemaVersion: 6`)

@@ -308,10 +308,12 @@ const DiplomacyConfigSchema = z.object({
   // Claims (J6, sim/diplomacy/claims.ts): a territorial casus belli needs
   // the target to hold at least `minTiles` unsettled tiles of the claim;
   // every `failuresPerHalving` white or lost wars on a claim halve its
-  // weight.
+  // weight; J6c: after `abandonAfterFailures` of them the claim is given up
+  // (weight 0, no casus belli).
   claims: z.object({
     minTiles: z.number().int().min(1),
     failuresPerHalving: z.number().int().min(1),
+    abandonAfterFailures: z.number().int().min(1),
   }),
 });
 

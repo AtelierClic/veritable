@@ -12,7 +12,8 @@ import { homelandRegion } from "../war/claimTiles";
 //
 // A claim carries a weight (1 at first) that scales the motive of a war on
 // it; every config.diplomacy.claims.failuresPerHalving white or lost wars on
-// the claim halve it.
+// the claim halve it, and after abandonAfterFailures of them it is given up
+// (J6c).
 
 export function initClaims(scenario: Scenario): Claim[] {
   return scenario.contested.flatMap((r) =>
@@ -43,9 +44,11 @@ export function claimsAgainst(
   claimant: NationId,
   target: NationId,
 ): Claim[] {
-  const min = ctx.config.diplomacy.claims.minTiles;
+  const { minTiles, abandonAfterFailures } = ctx.config.diplomacy.claims;
   return claimsOf(state, claimant).filter(
-    (c) => (ctx.claimHolders(c.region).get(target) ?? 0) >= min,
+    (c) =>
+      c.failures < abandonAfterFailures &&
+      (ctx.claimHolders(c.region).get(target) ?? 0) >= minTiles,
   );
 }
 
@@ -123,7 +126,8 @@ export function recordWarOutcome(
   war: War,
   winner: NationId | null,
 ): ClaimOutcome[] {
-  const every = ctx.config.diplomacy.claims.failuresPerHalving;
+  const { failuresPerHalving: every, abandonAfterFailures } =
+    ctx.config.diplomacy.claims;
   const out: ClaimOutcome[] = [];
   const taken = (side: readonly NationId[]) =>
     side.reduce((s, n) => s + (war.tilesTaken[n] ?? 0), 0);
@@ -136,7 +140,15 @@ export function recordWarOutcome(
     for (const region of war.claims) {
       const claim = claimRecord(state, region, aggressor);
       claim.failures += 1;
-      if (claim.failures % every === 0) {
+      // J6c: a claim pressed in vain abandonAfterFailures times is given up
+      // (Syria on the north-east across a nine-tile gap of the Euphrates,
+      // every six years for fifty years).
+      if (claim.failures >= abandonAfterFailures) {
+        if (claim.weight > 0) {
+          claim.weight = 0;
+          out.push({ claimant: aggressor, region, weight: 0 });
+        }
+      } else if (claim.failures % every === 0) {
         claim.weight /= 2;
         out.push({ claimant: aggressor, region, weight: claim.weight });
       }

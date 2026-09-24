@@ -20,6 +20,7 @@ Chargement : 3 à 5 secondes (carte `giantworldmap`, 4 108 × 1 948 tuiles, 208 
 **La carte.** Les frontières de facto : Crimée et est de l'Ukraine russes, Taïwan, Kosovo, Chypre du Nord, Abkhazie et Ossétie du Sud, Transnistrie, Somaliland, le Sahara occidental coupé au mur des sables, le Yémen d'Ansar Allah, la Libye orientale, les Forces de soutien rapide au Soudan, le Nord-Est syrien, l'AFC/M23 à l'est de la RD Congo. Les tuiles contestées sont hachurées. Trois fronts sont actifs : Russie–Ukraine, FSR–Soudan, AFC/M23–RD Congo (légende des fronts en bas à gauche).
 
 **Diplomatie et sanctions.** 207 nations. Essayer :
+
 - filtre **bloc = OTAN**, tri **par relations** : « 31 sur 207 » ; en tête les alliés qui sont aussi dans l'UE (Tchéquie 64, Hongrie 63, Lituanie 62, Allemagne 61…), puis le Canada vers 52 et les autres alliés hors UE plus bas ;
 - recherche **« russ »**, cliquer **Russie** : relations −60, sanctions de l'UE en vigueur (« de politique » : elles ne tombent qu'avec un changement de régime), et en dessous **les embargos de la Russie dans les deux sens**, bien par bien ;
 - filtre **région = Afrique**, tri **par stabilité** : les moins stables en tête, dont les États en conflit interne du scénario (Soudan, Somalie, Mali, Burkina Faso…).
@@ -32,13 +33,13 @@ Chargement : 3 à 5 secondes (carte `giantworldmap`, 4 108 × 1 948 tuiles, 208 
 
 Lancer **×5**. Une année de jeu dure environ 2 min 30 s. Les fenêtres d'événements mettent le jeu en pause : répondre (ou laisser le gouvernement trancher au bout d'un mois).
 
-| Chiffre | Où | Ordre de grandeur |
-| --- | --- | --- |
-| Vitesse | barre du haut, date | un jour de jeu ≈ 0,4 s ; mesuré à 49,3-50 ticks/s (critère 49) ; le premier 1er du mois d'une session marque un léger à-coup (code froid) |
-| Présidence de l'UE | Blocs | Irlande au 1er juillet 2026, Lituanie au 1er janvier 2027 |
-| Guerres | Fronts et divisions | les trois du scénario ; une nouvelle guerre dans le monde tous les quatre ans environ |
-| Prix | Économie | pétrole entre 1 et 1,4 × sa base la première année (sanctions de 2026) |
-| Journal | Objectifs et journal | élections du monde, coups (surtout en régimes autoritaires, juntes et États faillis), décisions des blocs |
+| Chiffre            | Où                   | Ordre de grandeur                                                                                                                         |
+| ------------------ | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Vitesse            | barre du haut, date  | un jour de jeu ≈ 0,4 s ; mesuré à 49,3-50 ticks/s (critère 49) ; le premier 1er du mois d'une session marque un léger à-coup (code froid) |
+| Présidence de l'UE | Blocs                | Irlande au 1er juillet 2026, Lituanie au 1er janvier 2027                                                                                 |
+| Guerres            | Fronts et divisions  | les trois du scénario ; une nouvelle guerre dans le monde tous les quatre ans environ                                                     |
+| Prix               | Économie             | pétrole entre 1 et 1,4 × sa base la première année (sanctions de 2026)                                                                    |
+| Journal            | Objectifs et journal | élections du monde, coups (surtout en régimes autoritaires, juntes et États faillis), décisions des blocs                                 |
 
 ## 3. Sauvegarder et reprendre (3 min)
 

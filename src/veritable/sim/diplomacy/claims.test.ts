@@ -133,7 +133,7 @@ describe("claims", () => {
     expect(war.losses).toEqual({ AAA: 0, BBB: 0 });
   });
 
-  it("every second white or lost war on a claim halves its weight; a won one leaves it", () => {
+  it("every second white or lost war on a claim halves its weight, the third gives it up (J6c); a won one leaves it", () => {
     // White: a ceasefire without net gain of land (here none taken).
     const { ctx, state, war } = unit();
     expect(recordWarOutcome(ctx, state, war, null)).toEqual([]);
@@ -145,13 +145,16 @@ describe("claims", () => {
     expect(claim()).toMatchObject({ failures: 2, weight: 0.5 });
     expect(recordWarOutcome(ctx, state, war, "AAA")).toEqual([]);
     expect(claim()).toMatchObject({ failures: 2, weight: 0.5 });
-    recordWarOutcome(ctx, state, war, null);
-    recordWarOutcome(ctx, state, war, null);
-    expect(claim()).toMatchObject({ failures: 4, weight: 0.25 });
+    expect(recordWarOutcome(ctx, state, war, null)).toEqual([
+      { claimant: "AAA", region: "strip", weight: 0 },
+    ]);
+    expect(claim()).toMatchObject({ failures: 3, weight: 0 });
+    expect(recordWarOutcome(ctx, state, war, null)).toEqual([]);
+    expect(claim()).toMatchObject({ failures: 4, weight: 0 });
     // A ceasefire after taking more land than it lost is no failure.
     war.tilesTaken = { AAA: 300, BBB: 20 };
     recordWarOutcome(ctx, state, war, null);
-    expect(claim()).toMatchObject({ failures: 4, weight: 0.25 });
+    expect(claim()).toMatchObject({ failures: 4, weight: 0 });
   });
 
   it("war memory: losses over population plus years of war, halving every eight years", () => {

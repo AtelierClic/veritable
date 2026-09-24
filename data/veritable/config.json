@@ -337,7 +337,8 @@
     },
     "claims": {
       "minTiles": 1,
-      "failuresPerHalving": 2
+      "failuresPerHalving": 2,
+      "abandonAfterFailures": 3
     }
   },
   "war": {

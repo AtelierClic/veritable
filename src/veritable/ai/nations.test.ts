@@ -291,6 +291,67 @@ describe("the cost of a war by its size (J6c)", () => {
   });
 });
 
+describe("a claim weakened by failed wars (J6c)", () => {
+  it("its weight multiplies the motive of the casus belli: a quarter of the weight, a quarter of the motive", () => {
+    const ids = ["AAA", "BBB", "CCC", "DDD"];
+    const sheets = new Map<string, NationData>(
+      ids.map((id) => [
+        id,
+        testNation(
+          id,
+          id === "BBB"
+            ? { activePersonnel: 1_000_000, tradeOpenness: 0.05 }
+            : id === "CCC"
+              ? { activePersonnel: 50_000 }
+              : {},
+        ),
+      ]),
+    );
+    const scenario = {
+      ...testScenario(ids),
+      contested: [
+        {
+          region: "marches",
+          controller: "CCC",
+          claimants: ["BBB"],
+          recognizedBy: [],
+        },
+      ],
+    };
+    const world = new MemoryWorld(4, 4);
+    ids.forEach((id, row) => {
+      for (let x = 0; x < 4; x++) world.setOwner(row * 4 + x, id);
+    });
+    world.setClaims(new Map([["marches", Uint32Array.from([8, 9])]]));
+    const sim = new VeritableSimImpl({
+      config: quietConfig(),
+      world,
+      data: testSimData(ids, { landNeighbours: [["BBB", "CCC"]] }),
+      nationData: (id) => sheets.get(id),
+      scenario,
+    });
+    sim.init(scenario, 21);
+    const internals = sim as unknown as {
+      diplomacy: DiplomacyState;
+      politics: PoliticsState;
+      aiEnv(date: string): AiEnv;
+    };
+    setRelation(internals.diplomacy, "BBB", "CCC", -30);
+    const claim = internals.diplomacy.claims.find(
+      (c) => c.region === "marches" && c.claimant === "BBB",
+    )!;
+    const full = appraiseWar(internals.aiEnv("2026-01-01"), "BBB", "CCC")!;
+    expect(full.casusBelli).toBe("contested-territory");
+    claim.weight = 0.25;
+    const weak = appraiseWar(internals.aiEnv("2026-01-01"), "BBB", "CCC")!;
+    expect(weak.gain / full.gain).toBeCloseTo(0.25, 10);
+    // Given up after its third failure: no casus belli left, no war on it.
+    claim.failures = quietConfig().diplomacy.claims.abandonAfterFailures;
+    internals.politics.nations.BBB.leader.traits.aggressiveness = 0.5;
+    expect(appraiseWar(internals.aiEnv("2026-01-01"), "BBB", "CCC")).toBeNull();
+  });
+});
+
 describe("arms flows", () => {
   it("a nation at peace sends arms to a friend at war with a foe; its budget pays, the friend re-equips", () => {
     const { sim, internals, days } = campaign();

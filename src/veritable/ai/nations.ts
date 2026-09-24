@@ -344,14 +344,16 @@ export function appraiseWar(
     cfg.landSharePerPowerRatio * (Math.min(powerRatio, 10) - 1),
   );
   // A justified war also serves the government at home (J5); a claim
-  // weakened by failed wars less so (J6).
+  // weakened by failed wars less so (J6). J6c: the weight multiplies the
+  // motive, as the rule of the J6 says — the J6a kept the motive of a war
+  // without casus belli as a floor, and a claim that failed again and again
+  // (Syria on the north-east across a nine-tile gap of the Euphrates) was
+  // pressed every six years for fifty years.
   const motive =
     casusBelli === "none"
       ? 1
       : casusBelli === "contested-territory"
-        ? 1 +
-          (cfg.casusBelliMotive - 1) *
-            claimWeight(env.ctx, env.diplomacy, id, target)
+        ? cfg.casusBelliMotive * claimWeight(env.ctx, env.diplomacy, id, target)
         : cfg.casusBelliMotive;
   // Help to the target lengthens the war (J6).
   const duration =
