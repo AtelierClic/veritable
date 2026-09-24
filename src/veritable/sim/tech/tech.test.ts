@@ -167,12 +167,15 @@ describe("technology: research", () => {
   it("the player researches by command; three projects at most; a refusal says why", () => {
     const nodes = ["a", "b", "c", "d"].map((id) => node({ id }));
     nodes.push(node({ id: "e", requires: ["a"] }));
+    nodes.push(node({ id: "f", bloc: "elsewhere" }));
     const { sim } = campaign({ nodes });
     for (const id of ["a", "b", "c"])
       sim.apply({ type: "tech-research", node: id });
     expect(sim.read().tech.nations.AAA.projects.length).toBe(3);
     expect(sim.read().techRefusals.d).toBe("full");
-    expect(sim.read().techRefusals.e).toBe("full");
+    // J6c: the lasting reason before the full queue.
+    expect(sim.read().techRefusals.e).toBe("requires");
+    expect(sim.read().techRefusals.f).toBe("bloc");
     expect(() => sim.apply({ type: "tech-research", node: "d" })).toThrow(
       /full/,
     );

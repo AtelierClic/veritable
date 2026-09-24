@@ -185,9 +185,11 @@ function refusalOf(
 ): string | null {
   if (view.done.has(node.id)) return "done";
   if (view.inProgress.has(node.id)) return "in-progress";
-  if (view.projects >= ctx.config.tech.maxProjects) return "full";
-  if (!node.requires.every((r) => view.done.has(r))) return "requires";
+  // J6c: the lasting reason first — a node of another bloc showed "queue
+  // full" while three projects ran, never "reserved to the bloc".
   if (node.bloc !== undefined && !view.blocs.includes(node.bloc)) return "bloc";
+  if (!node.requires.every((r) => view.done.has(r))) return "requires";
+  if (view.projects >= ctx.config.tech.maxProjects) return "full";
   return null;
 }
 

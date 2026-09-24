@@ -1,0 +1,141 @@
+[
+  {
+    "step": "01",
+    "title": "1. La barre du haut",
+    "date": "2026-01-01",
+    "capture": "j5-01-1-la-barre-du-haut.png",
+    "notes": [
+      "date 2026-01-01",
+      "Blocs : true, Technologie : true, Événements : true"
+    ]
+  },
+  {
+    "step": "02",
+    "title": "2. Technologie : trois projets lancés",
+    "date": "2026-01-01",
+    "capture": "j5-02-2-technologie-trois-projets-lances.png",
+    "notes": [
+      "Recherche : 0.0 points par mois ; palier 1 du tronc commun : 27 / 61 nœuds",
+      "boutons « Rechercher » cliqués : 3, projets energy-green-hydrogen, energy-solid-state-batteries, energy-ccs (guide : 3)",
+      "nœuds acquis 28 (guide : 27 sur 61 au palier 1)"
+    ]
+  },
+  {
+    "step": "03",
+    "title": "2. Technologie : onglet BRICS",
+    "date": "2026-01-01",
+    "capture": "j5-03-2-technologie-onglet-brics.png",
+    "notes": [
+      "aucun refus affiché"
+    ]
+  },
+  {
+    "step": "04",
+    "title": "2. Technologie : points au 1er février",
+    "date": "2026-02-03",
+    "capture": "j5-04-2-technologie-points-au-1er-fevrier.png",
+    "notes": [
+      "28.3 points par mois (guide : environ 35)"
+    ]
+  },
+  {
+    "step": "05",
+    "title": "3. Événements : une fenêtre met le jeu en pause",
+    "date": "2026-04-01",
+    "capture": "j5-05-3-evenements-une-fenetre-met-le-jeu-en-p.png",
+    "notes": [
+      "pause au 2026-04-01",
+      "Événements Fermer Décisions en attente Motion de censure sur le budget Faute de majorité, le gouvernement de France voit son projet de budget menacé par une motion de censure que soutiennent des oppositions de tous bords. Les agences de notation ont prévenu qu'un budget reconduit à l'identique pèserait sur la note du pays. Le chef du gouvernement a trois jours pour trancher. Faire adopter le budget sans vote légitimité -0.06, budget +0.30 % du PIB, stabilité -0.03 Céder aux oppositions sur les retraites et la fiscalité budget -0.40 % du PIB, capital politique -10.00, stabilité +0.02 Reconduire"
+    ]
+  },
+  {
+    "step": "06",
+    "title": "3. Événements : une réponse, une décision laissée",
+    "date": "2026-08-01",
+    "capture": "j5-06-3-evenements-une-reponse-une-decision-la.png",
+    "notes": [
+      "répondu : budget-censure-motion:force",
+      "seconde fenêtre : 2026-07-01 nato-summit-spending-pledge",
+      "laissée sans réponse : 2026-08-01 : tranché par le gouvernement"
+    ]
+  },
+  {
+    "step": "07",
+    "title": "4. Présidence française de l'UE : programme technologique",
+    "date": "2026-08-03",
+    "capture": "j5-07-4-presidence-francaise-de-l-ue-programme.png",
+    "notes": [
+      "tête de l'UE FRA jusqu'au 2027-01-01 (guide : France)",
+      "programme commun : soumis",
+      "Blocs Fermer Bloc Tête Membres (simulés / monde) Votre statut Votes en cours Ligue arabe aucun membre simulé 0 / 22 hors du bloc 0 ASEAN aucun membre simulé 0 / 11 hors du bloc 0 Union africaine aucun membre simulé 0 / 49 hors du bloc 0 BRICS Russie 1 / 10 hors du bloc 0 CEDEAO aucun membre simulé 0 / 11 hors du bloc 0 Union européenne France 5 / 27 membre 1 G20 Royaume-Uni 6 / 19 membre 0 G7 France 4 / 7 membre 0 Mercosur aucun membre simulé 0 / 5 hors du bloc 0 OTAN Turquie 8 / 32 membre 0 OPEP aucun membre simulé 0 / 12 hors du bloc 0 Organisation de coopération de Shanghai Russie 1 / 10 hors du bloc 0 Union européenne Présidence tournante : France jusqu'au 2027-01-01 vous dirigez le bloc"
+    ]
+  },
+  {
+    "step": "08",
+    "title": "4. Présidence : le programme au mois suivant",
+    "date": "2026-08-04",
+    "capture": "j5-08-4-presidence-le-programme-au-mois-suivan.png",
+    "notes": [
+      "programmes de l'UE []",
+      "points 28.3 → 28.3 (guide : +25 %)"
+    ]
+  },
+  {
+    "step": "09",
+    "title": "5. Guerre à la Russie sans casus belli : la main morte",
+    "date": "2026-08-04",
+    "capture": "j5-09-5-guerre-a-la-russie-sans-casus-belli-la.png",
+    "notes": [
+      "main morte FRA 45 %, GBR 38 %, RUS 70 % (guide : Russie 70 %)",
+      "avertissement du formulaire (annexion) : 0 · recul depuis 0 mois · 0 tuiles prises Proposer la paix : cessez-le-feu cession des territoires occupés annexion totale réparations % ans plafond de divisions Proposer à Russie Main morte de Russie : 70 % de chances qu'elle frappe votre capitale si vous l'annexez"
+    ]
+  },
+  {
+    "step": "10",
+    "title": "6. Sanctions de l'UE contre la Russie soumises",
+    "date": "2026-09-02",
+    "capture": "j5-10-6-sanctions-de-l-ue-contre-la-russie-sou.png",
+    "notes": [
+      "soumises",
+      "Blocs Fermer Bloc Tête Membres (simulés / monde) Votre statut Votes en cours Ligue arabe aucun membre simulé 0 / 22 hors du bloc 0 ASEAN aucun membre simulé 0 / 11 hors du bloc 0 Union africaine aucun membre simulé 0 / 49 hors du bloc 0 BRICS Russie 1 / 10 hors du bloc 0 CEDEAO aucun membre simulé 0 / 11 hors du bloc 0 Union européenne France 5 / 27 membre 1 G20 Royaume-Uni 6 / 19 membre 0 G7 France 4 / 7 membre 0 Mercosur aucun membre simulé 0 / 5 hors du bloc 0 OTAN Turquie 8 / 32 membre 0 OPEP aucun membre simulé 0 / 12 hors du bloc 0 Organisation de coopération de Shanghai Russie 1 / 10 hors du bloc 0 Union européenne Présidence tournante : France jusqu'au 2027-01-01 vous dirigez le bloc Membres simulés : France (membre)Allemagne (membre)Italie (membre)Pologne (membre)Espagne (membre)Turquie (candidat)Ukraine (candidat) Seuls les membres simulés votent et paient (carte Europe ; tous "
+    ]
+  },
+  {
+    "step": "11",
+    "title": "6. Les votes et les sanctions au journal",
+    "date": "2027-03-02",
+    "capture": "j5-11-6-les-votes-et-les-sanctions-au-journal.png",
+    "notes": [
+      "2026-02-01 sanctions-imposed RUS {\"by\":\"UKR\"}",
+      "2026-09-01 sanctions-imposed FRA {\"by\":\"RUS\"}",
+      "2026-09-01 bloc-decision FRA {\"bloc\":\"eu\",\"kind\":\"tech-program\",\"target\":\"\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"5\",\"no\":\"0\",\"abstain\":\"0\"}",
+      "2026-09-01 bloc-decision RUS {\"bloc\":\"sco\",\"kind\":\"common-defense\",\"target\":\"\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"1\",\"no\":\"0\",\"abstain\":\"0\"}",
+      "2026-10-01 bloc-decision FRA {\"bloc\":\"eu\",\"kind\":\"sanctions\",\"target\":\"RUS\",\"direction\":\"\",\"result\":\"rejected\",\"yes\":\"1\",\"no\":\"4\",\"abstain\":\"0\"}",
+      "2027-02-01 sanctions-imposed FRA {\"by\":\"GBR\"}",
+      "2027-03-01 sanctions-imposed FRA {\"by\":\"DEU\"}",
+      "2027-03-01 sanctions-imposed FRA {\"by\":\"ITA\"}",
+      "2027-03-01 sanctions-imposed FRA {\"by\":\"TUR\"}",
+      "2027-03-01 bloc-decision GBR {\"bloc\":\"g7\",\"kind\":\"sanctions\",\"target\":\"FRA\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"3\",\"no\":\"0\",\"abstain\":\"0\"}"
+    ]
+  },
+  {
+    "step": "12",
+    "title": "7. Sauvegarde et rechargement",
+    "date": "2027-03-02",
+    "capture": "j5-12-7-sauvegarde-et-rechargement.png",
+    "notes": [
+      "avant {\"date\":\"2027-03-02\",\"projects\":[],\"pending\":0,\"blocs\":[\"arab-league:0\",\"asean:0\",\"au:0\",\"brics:1\",\"ecowas:0\",\"eu:7\",\"g20:6\",\"g7:4\",\"mercosur:0\",\"nato:8\",\"opec:0\",\"sco:1\"]}",
+      "après {\"date\":\"2027-03-02\",\"projects\":[],\"pending\":0,\"blocs\":[\"arab-league:0\",\"asean:0\",\"au:0\",\"brics:1\",\"ecowas:0\",\"eu:7\",\"g20:6\",\"g7:4\",\"mercosur:0\",\"nato:8\",\"opec:0\",\"sco:1\"]}",
+      "identiques : true"
+    ]
+  },
+  {
+    "step": "errors",
+    "title": "Erreurs de la page",
+    "date": null,
+    "capture": "",
+    "notes": [
+      "got wrong turn have turns 0, received turn 1"
+    ]
+  }
+]
