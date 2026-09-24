@@ -292,6 +292,113 @@ export function loadImfWorld(lock: Lock): ImfWorld {
   };
 }
 
+// Interest and inflation (J6b, the debt of the first day): IMF DataMapper,
+// all rights reserved, cache outside git, sha256 in the lock, only derived
+// figures reach the sheets.
+//
+//   npm run veritable:ingest -- fetch-imf-fiscal --scenario world-2026
+export const IMF_FISCAL_INDICATORS = [
+  "ie", // interest paid on public debt, % of GDP (Public Finances in Modern History)
+  "GGXCNL_G01_GDP_PT", // overall balance, % of GDP (Fiscal Monitor)
+  "GGXONLB_G01_GDP_PT", // primary balance, % of GDP (Fiscal Monitor)
+  "PCPIPCH", // consumer prices, annual % change (WEO)
+] as const;
+export type ImfFiscalIndicator = (typeof IMF_FISCAL_INDICATORS)[number];
+const IMF_FISCAL_CACHE = "cache/imf-fiscal.json";
+// IMF codes that differ from ours.
+const IMF_CODE_OF: Record<string, string> = { UVK: "XKX" };
+
+export async function fetchImfFiscal(
+  nations: readonly string[],
+): Promise<void> {
+  const lock = readLock();
+  const wanted = new Set(nations);
+  const imf: Record<string, Record<string, Record<string, number>>> = {};
+  for (const id of IMF_FISCAL_INDICATORS) {
+    const body = JSON.parse(
+      (
+        await download(`https://www.imf.org/external/datamapper/api/v1/${id}`)
+      ).toString(),
+    ) as { values: Record<string, Record<string, Record<string, number>>> };
+    const series = body.values?.[id] ?? {};
+    imf[id] = Object.fromEntries(
+      Object.entries(series)
+        .map(([code, v]) => [IMF_CODE_OF[code] ?? code, v] as const)
+        .filter(([iso3]) => wanted.has(iso3))
+        .sort((a, b) => a[0].localeCompare(b[0])),
+    );
+    console.log(`IMF ${id}: ${Object.keys(imf[id]).length} countries`);
+  }
+  const text =
+    JSON.stringify({
+      source:
+        "IMF DataMapper: Public Finances in Modern History, Fiscal Monitor, World Economic Outlook",
+      fetchedAt: new Date().toISOString().slice(0, 10),
+      indicators: imf,
+    }) + "\n";
+  fs.writeFileSync(path.join(HERE, IMF_FISCAL_CACHE), text);
+  lock[IMF_FISCAL_CACHE] = sha256(text);
+  fs.writeFileSync(LOCK_FILE, JSON.stringify(lock, null, 2) + "\n");
+}
+
+export interface ImfFiscal {
+  fetchedAt: string;
+  // The latest value at or before `year`.
+  at(
+    indicator: ImfFiscalIndicator,
+    iso3: string,
+    year: number,
+  ): { value: number; year: number } | null;
+  // The mean over [from, to], null without any value.
+  mean(
+    indicator: ImfFiscalIndicator,
+    iso3: string,
+    from: number,
+    to: number,
+  ): number | null;
+}
+
+export function loadImfFiscal(lock: Lock): ImfFiscal {
+  const file = path.join(HERE, IMF_FISCAL_CACHE);
+  if (!fs.existsSync(file)) {
+    throw new Error(
+      "IMF fiscal cache missing: run `veritable:ingest -- fetch-imf-fiscal`",
+    );
+  }
+  const text = fs.readFileSync(file, "utf8");
+  if (lock[IMF_FISCAL_CACHE] !== sha256(text)) {
+    throw new Error("IMF fiscal cache does not match sources.lock.json");
+  }
+  const cache = JSON.parse(text) as {
+    fetchedAt: string;
+    indicators: Record<string, Record<string, Record<string, number>>>;
+  };
+  return {
+    fetchedAt: cache.fetchedAt,
+    at(indicator, iso3, year) {
+      const byYear = cache.indicators[indicator]?.[iso3];
+      if (byYear === undefined) return null;
+      for (let y = year; y >= 2010; y--) {
+        const value = byYear[String(y)];
+        if (value !== undefined) return { value, year: y };
+      }
+      return null;
+    },
+    mean(indicator, iso3, from, to) {
+      const byYear = cache.indicators[indicator]?.[iso3];
+      if (byYear === undefined) return null;
+      const values: number[] = [];
+      for (let y = from; y <= to; y++) {
+        const value = byYear[String(y)];
+        if (value !== undefined) values.push(value);
+      }
+      return values.length === 0
+        ? null
+        : values.reduce((a, b) => a + b, 0) / values.length;
+    },
+  };
+}
+
 // V-Dem Regimes of the World of every nation (last year known).
 export function loadVdem(
   lock: Lock,

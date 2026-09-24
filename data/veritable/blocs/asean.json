@@ -1,6 +1,7 @@
 {
   "id": "asean",
   "name": "bloc.asean.name",
+  "type": "economic-union",
   "members": [
     {
       "nation": "BRN",

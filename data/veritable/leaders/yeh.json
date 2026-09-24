@@ -1,0 +1,95 @@
+{
+  "nation": "YEH",
+  "actors": [
+    {
+      "id": "yeh-mahdi-al-mashat",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.yeh-mahdi-al-mashat.parody",
+        "fictional": "leader.yeh-mahdi-al-mashat.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "yeh-ansar-allah",
+      "traits": {
+        "economic": -0.2,
+        "authority": 0.9,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.66,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "yeh-mohammed-miftah",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.yeh-mohammed-miftah.parody",
+        "fictional": "leader.yeh-mohammed-miftah.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "yeh-ansar-allah",
+      "traits": {
+        "economic": -0.2,
+        "authority": 0.9,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.66,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "yeh-abdel-malik-al-houthi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.yeh-abdel-malik-al-houthi.parody",
+        "fictional": "leader.yeh-abdel-malik-al-houthi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "yeh-ansar-allah",
+      "traits": {
+        "economic": -0.2,
+        "authority": 0.9,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.66,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "yeh-ansar-allah",
+      "name": "party.yeh-ansar-allah",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.2,
+        "authority": 0.9,
+        "sovereignty": 0.9
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Aucune élection depuis la prise de Sanaa (2014)"
+      },
+      "leader": "yeh-abdel-malik-al-houthi"
+    }
+  ]
+}

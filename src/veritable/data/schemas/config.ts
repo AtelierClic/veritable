@@ -79,6 +79,12 @@ const BudgetConfigSchema = z.object({
     debtSlope: z.number().min(0),
     debtThreshold: z.number().min(0),
     instabilitySlope: z.number().min(0),
+    // J6b: the real rate of the first day of a sheet with interest data
+    // (interest paid / debt, at most nominalMax, minus inflation), kept in
+    // [realMin, realMax]; the rate never falls under realMin afterwards.
+    nominalMax: z.number().min(0),
+    realMin: z.number(),
+    realMax: z.number(),
   }),
   austerity: z.object({
     debtToGdp: positive,
@@ -87,6 +93,10 @@ const BudgetConfigSchema = z.object({
   }),
   default: z.object({
     debtToGdp: positive,
+    // J6b: a nation above debtToGdp (or interestToRevenue) on the first day
+    // defaults at its own debt ratio (interest share) of that day x
+    // startMargin.
+    startMargin: z.number().min(1),
     interestToRevenue: share,
     haircut: share,
     noDeficitYears: z.number().int().min(0),
@@ -102,6 +112,12 @@ const BudgetConfigSchema = z.object({
 });
 
 const PoliticsConfigSchema = z.object({
+  // Internal conflicts of the scenario (J6b): stability lost at intensity 1,
+  // halving every halfLifeYears from the start of the campaign.
+  internalConflict: z.object({
+    stabilityMalus: share,
+    halfLifeYears: positive,
+  }),
   convergencePerWeek: share,
   groupWeights: record(INTEREST_GROUPS, share),
   // A driver is its raw value divided by its scale, clamped to [-1, 1].
@@ -240,9 +256,24 @@ const DiplomacyConfigSchema = z.object({
   relationDecayPerMonth: z.number().min(0), // above the affinity, towards it
   relationRecoveryPerMonth: z.number().min(0), // below the affinity, towards it
   // Affinity (J4): affinityPerBloc x common blocs + affinityIdeology x
-  // (1 - ideological distance of the leaders / max distance).
+  // (1 - ideological distance of the leaders / max distance). J6b: a common
+  // bloc weighs by its type (a bloc without type: affinityPerBloc), minus
+  // affinitySanctions when either sanctions the other, minus
+  // affinityAllyAtWar when either is at war against an ally of the other (a
+  // member of a common bloc of an `allyBlocTypes` type, or a nation it
+  // guarantees or that guarantees it).
   affinityPerBloc: z.number().min(0),
   affinityIdeology: z.number().min(0),
+  affinityByBlocType: z.object({
+    "military-alliance": z.number().min(0),
+    "economic-union": z.number().min(0),
+    forum: z.number().min(0),
+  }),
+  affinitySanctions: z.number().min(0),
+  affinityAllyAtWar: z.number().min(0),
+  allyBlocTypes: z.array(
+    z.enum(["military-alliance", "economic-union", "forum"]),
+  ),
   // Satisfaction lost by the youth and business groups of an aggressor.
   declarationGroupHit: share,
   // Humanitarian casus belli: the target is in unrest below this stability.
@@ -255,6 +286,10 @@ const DiplomacyConfigSchema = z.object({
     blocAlignShare: share,
     // Sanctions are lifted once the war is over and relations are back here.
     liftAboveRelations: z.number(),
+    // J6b: a sanction of policy also needs a change of the target's regime
+    // since the first day and this affinity between the two, the sanctions
+    // themselves left out (time alone cannot lift it).
+    liftPolicyMinAffinity: z.number(),
   }),
   coalition: z.object({
     relationsBelow: z.number(),

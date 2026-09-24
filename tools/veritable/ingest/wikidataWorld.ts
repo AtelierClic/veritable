@@ -165,6 +165,13 @@ export async function fetchWikidataWorld(
       P35: [] as (Dated & { qid: string })[],
       P6: [] as (Dated & { qid: string })[],
     };
+    // J6b: a de facto entity without a Wikidata country (the Houthis'
+    // Yemen, eastern Libya...) gets an empty snapshot: politics-world.json
+    // gives its heads and parties.
+    if (country === null) {
+      heads.set(n, record);
+      continue;
+    }
     for (const property of ["P35", "P6"] as const) {
       const json = await api<{ claims: Claims }>({
         action: "wbgetclaims",
@@ -181,6 +188,7 @@ export async function fetchWikidataWorld(
   const candidates: { nation: string; index: number; qids: string[] }[] = [];
   for (const n of nations) {
     const entry = parties.nations[n];
+    if (entry.wikidataCountry === null) continue;
     for (let i = 0; i < entry.parties.length; i++) {
       const party = entry.parties[i];
       if (party.qid !== undefined) continue;
@@ -318,7 +326,7 @@ export async function fetchWikidataWorld(
     }
     const snapshot: WikidataSnapshot = {
       nation: n,
-      country: entry.wikidataCountry,
+      country: entry.wikidataCountry ?? "",
       referenceDate,
       fetchedAt,
       license: "CC0 1.0, Wikidata",

@@ -1,6 +1,11 @@
 import { NationId } from "../../data/schemas/common";
-import { SPENDING_POSTS, TAX_IDS } from "../../data/schemas/nation";
-import { NationEconomy, NationPolitics } from "../../data/schemas/save";
+import { NationData, SPENDING_POSTS, TAX_IDS } from "../../data/schemas/nation";
+import {
+  EconomyState,
+  NationEconomy,
+  NationPolitics,
+  PoliticsState,
+} from "../../data/schemas/save";
 import { EconomyContext } from "./context";
 import { MonthlyTrade } from "./engine";
 import { taxBase } from "./init";
@@ -10,7 +15,11 @@ import { taxBase } from "./init";
 //   revenue     = sum over taxes of rate x base / 12     (+ foreign grants)
 //   expenditure = GDP / 12 x sum of post shares          (+ interest)
 //   i = base + debtSlope x max(0, debt/GDP - threshold)
-//            + instabilitySlope x (1 - stability)
+//            + instabilitySlope x (1 - stability) + spread
+//
+// J6b: the spread makes the rate of the first day the real rate observed
+// (interest paid / debt - inflation, sheet); the formula moves it with the
+// debt and the stability from there.
 //
 // Forced austerity: debt/GDP >= threshold and rising for N months -> posts
 // capped. Default: debt/GDP >= threshold or interest > share of revenue ->
@@ -43,6 +52,104 @@ export function spendingCeiling(
 
 function addYears(isoDate: string, years: number): string {
   return `${Number(isoDate.slice(0, 4)) + years}${isoDate.slice(4)}`;
+}
+
+// The rate of the formula of the J2 at a debt ratio and a stability.
+export function formulaRate(
+  ctx: EconomyContext,
+  debtToGdp: number,
+  stability: number,
+): number {
+  const cfg = ctx.config.budget.interest;
+  return (
+    cfg.base +
+    cfg.debtSlope * Math.max(0, debtToGdp - cfg.debtThreshold) +
+    cfg.instabilitySlope * (1 - stability)
+  );
+}
+
+// J6b: the real interest rate of the first day of a sheet, null without its
+// interest data (a test sheet) or without debt to speak of.
+export function startRealRate(
+  ctx: EconomyContext,
+  sheet: NationData,
+): number | null {
+  const budget = sheet.economy.budget;
+  const debt = sheet.debtToGdp.value;
+  if (
+    budget.interestPctGdp === undefined ||
+    budget.inflation === undefined ||
+    debt < 0.01
+  ) {
+    return null;
+  }
+  const cfg = ctx.config.budget.interest;
+  const nominal = Math.min(cfg.nominalMax, budget.interestPctGdp.value / debt);
+  return Math.min(
+    cfg.realMax,
+    Math.max(cfg.realMin, nominal - budget.inflation.value),
+  );
+}
+
+// J6b: the debt ratio at which a nation defaults: the rule's, or its own
+// debt of the first day with a margin when it already stood above it
+// (Japan, Venezuela...).
+export function defaultDebtThreshold(
+  ctx: EconomyContext,
+  id: NationId,
+): number {
+  const cfg = ctx.config.budget.default;
+  const start = ctx.sheet(id).debtToGdp.value;
+  return start > cfg.debtToGdp ? start * cfg.startMargin : cfg.debtToGdp;
+}
+
+// J6b: the same for the share of revenue that interest takes (Sri Lanka
+// pays half of its revenue in interest on the first day).
+export function defaultInterestShare(
+  ctx: EconomyContext,
+  id: NationId,
+): number {
+  const cfg = ctx.config.budget.default;
+  const sheet = ctx.sheet(id);
+  const real = startRealRate(ctx, sheet);
+  const revenue = sheet.economy.budget.revenuePctGdp.value;
+  if (real === null || revenue <= 0) return cfg.interestToRevenue;
+  const start = (real * sheet.debtToGdp.value) / revenue;
+  return start > cfg.interestToRevenue
+    ? start * cfg.startMargin
+    : cfg.interestToRevenue;
+}
+
+// J6b: the budget of the first day once politics exist: the interest spread
+// of each nation, and the nations already in default (they cannot borrow
+// for noDeficitYears, and do not default again meanwhile).
+export function settleStartBudget(
+  ctx: EconomyContext,
+  economy: EconomyState,
+  politics: PoliticsState,
+  startDate: string,
+): void {
+  for (const [id, nation] of Object.entries(economy.nations)) {
+    const sheet = ctx.sheet(id);
+    const real = startRealRate(ctx, sheet);
+    const stability = politics.nations[id]?.stability ?? 1;
+    nation.interestSpread =
+      real === null
+        ? 0
+        : real - formulaRate(ctx, sheet.debtToGdp.value, stability);
+    nation.interestRate = formulaRate(ctx, nation.debt / nation.gdp, stability);
+    nation.interestRate = Math.max(
+      ctx.config.budget.interest.realMin,
+      nation.interestRate + nation.interestSpread,
+    );
+    if (sheet.economy.budget.inDefault !== undefined) {
+      nation.defaults = 1;
+      nation.noDeficitUntil = addYears(
+        startDate,
+        ctx.config.budget.default.noDeficitYears,
+      );
+    }
+  }
 }
 
 export function stepBudget(
@@ -80,11 +187,10 @@ export function stepBudget(
   }
 
   const debtToGdp = nation.debt / nation.gdp;
-  nation.interestRate =
-    cfg.interest.base +
-    cfg.interest.debtSlope *
-      Math.max(0, debtToGdp - cfg.interest.debtThreshold) +
-    cfg.interest.instabilitySlope * (1 - politics.stability);
+  nation.interestRate = Math.max(
+    cfg.interest.realMin,
+    formulaRate(ctx, debtToGdp, politics.stability) + nation.interestSpread,
+  );
   const interest = (nation.interestRate / 12) * Math.max(0, nation.debt);
 
   let share = 0;
@@ -113,9 +219,11 @@ export function stepBudget(
   const after = nation.debt / nation.gdp;
   nation.debtRisingMonths = after > before ? nation.debtRisingMonths + 1 : 0;
 
+  // No second default while one is in progress (J6b).
   if (
-    after >= cfg.default.debtToGdp ||
-    (revenue > 0 && interest > cfg.default.interestToRevenue * revenue)
+    nation.noDeficitUntil === null &&
+    (after >= defaultDebtThreshold(ctx, id) ||
+      (revenue > 0 && interest > defaultInterestShare(ctx, id) * revenue))
   ) {
     nation.debt *= 1 - cfg.default.haircut;
     nation.noDeficitUntil = addYears(date, cfg.default.noDeficitYears);

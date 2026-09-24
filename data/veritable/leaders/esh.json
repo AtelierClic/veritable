@@ -1,0 +1,72 @@
+{
+  "nation": "ESH",
+  "actors": [
+    {
+      "id": "esh-bouchraya-hammoudi-bayoun",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.esh-bouchraya-hammoudi-bayoun.parody",
+        "fictional": "leader.esh-bouchraya-hammoudi-bayoun.fictional"
+      },
+      "born": "1954-01-01",
+      "party": "esh-front-polisario",
+      "traits": {
+        "economic": -0.3,
+        "authority": 0.5,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4949324",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "esh-brahim-ghali",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.esh-brahim-ghali.parody",
+        "fictional": "leader.esh-brahim-ghali.fictional"
+      },
+      "born": "1949-08-19",
+      "party": "esh-front-polisario",
+      "traits": {
+        "economic": -0.3,
+        "authority": 0.5,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4955460",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "esh-front-polisario",
+      "name": "party.esh-front-polisario",
+      "wikidata": "Q240425",
+      "ideologies": ["Q27961892"],
+      "ideology": {
+        "economic": -0.3,
+        "authority": 0.5,
+        "sovereignty": 0.9
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Pas d'élection nationale au suffrage direct ; le congrès du Front Polisario élit son secrétaire général (dernier congrès : janvier 2023)"
+      },
+      "leader": "esh-brahim-ghali"
+    }
+  ]
+}

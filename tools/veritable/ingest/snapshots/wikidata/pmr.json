@@ -1,0 +1,57 @@
+{
+ "nation": "PMR",
+ "country": "Q907112",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q110644463",
+    "label": "Aleksandr Rozenberg",
+    "born": "1967-10-18",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q2035881",
+    "label": "Vadim Krasnosselski",
+    "born": "1970-04-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1967163",
+   "label": "Parti républicain",
+   "ideologies": [
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    }
+   ],
+   "leader": {
+    "qid": "Q5518658",
+    "label": "Galina Antyufeyeva",
+    "born": "1960-01-06",
+    "died": null,
+    "parties": [
+     "Q1967163",
+     "Q5429904"
+    ]
+   }
+  }
+ ]
+}

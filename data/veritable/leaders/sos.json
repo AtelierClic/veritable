@@ -1,0 +1,114 @@
+{
+  "nation": "SOS",
+  "actors": [
+    {
+      "id": "sos-konstantin-dzhussoev",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.sos-konstantin-dzhussoev.parody",
+        "fictional": "leader.sos-konstantin-dzhussoev.fictional"
+      },
+      "born": "1967-11-23",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q112691270",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "sos-alan-gagloiev",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.sos-alan-gagloiev.parody",
+        "fictional": "leader.sos-alan-gagloiev.fictional"
+      },
+      "born": "1981-02-06",
+      "party": "sos-nykhas",
+      "traits": {
+        "economic": 0,
+        "authority": 0.4,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.52,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q29319183",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "sos-alan-tadtaiev",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.sos-alan-tadtaiev.parody",
+        "fictional": "leader.sos-alan-tadtaiev.fictional"
+      },
+      "born": "1969-09-19",
+      "party": "sos-ossetie-unie",
+      "traits": {
+        "economic": 0,
+        "authority": 0.5,
+        "sovereignty": 0.8,
+        "aggressiveness": 0.56,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q85866853",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "sos-ossetie-unie",
+      "name": "party.sos-ossetie-unie",
+      "wikidata": "Q17279744",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.5,
+        "sovereignty": 0.8
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.3,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Présidentielle d'avril et mai 2022"
+      },
+      "leader": "sos-alan-tadtaiev"
+    },
+    {
+      "id": "sos-nykhas",
+      "name": "party.sos-nykhas",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.4,
+        "sovereignty": 0.7
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.4,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Présidentielle d'avril et mai 2022"
+      },
+      "leader": "sos-alan-gagloiev"
+    }
+  ]
+}

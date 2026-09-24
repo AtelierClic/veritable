@@ -1,0 +1,47 @@
+{
+ "nation": "SOS",
+ "country": "Q23427",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q112691270",
+    "label": "Konstantin Dzhussoev",
+    "born": "1967-11-23",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q29319183",
+    "label": "Alan Gagloïev",
+    "born": "1981-02-06",
+    "died": null,
+    "parties": [
+     "Q111585604"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q17279744",
+   "label": "Ossétie unie",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q85866853",
+    "label": "Alan Tadtaïev",
+    "born": "1969-09-19",
+    "died": null,
+    "parties": [
+     "Q17279744"
+    ]
+   }
+  }
+ ]
+}

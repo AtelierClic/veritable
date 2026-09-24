@@ -23,7 +23,7 @@
     }
   },
   "spendingSplit": {
-    "justification": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D.",
+    "justification": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D.",
     "publicShareOfResearch": 0.35,
     "residual": {
       "social": 0.65,
@@ -357,6 +357,71 @@
         "activePersonnel": 100000,
         "airPower": 0.3,
         "navalPower": 0.05
+      },
+      "TWN": {
+        "activePersonnel": 169000,
+        "airPower": 0.45,
+        "navalPower": 0.4
+      },
+      "XKX": {
+        "activePersonnel": 5000,
+        "airPower": 0.02,
+        "navalPower": 0
+      },
+      "CYN": {
+        "activePersonnel": 9000,
+        "airPower": 0.02,
+        "navalPower": 0.03
+      },
+      "ABK": {
+        "activePersonnel": 5000,
+        "airPower": 0.02,
+        "navalPower": 0.02
+      },
+      "SOS": {
+        "activePersonnel": 2500,
+        "airPower": 0,
+        "navalPower": 0
+      },
+      "PMR": {
+        "activePersonnel": 7500,
+        "airPower": 0.02,
+        "navalPower": 0
+      },
+      "SOL": {
+        "activePersonnel": 20000,
+        "airPower": 0.01,
+        "navalPower": 0.03
+      },
+      "ESH": {
+        "activePersonnel": 7000,
+        "airPower": 0,
+        "navalPower": 0
+      },
+      "YEH": {
+        "activePersonnel": 150000,
+        "airPower": 0.06,
+        "navalPower": 0.05
+      },
+      "LBE": {
+        "activePersonnel": 60000,
+        "airPower": 0.12,
+        "navalPower": 0.05
+      },
+      "SDR": {
+        "activePersonnel": 100000,
+        "airPower": 0.05,
+        "navalPower": 0
+      },
+      "RJV": {
+        "activePersonnel": 70000,
+        "airPower": 0.02,
+        "navalPower": 0
+      },
+      "M23": {
+        "activePersonnel": 10000,
+        "airPower": 0.01,
+        "navalPower": 0.01
       }
     },
     "justificationWorld": "J6 : grandes et moyennes puissances hors europe-10, écrites à la main sur la même échelle relative (0 à 1) que les dix nations du J2 : États-Unis 1 et 1 (référence), Chine 0,85 et 0,9 (première flotte en nombre de coques), Inde, Japon, Corée du Sud entre 0,5 et 0,7, etc. Effectifs d'active : ordres de grandeur publics de 2024-2025 (hors paramilitaires et réserves). À valider."
@@ -550,7 +615,55 @@
       "note": "Premier ministre depuis février 2025 (Wikidata : Bob Loughman). Estimation, à valider."
     }
   },
+  "partyLeaderOverrides": {
+    "TWN/Kuomintang": {
+      "person": "Cheng Li-wun",
+      "note": "Présidente du Kuomintang depuis le 1er novembre 2025 (Wikidata garde Wu Den-yih). Estimation, à valider."
+    },
+    "XKX/Partia Demokratike e Kosovës": {
+      "person": "Memli Krasniqi",
+      "note": "Président du PDK (Wikidata garde Kadri Veseli, jugé à La Haye depuis 2020). Estimation, à valider."
+    },
+    "XKX/Lidhja Demokratike e Kosovës": {
+      "person": "Lumir Abdixhiku",
+      "note": "Président de la LDK depuis 2021 (Wikidata garde Isa Mustafa). Estimation, à valider."
+    },
+    "CYN/Ulusal Birlik Partisi": {
+      "person": "Ünal Üstel",
+      "note": "Président de l'UBP et Premier ministre (Wikidata garde Hüseyin Özgürgün). Estimation, à valider."
+    },
+    "CYN/Cumhuriyetçi Türk Partisi": {
+      "person": "Sıla Usar İncirli",
+      "note": "Présidente du CTP après l'élection de Tufan Erhürman à la présidence (octobre 2025). Estimation, à valider."
+    }
+  },
   "leaderTraits": {
+    "TWN/head-of-state": {
+      "person": "Lai Ching‑te",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.4,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.3,
+        "corruption": 0.1,
+        "charisma": 0.5,
+        "competence": 0.6
+      },
+      "note": "Ancien médecin, Premier ministre puis vice-président ; se disait « travailleur pragmatique pour l'indépendance » (souveraineté +0,5), démocrate libéral (autorité −0,4) ; relève le budget de défense sans provocation ouverte face à Pékin (agressivité 0,3) ; aucune affaire de corruption notable."
+    },
+    "TWN/head-of-government": {
+      "person": "Cho Jung-tai",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.3,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.2,
+        "corruption": 0.1,
+        "charisma": 0.4,
+        "competence": 0.6
+      },
+      "note": "Président du Yuan exécutif depuis mai 2024, ancien secrétaire général de la présidence et président du DPP : gestionnaire discret, ligne du président (souveraineté +0,3), face à un Parlement tenu par l'opposition KMT-TPP."
+    },
     "USA/head-of-state": {
       "person": "Donald Trump",
       "traits": {
@@ -1934,6 +2047,12 @@
         "COL",
         "MOZ"
       ]
+    },
+    "interest": {
+      "rate": 0.04,
+      "note": "Intérêts absents des séries du FMI : 4 % de la dette, taux effectif nominal médian des pays couverts (intérêts payés / dette brute, 2024).",
+      "inflation": 0.03,
+      "inflationNote": "Inflation absente des Perspectives de l'économie mondiale du FMI : 3 %, ordre de grandeur mondial."
     }
   },
   "parodyNations": [
@@ -1978,5 +2097,1036 @@
     "KAZ",
     "TWN"
   ],
-  "_parodyNationsNote": "J6 : les quarante nations principales (europe-10, le G20 hors UE, les puissances nucléaires, des puissances régionales) ont des noms parodiques écrits à la main ; les autres portent leur nom fictif même en mode parodie (consigne du J6)."
+  "_parodyNationsNote": "J6 : les quarante nations principales (europe-10, le G20 hors UE, les puissances nucléaires, des puissances régionales) ont des noms parodiques écrits à la main ; les autres portent leur nom fictif même en mode parodie (consigne du J6).",
+  "defacto": {
+    "justification": "Entités de facto du monde de 2026 (J6b, data/veritable/scenarios/world-2026.defacto.md). Une entité découpée d'une nation des sources ouvertes (`parent`) en prend les parts indiquées (population, activité, alimentation, énergie) ; le parent garde le reste. Une entité hors des sources a ses valeurs dans `series` (clés de la Banque mondiale en unités de la Banque mondiale, indicateurs du FMI en %, colonnes d'Our World in Data en TWh). Tout est estimation, à valider.",
+    "asOf": "2026-01-01",
+    "entities": {
+      "TWN": {
+        "name": "Taïwan",
+        "capital": {
+          "name": "Taipei",
+          "nameFr": "Taipei",
+          "lon": 121.5654,
+          "lat": 25.033
+        },
+        "series": {
+          "population": 23400000,
+          "manufacturing": 265000000000.0,
+          "services": 485000000000.0,
+          "highTechExports": 330000000000.0,
+          "merchandiseExports": 475000000000.0,
+          "cereals": 1600000,
+          "military": 2.45,
+          "revenue": 17,
+          "expense": 18,
+          "health": 4.0,
+          "education": 4.0,
+          "research": 3.8,
+          "trade": 130,
+          "growth": 3.2,
+          "rents": 0,
+          "oresExports": 0.5,
+          "personnel": 180000,
+          "GGXWDG_NGDP": 26,
+          "taxRevenue": 12,
+          "gdp": 850000000000.0
+        },
+        "recognition": {
+          "recognizedBy": [
+            "BLZ",
+            "GTM",
+            "HTI",
+            "MHL",
+            "PLW",
+            "PRY",
+            "KNA",
+            "LCA",
+            "VCT",
+            "TUV",
+            "SWZ",
+            "VAT"
+          ],
+          "note": "Onze États membres de l'ONU et le Saint-Siège au 1er janvier 2026 (Nauru a rompu en janvier 2024) ; à valider."
+        },
+        "note": "République de Chine : contrôle Taïwan, les Penghu, Kinmen et Matsu depuis 1949. Absente des séries de la Banque mondiale : population, valeurs ajoutées, exportations de haute technologie (électronique, TSMC), céréales, budget et dette estimés (ordres de grandeur publics 2024-2025) ; PIB estimé (≈ 850 Md$ en 2025, hors de la collecte FMI du J6a), énergie d'Our World in Data."
+      },
+      "XKX": {
+        "name": "Kosovo",
+        "capital": {
+          "name": "Pristina",
+          "nameFr": "Pristina",
+          "lon": 21.1655,
+          "lat": 42.6629
+        },
+        "series": {
+          "population": 1590000,
+          "gdp": 11600000000.0,
+          "manufacturing": 1100000000.0,
+          "services": 6500000000.0,
+          "merchandiseExports": 1000000000.0,
+          "cereals": 400000,
+          "military": 1.0,
+          "revenue": 27,
+          "expense": 29,
+          "health": 3.0,
+          "education": 4.3,
+          "research": 0.1,
+          "trade": 90,
+          "growth": 4.0,
+          "rents": 0.5,
+          "oresExports": 10,
+          "personnel": 5000,
+          "GGXWDG_NGDP": 17
+        },
+        "recognition": {
+          "recognizedBy": [
+            "AFG",
+            "ALB",
+            "AND",
+            "ARE",
+            "ATG",
+            "AUS",
+            "AUT",
+            "BEL",
+            "BEN",
+            "BFA",
+            "BGD",
+            "BGR",
+            "BHR",
+            "BHS",
+            "BRB",
+            "BRN",
+            "CAN",
+            "CHE",
+            "CIV",
+            "COL",
+            "COM",
+            "CRI",
+            "CZE",
+            "DEU",
+            "DJI",
+            "DNK",
+            "DOM",
+            "EGY",
+            "EST",
+            "FIN",
+            "FJI",
+            "FRA",
+            "FSM",
+            "GAB",
+            "GBR",
+            "GHA",
+            "GIN",
+            "GMB",
+            "GNB",
+            "GRD",
+            "GUY",
+            "HND",
+            "HRV",
+            "HTI",
+            "HUN",
+            "IRL",
+            "ISL",
+            "ISR",
+            "ITA",
+            "JOR",
+            "JPN",
+            "KEN",
+            "KIR",
+            "KNA",
+            "KOR",
+            "KWT",
+            "LBR",
+            "LBY",
+            "LCA",
+            "LIE",
+            "LSO",
+            "LTU",
+            "LUX",
+            "LVA",
+            "MCO",
+            "MDV",
+            "MHL",
+            "MLT",
+            "MNE",
+            "MWI",
+            "MYS",
+            "NER",
+            "NLD",
+            "NOR",
+            "NZL",
+            "OMN",
+            "PAK",
+            "PAN",
+            "PER",
+            "PLW",
+            "POL",
+            "PRT",
+            "QAT",
+            "SAU",
+            "SDN",
+            "SEN",
+            "SGP",
+            "SLE",
+            "SLV",
+            "SOM",
+            "SUR",
+            "SVN",
+            "SWE",
+            "SYR",
+            "TCD",
+            "THA",
+            "TLS",
+            "TON",
+            "TUR",
+            "TUV",
+            "TZA",
+            "USA",
+            "VUT",
+            "WSM",
+            "YEM"
+          ],
+          "note": "Wikipédia (en), « International recognition of Kosovo », tableaux des reconnaissances et des retraits datés avant le 1er janvier 2026, lus par l'outil (texte wiki) ; à valider. 105 États membres de l'ONU ; huit retraits signalés par la Serbie écartés."
+        },
+        "note": "Indépendant de fait depuis la déclaration du 17 février 2008. Hors de la collecte Banque mondiale du J6a (limitée aux 195) : population (recensement 2024), PIB, valeurs ajoutées, budget et dette estimés d'après les ordres de grandeur publics de la Banque mondiale et du FMI (qui le code UVK) ; énergie d'Our World in Data (sans code ISO, rattachée par son nom)."
+      },
+      "CYN": {
+        "name": "Chypre du Nord",
+        "capital": {
+          "name": "North Nicosia",
+          "nameFr": "Nicosie-Nord",
+          "lon": 33.3642,
+          "lat": 35.1856
+        },
+        "series": {
+          "population": 390000,
+          "gdp": 5000000000.0,
+          "manufacturing": 200000000.0,
+          "services": 3800000000.0,
+          "merchandiseExports": 150000000.0,
+          "cereals": 80000,
+          "military": 1.5,
+          "revenue": 30,
+          "expense": 34,
+          "health": 3.0,
+          "education": 4.0,
+          "research": 0.2,
+          "trade": 60,
+          "growth": 3.0,
+          "rents": 0,
+          "personnel": 9000,
+          "GGXWDG_NGDP": 30,
+          "electricity_generation": 1.9,
+          "electricity_demand": 1.9,
+          "oil_consumption": 7.0,
+          "oil_electricity": 1.9
+        },
+        "recognition": {
+          "recognizedBy": ["TUR"],
+          "note": "Reconnue par la seule Turquie."
+        },
+        "note": "République turque de Chypre du Nord, de facto depuis 1974 (proclamée en 1983). Hors des séries internationales : ordres de grandeur publics (population ≈ 390 000, PIB ≈ 5 Md$, électricité au fioul), estimations à valider ; l'armée turque stationnée sur l'île (≈ 35 000 hommes) compte pour la Turquie."
+      },
+      "ABK": {
+        "name": "Abkhazie",
+        "capital": {
+          "name": "Sukhumi",
+          "nameFr": "Soukhoumi",
+          "lon": 41.0214,
+          "lat": 43.0015
+        },
+        "series": {
+          "population": 245000,
+          "gdp": 900000000.0,
+          "manufacturing": 50000000.0,
+          "services": 600000000.0,
+          "merchandiseExports": 50000000.0,
+          "cereals": 10000,
+          "military": 3.0,
+          "revenue": 25,
+          "expense": 26,
+          "health": 3.0,
+          "education": 3.5,
+          "research": 0.1,
+          "trade": 50,
+          "growth": 2.0,
+          "rents": 0,
+          "personnel": 5000,
+          "GGXWDG_NGDP": 10,
+          "electricity_generation": 2.0,
+          "electricity_demand": 2.2,
+          "oil_consumption": 1.5
+        },
+        "recognition": {
+          "recognizedBy": ["RUS", "NIC", "VEN", "SYR"],
+          "note": "Wikipédia (en), « International recognition of Abkhazia and South Ossetia », tableaux des reconnaissances et des retraits datés avant le 1er janvier 2026, lus par l'outil (texte wiki) ; à valider. La reconnaissance syrienne date du régime Assad (2018) ; retrait non formalisé au 1er janvier 2026."
+        },
+        "note": "République d'Abkhazie, de facto depuis 1993. Ordres de grandeur publics ; budget en grande partie financé par la Russie (non modélisé : recettes et dépenses équilibrées), base russe comptée pour la Russie ; estimations à valider."
+      },
+      "SOS": {
+        "name": "Ossétie du Sud",
+        "capital": {
+          "name": "Tskhinvali",
+          "nameFr": "Tskhinvali",
+          "lon": 43.9637,
+          "lat": 42.2254
+        },
+        "series": {
+          "population": 55000,
+          "gdp": 180000000.0,
+          "manufacturing": 10000000.0,
+          "services": 100000000.0,
+          "merchandiseExports": 5000000.0,
+          "cereals": 5000,
+          "military": 5.0,
+          "revenue": 20,
+          "expense": 22,
+          "health": 3.0,
+          "education": 3.5,
+          "research": 0.1,
+          "trade": 60,
+          "growth": 1.5,
+          "rents": 0,
+          "personnel": 2500,
+          "GGXWDG_NGDP": 5,
+          "electricity_generation": 0.05,
+          "electricity_demand": 0.3,
+          "oil_consumption": 0.3
+        },
+        "recognition": {
+          "recognizedBy": ["RUS", "NIC", "VEN", "SYR"],
+          "note": "Wikipédia (en), « International recognition of Abkhazia and South Ossetia », tableaux des reconnaissances et des retraits datés avant le 1er janvier 2026, lus par l'outil (texte wiki) ; à valider."
+        },
+        "note": "République d'Ossétie du Sud, de facto depuis 1992 (2008 pour tout l'ancien oblast). Ordres de grandeur publics ; budget financé à 80-90 % par la Russie (non modélisé) ; estimations à valider."
+      },
+      "PMR": {
+        "name": "Transnistrie",
+        "capital": {
+          "name": "Tiraspol",
+          "nameFr": "Tiraspol",
+          "lon": 29.6433,
+          "lat": 46.8403
+        },
+        "series": {
+          "population": 360000,
+          "gdp": 1300000000.0,
+          "manufacturing": 450000000.0,
+          "services": 600000000.0,
+          "merchandiseExports": 600000000.0,
+          "cereals": 400000,
+          "military": 5.0,
+          "revenue": 25,
+          "expense": 30,
+          "health": 3.0,
+          "education": 3.5,
+          "research": 0.1,
+          "trade": 90,
+          "growth": 1.0,
+          "rents": 0,
+          "personnel": 7500,
+          "GGXWDG_NGDP": 40,
+          "electricity_generation": 3.5,
+          "electricity_demand": 1.5,
+          "gas_consumption": 12.0,
+          "gas_electricity": 3.5
+        },
+        "recognition": {
+          "recognizedBy": [],
+          "note": "Aucun État membre de l'ONU ; seulement l'Abkhazie et l'Ossétie du Sud."
+        },
+        "note": "République moldave du Dniestr, de facto depuis 1992. Ordres de grandeur publics (aciérie de Rîbnița, centrale au gaz de Kuchurgan, dette gazière envers Gazprom non comptée) ; estimations à valider. Le contingent russe (≈ 1 500 hommes) compte pour la Russie."
+      },
+      "SOL": {
+        "name": "Somaliland",
+        "capital": {
+          "name": "Hargeisa",
+          "nameFr": "Hargeisa",
+          "lon": 44.065,
+          "lat": 9.56
+        },
+        "parent": "SOM",
+        "shares": {
+          "population": 0.25,
+          "economy": 0.3,
+          "food": 0.2
+        },
+        "series": {
+          "GGXWDG_NGDP": 8,
+          "personnel": 20000
+        },
+        "recognition": {
+          "recognizedBy": ["ISR"],
+          "note": "Israël, seul État membre de l'ONU, depuis le 26 décembre 2025 (Wikipédia, « Foreign relations of Somaliland »)."
+        },
+        "note": "République du Somaliland, de facto depuis 1991. Les séries de la Banque mondiale couvrent toute la Somalie : le Somaliland en prend un quart de la population et 30 % de l'activité (estimation à valider), le reste demeure à la Somalie."
+      },
+      "ESH": {
+        "name": "République arabe sahraouie démocratique",
+        "capital": {
+          "name": "Tifariti",
+          "nameFr": "Tifariti",
+          "lon": -10.567,
+          "lat": 26.158
+        },
+        "series": {
+          "population": 180000,
+          "gdp": 100000000.0,
+          "manufacturing": 0,
+          "services": 70000000.0,
+          "merchandiseExports": 0,
+          "cereals": 0,
+          "military": 10.0,
+          "revenue": 40,
+          "expense": 42,
+          "health": 3.0,
+          "education": 4.0,
+          "research": 0,
+          "trade": 60,
+          "growth": 1.0,
+          "rents": 0,
+          "personnel": 7000,
+          "GGXWDG_NGDP": 0,
+          "electricity_generation": 0.05,
+          "electricity_demand": 0.05
+        },
+        "recognition": {
+          "recognizedBy": [
+            "AGO",
+            "BLZ",
+            "BOL",
+            "BWA",
+            "CUB",
+            "DZA",
+            "ETH",
+            "IRN",
+            "KEN",
+            "LAO",
+            "LBY",
+            "LSO",
+            "MEX",
+            "MOZ",
+            "MRT",
+            "MUS",
+            "NAM",
+            "NGA",
+            "NIC",
+            "PER",
+            "PRK",
+            "RWA",
+            "SSD",
+            "SYR",
+            "TLS",
+            "TTO",
+            "TZA",
+            "UGA",
+            "URY",
+            "VEN",
+            "VNM",
+            "VUT",
+            "ZAF",
+            "ZWE"
+          ],
+          "note": "Wikipédia (en), « International recognition of the Sahrawi Arab Democratic Republic », tableaux des reconnaissances et des retraits datés avant le 1er janvier 2026, lus par l'outil (texte wiki) ; à valider. 34 États membres de l'ONU ; membre de l'Union africaine."
+        },
+        "note": "République arabe sahraouie démocratique (Front Polisario) : tient la zone à l'est du mur des sables. Sa population administrée vit surtout dans les camps de Tindouf, en Algérie (≈ 175 000, chiffre de planification du HCR) : comptée ici avec celle de la zone (≈ 180 000 au total, à valider) ; économie d'aide."
+      },
+      "YEH": {
+        "name": "Yémen (Ansar Allah)",
+        "capital": {
+          "name": "Sanaa",
+          "nameFr": "Sanaa",
+          "lon": 44.2066,
+          "lat": 15.3547
+        },
+        "parent": "YEM",
+        "shares": {
+          "population": 0.7,
+          "economy": 0.55,
+          "food": 0.6,
+          "oil": 0,
+          "gas": 0,
+          "coal": 0,
+          "electricity": 0.5
+        },
+        "series": {
+          "GGXWDG_NGDP": 20,
+          "personnel": 150000,
+          "military": 10
+        },
+        "recognition": {
+          "recognizedBy": [],
+          "note": "Aucun État ; l'Iran le soutient sans le reconnaître formellement."
+        },
+        "note": "Autorité d'Ansar Allah (Houthis), Conseil politique suprême de Sanaa, depuis 2014-2015. Sept Yéménites sur dix, un peu plus de la moitié de l'activité, aucun des champs de pétrole et de gaz (Marib, Chabwa, Hadramaout) ; estimations à valider."
+      },
+      "LBE": {
+        "name": "Libye orientale",
+        "capital": {
+          "name": "Benghazi",
+          "nameFr": "Benghazi",
+          "lon": 20.0667,
+          "lat": 32.1167
+        },
+        "parent": "LBY",
+        "shares": {
+          "population": 0.37,
+          "economy": 0.55,
+          "food": 0.35,
+          "oil": 0.85,
+          "gas": 0.1,
+          "electricity": 0.35
+        },
+        "series": {
+          "GGXWDG_NGDP": 25,
+          "personnel": 60000
+        },
+        "recognition": {
+          "recognizedBy": [],
+          "note": "Aucun État ; soutenue par l'Égypte, les Émirats arabes unis et la Russie."
+        },
+        "note": "Chambre des représentants, gouvernement de stabilité nationale (Oussama Hammad) et Armée nationale libyenne (Khalifa Haftar) : Cyrénaïque, Syrte, Joufra et Fezzan, soit l'essentiel des champs pétroliers et du croissant pétrolier. Dette : emprunts parallèles de la branche orientale de la banque centrale ; estimations à valider."
+      },
+      "SDR": {
+        "name": "Soudan (Tasis)",
+        "capital": {
+          "name": "Nyala",
+          "nameFr": "Nyala",
+          "lon": 24.8807,
+          "lat": 12.0489
+        },
+        "parent": "SDN",
+        "shares": {
+          "population": 0.25,
+          "economy": 0.18,
+          "food": 0.3,
+          "oil": 0.6,
+          "gas": 0,
+          "electricity": 0.1
+        },
+        "series": {
+          "GGXWDG_NGDP": 10,
+          "personnel": 100000,
+          "military": 10
+        },
+        "recognition": {
+          "recognizedBy": [],
+          "note": "Aucun État."
+        },
+        "note": "Forces de soutien rapide et alliance Tasis (gouvernement « de paix et d'unité » investi à Nyala le 30 août 2025) : Darfour et Kordofan-Occidental, champs de Heglig et Balila. Estimations à valider."
+      },
+      "RJV": {
+        "name": "Nord-Est syrien (AANES)",
+        "capital": {
+          "name": "Raqqa",
+          "nameFr": "Raqqa",
+          "lon": 39.0167,
+          "lat": 35.95
+        },
+        "parent": "SYR",
+        "shares": {
+          "population": 0.16,
+          "economy": 0.22,
+          "food": 0.45,
+          "oil": 0.8,
+          "gas": 0.4,
+          "electricity": 0.2
+        },
+        "series": {
+          "GGXWDG_NGDP": 5,
+          "personnel": 70000
+        },
+        "recognition": {
+          "recognizedBy": [],
+          "note": "Aucun État."
+        },
+        "note": "Administration autonome du nord et de l'est de la Syrie et Forces démocratiques syriennes : Hassaké, Raqqa, rive est de l'Euphrate ; l'essentiel du pétrole syrien et près de la moitié du blé. Estimations à valider."
+      },
+      "M23": {
+        "name": "Congo oriental (AFC/M23)",
+        "capital": {
+          "name": "Goma",
+          "nameFr": "Goma",
+          "lon": 29.2336,
+          "lat": -1.6792
+        },
+        "parent": "COD",
+        "shares": {
+          "population": 0.06,
+          "economy": 0.03,
+          "food": 0.05,
+          "oil": 0,
+          "gas": 0,
+          "electricity": 0.02
+        },
+        "series": {
+          "GGXWDG_NGDP": 0,
+          "personnel": 10000,
+          "military": 8
+        },
+        "recognition": {
+          "recognizedBy": [],
+          "note": "Aucun État ; soutien militaire du Rwanda documenté par l'ONU."
+        },
+        "note": "Alliance Fleuve Congo / M23 : Goma (janvier 2025), Bukavu (février 2025), Rutshuru, Masisi, Kalehe. Estimations à valider."
+      }
+    },
+    "recognitions": {
+      "PSE": {
+        "recognizedBy": [
+          "AFG",
+          "AGO",
+          "ALB",
+          "AND",
+          "ARE",
+          "ARG",
+          "ARM",
+          "ATG",
+          "AUS",
+          "AZE",
+          "BDI",
+          "BEN",
+          "BFA",
+          "BGD",
+          "BGR",
+          "BHR",
+          "BHS",
+          "BIH",
+          "BLR",
+          "BLZ",
+          "BOL",
+          "BRA",
+          "BRB",
+          "BRN",
+          "BTN",
+          "BWA",
+          "CAF",
+          "CAN",
+          "CHL",
+          "CHN",
+          "CIV",
+          "COD",
+          "COG",
+          "COL",
+          "COM",
+          "CPV",
+          "CRI",
+          "CUB",
+          "CYP",
+          "CZE",
+          "DJI",
+          "DMA",
+          "DOM",
+          "DZA",
+          "ECU",
+          "EGY",
+          "ESP",
+          "ETH",
+          "FRA",
+          "GAB",
+          "GBR",
+          "GEO",
+          "GHA",
+          "GIN",
+          "GMB",
+          "GNB",
+          "GNQ",
+          "GRD",
+          "GTM",
+          "GUY",
+          "HND",
+          "HTI",
+          "HUN",
+          "IDN",
+          "IND",
+          "IRL",
+          "IRN",
+          "IRQ",
+          "ISL",
+          "JAM",
+          "JOR",
+          "KAZ",
+          "KEN",
+          "KGZ",
+          "KHM",
+          "KNA",
+          "KWT",
+          "LAO",
+          "LBN",
+          "LBR",
+          "LBY",
+          "LCA",
+          "LKA",
+          "LSO",
+          "LUX",
+          "MAR",
+          "MCO",
+          "MDG",
+          "MDV",
+          "MEX",
+          "MLI",
+          "MLT",
+          "MNE",
+          "MNG",
+          "MOZ",
+          "MRT",
+          "MUS",
+          "MWI",
+          "MYS",
+          "NAM",
+          "NER",
+          "NGA",
+          "NIC",
+          "NOR",
+          "NPL",
+          "OMN",
+          "PAK",
+          "PER",
+          "PHL",
+          "PNG",
+          "POL",
+          "PRK",
+          "PRT",
+          "PRY",
+          "QAT",
+          "ROU",
+          "RUS",
+          "RWA",
+          "SAU",
+          "SDN",
+          "SEN",
+          "SLE",
+          "SLV",
+          "SMR",
+          "SOM",
+          "SRB",
+          "SSD",
+          "STP",
+          "SUR",
+          "SVK",
+          "SVN",
+          "SWE",
+          "SWZ",
+          "SYC",
+          "SYR",
+          "TCD",
+          "TGO",
+          "THA",
+          "TJK",
+          "TKM",
+          "TLS",
+          "TTO",
+          "TUN",
+          "TUR",
+          "TZA",
+          "UGA",
+          "UKR",
+          "URY",
+          "UZB",
+          "VAT",
+          "VCT",
+          "VEN",
+          "VNM",
+          "VUT",
+          "YEM",
+          "ZAF",
+          "ZMB",
+          "ZWE"
+        ],
+        "note": "États membres de l'ONU du scénario moins les 36 non reconnaissants de Wikipédia (« International recognition of Palestine », liste datée ; aucune reconnaissance postérieure au 1er janvier 2026) ; la Belgique, dont la reconnaissance annoncée en septembre 2025 est restée conditionnelle, en fait partie ; à valider."
+      }
+    }
+  },
+  "relations": {
+    "note": "Relations du 1er janvier 2026 (J6b) : r = intercept − pente × |écart des points idéaux| (votes à l'Assemblée générale de l'ONU, moyenne des sessions 2021-2025), 0 sans votes (Taïwan, Kosovo, Palestine, Saint-Siège, entités de facto) ; + alliance militaire commune, + union économique commune, + garantie entre les deux ; − sanctions complètes entre les deux ; au plus −60 entre une entité et son revendicateur ; + reconnaissance ; puis les paires écrites à la main (les groupes suivants l'emportent sur les précédents) ; bornées à [−100 ; 100]. Les guerres du scénario sont posées à −100 par la simulation. Calibrage : un écart médian (0,61) donne +23, le 99e centile (2,69) −19.",
+    "years": [2021, 2025],
+    "intercept": 35,
+    "slope": 20,
+    "unknownVoting": 0,
+    "militaryAlliance": 20,
+    "economicUnion": 10,
+    "guarantee": 30,
+    "sanctions": -30,
+    "claimant": -60,
+    "recognition": 20,
+    "keyPairs": [
+      {
+        "note": "La Russie face aux membres de l'UE, de l'OTAN et du G7 : −60 (consigne). Exceptions à valider : Turquie −20 (membre de l'OTAN sans sanctions, TurkStream, médiation d'Istanbul), Hongrie −35 et Slovaquie −40 (appliquent les sanctions de l'UE mais gardent des liens politiques et énergétiques avec Moscou).",
+        "pairs": [
+          ["RUS", "ALB", -60],
+          ["RUS", "AUT", -60],
+          ["RUS", "BEL", -60],
+          ["RUS", "BGR", -60],
+          ["RUS", "CAN", -60],
+          ["RUS", "CYP", -60],
+          ["RUS", "CZE", -60],
+          ["RUS", "DEU", -60],
+          ["RUS", "DNK", -60],
+          ["RUS", "ESP", -60],
+          ["RUS", "EST", -60],
+          ["RUS", "FIN", -60],
+          ["RUS", "FRA", -60],
+          ["RUS", "GBR", -60],
+          ["RUS", "GRC", -60],
+          ["RUS", "HRV", -60],
+          ["RUS", "HUN", -35],
+          ["RUS", "IRL", -60],
+          ["RUS", "ISL", -60],
+          ["RUS", "ITA", -60],
+          ["RUS", "JPN", -60],
+          ["RUS", "LTU", -60],
+          ["RUS", "LUX", -60],
+          ["RUS", "LVA", -60],
+          ["RUS", "MKD", -60],
+          ["RUS", "MLT", -60],
+          ["RUS", "MNE", -60],
+          ["RUS", "NLD", -60],
+          ["RUS", "NOR", -60],
+          ["RUS", "POL", -60],
+          ["RUS", "PRT", -60],
+          ["RUS", "ROU", -60],
+          ["RUS", "SVK", -40],
+          ["RUS", "SVN", -60],
+          ["RUS", "SWE", -60],
+          ["RUS", "TUR", -20],
+          ["RUS", "USA", -60]
+        ]
+      },
+      {
+        "note": "Antagonismes principaux (consigne) : guerre russo-ukrainienne, États-Unis et Iran après les frappes de juin 2025, péninsule coréenne, détroit de Taïwan, Inde et Pakistan après les combats de mai 2025, Israël et Iran après la guerre de juin 2025, Arménie et Azerbaïdjan (accord de paix paraphé à Washington en août 2025).",
+        "pairs": [
+          ["UKR", "RUS", -100],
+          ["USA", "IRN", -90],
+          ["USA", "PRK", -90],
+          ["CHN", "TWN", -80],
+          ["IND", "PAK", -70],
+          ["ISR", "IRN", -95],
+          ["KOR", "PRK", -70],
+          ["ARM", "AZE", -20]
+        ]
+      },
+      {
+        "note": "Grandes puissances et rivalités régionales, écrites à la main, à valider : rivalité sino-américaine (trêve commerciale de novembre 2025), axe Russie-Chine-Corée du Nord-Iran-Biélorussie, dégel sino-indien depuis octobre 2024, crise sino-japonaise de novembre 2025, mer de Chine méridionale, Algérie et Maroc (rupture de 2021), Serbie et Kosovo, Éthiopie et Érythrée, barrage de la Renaissance, Thaïlande et Cambodge (cessez-le-feu du 27 décembre 2025), Pakistan et Afghanistan (combats d'octobre 2025), Soudan et Émirats (rupture de mai 2025), Rwanda et RDC (accords de Washington de décembre 2025), Sahel et France.",
+        "pairs": [
+          ["USA", "CHN", -35],
+          ["RUS", "CHN", 60],
+          ["RUS", "PRK", 70],
+          ["RUS", "BLR", 80],
+          ["RUS", "IRN", 50],
+          ["CHN", "PRK", 50],
+          ["CHN", "PAK", 70],
+          ["CHN", "IRN", 40],
+          ["IND", "CHN", -20],
+          ["JPN", "CHN", -45],
+          ["PHL", "CHN", -45],
+          ["JPN", "PRK", -80],
+          ["KOR", "JPN", 30],
+          ["KOR", "RUS", -30],
+          ["MAR", "DZA", -60],
+          ["SRB", "XKX", -70],
+          ["ALB", "XKX", 80],
+          ["ETH", "ERI", -50],
+          ["EGY", "ETH", -40],
+          ["THA", "KHM", -60],
+          ["PAK", "AFG", -50],
+          ["IND", "AFG", 20],
+          ["RUS", "AFG", 30],
+          ["SDN", "ARE", -50],
+          ["COD", "RWA", -40],
+          ["BDI", "RWA", -40],
+          ["FRA", "MLI", -40],
+          ["FRA", "BFA", -40],
+          ["FRA", "NER", -40],
+          ["FRA", "DZA", -20],
+          ["MLI", "DZA", -40],
+          ["UKR", "MLI", -40],
+          ["RUS", "MLI", 50],
+          ["RUS", "BFA", 40],
+          ["RUS", "NER", 40],
+          ["RUS", "CAF", 50],
+          ["UKR", "BLR", -70],
+          ["POL", "BLR", -50],
+          ["LTU", "BLR", -50],
+          ["LVA", "BLR", -50],
+          ["RUS", "MDA", -40],
+          ["RUS", "GEO", -40],
+          ["RUS", "AZE", -10],
+          ["RUS", "ARM", 10],
+          ["TUR", "ARM", -20],
+          ["TUR", "AZE", 80],
+          ["TUR", "GRC", 10],
+          ["TUR", "CYP", -50],
+          ["IRN", "SAU", -10],
+          ["IRN", "IRQ", 50],
+          ["IRN", "AZE", -10],
+          ["IRN", "AFG", -10],
+          ["VEN", "CUB", 70],
+          ["RUS", "VEN", 50],
+          ["CHN", "VEN", 40],
+          ["IRN", "VEN", 50],
+          ["RUS", "CUB", 50]
+        ]
+      },
+      {
+        "note": "Les États-Unis et leurs partenaires : le point idéal des États-Unis est à l'extrémité de l'échelle des votes, si bien que la règle sous-estime leurs alliances ; valeurs écrites à la main, à valider (dispute du Groenland avec le Danemark, droits de douane sur le Brésil et l'Inde, rupture avec l'Afrique du Sud au G20 de novembre 2025, sanctions contre le président colombien en octobre 2025, garantie de sécurité au Qatar en octobre 2025, levée des sanctions contre la Syrie en 2025, soutien à l'Argentine, frappes et blocus contre le Venezuela).",
+        "pairs": [
+          ["USA", "GBR", 70],
+          ["USA", "CAN", 40],
+          ["USA", "AUS", 70],
+          ["USA", "NZL", 50],
+          ["USA", "JPN", 70],
+          ["USA", "KOR", 65],
+          ["USA", "ISR", 70],
+          ["USA", "POL", 65],
+          ["USA", "FRA", 50],
+          ["USA", "DEU", 50],
+          ["USA", "ITA", 55],
+          ["USA", "NLD", 55],
+          ["USA", "EST", 60],
+          ["USA", "LVA", 60],
+          ["USA", "LTU", 60],
+          ["USA", "ROU", 55],
+          ["USA", "NOR", 50],
+          ["USA", "DNK", 30],
+          ["USA", "ESP", 35],
+          ["USA", "TUR", 20],
+          ["USA", "HUN", 50],
+          ["USA", "UKR", 40],
+          ["USA", "PHL", 50],
+          ["USA", "SGP", 45],
+          ["USA", "TWN", 50],
+          ["USA", "SAU", 45],
+          ["USA", "ARE", 45],
+          ["USA", "QAT", 45],
+          ["USA", "BHR", 40],
+          ["USA", "KWT", 40],
+          ["USA", "JOR", 40],
+          ["USA", "EGY", 30],
+          ["USA", "MEX", 20],
+          ["USA", "IND", 15],
+          ["USA", "PAK", 10],
+          ["USA", "ARG", 60],
+          ["USA", "SLV", 60],
+          ["USA", "XKX", 60],
+          ["USA", "SYR", 10],
+          ["USA", "BRA", -15],
+          ["USA", "COL", -20],
+          ["USA", "ZAF", -30],
+          ["USA", "VEN", -80],
+          ["USA", "CUB", -70],
+          ["USA", "NIC", -60],
+          ["USA", "AFG", -50],
+          ["USA", "PSE", -30],
+          ["JPN", "TWN", 50]
+        ]
+      },
+      {
+        "note": "Proche-Orient, écrit à la main, à valider : Gaza (cessez-le-feu d'octobre 2025), Liban (frappes israéliennes), nouveau pouvoir syrien soutenu par la Turquie et hostile à l'Iran, négociations avec Israël, frappe israélienne sur Doha (septembre 2025), rupture commerciale turco-israélienne, accords d'Abraham, trêve saoudo-houthie depuis 2022.",
+        "pairs": [
+          ["ISR", "PSE", -80],
+          ["ISR", "LBN", -60],
+          ["ISR", "SYR", -50],
+          ["ISR", "QAT", -20],
+          ["ISR", "TUR", -50],
+          ["ISR", "YEH", -90],
+          ["ISR", "EGY", 20],
+          ["ISR", "JOR", 10],
+          ["ISR", "ARE", 40],
+          ["ISR", "BHR", 30],
+          ["ISR", "MAR", 40],
+          ["TUR", "SYR", 60],
+          ["IRN", "SYR", -40],
+          ["RUS", "SYR", 10],
+          ["SAU", "YEM", 60],
+          ["SAU", "YEH", -40],
+          ["ARE", "YEH", -40],
+          ["USA", "YEH", -70]
+        ]
+      },
+      {
+        "note": "Entités de facto, leurs protecteurs et leurs anciens souverains, écrit à la main, à valider : la règle du revendicateur (−60) est adoucie là où le conflit est gelé sans combats (Transnistrie, Chypre-Nord, Libye, Somaliland, accord du 10 mars 2025 entre Damas et les FDS) et durcie là où il reste actif (Sahara occidental depuis 2020, Yémen).",
+        "pairs": [
+          ["RUS", "ABK", 80],
+          ["RUS", "SOS", 80],
+          ["RUS", "PMR", 60],
+          ["MDA", "PMR", -30],
+          ["TUR", "CYN", 85],
+          ["CYP", "CYN", -40],
+          ["GRC", "CYN", -40],
+          ["DZA", "ESH", 80],
+          ["MAR", "ESH", -80],
+          ["IRN", "YEH", 70],
+          ["YEM", "YEH", -70],
+          ["LBY", "LBE", -30],
+          ["EGY", "LBE", 60],
+          ["ARE", "LBE", 50],
+          ["RUS", "LBE", 50],
+          ["TUR", "LBY", 60],
+          ["TUR", "LBE", 10],
+          ["ARE", "SDR", 30],
+          ["EGY", "SDN", 50],
+          ["SAU", "SDN", 30],
+          ["RWA", "M23", 70],
+          ["SOM", "SOL", -40],
+          ["ISR", "SOL", 50],
+          ["ETH", "SOL", 40],
+          ["ARE", "SOL", 40],
+          ["SYR", "RJV", -30],
+          ["TUR", "RJV", -80],
+          ["USA", "RJV", 50]
+        ]
+      },
+      {
+        "note": "Revendications anciennes et apaisées : la règle du revendicateur (−60) ne s'applique pas (Malouines, triangle de Halaïb, triangle d'Ilemi, Abyei, frontière sino-indienne).",
+        "pairs": [
+          ["ARG", "GBR", 10],
+          ["SSD", "KEN", 20],
+          ["SSD", "SDN", 0]
+        ]
+      }
+    ]
+  },
+  "interestPctGdp": {
+    "justification": "Singapour : la dette publique (171 % du PIB) finance les placements du GIC et de la CPF et non le budget ; ses intérêts sont couverts par les revenus de ces placements, si bien que la charge nette pour le budget est nulle (FMI, Article IV). Écrit à la main, à valider.",
+    "values": {
+      "SGP": 0
+    }
+  },
+  "defaultsInProgress": {
+    "justification": "Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation et le FMI, de mémoire : à valider. Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025).",
+    "values": {
+      "VEN": {
+        "since": "2017-11-13",
+        "note": "Défaut sur les obligations souveraines et celles de PDVSA constaté en novembre 2017, sans restructuration depuis."
+      },
+      "LBN": {
+        "since": "2020-03-09",
+        "note": "Euro-obligation du 9 mars 2020 non remboursée, sans restructuration depuis."
+      },
+      "SDN": {
+        "since": "1990-01-01",
+        "note": "Arriérés extérieurs depuis le début des années 1990 ; le processus PPTE (point de décision de 2021) est interrompu depuis le coup d'État d'octobre 2021 et la guerre de 2023."
+      },
+      "ERI": {
+        "since": "2019-01-01",
+        "note": "Arriérés extérieurs, surendettement constaté par le FMI ; date approximative."
+      },
+      "ETH": {
+        "since": "2023-12-26",
+        "note": "Coupon de l'euro-obligation de décembre 2023 non payé, restructuration dans le cadre commun du G20 en cours."
+      },
+      "ZWE": {
+        "since": "2000-01-01",
+        "note": "Arriérés envers les créanciers bilatéraux et multilatéraux depuis 2000."
+      },
+      "CUB": {
+        "since": "1986-01-01",
+        "note": "Dette commerciale en défaut depuis 1986 ; arriérés envers le Club de Paris depuis 2019."
+      },
+      "PRK": {
+        "since": "1987-01-01",
+        "note": "Prêts bancaires occidentaux en défaut depuis 1987."
+      }
+    }
+  }
 }

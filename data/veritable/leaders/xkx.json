@@ -1,0 +1,247 @@
+{
+  "nation": "XKX",
+  "actors": [
+    {
+      "id": "xkx-albin-kurti",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.xkx-albin-kurti.parody",
+        "fictional": "leader.xkx-albin-kurti.fictional"
+      },
+      "born": "1975-03-24",
+      "party": "xkx-vetevendosje",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.3,
+        "sovereignty": 0.167,
+        "aggressiveness": 0.2734,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q441633",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "xkx-vjosa-osmani-sadriu",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.xkx-vjosa-osmani-sadriu.parody",
+        "fictional": "leader.xkx-vjosa-osmani-sadriu.fictional"
+      },
+      "born": "1982-05-17",
+      "party": "xkx-ligue-democratique-du-kosovo",
+      "traits": {
+        "economic": 0.283,
+        "authority": -0.017,
+        "sovereignty": -0.067,
+        "aggressiveness": 0.28319999999999995,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q13047644",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "xkx-memli-krasniqi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.xkx-memli-krasniqi.parody",
+        "fictional": "leader.xkx-memli-krasniqi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "xkx-parti-democratique-du-kosovo",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.15,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.35,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Président du PDK (Wikidata garde Kadri Veseli, jugé à La Haye depuis 2020). Estimation, à valider. Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "xkx-lumir-abdixhiku",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.xkx-lumir-abdixhiku.parody",
+        "fictional": "leader.xkx-lumir-abdixhiku.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "xkx-ligue-democratique-du-kosovo",
+      "traits": {
+        "economic": 0.283,
+        "authority": -0.017,
+        "sovereignty": -0.067,
+        "aggressiveness": 0.28319999999999995,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Président de la LDK depuis 2021 (Wikidata garde Isa Mustafa). Estimation, à valider. Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "xkx-zlatan-elek",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.xkx-zlatan-elek.parody",
+        "fictional": "leader.xkx-zlatan-elek.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "xkx-srpska-lista",
+      "traits": {
+        "economic": 0,
+        "authority": 0.3,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.48,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "xkx-ramush-haradinaj",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.xkx-ramush-haradinaj.parody",
+        "fictional": "leader.xkx-ramush-haradinaj.fictional"
+      },
+      "born": "1968-07-03",
+      "party": "xkx-alliance-pour-l-avenir-du-kosovo",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q316553",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "xkx-vetevendosje",
+      "name": "party.xkx-vetevendosje",
+      "wikidata": "Q29534",
+      "ideologies": ["Q1202972", "Q121254", "Q1702969", "Q171174"],
+      "ideology": {
+        "economic": -0.4,
+        "authority": -0.3,
+        "sovereignty": 0.167
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.51,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives anticipées du 28 décembre 2025 (résultats provisoires, à valider)"
+      },
+      "leader": "xkx-albin-kurti"
+    },
+    {
+      "id": "xkx-parti-democratique-du-kosovo",
+      "name": "party.xkx-parti-democratique-du-kosovo",
+      "wikidata": "Q1186316",
+      "ideologies": ["Q1043096", "Q3781399", "Q59599", "Q660018", "Q852739"],
+      "ideology": {
+        "economic": 0.25,
+        "authority": 0.15,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 5)",
+      "support": 0.2,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives anticipées du 28 décembre 2025 (résultats provisoires, à valider)"
+      },
+      "leader": "xkx-memli-krasniqi"
+    },
+    {
+      "id": "xkx-ligue-democratique-du-kosovo",
+      "name": "party.xkx-ligue-democratique-du-kosovo",
+      "wikidata": "Q1164022",
+      "ideologies": [
+        "Q1043096",
+        "Q3781399",
+        "Q59599",
+        "Q7169",
+        "Q729119",
+        "Q877848"
+      ],
+      "ideology": {
+        "economic": 0.283,
+        "authority": -0.017,
+        "sovereignty": -0.067
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (6 of 6)",
+      "support": 0.135,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives anticipées du 28 décembre 2025 (résultats provisoires, à valider)"
+      },
+      "leader": "xkx-lumir-abdixhiku"
+    },
+    {
+      "id": "xkx-alliance-pour-l-avenir-du-kosovo",
+      "name": "party.xkx-alliance-pour-l-avenir-du-kosovo",
+      "wikidata": "Q1265971",
+      "ideologies": ["Q1702969", "Q7169"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.055,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives anticipées du 28 décembre 2025 (résultats provisoires, à valider)"
+      },
+      "leader": "xkx-ramush-haradinaj"
+    },
+    {
+      "id": "xkx-srpska-lista",
+      "name": "party.xkx-srpska-lista",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.3,
+        "sovereignty": 0.6
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.045,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives anticipées du 28 décembre 2025 (résultats provisoires, à valider)"
+      },
+      "leader": "xkx-zlatan-elek"
+    }
+  ]
+}

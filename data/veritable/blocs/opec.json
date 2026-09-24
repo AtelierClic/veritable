@@ -1,6 +1,7 @@
 {
   "id": "opec",
   "name": "bloc.opec.name",
+  "type": "forum",
   "members": [
     {
       "nation": "DZA",

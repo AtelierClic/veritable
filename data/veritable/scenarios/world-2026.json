@@ -197,7 +197,20 @@
     "ZMB",
     "ZWE",
     "VAT",
-    "PSE"
+    "PSE",
+    "TWN",
+    "XKX",
+    "CYN",
+    "ABK",
+    "SOS",
+    "PMR",
+    "SOL",
+    "ESH",
+    "YEH",
+    "LBE",
+    "SDR",
+    "RJV",
+    "M23"
   ],
   "borders": {
     "source": "natural-earth-de-facto",
@@ -207,7 +220,1063 @@
     "microstateTiles": 4
   },
   "restOfWorld": false,
-  "contested": [],
-  "wars": [],
-  "playerDefault": "FRA"
+  "contested": [
+    {
+      "region": "crimea",
+      "controller": "RUS",
+      "claimants": ["UKR"],
+      "recognizedBy": []
+    },
+    {
+      "region": "ukraine-occupied-mainland",
+      "controller": "RUS",
+      "claimants": ["UKR"],
+      "recognizedBy": []
+    },
+    {
+      "region": "ukraine-oblasts-claimed-by-russia",
+      "controller": "UKR",
+      "claimants": ["RUS"],
+      "recognizedBy": []
+    },
+    {
+      "region": "abkhazia",
+      "controller": "ABK",
+      "claimants": ["GEO"],
+      "recognizedBy": ["RUS", "NIC", "VEN", "SYR"]
+    },
+    {
+      "region": "south-ossetia",
+      "controller": "SOS",
+      "claimants": ["GEO"],
+      "recognizedBy": ["RUS", "NIC", "VEN", "SYR"]
+    },
+    {
+      "region": "transnistria",
+      "controller": "PMR",
+      "claimants": ["MDA"],
+      "recognizedBy": []
+    },
+    {
+      "region": "kosovo",
+      "controller": "XKX",
+      "claimants": ["SRB"],
+      "recognizedBy": [
+        "AFG",
+        "ALB",
+        "AND",
+        "ARE",
+        "ATG",
+        "AUS",
+        "AUT",
+        "BEL",
+        "BEN",
+        "BFA",
+        "BGD",
+        "BGR",
+        "BHR",
+        "BHS",
+        "BRB",
+        "BRN",
+        "CAN",
+        "CHE",
+        "CIV",
+        "COL",
+        "COM",
+        "CRI",
+        "CZE",
+        "DEU",
+        "DJI",
+        "DNK",
+        "DOM",
+        "EGY",
+        "EST",
+        "FIN",
+        "FJI",
+        "FRA",
+        "FSM",
+        "GAB",
+        "GBR",
+        "GHA",
+        "GIN",
+        "GMB",
+        "GNB",
+        "GRD",
+        "GUY",
+        "HND",
+        "HRV",
+        "HTI",
+        "HUN",
+        "IRL",
+        "ISL",
+        "ISR",
+        "ITA",
+        "JOR",
+        "JPN",
+        "KEN",
+        "KIR",
+        "KNA",
+        "KOR",
+        "KWT",
+        "LBR",
+        "LBY",
+        "LCA",
+        "LIE",
+        "LSO",
+        "LTU",
+        "LUX",
+        "LVA",
+        "MCO",
+        "MDV",
+        "MHL",
+        "MLT",
+        "MNE",
+        "MWI",
+        "MYS",
+        "NER",
+        "NLD",
+        "NOR",
+        "NZL",
+        "OMN",
+        "PAK",
+        "PAN",
+        "PER",
+        "PLW",
+        "POL",
+        "PRT",
+        "QAT",
+        "SAU",
+        "SDN",
+        "SEN",
+        "SGP",
+        "SLE",
+        "SLV",
+        "SOM",
+        "SUR",
+        "SVN",
+        "SWE",
+        "SYR",
+        "TCD",
+        "THA",
+        "TLS",
+        "TON",
+        "TUR",
+        "TUV",
+        "TZA",
+        "USA",
+        "VUT",
+        "WSM",
+        "YEM"
+      ]
+    },
+    {
+      "region": "northern-cyprus",
+      "controller": "CYN",
+      "claimants": ["CYP"],
+      "recognizedBy": ["TUR"]
+    },
+    {
+      "region": "taiwan",
+      "controller": "TWN",
+      "claimants": ["CHN"],
+      "recognizedBy": [
+        "BLZ",
+        "GTM",
+        "HTI",
+        "MHL",
+        "PLW",
+        "PRY",
+        "KNA",
+        "LCA",
+        "VCT",
+        "TUV",
+        "SWZ",
+        "VAT"
+      ]
+    },
+    {
+      "region": "somaliland",
+      "controller": "SOL",
+      "claimants": ["SOM"],
+      "recognizedBy": ["ISR"]
+    },
+    {
+      "region": "sadr-free-zone",
+      "controller": "ESH",
+      "claimants": ["MAR"],
+      "recognizedBy": [
+        "AGO",
+        "BLZ",
+        "BOL",
+        "BWA",
+        "CUB",
+        "DZA",
+        "ETH",
+        "IRN",
+        "KEN",
+        "LAO",
+        "LBY",
+        "LSO",
+        "MEX",
+        "MOZ",
+        "MRT",
+        "MUS",
+        "NAM",
+        "NGA",
+        "NIC",
+        "PER",
+        "PRK",
+        "RWA",
+        "SSD",
+        "SYR",
+        "TLS",
+        "TTO",
+        "TZA",
+        "UGA",
+        "URY",
+        "VEN",
+        "VNM",
+        "VUT",
+        "ZAF",
+        "ZWE"
+      ]
+    },
+    {
+      "region": "western-sahara-moroccan",
+      "controller": "MAR",
+      "claimants": ["ESH"],
+      "recognizedBy": ["USA", "ISR"]
+    },
+    {
+      "region": "yemen-ansar-allah",
+      "controller": "YEH",
+      "claimants": ["YEM"],
+      "recognizedBy": []
+    },
+    {
+      "region": "libya-east",
+      "controller": "LBE",
+      "claimants": ["LBY"],
+      "recognizedBy": []
+    },
+    {
+      "region": "sudan-rsf",
+      "controller": "SDR",
+      "claimants": ["SDN"],
+      "recognizedBy": []
+    },
+    {
+      "region": "syria-northeast",
+      "controller": "RJV",
+      "claimants": ["SYR"],
+      "recognizedBy": []
+    },
+    {
+      "region": "kivu-afc-m23",
+      "controller": "M23",
+      "claimants": ["COD"],
+      "recognizedBy": []
+    },
+    {
+      "region": "golan",
+      "controller": "ISR",
+      "claimants": ["SYR"],
+      "recognizedBy": ["USA"]
+    },
+    {
+      "region": "syria-buffer-zone",
+      "controller": "ISR",
+      "claimants": ["SYR"],
+      "recognizedBy": []
+    },
+    {
+      "region": "east-jerusalem",
+      "controller": "ISR",
+      "claimants": ["PSE"],
+      "recognizedBy": []
+    },
+    {
+      "region": "jordan-valley",
+      "controller": "ISR",
+      "claimants": ["PSE"],
+      "recognizedBy": []
+    },
+    {
+      "region": "kashmir-indian-administered",
+      "controller": "IND",
+      "claimants": ["PAK"],
+      "recognizedBy": []
+    },
+    {
+      "region": "azad-kashmir",
+      "controller": "PAK",
+      "claimants": ["IND"],
+      "recognizedBy": []
+    },
+    {
+      "region": "gilgit-baltistan",
+      "controller": "PAK",
+      "claimants": ["IND"],
+      "recognizedBy": []
+    },
+    {
+      "region": "aksai-chin",
+      "controller": "CHN",
+      "claimants": ["IND"],
+      "recognizedBy": []
+    },
+    {
+      "region": "arunachal-pradesh",
+      "controller": "IND",
+      "claimants": ["CHN"],
+      "recognizedBy": []
+    },
+    {
+      "region": "falkland-islands",
+      "controller": "GBR",
+      "claimants": ["ARG"],
+      "recognizedBy": []
+    },
+    {
+      "region": "essequibo",
+      "controller": "GUY",
+      "claimants": ["VEN"],
+      "recognizedBy": []
+    },
+    {
+      "region": "halaib-triangle",
+      "controller": "EGY",
+      "claimants": ["SDN"],
+      "recognizedBy": []
+    },
+    {
+      "region": "ilemi-triangle",
+      "controller": "KEN",
+      "claimants": ["SSD"],
+      "recognizedBy": []
+    },
+    {
+      "region": "abyei",
+      "controller": "SDN",
+      "claimants": ["SSD"],
+      "recognizedBy": []
+    }
+  ],
+  "wars": [
+    {
+      "id": "rus-ukr-2022",
+      "belligerents": [["RUS"], ["UKR"]],
+      "since": "2022-02-24",
+      "intensity": 0.8,
+      "fronts": []
+    },
+    {
+      "id": "sdr-sdn-2023",
+      "belligerents": [["SDR"], ["SDN"]],
+      "since": "2023-04-15",
+      "intensity": 0.8,
+      "fronts": []
+    },
+    {
+      "id": "m23-cod-2022",
+      "belligerents": [["M23"], ["COD"]],
+      "since": "2022-03-28",
+      "intensity": 0.5,
+      "fronts": []
+    }
+  ],
+  "playerDefault": "FRA",
+  "relations": "relations/world-2026.json",
+  "guarantees": [
+    {
+      "guarantor": "USA",
+      "protected": "TWN",
+      "probability": 0.5,
+      "note": "Taiwan Relations Act (1979), « ambiguïté stratégique » : probabilité 0,5, à valider."
+    },
+    {
+      "guarantor": "USA",
+      "protected": "JPN",
+      "probability": 0.9,
+      "note": "Traité de sécurité nippo-américain (1960)."
+    },
+    {
+      "guarantor": "USA",
+      "protected": "KOR",
+      "probability": 0.9,
+      "note": "Traité de défense mutuelle (1953), 28 500 soldats américains en Corée."
+    },
+    {
+      "guarantor": "USA",
+      "protected": "PHL",
+      "probability": 0.7,
+      "note": "Traité de défense mutuelle (1951)."
+    },
+    {
+      "guarantor": "USA",
+      "protected": "AUS",
+      "probability": 0.8,
+      "note": "ANZUS (1951)."
+    },
+    {
+      "guarantor": "USA",
+      "protected": "ISR",
+      "probability": 0.5,
+      "note": "Mémorandum d'entente de 2016 et engagement de sécurité, sans traité d'alliance : à valider."
+    },
+    {
+      "guarantor": "USA",
+      "protected": "XKX",
+      "probability": 0.3,
+      "note": "Présence de la KFOR (OTAN) et du camp Bondsteel ; pas de traité : à valider."
+    },
+    {
+      "guarantor": "USA",
+      "protected": "GUY",
+      "probability": 0.5,
+      "note": "Avertissement du secrétaire d'État à Georgetown (27 mars 2025) : une attaque vénézuélienne contre le Guyana aurait des conséquences ; coopération de défense et exercices aériens depuis décembre 2023. Pas de traité : à valider."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "BLR",
+      "probability": 0.9,
+      "note": "État de l'Union et traité de garanties de sécurité (décembre 2024), OTSC."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "ABK",
+      "probability": 0.9,
+      "note": "Accords d'assistance mutuelle de 2008, bases russes."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "SOS",
+      "probability": 0.9,
+      "note": "Accords d'assistance mutuelle de 2008, base russe."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "PMR",
+      "probability": 0.4,
+      "note": "Contingent russe (≈ 1 500 hommes), sans continuité territoriale : à valider."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "TJK",
+      "probability": 0.5,
+      "note": "201e base militaire russe, OTSC."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "KAZ",
+      "probability": 0.3,
+      "note": "OTSC (intervention de janvier 2022)."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "KGZ",
+      "probability": 0.3,
+      "note": "OTSC, base de Kant."
+    },
+    {
+      "guarantor": "RUS",
+      "protected": "PRK",
+      "probability": 0.5,
+      "note": "Traité de partenariat stratégique global (juin 2024), article 4 d'assistance mutuelle."
+    },
+    {
+      "guarantor": "PRK",
+      "protected": "RUS",
+      "probability": 0.3,
+      "note": "Même traité ; troupes nord-coréennes engagées dans l'oblast de Koursk en 2024-2025."
+    },
+    {
+      "guarantor": "CHN",
+      "protected": "PRK",
+      "probability": 0.5,
+      "note": "Traité d'amitié, de coopération et d'assistance mutuelle (1961)."
+    },
+    {
+      "guarantor": "TUR",
+      "protected": "CYN",
+      "probability": 0.95,
+      "note": "Traité de garantie (1960) invoqué par Ankara, ≈ 35 000 soldats turcs sur l'île."
+    },
+    {
+      "guarantor": "TUR",
+      "protected": "AZE",
+      "probability": 0.5,
+      "note": "Déclaration de Choucha (2021), alliance militaire."
+    },
+    {
+      "guarantor": "GRC",
+      "protected": "CYP",
+      "probability": 0.3,
+      "note": "Doctrine de défense commune gréco-chypriote : à valider."
+    },
+    {
+      "guarantor": "SAU",
+      "protected": "BHR",
+      "probability": 0.6,
+      "note": "Bouclier de la Péninsule (CCG), intervention de 2011."
+    },
+    {
+      "guarantor": "IND",
+      "protected": "BTN",
+      "probability": 0.5,
+      "note": "Traité d'amitié indo-bhoutanais (2007), défense du Bhoutan de fait."
+    },
+    {
+      "guarantor": "RWA",
+      "protected": "M23",
+      "probability": 0.5,
+      "note": "Soutien militaire du Rwanda à l'AFC/M23 documenté par le groupe d'experts de l'ONU : à valider."
+    },
+    {
+      "guarantor": "DZA",
+      "protected": "ESH",
+      "probability": 0.3,
+      "note": "Soutien militaire de l'Algérie au Front Polisario (camps de Tindouf) : à valider."
+    }
+  ],
+  "internalConflicts": [
+    {
+      "nation": "MMR",
+      "intensity": 0.8,
+      "since": "2021-02-01",
+      "note": "Guerre civile depuis le coup d'État : Armée d'Arakan, KIA, TNLA, MNDAA, UWSA, Forces de défense du peuple ; la junte ne tient plus qu'une partie du territoire. Entités non représentées (lignes mouvantes, partagées entre de nombreux groupes)."
+    },
+    {
+      "nation": "HTI",
+      "intensity": 0.7,
+      "since": "2021-07-07",
+      "note": "Gangs (coalition Viv Ansanm) maîtres de l'essentiel de Port-au-Prince."
+    },
+    {
+      "nation": "SOM",
+      "intensity": 0.6,
+      "since": "2006-01-01",
+      "note": "Insurrection d'Al-Chabab dans le centre-sud rural ; tensions avec le Puntland et le Jubaland."
+    },
+    {
+      "nation": "BFA",
+      "intensity": 0.7,
+      "since": "2015-01-01",
+      "note": "Insurrection jihadiste (JNIM, État islamique au Sahel) sur une grande partie du territoire."
+    },
+    {
+      "nation": "MLI",
+      "intensity": 0.6,
+      "since": "2012-01-01",
+      "note": "Insurrection jihadiste (JNIM, État islamique au Sahel), blocus de carburant de Bamako (2025), rebelles du nord."
+    },
+    {
+      "nation": "NER",
+      "intensity": 0.5,
+      "since": "2015-01-01",
+      "note": "Insurrection jihadiste (État islamique au Sahel, JNIM, ISWAP)."
+    },
+    {
+      "nation": "NGA",
+      "intensity": 0.5,
+      "since": "2009-01-01",
+      "note": "Boko Haram et ISWAP au nord-est, banditisme au nord-ouest, violences au centre."
+    },
+    {
+      "nation": "ETH",
+      "intensity": 0.5,
+      "since": "2023-08-01",
+      "note": "Insurrection Fano en Amhara, Armée de libération oromo, tensions au Tigré."
+    },
+    {
+      "nation": "SSD",
+      "intensity": 0.5,
+      "since": "2025-03-01",
+      "note": "Affrontements avec le SPLA-IO depuis mars 2025, arrestation de Riek Machar (septembre 2025)."
+    },
+    {
+      "nation": "COD",
+      "intensity": 0.4,
+      "since": "1996-01-01",
+      "note": "ADF, CODECO et autres groupes armés dans l'est, en plus de la guerre avec l'AFC/M23."
+    },
+    {
+      "nation": "CAF",
+      "intensity": 0.4,
+      "since": "2012-12-01",
+      "note": "Groupes armés de la CPC hors de Bangui."
+    },
+    {
+      "nation": "CMR",
+      "intensity": 0.4,
+      "since": "2017-10-01",
+      "note": "Crise anglophone du nord-ouest et du sud-ouest, Boko Haram à l'extrême nord."
+    },
+    {
+      "nation": "MOZ",
+      "intensity": 0.3,
+      "since": "2017-10-05",
+      "note": "Insurrection jihadiste du Cabo Delgado."
+    },
+    {
+      "nation": "COL",
+      "intensity": 0.4,
+      "since": "1964-01-01",
+      "note": "ELN, dissidences des FARC (EMC, Segunda Marquetalia), Clan del Golfo."
+    },
+    {
+      "nation": "PAK",
+      "intensity": 0.5,
+      "since": "2007-12-01",
+      "note": "TTP au Khyber Pakhtunkhwa, Armée de libération du Baloutchistan."
+    },
+    {
+      "nation": "SYR",
+      "intensity": 0.4,
+      "since": "2011-03-15",
+      "note": "Violences sur la côte alaouite (mars 2025) et à Soueïda (juillet 2025), cellules de l'État islamique."
+    },
+    {
+      "nation": "YEM",
+      "intensity": 0.4,
+      "since": "2014-09-21",
+      "note": "Rivalités au sein du gouvernement reconnu (Conseil de transition du Sud), AQPA."
+    },
+    {
+      "nation": "LBY",
+      "intensity": 0.2,
+      "since": "2011-02-15",
+      "note": "Affrontements entre milices à Tripoli (mai 2025)."
+    },
+    {
+      "nation": "AFG",
+      "intensity": 0.2,
+      "since": "2021-08-15",
+      "note": "Front national de résistance, État islamique au Khorassan."
+    },
+    {
+      "nation": "MEX",
+      "intensity": 0.3,
+      "since": "2006-12-11",
+      "note": "Violence des cartels (Sinaloa, CJNG)."
+    },
+    {
+      "nation": "ECU",
+      "intensity": 0.3,
+      "since": "2024-01-09",
+      "note": "« Conflit armé interne » déclaré contre les gangs en janvier 2024."
+    },
+    {
+      "nation": "PSE",
+      "intensity": 0.5,
+      "since": "2023-10-07",
+      "note": "Gaza dévastée par la guerre (cessez-le-feu d'octobre 2025, Israël tient la moitié du territoire), rivalité entre le Hamas et l'Autorité palestinienne."
+    },
+    {
+      "nation": "IND",
+      "intensity": 0.1,
+      "since": "2023-05-03",
+      "note": "Violences au Manipur, insurrection naxalite résiduelle."
+    },
+    {
+      "nation": "TCD",
+      "intensity": 0.2,
+      "since": "2021-04-20",
+      "note": "Rébellions du nord, afflux de réfugiés soudanais."
+    }
+  ],
+  "sanctions": [
+    {
+      "by": "eu",
+      "against": "RUS",
+      "since": "2014-07-31",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; régime de mesures restrictives de 2014, étendu depuis le 24 février 2022 (19e paquet en octobre 2025)."
+    },
+    {
+      "by": "GBR",
+      "against": "RUS",
+      "since": "2014-07-31",
+      "source": "UK Sanctions List (régime Russie), Office of Financial Sanctions Implementation."
+    },
+    {
+      "by": "USA",
+      "against": "RUS",
+      "since": "2014-03-06",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; Ukraine/Russia-related Sanctions, EO 14024 (2021) ; sanctions sur Rosneft et Lukoil (octobre 2025)."
+    },
+    {
+      "by": "CAN",
+      "against": "RUS",
+      "since": "2014-03-17",
+      "source": "Special Economic Measures (Russia) Regulations."
+    },
+    {
+      "by": "JPN",
+      "against": "RUS",
+      "since": "2022-02-26",
+      "source": "Mesures du ministère des Finances et du METI depuis février 2022."
+    },
+    {
+      "by": "AUS",
+      "against": "RUS",
+      "since": "2014-03-19",
+      "source": "Autonomous Sanctions (Russia) Regulations."
+    },
+    {
+      "by": "CHE",
+      "against": "RUS",
+      "since": "2022-02-28",
+      "source": "Ordonnance instituant des mesures en lien avec la situation en Ukraine (reprise des paquets de l'UE)."
+    },
+    {
+      "by": "NOR",
+      "against": "RUS",
+      "since": "2014-08-15",
+      "source": "Reprise des mesures de l'UE (EEE)."
+    },
+    {
+      "by": "NZL",
+      "against": "RUS",
+      "since": "2022-03-09",
+      "source": "Russia Sanctions Act 2022."
+    },
+    {
+      "by": "ISL",
+      "against": "RUS",
+      "since": "2014-08-15",
+      "source": "Reprise des mesures de l'UE (EEE)."
+    },
+    {
+      "by": "LIE",
+      "against": "RUS",
+      "since": "2014-08-15",
+      "source": "Reprise des mesures de l'UE et de la Suisse."
+    },
+    {
+      "by": "MCO",
+      "against": "RUS",
+      "since": "2022-02-28",
+      "source": "Reprise des mesures de l'UE."
+    },
+    {
+      "by": "ALB",
+      "against": "RUS",
+      "since": "2022-03-01",
+      "source": "Alignement sur la PESC de l'UE (pays candidat)."
+    },
+    {
+      "by": "MNE",
+      "against": "RUS",
+      "since": "2022-03-01",
+      "source": "Alignement sur la PESC de l'UE (pays candidat)."
+    },
+    {
+      "by": "MKD",
+      "against": "RUS",
+      "since": "2022-03-01",
+      "source": "Alignement sur la PESC de l'UE (pays candidat)."
+    },
+    {
+      "by": "MDA",
+      "against": "RUS",
+      "since": "2022-06-01",
+      "source": "Alignement sur la PESC de l'UE (pays candidat), à valider."
+    },
+    {
+      "by": "KOR",
+      "against": "RUS",
+      "goods": ["electronics", "arms"],
+      "since": "2022-02-28",
+      "source": "Contrôles à l'exportation (plus de 1 000 articles) : électronique et armement seulement, à valider."
+    },
+    {
+      "by": "TWN",
+      "against": "RUS",
+      "goods": ["electronics", "arms"],
+      "since": "2022-02-28",
+      "source": "Contrôles à l'exportation de semi-conducteurs : électronique et armement seulement, à valider."
+    },
+    {
+      "by": "SGP",
+      "against": "RUS",
+      "goods": ["electronics", "arms"],
+      "since": "2022-03-05",
+      "source": "Contrôles à l'exportation (seule sanction autonome de Singapour) : électronique et armement seulement."
+    },
+    {
+      "by": "UKR",
+      "against": "RUS",
+      "since": "2014-03-01",
+      "source": "Sanctions ukrainiennes (en guerre depuis 2022)."
+    },
+    {
+      "by": "RUS",
+      "against": "eu",
+      "goods": ["food"],
+      "since": "2014-08-07",
+      "source": "Embargo alimentaire russe (décret 560 du 6 août 2014, prolongé) : alimentation seulement."
+    },
+    {
+      "by": "RUS",
+      "against": "USA",
+      "goods": ["food"],
+      "since": "2014-08-07",
+      "source": "Embargo alimentaire russe (2014) : alimentation seulement."
+    },
+    {
+      "by": "RUS",
+      "against": "CAN",
+      "goods": ["food"],
+      "since": "2014-08-07",
+      "source": "Embargo alimentaire russe (2014) : alimentation seulement."
+    },
+    {
+      "by": "RUS",
+      "against": "AUS",
+      "goods": ["food"],
+      "since": "2014-08-07",
+      "source": "Embargo alimentaire russe (2014) : alimentation seulement."
+    },
+    {
+      "by": "RUS",
+      "against": "NOR",
+      "goods": ["food"],
+      "since": "2014-08-07",
+      "source": "Embargo alimentaire russe (2014) : alimentation seulement."
+    },
+    {
+      "by": "RUS",
+      "against": "GBR",
+      "goods": ["food"],
+      "since": "2014-08-07",
+      "source": "Embargo alimentaire russe (2014) : alimentation seulement."
+    },
+    {
+      "by": "eu",
+      "against": "BLR",
+      "since": "2020-10-02",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; régime Biélorussie (sanctions sectorielles depuis 2021 et 2022)."
+    },
+    {
+      "by": "GBR",
+      "against": "BLR",
+      "since": "2020-09-29",
+      "source": "UK Sanctions List (régime Biélorussie)."
+    },
+    {
+      "by": "USA",
+      "against": "BLR",
+      "since": "2021-08-09",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; Belarus Sanctions, EO 14038, à valider (assouplissements ponctuels en 2025)."
+    },
+    {
+      "by": "CAN",
+      "against": "BLR",
+      "since": "2020-09-29",
+      "source": "Special Economic Measures (Belarus) Regulations."
+    },
+    {
+      "by": "UKR",
+      "against": "BLR",
+      "since": "2022-03-01",
+      "source": "Sanctions ukrainiennes."
+    },
+    {
+      "by": "USA",
+      "against": "IRN",
+      "since": "1979-11-14",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; Iranian Transactions and Sanctions Regulations, « pression maximale » rétablie en février 2025."
+    },
+    {
+      "by": "eu",
+      "against": "IRN",
+      "since": "2025-09-28",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; mesures nucléaires rétablies après le « snapback » du 28 septembre 2025 (embargo pétrolier)."
+    },
+    {
+      "by": "GBR",
+      "against": "IRN",
+      "since": "2025-09-28",
+      "source": "UK Sanctions List, mesures nucléaires rétablies (snapback)."
+    },
+    {
+      "by": "CAN",
+      "against": "IRN",
+      "since": "2010-07-22",
+      "source": "Special Economic Measures (Iran) Regulations."
+    },
+    {
+      "by": "AUS",
+      "against": "IRN",
+      "since": "2025-09-28",
+      "source": "Autonomous Sanctions (Iran) et rétablissement des mesures de l'ONU, à valider."
+    },
+    {
+      "by": "USA",
+      "against": "PRK",
+      "since": "1950-12-17",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; North Korea Sanctions Regulations."
+    },
+    {
+      "by": "eu",
+      "against": "PRK",
+      "since": "2006-11-20",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; régime République populaire démocratique de Corée."
+    },
+    {
+      "by": "GBR",
+      "against": "PRK",
+      "since": "2006-11-20",
+      "source": "UK Sanctions List (régime RPDC)."
+    },
+    {
+      "by": "JPN",
+      "against": "PRK",
+      "since": "2006-10-14",
+      "source": "Interdiction totale des échanges depuis 2009."
+    },
+    {
+      "by": "KOR",
+      "against": "PRK",
+      "since": "2010-05-24",
+      "source": "Mesures du 24 mai 2010 (arrêt des échanges)."
+    },
+    {
+      "by": "AUS",
+      "against": "PRK",
+      "since": "2006-10-17",
+      "source": "Autonomous Sanctions (DPRK)."
+    },
+    {
+      "by": "CAN",
+      "against": "PRK",
+      "since": "2011-08-11",
+      "source": "Special Economic Measures (DPRK) Regulations."
+    },
+    {
+      "by": "USA",
+      "against": "CUB",
+      "since": "1962-02-07",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; Cuban Assets Control Regulations (embargo)."
+    },
+    {
+      "by": "USA",
+      "against": "VEN",
+      "since": "2019-01-28",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; Venezuela-related Sanctions (secteur pétrolier), blocus des pétroliers sous sanctions (décembre 2025)."
+    },
+    {
+      "by": "eu",
+      "against": "VEN",
+      "goods": ["arms"],
+      "since": "2017-11-13",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; embargo sur les armes et mesures ciblées : armement seulement."
+    },
+    {
+      "by": "eu",
+      "against": "SYR",
+      "goods": ["arms"],
+      "since": "2011-05-09",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; sanctions économiques levées le 28 mai 2025 ; embargo sur les armes maintenu : armement seulement."
+    },
+    {
+      "by": "eu",
+      "against": "MMR",
+      "goods": ["arms"],
+      "since": "1996-10-28",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; embargo sur les armes et mesures ciblées : armement seulement."
+    },
+    {
+      "by": "USA",
+      "against": "MMR",
+      "goods": ["arms"],
+      "since": "2021-02-11",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; Burma Sanctions (mesures ciblées), armement seulement."
+    },
+    {
+      "by": "GBR",
+      "against": "MMR",
+      "goods": ["arms"],
+      "since": "2021-02-25",
+      "source": "UK Sanctions List (régime Myanmar) : armement seulement."
+    },
+    {
+      "by": "USA",
+      "against": "SDR",
+      "since": "2023-09-06",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; sanctions contre les Forces de soutien rapide et Mohamed Hamdan Dagalo (janvier 2025), à valider."
+    },
+    {
+      "by": "USA",
+      "against": "SDN",
+      "goods": ["arms"],
+      "since": "2025-06-06",
+      "source": "Programmes de sanctions de l'OFAC (domaine public) ; restrictions après la détermination sur les armes chimiques (mai 2025) : armement seulement, à valider."
+    },
+    {
+      "by": "eu",
+      "against": "SDR",
+      "goods": ["arms"],
+      "since": "2023-10-09",
+      "source": "Liste consolidée des sanctions financières de l'UE et carte des sanctions de l'UE (CC BY 4.0) ; régime Soudan (mesures ciblées contre les FSR) : armement seulement, à valider."
+    },
+    {
+      "by": "*",
+      "against": "PRK",
+      "except": ["RUS", "CHN", "IRN"],
+      "goods": ["arms", "coal", "steel", "consumer-goods", "oil"],
+      "since": "2006-10-14",
+      "source": "Résolutions 1718 (2006) à 2397 (2017) du Conseil de sécurité, appliquées par les États membres : armement, charbon, acier, textiles, pétrole ; la Russie, la Chine et l'Iran ne les appliquent pas (à valider)."
+    },
+    {
+      "by": "*",
+      "against": "IRN",
+      "except": ["RUS", "CHN", "PRK"],
+      "goods": ["arms"],
+      "since": "2025-09-28",
+      "source": "Rétablissement des résolutions du Conseil de sécurité (« snapback ») : embargo sur les armes ; la Russie, la Chine et la Corée du Nord ne l'appliquent pas (à valider)."
+    },
+    {
+      "by": "*",
+      "against": "YEH",
+      "goods": ["arms"],
+      "since": "2015-04-14",
+      "source": "Résolution 2216 (2015) : embargo sur les armes visant les Houthis."
+    },
+    {
+      "by": "*",
+      "against": "LBY",
+      "goods": ["arms"],
+      "since": "2011-02-26",
+      "source": "Résolution 1970 (2011) : embargo sur les armes (toute la Libye)."
+    },
+    {
+      "by": "*",
+      "against": "LBE",
+      "goods": ["arms"],
+      "since": "2011-02-26",
+      "source": "Résolution 1970 (2011) : embargo sur les armes (toute la Libye)."
+    },
+    {
+      "by": "*",
+      "against": "SDR",
+      "goods": ["arms"],
+      "since": "2004-07-30",
+      "source": "Résolution 1556 (2004) : embargo sur les armes au Darfour."
+    },
+    {
+      "by": "*",
+      "against": "SSD",
+      "goods": ["arms"],
+      "since": "2018-07-13",
+      "source": "Résolution 2428 (2018), renouvelée en 2025 : embargo sur les armes."
+    },
+    {
+      "by": "*",
+      "against": "M23",
+      "goods": ["arms"],
+      "since": "2003-07-28",
+      "source": "Résolution 1493 (2003) : embargo sur les armes visant les groupes armés de l'est de la RDC."
+    }
+  ]
 }

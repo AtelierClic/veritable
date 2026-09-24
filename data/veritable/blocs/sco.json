@@ -1,6 +1,7 @@
 {
   "id": "sco",
   "name": "bloc.sco.name",
+  "type": "forum",
   "members": [
     {
       "nation": "CHN",

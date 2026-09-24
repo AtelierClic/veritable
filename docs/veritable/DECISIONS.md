@@ -609,6 +609,60 @@ Plan, liste « à valider » et écarts : `docs/veritable/plans/J6.md`. Lukas é
 - Navigateur : une campagne `world-2026` (France) se lance sur `giantworldmap`, les événements du 1er février mettent le jeu en pause, ×5 tenu à 46,9 ticks/s entre deux pas mensuels.
 - Les crochets git (husky) ne sont pas installés dans ce dépôt (`npm ci --ignore-scripts`) : aucun formatage au commit ; les fichiers modifiés sont formatés à la main, `DESIGN.md` excepté, comme au J0.
 
+## 2026-09-24 — J6b : monde de 2026 (session Claude Code, Lukas absent)
+
+Plan, liste « à valider » (points 17 à 27) et écarts : `docs/veritable/plans/J6.md`. Entités de facto, régions contestées et guerres en cours, justifiées une à une : `data/veritable/scenarios/world-2026.defacto.md`.
+
+### Entités de facto et régions contestées
+
+- **Règle** (consigne) : une entité qui contrôle durablement, au moins un an au 1er janvier 2026, un territoire peuplé d'au moins une tuile est une nation, reconnue ou non. Lecture retenue : la durée s'apprécie pour l'entité, pas tuile par tuile (Goma, El-Facher gardés) ; une autonomie accordée par l'État (Kurdistan irakien, Puntland, Bougainville) n'est pas une entité.
+- **13 entités** : Taïwan, Kosovo (`XKX`), Chypre du Nord, Abkhazie, Ossétie du Sud, Transnistrie, Somaliland, RASD (à l'est du mur des sables), Yémen d'Ansar Allah, Libye orientale, Forces de soutien rapide au Soudan, Nord-Est syrien (AANES), AFC/M23. La Palestine fait déjà partie des 195. Écartés, entre autres : le Haut-Karabakh (dissous), les groupes armés du Myanmar (lignes non traçables, **à valider** : l'État wa remplit le critère), Al-Chabab et les jihadistes du Sahel (contrôle diffus), le Conseil de transition du Sud et Soueïda (moins d'un an).
+- **Outil de frontières** : le `controller` d'une surcharge qui n'est pas un pays Natural Earth crée une entité, dont le territoire est ce que ses surcharges prennent à `from` ; `disputed` (zones contestées Natural Earth par code BRK_A3), `admin1` (provinces par code ISO 3166-2), `regionWithin` et `kind: "region"` complètent le mécanisme du J1. 32 surcharges pour `giantworldmap`. **31 régions contestées** (fichier `VREG`) ; les Kouriles, les Senkaku et les fermes de Chebaa n'ont aucune tuile sur la carte et ne pèsent que dans les relations.
+- **Fiches des entités** : même chaîne d'ingestion. Une entité couverte par les séries de sa nation mère en reçoit une part : population, activité, alimentation, énergie (`estimates.json → defacto`) ; la dette n'est pas héritée. Les autres (Taïwan, Kosovo, Chypre du Nord, Abkhazie, Ossétie du Sud, Transnistrie, RASD) ont des séries estimées. Dirigeants par Wikidata là où il y en a, à la main ailleurs, noms fictifs ; reconnaissances (champ `recognition` des fiches) lues dans les tableaux de Wikipédia. Capitale du Yémen reconnu : Aden.
+
+### Guerres, conflits internes, garanties
+
+- **Trois guerres en cours** : Russie–Ukraine, FSR–Soudan, AFC/M23–RD Congo (UCDP, CC BY 4.0, et situation connue fin 2025). Les cessez-le-feu de 2024-2025 (Gaza, Liban, Iran, Inde–Pakistan, Thaïlande–Cambodge) et les conflits gelés (Yémen, Libye, Syrie–FDS) n'en sont pas.
+- **24 conflits internes** (`internalConflicts` du scénario) : malus de stabilité = intensité × 0,15 (`politics.internalConflict`), divisé par deux tous les dix ans.
+- **25 garanties bilatérales** (`guarantees`) : le garant IA entre dans une guerre déclarée au protégé avec la probabilité donnée ; l'IA les compte dans la puissance défendue de sa cible (correction (c) du J6a) ; garant et protégé sont « alliés » dans l'affinité.
+
+### Relations de départ et affinité
+
+- **Relations du premier jour** : fichier `data/veritable/relations/world-2026.json` (triangle supérieur, 21 528 paires), construit par `npm run veritable:ingest -- fetch-voeten` puis `build-relations`. Il repose sur les points idéaux des votes à l'Assemblée générale de l'ONU (Bailey, Strezhnev et Voeten, Harvard Dataverse, CC0, fichier 14098429, sha256 dans le verrou), moyenne 2021-2025. Règle : r = 35 − 20 × |écart| (0 sans votes : Taïwan, Kosovo, Palestine, Saint-Siège, entités) ; + 20 alliance militaire commune, + 10 union économique commune, + 30 garantie, − 30 sanctions complètes, au plus −60 entre une entité et son revendicateur, + 20 reconnaissance. S'y ajoutent **199 paires à la main** en sept groupes, dont la Russie face à l'UE, l'OTAN et le G7 à −60, sauf la Turquie −20, la Hongrie −35 et la Slovaquie −40. Médiane +19 ; 5 paires à −100 ou presque. europe-10 garde la règle du J3.
+- **Nouvelle affinité** (consigne) : blocs communs pondérés par leur type (`type` dans les données des blocs : OTAN alliance militaire 40 ; UE, ASEAN, Mercosur, CEDEAO union économique 30 ; les autres forum 5 ; somme plafonnée à 60 comme au J4), + 20 × proximité idéologique, − 40 si des sanctions sont en vigueur entre les deux, − 30 si l'un est en guerre contre un allié de l'autre. Elle vaut aussi pour europe-10 (non-régression au J6c).
+
+### Sanctions de 2026
+
+- **61 entrées sourcées** dans le scénario. Émetteur : une nation, un bloc (ses membres pleins, et le bloc les tient) ou « \* », un régime de l'ONU appliqué par toutes les nations sauf `except`. Cible : une nation ou un bloc. Portée : complètes, ou par bien (embargos dans les deux sens). Contenu :
+  - l'UE et quinze autres contre la Russie, l'embargo alimentaire russe en retour ;
+  - la Biélorussie, l'Iran (mesures rétablies en 2025), la Corée du Nord, Cuba et le Venezuela ;
+  - les embargos sur les armes de l'UE, des États-Unis et du Royaume-Uni (Syrie, Myanmar, FSR) ;
+  - les régimes de l'ONU : Corée du Nord, Iran, Ansar Allah, Libye, FSR, Soudan du Sud, groupes de l'est de la RD Congo.
+    Sources : liste consolidée et carte des sanctions de l'UE (CC BY 4.0), programmes de l'OFAC (domaine public), listes britannique, canadienne, australienne, suisse et japonaise ; la liste consolidée de l'ONU n'est pas redistribuable et n'est pas utilisée.
+- **Sanctions de politique** (drapeau `policy`, sauvegarde v6) : toutes celles du premier jour, Russie comprise. Jamais levées pendant une guerre d'agression de la cible ; ensuite seulement si son régime a changé depuis le premier jour **et** si l'affinité des deux gouvernements, hors sanctions, atteint 15 (`diplomacy.sanction.liftPolicyMinAffinity`). La règle du J3 (relations revenues au-dessus de −40) reste celle des sanctions prises en campagne.
+- **Bogue corrigé** : la présidence d'un bloc proposait de lever les sanctions contre une nation en guerre d'agression quand cette guerre était celle du scénario.
+
+### Blocs
+
+- Dans `world-2026`, tous les membres réels sont simulés : ils votent et paient. La présidence de l'UE suit l'ordre du Conseil (Chypre au premier semestre 2026, Irlande au second, puis Lituanie, Grèce, Italie…) ; les États-Unis dirigent l'OTAN. Vérifié sur une campagne de cinq ans. Les artefacts d'europe-10 (vote des seuls membres simulés, Turquie à la tête de l'OTAN) restent dans europe-10.
+
+### Dette de départ (tâche ajoutée)
+
+- **Données** : intérêts payés par les administrations (FMI, Public Finances in Modern History `ie` ; sinon solde primaire moins solde global du Moniteur des finances publiques ; sinon 4 % de la dette) et inflation 2025-2026 (FMI, Perspectives, `PCPIPCH`). Même traitement que le cache du J3 : `npm run veritable:ingest -- fetch-imf-fiscal`, fichier `cache/imf-fiscal.json` hors git, empreinte dans le verrou, seules des valeurs dérivées dans les fiches (`budget.interestPctGdp`, `budget.inflation`). Huit nations en défaut au 1er janvier 2026 (`budget.inDefault`).
+- **Intérêts comptés deux fois depuis le J2, corrigé.** Les postes de dépense sont désormais la dépense totale moins les postes connus **et moins les intérêts observés**. La dépense des sources comprend les intérêts, et la simulation ajoute les siens. Les fiches d'europe-10 changent (Italie : −3,9 points de PIB sur les postes résiduels).
+- **Taux réel de départ** = min(intérêts / dette, 15 %) − inflation, borné à [0 ; 8 %] (`budget.interest.nominalMax`, `realMin`, `realMax`). Le PIB du jeu étant réel, ce taux donne la bonne dynamique du ratio dette/PIB, là où un taux nominal ferait exploser la dette des nations à forte inflation. **L'écart de départ à la formule du J2** (`interestSpread`, sauvegarde v6) est gardé toute la campagne : la formule déplace le taux avec la dette et la stabilité, jamais sous `realMin`. Exemples : Japon 0 %, Italie 0,73 %, France 0,43 %, États-Unis 0,24 %, Brésil 4,4 %, Pakistan 4,8 %. Une sauvegarde v5 migrée garde la formule du J2 (écart nul).
+- **Seuils propres** : une nation déjà au-dessus du seuil de défaut au premier jour fait défaut à 1,25 fois sa valeur de départ (`budget.default.startMargin`). C'est le cas pour la dette (Japon 2,58 fois le PIB, Venezuela 3,86) et pour la part des intérêts dans les recettes (Sri Lanka 54 %). Pas de second défaut tant qu'un défaut est en cours. Une nation en défaut au premier jour ne finance aucun déficit pendant cinq ans.
+- **Résultat** : au premier essai, le Japon, le Soudan, l'Érythrée et le Venezuela faisaient défaut dès février 2026, puis Cuba et Singapour ; sur la campagne de contrôle de cinq ans, plus aucun défaut.
+
+### Schémas (sauvegarde `schemaVersion: 6`, encore ouverte jusqu'au J6c)
+
+`save.ts` (`Sanction.policy` facultatif, `NationEconomy.interestSpread` ; migration v5 → v6 : écart nul), `nation.ts` (`recognition`, `budget.interestPctGdp`, `budget.inflation`, `budget.inDefault`, facultatifs), `scenario.ts` (`relations`, `sanctions`, `internalConflicts`, `guarantees`), `bloc.ts` (`type`), `relations.ts` (nouveau), `config.ts` (`diplomacy.affinityByBlocType`, `affinitySanctions`, `affinityAllyAtWar`, `allyBlocTypes`, `sanction.liftPolicyMinAffinity` ; `politics.internalConflict` ; `budget.interest.nominalMax`, `realMin`, `realMax` ; `budget.default.startMargin`). `src/core` n'a pas été touché au J6b.
+
+### Observations pour le J6c
+
+- Sans le cœur, le pas mensuel de l'économie coûte ≈ 400 ms à 208 nations et celui de la diplomatie ≈ 125 ms ; les embargos des régimes de l'ONU portent la liste à ≈ 7 500 entrées. Il faut étaler ou alléger ces pas pour tenir un tick maximal sous 100 ms.
+- Aucune guerre nouvelle en cinq ans sur la campagne de contrôle après la garantie américaine au Guyana : la fréquence des guerres se mesure sur les 30 campagnes mondiales (critère : médiane de 10 à 30 en 50 ans).
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.

@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   ContestedRegionSchema,
   INTEREST_GROUPS,
+  IsoDateSchema,
   NationIdSchema,
   NuclearDoctrineSchema,
   RegimeSchema,
@@ -95,6 +96,20 @@ export const NationEconomySchema = z.object({
     revenuePctGdp: SourcedNumberSchema,
     expensePctGdp: SourcedNumberSchema,
     grantsPctGdp: SourcedNumberSchema,
+    // J6b, the debt of the first day: interest paid (share of GDP, already
+    // out of the programmes) and inflation, which make the real interest
+    // rate of the first day. Without them (test sheets), the rate of the J2.
+    interestPctGdp: SourcedNumberSchema.optional(),
+    inflation: SourcedNumberSchema.optional(),
+    // A nation already in default on 1 January 2026: it cannot borrow.
+    inDefault: z
+      .object({
+        since: IsoDateSchema,
+        source: z.string().min(1),
+        asOf: z.string().min(1),
+        note: z.string().optional(),
+      })
+      .optional(),
     revenueShares: z.object({
       value: record(TAX_IDS, z.number().min(0).max(1)),
       source: z.string().min(1),
@@ -127,6 +142,15 @@ export const NationDataSchema = z.object({
     .nullable(),
   territory: TerritorySchema,
   contested: z.array(ContestedRegionSchema),
+  // A de facto entity (J6b): the nations that recognise it as a state.
+  recognition: z
+    .object({
+      recognizedBy: z.array(NationIdSchema),
+      note: z.string(),
+      source: z.string().min(1),
+      asOf: z.string().min(1),
+    })
+    .optional(),
   population: SourcedNumberSchema,
   gdp: SourcedNumberSchema, // current US$
   debtToGdp: SourcedNumberSchema,

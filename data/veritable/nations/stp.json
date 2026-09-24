@@ -200,7 +200,7 @@
       },
       "critical-minerals": {
         "production": {
-          "value": 0.0000536946,
+          "value": 0.0000535453,
           "source": "estimate",
           "asOf": "2026-09-24",
           "note": "Part de la valeur mondiale des minerais critiques (hors nations estimées à la main) au prorata des exportations de minerais et métaux (Banque mondiale TX.VAL.MMTL.ZS.UN × TX.VAL.MRCH.CD.WT), Md$."
@@ -249,6 +249,18 @@
         "asOf": "2026-01-01",
         "note": "Dons budgétaires extérieurs. Ukraine : soutien budgétaire international d'environ 40 Md$ par an pour un PIB d'environ 190 Md$ ; sans lui le déficit de guerre (dépenses 66 % du PIB, recettes 34 %, Banque mondiale) ferait exploser la dette en deux ans. Nul pour les autres."
       },
+      "interestPctGdp": {
+        "value": 0.00583857,
+        "source": "imf-fm:GGXONLB_G01_GDP_PT-GGXCNL_G01_GDP_PT",
+        "asOf": "2025",
+        "note": "Intérêts nets : solde primaire moins solde global, en % du PIB, FMI, Moniteur des finances publiques (API DataMapper, extraction du 2026-09-24), à défaut de la série des intérêts payés."
+      },
+      "inflation": {
+        "value": 0.0525,
+        "source": "imf-weo:PCPIPCH",
+        "asOf": "2025-2026",
+        "note": "Hausse des prix à la consommation, moyenne 2025-2026 (estimation et prévision), FMI, Perspectives de l'économie mondiale (API DataMapper, extraction du 2026-09-24)."
+      },
       "revenueShares": {
         "value": {
           "income": 0.386072,
@@ -278,25 +290,25 @@
           "value": 0.00105,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         },
         "social": {
-          "value": 0.0872423,
+          "value": 0.0834472,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         },
         "infrastructure": {
-          "value": 0.0268438,
+          "value": 0.0256761,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         },
         "subsidies": {
-          "value": 0.0201328,
+          "value": 0.019257,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         }
       }
     }

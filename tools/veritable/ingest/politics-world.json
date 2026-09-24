@@ -11789,6 +11789,554 @@
           }
         }
       ]
+    },
+    "TWN": {
+      "wikidataCountry": "Q865",
+      "regime": "semi-presidential",
+      "vdemRow": "liberal-democracy",
+      "regimeNote": "République semi-présidentielle : président élu au suffrage direct, Premier ministre (président du Yuan exécutif) nommé par lui. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Lai Ching-te",
+        "party": "Democratic Progressive Party",
+        "since": "2024-05-20"
+      },
+      "headOfGovernment": {
+        "name": "Cho Jung-tai",
+        "party": "Democratic Progressive Party",
+        "since": "2024-05-20"
+      },
+      "lastElection": "2024-01-13",
+      "lastElectionKind": "general",
+      "electionIntervalMonths": 48,
+      "electionsSuspendedAtWarAtHome": false,
+      "election": "Présidentielle et législatives du 13 janvier 2024 (vote de liste des législatives)",
+      "electionSource": "https://en.wikipedia.org/wiki/2024_Taiwanese_legislative_election",
+      "parties": [
+        {
+          "label": "Democratic Progressive Party",
+          "lang": "en",
+          "support": 0.3616,
+          "leader": "Lai Ching-te",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": -0.1,
+            "authority": -0.4,
+            "sovereignty": 0.5
+          }
+        },
+        {
+          "label": "Kuomintang",
+          "lang": "en",
+          "support": 0.3458,
+          "leader": "Cheng Li-wun",
+          "leaderRole": "présidente du parti (depuis novembre 2025)",
+          "ideology": {
+            "economic": 0.2,
+            "authority": 0.1,
+            "sovereignty": -0.2
+          }
+        },
+        {
+          "label": "Taiwan People's Party",
+          "lang": "en",
+          "support": 0.2207,
+          "leader": "Huang Kuo-chang",
+          "leaderRole": "président du parti (depuis janvier 2025)",
+          "ideology": {
+            "economic": 0.1,
+            "authority": -0.2,
+            "sovereignty": 0.0
+          }
+        }
+      ]
+    },
+    "XKX": {
+      "wikidataCountry": "Q1246",
+      "regime": "parliamentary",
+      "vdemRow": "electoral-democracy",
+      "regimeNote": "République parlementaire ; président élu par l'Assemblée. Albin Kurti gouverne par intérim depuis les législatives de février 2025, faute de majorité ; législatives anticipées le 28 décembre 2025. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Vjosa Osmani",
+        "party": null,
+        "since": "2021-04-04"
+      },
+      "headOfGovernment": {
+        "name": "Albin Kurti",
+        "party": "Vetëvendosje",
+        "since": "2021-03-22"
+      },
+      "lastElection": "2025-12-28",
+      "lastElectionKind": "legislative",
+      "electionIntervalMonths": 48,
+      "electionsSuspendedAtWarAtHome": false,
+      "election": "Législatives anticipées du 28 décembre 2025 (résultats provisoires, à valider)",
+      "electionSource": "https://en.wikipedia.org/wiki/2025_Kosovan_parliamentary_election",
+      "parties": [
+        {
+          "label": "Vetëvendosje",
+          "lang": "sq",
+          "support": 0.51,
+          "leader": "Albin Kurti",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": -0.3,
+            "authority": 0.0,
+            "sovereignty": 0.5
+          }
+        },
+        {
+          "label": "Partia Demokratike e Kosovës",
+          "lang": "sq",
+          "support": 0.2,
+          "leader": "Memli Krasniqi",
+          "leaderRole": "président du parti (Bedri Hamza, candidat au poste de Premier ministre en 2025)",
+          "ideology": {
+            "economic": 0.2,
+            "authority": 0.1,
+            "sovereignty": 0.2
+          }
+        },
+        {
+          "label": "Lidhja Demokratike e Kosovës",
+          "lang": "sq",
+          "support": 0.135,
+          "leader": "Lumir Abdixhiku",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.2,
+            "authority": -0.1,
+            "sovereignty": 0.0
+          }
+        },
+        {
+          "label": "Aleanca për Ardhmërinë e Kosovës",
+          "lang": "sq",
+          "support": 0.055,
+          "leader": "Ramush Haradinaj",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.2,
+            "authority": 0.1,
+            "sovereignty": 0.3
+          }
+        },
+        {
+          "label": "Srpska lista",
+          "lang": "sr",
+          "support": 0.045,
+          "leader": "Zlatan Elek",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.0,
+            "authority": 0.3,
+            "sovereignty": 0.6
+          }
+        }
+      ]
+    },
+    "CYN": {
+      "wikidataCountry": "Q23681",
+      "regime": "parliamentary",
+      "vdemRow": "unknown",
+      "regimeNote": "République parlementaire à président élu au suffrage direct (rôle surtout représentatif et de négociateur sur la question chypriote). Tufan Erhürman (CTP, fédéraliste) élu en octobre 2025 face au sortant Ersin Tatar. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Tufan Erhürman",
+        "party": "Cumhuriyetçi Türk Partisi",
+        "since": "2025-10-24"
+      },
+      "headOfGovernment": {
+        "name": "Ünal Üstel",
+        "party": "Ulusal Birlik Partisi",
+        "since": "2022-05-12"
+      },
+      "lastElection": "2022-01-23",
+      "lastElectionKind": "legislative",
+      "electionIntervalMonths": 60,
+      "electionsSuspendedAtWarAtHome": false,
+      "election": "Législatives du 23 janvier 2022",
+      "electionSource": "https://en.wikipedia.org/wiki/2022_Northern_Cypriot_parliamentary_election",
+      "parties": [
+        {
+          "label": "Ulusal Birlik Partisi",
+          "lang": "tr",
+          "support": 0.395,
+          "leader": "Ünal Üstel",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.3,
+            "authority": 0.2,
+            "sovereignty": 0.6
+          }
+        },
+        {
+          "label": "Cumhuriyetçi Türk Partisi",
+          "lang": "tr",
+          "support": 0.32,
+          "leader": "Sıla Usar İncirli",
+          "leaderRole": "présidente du parti (depuis 2025)",
+          "ideology": {
+            "economic": -0.3,
+            "authority": -0.2,
+            "sovereignty": -0.4
+          }
+        },
+        {
+          "label": "Demokrat Parti",
+          "lang": "tr",
+          "support": 0.074,
+          "leader": "Fikri Ataoğlu",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.2,
+            "authority": 0.1,
+            "sovereignty": 0.4
+          }
+        },
+        {
+          "label": "Halkın Partisi",
+          "lang": "tr",
+          "support": 0.068,
+          "leader": "Kudret Özersay",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.1,
+            "authority": -0.1,
+            "sovereignty": 0.0
+          }
+        }
+      ]
+    },
+    "ABK": {
+      "wikidataCountry": "Q23334",
+      "regime": "presidential",
+      "vdemRow": "unknown",
+      "regimeNote": "République présidentielle sous protectorat russe de fait ; présidentielle disputée de mars 2025 (Badra Gounba élu au second tour). Partis faibles, candidats indépendants. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Badra Gunba",
+        "party": null,
+        "since": "2025-04-01"
+      },
+      "headOfGovernment": {
+        "name": "Vladimir Delba",
+        "party": null,
+        "since": "2025-04-15"
+      },
+      "lastElection": "2025-03-01",
+      "lastElectionKind": "presidential",
+      "electionIntervalMonths": 60,
+      "electionsSuspendedAtWarAtHome": false,
+      "election": "Présidentielle des 15 février et 1er mars 2025 ; partis sans part de voix publiée à l'échelle nationale",
+      "electionSource": "https://en.wikipedia.org/wiki/2025_Abkhazian_presidential_election",
+      "parties": []
+    },
+    "SOS": {
+      "wikidataCountry": "Q23427",
+      "regime": "electoral-authoritarian",
+      "vdemRow": "unknown",
+      "regimeNote": "République présidentielle sous tutelle russe ; élections peu disputées. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Alan Gagloev",
+        "party": "Nykhas",
+        "since": "2022-05-24"
+      },
+      "headOfGovernment": {
+        "name": "Konstantin Dzhussoev",
+        "party": null,
+        "since": "2022-06-10"
+      },
+      "lastElection": "2022-05-08",
+      "lastElectionKind": "presidential",
+      "electionIntervalMonths": 60,
+      "electionsSuspendedAtWarAtHome": false,
+      "election": "Présidentielle d'avril et mai 2022",
+      "electionSource": "https://en.wikipedia.org/wiki/2022_South_Ossetian_presidential_election",
+      "parties": [
+        {
+          "label": "Nykhas",
+          "lang": "ru",
+          "support": 0.4,
+          "leader": "Alan Gagloev",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.0,
+            "authority": 0.4,
+            "sovereignty": 0.7
+          }
+        },
+        {
+          "label": "United Ossetia",
+          "lang": "ru",
+          "support": 0.3,
+          "leader": "Anatoly Bibilov",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.0,
+            "authority": 0.5,
+            "sovereignty": 0.8
+          }
+        }
+      ]
+    },
+    "PMR": {
+      "wikidataCountry": "Q907112",
+      "regime": "electoral-authoritarian",
+      "vdemRow": "unknown",
+      "regimeNote": "République présidentielle dominée par le parti Obnovlenie, lié au conglomérat Sheriff ; élections sans opposition réelle. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Vadim Krasnoselsky",
+        "party": null,
+        "since": "2016-12-16"
+      },
+      "headOfGovernment": {
+        "name": "Aleksandr Rozenberg",
+        "party": null,
+        "since": "2022-06-02"
+      },
+      "lastElection": "2021-12-12",
+      "lastElectionKind": "presidential",
+      "electionIntervalMonths": 60,
+      "electionsSuspendedAtWarAtHome": false,
+      "election": "Présidentielle du 12 décembre 2021",
+      "electionSource": "https://en.wikipedia.org/wiki/2021_Transnistrian_presidential_election",
+      "parties": [
+        {
+          "label": "Obnovlenie",
+          "lang": "ru",
+          "support": 0.8,
+          "leader": "Aleksandr Korshunov",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.1,
+            "authority": 0.4,
+            "sovereignty": 0.6
+          }
+        }
+      ]
+    },
+    "SOL": {
+      "wikidataCountry": "Q34754",
+      "regime": "presidential",
+      "vdemRow": "electoral-democracy",
+      "regimeNote": "République présidentielle ; trois partis autorisés par la constitution. Abdirahman Mohamed Abdullahi « Irro » (Waddani) élu en novembre 2024 face au sortant Muse Bihi Abdi. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Abdirahman Mohamed Abdullahi",
+        "party": "Waddani",
+        "since": "2024-12-12"
+      },
+      "headOfGovernment": null,
+      "lastElection": "2024-11-13",
+      "lastElectionKind": "presidential",
+      "electionIntervalMonths": 60,
+      "electionsSuspendedAtWarAtHome": false,
+      "election": "Présidentielle du 13 novembre 2024",
+      "electionSource": "https://en.wikipedia.org/wiki/2024_Somaliland_presidential_election",
+      "parties": [
+        {
+          "label": "Waddani",
+          "lang": "so",
+          "support": 0.639,
+          "leader": "Abdirahman Mohamed Abdullahi",
+          "leaderRole": "fondateur du parti",
+          "ideology": {
+            "economic": 0.1,
+            "authority": 0.0,
+            "sovereignty": 0.6
+          }
+        },
+        {
+          "label": "Kulmiye",
+          "lang": "so",
+          "support": 0.348,
+          "leader": "Muse Bihi Abdi",
+          "leaderRole": "ancien président de la République",
+          "ideology": {
+            "economic": 0.2,
+            "authority": 0.2,
+            "sovereignty": 0.6
+          }
+        },
+        {
+          "label": "UCID",
+          "lang": "so",
+          "support": 0.013,
+          "leader": "Faisal Ali Warabe",
+          "leaderRole": "président du parti",
+          "ideology": {
+            "economic": 0.0,
+            "authority": 0.0,
+            "sovereignty": 0.5
+          }
+        }
+      ]
+    },
+    "ESH": {
+      "wikidataCountry": "Q40362",
+      "regime": "single-party",
+      "vdemRow": "unknown",
+      "regimeNote": "République à parti unique : le secrétaire général du Front Polisario est président de la République. Gouvernement installé dans les camps de Tindouf (Algérie). À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Brahim Ghali",
+        "party": "Front Polisario",
+        "since": "2016-07-12"
+      },
+      "headOfGovernment": {
+        "name": "Bouchraya Hammoudi Bayoun",
+        "party": "Front Polisario",
+        "since": "2020-01-13"
+      },
+      "lastElection": null,
+      "lastElectionKind": "none",
+      "electionIntervalMonths": null,
+      "electionsSuspendedAtWarAtHome": true,
+      "election": "Pas d'élection nationale au suffrage direct ; le congrès du Front Polisario élit son secrétaire général (dernier congrès : janvier 2023)",
+      "electionSource": "https://en.wikipedia.org/wiki/Sahrawi_Arab_Democratic_Republic",
+      "parties": [
+        {
+          "label": "Front Polisario",
+          "lang": "fr",
+          "support": 1.0,
+          "leader": "Brahim Ghali",
+          "leaderRole": "secrétaire général",
+          "ideology": {
+            "economic": -0.3,
+            "authority": 0.5,
+            "sovereignty": 0.9
+          }
+        }
+      ]
+    },
+    "YEH": {
+      "wikidataCountry": null,
+      "regime": "theocracy",
+      "vdemRow": "unknown",
+      "regimeNote": "Autorité d'Ansar Allah : le Conseil politique suprême gouverne sous l'autorité religieuse et politique du « chef de la révolution », Abdel-Malik al-Houthi. Le Premier ministre Ahmed al-Rahawi a été tué par une frappe israélienne le 28 août 2025. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Mahdi al-Mashat",
+        "party": "Ansar Allah",
+        "since": "2018-04-25"
+      },
+      "headOfGovernment": {
+        "name": "Mohammed Miftah",
+        "party": "Ansar Allah",
+        "since": "2025-08-30"
+      },
+      "lastElection": null,
+      "lastElectionKind": "none",
+      "electionIntervalMonths": null,
+      "electionsSuspendedAtWarAtHome": true,
+      "election": "Aucune élection depuis la prise de Sanaa (2014)",
+      "electionSource": "https://en.wikipedia.org/wiki/Supreme_Political_Council",
+      "parties": [
+        {
+          "label": "Ansar Allah",
+          "lang": "ar",
+          "support": 1.0,
+          "leader": "Abdel-Malik al-Houthi",
+          "leaderRole": "chef de la révolution",
+          "ideology": {
+            "economic": -0.2,
+            "authority": 0.9,
+            "sovereignty": 0.9
+          }
+        }
+      ]
+    },
+    "LBE": {
+      "wikidataCountry": null,
+      "regime": "junta",
+      "vdemRow": "unknown",
+      "regimeNote": "Pouvoir de l'Armée nationale libyenne du maréchal Khalifa Haftar, adossé à la Chambre des représentants (Tobrouk) et au gouvernement de stabilité nationale d'Oussama Hammad ; aucune élection depuis 2014. Haftar tient lieu de chef de l'État dans le jeu (dirigeant effectif). À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Khalifa Haftar",
+        "party": null,
+        "since": "2014-05-16"
+      },
+      "headOfGovernment": {
+        "name": "Osama Hammad",
+        "party": null,
+        "since": "2023-05-16"
+      },
+      "lastElection": null,
+      "lastElectionKind": "none",
+      "electionIntervalMonths": null,
+      "electionsSuspendedAtWarAtHome": true,
+      "election": "Aucune élection nationale depuis les législatives de 2014",
+      "electionSource": "https://en.wikipedia.org/wiki/Government_of_National_Stability",
+      "parties": []
+    },
+    "SDR": {
+      "wikidataCountry": null,
+      "regime": "junta",
+      "vdemRow": "unknown",
+      "regimeNote": "Gouvernement « de paix et d'unité » de l'alliance Tasis, investi à Nyala le 30 août 2025 : Mohamed Hamdan Dagalo (Hemetti), commandant des Forces de soutien rapide, préside le conseil présidentiel. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Mohamed Hamdan Dagalo",
+        "party": null,
+        "since": "2025-08-30"
+      },
+      "headOfGovernment": {
+        "name": "Mohamed Hassan al-Ta'ayshi",
+        "party": null,
+        "since": "2025-08-30"
+      },
+      "lastElection": null,
+      "lastElectionKind": "none",
+      "electionIntervalMonths": null,
+      "electionsSuspendedAtWarAtHome": true,
+      "election": "Aucune élection",
+      "electionSource": "https://en.wikipedia.org/wiki/Government_of_Peace_and_Unity",
+      "parties": []
+    },
+    "RJV": {
+      "wikidataCountry": null,
+      "regime": "single-party",
+      "vdemRow": "unknown",
+      "regimeNote": "Administration autonome à conseils, dominée par le Parti de l'union démocratique (PYD) et ses Forces démocratiques syriennes ; aucune élection générale. Mazloum Abdi, commandant des FDS, tient lieu de chef dans le jeu. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Mazloum Abdi",
+        "party": null,
+        "since": "2015-10-10"
+      },
+      "headOfGovernment": null,
+      "lastElection": null,
+      "lastElectionKind": "none",
+      "electionIntervalMonths": null,
+      "electionsSuspendedAtWarAtHome": true,
+      "election": "Aucune élection générale (élections municipales reportées en 2024)",
+      "electionSource": "https://en.wikipedia.org/wiki/Autonomous_Administration_of_North_and_East_Syria",
+      "parties": [
+        {
+          "label": "Parti de l'union démocratique",
+          "lang": "fr",
+          "support": 1.0,
+          "leader": "Asya Abdullah",
+          "leaderRole": "coprésidente du parti",
+          "ideology": {
+            "economic": -0.6,
+            "authority": 0.3,
+            "sovereignty": 0.3
+          }
+        }
+      ]
+    },
+    "M23": {
+      "wikidataCountry": null,
+      "regime": "junta",
+      "vdemRow": "unknown",
+      "regimeNote": "Alliance Fleuve Congo, dont le M23 est la branche armée : coordination politique de Corneille Nangaa, commandement militaire de Sultani Makenga ; administrations provinciales nommées. À valider (J6b, connaissances de Claude Code au 1er janvier 2026).",
+      "headOfState": {
+        "name": "Corneille Nangaa",
+        "party": null,
+        "since": "2023-12-15"
+      },
+      "headOfGovernment": null,
+      "lastElection": null,
+      "lastElectionKind": "none",
+      "electionIntervalMonths": null,
+      "electionsSuspendedAtWarAtHome": true,
+      "election": "Aucune élection",
+      "electionSource": "https://en.wikipedia.org/wiki/Alliance_Fleuve_Congo",
+      "parties": []
     }
   }
 }

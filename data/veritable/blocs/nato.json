@@ -1,6 +1,7 @@
 {
   "id": "nato",
   "name": "bloc.nato.name",
+  "type": "military-alliance",
   "members": [
     {
       "nation": "ALB",

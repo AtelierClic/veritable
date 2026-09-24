@@ -45,9 +45,19 @@ export const DECISION_RULES = [
 export const DecisionRuleSchema = z.enum(DECISION_RULES);
 export type DecisionRule = z.infer<typeof DecisionRuleSchema>;
 
+export const BLOC_TYPES = [
+  "military-alliance",
+  "economic-union",
+  "forum",
+] as const;
+export type BlocType = (typeof BLOC_TYPES)[number];
+
 export const BlocSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1), // i18n key
+  // What a common membership is worth in the affinity of two nations (J6b,
+  // config.diplomacy.affinityByBlocType); absent: affinityPerBloc.
+  type: z.enum(BLOC_TYPES).optional(),
   // Every member, simulated or not (ISO 3166-1 alpha-3); only the nations of
   // the scenario vote and pay (europe-10: an artifact lifted at the J6).
   members: z.array(

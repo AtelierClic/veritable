@@ -53,7 +53,7 @@ const NONE = -1;
 export function buildBorders(
   mask: LandMask,
   georef: Georef,
-  countries: readonly Feature[],
+  countriesIn: readonly Feature[],
   overrides: readonly Override[],
   insets: readonly Inset[],
   nations: readonly string[],
@@ -70,6 +70,17 @@ export function buildBorders(
 } {
   const { width, height, land } = mask;
   const owner = new Int32Array(width * height).fill(NONE);
+  // J6: a controller that is no Natural Earth country is a de facto entity
+  // (Abkhazia, the Houthis' Yemen...): a unit without polygons of its own,
+  // whose territory is what its overrides take.
+  const known = new Set(countriesIn.map((c) => c.id));
+  const units: Feature[] = [
+    ...countriesIn,
+    ...[...new Set(overrides.map((o) => o.controller))]
+      .filter((id) => !known.has(id))
+      .map((id) => ({ id, name: id, label: null, polygons: [] })),
+  ];
+  const countries: readonly Feature[] = units;
   const indexOf = new Map(countries.map((c, i) => [c.id, i]));
 
   countries.forEach((country, c) => {

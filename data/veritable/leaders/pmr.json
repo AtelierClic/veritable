@@ -1,0 +1,95 @@
+{
+  "nation": "PMR",
+  "actors": [
+    {
+      "id": "pmr-aleksandr-rozenberg",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.pmr-aleksandr-rozenberg.parody",
+        "fictional": "leader.pmr-aleksandr-rozenberg.fictional"
+      },
+      "born": "1967-10-18",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q110644463",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "pmr-vadim-krasnosselski",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.pmr-vadim-krasnosselski.parody",
+        "fictional": "leader.pmr-vadim-krasnosselski.fictional"
+      },
+      "born": "1970-04-14",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2035881",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "pmr-galina-antyufeyeva",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pmr-galina-antyufeyeva.parody",
+        "fictional": "leader.pmr-galina-antyufeyeva.fictional"
+      },
+      "born": "1960-01-06",
+      "party": "pmr-parti-republicain",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.5,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5518658",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "pmr-parti-republicain",
+      "name": "party.pmr-parti-republicain",
+      "wikidata": "Q1967163",
+      "ideologies": ["Q6235", "Q794394"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.5,
+        "sovereignty": 0.9
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.8,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Présidentielle du 12 décembre 2021"
+      },
+      "leader": "pmr-galina-antyufeyeva"
+    }
+  ]
+}

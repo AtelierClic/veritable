@@ -34,7 +34,8 @@ export interface PartiesFile {
   asOf: string;
   nations: Record<
     string,
-    { wikidataCountry: string; election: string; parties: PartyEntry[] }
+    // null: a de facto entity without a Wikidata country (J6b).
+    { wikidataCountry: string | null; election: string; parties: PartyEntry[] }
   >;
 }
 
@@ -57,7 +58,7 @@ export interface WikidataParty {
 }
 export interface WikidataSnapshot {
   nation: string;
-  country: string; // QID
+  country: string; // QID ("" for an entity without one, J6b)
   // Every mandate and membership is read as it stood on this date (the
   // start of the scenario): P580 (start) <= date < P582 (end).
   referenceDate: string;
@@ -386,22 +387,25 @@ export async function fetchWikidata(
   for (const nation of countries) {
     const entry = parties.nations[nation];
     if (entry === undefined) throw new Error(`parties.json: no ${nation}`);
-    console.log(`${nation} (${entry.wikidataCountry})`);
+    const country = entry.wikidataCountry;
+    // The SPARQL path serves europe-10; the world one handles entities.
+    if (country === null) throw new Error(`${nation}: no Wikidata country`);
+    console.log(`${nation} (${country})`);
     for (const party of entry.parties) {
       // J6: a party Wikidata does not know is left out (logged), not fatal.
       try {
-        party.qid = await resolveParty(party, entry.wikidataCountry);
+        party.qid = await resolveParty(party, country);
       } catch (error) {
         console.log(`  ${party.label}: ${(error as Error).message}, skipped`);
       }
     }
     const snapshot: WikidataSnapshot = {
       nation,
-      country: entry.wikidataCountry,
+      country,
       referenceDate,
       fetchedAt,
       license: "CC0 1.0, Wikidata",
-      heads: await fetchHeads(entry.wikidataCountry, referenceDate),
+      heads: await fetchHeads(country, referenceDate),
       parties: [],
     };
     for (const party of entry.parties) {

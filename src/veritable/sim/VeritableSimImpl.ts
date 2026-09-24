@@ -15,6 +15,7 @@ import { ROW_ID } from "../data/schemas/row";
 import {
   AiState,
   BlocsState,
+  BlocState,
   Calendar,
   DiplomacyState,
   EconomyState,
@@ -72,7 +73,12 @@ import {
   stepDiplomacyMonth,
   warSide,
 } from "./diplomacy/diplomacy";
-import { BudgetEvent, spendingCeiling, stepBudget } from "./economy/budget";
+import {
+  BudgetEvent,
+  settleStartBudget,
+  spendingCeiling,
+  stepBudget,
+} from "./economy/budget";
 import { buildContext, EconomyContext, SimData } from "./economy/context";
 import {
   MonthlyTrade,
@@ -139,7 +145,11 @@ import {
   stepObjectivesMonth,
   unpinObjective,
 } from "./politics/objectives";
-import { PoliticsEvent, stepPolitics } from "./politics/politics";
+import {
+  internalConflictMalus,
+  PoliticsEvent,
+  stepPolitics,
+} from "./politics/politics";
 import { Rng } from "./rng";
 import {
   ClockContext,
@@ -402,6 +412,12 @@ export class VeritableSimImpl implements VeritableSim {
       this.rng,
       this.calendar.date,
     );
+    settleStartBudget(
+      this.ctx,
+      this.economy,
+      this.politics,
+      scenario.startDate,
+    );
     this.syncSuspensions();
     this.diplomacy = initDiplomacy(this.ctx, scenario);
     this.military = initMilitary(this.ctx, sheets);
@@ -410,6 +426,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.ai = initAi(scenario.nations, scenario.startDate);
     this.blocs = initBlocs(this.ctx);
     syncBlocs(this.ctx, this.blocs);
+    this.applyScenarioSanctions(scenario);
     this.tech = initTech(this.ctx, sheets);
     syncTech(this.ctx, this.tech);
     this.events = initEvents();
@@ -1304,7 +1321,84 @@ export class VeritableSimImpl implements VeritableSim {
 
   // --- domain clocks ----------------------------------------------------------
 
+  // J6b: sanctions in force on the first day. `by` is a nation, a bloc (its
+  // full members apply them, and the bloc holds them: no member lifts them
+  // alone, a new member takes them on) or "*" (every nation but `except`);
+  // `against` a nation or a bloc (each of its full members). Without
+  // `goods`, full sanctions; with, embargoes on those goods only, both ways.
+  private applyScenarioSanctions(scenario: Scenario): void {
+    const known = (id: string) => this.ctx.nationIds.includes(id);
+    const blocOf = (id: string) => this.blocs.blocs.find((b) => b.id === id);
+    const expand = (id: string) =>
+      blocOf(id) !== undefined
+        ? this.ctx.membersOf(id).filter(known)
+        : known(id)
+          ? [id]
+          : [];
+    for (const s of scenario.sanctions ?? []) {
+      for (const against of expand(s.against)) {
+        this.applyScenarioSanction(s, against, known, blocOf);
+      }
+    }
+  }
+
+  private applyScenarioSanction(
+    s: NonNullable<Scenario["sanctions"]>[number],
+    against: NationId,
+    known: (id: string) => boolean,
+    blocOf: (id: string) => BlocState | undefined,
+  ): void {
+    const bloc = s.by === "*" ? undefined : blocOf(s.by);
+    const by = (
+      s.by === "*"
+        ? this.ctx.nationIds
+        : bloc !== undefined
+          ? this.ctx.membersOf(bloc.id).filter(known)
+          : known(s.by)
+            ? [s.by]
+            : []
+    ).filter((n) => n !== against && !(s.except ?? []).includes(n));
+    if (bloc !== undefined && s.goods === undefined) {
+      if (!bloc.sanctions.includes(against)) bloc.sanctions.push(against);
+    }
+    // Every sanction of the first day is one of policy, those against
+    // Russia included (since 2014): never lifted while the target wages a
+    // war of aggression, and after that only on a change of its regime.
+    for (const nation of by) {
+      if (s.goods === undefined) {
+        imposeSanctions(
+          this.ctx,
+          this.diplomacy,
+          this.economy,
+          nation,
+          against,
+          s.since,
+        );
+        const record = this.diplomacy.sanctions.find(
+          (r) => r.by === nation && r.against === against,
+        );
+        if (record !== undefined) record.policy = true;
+        continue;
+      }
+      const list = this.economy.market.embargoes;
+      for (const good of s.goods) {
+        for (const [from, to] of [
+          [against, nation],
+          [nation, against],
+        ]) {
+          if (
+            !list.some((e) => e.from === from && e.to === to && e.good === good)
+          ) {
+            list.push({ from, to, good });
+          }
+        }
+      }
+    }
+  }
+
   private politicsWeek(clock: ClockContext): void {
+    const conflicts = this.deps.data.internalConflicts ?? [];
+    const years = clock.day / 365.25;
     for (const id of this.ctx.nationIds) {
       const events = stepPolitics(
         this.ctx,
@@ -1315,6 +1409,7 @@ export class VeritableSimImpl implements VeritableSim {
         this.military.nations[id]?.exhaustion ?? 0,
         this.lostTradeShare(id, true),
         lawModifiers(this.ctx, this.politics.nations[id]).groups,
+        internalConflictMalus(this.ctx, conflicts, id, years),
       );
       for (const event of events) this.record(clock.date, event);
     }

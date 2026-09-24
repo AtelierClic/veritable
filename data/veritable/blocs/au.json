@@ -1,6 +1,7 @@
 {
   "id": "au",
   "name": "bloc.au.name",
+  "type": "forum",
   "members": [
     {
       "nation": "DZA",

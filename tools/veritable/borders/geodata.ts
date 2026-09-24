@@ -90,15 +90,33 @@ export async function loadCountries(): Promise<Feature[]> {
   return parseFeatures(fs.readFileSync(file, "utf8"), "ADM0_A3", "ADMIN");
 }
 
+// Features keyed by a property, the polygons of features that share a key
+// merged (Natural Earth gives Eastern and Southern Darfur the same code).
+function byKey(features: Feature[]): Map<string, Feature> {
+  const out = new Map<string, Feature>();
+  for (const f of features) {
+    const seen = out.get(f.id);
+    if (seen === undefined) out.set(f.id, { ...f, polygons: [...f.polygons] });
+    else seen.polygons.push(...f.polygons);
+  }
+  return out;
+}
+
 // Provinces keyed by their ISO 3166-2 code (J6).
 export async function loadAdmin1(): Promise<Map<string, Feature>> {
   const file = await fetchSource("admin1");
-  const features = parseFeatures(
-    fs.readFileSync(file, "utf8"),
-    "iso_3166_2",
-    "name",
+  return byKey(
+    parseFeatures(fs.readFileSync(file, "utf8"), "iso_3166_2", "name"),
   );
-  return new Map(features.map((f) => [f.id, f]));
+}
+
+// Disputed areas keyed by their Natural Earth BRK_A3 code (J6: B35
+// Abkhazia, B16 Golan Heights...).
+export async function loadDisputed(): Promise<Map<string, Feature>> {
+  const file = await fetchSource("disputed");
+  return byKey(
+    parseFeatures(fs.readFileSync(file, "utf8"), "BRK_A3", "BRK_NAME"),
+  );
 }
 
 export interface LonLatBox {

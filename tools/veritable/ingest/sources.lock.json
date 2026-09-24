@@ -234,5 +234,20 @@
   "snapshots/wikidata/zmb.json": "3b97fb4f6552699b6594275015ffa156fd2c3415e05bccadb244c454d58dce5d",
   "snapshots/wikidata/zwe.json": "7578b367538a5f8dc54d63514333bc6c5ae3b9246b60739e1c69f9feb162349a",
   "snapshots/wikidata/vat.json": "9af98731d512e8a9c430f7f9c638131dc7052f0f765fb1b29dcd15d4fa9ea0d2",
-  "snapshots/wikidata/pse.json": "8d2b42dbce86d3237e4a8bcd4e04a5f9662f3ca7854d026831c197ef0cde62f3"
+  "snapshots/wikidata/pse.json": "8d2b42dbce86d3237e4a8bcd4e04a5f9662f3ca7854d026831c197ef0cde62f3",
+  "snapshots/wikidata/twn.json": "ca743f24b65969b068539845f15aaf610d06343a371b45d999b34bc84adf2d9f",
+  "snapshots/wikidata/xkx.json": "f5371c18975a594c7dde3433e40aade008955bc70ef366a03b4cf29348c01a72",
+  "snapshots/wikidata/cyn.json": "04a35e05120f001cf6d5564324b42f540398c2db66c09655bc26cfe4c9d8873a",
+  "snapshots/wikidata/abk.json": "12f38bc24bacfb78e9d1d435449dfa17e85d588f740007b6bb5d44653ca0a01a",
+  "snapshots/wikidata/sos.json": "7ec1a7e2d6c81f5a612fe5fb1b9f5be427a7ad96d6e8f948c22b199020d0f45c",
+  "snapshots/wikidata/pmr.json": "6d4962e35ba9f85ca376d121c1a13e3022977961b4e5de6feefec7577f4336af",
+  "snapshots/wikidata/sol.json": "2b162d6ab11b9e6278c1d84c89d0cb10597df3d10879b8292233e9cc0d294ab6",
+  "snapshots/wikidata/esh.json": "a1f98f9d0adb305b21802de5e325df6086ed25af3efe280b3312327aa92a97df",
+  "snapshots/wikidata/yeh.json": "8dd427ced0d1a7359f6e5debf9442fc9681672436e0ad8ff0b065a9a6a79ab18",
+  "snapshots/wikidata/lbe.json": "bed1c21f9b2b5b028abe5cbd2060940a43fab75ed833518015338d763b2ce077",
+  "snapshots/wikidata/sdr.json": "efb15fe8d992f80528c30d6e49cb33699b33ba9ab38a5a6034d36e0b5d054061",
+  "snapshots/wikidata/rjv.json": "a4df8f96edc836de32bca5ac372809a9473ca129db216ac7efcb0c08e967f248",
+  "snapshots/wikidata/m23.json": "3445f2d4b7b7fe998ab61b289b59fb872e7961a137b0f22d1499ef23e80b2e46",
+  "cache/voeten-idealpoints.csv": "3ae821bbd19977d4229cde5ac648e4bc915d637ec0dcf93368838cf5bde2a956",
+  "cache/imf-fiscal.json": "0c034caaa03701f2c51d5f897f8d1dbc4d39718fda2845d8b6f03197b10f7510"
 }

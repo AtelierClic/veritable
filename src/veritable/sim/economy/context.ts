@@ -7,7 +7,9 @@ import { Law } from "../../data/schemas/laws";
 import { LeadersData } from "../../data/schemas/leaders";
 import { NationData } from "../../data/schemas/nation";
 import { NamePool, Objective, RegimeData } from "../../data/schemas/politics";
+import { RelationsFile, relationIn } from "../../data/schemas/relations";
 import { ROW_ID, RowData } from "../../data/schemas/row";
+import { Scenario } from "../../data/schemas/scenario";
 import { SeaZone } from "../../data/schemas/seas";
 import { TechNode } from "../../data/schemas/tech";
 import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
@@ -37,6 +39,11 @@ export interface SimData {
   // Technology and events (J5).
   tech: TechNode[];
   events: VeritableEvent[];
+  // The world of 2026 (J6b): relations of the first day, bilateral
+  // guarantees and internal conflicts of the scenario.
+  startRelations?: RelationsFile;
+  guarantees?: NonNullable<Scenario["guarantees"]>;
+  internalConflicts?: NonNullable<Scenario["internalConflicts"]>;
 }
 
 // Everything the economic systems need besides the state.
@@ -96,6 +103,13 @@ export interface EconomyContext {
   // (J6, the world), the world supply shocks hit every producer.
   hasRow: boolean;
   worldSupplyShock(good: string): number;
+  // Bilateral guarantees of the scenario (J6b), and the type of a bloc
+  // (undefined for a bloc without one).
+  guarantees: NonNullable<Scenario["guarantees"]>;
+  blocType(bloc: string): Bloc["type"];
+  // Relation of a pair on the first day from the scenario's file (J6b), null
+  // without one (the rule of the J3 applies).
+  startRelation(a: string, b: string): number | null;
 }
 
 export function buildContext(
@@ -150,6 +164,9 @@ export function buildContext(
     return w;
   };
   const partnerTotals = new Map<string, number>();
+  const relationIndex = new Map(
+    (data.startRelations?.nations ?? []).map((n, i) => [n, i]),
+  );
   const byTemplate = new Map<string, DivisionTemplate>(
     data.divisions.map((d) => [d.id, d]),
   );
@@ -233,6 +250,12 @@ export function buildContext(
     claimHolders: () => new Map(),
     hasRow: data.row.gdp.value > 0,
     worldSupplyShock: () => 0,
+    guarantees: data.guarantees ?? [],
+    blocType: (bloc) => data.blocs.find((b) => b.id === bloc)?.type,
+    startRelation: (a, b) =>
+      data.startRelations === undefined
+        ? null
+        : relationIn(data.startRelations, relationIndex, a, b),
     membersOf: (bloc) =>
       [...(memberships.get(bloc)?.keys() ?? [])].filter((n) => full(bloc, n)),
     blocsOf,

@@ -124,7 +124,21 @@ function migrateBlocs(
   for (const bloc of blocs.blocs) {
     blocs.leaders[bloc.id] =
       computeLeader(
-        { ctx, state: blocs, military: save.military, economy: save.economy },
+        {
+          ctx,
+          state: blocs,
+          military: save.military,
+          // The economy of today's shape (the leader reads the GDP only).
+          economy: {
+            ...save.economy,
+            nations: Object.fromEntries(
+              Object.entries(save.economy.nations).map(([id, e]) => [
+                id,
+                { ...e, interestSpread: 0 },
+              ]),
+            ),
+          },
+        },
         bloc.id,
         save.calendar.date,
       ) ?? "";

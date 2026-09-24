@@ -1,6 +1,7 @@
 {
   "id": "brics",
   "name": "bloc.brics.name",
+  "type": "forum",
   "members": [
     {
       "nation": "BRA",

@@ -61,7 +61,10 @@
       "base": 0.02,
       "debtSlope": 0.01,
       "debtThreshold": 0.6,
-      "instabilitySlope": 0.02
+      "instabilitySlope": 0.02,
+      "nominalMax": 0.15,
+      "realMin": 0,
+      "realMax": 0.08
     },
     "austerity": {
       "debtToGdp": 1.5,
@@ -70,6 +73,7 @@
     },
     "default": {
       "debtToGdp": 2,
+      "startMargin": 1.25,
       "interestToRevenue": 0.4,
       "haircut": 0.5,
       "noDeficitYears": 5,
@@ -87,6 +91,10 @@
     "grantsPeaceDecayPerMonth": 0.05
   },
   "politics": {
+    "internalConflict": {
+      "stabilityMalus": 0.15,
+      "halfLifeYears": 10
+    },
     "convergencePerWeek": 0.1,
     "groupWeights": {
       "business": 0.12,
@@ -180,14 +188,46 @@
       "prices": 0.5
     },
     "groupIdeologies": {
-      "business": { "economic": 0.6, "authority": 0.1, "sovereignty": -0.3 },
-      "workers": { "economic": -0.5, "authority": 0, "sovereignty": 0.1 },
-      "farmers": { "economic": 0.2, "authority": 0.3, "sovereignty": 0.5 },
-      "military": { "economic": 0.3, "authority": 0.6, "sovereignty": 0.5 },
-      "religious": { "economic": 0.2, "authority": 0.5, "sovereignty": 0.4 },
-      "youth": { "economic": -0.3, "authority": -0.5, "sovereignty": -0.4 },
-      "retirees": { "economic": 0.1, "authority": 0.3, "sovereignty": 0.3 },
-      "minorities": { "economic": -0.3, "authority": -0.4, "sovereignty": -0.5 }
+      "business": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.3
+      },
+      "workers": {
+        "economic": -0.5,
+        "authority": 0,
+        "sovereignty": 0.1
+      },
+      "farmers": {
+        "economic": 0.2,
+        "authority": 0.3,
+        "sovereignty": 0.5
+      },
+      "military": {
+        "economic": 0.3,
+        "authority": 0.6,
+        "sovereignty": 0.5
+      },
+      "religious": {
+        "economic": 0.2,
+        "authority": 0.5,
+        "sovereignty": 0.4
+      },
+      "youth": {
+        "economic": -0.3,
+        "authority": -0.5,
+        "sovereignty": -0.4
+      },
+      "retirees": {
+        "economic": 0.1,
+        "authority": 0.3,
+        "sovereignty": 0.3
+      },
+      "minorities": {
+        "economic": -0.3,
+        "authority": -0.4,
+        "sovereignty": -0.5
+      }
     },
     "elections": {
       "sigma": 0.9,
@@ -268,6 +308,14 @@
     "relationRecoveryPerMonth": 2,
     "affinityPerBloc": 40,
     "affinityIdeology": 20,
+    "affinityByBlocType": {
+      "military-alliance": 40,
+      "economic-union": 30,
+      "forum": 5
+    },
+    "affinitySanctions": 40,
+    "affinityAllyAtWar": 30,
+    "allyBlocTypes": ["military-alliance", "economic-union"],
     "declarationGroupHit": 0.1,
     "humanitarianStability": 0.3,
     "sanction": {
@@ -275,7 +323,8 @@
       "aggressorPowerShare": 0.25,
       "exemptGoods": ["food", "pharma"],
       "blocAlignShare": 0.5,
-      "liftAboveRelations": -40
+      "liftAboveRelations": -40,
+      "liftPolicyMinAffinity": 15
     },
     "coalition": {
       "relationsBelow": -60,
@@ -382,10 +431,10 @@
   },
   "nuclear": {
     "base": {
-      "first-use-possible": [0, 0.000001, 0.0001, 0.002],
-      "no-first-use": [0, 0, 0.00002, 0.001],
-      "undeclared": [0, 0.000001, 0.0001, 0.002],
-      "unpredictable": [0, 0.000005, 0.0003, 0.004]
+      "first-use-possible": [0, 1e-6, 0.0001, 0.002],
+      "no-first-use": [0, 0, 2e-5, 0.001],
+      "undeclared": [0, 1e-6, 0.0001, 0.002],
+      "unpredictable": [0, 5e-6, 0.0003, 0.004]
     },
     "deterrence": 0.1,
     "collectiveDefenseBlocs": ["nato"],

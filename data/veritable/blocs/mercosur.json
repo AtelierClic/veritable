@@ -1,6 +1,7 @@
 {
   "id": "mercosur",
   "name": "bloc.mercosur.name",
+  "type": "economic-union",
   "members": [
     {
       "nation": "ARG",

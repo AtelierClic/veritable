@@ -15,6 +15,7 @@ import {
   AnyWorldBankKey,
   indicatorOf,
   loadCapitals,
+  loadImfFiscal,
   loadImfWorld,
   loadVdem,
   loadWorldSeries,
@@ -91,6 +92,26 @@ interface WorldPolitics {
   electionSource: string;
 }
 
+// A de facto entity of estimates.json -> defacto.entities (J6b).
+type ShareKind =
+  | "population"
+  | "economy"
+  | "food"
+  | "military"
+  | "oil"
+  | "gas"
+  | "coal"
+  | "electricity";
+interface DefactoEntity {
+  name: string;
+  capital: { name: string; nameFr: string; lon: number; lat: number };
+  parent?: string;
+  shares?: Partial<Record<ShareKind, number>>;
+  series?: Record<string, number>;
+  recognition: { recognizedBy: string[]; note: string };
+  note: string;
+}
+
 const DEMOCRATIC = ["parliamentary", "presidential", "semi-presidential"];
 const AUTOCRATIC_FORMS = [
   "junta",
@@ -162,12 +183,121 @@ export function build(scenarioId: string): void {
     ...Object.keys(WORLD_BANK_INDICATORS),
     ...Object.keys(WORLD_EXTRA_INDICATORS),
   ] as AnyWorldBankKey[];
+  // J6b: de facto entities. An entity carved out of a nation of the open
+  // sources (`parent`) takes a share of the parent's series in level
+  // (population, output, energy, armed forces) and the parent keeps the
+  // rest; ratios (shares of GDP, growth) are the parent's for both, except
+  // the public debt, which the entity does not inherit (the rules apply). An
+  // entity without parent reads its own data where the sources have it
+  // (Taiwan, Kosovo); `series` gives the values they lack (World Bank keys,
+  // IMF indicators, OWID columns), the rules do the rest.
+  const entities = (estimates.defacto?.entities ?? {}) as Record<
+    string,
+    DefactoEntity
+  >;
+  const children = new Map<string, DefactoEntity[]>();
+  for (const e of Object.values(entities)) {
+    if (e.parent !== undefined) {
+      children.set(e.parent, [...(children.get(e.parent) ?? []), e]);
+    }
+  }
+  const shareOf = (e: DefactoEntity, kind: ShareKind): number =>
+    e.shares?.[kind] ??
+    (kind === "food" || kind === "military"
+      ? e.shares?.population
+      : e.shares?.economy) ??
+    0;
+  type Point = { value: number; year: number } | null;
+  const carve = (
+    iso: string,
+    own: string,
+    kind: ShareKind | "debt" | null,
+    read: (iso: string) => Point,
+  ): Point => {
+    const e = entities[iso];
+    if (e !== undefined) {
+      const given = e.series?.[own];
+      if (given !== undefined) return { value: given, year: 2024 };
+      // Outside `series`: an entity with data of its own reads them (the
+      // IMF has Taiwan, the World Bank Kosovo)...
+      if (e.parent === undefined) return read(iso);
+      // ...a carved one never inherits its parent's debt.
+      if (kind === "debt") return null;
+      const v = read(e.parent);
+      return v === null || kind === null
+        ? v
+        : { year: v.year, value: v.value * shareOf(e, kind) };
+    }
+    const v = read(iso);
+    const kids = children.get(iso);
+    if (v === null || kids === undefined || kind === null || kind === "debt") {
+      return v;
+    }
+    const taken = kids.reduce((sum, k) => sum + shareOf(k, kind), 0);
+    return { year: v.year, value: v.value * (1 - taken) };
+  };
+  const WB_KIND: Partial<Record<AnyWorldBankKey, ShareKind>> = {
+    population: "population",
+    gdp: "economy",
+    manufacturing: "economy",
+    services: "economy",
+    highTechExports: "economy",
+    merchandiseExports: "economy",
+    cereals: "food",
+    personnel: "military",
+  };
   const wb = Object.fromEntries(
-    keys.map((k) => [k, loadWorldSeries(k, lock)]),
+    keys.map((k) => {
+      const raw = loadWorldSeries(k, lock);
+      const series: ReturnType<typeof loadWorldSeries> = {
+        lastUpdated: raw.lastUpdated,
+        latest: (iso, maxYear) =>
+          carve(iso, k, WB_KIND[k] ?? null, (i) => raw.latest(i, maxYear)),
+        mean: (iso, from, to) => {
+          const e = entities[iso];
+          if (e === undefined) return raw.mean(iso, from, to);
+          return (
+            e.series?.[k] ??
+            (e.parent === undefined ? null : raw.mean(e.parent, from, to))
+          );
+        },
+      };
+      return [k, series];
+    }),
   ) as Record<AnyWorldBankKey, ReturnType<typeof loadWorldSeries>>;
-  const owid = loadOwidEnergy(lock);
+  const owidRaw = loadOwidEnergy(lock);
+  const OWID_KIND: Record<string, ShareKind> = {
+    oil_production: "oil",
+    gas_production: "gas",
+    coal_production: "coal",
+    electricity_generation: "electricity",
+    gas_electricity: "electricity",
+    coal_electricity: "electricity",
+    oil_electricity: "electricity",
+  };
+  const owid: typeof owidRaw = {
+    latest: (iso, column) =>
+      carve(iso, column, OWID_KIND[column] ?? "economy", (i) =>
+        owidRaw.latest(i, column),
+      ),
+  };
   const imf = loadImfDebt(lock);
-  const imfWorld = loadImfWorld(lock);
+  const imfWorldRaw = loadImfWorld(lock);
+  const imfWorld: typeof imfWorldRaw = {
+    fetchedAt: imfWorldRaw.fetchedAt,
+    at: (indicator, iso, year) =>
+      carve(
+        iso,
+        indicator,
+        indicator === "NGDPD"
+          ? "economy"
+          : indicator === "GGXWDG_NGDP"
+            ? "debt"
+            : null,
+        (i) => imfWorldRaw.at(indicator, i, year),
+      ),
+  };
+  const imfFiscal = loadImfFiscal(lock);
   const vdem = loadVdem(lock);
   const capitals = loadCapitals(lock);
   const politicsWorld = JSON.parse(
@@ -519,6 +649,87 @@ export function build(scenarioId: string): void {
       };
     }
 
+    const debtToGdp = (): Sourced => {
+      const v =
+        imf.at(n, DEBT_YEAR) ?? imfWorld.at("GGXWDG_NGDP", n, DEBT_YEAR);
+      if (v === null) {
+        return estimates.debtToGdp.values[n] !== undefined
+          ? estimate(
+              estimates.debtToGdp.values[n],
+              estimates.debtToGdp.justification,
+            )
+          : ruled(rules.debtToGdp.values[n] ?? 0.5, rules.debtToGdp.note);
+      }
+      return {
+        value: round(v.value / 100),
+        source: `imf-weo:${IMF_DEBT_INDICATOR}`,
+        asOf: String(v.year),
+        note: `Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper) ; la valeur ${v.year} est une estimation du FMI.`,
+      };
+    };
+
+    // Interest paid on the public debt (J6b), a share of GDP: the IMF series
+    // of interest paid, else the primary minus the overall balance (net
+    // interest, not below 0), else a rule on the debt. The expense of the
+    // sources includes it: it is taken out of the programmes below, the
+    // simulation adds its own interest. Inflation (IMF, 2025-2026) turns the
+    // rate it implies into a real one (the GDP of the game is real).
+    const debt = debtToGdp();
+    const carved = entities[n]?.parent !== undefined;
+    const interestPctGdp = ((): Sourced => {
+      const hand = estimates.interestPctGdp.values[n];
+      if (hand !== undefined) {
+        return estimate(hand, estimates.interestPctGdp.justification);
+      }
+      const paid = carved ? null : imfFiscal.at("ie", n, DEBT_YEAR);
+      if (paid !== null) {
+        return {
+          value: round(Math.max(0, paid.value) / 100),
+          source: "imf-fpp:ie",
+          asOf: String(paid.year),
+          note: `Intérêts payés sur la dette publique en % du PIB, FMI, Public Finances in Modern History (API DataMapper, extraction du ${imfFiscal.fetchedAt}).`,
+        };
+      }
+      const primary = carved
+        ? null
+        : imfFiscal.at("GGXONLB_G01_GDP_PT", n, DEBT_YEAR);
+      const overall = carved
+        ? null
+        : imfFiscal.at("GGXCNL_G01_GDP_PT", n, DEBT_YEAR);
+      if (
+        primary !== null &&
+        overall !== null &&
+        primary.year === overall.year
+      ) {
+        return {
+          value: round(Math.max(0, primary.value - overall.value) / 100),
+          source: "imf-fm:GGXONLB_G01_GDP_PT-GGXCNL_G01_GDP_PT",
+          asOf: String(primary.year),
+          note: `Intérêts nets : solde primaire moins solde global, en % du PIB, FMI, Moniteur des finances publiques (API DataMapper, extraction du ${imfFiscal.fetchedAt}), à défaut de la série des intérêts payés.`,
+        };
+      }
+      return ruled(rules.interest.rate * debt.value, rules.interest.note);
+    })();
+    const inflationOf = (iso3: string) =>
+      imfFiscal.mean("PCPIPCH", iso3, DEBT_YEAR, DEBT_YEAR + 1);
+    const inflation = ((): Sourced => {
+      const own = carved ? null : inflationOf(n);
+      const parent = entities[n]?.parent;
+      const value = own ?? (parent !== undefined ? inflationOf(parent) : null);
+      if (value === null) {
+        return ruled(rules.interest.inflation, rules.interest.inflationNote);
+      }
+      return {
+        value: round(value / 100),
+        source: "imf-weo:PCPIPCH",
+        asOf: `${DEBT_YEAR}-${DEBT_YEAR + 1}`,
+        note:
+          `Hausse des prix à la consommation, moyenne ${DEBT_YEAR}-${DEBT_YEAR + 1} (estimation et prévision), FMI, Perspectives de l'économie mondiale (API DataMapper, extraction du ${imfFiscal.fetchedAt})` +
+          (own === null ? `, celle de ${parent} (même monnaie).` : "."),
+      };
+    })();
+    const inDefault = estimates.defaultsInProgress.values[n];
+
     // Budget, as shares of GDP.
     const revenue =
       wbSourced("revenue", n, 0.01) ??
@@ -557,7 +768,10 @@ export function build(scenarioId: string): void {
     const publicResearch = research.value * split.publicShareOfResearch;
     const known =
       defense.value + health.value + education.value + publicResearch;
-    const residual = Math.max(0.02, expense.value - known);
+    const residual = Math.max(
+      0.02,
+      expense.value - known - interestPctGdp.value,
+    );
     const spending = {
       defense,
       healthEducation: derived(
@@ -608,24 +822,6 @@ export function build(scenarioId: string): void {
       growth === null
         ? rules.growthDefault * 100
         : Math.min(4, Math.max(1, growth));
-    const debtToGdp = (): Sourced => {
-      const v =
-        imf.at(n, DEBT_YEAR) ?? imfWorld.at("GGXWDG_NGDP", n, DEBT_YEAR);
-      if (v === null) {
-        return estimates.debtToGdp.values[n] !== undefined
-          ? estimate(
-              estimates.debtToGdp.values[n],
-              estimates.debtToGdp.justification,
-            )
-          : ruled(rules.debtToGdp.values[n] ?? 0.5, rules.debtToGdp.note);
-      }
-      return {
-        value: round(v.value / 100),
-        source: `imf-weo:${IMF_DEBT_INDICATOR}`,
-        asOf: String(v.year),
-        note: `Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper) ; la valeur ${v.year} est une estimation du FMI.`,
-      };
-    };
 
     // Military: the hand-written values, else the rules.
     const spendBn = militaryUsd(n) / BN;
@@ -691,7 +887,7 @@ export function build(scenarioId: string): void {
       const pw = politicsWorld[n];
       if (pw === undefined) throw new Error(`no politics-world entry for ${n}`);
       const override = rules.capitals.values[n];
-      const extra = rules.capitals.extra[n];
+      const extra = entities[n]?.capital ?? rules.capitals.extra[n];
       const list = capitals.get(n === "PSE" ? "PSX" : n) ?? [];
       const capital =
         extra ??
@@ -701,7 +897,8 @@ export function build(scenarioId: string): void {
       if (capital === undefined) throw new Error(`no capital for ${n}`);
       const v = vdem.get(n);
       const { regime, rule } = regimeOf(pw.regime, v?.row);
-      newNames[`nation.${lower}.name`] = countryNames.get(n) ?? n;
+      newNames[`nation.${lower}.name`] =
+        entities[n]?.name ?? countryNames.get(n) ?? n;
       newNames[`nation.${lower}.capital`] = capital.nameFr ?? capital.name;
       identity = {
         id: n,
@@ -711,9 +908,11 @@ export function build(scenarioId: string): void {
           lon: round(capital.lon, 4),
           lat: round(capital.lat, 4),
           source:
-            extra !== undefined
-              ? "estimate (worldRules.capitals)"
-              : "natural-earth v5.1.2, ne_10m_populated_places (Admin-0 capital)",
+            entities[n] !== undefined
+              ? "estimate (defacto.entities)"
+              : extra !== undefined
+                ? "estimate (worldRules.capitals)"
+                : "natural-earth v5.1.2, ne_10m_populated_places (Admin-0 capital)",
           asOf: "2026-01-01",
         },
         regime,
@@ -777,6 +976,19 @@ export function build(scenarioId: string): void {
     };
     const rawTotal = Object.values(raw).reduce((s, w) => s + w, 0);
     const handAgenda = estimates.aiAgenda?.values[n];
+    // A de facto entity, or a state recognised by part of the world
+    // (Palestine), J6b: its recognitions come from the estimates on every
+    // build, the sheet's identity being otherwise kept.
+    const recognition =
+      entities[n]?.recognition ?? estimates.defacto?.recognitions?.[n];
+    if (recognition !== undefined) {
+      identity.recognition = {
+        recognizedBy: recognition.recognizedBy,
+        note: recognition.note,
+        source: "estimate (defacto)",
+        asOf: "2026-01-01",
+      };
+    }
     // A micro-state (J6): no tile, a host tile on the map.
     if (microstates[n] !== undefined) {
       identity.territory = { kind: "microstate", hostTile: microstates[n] };
@@ -799,7 +1011,7 @@ export function build(scenarioId: string): void {
             },
       population: pop,
       gdp: gdp[n],
-      debtToGdp: debtToGdp(),
+      debtToGdp: debt,
       economy: {
         tradeOpenness:
           wbSourced("trade", n, 0.01) ??
@@ -836,6 +1048,18 @@ export function build(scenarioId: string): void {
             estimates.grantsPctGdp.values[n] ?? 0,
             estimates.grantsPctGdp.justification,
           ),
+          interestPctGdp,
+          inflation,
+          ...(inDefault === undefined
+            ? {}
+            : {
+                inDefault: {
+                  since: inDefault.since,
+                  source: "estimate",
+                  asOf: estimates.asOf,
+                  note: `${inDefault.note} ${estimates.defaultsInProgress.justification}`,
+                },
+              }),
           revenueShares: {
             value: Object.fromEntries(
               Object.entries(revenueShares).map(([k, v]) => [k, round(v)]),

@@ -1,0 +1,56 @@
+{
+ "nation": "ESH",
+ "country": "Q40362",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q4949324",
+    "label": "Bouchraya Hammoudi Bayoun",
+    "born": "1954-01-01",
+    "died": null,
+    "parties": [
+     "Q240425"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q4955460",
+    "label": "Brahim Ghali",
+    "born": "1949-08-19",
+    "died": null,
+    "parties": [
+     "Q240425",
+     "Q6926722"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q240425",
+   "label": "Front Polisario",
+   "ideologies": [
+    {
+     "qid": "Q27961892",
+     "label": "nationalisme sahraoui"
+    }
+   ],
+   "leader": {
+    "qid": "Q4955460",
+    "label": "Brahim Ghali",
+    "born": "1949-08-19",
+    "died": null,
+    "parties": [
+     "Q240425",
+     "Q6926722"
+    ]
+   }
+  }
+ ]
+}

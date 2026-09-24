@@ -1,5 +1,5 @@
 {
-  "_comment": "Rattachement des unités de Natural Earth aux nations de world-2026 (J6) : chaque dépendance à son souverain de facto (champ SOV_A3), les codes Natural Earth différents des codes ISO (SDS, PSX), et les cas particuliers. Les unités absentes restent neutres : Antarctique, îles contestées sans population (Spratleys, Scarborough, Bajo Nuevo, Serranilla), Bir Tawil, zone tampon de l ONU à Chypre, champ de glace de Patagonie ; Kosovo, Somaliland, Chypre du Nord et Taïwan deviennent des entités de facto au J6b. À valider : Baïkonour rattaché au Kazakhstan (souverain, bail russe), glacier de Siachen à l Inde (qui le tient), île Brésilienne au Brésil, Sahara occidental au Maroc jusqu au partage au mur des sables (J6b).",
+  "_comment": "Rattachement des unités de Natural Earth aux nations de world-2026 (J6) : chaque dépendance à son souverain de facto (champ SOV_A3), les codes Natural Earth différents des codes ISO (SDS, PSX), et les cas particuliers. Les unités absentes restent neutres : Antarctique, îles contestées sans population (Spratleys, Scarborough, Bajo Nuevo, Serranilla), Bir Tawil, zone tampon de l ONU à Chypre, champ de glace de Patagonie ; Kosovo (KOS → XKX), Somaliland, Chypre du Nord et Taïwan sont des entités de facto depuis le J6b. À valider : Baïkonour rattaché au Kazakhstan (souverain, bail russe), glacier de Siachen à l Inde (qui le tient), île Brésilienne au Brésil, Sahara occidental au Maroc jusqu au partage au mur des sables (J6b).",
   "asOf": "2026-01-01",
   "status": "à valider",
   "attach": {
@@ -55,6 +55,7 @@
     "NIU": "NZL",
     "KAB": "KAZ",
     "KAS": "IND",
-    "BRI": "BRA"
+    "BRI": "BRA",
+    "KOS": "XKX"
   }
 }

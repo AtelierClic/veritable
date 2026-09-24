@@ -158,11 +158,12 @@ export function initDiplomacy(
   for (let i = 0; i < ids.length; i++) {
     state.relations[ids[i]] = {};
     for (let j = i + 1; j < ids.length; j++) {
+      // J6b: the scenario's relations file when it has one (the world of
+      // 2026), else the rule of the J3.
+      const given = ctx.startRelation(ids[i], ids[j]);
       const common = ctx.commonBlocs(ids[i], ids[j]);
-      state.relations[ids[i]][ids[j]] = Math.min(
-        cfg.blocRelationCap,
-        cfg.blocRelation * common,
-      );
+      state.relations[ids[i]][ids[j]] =
+        given ?? Math.min(cfg.blocRelationCap, cfg.blocRelation * common);
     }
   }
   for (const war of scenario.wars) {
@@ -445,13 +446,37 @@ export function liftSanctions(
 
 // --- the monthly reaction ---------------------------------------------------------------
 
+// Allies (J6b): members of a common bloc of an ally type (a military
+// alliance, an economic union), or a guarantor and the nation it protects.
+export function allies(ctx: EconomyContext, a: NationId, b: NationId): boolean {
+  const types: readonly string[] = ctx.config.diplomacy.allyBlocTypes;
+  const mine = ctx.blocsOf(a);
+  for (const bloc of ctx.blocsOf(b)) {
+    const type = ctx.blocType(bloc);
+    if (mine.includes(bloc) && type !== undefined && types.includes(type)) {
+      return true;
+    }
+  }
+  return ctx.guarantees.some(
+    (g) =>
+      (g.guarantor === a && g.protected === b) ||
+      (g.guarantor === b && g.protected === a),
+  );
+}
+
 // Where the relations of two nations settle: common blocs and the
-// ideological proximity of their governments (J4).
+// ideological proximity of their governments (J4). J6b: a common bloc weighs
+// by its type; sanctions between the two, or a war of either against an ally
+// of the other, pull the affinity down.
 export function affinityOf(
   ctx: EconomyContext,
+  state: DiplomacyState,
   politics: PoliticsState,
   a: NationId,
   b: NationId,
+  // J6b: the affinity the two would have without their sanctions (the lift
+  // of a sanction of policy).
+  withoutSanctions = false,
 ): number {
   const cfg = ctx.config.diplomacy;
   const pa = politics.nations[a];
@@ -462,13 +487,54 @@ export function affinityOf(
       : 1 -
         ideologyDistance(pa.government.ideology, pb.government.ideology) /
           MAX_IDEOLOGY_DISTANCE;
+  let blocs = 0;
+  const mine = ctx.blocsOf(a);
+  for (const bloc of ctx.blocsOf(b)) {
+    if (!mine.includes(bloc)) continue;
+    const type = ctx.blocType(bloc);
+    blocs +=
+      type === undefined ? cfg.affinityPerBloc : cfg.affinityByBlocType[type];
+  }
+  const sanctions =
+    !withoutSanctions &&
+    (isSanctioning(state, a, b) || isSanctioning(state, b, a))
+      ? cfg.affinitySanctions
+      : 0;
+  const againstAlly = (x: NationId, y: NationId) =>
+    enemiesOf(state, x).some((z) => z !== y && allies(ctx, y, z));
+  const allyAtWar =
+    againstAlly(a, b) || againstAlly(b, a) ? cfg.affinityAllyAtWar : 0;
   // The bloc term is capped like the first-day relations (blocRelationCap):
   // four common blocs are not worth more than two.
   return clamp(
-    Math.min(cfg.blocRelationCap, cfg.affinityPerBloc * ctx.commonBlocs(a, b)) +
-      cfg.affinityIdeology * proximity,
+    Math.min(cfg.blocRelationCap, blocs) +
+      cfg.affinityIdeology * proximity -
+      sanctions -
+      allyAtWar,
     -100,
     100,
+  );
+}
+
+// J6b: a sanction of policy (the first day's) may be lifted once the regime
+// of the target is no longer the one it had that day (revolution, coup,
+// transition) and the two would be close without the sanction: the
+// ideological proxy alone sees the governments of the United States and of
+// Iran as close (both high on authority and sovereignty).
+export function policyLiftable(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  politics: PoliticsState,
+  by: NationId,
+  against: NationId,
+): boolean {
+  const regime = politics.nations[against]?.regime;
+  if (regime === undefined || regime === ctx.sheet(against).regime) {
+    return false;
+  }
+  return (
+    affinityOf(ctx, state, politics, by, against, true) >=
+    ctx.config.diplomacy.sanction.liftPolicyMinAffinity
   );
 }
 
@@ -526,7 +592,7 @@ export function stepDiplomacyMonth(
         continue;
       }
       const r = relation(state, a, b);
-      const target = affinityOf(ctx, politics, a, b);
+      const target = affinityOf(ctx, state, politics, a, b);
       const mending = !unjustAggressors.has(a) && !unjustAggressors.has(b);
       const next =
         r > target
@@ -583,7 +649,8 @@ export function stepDiplomacyMonth(
   }
 
   // 4. Sanctions are lifted once the sanctioned nation is no longer an
-  //    aggressor anywhere and relations have healed.
+  //    aggressor anywhere and relations have healed; a sanction of policy
+  //    (J6b) once the two governments have also grown close.
   for (const sanction of [...state.sanctions]) {
     if (!aiNations.includes(sanction.by)) continue;
     if (blocHeld(sanction.by, sanction.against)) continue;
@@ -591,6 +658,12 @@ export function stepDiplomacyMonth(
       w.aggressors.includes(sanction.against),
     );
     if (stillAggressor) continue;
+    if (
+      sanction.policy === true &&
+      !policyLiftable(ctx, state, politics, sanction.by, sanction.against)
+    ) {
+      continue;
+    }
     if (
       relation(state, sanction.by, sanction.against) >=
       cfg.sanction.liftAboveRelations

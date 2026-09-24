@@ -69,6 +69,26 @@ export function driverValue(
   throw new Error(`unknown political driver: ${key}`);
 }
 
+// Stability a nation loses to the internal conflicts of the scenario (J6b):
+// intensity x stabilityMalus, halving every halfLifeYears from the start of
+// the campaign; several conflicts add up, capped at stabilityMalus.
+export function internalConflictMalus(
+  ctx: EconomyContext,
+  conflicts: readonly { nation: NationId; intensity: number }[],
+  id: NationId,
+  yearsSinceStart: number,
+): number {
+  const cfg = ctx.config.politics.internalConflict;
+  let intensity = 0;
+  for (const c of conflicts) if (c.nation === id) intensity += c.intensity;
+  if (intensity <= 0) return 0;
+  return (
+    cfg.stabilityMalus *
+    Math.min(1, intensity) *
+    Math.pow(2, -yearsSinceStart / cfg.halfLifeYears)
+  );
+}
+
 export function stepPolitics(
   ctx: EconomyContext,
   id: NationId,
@@ -82,6 +102,9 @@ export function stepPolitics(
   sanctionedShare = 0,
   // Offsets of the satisfaction targets from the laws in force (J4).
   lawOffsets: Record<string, number> = {},
+  // Stability lost to internal conflicts of the scenario (J6b,
+  // internalConflictMalus).
+  conflictMalus = 0,
 ): PoliticsEvent[] {
   const cfg = ctx.config.politics;
   // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts); a war and
@@ -142,7 +165,8 @@ export function stepPolitics(
     s.opinion * politics.opinion +
       s.shortage * (1 - shortage) +
       s.debt * debtHealthOf(ctx, economy.debt / economy.gdp) +
-      s.legitimacy * politics.legitimacy,
+      s.legitimacy * politics.legitimacy -
+      conflictMalus,
     0,
     1,
   );

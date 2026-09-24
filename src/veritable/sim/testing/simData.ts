@@ -297,6 +297,9 @@ export function testSimData(
     leaders?: Record<NationId, LeadersData>;
     tech?: TechNode[];
     events?: VeritableEvent[];
+    startRelations?: SimData["startRelations"];
+    guarantees?: SimData["guarantees"];
+    internalConflicts?: SimData["internalConflicts"];
   } = {},
 ): SimData {
   return {
@@ -319,6 +322,9 @@ export function testSimData(
     names: Object.fromEntries(nations.map((id) => [id, testNames(id)])),
     tech: options.tech ?? [],
     events: options.events ?? [],
+    startRelations: options.startRelations,
+    guarantees: options.guarantees,
+    internalConflicts: options.internalConflicts,
   };
 }
 

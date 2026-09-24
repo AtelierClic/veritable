@@ -24,6 +24,7 @@ import {
   isSanctioning,
   joinWar,
   liftSanctions,
+  policyLiftable,
   relation,
   warSide,
 } from "../diplomacy/diplomacy";
@@ -1026,6 +1027,24 @@ function collectiveDefense(env: BlocEnv): BlocStepEvent[] {
         }
       }
     }
+    // J6b: bilateral guarantees of the scenario (Russia for Abkhazia, the
+    // United States for Taiwan...). An AI guarantor enters with the
+    // probability of its guarantee; the player decides alone.
+    for (const g of ctx.guarantees) {
+      if (g.protected !== victim) continue;
+      if (warSide(war, g.guarantor) !== null) continue;
+      if (!ctx.nationIds.includes(g.guarantor)) continue;
+      if (!env.aiNations.includes(g.guarantor)) continue;
+      if (env.rng.next() < g.probability) {
+        joinWar(ctx, env.diplomacy, war, g.guarantor, "defenders");
+        events.push({
+          type: "war-joined",
+          nation: g.guarantor,
+          war: war.id,
+          against: war.aggressors[0],
+        });
+      }
+    }
   }
   return events;
 }
@@ -1061,6 +1080,12 @@ export function defenseGuarantors(
           : clause.joinProbability;
       best.set(m, Math.max(best.get(m) ?? 0, p));
     }
+  }
+  // J6b: bilateral guarantees of the scenario.
+  for (const g of ctx.guarantees) {
+    if (g.protected !== victim || g.guarantor === aggressor) continue;
+    if (!ctx.nationIds.includes(g.guarantor)) continue;
+    best.set(g.guarantor, Math.max(best.get(g.guarantor) ?? 0, g.probability));
   }
   return [...best].map(([nation, probability]) => ({ nation, probability }));
 }
@@ -1253,10 +1278,25 @@ function aiProposal(env: BlocEnv, id: string): BlocStepEvent[] {
       if (done !== null) return done;
     }
   }
+  // Lifts: never while the target wages a war of aggression, the wars of
+  // the scenario included (J6b); a sanction of policy once the leader's
+  // government has grown close to the target's.
+  const waging = new Set(env.diplomacy.wars.flatMap((w) => w.aggressors));
+  const membersAll = ctx.membersOf(id);
   for (const target of bloc.sanctions) {
-    if (aggressors.has(target)) continue;
+    if (aggressors.has(target) || waging.has(target)) continue;
     if (relation(env.diplomacy, leader, target) < cfg.liftAboveRelations)
       continue;
+    const policy = env.diplomacy.sanctions.some(
+      (s) =>
+        s.against === target && s.policy === true && membersAll.includes(s.by),
+    );
+    if (
+      policy &&
+      !policyLiftable(ctx, env.diplomacy, env.politics, leader, target)
+    ) {
+      continue;
+    }
     const done = attempt("lift", target);
     if (done !== null) return done;
   }

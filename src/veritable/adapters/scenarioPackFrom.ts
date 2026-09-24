@@ -78,5 +78,9 @@ export function simDataFrom(source: DataSource, scenario: Scenario): SimData {
     ),
     tech: source.tech(),
     events: source.events(),
+    // The world of 2026 (J6b).
+    startRelations: source.relations(scenario) ?? undefined,
+    guarantees: scenario.guarantees,
+    internalConflicts: scenario.internalConflicts,
   };
 }

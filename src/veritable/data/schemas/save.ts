@@ -155,6 +155,10 @@ export const NationEconomySchema = z.object({
   expenditure: zb.float(),
   interest: zb.float(),
   interestRate: zb.float(),
+  // J6b: the gap between the real rate of the first day (interest paid,
+  // inflation) and the formula of the J2 at the debt and stability of that
+  // day, kept for the whole campaign (0: the formula alone).
+  interestSpread: zb.float(),
   balances: z.array(zb.float()), // last 12 monthly balances, US$
   debtRisingMonths: zb.uint(),
   austerity: z.boolean(),
@@ -395,6 +399,12 @@ export const SanctionSchema = z.object({
   by: NationIdSchema,
   against: NationIdSchema,
   since: IsoDateSchema,
+  // J6b: a sanction of policy (the first day of the world: Russia, Iran,
+  // North Korea, Cuba...): lifted only once the regime of the target has
+  // changed and the two governments are close
+  // (diplomacy.sanction.liftPolicyMinAffinity). Absent: a sanction imposed
+  // in the campaign, lifted by the rule of the J3.
+  policy: z.boolean().optional(),
 });
 export type Sanction = z.infer<typeof SanctionSchema>;
 

@@ -145,6 +145,7 @@ export function buildLeaders(
     partyIdeologies: Record<string, { ideology: Ideology; note: string }>;
     parodyNations?: string[];
     headOverrides?: Record<string, HeadOverride>;
+    partyLeaderOverrides?: Record<string, HeadOverride>;
   },
   i18n: Record<string, string>,
 ): {
@@ -507,10 +508,48 @@ export function buildLeaders(
         );
       }
     }
+    // J6b: a party leader written by hand where Wikidata keeps a former
+    // chair (estimates.json -> partyLeaderOverrides, "<ISO3>/<label of
+    // parties.json>").
+    const handled = new Set<string>();
+    for (const party of partyList) {
+      const listed = entry.parties.find(
+        (p) =>
+          (p.qid !== undefined && p.qid === party.wikidata) ||
+          `${lower}-${slug(p.label)}` === party.id,
+      );
+      const o =
+        listed === undefined
+          ? undefined
+          : estimates.partyLeaderOverrides?.[`${nation}/${listed.label}`];
+      if (o === undefined) continue;
+      const known = actors.find((a) =>
+        sameName(labels.get(a.id) ?? "", o.person),
+      );
+      const actor =
+        known ??
+        addActor(
+          {
+            qid: `estimate:${slug(o.person)}`,
+            label: o.person,
+            born: o.born ?? null,
+            parties: [],
+          },
+          "party-leader",
+          party.id,
+          traitsFromIdeology(party.ideology, regime.legitimacyBase, 0, null),
+          "estimate",
+          `${o.note} Traits dérivés de l'idéologie du parti.`,
+        );
+      party.leader = actor.id;
+      actor.party ??= party.id;
+      handled.add(party.id);
+    }
     // J6: a party without a chair on Wikidata takes the leader named by
     // politics-world.json (no QID, no birth date).
     for (const party of partyList) {
       if (worldEntry === undefined) break;
+      if (handled.has(party.id)) continue;
       const wd = snapshot.parties.find((w) => w.qid === party.wikidata);
       if (wd?.leader !== null && wd?.leader !== undefined) continue;
       // The party as parties.json lists it (its label is the world file's).
@@ -562,6 +601,7 @@ export function buildLeaders(
     for (const wd of snapshot.parties) {
       const partyId = partyIdOf.get(wd.qid);
       if (partyId === undefined || wd.leader === null) continue;
+      if (handled.has(partyId)) continue;
       const party = partyList.find((p) => p.id === partyId)!;
       const actor = addActor(
         wd.leader,

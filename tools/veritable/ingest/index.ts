@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { build } from "./build";
 import { buildLeaders, writeLeaders } from "./leaders";
+import { buildRelations, fetchVoeten } from "./relations";
 import {
   fetchAll,
   fetchImf,
@@ -12,7 +13,7 @@ import {
 } from "./sources";
 import { fetchWikidata, relockWikidata } from "./wikidata";
 import { fetchWikidataWorld } from "./wikidataWorld";
-import { fetchWorld } from "./world";
+import { fetchImfFiscal, fetchWorld } from "./world";
 
 // Open sources -> data/veritable/. Replayable:
 //
@@ -22,6 +23,10 @@ import { fetchWorld } from "./world";
 //   npm run veritable:ingest -- fetch-world --scenario world-2026
 //       every nation of the world (J6): World Bank CSV snapshots, IMF cache,
 //       V-Dem regimes (OWID), Natural Earth capitals; see world.ts
+//
+//   npm run veritable:ingest -- fetch-imf-fiscal --scenario world-2026
+//       interest paid and inflation (J6b, the debt of the first day), IMF
+//       DataMapper, cache outside git; see world.ts
 //
 //   npm run veritable:ingest -- fetch-imf --scenario europe-10
 //       downloads the IMF WEO debt series into the cache (outside git) and
@@ -35,6 +40,9 @@ import { fetchWorld } from "./world";
 //   npm run veritable:ingest -- build --scenario europe-10
 //       rebuilds the nation sheets, row.json and the index-good prices from
 //       the snapshots, offline, after checking every sha256.
+//   npm run veritable:ingest -- fetch-voeten --scenario world-2026
+//   npm run veritable:ingest -- build-relations --scenario world-2026
+//       relations of the first day (J6b), see relations.ts.
 //   npm run veritable:ingest -- build-leaders --scenario europe-10
 //       rebuilds data/veritable/leaders/<iso3>.json from the Wikidata
 //       snapshots, the ideology table, parties.json and the hand-written
@@ -63,6 +71,8 @@ async function main(): Promise<void> {
       return fetchImf(scenario.nations);
     case "fetch-world":
       return fetchWorld(scenario.nations);
+    case "fetch-imf-fiscal":
+      return fetchImfFiscal(scenario.nations);
     case "fetch-wikidata-world": {
       const only = args.includes("--only")
         ? option(args, "only").split(",")
@@ -92,6 +102,10 @@ async function main(): Promise<void> {
     }
     case "build":
       return build(scenarioId);
+    case "fetch-voeten":
+      return fetchVoeten();
+    case "build-relations":
+      return buildRelations(scenarioId);
     case "build-leaders": {
       const estimates = JSON.parse(
         fs.readFileSync(
@@ -119,6 +133,7 @@ async function main(): Promise<void> {
           partyIdeologies: estimates.partyIdeologies ?? {},
           parodyNations: estimates.parodyNations,
           headOverrides: estimates.headOverrides,
+          partyLeaderOverrides: estimates.partyLeaderOverrides,
         },
         i18n,
       );
@@ -133,11 +148,13 @@ async function main(): Promise<void> {
       );
       const built = new Set(Object.keys(files).map((n) => n.toLowerCase()));
       for (const key of Object.keys(i18n)) {
-        const actor = /^leader\.([a-z]{3})-(.+)\.(parody|fictional)$/.exec(key);
+        const actor = /^leader\.([a-z0-9]{3})-(.+)\.(parody|fictional)$/.exec(
+          key,
+        );
         if (actor !== null && built.has(actor[1])) {
           if (!actorIds.has(`${actor[1]}-${actor[2]}`)) delete i18n[key];
         }
-        const party = /^party\.([a-z]{3})-(.+)$/.exec(key);
+        const party = /^party\.([a-z0-9]{3})-(.+)$/.exec(key);
         if (party !== null && built.has(party[1])) {
           if (!partyIds.has(`${party[1]}-${party[2]}`)) delete i18n[key];
         }

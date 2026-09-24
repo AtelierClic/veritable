@@ -131,6 +131,7 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     expenditure: 0,
     interest: 0,
     interestRate: ctx.config.budget.interest.base,
+    interestSpread: 0, // settled with the stability (settleStartBudget)
     balances: [],
     debtRisingMonths: 0,
     austerity: false,

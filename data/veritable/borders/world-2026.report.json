@@ -6,7 +6,7 @@
     "countries": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255"
   },
   "maxOrphanDistanceTiles": 60,
-  "fileBytes": 163541,
+  "fileBytes": 165421,
   "landTiles": 2335403,
   "nations": [
     {
@@ -382,8 +382,8 @@
       "fromPolygons": 24305,
       "fromOrphans": 0,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 24305
+      "lostToOverride": 215,
+      "total": 24090
     },
     {
       "nation": "DNK",
@@ -526,8 +526,8 @@
       "fromPolygons": 989,
       "fromOrphans": 0,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 989
+      "lostToOverride": 176,
+      "total": 813
     },
     {
       "nation": "DEU",
@@ -669,9 +669,9 @@
       "nation": "ISR",
       "fromPolygons": 263,
       "fromOrphans": 0,
-      "gainedByOverride": 0,
+      "gainedByOverride": 16,
       "lostToOverride": 0,
-      "total": 263
+      "total": 279
     },
     {
       "nation": "ITA",
@@ -790,8 +790,8 @@
       "fromPolygons": 19801,
       "fromOrphans": 0,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 19801
+      "lostToOverride": 16940,
+      "total": 2861
     },
     {
       "nation": "LIE",
@@ -934,8 +934,8 @@
       "fromPolygons": 8347,
       "fromOrphans": 0,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 8347
+      "lostToOverride": 1075,
+      "total": 7272
     },
     {
       "nation": "MOZ",
@@ -1134,8 +1134,8 @@
       "fromPolygons": 534,
       "fromOrphans": 0,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 534
+      "lostToOverride": 49,
+      "total": 485
     },
     {
       "nation": "ROU",
@@ -1149,9 +1149,9 @@
       "nation": "RUS",
       "fromPolygons": 376894,
       "fromOrphans": 862,
-      "gainedByOverride": 0,
+      "gainedByOverride": 1309,
       "lostToOverride": 0,
-      "total": 377756
+      "total": 379065
     },
     {
       "nation": "RWA",
@@ -1326,8 +1326,8 @@
       "fromPolygons": 20779,
       "fromOrphans": 0,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 20779
+      "lostToOverride": 6595,
+      "total": 14184
     },
     {
       "nation": "SUR",
@@ -1357,9 +1357,9 @@
       "nation": "SYR",
       "fromPolygons": 2368,
       "fromOrphans": 0,
-      "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 2368
+      "gainedByOverride": 56,
+      "lostToOverride": 678,
+      "total": 1746
     },
     {
       "nation": "TJK",
@@ -1454,8 +1454,8 @@
       "fromPolygons": 9032,
       "fromOrphans": 0,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 9032
+      "lostToOverride": 1309,
+      "total": 7723
     },
     {
       "nation": "ARE",
@@ -1534,8 +1534,8 @@
       "fromPolygons": 5019,
       "fromOrphans": 5,
       "gainedByOverride": 0,
-      "lostToOverride": 0,
-      "total": 5024
+      "lostToOverride": 1356,
+      "total": 3668
     },
     {
       "nation": "ZMB",
@@ -1566,14 +1566,222 @@
       "fromPolygons": 75,
       "fromOrphans": 0,
       "gainedByOverride": 0,
+      "lostToOverride": 12,
+      "total": 63
+    },
+    {
+      "nation": "TWN",
+      "fromPolygons": 364,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
       "lostToOverride": 0,
-      "total": 75
+      "total": 364
+    },
+    {
+      "nation": "XKX",
+      "fromPolygons": 160,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 160
+    },
+    {
+      "nation": "CYN",
+      "fromPolygons": 33,
+      "fromOrphans": 4,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 37
+    },
+    {
+      "nation": "ABK",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 110,
+      "lostToOverride": 0,
+      "total": 110
+    },
+    {
+      "nation": "SOS",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 66,
+      "lostToOverride": 0,
+      "total": 66
+    },
+    {
+      "nation": "PMR",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 49,
+      "lostToOverride": 0,
+      "total": 49
+    },
+    {
+      "nation": "SOL",
+      "fromPolygons": 1828,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1828
+    },
+    {
+      "nation": "ESH",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 1075,
+      "lostToOverride": 0,
+      "total": 1075
+    },
+    {
+      "nation": "YEH",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 1356,
+      "lostToOverride": 0,
+      "total": 1356
+    },
+    {
+      "nation": "LBE",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 16940,
+      "lostToOverride": 0,
+      "total": 16940
+    },
+    {
+      "nation": "SDR",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 6595,
+      "lostToOverride": 0,
+      "total": 6595
+    },
+    {
+      "nation": "RJV",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 674,
+      "lostToOverride": 56,
+      "total": 618
+    },
+    {
+      "nation": "M23",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 215,
+      "lostToOverride": 0,
+      "total": 215
     }
   ],
-  "neutralLand": 371536,
+  "neutralLand": 369147,
   "insetLand": 0,
   "unattachedLand": 0,
   "orphansReattached": 11611,
-  "overrides": [],
-  "regions": {}
+  "overrides": [
+    {
+      "id": "crimea",
+      "controller": "RUS",
+      "tiles": 0
+    },
+    {
+      "id": "ukraine-occupied-mainland",
+      "controller": "RUS",
+      "tiles": 1309
+    },
+    {
+      "id": "abkhazia",
+      "controller": "ABK",
+      "tiles": 110
+    },
+    {
+      "id": "south-ossetia",
+      "controller": "SOS",
+      "tiles": 66
+    },
+    {
+      "id": "transnistria",
+      "controller": "PMR",
+      "tiles": 49
+    },
+    {
+      "id": "sadr-free-zone",
+      "controller": "ESH",
+      "tiles": 1075
+    },
+    {
+      "id": "yemen-ansar-allah",
+      "controller": "YEH",
+      "tiles": 1356
+    },
+    {
+      "id": "libya-east",
+      "controller": "LBE",
+      "tiles": 16940
+    },
+    {
+      "id": "sudan-rsf",
+      "controller": "SDR",
+      "tiles": 6595
+    },
+    {
+      "id": "syria-northeast",
+      "controller": "RJV",
+      "tiles": 674
+    },
+    {
+      "id": "syria-peace-spring",
+      "controller": "SYR",
+      "tiles": 56
+    },
+    {
+      "id": "kivu-afc-m23",
+      "controller": "M23",
+      "tiles": 215
+    },
+    {
+      "id": "syria-buffer-zone",
+      "controller": "ISR",
+      "tiles": 4
+    },
+    {
+      "id": "jordan-valley",
+      "controller": "ISR",
+      "tiles": 12
+    }
+  ],
+  "regions": {
+    "crimea": 305,
+    "ukraine-occupied-mainland": 1309,
+    "ukraine-oblasts-claimed-by-russia": 1533,
+    "abkhazia": 110,
+    "south-ossetia": 66,
+    "transnistria": 49,
+    "sadr-free-zone": 1075,
+    "yemen-ansar-allah": 1356,
+    "libya-east": 16940,
+    "sudan-rsf": 6595,
+    "syria-northeast": 674,
+    "syria-peace-spring": 56,
+    "kivu-afc-m23": 215,
+    "syria-buffer-zone": 4,
+    "jordan-valley": 12,
+    "east-jerusalem": 2,
+    "golan": 15,
+    "kosovo": 160,
+    "northern-cyprus": 33,
+    "somaliland": 1828,
+    "taiwan": 364,
+    "western-sahara-moroccan": 2053,
+    "kashmir-indian-administered": 1340,
+    "azad-kashmir": 160,
+    "gilgit-baltistan": 828,
+    "aksai-chin": 486,
+    "arunachal-pradesh": 866,
+    "falkland-islands": 137,
+    "essequibo": 1539,
+    "halaib-triangle": 190,
+    "ilemi-triangle": 31,
+    "abyei": 121
+  }
 }

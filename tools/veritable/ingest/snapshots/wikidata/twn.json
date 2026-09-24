@@ -1,0 +1,120 @@
+{
+ "nation": "TWN",
+ "country": "Q865",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5116472",
+    "label": "Cho Jung-tai",
+    "born": "1959-01-22",
+    "died": null,
+    "parties": [
+     "Q903822"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3847080",
+    "label": "Lai Ching‑te",
+    "born": "1959-10-06",
+    "died": null,
+    "parties": [
+     "Q903822"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q903822",
+   "label": "Parti démocrate progressiste",
+   "ideologies": [
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q218505",
+     "label": "nationalisme taïwanais"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q3847080",
+    "label": "Lai Ching‑te",
+    "born": "1959-10-06",
+    "died": null,
+    "parties": [
+     "Q903822"
+    ]
+   }
+  },
+  {
+   "qid": "Q31113",
+   "label": "Kuomintang",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q260998",
+     "label": "Trois principes du peuple"
+    },
+    {
+     "qid": "Q3058841",
+     "label": "Nationalisme chinois"
+    },
+    {
+     "qid": "Q7333466",
+     "label": "conservatisme paternaliste"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57838",
+    "label": "Wu Den-yih",
+    "born": "1948-01-30",
+    "died": null,
+    "parties": [
+     "Q31113"
+    ]
+   }
+  },
+  {
+   "qid": "Q66029902",
+   "label": "Parti du peuple de Taiwan",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

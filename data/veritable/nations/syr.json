@@ -21,12 +21,12 @@
   "contested": [],
   "nuclear": null,
   "population": {
-    "value": 25620400,
+    "value": 21521200,
     "source": "worldbank:SP.POP.TOTL",
     "asOf": "2025"
   },
   "gdp": {
-    "value": 23737600000,
+    "value": 18515400000,
     "source": "worldbank:NY.GDP.MKTP.CD",
     "asOf": "2022"
   },
@@ -51,7 +51,7 @@
     "goods": {
       "oil": {
         "production": {
-          "value": 19.278,
+          "value": 3.8556,
           "source": "owid-energy@7e387a16:oil_production",
           "asOf": "2024"
         },
@@ -64,7 +64,7 @@
       },
       "gas": {
         "production": {
-          "value": 27.23,
+          "value": 16.338,
           "source": "owid-energy@7e387a16:gas_production",
           "asOf": "2024"
         },
@@ -90,24 +90,24 @@
       },
       "electricity": {
         "production": {
-          "value": 24.88,
+          "value": 19.904,
           "source": "owid-energy@7e387a16:electricity_generation",
           "asOf": "2024"
         },
         "consumption": {
-          "value": 24.28,
+          "value": 18.9384,
           "source": "owid-energy@7e387a16:electricity_demand",
           "asOf": "2024"
         }
       },
       "food": {
         "production": {
-          "value": 4.87871,
+          "value": 2.68329,
           "source": "worldbank:AG.PRD.CREL.MT",
           "asOf": "2023"
         },
         "consumption": {
-          "value": 9.74122,
+          "value": 8.18265,
           "source": "estimate",
           "asOf": "2026-01-01",
           "note": "Consommation apparente : population × production mondiale de céréales par habitant (Banque mondiale). Aucune série ouverte de consommation homogène."
@@ -115,13 +115,13 @@
       },
       "steel": {
         "production": {
-          "value": 0.170911,
+          "value": 0.133311,
           "source": "derived",
           "asOf": "2025",
           "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.06 (valeur ajoutée absente : 0.12 du PIB, estimation) (Banque mondiale)."
         },
         "consumption": {
-          "value": 0.211816,
+          "value": 0.165217,
           "source": "derived",
           "asOf": "2025",
           "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
@@ -129,13 +129,13 @@
       },
       "consumer-goods": {
         "production": {
-          "value": 1.28183,
+          "value": 0.999832,
           "source": "derived",
           "asOf": "2025",
           "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.45 (valeur ajoutée absente : 0.12 du PIB, estimation) (Banque mondiale)."
         },
         "consumption": {
-          "value": 1.58862,
+          "value": 1.23913,
           "source": "derived",
           "asOf": "2025",
           "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
@@ -143,13 +143,13 @@
       },
       "pharma": {
         "production": {
-          "value": 0.142426,
+          "value": 0.111092,
           "source": "derived",
           "asOf": "2025",
           "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.05 (valeur ajoutée absente : 0.12 du PIB, estimation) (Banque mondiale)."
         },
         "consumption": {
-          "value": 0.176513,
+          "value": 0.137681,
           "source": "derived",
           "asOf": "2025",
           "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
@@ -157,13 +157,13 @@
       },
       "electronics": {
         "production": {
-          "value": 0.0229278,
+          "value": 0.0178837,
           "source": "derived",
           "asOf": "2025",
           "note": "Md$ de production, d'après exportations de haute technologie × 0.59073 (part électronique de la valeur ajoutée manufacturière mondiale) (Banque mondiale)."
         },
         "consumption": {
-          "value": 0.423632,
+          "value": 0.330434,
           "source": "derived",
           "asOf": "2025",
           "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
@@ -171,13 +171,13 @@
       },
       "services": {
         "production": {
-          "value": 10.6159,
+          "value": 8.28038,
           "source": "derived",
           "asOf": "2025",
           "note": "Md$ de production, d'après valeur ajoutée des services (Banque mondiale)."
         },
         "consumption": {
-          "value": 14.1781,
+          "value": 11.059,
           "source": "derived",
           "asOf": "2025",
           "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
@@ -185,13 +185,13 @@
       },
       "arms": {
         "production": {
-          "value": 0.240708,
+          "value": 0.187753,
           "source": "derived",
           "asOf": "2025",
           "note": "Md$ de production, d'après dépenses militaires × 0.25 (part d'équipement) (Banque mondiale)."
         },
         "consumption": {
-          "value": 0.240708,
+          "value": 0.187753,
           "source": "derived",
           "asOf": "2025",
           "note": "Valeur mondiale × part des dépenses militaires mondiales (Banque mondiale), Md$."
@@ -199,13 +199,13 @@
       },
       "critical-minerals": {
         "production": {
-          "value": 0.0700762,
+          "value": 0.0545075,
           "source": "estimate",
           "asOf": "2026-09-24",
           "note": "Part de la valeur mondiale des minerais critiques (hors nations estimées à la main) au prorata des exportations de minerais et métaux (Banque mondiale TX.VAL.MMTL.ZS.UN × TX.VAL.MRCH.CD.WT), Md$."
         },
         "consumption": {
-          "value": 0.150428,
+          "value": 0.117335,
           "source": "derived",
           "asOf": "2025",
           "note": "Valeur mondiale (estimation) × part du PIB mondial (Banque mondiale), Md$."
@@ -214,7 +214,7 @@
     },
     "electricityFromFossil": {
       "gas": {
-        "value": 13,
+        "value": 10.4,
         "source": "owid-energy@7e387a16:gas_electricity",
         "asOf": "2024"
       },
@@ -224,7 +224,7 @@
         "asOf": "2024"
       },
       "oil": {
-        "value": 11,
+        "value": 8.8,
         "source": "owid-energy@7e387a16:oil_electricity",
         "asOf": "2024"
       }
@@ -247,6 +247,18 @@
         "source": "estimate",
         "asOf": "2026-01-01",
         "note": "Dons budgétaires extérieurs. Ukraine : soutien budgétaire international d'environ 40 Md$ par an pour un PIB d'environ 190 Md$ ; sans lui le déficit de guerre (dépenses 66 % du PIB, recettes 34 %, Banque mondiale) ferait exploser la dette en deux ans. Nul pour les autres."
+      },
+      "interestPctGdp": {
+        "value": 0.00534667,
+        "source": "imf-fm:GGXONLB_G01_GDP_PT-GGXCNL_G01_GDP_PT",
+        "asOf": "2010",
+        "note": "Intérêts nets : solde primaire moins solde global, en % du PIB, FMI, Moniteur des finances publiques (API DataMapper, extraction du 2026-09-24), à défaut de la série des intérêts payés."
+      },
+      "inflation": {
+        "value": 0.03,
+        "source": "estimate",
+        "asOf": "2026-09-24",
+        "note": "Inflation absente des Perspectives de l'économie mondiale du FMI : 3 %, ordre de grandeur mondial."
       },
       "revenueShares": {
         "value": {
@@ -277,25 +289,25 @@
           "value": 0.000147595,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         },
         "social": {
-          "value": 0.131053,
+          "value": 0.127578,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         },
         "infrastructure": {
-          "value": 0.0403241,
+          "value": 0.0392548,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         },
         "subsidies": {
-          "value": 0.0302431,
+          "value": 0.0294411,
           "source": "estimate",
           "asOf": "2026-01-01",
-          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes et moins les intérêts de la dette, que la simulation ajoute elle-même depuis le J6) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
         }
       }
     }

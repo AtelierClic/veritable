@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ContestedRegionSchema, IsoDateSchema, NationIdSchema } from "./common";
+import { GoodIdSchema } from "./goods";
 
 // Shape of data/veritable/scenarios/<slug>.json.
 
@@ -37,6 +38,56 @@ export const ScenarioSchema = z
       }),
     ),
     playerDefault: NationIdSchema,
+    // The world of 2026 (J6b). Relations of the first day (a file of
+    // relations/, see data/schemas/relations.ts); without it, the rule of
+    // the J3 (common blocs).
+    relations: z.string().min(1).optional(),
+    // Sanctions in force on the first day, by a nation or a bloc (its full
+    // members apply them, the bloc holds them): `goods` absent = full
+    // sanctions (every good but the exempt ones, both ways, as a sanction
+    // imposed in the campaign), else embargoes on those goods only, both
+    // ways.
+    sanctions: z
+      .array(
+        z.object({
+          // A nation, a bloc, or "*": every nation of the scenario (a
+          // regime of the UN Security Council) but `except`.
+          by: z.union([NationIdSchema, z.literal("*")]),
+          // A nation, or a bloc: each of its full members.
+          against: NationIdSchema,
+          except: z.array(NationIdSchema).optional(),
+          goods: z.array(GoodIdSchema).optional(),
+          since: IsoDateSchema,
+          source: z.string().min(1),
+          note: z.string().optional(),
+        }),
+      )
+      .optional(),
+    // Armed conflicts inside a nation without a de facto entity: stability
+    // lost in proportion to the intensity, fading (config.politics).
+    internalConflicts: z
+      .array(
+        z.object({
+          nation: NationIdSchema,
+          intensity: z.number().min(0).max(1),
+          since: IsoDateSchema,
+          note: z.string().min(1),
+        }),
+      )
+      .optional(),
+    // Bilateral protection: the guarantor enters a war declared on the
+    // protected nation with this probability, and the AI counts it as it
+    // counts a collective-defence bloc.
+    guarantees: z
+      .array(
+        z.object({
+          guarantor: NationIdSchema,
+          protected: NationIdSchema,
+          probability: z.number().min(0).max(1),
+          note: z.string().min(1),
+        }),
+      )
+      .optional(),
   })
   .refine((s) => new Set(s.nations).size === s.nations.length, {
     message: "duplicate nation id in scenario",

@@ -1,6 +1,7 @@
 {
   "id": "g20",
   "name": "bloc.g20.name",
+  "type": "forum",
   "members": [
     {
       "nation": "ARG",

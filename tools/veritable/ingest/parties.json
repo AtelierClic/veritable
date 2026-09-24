@@ -5156,6 +5156,201 @@
           "qid": "Q921699"
         }
       ]
+    },
+    "TWN": {
+      "wikidataCountry": "Q865",
+      "election": "Présidentielle et législatives du 13 janvier 2024 (vote de liste des législatives)",
+      "parties": [
+        {
+          "label": "Democratic Progressive Party",
+          "lang": "en",
+          "support": 0.3616,
+          "qid": "Q903822"
+        },
+        {
+          "label": "Kuomintang",
+          "lang": "en",
+          "support": 0.3458,
+          "qid": "Q31113"
+        },
+        {
+          "label": "Taiwan People's Party",
+          "lang": "en",
+          "support": 0.2207,
+          "qid": "Q66029902"
+        }
+      ]
+    },
+    "XKX": {
+      "wikidataCountry": "Q1246",
+      "election": "Législatives anticipées du 28 décembre 2025 (résultats provisoires, à valider)",
+      "parties": [
+        {
+          "label": "Vetëvendosje",
+          "lang": "sq",
+          "support": 0.51,
+          "qid": "Q29534"
+        },
+        {
+          "label": "Partia Demokratike e Kosovës",
+          "lang": "sq",
+          "support": 0.2,
+          "qid": "Q1186316"
+        },
+        {
+          "label": "Lidhja Demokratike e Kosovës",
+          "lang": "sq",
+          "support": 0.135,
+          "qid": "Q1164022"
+        },
+        {
+          "label": "Aleanca për Ardhmërinë e Kosovës",
+          "lang": "sq",
+          "support": 0.055,
+          "qid": "Q1265971"
+        },
+        {
+          "label": "Srpska lista",
+          "lang": "sr",
+          "support": 0.045
+        }
+      ]
+    },
+    "CYN": {
+      "wikidataCountry": "Q23681",
+      "election": "Législatives du 23 janvier 2022",
+      "parties": [
+        {
+          "label": "Ulusal Birlik Partisi",
+          "lang": "tr",
+          "support": 0.395,
+          "qid": "Q1809278"
+        },
+        {
+          "label": "Cumhuriyetçi Türk Partisi",
+          "lang": "tr",
+          "support": 0.32,
+          "qid": "Q731357"
+        },
+        {
+          "label": "Demokrat Parti",
+          "lang": "tr",
+          "support": 0.074
+        },
+        {
+          "label": "Halkın Partisi",
+          "lang": "tr",
+          "support": 0.068,
+          "qid": "Q22350293"
+        }
+      ]
+    },
+    "ABK": {
+      "wikidataCountry": "Q23334",
+      "election": "Présidentielle des 15 février et 1er mars 2025 ; partis sans part de voix publiée à l'échelle nationale",
+      "parties": []
+    },
+    "SOS": {
+      "wikidataCountry": "Q23427",
+      "election": "Présidentielle d'avril et mai 2022",
+      "parties": [
+        {
+          "label": "Nykhas",
+          "lang": "ru",
+          "support": 0.4
+        },
+        {
+          "label": "United Ossetia",
+          "lang": "ru",
+          "support": 0.3,
+          "qid": "Q17279744"
+        }
+      ]
+    },
+    "PMR": {
+      "wikidataCountry": "Q907112",
+      "election": "Présidentielle du 12 décembre 2021",
+      "parties": [
+        {
+          "label": "Obnovlenie",
+          "lang": "ru",
+          "support": 0.8,
+          "qid": "Q1967163"
+        }
+      ]
+    },
+    "SOL": {
+      "wikidataCountry": "Q34754",
+      "election": "Présidentielle du 13 novembre 2024",
+      "parties": [
+        {
+          "label": "Waddani",
+          "lang": "so",
+          "support": 0.639,
+          "qid": "Q18395954"
+        },
+        {
+          "label": "Kulmiye",
+          "lang": "so",
+          "support": 0.348,
+          "qid": "Q521072"
+        },
+        {
+          "label": "UCID",
+          "lang": "so",
+          "support": 0.013,
+          "qid": "Q1239685"
+        }
+      ]
+    },
+    "ESH": {
+      "wikidataCountry": "Q40362",
+      "election": "Pas d'élection nationale au suffrage direct ; le congrès du Front Polisario élit son secrétaire général (dernier congrès : janvier 2023)",
+      "parties": [
+        {
+          "label": "Front Polisario",
+          "lang": "fr",
+          "support": 1,
+          "qid": "Q240425"
+        }
+      ]
+    },
+    "YEH": {
+      "wikidataCountry": null,
+      "election": "Aucune élection depuis la prise de Sanaa (2014)",
+      "parties": [
+        {
+          "label": "Ansar Allah",
+          "lang": "ar",
+          "support": 1
+        }
+      ]
+    },
+    "LBE": {
+      "wikidataCountry": null,
+      "election": "Aucune élection nationale depuis les législatives de 2014",
+      "parties": []
+    },
+    "SDR": {
+      "wikidataCountry": null,
+      "election": "Aucune élection",
+      "parties": []
+    },
+    "RJV": {
+      "wikidataCountry": null,
+      "election": "Aucune élection générale (élections municipales reportées en 2024)",
+      "parties": [
+        {
+          "label": "Parti de l'union démocratique",
+          "lang": "fr",
+          "support": 1
+        }
+      ]
+    },
+    "M23": {
+      "wikidataCountry": null,
+      "election": "Aucune élection",
+      "parties": []
     }
   }
 }

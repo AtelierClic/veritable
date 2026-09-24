@@ -1,0 +1,52 @@
+{
+  "nation": "SDR",
+  "actors": [
+    {
+      "id": "sdr-mohamed-hamdan-dagalo",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.sdr-mohamed-hamdan-dagalo.parody",
+        "fictional": "leader.sdr-mohamed-hamdan-dagalo.fictional"
+      },
+      "born": "1965-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "sdr-mohamed-hassan-al-ta-ayshi",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.sdr-mohamed-hassan-al-ta-ayshi.parody",
+        "fictional": "leader.sdr-mohamed-hassan-al-ta-ayshi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

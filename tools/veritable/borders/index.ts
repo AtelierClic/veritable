@@ -24,6 +24,7 @@ import {
   fetchSource,
   loadAdmin1,
   loadCountries,
+  loadDisputed,
   NATURAL_EARTH_TAG,
   parseFeatures,
   REPO_ROOT,
@@ -264,11 +265,14 @@ const MAX_ORPHAN_DISTANCE_TILES = 60;
 
 // Features of data/veritable/borders/overrides/<map>.geojson. Each one is a
 // contested region; unless `kind` is "region", it also reassigns to its
-// `controller` the tiles whose Natural Earth owner is in `from`. A feature
-// without geometry takes the polygons of the provinces listed in `admin1`
-// (ISO 3166-2 codes, Natural Earth). `regionWithin` filters the tiles of the
-// region on their Natural Earth country: absent = `from` (the reassigned
-// tiles) for an override and no filter for a region, null = no filter.
+// `controller` the tiles whose Natural Earth owner is in `from`. Its polygons
+// are its own geometry, plus those of the provinces listed in `admin1` (ISO
+// 3166-2 codes, Natural Earth) and of the disputed areas listed in `disputed`
+// (BRK_A3 codes of Natural Earth, J6). `regionWithin` filters the tiles of
+// the region on their Natural Earth country: absent = `from` (the reassigned
+// tiles) for an override and no filter for a region, null = no filter. A
+// controller that is no Natural Earth country is a de facto entity (J6):
+// the tiles it takes from `from` make up its territory.
 async function loadOverrides(
   file: string,
 ): Promise<{ overrides: Override[]; regions: RegionSpec[] }> {
@@ -278,30 +282,35 @@ async function loadOverrides(
     properties: Record<string, unknown> & { id: string };
   }[];
   let admin1: Map<string, Feature> | null = null;
+  let disputed: Map<string, Feature> | null = null;
   const overrides: Override[] = [];
   const regions: RegionSpec[] = [];
   for (const f of raw) {
     const p = f.properties;
-    let feature: Feature;
-    if (f.geometry === null) {
-      admin1 ??= await loadAdmin1();
-      const codes = (p.admin1 ?? []) as string[];
-      const provinces = admin1;
-      feature = {
-        id: p.id,
-        name: p.id,
-        label: null,
-        polygons: codes.flatMap((code) => {
-          const province = provinces.get(code);
-          if (province === undefined) {
-            throw new Error(`region ${p.id}: unknown province ${code}`);
-          }
-          return province.polygons;
-        }),
-      };
-    } else {
-      feature = parseFeatures(JSON.stringify({ features: [f] }), "id", "id")[0];
+    const polygons: number[][][][] =
+      f.geometry === null
+        ? []
+        : parseFeatures(JSON.stringify({ features: [f] }), "id", "id")[0]
+            .polygons;
+    const provinceCodes = (p.admin1 ?? []) as string[];
+    if (provinceCodes.length > 0) admin1 ??= await loadAdmin1();
+    for (const code of provinceCodes) {
+      const province = admin1!.get(code);
+      if (province === undefined) {
+        throw new Error(`region ${p.id}: unknown province ${code}`);
+      }
+      polygons.push(...province.polygons);
     }
+    const areaCodes = (p.disputed ?? []) as string[];
+    if (areaCodes.length > 0) disputed ??= await loadDisputed();
+    for (const code of areaCodes) {
+      const area = disputed!.get(code);
+      if (area === undefined) {
+        throw new Error(`region ${p.id}: unknown disputed area ${code}`);
+      }
+      polygons.push(...area.polygons);
+    }
+    const feature: Feature = { id: p.id, name: p.id, label: null, polygons };
     const isRegion = p.kind === "region";
     if (!isRegion) {
       overrides.push({

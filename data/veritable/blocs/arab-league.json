@@ -1,6 +1,7 @@
 {
   "id": "arab-league",
   "name": "bloc.arab-league.name",
+  "type": "forum",
   "members": [
     {
       "nation": "DZA",

@@ -1,0 +1,164 @@
+{
+ "nation": "XKX",
+ "country": "Q1246",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q441633",
+    "label": "Albin Kurti",
+    "born": "1975-03-24",
+    "died": null,
+    "parties": [
+     "Q29534"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q13047644",
+    "label": "Vjosa Osmani-Sadriu",
+    "born": "1982-05-17",
+    "died": null,
+    "parties": [
+     "Q106141967",
+     "Q1164022"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q29534",
+   "label": "Vetëvendosje!",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1702969",
+     "label": "nationalisme albanais"
+    },
+    {
+     "qid": "Q171174",
+     "label": "démocratie directe"
+    }
+   ],
+   "leader": {
+    "qid": "Q441633",
+    "label": "Albin Kurti",
+    "born": "1975-03-24",
+    "died": null,
+    "parties": [
+     "Q29534"
+    ]
+   }
+  },
+  {
+   "qid": "Q1186316",
+   "label": "Parti démocratique du Kosovo",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q660018",
+     "label": "national-libéralisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q13040485",
+    "label": "Kadri Veseli",
+    "born": "1967-05-31",
+    "died": null,
+    "parties": [
+     "Q1186316"
+    ]
+   }
+  },
+  {
+   "qid": "Q1164022",
+   "label": "Ligue démocratique du Kosovo",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q177851",
+    "label": "Isa Mustafa",
+    "born": "1951-05-15",
+    "died": null,
+    "parties": [
+     "Q1164022"
+    ]
+   }
+  },
+  {
+   "qid": "Q1265971",
+   "label": "Alliance pour l'avenir du Kosovo",
+   "ideologies": [
+    {
+     "qid": "Q1702969",
+     "label": "nationalisme albanais"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q316553",
+    "label": "Ramush Haradinaj",
+    "born": "1968-07-03",
+    "died": null,
+    "parties": [
+     "Q1265971"
+    ]
+   }
+  }
+ ]
+}

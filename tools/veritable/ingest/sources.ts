@@ -249,6 +249,9 @@ export function loadWorldBank(key: WorldBankKey, lock: Lock): Series {
 
 export type OwidRow = Record<string, number | null> & { year: number };
 
+// Countries that OWID lists without an ISO code, by name (J6b).
+const OWID_ISO_OF: Record<string, string> = { Kosovo: "XKX" };
+
 // Latest year of the OWID energy table for which `column` is known.
 export function loadOwidEnergy(lock: Lock): {
   latest(iso3: string, column: string): { value: number; year: number } | null;
@@ -274,8 +277,13 @@ export function loadOwidEnergy(lock: Lock): {
   for (const line of lines.slice(1)) {
     if (line === "") continue;
     const cells = line.split(",");
-    // OWID has no ISO code for the world aggregate.
-    const iso = cells[countryAt] === "World" ? WORLD : cells[isoAt];
+    // OWID has no ISO code for the world aggregate, nor for Kosovo (J6b).
+    const iso =
+      cells[countryAt] === "World"
+        ? WORLD
+        : cells[isoAt] === "" && cells[countryAt] in OWID_ISO_OF
+          ? OWID_ISO_OF[cells[countryAt]]
+          : cells[isoAt];
     if (iso === "") continue;
     if (!byIso.has(iso)) byIso.set(iso, []);
     byIso.get(iso)!.push(cells);

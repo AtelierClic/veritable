@@ -108,6 +108,8 @@ export function v5ToV6(
             consumption: scaled(e.consumption, quantity),
             imports: scaled(e.imports, quantity),
             exports: scaled(e.exports, quantity),
+            // J6b: a campaign of the J5 keeps the rate of the J2.
+            interestSpread: 0,
           },
         ]),
       ),

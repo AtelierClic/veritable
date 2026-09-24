@@ -18,6 +18,7 @@ import {
   RegimeData,
   RegimesSchema,
 } from "./schemas/politics";
+import { RelationsFile, RelationsFileSchema } from "./schemas/relations";
 import { RowData, RowSchema } from "./schemas/row";
 import { Scenario, ScenarioSchema } from "./schemas/scenario";
 import { Seas, SeasSchema } from "./schemas/seas";
@@ -74,6 +75,8 @@ export interface DataSource {
   zones(scenario: Scenario): Promise<Zones>;
   // Contested regions (J6): null when the scenario has no regions file.
   regions(scenario: Scenario): Promise<Regions | null>;
+  // Relations of the first day (J6b): null when the scenario has none.
+  relations(scenario: Scenario): RelationsFile | null;
   // The political engine (J4).
   regimes(): RegimeData[];
   ideologies(): IdeologyTable;
@@ -185,6 +188,13 @@ export function createDataSource(files: RawDataFiles): DataSource {
       scenario.borders.regions === undefined
         ? null
         : decodeRegions(await files.bytes(scenario.borders.regions)),
+    relations: (scenario) => {
+      const file = scenario.relations;
+      if (file === undefined) return null;
+      return once(`relations:${file}`, () =>
+        RelationsFileSchema.parse(files.json(file)),
+      );
+    },
     // The trunk, then the branches in file order.
     tech: () =>
       once("tech", () => [

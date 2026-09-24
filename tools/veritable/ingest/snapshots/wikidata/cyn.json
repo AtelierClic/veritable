@@ -1,0 +1,86 @@
+{
+ "nation": "CYN",
+ "country": "Q23681",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q12812869",
+    "label": "Ünal Üstel",
+    "born": "1955-01-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q47188815",
+    "label": "Tufan Erhürman",
+    "born": "1970-09-11",
+    "died": null,
+    "parties": [
+     "Q731357"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1809278",
+   "label": "Parti de l'unité nationale",
+   "ideologies": [
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q58174",
+    "label": "Hüseyin Özgürgün",
+    "born": "1965-01-01",
+    "died": null,
+    "parties": [
+     "Q1809278"
+    ]
+   }
+  },
+  {
+   "qid": "Q731357",
+   "label": "Parti républicain turc",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q27628449",
+     "label": "nationalisme chypriote"
+    }
+   ],
+   "leader": {
+    "qid": "Q47188815",
+    "label": "Tufan Erhürman",
+    "born": "1970-09-11",
+    "died": null,
+    "parties": [
+     "Q731357"
+    ]
+   }
+  },
+  {
+   "qid": "Q22350293",
+   "label": "Parti populaire",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

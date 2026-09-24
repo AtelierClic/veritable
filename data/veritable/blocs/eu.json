@@ -1,6 +1,7 @@
 {
   "id": "eu",
   "name": "bloc.eu.name",
+  "type": "economic-union",
   "members": [
     {
       "nation": "AUT",

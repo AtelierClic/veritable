@@ -1,0 +1,80 @@
+{
+ "nation": "SOL",
+ "country": "Q34754",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q4664994",
+    "label": "Abdirahman Mohamed Abdullahi",
+    "born": "1956-04-24",
+    "died": null,
+    "parties": [
+     "Q18395954"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q18395954",
+   "label": "Waddani",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4664994",
+    "label": "Abdirahman Mohamed Abdullahi",
+    "born": "1956-04-24",
+    "died": null,
+    "parties": [
+     "Q18395954"
+    ]
+   }
+  },
+  {
+   "qid": "Q521072",
+   "label": "parti de la Paix, de l'Unité et du Développement",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1239685",
+   "label": "Pour la justice et le développement",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}
