@@ -1158,7 +1158,7 @@
   "screen.diplomacy.sea": "Contrôle des zones maritimes",
   "screen.diplomacy.blockaded": "Blocus subi",
   "screen.diplomacy.embargoes": "Embargos par bien (mes exportations vers…)",
-  "screen.diplomacy.note": "Relations de −100 à +100 ; chaque mois elles dérivent vers l'affinité des deux nations : blocs communs (alliance militaire 40, union économique 30, forum 5), proximité idéologique des gouvernements (jusqu'à 20), −40 si des sanctions sont en vigueur entre elles, −30 si l'une est en guerre contre un allié de l'autre ; −100 en guerre. Déclarer la guerre coûte des relations avec tout le monde, et chaque mois sans casus belli. Les sanctions frappent tous les biens sauf l'alimentation et la pharmacie, dans les deux sens.",
+  "screen.diplomacy.note": "Relations de −100 à +100 ; chaque mois elles dérivent vers l'affinité des deux nations : blocs communs (alliance militaire 40, union économique 30, forum 5), proximité idéologique des gouvernements (jusqu'à 20), −40 si des sanctions sont en vigueur entre elles, −30 si l'une est en guerre contre un allié de l'autre, et la défiance héritée des relations de 2026, qui s'efface de moitié en 25 ans ; −100 en guerre. Déclarer la guerre coûte des relations avec tout le monde, et chaque mois sans casus belli. Les sanctions frappent tous les biens sauf l'alimentation et la pharmacie, dans les deux sens.",
   "law.minimum-wage-raise.name": "Hausse du salaire minimum",
   "law.minimum-wage-raise.desc": "Relève le salaire minimum : les salariés y gagnent, les entreprises y perdent, la croissance ralentit un peu.",
   "law.corporate-tax-cut.name": "Baisse de l'impôt sur les sociétés",
