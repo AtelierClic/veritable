@@ -1,0 +1,79 @@
+[
+  {
+    "date": "2026-01-02",
+    "command": { "type": "tech-research", "node": "energy-green-hydrogen" }
+  },
+  {
+    "date": "2026-01-02",
+    "command": {
+      "type": "tech-research",
+      "node": "energy-solid-state-batteries"
+    }
+  },
+  {
+    "date": "2026-01-02",
+    "command": { "type": "tech-research", "node": "energy-ccs" }
+  },
+  {
+    "date": "2026-07-02",
+    "command": {
+      "type": "bloc-propose",
+      "bloc": "eu",
+      "kind": "budget",
+      "target": null,
+      "direction": "up"
+    }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "set-conscription", "level": "partial" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "raise-division", "template": "armored" }
+  },
+  {
+    "date": "2027-01-01",
+    "command": { "type": "declare-war", "target": "ESP", "casusBelli": "none" }
+  },
+  {
+    "date": "2027-01-02",
+    "macro": { "kind": "send-all", "front": "ESP|FRA", "posture": "attack" }
+  }
+]
