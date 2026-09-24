@@ -574,6 +574,9 @@ export const VeritableConfigSchema = z.object({
   save: z.object({
     // Monthly automatic saves kept; older ones are rotated out.
     autosaveSlots: z.number().int().min(1),
+    // J6c: journal entries older than this many game years are folded into
+    // yearly summaries (sim/journal.ts), every 1 January.
+    journalFullYears: z.number().int().min(1),
   }),
   economy: EconomyConfigSchema,
   budget: BudgetConfigSchema,

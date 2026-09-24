@@ -20,7 +20,14 @@ import { TECH_DOMAINS, TechEffect } from "../data/schemas/tech";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import type { Tally } from "../sim/blocs/blocs";
 import { relation } from "../sim/diplomacy/diplomacy";
+import { entryCategory } from "../sim/journal";
 import { BlocView, FrontView, ReadonlyWorldView } from "../sim/VeritableSim";
+import {
+  filterNations,
+  NationFilter,
+  NO_FILTER,
+  renderNationFilter,
+} from "./nationFilter";
 
 export type ScreenId =
   | "economy"
@@ -81,6 +88,11 @@ export class VeritableScreens extends LitElement {
     target: string;
     aim: "front" | "capital";
   } | null = null;
+
+  // Lists of every nation (J6c): search, region, bloc, sort; the nation
+  // picked in the diplomacy list (its embargoes).
+  @state() private filter: NationFilter = NO_FILTER;
+  @state() private picked: string | null = null;
 
   private sim: RemoteVeritableSim | null = null;
   private timer: ReturnType<typeof setInterval> | null = null;
@@ -366,15 +378,38 @@ export class VeritableScreens extends LitElement {
         ? nothing
         : INTEREST_GROUPS.map((g) => this.bar(vt(`group.${g}`), p.groups![g]))}
       <div class="mt-1 font-bold">${vt("screen.opinion.world")}</div>
-      ${view.nations
-        .filter((n) => !n.isPlayer)
-        .map((n) =>
+      ${this.worldList(view, ["stability", "name", "gdp", "relations"], (ids) =>
+        ids.map((id) =>
           this.bar(
-            `${this.nationLabel(view, n.id)}${view.politics[n.id].unrest ? " ⚠" : ""}`,
-            view.politics[n.id].stability,
+            `${this.nationLabel(view, id)}${view.politics[id].unrest ? " ⚠" : ""}`,
+            view.politics[id].stability,
           ),
-        )}
+        ),
+      )}
     `;
+  }
+
+  // Every nation but the player's, filtered and sorted (J6c).
+  private worldList(
+    view: ReadonlyWorldView,
+    sorts: readonly NationFilter["sort"][],
+    render: (ids: string[]) => unknown,
+  ): TemplateResult {
+    const all = view.nations.filter((n) => !n.isPlayer).map((n) => n.id);
+    const filter = sorts.includes(this.filter.sort)
+      ? this.filter
+      : { ...this.filter, sort: sorts[0] };
+    const ids = filterNations(view, all, filter, (id) =>
+      this.nationLabel(view, id),
+    );
+    return html`${renderNationFilter(
+      view,
+      all,
+      ids.length,
+      filter,
+      sorts,
+      (next) => (this.filter = next),
+    )}${render(ids)}`;
   }
 
   // --- war: fronts and divisions --------------------------------------------------
@@ -902,7 +937,12 @@ export class VeritableScreens extends LitElement {
   private renderDiplomacy(view: ReadonlyWorldView) {
     const me = view.playerNation!;
     const d = view.diplomacy;
-    const others = view.nations.filter((n) => n.id !== me).map((n) => n.id);
+    const all = view.nations.filter((n) => n.id !== me).map((n) => n.id);
+    const others = filterNations(view, all, this.filter, (id) =>
+      this.nationLabel(view, id),
+    );
+    const picked =
+      this.picked !== null && all.includes(this.picked) ? this.picked : null;
     const enemies = new Set(
       d.wars.flatMap((w) =>
         w.aggressors.includes(me)
@@ -916,115 +956,133 @@ export class VeritableScreens extends LitElement {
     void blockading;
     const myDeployment = view.naval.deployments[me];
     return html`
-      <table class="w-full text-right">
-        <thead>
-          <tr class="text-gray-300">
-            <th class="text-left">${vt("screen.diplomacy.nation")}</th>
-            <th>${vt("screen.diplomacy.relations")}</th>
-            <th>${vt("screen.diplomacy.state")}</th>
-            <th>${vt("screen.diplomacy.sanctions")}</th>
-            <th>${vt("screen.diplomacy.war")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${others.map((id) => {
-            const r = relation(d, me, id);
-            const atWar = enemies.has(id);
-            const sanctioning = d.sanctions.some(
-              (s) => s.by === me && s.against === id,
-            );
-            const sanctionedBy = d.sanctions.some(
-              (s) => s.by === id && s.against === me,
-            );
-            const casus = view.casusBelli[id] ?? [];
-            return html`<tr>
-              <td class="text-left">${this.nationLabel(view, id)}</td>
-              <td
-                class=${r < -40
-                  ? "text-red-300"
-                  : r > 30
-                    ? "text-green-300"
-                    : ""}
-              >
-                ${r.toFixed(0)}
-              </td>
-              <td>
-                ${atWar
-                  ? html`<span class="text-red-300"
-                      >${vt("screen.diplomacy.at-war")}</span
-                    >`
-                  : nothing}
-                ${sanctionedBy
-                  ? html`<span class="text-yellow-300"
-                      >${vt("screen.diplomacy.sanctions-me")}</span
-                    >`
-                  : nothing}
-              </td>
-              <td>
-                <button
-                  class="rounded px-1 ${sanctioning
-                    ? "bg-yellow-700"
-                    : "bg-gray-700"}"
-                  @click=${() =>
-                    void this.command({
-                      type: "set-sanctions",
-                      against: id,
-                      active: !sanctioning,
-                    })}
+      ${renderNationFilter(
+        view,
+        all,
+        others.length,
+        this.filter,
+        ["name", "relations", "gdp", "stability"],
+        (next) => (this.filter = next),
+      )}
+      <div class="max-h-96 overflow-y-auto">
+        <table class="w-full text-right">
+          <thead>
+            <tr class="text-gray-300">
+              <th class="text-left">${vt("screen.diplomacy.nation")}</th>
+              <th>${vt("screen.diplomacy.relations")}</th>
+              <th>${vt("screen.diplomacy.state")}</th>
+              <th>${vt("screen.diplomacy.sanctions")}</th>
+              <th>${vt("screen.diplomacy.war")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${others.map((id) => {
+              const r = relation(d, me, id);
+              const atWar = enemies.has(id);
+              const sanctioning = d.sanctions.some(
+                (s) => s.by === me && s.against === id,
+              );
+              const sanctionedBy = d.sanctions.some(
+                (s) => s.by === id && s.against === me,
+              );
+              const casus = view.casusBelli[id] ?? [];
+              return html`<tr class=${id === picked ? "bg-gray-700" : ""}>
+                <td class="text-left">
+                  <button
+                    class="underline decoration-dotted"
+                    title=${vt("screen.diplomacy.pick")}
+                    @click=${() => (this.picked = id)}
+                  >
+                    ${this.nationLabel(view, id)}
+                  </button>
+                </td>
+                <td
+                  class=${r < -40
+                    ? "text-red-300"
+                    : r > 30
+                      ? "text-green-300"
+                      : ""}
                 >
-                  ${sanctioning
-                    ? vt("screen.diplomacy.lift")
-                    : vt("screen.diplomacy.sanction")}
-                </button>
-              </td>
-              <td>
-                ${atWar
-                  ? html`<button
-                        class="rounded px-1 ${myDeployment !== undefined
-                          ? "bg-blue-800"
-                          : "bg-gray-700"}"
-                        @click=${() =>
-                          void this.command({
-                            type: "set-blockade",
-                            target: id,
-                            active: myDeployment === undefined,
-                          })}
-                      >
-                        ${myDeployment !== undefined
-                          ? vt("screen.diplomacy.recall")
-                          : vt("screen.diplomacy.blockade")}
-                      </button>
-                      <button
-                        class="rounded bg-gray-700 px-1"
-                        @click=${() =>
-                          void this.command({ type: "landing", target: id })}
-                      >
-                        ${vt("screen.diplomacy.landing")}
-                      </button>`
-                  : casus.map(
-                      (c) =>
-                        html`<button
-                          class="rounded bg-red-800 px-1"
+                  ${r.toFixed(0)}
+                </td>
+                <td>
+                  ${atWar
+                    ? html`<span class="text-red-300"
+                        >${vt("screen.diplomacy.at-war")}</span
+                      >`
+                    : nothing}
+                  ${sanctionedBy
+                    ? html`<span class="text-yellow-300"
+                        >${vt("screen.diplomacy.sanctions-me")}</span
+                      >`
+                    : nothing}
+                </td>
+                <td>
+                  <button
+                    class="rounded px-1 ${sanctioning
+                      ? "bg-yellow-700"
+                      : "bg-gray-700"}"
+                    @click=${() =>
+                      void this.command({
+                        type: "set-sanctions",
+                        against: id,
+                        active: !sanctioning,
+                      })}
+                  >
+                    ${sanctioning
+                      ? vt("screen.diplomacy.lift")
+                      : vt("screen.diplomacy.sanction")}
+                  </button>
+                </td>
+                <td>
+                  ${atWar
+                    ? html`<button
+                          class="rounded px-1 ${myDeployment !== undefined
+                            ? "bg-blue-800"
+                            : "bg-gray-700"}"
                           @click=${() =>
                             void this.command({
-                              type: "declare-war",
+                              type: "set-blockade",
                               target: id,
-                              casusBelli: c,
+                              active: myDeployment === undefined,
                             })}
                         >
-                          ${vt("screen.diplomacy.declare", {
-                            casus: vt(
-                              this.casusBelli.find((cb) => cb.id === c)?.name ??
-                                c,
-                            ),
-                          })}
-                        </button>`,
-                    )}
-              </td>
-            </tr>`;
-          })}
-        </tbody>
-      </table>
+                          ${myDeployment !== undefined
+                            ? vt("screen.diplomacy.recall")
+                            : vt("screen.diplomacy.blockade")}
+                        </button>
+                        <button
+                          class="rounded bg-gray-700 px-1"
+                          @click=${() =>
+                            void this.command({ type: "landing", target: id })}
+                        >
+                          ${vt("screen.diplomacy.landing")}
+                        </button>`
+                    : casus.map(
+                        (c) =>
+                          html`<button
+                            class="rounded bg-red-800 px-1"
+                            @click=${() =>
+                              void this.command({
+                                type: "declare-war",
+                                target: id,
+                                casusBelli: c,
+                              })}
+                          >
+                            ${vt("screen.diplomacy.declare", {
+                              casus: vt(
+                                this.casusBelli.find((cb) => cb.id === c)
+                                  ?.name ?? c,
+                              ),
+                            })}
+                          </button>`,
+                      )}
+                </td>
+              </tr>`;
+            })}
+          </tbody>
+        </table>
+      </div>
       <div class="mt-1 font-bold">${vt("screen.diplomacy.sea")}</div>
       <div class="flex flex-wrap gap-x-3">
         ${Object.entries(view.naval.control).map(
@@ -1038,46 +1096,68 @@ export class VeritableScreens extends LitElement {
           <b>${pct(view.naval.blockade[me] ?? 0, 0)}</b></span
         >
       </div>
-      <div class="mt-1 font-bold">${vt("screen.diplomacy.embargoes")}</div>
-      <table class="w-full text-center">
+      ${this.renderEmbargoes(view, me, picked)}
+      <div class="mt-1 text-gray-400">${vt("screen.diplomacy.note")}</div>
+    `;
+  }
+
+  // The embargoes of one pair, both ways (J6c: a matrix of 207 nations by
+  // twelve goods did not fit the world).
+  private renderEmbargoes(
+    view: ReadonlyWorldView,
+    me: string,
+    other: string | null,
+  ): TemplateResult {
+    if (other === null) {
+      return html`<div class="mt-1 text-gray-400">
+        ${vt("screen.diplomacy.pick-hint")}
+      </div>`;
+    }
+    const has = (from: string, to: string, good: string) =>
+      view.market.embargoes.some(
+        (e) => e.from === from && e.to === to && e.good === good,
+      );
+    return html`
+      <div class="mt-1 font-bold">
+        ${vt("screen.diplomacy.embargoes-with", {
+          nation: this.nationLabel(view, other),
+        })}
+      </div>
+      <table class="text-center">
         <thead>
           <tr class="text-gray-300">
-            <th class="text-left">${vt("screen.diplomacy.nation")}</th>
-            ${this.goods.map(
-              (g) =>
-                html`<th title=${vt(g.name)}>${vt(g.name).slice(0, 4)}</th>`,
-            )}
+            <th class="text-left">${vt("screen.economy.good")}</th>
+            <th class="px-2">${vt("screen.diplomacy.embargo-mine")}</th>
+            <th class="px-2">${vt("screen.diplomacy.embargo-theirs")}</th>
           </tr>
         </thead>
         <tbody>
-          ${others.map(
-            (id) =>
-              html`<tr>
-                <td class="text-left">${this.nationLabel(view, id)}</td>
-                ${this.goods.map((g) => {
-                  const active = view.market.embargoes.some(
-                    (e) => e.from === me && e.to === id && e.good === g.id,
-                  );
-                  return html`<td>
-                    <input
-                      type="checkbox"
-                      .checked=${active}
-                      @change=${() =>
-                        void this.command({
-                          type: "set-embargo",
-                          from: me,
-                          to: id,
-                          good: g.id,
-                          active: !active,
-                        })}
-                    />
-                  </td>`;
-                })}
-              </tr>`,
-          )}
+          ${this.goods.map((g) => {
+            const mine = has(me, other, g.id);
+            const theirs = has(other, me, g.id);
+            return html`<tr>
+              <td class="text-left">${vt(g.name)}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  .checked=${mine}
+                  @change=${() =>
+                    void this.command({
+                      type: "set-embargo",
+                      from: me,
+                      to: other,
+                      good: g.id,
+                      active: !mine,
+                    })}
+                />
+              </td>
+              <td class=${theirs ? "text-red-300" : "text-gray-500"}>
+                ${theirs ? "✗" : "—"}
+              </td>
+            </tr>`;
+          })}
         </tbody>
       </table>
-      <div class="mt-1 text-gray-400">${vt("screen.diplomacy.note")}</div>
     `;
   }
 
@@ -1568,41 +1648,48 @@ export class VeritableScreens extends LitElement {
           `,
         )}
       <div class="mt-1 font-bold">${vt("screen.leaders.world")}</div>
-      <table class="w-full">
-        <thead>
-          <tr class="text-gray-300">
-            <th class="text-left">${vt("screen.diplomacy.nation")}</th>
-            <th class="text-left">${vt("screen.politics.regime")}</th>
-            <th class="text-left">${vt("screen.leaders.leader")}</th>
-            <th class="text-right">${vt("screen.politics.legitimacy")}</th>
-            <th class="text-right">${vt("screen.opinion.stability")}</th>
-            <th class="text-left">${vt("screen.politics.next-election")}</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${view.nations
-            .filter((n) => !n.isPlayer)
-            .map((n) => {
-              const q = view.politics[n.id];
-              return html`
-                <tr>
-                  <td>${this.nationLabel(view, n.id)}</td>
-                  <td>${vt(`regime.${q.regime}`)}</td>
-                  <td title=${this.ideologyText(q.leader.traits)}>
-                    ${this.actorName(q.leader.name)}
-                  </td>
-                  <td class="text-right">${pct(q.legitimacy, 0)}</td>
-                  <td class="text-right">
-                    ${q.stability.toFixed(2)}${q.unrest ? " ⚠" : ""}
-                  </td>
-                  <td>
-                    ${q.nextElection ?? "—"}${q.electionsSuspended ? " ⏸" : ""}
-                  </td>
-                </tr>
-              `;
-            })}
-        </tbody>
-      </table>
+      ${this.worldList(
+        view,
+        ["name", "stability", "gdp", "relations"],
+        (ids) =>
+          html`<table class="w-full">
+            <thead>
+              <tr class="text-gray-300">
+                <th class="text-left">${vt("screen.diplomacy.nation")}</th>
+                <th class="text-left">${vt("screen.politics.regime")}</th>
+                <th class="text-left">${vt("screen.leaders.leader")}</th>
+                <th class="text-right">${vt("screen.politics.legitimacy")}</th>
+                <th class="text-right">${vt("screen.opinion.stability")}</th>
+                <th class="text-left">
+                  ${vt("screen.politics.next-election")}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              ${ids.map((id) => {
+                const q = view.politics[id];
+                return html`
+                  <tr>
+                    <td>${this.nationLabel(view, id)}</td>
+                    <td>${vt(`regime.${q.regime}`)}</td>
+                    <td title=${this.ideologyText(q.leader.traits)}>
+                      ${this.actorName(q.leader.name)}
+                    </td>
+                    <td class="text-right">${pct(q.legitimacy, 0)}</td>
+                    <td class="text-right">
+                      ${q.stability.toFixed(2)}${q.unrest ? " ⚠" : ""}
+                    </td>
+                    <td>
+                      ${q.nextElection ?? "—"}${q.electionsSuspended
+                        ? " ⏸"
+                        : ""}
+                    </td>
+                  </tr>
+                `;
+              })}
+            </tbody>
+          </table>`,
+      )}
     `;
   }
 
@@ -2298,21 +2385,6 @@ export class VeritableScreens extends LitElement {
     return vt(`region.${region}`);
   }
 
-  private journalCategory(kind: string): string {
-    if (kind === "note") return "notes";
-    if (kind === "objective-completed") return "objectives";
-    if (/^(war|peace|annexation|landing|nuclear|dead-hand)/.test(kind)) {
-      return "war";
-    }
-    if (/^(sanctions|claim)/.test(kind)) return "diplomacy";
-    if (/^bloc-(?!reprimand|suspended)/.test(kind)) return "diplomacy";
-    if (kind === "tech-completed") return "economy";
-    if (kind === "event-occurred") return "other";
-    if (/^(austerity|sovereign|bloc-reprimand)/.test(kind)) return "economy";
-    if (kind === "campaign-started" || kind === "nation-status") return "other";
-    return "politics";
-  }
-
   private renderObjectives(view: ReadonlyWorldView, p: NationPolitics) {
     const pinned = view.objectives;
     const active = pinned.filter((o) => !o.done).length;
@@ -2330,8 +2402,7 @@ export class VeritableScreens extends LitElement {
       .reverse()
       .filter(
         (j) =>
-          this.journalFilter === "" ||
-          this.journalCategory(j.kind) === this.journalFilter,
+          this.journalFilter === "" || entryCategory(j) === this.journalFilter,
       )
       .slice(0, 60);
     void p;
@@ -2439,7 +2510,12 @@ export class VeritableScreens extends LitElement {
                 nation:
                   j.nation === undefined
                     ? ""
-                    : this.nationLabel(view, j.nation),
+                    : j.kind === "yearly-summary"
+                      ? ` — ${this.nationLabel(view, j.nation)}`
+                      : this.nationLabel(view, j.nation),
+                ...(j.kind !== "yearly-summary"
+                  ? {}
+                  : { category: vt(`journal.category.${j.params.category}`) }),
                 ...(j.params.law === undefined
                   ? {}
                   : { law: vt(`law.${j.params.law}.name`) }),

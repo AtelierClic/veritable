@@ -8,6 +8,7 @@ import { IndexedDbSaveStore } from "../save/IndexedDbSaveStore";
 import { SaveMeta, SaveStore } from "../save/SaveStore";
 import { peekSchemaVersion, SAVE_FILE_EXTENSION } from "../save/serialize";
 import { ReadonlyWorldView } from "../sim/VeritableSim";
+import "./NationPicker";
 import {
   newCampaignStartInfo,
   ScenarioChoice,
@@ -147,18 +148,12 @@ export class VeritablePanel extends LitElement {
         )}
       </select>
       <label class="mt-1 block text-gray-300">${vt("start.nation")}</label>
-      <select
-        class="w-full rounded bg-gray-700 px-1"
-        @change=${(e: Event) =>
-          (this.nationId = (e.target as HTMLSelectElement).value)}
-      >
-        ${scenario.nations.map(
-          (n) =>
-            html`<option value=${n.id} ?selected=${n.id === selected}>
-              ${n.label}
-            </option>`,
-        )}
-      </select>
+      <veritable-nation-picker
+        .scenarioId=${scenario.id}
+        .nations=${scenario.nations}
+        .selected=${selected}
+        @nation-picked=${(e: CustomEvent<string>) => (this.nationId = e.detail)}
+      ></veritable-nation-picker>
       <button
         class="mt-1 w-full rounded bg-blue-700 px-2"
         @click=${() => this.startCampaign()}
@@ -313,12 +308,18 @@ export class VeritablePanel extends LitElement {
       <div class="max-h-24 overflow-y-auto text-gray-300">
         ${view.journal.slice(-JOURNAL_LINES).map((entry) => {
           const nation = view.nations.find((n) => n.id === entry.nation);
+          const summary = entry.kind === "yearly-summary";
+          const label = nation ? this.nationLabel(nation) : "";
           const params: Record<string, string> = {
-            nation: nation ? this.nationLabel(nation) : "",
+            nation: summary && label !== "" ? ` — ${label}` : label,
           };
           for (const [k, v] of Object.entries(entry.params)) {
             params[k] =
-              k === "from" || k === "to" ? vt(`nation.status.${v}`) : v;
+              k === "from" || k === "to"
+                ? vt(`nation.status.${v}`)
+                : summary && k === "category"
+                  ? vt(`journal.category.${v}`)
+                  : v;
           }
           return html`<div>
             ${entry.date} — ${vt(`journal.${entry.kind}`, params)}

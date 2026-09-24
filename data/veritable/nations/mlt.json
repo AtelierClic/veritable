@@ -20,6 +20,12 @@
     "hostTile": [2094, 580]
   },
   "contested": [],
+  "geography": {
+    "region": "europe",
+    "subregion": "southern-europe",
+    "source": "natural-earth v5.1.2:REGION_UN,SUBREGION",
+    "asOf": "2026-01-01"
+  },
   "nuclear": null,
   "population": {
     "value": 579704,

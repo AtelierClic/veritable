@@ -20,6 +20,12 @@
     "hostTile": [1660, 827]
   },
   "contested": [],
+  "geography": {
+    "region": "africa",
+    "subregion": "western-africa",
+    "source": "natural-earth v5.1.2:REGION_UN,SUBREGION",
+    "asOf": "2026-01-01"
+  },
   "nuclear": null,
   "population": {
     "value": 527326,

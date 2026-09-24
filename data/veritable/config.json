@@ -5,7 +5,8 @@
     "defaultStartDate": "2026-01-01"
   },
   "save": {
-    "autosaveSlots": 6
+    "autosaveSlots": 6,
+    "journalFullYears": 10
   },
   "economy": {
     "priceAdjustment": 0.02,

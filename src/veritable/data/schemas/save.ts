@@ -106,6 +106,9 @@ export const JOURNAL_KINDS_V6 = [
   // Claims (J6).
   "claim-weakened",
   "claims-settled",
+  // Compaction (J6c): the entries of a year older than
+  // save.journalFullYears, by nation and category.
+  "yearly-summary",
 ] as const;
 export const JournalEntryV6Schema = z.object({
   date: IsoDateSchema,

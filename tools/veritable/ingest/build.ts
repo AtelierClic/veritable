@@ -63,6 +63,20 @@ const FOSSIL_ELECTRICITY = {
 const CEREALS_LAST_COMPLETE_YEAR = 2023;
 // Year of the IMF figures: the last year before the campaign starts.
 const DEBT_YEAR = 2025;
+
+// Natural Earth units under another code than the scenario's.
+const NE_ALIAS: Record<string, string> = { KOS: "XKX" };
+// M49 subregion of the islands Natural Earth files under the open ocean.
+const OPEN_OCEAN_SUBREGION: Record<string, string> = {
+  Africa: "Eastern Africa",
+  Americas: "South America",
+  Oceania: "Polynesia",
+};
+const slug = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 // The ten nations of europe-10, whose hand-written estimates predate the J6.
 const EUROPE_10 = [
   "FRA",
@@ -311,6 +325,7 @@ export function build(scenarioId: string): void {
     )
     .sort((a, b) => a.id.localeCompare(b.id));
   const countryNames = new Map<string, string>();
+  const worldRegions = new Map<string, { region: string; subregion: string }>();
   for (const f of JSON.parse(
     fs.readFileSync(
       path.join(
@@ -323,6 +338,17 @@ export function build(scenarioId: string): void {
     const p = f.properties;
     const iso = p.ISO_A3 !== "-99" ? p.ISO_A3 : p.ADM0_A3;
     if (p.NAME_FR) countryNames.set(iso, p.NAME_FR);
+    // J6c: the region of the world (UN M49 as Natural Earth gives it); the
+    // few islands Natural Earth files under the open ocean go to the
+    // subregion M49 gives them (Seychelles, Mauritius: Eastern Africa).
+    const sub =
+      p.SUBREGION === "Seven seas (open ocean)"
+        ? (OPEN_OCEAN_SUBREGION[p.REGION_UN] ?? p.SUBREGION)
+        : p.SUBREGION;
+    worldRegions.set(NE_ALIAS[iso] ?? iso, {
+      region: slug(p.REGION_UN),
+      subregion: slug(sub),
+    });
   }
   // Micro-states of the scenario's map (J6), from its borders meta.
   const metaFile = path.join(
@@ -998,8 +1024,26 @@ export function build(scenarioId: string): void {
     ) {
       identity.territory = { kind: "tiles" };
     }
+    // The region of the world (J6c): Natural Earth, else that of the
+    // nation an entity was carved from or of its claimant.
+    const claimant = (
+      scenario.contested as { controller: string; claimants: string[] }[]
+    ).find((c) => c.controller === n)?.claimants[0];
+    const where =
+      worldRegions.get(n) ??
+      worldRegions.get(entities[n]?.parent ?? "") ??
+      worldRegions.get(claimant ?? "");
+    if (where === undefined) throw new Error(`no region of the world for ${n}`);
+    const geography = {
+      ...where,
+      source: worldRegions.has(n)
+        ? "natural-earth v5.1.2:REGION_UN,SUBREGION"
+        : `natural-earth v5.1.2:REGION_UN,SUBREGION (${entities[n]?.parent ?? claimant})`,
+      asOf: "2026-01-01",
+    };
     sheets[n] = {
       ...identity,
+      geography,
       nuclear:
         nuclear === undefined
           ? null

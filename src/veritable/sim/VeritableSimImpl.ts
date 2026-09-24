@@ -95,6 +95,7 @@ import {
   initEvents,
   stepEventsMonth,
 } from "./events/events";
+import { compactJournal } from "./journal";
 import { nationFromData, statusFromTerritory } from "./nation";
 import {
   initNaval,
@@ -390,7 +391,17 @@ export class VeritableSimImpl implements VeritableSim {
         },
       },
       { domain: "blocs", onMonth: (c) => this.blocsMonth(c) },
-      { domain: "save" },
+      {
+        domain: "save",
+        // J6c: every 1 January, the journal older than journalFullYears
+        // is folded into yearly summaries.
+        onMonth: (c) => {
+          if (!c.date.endsWith("-01-01")) return;
+          const years = this.deps.config.save.journalFullYears;
+          const before = `${Number(c.date.slice(0, 4)) - years}-01-01`;
+          this.journal = compactJournal(this.journal, before);
+        },
+      },
     ];
   }
 

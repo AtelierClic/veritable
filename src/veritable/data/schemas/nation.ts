@@ -121,6 +121,15 @@ export const NationEconomySchema = z.object({
 });
 export type NationEconomyData = z.infer<typeof NationEconomySchema>;
 
+// J6c: the region and subregion of the world (UN M49, slugs; the labels are
+// i18n keys world-region.<slug>): filters of the screens, spread of the wars.
+export const GeographySchema = z.object({
+  region: z.string().min(1),
+  subregion: z.string().min(1),
+  source: z.string().min(1),
+  asOf: z.string().min(1),
+});
+
 // The sourced figures were optional during J1; since the J2 ingestion they are
 // mandatory again. Still optional by design: `interestGroups` (an override of
 // the default weights of config.json) and `aiAgenda` (J5).
@@ -128,6 +137,8 @@ export const NationDataSchema = z.object({
   id: NationIdSchema,
   name: z.string().min(1), // i18n key
   capital: CapitalSchema,
+  // J6c; optional for the test sheets.
+  geography: GeographySchema.optional(),
   regime: RegimeSchema,
   regimeSource: ProvenanceSchema,
   blocs: z.array(z.string()),

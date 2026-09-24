@@ -19,6 +19,12 @@
     "kind": "tiles"
   },
   "contested": [],
+  "geography": {
+    "region": "africa",
+    "subregion": "eastern-africa",
+    "source": "natural-earth v5.1.2:REGION_UN,SUBREGION",
+    "asOf": "2026-01-01"
+  },
   "nuclear": null,
   "population": {
     "value": 12188800,
