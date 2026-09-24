@@ -10,7 +10,7 @@ import {
   TestNationOptions,
   testScenario,
 } from "../testing/nations";
-import { testSimData } from "../testing/simData";
+import { testBloc, testSimData } from "../testing/simData";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { relation, setRelation } from "./diplomacy";
@@ -296,36 +296,22 @@ describe("international reaction", () => {
     ).toEqual(["BBB", "CCC", "DDD"]);
   });
 
-  it("the full members of a bloc entity align once half of them sanction", () => {
-    const { sim, months } = campaign({
+  it("a bloc entity decides who its members are; a sheet label counts only for a bloc without an entity (J5)", () => {
+    const { sim } = campaign({
       nations: {
-        AAA: { personnel: 150_000 },
-        BBB: { blocs: ["club"], personnel: 100_000 },
-        CCC: { blocs: ["club"], personnel: 100_000 },
-        DDD: { blocs: ["far"], personnel: 100_000 },
-        EEE: { blocs: ["far"], personnel: 100_000 },
+        AAA: { blocs: ["club"] },
+        BBB: { blocs: ["club"] },
+        CCC: { blocs: ["far"] },
+        DDD: { blocs: ["far"] },
       },
       blocsData: [
-        {
-          id: "club",
-          name: "bloc.club",
-          layer: 1,
-          members: [
-            { nation: "CCC", status: "full" },
-            { nation: "DDD", status: "full" },
-          ],
-        },
+        testBloc({ id: "club", members: [{ nation: "AAA", status: "full" }] }),
       ],
     });
-    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
-    months(8);
-    const by = sim
-      .read()
-      .diplomacy.sanctions.map((s) => s.by)
-      .sort();
-    // BBB is the victim; CCC sanctions as a bloc-mate of BBB; DDD follows CCC
-    // inside the "club" entity; EEE has no reason.
-    expect(by).toEqual(["BBB", "CCC", "DDD"]);
+    const d = sim.read().diplomacy;
+    // BBB carries the label "club" but is no member of the entity.
+    expect(relation(d, "AAA", "BBB")).toBe(0);
+    expect(relation(d, "CCC", "DDD")).toBe(30);
   });
 
   it("a coalition forms against an aggressor without casus belli that outweighs its victim", () => {

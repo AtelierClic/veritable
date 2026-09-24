@@ -1,5 +1,10 @@
 import { z } from "zod";
 import {
+  BlocDomain,
+  BlocMemberStatus,
+  DecisionRule,
+} from "../data/schemas/bloc";
+import {
   INTEREST_GROUPS,
   NationId,
   NationIdSchema,
@@ -8,6 +13,10 @@ import { GoodIdSchema } from "../data/schemas/goods";
 import { SPENDING_POSTS, TAX_IDS } from "../data/schemas/nation";
 import {
   AiState,
+  BlocMeasureSchema,
+  BlocProposal,
+  BlocState,
+  BlocVoteSchema,
   DiplomacyState,
   JournalEntry,
   Market,
@@ -26,6 +35,7 @@ import {
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
+import type { AccessionCriteria, MeasureOption, Tally } from "./blocs/blocs";
 
 // The simulation boundary (ARCHITECTURE.md, "Frontière de simulation").
 // The client (through the worker) and the headless runner are two consumers of
@@ -143,6 +153,27 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
     aim: z.enum(["front", "capital"]),
     confirmed: z.literal(true),
   }),
+  // Blocs (J5): the leader puts a measure to the vote (political capital);
+  // a member votes, applies, leaves, answers a call of collective defence.
+  z.object({
+    type: z.literal("bloc-propose"),
+    bloc: z.string().min(1),
+    kind: BlocMeasureSchema,
+    target: NationIdSchema.nullable(),
+    direction: z.enum(["up", "down"]).nullable(),
+  }),
+  z.object({
+    type: z.literal("bloc-vote"),
+    proposal: z.number().int(),
+    vote: BlocVoteSchema,
+  }),
+  z.object({ type: z.literal("bloc-apply"), bloc: z.string().min(1) }),
+  z.object({ type: z.literal("bloc-leave"), bloc: z.string().min(1) }),
+  z.object({
+    type: z.literal("bloc-honor"),
+    bloc: z.string().min(1),
+    war: z.string().min(1),
+  }),
 ]);
 export type PlayerCommand = z.infer<typeof PlayerCommandSchema>;
 
@@ -238,7 +269,19 @@ export type SimEvent =
         // The nation AI (J5).
         | "arms-aid-started"
         | "arms-aid-ended"
-        | "ai-landing";
+        | "ai-landing"
+        // Blocs (J5).
+        | "bloc-proposal"
+        | "bloc-decision"
+        | "bloc-presidency"
+        | "bloc-application"
+        | "bloc-accession-opened"
+        | "bloc-accession-frozen"
+        | "bloc-joined"
+        | "bloc-exit-notified"
+        | "bloc-left"
+        | "bloc-article5"
+        | "bloc-article5-refused";
       date: string;
       nation: NationId;
       params: Record<string, string>;
@@ -316,6 +359,36 @@ export interface ReadonlyWorldView {
   readonly electionProjection: Readonly<Record<string, number>> | null;
   readonly objectives: readonly Readonly<PinnedObjective>[];
   readonly notes: readonly Readonly<{ date: string; text: string }>[];
+  // Blocs, layers 2 and 3 (J5).
+  readonly blocs: readonly BlocView[];
+}
+
+// A bloc as the screen sees it. Members: the simulated nations only, and
+// how many full members it has in the world.
+export interface BlocView {
+  id: string;
+  leader: NationId | null;
+  leadership: "rotating" | "hegemon" | "elected";
+  termEnds: string | null; // next change of a rotating presidency
+  members: readonly { nation: NationId; status: BlocMemberStatus }[];
+  worldMembers: number;
+  playerStatus: BlocMemberStatus | null;
+  rules: Readonly<Record<BlocDomain, DecisionRule>>;
+  qualifiedMajority: { memberShare: number; populationShare: number } | null;
+  collectiveDefense: boolean; // in the data or voted
+  competencies: readonly string[];
+  techBranch: string | null;
+  state: Readonly<BlocState>;
+  contributionPctGdp: number | null; // x the budget scale
+  // Pending proposals with the vote they would get today; resolved ones.
+  pending: readonly { proposal: Readonly<BlocProposal>; projection: Tally }[];
+  resolved: readonly Readonly<BlocProposal>[];
+  // What the player may propose (it leads), apply for (it is out).
+  options: readonly MeasureOption[];
+  criteria: AccessionCriteria | null;
+  calls: readonly { war: string; until: string }[];
+  exitTradeCostPctGdp: number;
+  exitDelayMonths: number;
 }
 
 export interface TileGrid {

@@ -1,0 +1,77 @@
+{
+  "id": "opec",
+  "name": "bloc.opec.name",
+  "members": [
+    {
+      "nation": "DZA",
+      "status": "full"
+    },
+    {
+      "nation": "COG",
+      "status": "full"
+    },
+    {
+      "nation": "GNQ",
+      "status": "full"
+    },
+    {
+      "nation": "GAB",
+      "status": "full"
+    },
+    {
+      "nation": "IRN",
+      "status": "full"
+    },
+    {
+      "nation": "IRQ",
+      "status": "full"
+    },
+    {
+      "nation": "KWT",
+      "status": "full"
+    },
+    {
+      "nation": "LBY",
+      "status": "full"
+    },
+    {
+      "nation": "NGA",
+      "status": "full"
+    },
+    {
+      "nation": "SAU",
+      "status": "full"
+    },
+    {
+      "nation": "ARE",
+      "status": "full"
+    },
+    {
+      "nation": "VEN",
+      "status": "full"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "unanimity",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "hegemon"
+  },
+  "competencies": ["trade"],
+  "layer": 3
+}

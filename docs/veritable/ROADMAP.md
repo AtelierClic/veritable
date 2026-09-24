@@ -91,7 +91,7 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 
 ## J5 — Profondeur
 
-- [ ] Blocs couche 2 (budget, votes, décisions) puis couche 3 (leadership joueur) ; 12 blocs du palier 1
+- [x] Blocs couche 2 (budget, votes, décisions) puis couche 3 (leadership joueur) ; 12 blocs du palier 1 _(2026-09-24 — listes de membres des 195 pays, seuls les membres simulés votent (artefact europe-10, J6) ; majorité qualifiée de l'UE, article 5 de l'OTAN, budget et transferts, adhésion et sortie, présidence tournante et puissance dominante, huit mesures ; l'écran Blocs est livré, les écrans arbre et événements viennent au J5c)_
 - [ ] Arbre technologique : tronc commun paliers 1 et 2 ; branches de doctrine par bloc
 - [ ] 50 événements scriptés 2026-2030 ; gabarits procéduraux ; moteur de déclenchement unique
 - [x] Doctrines nucléaires ; probabilité de tir ; main morte ; retombées → production _(2026-09-24 — niveaux de menace, dissuasion, silos OpenFront dès le premier jour, tirs par `NukeExecution`, paria et coalition, main morte qui reporte l'annexion d'un jour, section Nucléaire de l'écran des fronts ; calibrage sur la campagne de livraison du J5c)_

@@ -1,4 +1,4 @@
-import { Bloc } from "../../data/schemas/bloc";
+import { Bloc, BlocMemberStatus } from "../../data/schemas/bloc";
 import { NationId } from "../../data/schemas/common";
 import { VeritableConfig } from "../../data/schemas/config";
 import { Good, GoodId } from "../../data/schemas/goods";
@@ -65,6 +65,17 @@ export interface EconomyContext {
   // state: a suspended member gets no bloc bonus and no alignment (J4).
   suspensions: Set<string>;
   isFullMember(bloc: Bloc, nation: string): boolean;
+  // Bloc memberships in play (J5): bloc id -> nation -> status, the lists of
+  // the data until the bloc state syncs them (accessions, exits).
+  memberships: Map<string, Map<string, BlocMemberStatus>>;
+  // Full, unsuspended members of a bloc, simulated or not.
+  membersOf(bloc: string): string[];
+  // The blocs a nation is a full, unsuspended member of, plus the bloc labels
+  // of its sheet for blocs without an entity.
+  blocsOf(nation: string): string[];
+  commonBlocs(a: string, b: string): number;
+  // Trade agreements of the blocs (J5): "exporter|importer" -> multiplier.
+  pairBonus: Map<string, number>;
 }
 
 export function buildContext(
@@ -83,15 +94,14 @@ export function buildContext(
     neighbours.add(`${id}|${ROW_ID}`);
     neighbours.add(`${ROW_ID}|${id}`);
   }
-  const fullMembers = data.blocs
-    .filter((b) => b.tradeBonus !== undefined)
-    .map((b) => ({
-      id: b.id,
-      bonus: b.tradeBonus!,
-      members: new Set(
-        b.members.filter((m) => m.status === "full").map((m) => m.nation),
-      ),
-    }));
+  const memberships = new Map<string, Map<string, BlocMemberStatus>>(
+    data.blocs.map((b) => [
+      b.id,
+      new Map(b.members.map((m) => [m.nation, m.status])),
+    ]),
+  );
+  const tradeBlocs = data.blocs.filter((b) => b.tradeBonus !== undefined);
+  const entities = new Set(data.blocs.map((b) => b.id));
 
   const distanceKm = (a: string, b: string): number => {
     if (a === ROW_ID || b === ROW_ID) return config.economy.rowDistanceKm;
@@ -107,6 +117,20 @@ export function buildContext(
   );
   const sheets = new Map(nations.map((n) => [n.id, n]));
   const suspensions = new Set<string>();
+  const pairBonus = new Map<string, number>();
+  const full = (bloc: string, nation: string) =>
+    memberships.get(bloc)?.get(nation) === "full" &&
+    !suspensions.has(`${bloc}|${nation}`);
+  const blocsOf = (nation: string): string[] => {
+    const out: string[] = [];
+    for (const bloc of memberships.keys()) {
+      if (full(bloc, nation)) out.push(bloc);
+    }
+    for (const label of sheets.get(nation)?.blocs ?? []) {
+      if (!entities.has(label) && !out.includes(label)) out.push(label);
+    }
+    return out;
+  };
   const byRegime = new Map(data.regimes.map((r) => [r.id, r]));
   const byLaw = new Map(data.laws.map((l) => [l.id, l]));
 
@@ -156,9 +180,16 @@ export function buildContext(
       return sheet;
     },
     suspensions,
-    isFullMember: (bloc, nation) =>
-      bloc.members.some((m) => m.nation === nation && m.status === "full") &&
-      !suspensions.has(`${bloc.id}|${nation}`),
+    isFullMember: (bloc, nation) => full(bloc.id, nation),
+    memberships,
+    pairBonus,
+    membersOf: (bloc) =>
+      [...(memberships.get(bloc)?.keys() ?? [])].filter((n) => full(bloc, n)),
+    blocsOf,
+    commonBlocs: (a, b) => {
+      const mine = blocsOf(a);
+      return blocsOf(b).filter((x) => mine.includes(x)).length;
+    },
     affinity(good, exporter, importer) {
       if (exporter === importer) return 0;
       if (
@@ -179,18 +210,12 @@ export function buildContext(
         }
         value *= d;
       }
-      for (const bloc of fullMembers) {
-        if (
-          bloc.members.has(exporter) &&
-          bloc.members.has(importer) &&
-          !suspensions.has(`${bloc.id}|${exporter}`) &&
-          !suspensions.has(`${bloc.id}|${importer}`)
-        ) {
-          value *= bloc.bonus;
+      for (const bloc of tradeBlocs) {
+        if (full(bloc.id, exporter) && full(bloc.id, importer)) {
+          value *= bloc.tradeBonus!;
         }
       }
-      // Trade agreements (agreementBonus) arrive with diplomacy (J3a).
-      return value;
+      return value * (pairBonus.get(`${exporter}|${importer}`) ?? 1);
     },
   };
 }

@@ -11,7 +11,7 @@ import {
   TestNationOptions,
   testScenario,
 } from "../testing/nations";
-import { testGoods, testRow, testSimData } from "../testing/simData";
+import { testBloc, testGoods, testRow, testSimData } from "../testing/simData";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { buildContext } from "./context";
@@ -327,10 +327,8 @@ describe("shortages", () => {
 });
 
 describe("blocs and AI", () => {
-  const club: Bloc = {
+  const club: Bloc = testBloc({
     id: "club",
-    name: "bloc.club",
-    layer: 1,
     members: [{ nation: "AAA", status: "full" }],
     fiscalRule: {
       maxDeficitToGdp: 0.03,
@@ -340,7 +338,7 @@ describe("blocs and AI", () => {
       opinionMalus: 0.03,
       malusFadeMonths: 6,
     },
-  };
+  });
 
   it("debt above 60 % and rising for a year: the bloc reprimands a member, once, and it costs opinion", () => {
     const { sim, events, months } = campaign({
@@ -392,7 +390,7 @@ describe("blocs and AI", () => {
     politics.reprimandMalus = 0.03;
     const malus: number[] = [];
     for (let m = 0; m < 7; m++) {
-      stepFiscalRules([club], "AAA", economy, politics);
+      stepFiscalRules([club], () => true, "AAA", economy, politics);
       malus.push(politics.reprimandMalus);
     }
     expect(politics.reprimanded).toBe(false);

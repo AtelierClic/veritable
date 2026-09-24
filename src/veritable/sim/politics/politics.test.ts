@@ -10,7 +10,7 @@ import {
   TestNationOptions,
   testScenario,
 } from "../testing/nations";
-import { testLeaders, testSimData } from "../testing/simData";
+import { testBloc, testLeaders, testSimData } from "../testing/simData";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { holdElection, projectShares } from "./elections";
@@ -305,17 +305,15 @@ describe("coups, revolutions and the AI", () => {
     const config = quietConfig();
     config.politics.coups.failureShare = 0;
     const blocs = [
-      {
+      testBloc({
         id: "club",
-        name: "bloc.club",
         members: [
-          { nation: "AAA", status: "full" as const },
-          { nation: "BBB", status: "full" as const },
+          { nation: "AAA", status: "full" },
+          { nation: "BBB", status: "full" },
         ],
-        layer: 1,
         tradeBonus: 1.5,
         suspendsOnCoup: true,
-      },
+      }),
     ];
     const ids = ["AAA", "BBB"];
     const sheets = new Map(

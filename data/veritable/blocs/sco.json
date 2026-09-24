@@ -1,0 +1,99 @@
+{
+  "id": "sco",
+  "name": "bloc.sco.name",
+  "members": [
+    {
+      "nation": "CHN",
+      "status": "full"
+    },
+    {
+      "nation": "IND",
+      "status": "full"
+    },
+    {
+      "nation": "IRN",
+      "status": "full"
+    },
+    {
+      "nation": "KAZ",
+      "status": "full"
+    },
+    {
+      "nation": "KGZ",
+      "status": "full"
+    },
+    {
+      "nation": "PAK",
+      "status": "full"
+    },
+    {
+      "nation": "RUS",
+      "status": "full"
+    },
+    {
+      "nation": "TJK",
+      "status": "full"
+    },
+    {
+      "nation": "UZB",
+      "status": "full"
+    },
+    {
+      "nation": "BLR",
+      "status": "full"
+    },
+    {
+      "nation": "AFG",
+      "status": "observer"
+    },
+    {
+      "nation": "MNG",
+      "status": "observer"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "consensus",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "budget": {
+    "contributionPctGdp": 0.0001,
+    "shares": {
+      "defense": 0.5,
+      "programs": 0.5
+    }
+  },
+  "accession": {
+    "minRelations": 0,
+    "monthsMin": 12,
+    "monthsMax": 48
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0.002
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": [
+      "KGZ",
+      "PAK",
+      "RUS",
+      "TJK",
+      "UZB",
+      "BLR",
+      "CHN",
+      "IND",
+      "IRN",
+      "KAZ"
+    ]
+  },
+  "competencies": ["defense", "tech"],
+  "techBranch": "sco-security",
+  "layer": 3
+}

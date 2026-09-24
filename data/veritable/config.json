@@ -397,6 +397,69 @@
     "relationsCap": -80,
     "falloutLoss": 0.9
   },
+  "blocs": {
+    "rotationEpoch": "2026-01-01",
+    "vote": {
+      "relations": 1,
+      "ideology": 0.5,
+      "tradePerPctGdp": 0.5,
+      "sovereignty": 0.5,
+      "loyalty": 0.2
+    },
+    "integration": {
+      "sanctions": 0,
+      "lift": 0,
+      "accession": 0.5,
+      "suspension": 0,
+      "budget": 1,
+      "common-defense": 1,
+      "tech-program": 0.5,
+      "trade-agreement": 0
+    },
+    "tradeStake": {
+      "sanctions": 1,
+      "lift": -1,
+      "accession": -0.25,
+      "suspension": 0.5,
+      "budget": 0,
+      "common-defense": 0,
+      "tech-program": 0,
+      "trade-agreement": -0.5
+    },
+    "capitalCost": {
+      "sanctions": 20,
+      "lift": 10,
+      "accession": 20,
+      "suspension": 30,
+      "budget": 15,
+      "common-defense": 30,
+      "tech-program": 20,
+      "trade-agreement": 15
+    },
+    "budgetStep": 0.2,
+    "budgetScaleMin": 0.4,
+    "budgetScaleMax": 2,
+    "programMonths": 36,
+    "agreementTradeBonus": 1.2,
+    "historyMonths": 24,
+    "hegemonMargin": 0.1,
+    "commonDefense": {
+      "joinProbability": 0.7,
+      "sovereignJoinProbability": 0.4,
+      "sovereigntyAbove": 0.7
+    },
+    "article5RefusalRelations": 20,
+    "ai": {
+      "sanctionRelationsBelow": -40,
+      "liftAboveRelations": -40,
+      "techProgramProbability": 0.05,
+      "tradeAgreementProbability": 0.02,
+      "tradeAgreementRelations": 40,
+      "applyProbability": 0.01,
+      "applyRelationMargin": 20,
+      "applySovereigntyBelow": -0.3
+    }
+  },
   "ai": {
     "nations": {
       "reviewShare": 0.1,

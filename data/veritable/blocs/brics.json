@@ -1,0 +1,119 @@
+{
+  "id": "brics",
+  "name": "bloc.brics.name",
+  "members": [
+    {
+      "nation": "BRA",
+      "status": "full"
+    },
+    {
+      "nation": "RUS",
+      "status": "full"
+    },
+    {
+      "nation": "IND",
+      "status": "full"
+    },
+    {
+      "nation": "CHN",
+      "status": "full"
+    },
+    {
+      "nation": "ZAF",
+      "status": "full"
+    },
+    {
+      "nation": "EGY",
+      "status": "full"
+    },
+    {
+      "nation": "ETH",
+      "status": "full"
+    },
+    {
+      "nation": "IRN",
+      "status": "full"
+    },
+    {
+      "nation": "ARE",
+      "status": "full"
+    },
+    {
+      "nation": "IDN",
+      "status": "full"
+    },
+    {
+      "nation": "BLR",
+      "status": "partner"
+    },
+    {
+      "nation": "BOL",
+      "status": "partner"
+    },
+    {
+      "nation": "KAZ",
+      "status": "partner"
+    },
+    {
+      "nation": "CUB",
+      "status": "partner"
+    },
+    {
+      "nation": "MYS",
+      "status": "partner"
+    },
+    {
+      "nation": "THA",
+      "status": "partner"
+    },
+    {
+      "nation": "UGA",
+      "status": "partner"
+    },
+    {
+      "nation": "UZB",
+      "status": "partner"
+    },
+    {
+      "nation": "NGA",
+      "status": "partner"
+    },
+    {
+      "nation": "VNM",
+      "status": "partner"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "consensus",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "budget": {
+    "contributionPctGdp": 0.0002,
+    "shares": {
+      "programs": 1
+    }
+  },
+  "accession": {
+    "minRelations": 0,
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0.005
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": ["IND", "CHN", "ZAF", "BRA", "RUS"]
+  },
+  "competencies": ["trade", "tech"],
+  "techBranch": "brics-sovereign-industry",
+  "layer": 3
+}

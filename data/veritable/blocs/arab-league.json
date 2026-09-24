@@ -1,0 +1,146 @@
+{
+  "id": "arab-league",
+  "name": "bloc.arab-league.name",
+  "members": [
+    {
+      "nation": "DZA",
+      "status": "full"
+    },
+    {
+      "nation": "BHR",
+      "status": "full"
+    },
+    {
+      "nation": "COM",
+      "status": "full"
+    },
+    {
+      "nation": "DJI",
+      "status": "full"
+    },
+    {
+      "nation": "EGY",
+      "status": "full"
+    },
+    {
+      "nation": "IRQ",
+      "status": "full"
+    },
+    {
+      "nation": "JOR",
+      "status": "full"
+    },
+    {
+      "nation": "KWT",
+      "status": "full"
+    },
+    {
+      "nation": "LBN",
+      "status": "full"
+    },
+    {
+      "nation": "LBY",
+      "status": "full"
+    },
+    {
+      "nation": "MRT",
+      "status": "full"
+    },
+    {
+      "nation": "MAR",
+      "status": "full"
+    },
+    {
+      "nation": "OMN",
+      "status": "full"
+    },
+    {
+      "nation": "PSE",
+      "status": "full"
+    },
+    {
+      "nation": "QAT",
+      "status": "full"
+    },
+    {
+      "nation": "SAU",
+      "status": "full"
+    },
+    {
+      "nation": "SOM",
+      "status": "full"
+    },
+    {
+      "nation": "SDN",
+      "status": "full"
+    },
+    {
+      "nation": "SYR",
+      "status": "full"
+    },
+    {
+      "nation": "TUN",
+      "status": "full"
+    },
+    {
+      "nation": "ARE",
+      "status": "full"
+    },
+    {
+      "nation": "YEM",
+      "status": "full"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "qualified-majority",
+    "accession": "unanimity",
+    "suspension": "qualified-majority",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "qualifiedMajority": {
+    "memberShare": 0.67,
+    "populationShare": 0
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": [
+      "DZA",
+      "BHR",
+      "COM",
+      "DJI",
+      "EGY",
+      "IRQ",
+      "JOR",
+      "KWT",
+      "LBN",
+      "LBY",
+      "MRT",
+      "MAR",
+      "OMN",
+      "PSE",
+      "QAT",
+      "SAU",
+      "SOM",
+      "SDN",
+      "SYR",
+      "TUN",
+      "ARE",
+      "YEM"
+    ]
+  },
+  "competencies": ["sanctions"],
+  "layer": 3
+}

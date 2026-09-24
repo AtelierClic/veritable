@@ -1,0 +1,88 @@
+{
+  "id": "asean",
+  "name": "bloc.asean.name",
+  "members": [
+    {
+      "nation": "BRN",
+      "status": "full"
+    },
+    {
+      "nation": "KHM",
+      "status": "full"
+    },
+    {
+      "nation": "IDN",
+      "status": "full"
+    },
+    {
+      "nation": "LAO",
+      "status": "full"
+    },
+    {
+      "nation": "MYS",
+      "status": "full"
+    },
+    {
+      "nation": "MMR",
+      "status": "full"
+    },
+    {
+      "nation": "PHL",
+      "status": "full"
+    },
+    {
+      "nation": "SGP",
+      "status": "full"
+    },
+    {
+      "nation": "THA",
+      "status": "full"
+    },
+    {
+      "nation": "VNM",
+      "status": "full"
+    },
+    {
+      "nation": "TLS",
+      "status": "full"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "consensus",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": [
+      "PHL",
+      "SGP",
+      "THA",
+      "TLS",
+      "VNM",
+      "BRN",
+      "KHM",
+      "IDN",
+      "LAO",
+      "MYS",
+      "MMR"
+    ]
+  },
+  "competencies": ["trade"],
+  "tradeBonus": 1.2,
+  "layer": 3
+}

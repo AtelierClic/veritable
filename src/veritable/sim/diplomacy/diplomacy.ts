@@ -1,5 +1,4 @@
 import { NationId } from "../../data/schemas/common";
-import { NationData } from "../../data/schemas/nation";
 import {
   DiplomacyState,
   EconomyState,
@@ -91,10 +90,6 @@ export function addRelation(
   setRelation(state, a, b, relation(state, a, b) + delta);
 }
 
-function commonBlocs(a: NationData, b: NationData): number {
-  return a.blocs.filter((bloc) => b.blocs.includes(bloc)).length;
-}
-
 export function warOf(
   state: DiplomacyState,
   a: NationId,
@@ -155,7 +150,7 @@ export function initDiplomacy(
   for (let i = 0; i < ids.length; i++) {
     state.relations[ids[i]] = {};
     for (let j = i + 1; j < ids.length; j++) {
-      const common = commonBlocs(ctx.sheet(ids[i]), ctx.sheet(ids[j]));
+      const common = ctx.commonBlocs(ids[i], ids[j]);
       state.relations[ids[i]][ids[j]] = Math.min(
         cfg.blocRelationCap,
         cfg.blocRelation * common,
@@ -230,12 +225,11 @@ export function casusBelliValid(
       );
     }
     case "ally-attacked": {
-      const me = ctx.sheet(declarer);
       return state.wars.some(
         (w) =>
           w.aggressors.includes(target) &&
           w.defenders.some(
-            (d) => d !== declarer && commonBlocs(me, ctx.sheet(d)) > 0,
+            (d) => d !== declarer && ctx.commonBlocs(declarer, d) > 0,
           ),
       );
     }
@@ -453,10 +447,7 @@ export function affinityOf(
   // The bloc term is capped like the first-day relations (blocRelationCap):
   // four common blocs are not worth more than two.
   return clamp(
-    Math.min(
-      cfg.blocRelationCap,
-      cfg.affinityPerBloc * commonBlocs(ctx.sheet(a), ctx.sheet(b)),
-    ) +
+    Math.min(cfg.blocRelationCap, cfg.affinityPerBloc * ctx.commonBlocs(a, b)) +
       cfg.affinityIdeology * proximity,
     -100,
     100,
@@ -491,6 +482,8 @@ export function stepDiplomacyMonth(
   date: string,
   // Nations run by the AI (everyone but the player, or everyone in autopilot).
   aiNations: readonly NationId[],
+  // Sanctions a bloc holds: the member does not lift them alone (J5).
+  blocHeld: (by: NationId, against: NationId) => boolean = () => false,
 ): DiplomacyEvent[] {
   const cfg = ctx.config.diplomacy;
   const events: DiplomacyEvent[] = [];
@@ -532,7 +525,8 @@ export function stepDiplomacyMonth(
     }
   }
 
-  // 3. Sanctions of the AI nations against aggressors, then bloc alignment.
+  // 3. Sanctions of the AI nations against aggressors. The alignment of the
+  //    blocs (layer 1, J3) is now a vote of their members (sim/blocs, J5).
   const power = new Map(ids.map((n) => [n, militaryPower(ctx, military, n)]));
   const totalPower = [...power.values()].reduce((a, b) => a + b, 0);
   const wantsToSanction = (by: NationId, aggressor: NationId, war: War) => {
@@ -540,9 +534,8 @@ export function stepDiplomacyMonth(
       return false;
     // A nation the aggressor is fighting always sanctions it.
     if (warSide(war, by) === "defenders") return true;
-    const me = ctx.sheet(by);
     const bloc = war.defenders.some(
-      (d) => d !== by && commonBlocs(me, ctx.sheet(d)) > 0,
+      (d) => d !== by && ctx.commonBlocs(by, d) > 0,
     );
     const heavy =
       totalPower > 0 &&
@@ -561,25 +554,6 @@ export function stepDiplomacyMonth(
           sanctioners.add(by);
         }
       }
-      // Layer 1 of the blocs: when enough full members sanction, all do.
-      for (const bloc of ctx.blocs) {
-        const members = bloc.members
-          .filter((m) => m.status === "full")
-          .map((m) => m.nation)
-          .filter(
-            (n) =>
-              ids.includes(n) &&
-              ctx.isFullMember(bloc, n) &&
-              n !== aggressor &&
-              warSide(war, n) !== "aggressors",
-          );
-        if (members.length === 0) continue;
-        const count = members.filter((m) => sanctioners.has(m)).length;
-        if (count / members.length >= cfg.sanction.blocAlignShare) {
-          for (const m of members)
-            if (aiNations.includes(m)) sanctioners.add(m);
-        }
-      }
       for (const by of sanctioners) {
         const event = imposeSanctions(ctx, state, economy, by, aggressor, date);
         if (event !== null) events.push(event);
@@ -591,6 +565,7 @@ export function stepDiplomacyMonth(
   //    aggressor anywhere and relations have healed.
   for (const sanction of [...state.sanctions]) {
     if (!aiNations.includes(sanction.by)) continue;
+    if (blocHeld(sanction.by, sanction.against)) continue;
     const stillAggressor = state.wars.some((w) =>
       w.aggressors.includes(sanction.against),
     );

@@ -1,0 +1,85 @@
+{
+  "id": "mercosur",
+  "name": "bloc.mercosur.name",
+  "members": [
+    {
+      "nation": "ARG",
+      "status": "full"
+    },
+    {
+      "nation": "BRA",
+      "status": "full"
+    },
+    {
+      "nation": "PRY",
+      "status": "full"
+    },
+    {
+      "nation": "URY",
+      "status": "full"
+    },
+    {
+      "nation": "BOL",
+      "status": "full"
+    },
+    {
+      "nation": "VEN",
+      "status": "suspended"
+    },
+    {
+      "nation": "CHL",
+      "status": "associate"
+    },
+    {
+      "nation": "COL",
+      "status": "associate"
+    },
+    {
+      "nation": "ECU",
+      "status": "associate"
+    },
+    {
+      "nation": "PER",
+      "status": "associate"
+    },
+    {
+      "nation": "GUY",
+      "status": "associate"
+    },
+    {
+      "nation": "SUR",
+      "status": "associate"
+    },
+    {
+      "nation": "PAN",
+      "status": "associate"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "unanimity",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 6,
+    "order": ["PRY", "URY", "ARG", "BRA", "BOL"]
+  },
+  "competencies": ["trade"],
+  "tradeBonus": 1.3,
+  "suspendsOnCoup": true,
+  "layer": 3
+}

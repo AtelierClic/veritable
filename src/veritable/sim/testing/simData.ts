@@ -309,3 +309,29 @@ export function testSimData(
     names: Object.fromEntries(nations.map((id) => [id, testNames(id)])),
   };
 }
+
+// A bloc for the tests: the layers 2 and 3 fields filled with defaults
+// (consensus everywhere, a short accession, a free exit, rotating
+// leadership in the order of the members).
+export function testBloc(
+  bloc: Pick<Bloc, "id" | "members"> & Partial<Bloc>,
+): Bloc {
+  return {
+    name: `bloc.${bloc.id}`,
+    layer: 1,
+    decisionRules: {
+      sanctions: "consensus",
+      lift: "consensus",
+      accession: "consensus",
+      suspension: "consensus",
+      budget: "consensus",
+      defense: "consensus",
+      tech: "consensus",
+      trade: "consensus",
+    },
+    accession: { monthsMin: 12, monthsMax: 24 },
+    exit: { delayMonths: 12, tradeCostPctGdp: 0 },
+    leadership: { kind: "rotating", termMonths: 6 },
+    ...bloc,
+  };
+}

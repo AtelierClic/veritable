@@ -145,13 +145,13 @@ export function threatLevel(env: NuclearEnv, id: NationId): number {
 export function deterrence(env: NuclearEnv, target: NationId): number {
   const cfg = env.ctx.config.nuclear;
   if ((env.nuclear.nations[target]?.warheads ?? 0) > 0) return cfg.deterrence;
-  const blocs = (env.sheets.get(target)?.blocs ?? []).filter((b) =>
-    cfg.collectiveDefenseBlocs.includes(b),
-  );
+  const blocs = env.ctx
+    .blocsOf(target)
+    .filter((b) => cfg.collectiveDefenseBlocs.includes(b));
   for (const bloc of blocs) {
     for (const [id, arsenal] of Object.entries(env.nuclear.nations)) {
       if (id === target || arsenal.warheads <= 0) continue;
-      if (env.sheets.get(id)?.blocs.includes(bloc)) return cfg.deterrence;
+      if (env.ctx.blocsOf(id).includes(bloc)) return cfg.deterrence;
     }
   }
   return 1;

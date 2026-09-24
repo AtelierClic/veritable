@@ -505,7 +505,10 @@ export class ControlPanel extends LitElement implements Controller {
   // VERITABLE: a campaign fights with fronts and divisions; the legacy attack
   // ratio has no meaning there (the troop bar stays: structures cost troops).
   private get veritable(): boolean {
-    return this.game?.config().isVeritable() ?? false;
+    // Tolerant of the test doubles of OpenFront, whose game has no config.
+    const game = this.game as { config?: unknown } | undefined;
+    if (typeof game?.config !== "function") return false;
+    return this.game!.config().isVeritable();
   }
 
   private renderDesktop() {

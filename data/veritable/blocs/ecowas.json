@@ -1,0 +1,93 @@
+{
+  "id": "ecowas",
+  "name": "bloc.ecowas.name",
+  "members": [
+    {
+      "nation": "BEN",
+      "status": "full"
+    },
+    {
+      "nation": "CPV",
+      "status": "full"
+    },
+    {
+      "nation": "CIV",
+      "status": "full"
+    },
+    {
+      "nation": "GMB",
+      "status": "full"
+    },
+    {
+      "nation": "GHA",
+      "status": "full"
+    },
+    {
+      "nation": "GNB",
+      "status": "full"
+    },
+    {
+      "nation": "LBR",
+      "status": "full"
+    },
+    {
+      "nation": "NGA",
+      "status": "full"
+    },
+    {
+      "nation": "SEN",
+      "status": "full"
+    },
+    {
+      "nation": "SLE",
+      "status": "full"
+    },
+    {
+      "nation": "TGO",
+      "status": "full"
+    },
+    {
+      "nation": "GIN",
+      "status": "suspended"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "consensus",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": [
+      "BEN",
+      "CPV",
+      "CIV",
+      "GMB",
+      "GHA",
+      "GNB",
+      "LBR",
+      "NGA",
+      "SEN",
+      "SLE",
+      "TGO"
+    ]
+  },
+  "competencies": ["trade", "sanctions"],
+  "tradeBonus": 1.2,
+  "suspendsOnCoup": true,
+  "layer": 3
+}

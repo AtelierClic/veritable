@@ -14,6 +14,7 @@ import { NationData } from "../data/schemas/nation";
 import { ROW_ID } from "../data/schemas/row";
 import {
   AiState,
+  BlocsState,
   Calendar,
   DiplomacyState,
   EconomyState,
@@ -32,6 +33,28 @@ import {
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
 import { airMultiplier, stepAirMonth } from "./air/air";
+import {
+  accessionCriteria,
+  applyForMembership,
+  blocData,
+  BlocEngineEvent,
+  BlocEnv,
+  blocSanction,
+  castVote,
+  computeLeader,
+  honorCall,
+  initBlocs,
+  leaderOf,
+  leaveBloc,
+  measureOptions,
+  memberStatus,
+  openToApplications,
+  propose,
+  stepBlocsMonth,
+  syncBlocs,
+  tally,
+  termEnds,
+} from "./blocs/blocs";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
 import { dateAfter, dayIndex } from "./calendar";
 import {
@@ -115,6 +138,7 @@ import {
   Scheduler,
 } from "./scheduler";
 import {
+  BlocView,
   FrontGeometry,
   FrontView,
   PlayerCommand,
@@ -184,6 +208,7 @@ type DomainEvent =
   | NuclearEvent
   | AiEvent
   | { type: "bloc-suspended"; nation: NationId; bloc: string }
+  | BlocEngineEvent
   | { type: "note"; nation: NationId; text: string };
 
 // Events of the political engine: they reach the client with their journal
@@ -213,6 +238,17 @@ const POLITICAL_EVENTS = new Set<string>([
   "arms-aid-started",
   "arms-aid-ended",
   "ai-landing",
+  "bloc-proposal",
+  "bloc-decision",
+  "bloc-presidency",
+  "bloc-application",
+  "bloc-accession-opened",
+  "bloc-accession-frozen",
+  "bloc-joined",
+  "bloc-exit-notified",
+  "bloc-left",
+  "bloc-article5",
+  "bloc-article5-refused",
 ]);
 
 const CEASEFIRE: PeaceTerms = {
@@ -242,6 +278,7 @@ export class VeritableSimImpl implements VeritableSim {
   private territory!: TerritoryState;
   private nuclear!: NuclearState;
   private ai!: AiState;
+  private blocs!: BlocsState;
   // Arms flows of the month, for the military step and the budget.
   private armsAid: {
     points: Record<NationId, number>;
@@ -335,6 +372,16 @@ export class VeritableSimImpl implements VeritableSim {
     this.naval = initNaval();
     this.nuclear = initNuclear(sheets);
     this.ai = initAi(scenario.nations, scenario.startDate);
+    this.blocs = initBlocs(this.ctx);
+    syncBlocs(this.ctx, this.blocs);
+    for (const bloc of this.blocs.blocs) {
+      this.blocs.leaders[bloc.id] =
+        computeLeader(
+          this.blocEnv(scenario.startDate),
+          bloc.id,
+          scenario.startDate,
+        ) ?? "";
+    }
     this.journal = [
       { date: this.calendar.date, kind: "campaign-started", params: {} },
     ];
@@ -389,6 +436,8 @@ export class VeritableSimImpl implements VeritableSim {
     this.nuclear = state.nuclear;
     loseStrikesInFlight(this.nuclear);
     this.ai = state.ai;
+    this.blocs = state.blocs;
+    syncBlocs(this.ctx, this.blocs);
     this.trade = null;
     this.syncSuspensions();
     this.invalidateFronts();
@@ -417,7 +466,7 @@ export class VeritableSimImpl implements VeritableSim {
       rngState: this.rng.getState(),
       calendar: this.calendar,
       nations: this.nations,
-      blocs: [],
+      blocs: this.blocs,
       world,
       economy: this.economy,
       politics: this.politics,
@@ -480,6 +529,12 @@ export class VeritableSimImpl implements VeritableSim {
         const me = this.requirePlayer();
         if (!this.ctx.nationIds.includes(cmd.against)) {
           throw new Error(`sanctions: unknown nation ${cmd.against}`);
+        }
+        if (
+          !cmd.active &&
+          blocSanction(this.ctx, this.blocs, me, cmd.against)
+        ) {
+          throw new Error("sanctions: held by a bloc, lifted by its vote");
         }
         const event = cmd.active
           ? imposeSanctions(
@@ -726,6 +781,63 @@ export class VeritableSimImpl implements VeritableSim {
         this.record(date, { type: "note", nation: me, text: cmd.text });
         return;
       }
+      case "bloc-propose": {
+        const me = this.requirePlayer();
+        const politics = this.politics.nations[me];
+        const cost = this.deps.config.blocs.capitalCost[cmd.kind];
+        if (politics.capital < cost) {
+          throw new Error("bloc-propose: not enough political capital");
+        }
+        const events = propose(this.blocEnv(date), {
+          bloc: cmd.bloc,
+          by: me,
+          kind: cmd.kind,
+          target: cmd.target,
+          direction: cmd.direction,
+        });
+        politics.capital -= cost;
+        for (const event of events) this.record(date, event);
+        return;
+      }
+      case "bloc-vote":
+        castVote(
+          this.blocEnv(date),
+          this.requirePlayer(),
+          cmd.proposal,
+          cmd.vote,
+        );
+        return;
+      case "bloc-apply": {
+        const me = this.requirePlayer();
+        for (const event of applyForMembership(
+          this.blocEnv(date),
+          me,
+          cmd.bloc,
+        )) {
+          this.record(date, event);
+        }
+        return;
+      }
+      case "bloc-leave": {
+        const me = this.requirePlayer();
+        for (const event of leaveBloc(this.blocEnv(date), me, cmd.bloc)) {
+          this.record(date, event);
+        }
+        return;
+      }
+      case "bloc-honor": {
+        const me = this.requirePlayer();
+        for (const event of honorCall(
+          this.blocEnv(date),
+          me,
+          cmd.bloc,
+          cmd.war,
+        )) {
+          this.record(date, event);
+        }
+        this.invalidateFronts();
+        return;
+      }
     }
   }
 
@@ -843,6 +955,69 @@ export class VeritableSimImpl implements VeritableSim {
             ),
       objectives: this.politics.player.objectives,
       notes: this.politics.player.notes,
+      blocs: this.blocViews(player),
+    };
+  }
+
+  // The blocs as the screen sees them (J5).
+  private blocViews(player: NationId | null): BlocView[] {
+    const env = this.blocEnv(this.calendar.date);
+    return this.blocs.blocs.map((bloc) => {
+      const data = blocData(this.ctx, bloc.id);
+      const status = player === null ? null : memberStatus(bloc, player);
+      const member = status === "full" || status === "suspended";
+      const proposals = this.blocs.proposals.filter((p) => p.bloc === bloc.id);
+      return {
+        id: bloc.id,
+        leader: leaderOf(this.blocs, bloc.id),
+        leadership: data.leadership.kind,
+        termEnds: termEnds(this.ctx, bloc.id, this.calendar.date),
+        members: bloc.members
+          .filter((m) => this.ctx.nationIds.includes(m.nation))
+          .map((m) => ({ nation: m.nation, status: m.status })),
+        worldMembers: bloc.members.filter((m) => m.status === "full").length,
+        playerStatus: status,
+        rules: data.decisionRules,
+        qualifiedMajority: data.qualifiedMajority ?? null,
+        collectiveDefense:
+          data.collectiveDefense !== undefined || bloc.commonDefense,
+        competencies: data.competencies ?? [],
+        techBranch: data.techBranch ?? null,
+        state: bloc,
+        contributionPctGdp:
+          data.budget === undefined
+            ? null
+            : data.budget.contributionPctGdp * bloc.budgetScale,
+        pending: proposals
+          .filter((p) => p.result === "pending")
+          .map((p) => ({ proposal: p, projection: tally(env, p) })),
+        resolved: proposals.filter((p) => p.result !== "pending").reverse(),
+        options: player === null ? [] : measureOptions(env, player, bloc.id),
+        criteria:
+          player === null || member || !openToApplications(data)
+            ? null
+            : accessionCriteria(env, bloc.id, player),
+        calls: this.blocs.calls
+          .filter((c) => c.bloc === bloc.id && c.nation === player)
+          .map((c) => ({ war: c.war, until: c.until })),
+        exitTradeCostPctGdp: data.exit.tradeCostPctGdp,
+        exitDelayMonths: data.exit.delayMonths,
+      };
+    });
+  }
+
+  private blocEnv(date: string): BlocEnv {
+    return {
+      ctx: this.ctx,
+      rng: this.rng,
+      state: this.blocs,
+      diplomacy: this.diplomacy,
+      economy: this.economy,
+      politics: this.politics,
+      military: this.military,
+      sheets: this.sheets,
+      aiNations: this.aiNations(),
+      date,
     };
   }
 
@@ -1215,13 +1390,7 @@ export class VeritableSimImpl implements VeritableSim {
       politics: this.politics.nations[nation],
       diplomacy: this.diplomacy,
       scenario: this.scenario,
-      blocMembers: (bloc) => {
-        const entity = this.ctx.blocs.find((b) => b.id === bloc);
-        if (entity === undefined) return [];
-        return entity.members
-          .map((m) => m.nation)
-          .filter((n) => this.ctx.isFullMember(entity, n));
-      },
+      blocMembers: (bloc) => this.ctx.membersOf(bloc),
       monthsSince: (date) => {
         const [y, m] = date.split("-").map(Number);
         const [cy, cm] = this.calendar.date.split("-").map(Number);
@@ -1253,6 +1422,12 @@ export class VeritableSimImpl implements VeritableSim {
     // What was built on the map since last month (J5).
     for (const [id, cost] of Object.entries(this.constructionMonth())) {
       transfers[id] = (transfers[id] ?? 0) - cost;
+    }
+    // Bloc budgets of last month: contributions and transfers (J5).
+    for (const [id, net] of Object.entries(this.blocs.net)) {
+      if (this.economy.nations[id] !== undefined) {
+        transfers[id] = (transfers[id] ?? 0) + net;
+      }
     }
     for (const id of this.ctx.nationIds) {
       const economy = this.economy.nations[id];
@@ -1308,12 +1483,21 @@ export class VeritableSimImpl implements VeritableSim {
     for (const id of this.ctx.nationIds) {
       const events = stepFiscalRules(
         this.ctx.blocs,
+        (bloc, nation) => this.ctx.isFullMember(bloc, nation),
         id,
         this.economy.nations[id],
         this.politics.nations[id],
       );
       for (const event of events) this.record(clock.date, event);
     }
+    // Layers 2 and 3 (J5): leaders, votes, budgets, accessions, exits,
+    // collective defence.
+    let joined = false;
+    for (const event of stepBlocsMonth(this.blocEnv(clock.date))) {
+      this.record(clock.date, event);
+      if (event.type === "war-joined") joined = true;
+    }
+    if (joined) this.invalidateFronts();
   }
 
   private diplomacyMonth(clock: ClockContext): void {
@@ -1348,6 +1532,7 @@ export class VeritableSimImpl implements VeritableSim {
       this.rng,
       clock.date,
       this.aiNations(),
+      (by, against) => blocSanction(this.ctx, this.blocs, by, against),
     );
     for (const event of events) this.record(clock.date, event);
     if (events.some((e) => e.type === "war-joined")) this.invalidateFronts();
@@ -1542,6 +1727,19 @@ export class VeritableSimImpl implements VeritableSim {
         break;
       case "ai-landing":
         params = { target: event.target };
+        break;
+      case "bloc-proposal":
+      case "bloc-decision":
+      case "bloc-presidency":
+      case "bloc-application":
+      case "bloc-accession-opened":
+      case "bloc-accession-frozen":
+      case "bloc-joined":
+      case "bloc-exit-notified":
+      case "bloc-left":
+      case "bloc-article5":
+      case "bloc-article5-refused":
+        params = event.params;
         break;
       default:
         break;

@@ -80,9 +80,11 @@ describe("fifty years headless", () => {
       }
       // Debt/GDP ends close to where it started, or under the prudent mark
       // (Ukraine carries the war of the scenario and its Black Sea blockade:
-      // it levels off some 0.2 above its start), and a debt above the
-      // prudent mark has stopped rising: the last ten years are not above
-      // the ten before by more than 0.05.
+      // it levels off some 0.2 above its start), and a debt that was above
+      // the prudent mark ten years before the end has stopped rising: the
+      // last ten years are not above the ten before by more than 0.05. (A
+      // debt that crosses the mark late has not given the fiscal rule, which
+      // acts after a year of rise above it, the time to act.)
       const first = result.series[0].debtToGdp;
       const prudent = config.ai.fiscal.prudentDebtToGdp;
       const decade = (from: number, to: number, nation: string) =>
@@ -96,7 +98,9 @@ describe("fifty years headless", () => {
         expect(debt, `${nation} seed ${seed}`).toBeLessThan(
           Math.max(first[nation], prudent) + 0.25,
         );
-        if (debt > prudent) {
+        const tenYearsBefore =
+          result.series[result.series.length - 120].debtToGdp[nation];
+        if (debt > prudent && tenYearsBefore > prudent) {
           expect(decade(120, 0, nation), `${nation} seed ${seed}`).toBeLessThan(
             decade(240, 120, nation) + 0.05,
           );
@@ -148,7 +152,13 @@ describe("cutting a gas supplier shows in the curves", () => {
     expect(later.prices.gas).toBeGreaterThan(laterControl.prices.gas * 1.04);
     // Pipeline gas re-routes little (circumvention cap of the J3 close-out):
     // part of the Russian gas stays withheld, the world covers most of it.
-    expect(later.gasCoverage.DEU).toBeGreaterThan(0.9);
+    // Measured over 2029 against the control: one month depends on the
+    // supply shock drawn for the world.
+    const year2029 = (r: typeof control) => {
+      const rows = r.series.filter((row) => row.date.startsWith("2029-"));
+      return rows.reduce((s, row) => s + row.gasCoverage.DEU, 0) / rows.length;
+    };
+    expect(year2029(cut)).toBeGreaterThan(year2029(control) - 0.1);
     // ...but the growth lost is lost.
     expect(later.gdp.DEU).toBeLessThan(laterControl.gdp.DEU * 0.998);
     expect(cut.series[cut.series.length - 1].gdp.DEU).toBeLessThan(

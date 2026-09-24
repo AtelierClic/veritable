@@ -317,34 +317,72 @@ Curseurs : les impôts et les postes de dépense ont une cible (`taxTargets`, `s
 
 ## bloc (`blocs/<slug>.json`)
 
+Forme du J5 (couches 2 et 3), validée par `src/veritable/data/schemas/bloc.ts`. Tous les pays membres figurent dans la liste ; en europe-10 seuls les membres simulés votent, paient et reçoivent (artefact levé au J6).
+
 ```jsonc
 {
   "id": "eu",
   "name": "bloc.eu.name",
   "members": [
-    { "nation": "FRA", "status": "full" },
+    { "nation": "FRA", "status": "full" }, // full | candidate | observer | partner | associate | suspended
     { "nation": "UKR", "status": "candidate" },
   ],
-  "joinCriteria": {
-    "regimes": ["parliamentary", "presidential", "semi-presidential"],
-    "maxDebtToGdp": 0.6,
-    "geography": "europe",
-  },
-  "exit": { "delayMonths": 24, "cost": 0.02 },
+  // Une règle par domaine : unanimity | consensus | qualified-majority | simple-majority
   "decisionRules": {
     "sanctions": "unanimity",
-    "trade": "qualified-majority",
+    "lift": "unanimity",
+    "accession": "unanimity",
+    "suspension": "unanimity",
     "budget": "qualified-majority",
     "defense": "unanimity",
+    "tech": "qualified-majority",
+    "trade": "qualified-majority",
   },
+  "qualifiedMajority": { "memberShare": 0.55, "populationShare": 0.65 },
   "budget": {
     "contributionPctGdp": 0.01,
-    "spending": { "aid": 0.3, "structural": 0.5, "defense": 0.2 },
+    "structuralFundsBelowGdpPerCapitaShare": 0.9,
+    "shares": {
+      "structural": 0.5,
+      "defense": 0.15,
+      "candidates": 0.05,
+      "programs": 0.3,
+    },
   },
-  "competencies": ["trade", "sanctions", "currency", "free-movement", "norms"],
-  "leadership": "rotating", // rotating | elected | hegemon
+  // Sans regimes ni minRelations : bloc sur invitation, pas de candidature.
+  "accession": {
+    "regimes": ["parliamentary", "presidential", "semi-presidential"],
+    "maxDebtToGdp": 1.2,
+    "minRelations": 20,
+    "monthsMin": 24,
+    "monthsMax": 60,
+  },
+  "exit": { "delayMonths": 24, "tradeCostPctGdp": 0.02 },
+  // rotating (ordre et durée du mandat) | hegemon | elected
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 6,
+    "order": ["CYP", "IRL", "LTU"],
+  },
+  // Défense collective (OTAN) : probabilité d'entrer en guerre dans le mois.
+  "collectiveDefense": {
+    "joinProbability": 0.9,
+    "sovereignJoinProbability": 0.5,
+    "sovereigntyAbove": 0.7,
+  },
+  "competencies": ["trade", "sanctions", "defense", "tech"],
   "techBranch": "eu-strategic-autonomy",
-  "layer": 1, // couche implémentée : 1 modificateur, 2 entité, 3 leadership
+  "fiscalRule": {
+    "maxDeficitToGdp": 0.03,
+    "deficitYears": 2,
+    "maxDebtToGdp": 0.6,
+    "debtRisingMonths": 12,
+    "opinionMalus": 0.03,
+    "malusFadeMonths": 6,
+  },
+  "tradeBonus": 1.5,
+  "suspendsOnCoup": true,
+  "layer": 3,
 }
 ```
 

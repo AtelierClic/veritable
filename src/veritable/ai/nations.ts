@@ -206,7 +206,7 @@ export interface WarAppraisal {
 // Share of the partners of `id` (trade weights) likely to sanction it for a
 // war on `target`: those that share a bloc with the target.
 function expectedSanctions(env: AiEnv, id: NationId, target: NationId): number {
-  const blocs = env.sheets.get(target)?.blocs ?? [];
+  const blocs = env.ctx.blocsOf(target);
   let total = 0;
   let hostile = 0;
   for (const other of env.ctx.nationIds) {
@@ -214,8 +214,7 @@ function expectedSanctions(env: AiEnv, id: NationId, target: NationId): number {
     const w = env.ctx.partnerWeight(id, other);
     total += w;
     const shares =
-      other === target ||
-      (env.sheets.get(other)?.blocs ?? []).some((b) => blocs.includes(b));
+      other === target || env.ctx.blocsOf(other).some((b) => blocs.includes(b));
     if (shares) hostile += w;
   }
   return total > 0 ? hostile / total : 0;

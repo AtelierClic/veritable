@@ -1,0 +1,306 @@
+{
+  "id": "au",
+  "name": "bloc.au.name",
+  "members": [
+    {
+      "nation": "DZA",
+      "status": "full"
+    },
+    {
+      "nation": "AGO",
+      "status": "full"
+    },
+    {
+      "nation": "BEN",
+      "status": "full"
+    },
+    {
+      "nation": "BWA",
+      "status": "full"
+    },
+    {
+      "nation": "BDI",
+      "status": "full"
+    },
+    {
+      "nation": "CMR",
+      "status": "full"
+    },
+    {
+      "nation": "CPV",
+      "status": "full"
+    },
+    {
+      "nation": "CAF",
+      "status": "full"
+    },
+    {
+      "nation": "TCD",
+      "status": "full"
+    },
+    {
+      "nation": "COM",
+      "status": "full"
+    },
+    {
+      "nation": "COG",
+      "status": "full"
+    },
+    {
+      "nation": "COD",
+      "status": "full"
+    },
+    {
+      "nation": "CIV",
+      "status": "full"
+    },
+    {
+      "nation": "DJI",
+      "status": "full"
+    },
+    {
+      "nation": "EGY",
+      "status": "full"
+    },
+    {
+      "nation": "GNQ",
+      "status": "full"
+    },
+    {
+      "nation": "ERI",
+      "status": "full"
+    },
+    {
+      "nation": "SWZ",
+      "status": "full"
+    },
+    {
+      "nation": "ETH",
+      "status": "full"
+    },
+    {
+      "nation": "GAB",
+      "status": "full"
+    },
+    {
+      "nation": "GMB",
+      "status": "full"
+    },
+    {
+      "nation": "GHA",
+      "status": "full"
+    },
+    {
+      "nation": "GNB",
+      "status": "full"
+    },
+    {
+      "nation": "KEN",
+      "status": "full"
+    },
+    {
+      "nation": "LSO",
+      "status": "full"
+    },
+    {
+      "nation": "LBR",
+      "status": "full"
+    },
+    {
+      "nation": "LBY",
+      "status": "full"
+    },
+    {
+      "nation": "MWI",
+      "status": "full"
+    },
+    {
+      "nation": "MRT",
+      "status": "full"
+    },
+    {
+      "nation": "MUS",
+      "status": "full"
+    },
+    {
+      "nation": "MAR",
+      "status": "full"
+    },
+    {
+      "nation": "MOZ",
+      "status": "full"
+    },
+    {
+      "nation": "NAM",
+      "status": "full"
+    },
+    {
+      "nation": "NGA",
+      "status": "full"
+    },
+    {
+      "nation": "RWA",
+      "status": "full"
+    },
+    {
+      "nation": "ESH",
+      "status": "full"
+    },
+    {
+      "nation": "STP",
+      "status": "full"
+    },
+    {
+      "nation": "SEN",
+      "status": "full"
+    },
+    {
+      "nation": "SYC",
+      "status": "full"
+    },
+    {
+      "nation": "SLE",
+      "status": "full"
+    },
+    {
+      "nation": "SOM",
+      "status": "full"
+    },
+    {
+      "nation": "ZAF",
+      "status": "full"
+    },
+    {
+      "nation": "SSD",
+      "status": "full"
+    },
+    {
+      "nation": "TZA",
+      "status": "full"
+    },
+    {
+      "nation": "TGO",
+      "status": "full"
+    },
+    {
+      "nation": "TUN",
+      "status": "full"
+    },
+    {
+      "nation": "UGA",
+      "status": "full"
+    },
+    {
+      "nation": "ZMB",
+      "status": "full"
+    },
+    {
+      "nation": "ZWE",
+      "status": "full"
+    },
+    {
+      "nation": "BFA",
+      "status": "suspended"
+    },
+    {
+      "nation": "GIN",
+      "status": "suspended"
+    },
+    {
+      "nation": "MLI",
+      "status": "suspended"
+    },
+    {
+      "nation": "NER",
+      "status": "suspended"
+    },
+    {
+      "nation": "SDN",
+      "status": "suspended"
+    },
+    {
+      "nation": "MDG",
+      "status": "suspended"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "qualified-majority",
+    "lift": "simple-majority",
+    "accession": "simple-majority",
+    "suspension": "simple-majority",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "qualifiedMajority": {
+    "memberShare": 0.67,
+    "populationShare": 0
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": [
+      "DZA",
+      "AGO",
+      "BEN",
+      "BWA",
+      "BDI",
+      "CMR",
+      "CPV",
+      "CAF",
+      "TCD",
+      "COM",
+      "COG",
+      "COD",
+      "CIV",
+      "DJI",
+      "EGY",
+      "GNQ",
+      "ERI",
+      "SWZ",
+      "ETH",
+      "GAB",
+      "GMB",
+      "GHA",
+      "GNB",
+      "KEN",
+      "LSO",
+      "LBR",
+      "LBY",
+      "MWI",
+      "MRT",
+      "MUS",
+      "MAR",
+      "MOZ",
+      "NAM",
+      "NGA",
+      "RWA",
+      "ESH",
+      "STP",
+      "SEN",
+      "SYC",
+      "SLE",
+      "SOM",
+      "ZAF",
+      "SSD",
+      "TZA",
+      "TGO",
+      "TUN",
+      "UGA",
+      "ZMB",
+      "ZWE"
+    ]
+  },
+  "competencies": ["sanctions", "defense"],
+  "suspendsOnCoup": true,
+  "layer": 3
+}

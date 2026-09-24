@@ -22,6 +22,7 @@ export type BlocEvent = {
 
 export function stepFiscalRules(
   blocs: readonly Bloc[],
+  isFullMember: (bloc: Bloc, nation: NationId) => boolean,
   id: NationId,
   economy: NationEconomy,
   politics: NationPolitics,
@@ -36,10 +37,8 @@ export function stepFiscalRules(
   for (const bloc of blocs) {
     const rule = bloc.fiscalRule;
     if (rule === undefined) continue;
-    const member = bloc.members.some(
-      (m) => m.nation === id && m.status === "full",
-    );
-    if (!member || politics.suspendedFrom.includes(bloc.id)) continue;
+    if (!isFullMember(bloc, id) || politics.suspendedFrom.includes(bloc.id))
+      continue;
     malus = Math.max(malus, rule.opinionMalus);
     fadeMonths = Math.max(fadeMonths, rule.malusFadeMonths);
     if (deficit > rule.maxDeficitToGdp) breach = true;

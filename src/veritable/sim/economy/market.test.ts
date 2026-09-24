@@ -1,6 +1,6 @@
 import { loadVeritableConfig } from "../../data/loadConfig";
 import { testNation } from "../testing/nations";
-import { testGoods, testSimData } from "../testing/simData";
+import { testBloc, testGoods, testSimData } from "../testing/simData";
 import { buildContext } from "./context";
 import { demandAt, nextPrice, supplyAt, totals } from "./market";
 import { allocateFlows, greatCircleKm, Trader } from "./trade";
@@ -175,17 +175,15 @@ describe("geography of trade", () => {
       landNeighbours: [["AAA", "BBB"]],
       bordersNeutralLand: ["CCC"],
       blocs: [
-        {
+        testBloc({
           id: "club",
-          name: "bloc.club",
-          layer: 1,
           tradeBonus: 1.5,
           members: [
             { nation: "AAA", status: "full" },
             { nation: "BBB", status: "full" },
             { nation: "CCC", status: "candidate" },
           ],
-        },
+        }),
       ],
     }),
     nations,

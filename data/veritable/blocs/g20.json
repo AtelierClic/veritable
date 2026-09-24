@@ -1,0 +1,107 @@
+{
+  "id": "g20",
+  "name": "bloc.g20.name",
+  "members": [
+    {
+      "nation": "ARG",
+      "status": "full"
+    },
+    {
+      "nation": "AUS",
+      "status": "full"
+    },
+    {
+      "nation": "BRA",
+      "status": "full"
+    },
+    {
+      "nation": "CAN",
+      "status": "full"
+    },
+    {
+      "nation": "CHN",
+      "status": "full"
+    },
+    {
+      "nation": "FRA",
+      "status": "full"
+    },
+    {
+      "nation": "DEU",
+      "status": "full"
+    },
+    {
+      "nation": "IND",
+      "status": "full"
+    },
+    {
+      "nation": "IDN",
+      "status": "full"
+    },
+    {
+      "nation": "ITA",
+      "status": "full"
+    },
+    {
+      "nation": "JPN",
+      "status": "full"
+    },
+    {
+      "nation": "KOR",
+      "status": "full"
+    },
+    {
+      "nation": "MEX",
+      "status": "full"
+    },
+    {
+      "nation": "RUS",
+      "status": "full"
+    },
+    {
+      "nation": "SAU",
+      "status": "full"
+    },
+    {
+      "nation": "ZAF",
+      "status": "full"
+    },
+    {
+      "nation": "TUR",
+      "status": "full"
+    },
+    {
+      "nation": "GBR",
+      "status": "full"
+    },
+    {
+      "nation": "USA",
+      "status": "full"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "consensus",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": ["USA", "GBR", "KOR"]
+  },
+  "competencies": ["trade"],
+  "layer": 3
+}

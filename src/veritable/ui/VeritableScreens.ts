@@ -16,8 +16,9 @@ import {
   War,
 } from "../data/schemas/save";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
+import type { Tally } from "../sim/blocs/blocs";
 import { relation } from "../sim/diplomacy/diplomacy";
-import { FrontView, ReadonlyWorldView } from "../sim/VeritableSim";
+import { BlocView, FrontView, ReadonlyWorldView } from "../sim/VeritableSim";
 
 export type ScreenId =
   | "economy"
@@ -28,7 +29,8 @@ export type ScreenId =
   | "politics"
   | "election"
   | "leaders"
-  | "objectives";
+  | "objectives"
+  | "blocs";
 export const SCREENS: ScreenId[] = [
   "economy",
   "budget",
@@ -39,6 +41,7 @@ export const SCREENS: ScreenId[] = [
   "election",
   "leaders",
   "objectives",
+  "blocs",
 ];
 
 const REFRESH_MS = 1000;
@@ -246,6 +249,7 @@ export class VeritableScreens extends LitElement {
     e: NationEconomy,
     p: NationPolitics,
     constructionCost: number,
+    blocNet: number,
   ) {
     const yearly = (monthly: number) => (monthly * 12) / e.gdp;
     const balance = e.revenue - e.expenditure;
@@ -274,6 +278,12 @@ export class VeritableScreens extends LitElement {
         <span
           >${vt("screen.budget.constructions")} :
           <b>${money(constructionCost)}</b></span
+        >
+        <span
+          >${vt("screen.budget.blocs")} :
+          <b class=${blocNet < 0 ? "text-red-300" : "text-green-300"}
+            >${money(blocNet)}</b
+          ></span
         >
         <span class="text-yellow-300">
           ${e.austerity ? vt("screen.budget.austerity") : nothing}
@@ -1582,6 +1592,377 @@ export class VeritableScreens extends LitElement {
     `;
   }
 
+  // --- blocs (J5) ---------------------------------------------------------------------
+
+  @state() private selectedBloc: string | null = null;
+  @state() private armedExit: string | null = null;
+
+  private measureLabel(
+    view: ReadonlyWorldView,
+    kind: string,
+    target: string | undefined | null,
+    direction: string | undefined | null,
+  ): string {
+    if (kind === "budget") {
+      return vt(`bloc.measure.budget-${direction === "down" ? "down" : "up"}`);
+    }
+    return vt(`bloc.measure.${kind}`, {
+      target:
+        target === undefined || target === null || target === ""
+          ? ""
+          : this.nationLabel(view, target),
+    });
+  }
+
+  private renderTally(view: ReadonlyWorldView, t: Tally): TemplateResult {
+    return html`<span class=${t.adopted ? "text-green-300" : "text-red-300"}
+        >${vt(
+          t.adopted ? "screen.blocs.would-pass" : "screen.blocs.would-fail",
+          {
+            yes: t.yes,
+            no: t.no,
+            abstain: t.abstain,
+          },
+        )}</span
+      >
+      <span class="text-gray-400">
+        ${Object.entries(t.votes).map(
+          ([n, v]) =>
+            html`<span class="mr-1"
+              >${this.nationLabel(view, n)} ${vt(`bloc.vote.${v}`)}
+              (${(t.utilities[n] ?? 0).toFixed(2)})</span
+            >`,
+        )}
+      </span>`;
+  }
+
+  private renderBlocs(view: ReadonlyWorldView, politics: NationPolitics) {
+    const selected =
+      view.blocs.find((b) => b.id === this.selectedBloc) ??
+      view.blocs.find((b) => b.playerStatus === "full") ??
+      view.blocs[0];
+    return html`
+      <table class="w-full text-right">
+        <thead>
+          <tr class="text-gray-300">
+            <th class="text-left">${vt("screen.blocs.bloc")}</th>
+            <th>${vt("screen.blocs.leader")}</th>
+            <th>${vt("screen.blocs.members")}</th>
+            <th>${vt("screen.blocs.status")}</th>
+            <th>${vt("screen.blocs.pending")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${view.blocs.map(
+            (b) =>
+              html`<tr
+                class="cursor-pointer ${b.id === selected?.id
+                  ? "bg-gray-700"
+                  : ""}"
+                @click=${() => {
+                  this.selectedBloc = b.id;
+                  this.armedExit = null;
+                }}
+              >
+                <td class="text-left">${vt(`bloc.${b.id}.name`)}</td>
+                <td>
+                  ${b.leader === null
+                    ? vt("screen.blocs.no-leader")
+                    : this.nationLabel(view, b.leader)}
+                </td>
+                <td>
+                  ${vt("screen.blocs.member-count", {
+                    simulated: b.members.filter((m) => m.status === "full")
+                      .length,
+                    world: b.worldMembers,
+                  })}
+                </td>
+                <td>
+                  ${b.playerStatus === null
+                    ? vt("screen.blocs.not-member")
+                    : vt(`bloc.status.${b.playerStatus}`)}
+                </td>
+                <td>${b.pending.length}</td>
+              </tr>`,
+          )}
+        </tbody>
+      </table>
+      ${selected === undefined
+        ? nothing
+        : this.renderBloc(view, selected, politics)}
+    `;
+  }
+
+  private renderBloc(
+    view: ReadonlyWorldView,
+    b: BlocView,
+    politics: NationPolitics,
+  ): TemplateResult {
+    const me = view.playerNation!;
+    const s = b.state;
+    const label = (n: string) => this.nationLabel(view, n);
+    const member = b.playerStatus === "full" || b.playerStatus === "suspended";
+    const leaving = s.exits.some((e) => e.nation === me);
+    const q = b.qualifiedMajority;
+    return html`
+      <div class="mt-2 text-sm font-bold">${vt(`bloc.${b.id}.name`)}</div>
+      <div>
+        ${vt(`bloc.leadership.${b.leadership}`)} :
+        <b
+          >${b.leader === null
+            ? vt("screen.blocs.no-leader")
+            : label(b.leader)}</b
+        >
+        ${b.termEnds === null || b.leader === null
+          ? nothing
+          : vt("screen.blocs.until", { date: b.termEnds })}
+        ${b.leader === me
+          ? html`<span class="text-green-300"
+              >${vt("screen.blocs.you-lead")}</span
+            >`
+          : nothing}
+      </div>
+      <div>
+        ${vt("screen.blocs.simulated-members")} :
+        ${b.members.map(
+          (m) =>
+            html`<span class="mr-2"
+              >${label(m.nation)} (${vt(`bloc.status.${m.status}`)})</span
+            >`,
+        )}
+      </div>
+      <div class="text-gray-400">${vt("screen.blocs.artifact")}</div>
+      <div>
+        ${vt("screen.blocs.rules")} :
+        ${Object.entries(b.rules).map(
+          ([domain, rule]) =>
+            html`<span class="mr-2"
+              >${vt(`bloc.domain.${domain}`)} : ${vt(`bloc.rule.${rule}`)}</span
+            >`,
+        )}
+      </div>
+      ${q === null
+        ? nothing
+        : html`<div>
+            ${vt("screen.blocs.qmv", {
+              members: pct(q.memberShare, 0),
+              population: pct(q.populationShare, 0),
+            })}
+          </div>`}
+      ${b.contributionPctGdp === null
+        ? nothing
+        : html`<div>
+            ${vt("screen.blocs.budget", {
+              pct: pct(b.contributionPctGdp, 2),
+              scale: s.budgetScale.toFixed(2),
+              paid: money(s.contributions[me] ?? 0),
+              received: money(s.received[me] ?? 0),
+            })}
+          </div>`}
+      <div>
+        ${vt("screen.blocs.defense")} :
+        ${b.collectiveDefense ? vt("screen.blocs.yes") : vt("screen.blocs.no")}
+      </div>
+      ${s.sanctions.length === 0
+        ? nothing
+        : html`<div>
+            ${vt("screen.blocs.sanctions")} :
+            ${s.sanctions.map(label).join(", ")}
+          </div>`}
+      ${s.agreements.length === 0
+        ? nothing
+        : html`<div>
+            ${vt("screen.blocs.agreements")} :
+            ${s.agreements.map(label).join(", ")}
+          </div>`}
+      ${s.programs.length === 0
+        ? nothing
+        : html`<div>
+            ${vt("screen.blocs.programs")} :
+            ${s.programs
+              .map((p) =>
+                vt("screen.blocs.program", { since: p.since, until: p.until }),
+              )
+              .join(", ")}
+          </div>`}
+      ${s.accessions.map(
+        (a) =>
+          html`<div>
+            ${vt("screen.blocs.accession", {
+              nation: label(a.nation),
+              until: a.completeOn,
+              vote: a.nextVote,
+            })}
+          </div>`,
+      )}
+      ${s.applications.map(
+        (a) =>
+          html`<div>
+            ${vt("screen.blocs.application", {
+              nation: label(a.nation),
+              date: a.date,
+            })}
+          </div>`,
+      )}
+      ${s.exits.map(
+        (e) =>
+          html`<div class="text-yellow-300">
+            ${vt("screen.blocs.exit", {
+              nation: label(e.nation),
+              at: e.effectiveOn,
+            })}
+          </div>`,
+      )}
+      ${b.calls.map(
+        (c) =>
+          html`<div class="text-red-300">
+            ${vt("screen.blocs.call", { until: c.until })}
+            <button
+              class="rounded bg-red-800 px-1"
+              @click=${() =>
+                void this.command({
+                  type: "bloc-honor",
+                  bloc: b.id,
+                  war: c.war,
+                })}
+            >
+              ${vt("screen.blocs.honor")}
+            </button>
+          </div>`,
+      )}
+      <div class="mt-1 font-bold">${vt("screen.blocs.votes")}</div>
+      ${b.pending.length === 0
+        ? html`<div class="text-gray-400">${vt("screen.blocs.no-vote")}</div>`
+        : b.pending.map(
+            ({ proposal: p, projection }) =>
+              html`<div>
+                <b>${this.measureLabel(view, p.kind, p.target, p.direction)}</b
+                >,
+                ${vt("screen.blocs.proposed-by", {
+                  nation: label(p.by),
+                  date: p.resolveOn,
+                })}
+                ${this.renderTally(view, projection)}
+                ${me in projection.votes && p.by !== me
+                  ? html`<div>
+                      ${vt("screen.blocs.your-vote")}
+                      ${(["yes", "no", "abstain"] as const).map(
+                        (v) =>
+                          html`<button
+                            class="ml-1 rounded px-1 ${p.cast[me] === v
+                              ? "bg-blue-700"
+                              : "bg-gray-700"}"
+                            @click=${() =>
+                              void this.command({
+                                type: "bloc-vote",
+                                proposal: p.id,
+                                vote: v,
+                              })}
+                          >
+                            ${vt(`bloc.vote.${v}`)}
+                          </button>`,
+                      )}
+                    </div>`
+                  : nothing}
+              </div>`,
+          )}
+      ${b.leader === me
+        ? html`<div class="mt-1 font-bold">
+              ${vt("screen.blocs.propose", {
+                capital: politics.capital.toFixed(0),
+              })}
+            </div>
+            ${b.options.length === 0
+              ? html`<div class="text-gray-400">
+                  ${vt("screen.blocs.no-option")}
+                </div>`
+              : b.options.map(
+                  (o) =>
+                    html`<div class="border-b border-gray-800 py-0.5">
+                      <button
+                        class="rounded bg-gray-700 px-1 disabled:opacity-40"
+                        ?disabled=${politics.capital < o.cost}
+                        @click=${() =>
+                          void this.command({
+                            type: "bloc-propose",
+                            bloc: b.id,
+                            kind: o.kind,
+                            target: o.target,
+                            direction: o.direction,
+                          })}
+                      >
+                        ${vt("screen.blocs.submit", { cost: o.cost })}
+                      </button>
+                      <b
+                        >${this.measureLabel(
+                          view,
+                          o.kind,
+                          o.target,
+                          o.direction,
+                        )}</b
+                      >
+                      ${this.renderTally(view, o.projection)}
+                    </div>`,
+                )}`
+        : nothing}
+      ${b.criteria === null
+        ? nothing
+        : html`<div class="mt-1">
+            ${vt("screen.blocs.criteria", {
+              regime: vt(
+                b.criteria.regime ? "screen.blocs.ok" : "screen.blocs.ko",
+              ),
+              debt: vt(b.criteria.debt ? "screen.blocs.ok" : "screen.blocs.ko"),
+              relations: b.criteria.meanRelations.toFixed(0),
+            })}
+            ${s.applications.some((a) => a.nation === me) ||
+            s.accessions.some((a) => a.nation === me)
+              ? nothing
+              : html`<button
+                  class="rounded bg-gray-700 px-1 disabled:opacity-40"
+                  ?disabled=${!b.criteria.ok}
+                  @click=${() =>
+                    void this.command({ type: "bloc-apply", bloc: b.id })}
+                >
+                  ${vt("screen.blocs.apply")}
+                </button>`}
+          </div>`}
+      ${member && !leaving
+        ? html`<div class="mt-1">
+            <button
+              class="rounded bg-red-900 px-1"
+              @click=${() => {
+                if (this.armedExit === b.id) {
+                  this.armedExit = null;
+                  void this.command({ type: "bloc-leave", bloc: b.id });
+                } else {
+                  this.armedExit = b.id;
+                }
+              }}
+            >
+              ${this.armedExit === b.id
+                ? vt("screen.blocs.leave-confirm")
+                : vt("screen.blocs.leave", {
+                    months: b.exitDelayMonths,
+                    cost: pct(b.exitTradeCostPctGdp, 0),
+                  })}
+            </button>
+          </div>`
+        : nothing}
+      ${b.resolved.length === 0
+        ? nothing
+        : html`<div class="mt-1 font-bold">${vt("screen.blocs.history")}</div>
+            ${b.resolved.slice(0, 8).map(
+              (p) =>
+                html`<div class="text-gray-300">
+                  <span class="tabular-nums text-gray-500">${p.resolveOn}</span>
+                  ${this.measureLabel(view, p.kind, p.target, p.direction)} :
+                  ${vt(`bloc.result.${p.result}`)}
+                </div>`,
+            )}`}
+    `;
+  }
+
   // --- objectives and journal (J4) ----------------------------------------------------
 
   @state() private journalFilter = "";
@@ -1594,6 +1975,7 @@ export class VeritableScreens extends LitElement {
       return "war";
     }
     if (/^sanctions/.test(kind)) return "diplomacy";
+    if (/^bloc-(?!reprimand|suspended)/.test(kind)) return "diplomacy";
     if (/^(austerity|sovereign|bloc-reprimand)/.test(kind)) return "economy";
     if (kind === "campaign-started" || kind === "nation-status") return "other";
     return "politics";
@@ -1753,6 +2135,25 @@ export class VeritableScreens extends LitElement {
                 ...(j.params.against === undefined
                   ? {}
                   : { against: this.nationLabel(view, j.params.against) }),
+                ...(j.params.bloc === undefined
+                  ? {}
+                  : { bloc: vt(`bloc.${j.params.bloc}.name`) }),
+                ...(j.params.kind === undefined
+                  ? {}
+                  : {
+                      kind: this.measureLabel(
+                        view,
+                        j.params.kind,
+                        j.params.target,
+                        j.params.direction,
+                      ),
+                    }),
+                ...(j.params.result === undefined
+                  ? {}
+                  : { result: vt(`bloc.result.${j.params.result}`) }),
+                ...(j.params.why === undefined
+                  ? {}
+                  : { why: vt(`bloc.why.${j.params.why}`) }),
               })}
             </div>`,
         )}
@@ -1792,6 +2193,13 @@ export class VeritableScreens extends LitElement {
                   economy,
                   politics,
                   view.constructionCost[view.playerNation ?? ""] ?? 0,
+                  view.blocs.reduce(
+                    (s, b) =>
+                      s +
+                      (b.state.received[view.playerNation ?? ""] ?? 0) -
+                      (b.state.contributions[view.playerNation ?? ""] ?? 0),
+                    0,
+                  ),
                 )
               : screen === "opinion"
                 ? this.renderOpinion(view, politics)
@@ -1805,7 +2213,9 @@ export class VeritableScreens extends LitElement {
                         ? this.renderElection(view, politics, economy)
                         : screen === "leaders"
                           ? this.renderLeaders(view, politics)
-                          : this.renderObjectives(view, politics)}
+                          : screen === "blocs"
+                            ? this.renderBlocs(view, politics)
+                            : this.renderObjectives(view, politics)}
       </div>
     `;
   }

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { zb } from "../../../../zbin";
+import { BlocMemberStatusSchema } from "./bloc";
 import {
   IsoDateSchema,
   NationIdSchema,
@@ -83,6 +84,18 @@ export const JOURNAL_KINDS_V5 = [
   "arms-aid-started",
   "arms-aid-ended",
   "ai-landing",
+  // Blocs, layers 2 and 3 (J5).
+  "bloc-proposal",
+  "bloc-decision",
+  "bloc-presidency",
+  "bloc-application",
+  "bloc-accession-opened",
+  "bloc-accession-frozen",
+  "bloc-joined",
+  "bloc-exit-notified",
+  "bloc-left",
+  "bloc-article5",
+  "bloc-article5-refused",
 ] as const;
 export const JournalEntryV5Schema = z.object({
   date: IsoDateSchema,
@@ -519,6 +532,107 @@ export const AiStateSchema = z.object({
 });
 export type AiState = z.infer<typeof AiStateSchema>;
 
+// --- blocs, layers 2 and 3 (J5) ------------------------------------------------
+
+// The measures a bloc leader proposes; each falls in a decision domain of
+// the bloc (sim/blocs/blocs.ts, MEASURE_DOMAIN).
+export const BLOC_MEASURES = [
+  "sanctions",
+  "lift",
+  "accession",
+  "suspension",
+  "budget",
+  "common-defense",
+  "tech-program",
+  "trade-agreement",
+] as const;
+export const BlocMeasureSchema = z.enum(BLOC_MEASURES);
+export type BlocMeasure = z.infer<typeof BlocMeasureSchema>;
+
+export const BlocVoteSchema = z.enum(["yes", "no", "abstain"]);
+export type BlocVote = z.infer<typeof BlocVoteSchema>;
+
+export const BlocProposalSchema = z.object({
+  id: zb.uint(),
+  bloc: z.string(),
+  by: NationIdSchema,
+  kind: BlocMeasureSchema,
+  // The nation the measure is about (sanctions, lift, accession,
+  // suspension, trade agreement); null for the measures of the bloc itself.
+  target: NationIdSchema.nullable(),
+  direction: z.enum(["up", "down"]).nullable(), // budget only
+  date: IsoDateSchema,
+  resolveOn: IsoDateSchema,
+  // Votes cast by the player; the AI votes when the proposal resolves.
+  cast: z.record(z.string(), BlocVoteSchema),
+  result: z.enum(["pending", "adopted", "rejected"]),
+  votes: z.record(z.string(), BlocVoteSchema), // at resolution
+});
+export type BlocProposal = z.infer<typeof BlocProposalSchema>;
+
+export const BlocStateSchema = z.object({
+  id: z.string(),
+  // Every member, simulated or not; `since` null for the members of the
+  // first day.
+  members: z.array(
+    z.object({
+      nation: NationIdSchema,
+      status: BlocMemberStatusSchema,
+      since: IsoDateSchema.nullable(),
+    }),
+  ),
+  budgetScale: zb.float(), // x the contribution of the data
+  sanctions: z.array(NationIdSchema), // bloc sanctions in force
+  agreements: z.array(NationIdSchema), // trade agreements with non-members
+  commonDefense: z.boolean(), // voted common defence clause
+  programs: z.array(
+    z.object({ id: zb.uint(), since: IsoDateSchema, until: IsoDateSchema }),
+  ),
+  // Accession processes: opened, the next annual vote, the end.
+  accessions: z.array(
+    z.object({
+      nation: NationIdSchema,
+      since: IsoDateSchema,
+      nextVote: IsoDateSchema,
+      completeOn: IsoDateSchema,
+    }),
+  ),
+  applications: z.array(
+    z.object({ nation: NationIdSchema, date: IsoDateSchema }),
+  ),
+  exits: z.array(
+    z.object({ nation: NationIdSchema, effectiveOn: IsoDateSchema }),
+  ),
+  lastProposal: z.string().nullable(), // "YYYY-MM" of the leader's last one
+  // Last month's budget: what each member paid and received (US$).
+  contributions: z.record(z.string(), zb.float()),
+  received: z.record(z.string(), zb.float()),
+});
+export type BlocState = z.infer<typeof BlocStateSchema>;
+
+export const BlocsStateSchema = z.object({
+  blocs: z.array(BlocStateSchema),
+  // Pending proposals and those resolved in the last months.
+  proposals: z.array(BlocProposalSchema),
+  nextProposal: zb.uint(),
+  // Collective defence: a member attacked by a non-member calls the others;
+  // the player answers within the month.
+  calls: z.array(
+    z.object({
+      bloc: z.string(),
+      war: z.string(),
+      nation: NationIdSchema,
+      until: IsoDateSchema,
+    }),
+  ),
+  handledWars: z.array(z.string()),
+  // Leader of each bloc at the last monthly step ("" = none simulated).
+  leaders: z.record(z.string(), z.string()),
+  // Net bloc transfer of each nation, paid by the next monthly budget.
+  net: z.record(z.string(), zb.float()),
+});
+export type BlocsState = z.infer<typeof BlocsStateSchema>;
+
 // --- territory (J5) -----------------------------------------------------------
 
 export const TerritoryStateSchema = z.object({
@@ -539,7 +653,7 @@ export const SaveHeaderV5Schema = zb.object({
   rngState: z.tuple([zb.uint(), zb.uint(), zb.uint(), zb.uint()]),
   calendar: CalendarSchema,
   nations: z.array(NationStateSchema),
-  blocs: z.array(z.object({ id: z.string() })),
+  blocs: BlocsStateSchema,
   world: WorldStateSchema,
   economy: EconomyStateSchema,
   politics: PoliticsStateSchema,

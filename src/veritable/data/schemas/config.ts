@@ -393,6 +393,69 @@ const NuclearConfigSchema = z.object({
   falloutLoss: share,
 });
 
+// Blocs, layers 2 and 3 (J5, sim/blocs/blocs.ts). A member votes yes when
+//   U = relations x (relation with the target) + ideology x (alignment of
+//       the governments) - tradePerPctGdp x (trade at stake, % of GDP)
+//       - sovereignty x (its sovereignty axis) x integration + loyalty > 0
+// Relations and alignment count for the target of the measure, with the
+// sign of a hostile measure (sanctions, suspension); the measures of the
+// bloc itself (budget, common defence, programme) have no target: loyalty,
+// cost and sovereignty only.
+const perMeasure = z.object({
+  sanctions: z.number(),
+  lift: z.number(),
+  accession: z.number(),
+  suspension: z.number(),
+  budget: z.number(),
+  "common-defense": z.number(),
+  "tech-program": z.number(),
+  "trade-agreement": z.number(),
+});
+const BlocsConfigSchema = z.object({
+  // Rotating presidencies count their terms from this date.
+  rotationEpoch: IsoDateSchema,
+  vote: z.object({
+    relations: z.number().min(0),
+    ideology: z.number().min(0),
+    tradePerPctGdp: z.number().min(0),
+    sovereignty: z.number().min(0),
+    loyalty: z.number(),
+  }),
+  integration: perMeasure, // how much a measure pools sovereignty
+  // Trade at stake for the voter, x its trade share with the target and
+  // its openness: a cost (> 0) or a gain (< 0).
+  tradeStake: perMeasure,
+  capitalCost: perMeasure, // political capital of a player's proposal
+  budgetStep: share, // +/- 20 % of the contributions
+  budgetScaleMin: z.number().min(0),
+  budgetScaleMax: z.number().min(1),
+  programMonths: z.number().int().min(1),
+  agreementTradeBonus: z.number().min(1),
+  historyMonths: z.number().int().min(1), // resolved proposals kept
+  // A hegemon keeps the lead while its power is within this share of the
+  // largest (no monthly flip-flop between near equals).
+  hegemonMargin: share,
+  // Voted common defence clause of a bloc that has none in its data.
+  commonDefense: z.object({
+    joinProbability: share,
+    sovereignJoinProbability: share,
+    sovereigntyAbove: z.number(),
+  }),
+  // A player that ignores a call of collective defence loses this with
+  // every other member.
+  article5RefusalRelations: z.number().min(0),
+  ai: z.object({
+    sanctionRelationsBelow: z.number(),
+    liftAboveRelations: z.number(),
+    techProgramProbability: share,
+    tradeAgreementProbability: share,
+    tradeAgreementRelations: z.number(),
+    applyProbability: share,
+    applyRelationMargin: z.number(),
+    applySovereigntyBelow: z.number(),
+  }),
+});
+
 export const VeritableConfigSchema = z.object({
   leaderNames: z.enum(["parody", "fictional"]),
   time: z.object({
@@ -415,6 +478,7 @@ export const VeritableConfigSchema = z.object({
   air: AirConfigSchema,
   logistics: LogisticsConfigSchema,
   nuclear: NuclearConfigSchema,
+  blocs: BlocsConfigSchema,
   ai: z.object({
     // The AI of the nations (J5, ai/nations.ts).
     nations: z.object({

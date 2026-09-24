@@ -1,0 +1,59 @@
+{
+  "id": "g7",
+  "name": "bloc.g7.name",
+  "members": [
+    {
+      "nation": "CAN",
+      "status": "full"
+    },
+    {
+      "nation": "FRA",
+      "status": "full"
+    },
+    {
+      "nation": "DEU",
+      "status": "full"
+    },
+    {
+      "nation": "ITA",
+      "status": "full"
+    },
+    {
+      "nation": "JPN",
+      "status": "full"
+    },
+    {
+      "nation": "GBR",
+      "status": "full"
+    },
+    {
+      "nation": "USA",
+      "status": "full"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "unanimity",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "accession": {
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 12,
+    "order": ["FRA", "USA", "GBR", "DEU", "JPN", "ITA", "CAN"]
+  },
+  "competencies": ["sanctions", "trade"],
+  "layer": 3
+}

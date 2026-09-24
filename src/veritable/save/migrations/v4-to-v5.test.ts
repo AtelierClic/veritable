@@ -77,6 +77,21 @@ describe("migration v4 -> v5 on a real J4 save", () => {
       save.territory.initialTiles.ESP,
     );
 
+    // The blocs of the data, the leader of the month (the EU presidency of
+    // the first half of 2027 among the simulated members is Poland's), the
+    // wars of the v4 already handled (no collective defence after the fact).
+    expect(save.blocs.blocs.length).toBe(12);
+    expect(save.blocs.leaders.eu).toBe("POL");
+    expect(save.blocs.proposals).toEqual([]);
+    expect(save.blocs.handledWars).toEqual(
+      save.diplomacy.wars.map((w) => w.id),
+    );
+    expect(
+      save.blocs.blocs
+        .find((b) => b.id === "eu")!
+        .members.find((m) => m.nation === "UKR")?.status,
+    ).toBe("candidate");
+
     // The migrated save writes and reads back as a v5, identical.
     const bytes = encodeSave(save);
     expect(peekSchemaVersion(bytes)).toBe(SAVE_SCHEMA_VERSION);

@@ -3,6 +3,42 @@
   "name": "bloc.eu.name",
   "members": [
     {
+      "nation": "AUT",
+      "status": "full"
+    },
+    {
+      "nation": "BEL",
+      "status": "full"
+    },
+    {
+      "nation": "BGR",
+      "status": "full"
+    },
+    {
+      "nation": "HRV",
+      "status": "full"
+    },
+    {
+      "nation": "CYP",
+      "status": "full"
+    },
+    {
+      "nation": "CZE",
+      "status": "full"
+    },
+    {
+      "nation": "DNK",
+      "status": "full"
+    },
+    {
+      "nation": "EST",
+      "status": "full"
+    },
+    {
+      "nation": "FIN",
+      "status": "full"
+    },
+    {
       "nation": "FRA",
       "status": "full"
     },
@@ -11,11 +47,39 @@
       "status": "full"
     },
     {
+      "nation": "GRC",
+      "status": "full"
+    },
+    {
+      "nation": "HUN",
+      "status": "full"
+    },
+    {
+      "nation": "IRL",
+      "status": "full"
+    },
+    {
       "nation": "ITA",
       "status": "full"
     },
     {
-      "nation": "ESP",
+      "nation": "LVA",
+      "status": "full"
+    },
+    {
+      "nation": "LTU",
+      "status": "full"
+    },
+    {
+      "nation": "LUX",
+      "status": "full"
+    },
+    {
+      "nation": "MLT",
+      "status": "full"
+    },
+    {
+      "nation": "NLD",
       "status": "full"
     },
     {
@@ -23,41 +87,143 @@
       "status": "full"
     },
     {
-      "nation": "UKR",
+      "nation": "PRT",
+      "status": "full"
+    },
+    {
+      "nation": "ROU",
+      "status": "full"
+    },
+    {
+      "nation": "SVK",
+      "status": "full"
+    },
+    {
+      "nation": "SVN",
+      "status": "full"
+    },
+    {
+      "nation": "ESP",
+      "status": "full"
+    },
+    {
+      "nation": "SWE",
+      "status": "full"
+    },
+    {
+      "nation": "ALB",
+      "status": "candidate"
+    },
+    {
+      "nation": "BIH",
+      "status": "candidate"
+    },
+    {
+      "nation": "GEO",
+      "status": "candidate"
+    },
+    {
+      "nation": "MDA",
+      "status": "candidate"
+    },
+    {
+      "nation": "MNE",
+      "status": "candidate"
+    },
+    {
+      "nation": "MKD",
+      "status": "candidate"
+    },
+    {
+      "nation": "SRB",
       "status": "candidate"
     },
     {
       "nation": "TUR",
       "status": "candidate"
+    },
+    {
+      "nation": "UKR",
+      "status": "candidate"
     }
   ],
-  "joinCriteria": {
-    "regimes": ["parliamentary", "presidential", "semi-presidential"],
-    "maxDebtToGdp": 0.6,
-    "geography": "europe"
-  },
-  "exit": {
-    "delayMonths": 24,
-    "cost": 0.02
-  },
   "decisionRules": {
     "sanctions": "unanimity",
-    "trade": "qualified-majority",
+    "lift": "unanimity",
+    "accession": "unanimity",
+    "suspension": "unanimity",
     "budget": "qualified-majority",
-    "defense": "unanimity"
+    "defense": "unanimity",
+    "tech": "qualified-majority",
+    "trade": "qualified-majority"
+  },
+  "qualifiedMajority": {
+    "memberShare": 0.55,
+    "populationShare": 0.65
   },
   "budget": {
     "contributionPctGdp": 0.01,
-    "spending": {
-      "aid": 0.3,
+    "shares": {
       "structural": 0.5,
-      "defense": 0.2
-    }
+      "defense": 0.15,
+      "candidates": 0.05,
+      "programs": 0.3
+    },
+    "structuralFundsBelowGdpPerCapitaShare": 0.9
   },
-  "competencies": ["trade", "sanctions", "currency", "free-movement", "norms"],
-  "leadership": "rotating",
-  "techBranch": "eu-strategic-autonomy",
-  "layer": 1,
+  "accession": {
+    "regimes": ["parliamentary", "presidential", "semi-presidential"],
+    "maxDebtToGdp": 1.2,
+    "minRelations": 20,
+    "monthsMin": 24,
+    "monthsMax": 60
+  },
+  "exit": {
+    "delayMonths": 24,
+    "tradeCostPctGdp": 0.02
+  },
+  "leadership": {
+    "kind": "rotating",
+    "termMonths": 6,
+    "order": [
+      "CYP",
+      "IRL",
+      "LTU",
+      "GRC",
+      "ITA",
+      "LVA",
+      "LUX",
+      "NLD",
+      "SVK",
+      "MLT",
+      "FRA",
+      "SWE",
+      "PRT",
+      "POL",
+      "DNK",
+      "HUN",
+      "BEL",
+      "ESP",
+      "ROU",
+      "FIN",
+      "HRV",
+      "CZE",
+      "AUT",
+      "DEU",
+      "SVN",
+      "BGR",
+      "EST"
+    ]
+  },
+  "competencies": [
+    "trade",
+    "sanctions",
+    "currency",
+    "free-movement",
+    "norms",
+    "defense",
+    "tech"
+  ],
   "fiscalRule": {
     "maxDeficitToGdp": 0.03,
     "deficitYears": 2,
@@ -67,5 +233,7 @@
     "malusFadeMonths": 6
   },
   "tradeBonus": 1.5,
-  "suspendsOnCoup": true
+  "suspendsOnCoup": true,
+  "techBranch": "eu-strategic-autonomy",
+  "layer": 3
 }

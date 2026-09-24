@@ -1,0 +1,171 @@
+{
+  "id": "nato",
+  "name": "bloc.nato.name",
+  "members": [
+    {
+      "nation": "ALB",
+      "status": "full"
+    },
+    {
+      "nation": "BEL",
+      "status": "full"
+    },
+    {
+      "nation": "BGR",
+      "status": "full"
+    },
+    {
+      "nation": "CAN",
+      "status": "full"
+    },
+    {
+      "nation": "HRV",
+      "status": "full"
+    },
+    {
+      "nation": "CZE",
+      "status": "full"
+    },
+    {
+      "nation": "DNK",
+      "status": "full"
+    },
+    {
+      "nation": "EST",
+      "status": "full"
+    },
+    {
+      "nation": "FIN",
+      "status": "full"
+    },
+    {
+      "nation": "FRA",
+      "status": "full"
+    },
+    {
+      "nation": "DEU",
+      "status": "full"
+    },
+    {
+      "nation": "GRC",
+      "status": "full"
+    },
+    {
+      "nation": "HUN",
+      "status": "full"
+    },
+    {
+      "nation": "ISL",
+      "status": "full"
+    },
+    {
+      "nation": "ITA",
+      "status": "full"
+    },
+    {
+      "nation": "LVA",
+      "status": "full"
+    },
+    {
+      "nation": "LTU",
+      "status": "full"
+    },
+    {
+      "nation": "LUX",
+      "status": "full"
+    },
+    {
+      "nation": "MNE",
+      "status": "full"
+    },
+    {
+      "nation": "NLD",
+      "status": "full"
+    },
+    {
+      "nation": "MKD",
+      "status": "full"
+    },
+    {
+      "nation": "NOR",
+      "status": "full"
+    },
+    {
+      "nation": "POL",
+      "status": "full"
+    },
+    {
+      "nation": "PRT",
+      "status": "full"
+    },
+    {
+      "nation": "ROU",
+      "status": "full"
+    },
+    {
+      "nation": "SVK",
+      "status": "full"
+    },
+    {
+      "nation": "SVN",
+      "status": "full"
+    },
+    {
+      "nation": "ESP",
+      "status": "full"
+    },
+    {
+      "nation": "SWE",
+      "status": "full"
+    },
+    {
+      "nation": "TUR",
+      "status": "full"
+    },
+    {
+      "nation": "GBR",
+      "status": "full"
+    },
+    {
+      "nation": "USA",
+      "status": "full"
+    }
+  ],
+  "decisionRules": {
+    "sanctions": "consensus",
+    "lift": "consensus",
+    "accession": "unanimity",
+    "suspension": "consensus",
+    "budget": "consensus",
+    "defense": "consensus",
+    "tech": "consensus",
+    "trade": "consensus"
+  },
+  "budget": {
+    "contributionPctGdp": 0.0005,
+    "shares": {
+      "defense": 1
+    }
+  },
+  "accession": {
+    "regimes": ["parliamentary", "presidential", "semi-presidential"],
+    "minRelations": 30,
+    "monthsMin": 12,
+    "monthsMax": 36
+  },
+  "exit": {
+    "delayMonths": 12,
+    "tradeCostPctGdp": 0
+  },
+  "leadership": {
+    "kind": "hegemon"
+  },
+  "collectiveDefense": {
+    "joinProbability": 0.9,
+    "sovereignJoinProbability": 0.5,
+    "sovereigntyAbove": 0.7
+  },
+  "competencies": ["defense"],
+  "techBranch": "nato-integrated-defense",
+  "layer": 3
+}
