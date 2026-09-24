@@ -558,6 +558,57 @@ Plan et écarts : `docs/veritable/plans/J5.md`.
 - **Distribution des guerres** : une seule paire de belligérants en pratique (voir plus haut).
 - **Chefs de parti du J5a**, toujours en attente.
 
+## 2026-09-24 — J6a : boucle Russie–Ukraine, tests nucléaires forcés, carte et frontières du monde, données des 195 (session Claude Code, Lukas absent)
+
+Plan, liste « à valider » et écarts : `docs/veritable/plans/J6.md`. Lukas étant absent pendant tout le J6, les décisions de données incertaines sont prises, marquées « à valider » et listées en tête du rapport final.
+
+### Réponses de Lukas au rapport du J5 (2026-09-24)
+
+- **Revendication russe sur le reste des quatre oblasts : validée** (elle est réelle).
+- **Relations de départ** : traitées au J6b (« Monde de 2026 »).
+- **Distribution des guerres** : à réévaluer à l'échelle mondiale, après la correction de la boucle.
+- **Chefs de parti** : en fonction au 1er janvier 2026, par Wikidata avec qualificatifs de date, à la main là où Wikidata manque, marqués `estimate`.
+- **Rapports en français.**
+
+### Boucle Russie–Ukraine (correction du J5)
+
+- **(a) Mémoire de guerre par nation** : à la fin d'une guerre, chaque belligérant ajoute `m = k × pertes / population + 0,1 × années de guerre` (`k` = 200) à sa mémoire, qui décroît avec une demi-vie de 8 ans ; l'IA ne déclare que si `gain > coût × (1 + m)` (`ai.nations.war.memory`).
+- **(b) Revendications dynamiques** : les régions du scénario sont des masques de tuiles (fichier `VREG` écrit par l'outil de frontières, provinces Natural Earth admin-1 pour les quatre oblasts revendiqués par la Russie) ; chaque nation revendique en outre sa « patrie » (`homeland:<ISO3>`, ses tuiles du premier jour) ; les détenteurs sont lus sur la carte. Une paix avec cession règle la terre que le vainqueur tient du perdant (bit 14 de la tuile sauvegardée, « réglée », exclue des revendications) et le perdant ne reçoit plus de région revendiquée (règle du J3 retirée). Chaque deuxième guerre blanche (cessez-le-feu sans gain net des agresseurs) ou perdue sur une revendication divise son poids par deux ; le poids multiplie le motif de l'IA.
+- **(c) Coût attendu complet** : puissance défendue de la cible = sa puissance × (1 + renfort d'armes des nations à relations > 40 avec elle, plafonné à ×2) + membres de ses blocs de défense collective × probabilité de la clause ; la durée attendue de la guerre croît avec l'aide (×3 au plus).
+- **Critère tenu (europe-10, 100 × 50 ans sur le cœur, `docs/veritable/reports/J6/loop-europe-10/`)** : aucune relance RUS → UKR (médiane 0, maximum 0) ; 100 % des campagnes sans reprise dans les 15 ans qui suivent le cessez-le-feu. La Russie finit par tenir les quatre oblasts : sa revendication est satisfaite. Conséquence : plus aucune guerre nouvelle en europe-10 (le critère du J5 « médiane de 1 à 4 » tombe) ; comme Lukas l'a demandé, la distribution des guerres se réévalue sur le monde (J6c).
+- **Sauvegarde v6 ouverte** : `saveV5.ts` figé ; mémoire de guerre, pertes par guerre, revendications ; biens mesurés en valeur (1 unité = 1 Md$ de 2024, fiches identiques quel que soit le scénario ; europe-10 inchangé sauf l'électronique, +2 %) ; migration `v5-to-v6.ts` testée sur la vraie sauvegarde J5 (`save/fixtures/j5-europe-10.vsave`).
+
+### Tests nucléaires forcés (`docs/veritable/reports/J6/nuclear/`, `tools/veritable/headless/nuclearTests.ts`)
+
+- **Invasion** : la France, l'Allemagne, le Royaume-Uni et la Pologne, avec 80 divisions blindées chacun, déclarent la guerre à la Russie le deuxième jour ; le harnais force un débarquement tous les 20 jours pour chaque membre sans front et remet chaque jour à zéro l'épuisement et le recul de la coalition (outil de test, pas une règle). 20 graines × 12 ans : niveau 3 atteint dans les 20 campagnes, **tir russe dans 5 campagnes (0,25) pour 0,28 attendu** d'après le risque journalier affiché ; les cinq tirs au niveau 3, sur la France.
+- **Bogue trouvé et corrigé** : à la première passe, aucun tir pour 0,34 attendu. La Russie perdait son silo avec Moscou et `CoreBridge.ensureSilo` ne cherchait un emplacement qu'à 40 tuiles de la capitale perdue : chaque tir échouait sans bruit. Le silo se reconstruit désormais sur la terre la plus proche de la capitale, où qu'elle soit (200 tuiles candidates au plus), et **une nation sans terre n'a plus de vecteur : son risque affiché est nul**. Test sur le cœur (la Russie sans Moscou tire sur Kiev) et test unitaire.
+- **Main morte** : annexion signée le lendemain d'une déclaration de guerre ; elle se déclenche dans 15 annexions sur 20 (0,75) pour 0,70 affiché (tolérance 15 points).
+
+### Carte et frontières du monde
+
+- **Projections mondiales** dans l'outil (équirectangulaire à méridien central libre, coupe des polygones à l'antiméridien). Auto-calibration sur le trait de côte : `world` (2000 × 1000) IoU 0,9409, méridien central 11,78° E ; `giantworldmap` (4108 × 1948) IoU 0,9502, méridien central 10,95° E. Images de contrôle examinées et rangées dans `docs/veritable/reports/J6/maps/`.
+- **Rasterisation mondiale** : tous les pays Natural Earth ; dépendances rattachées à leur souverain de facto (`borders/attachments.world.json`, champ `SOV_A3` de Natural Earth) ; Kosovo, Somaliland, Chypre-Nord et Taïwan laissés neutres jusqu'au J6b (entités de facto) ; **moins de 4 tuiles = micro-État**, tuile hôte à sa capitale projetée (`microstateTiles` du scénario) ; 42 zones maritimes.
+- **Mesure des deux cartes et choix : `giantworldmap`** (`docs/veritable/reports/J6/maps/map-measure.json`, un an de jeu en 2026 sur le cœur, 195 nations). Tick p99 4,7 ms contre 4,0 ; maximum 653 ms contre 640 (pas mensuel de la simulation, identique sur les deux cartes, à étaler au J6c) ; sauvegarde 1,19 Mo contre 1,07 Mo au premier jour ; chargement 1,5 s contre 0,5 s ; ×5 dans le navigateur 46,9 contre 48,0 ticks/s ; 28 micro-États contre 29. La résolution l'emporte : 117 nations de plus de 1 000 tuiles contre 73, Andorre et Maurice visibles, fronts à une dizaine de kilomètres par tuile. Sur `world`, le cœur plaçait aussi le nom du joueur au-dessus du golfe de Carpentarie.
+- **La carte d'une nouvelle campagne vient de son scénario** (`adapters/scenarioMap.ts`, partagé par le client et le runner) : le client lançait toute campagne sur la carte Europe.
+
+### Données des 195
+
+- **Licences vérifiées** et consignées dans le tableau des sources de `DESIGN.md` : FAOSTAT CC BY 4.0 ; V-Dem CC BY-SA 4.0 (partage à l'identique, qui s'applique au champ `regime` dérivé) ; SIPRI et FAS sans licence ouverte (valeurs isolées attribuées seulement) ; votes de l'ONU (Voeten) CC0 ; UCDP CC BY 4.0 ; liste consolidée de l'UE CC BY 4.0 ; OFAC domaine public ; **liste consolidée de l'ONU : redistribution interdite, non utilisée**. `DESIGN.md` corrigé : le Haut-Karabakh n'est plus contesté (repris en septembre 2023, Artsakh dissous le 1er janvier 2024).
+- **Même pipeline pour les 185 nouvelles fiches** : instantanés CSV de la Banque mondiale, cache FMI hors git, régimes V-Dem (Regimes of the World, par Our World in Data) croisés avec la forme de gouvernement, capitales Natural Earth, règles du monde (`estimates.json → worldRules`) pour ce qui manque aux sources ouvertes, valeurs militaires à la main pour une cinquantaine de nations, arsenaux et doctrines des neuf puissances nucléaires (États-Unis et Russie emploi en premier possible, Chine et Inde non-usage en premier, Pakistan emploi en premier possible, Israël non déclarée, Corée du Nord imprévisible ; France et Royaume-Uni inchangés).
+- **Marché sans reste du monde** (`world-2026`) : participant `ROW` vide, demande mondiale ramenée à la production mondiale au chargement, chocs d'offre mondiaux sur chaque producteur. europe-10 garde son `ROW`.
+- **Dirigeants et partis des 185 au 1er janvier 2026** : Wikidata par l'API d'actions (`wikidataWorld.ts` ; les requêtes SPARQL prenaient sept minutes par nation), libellés en `fr`, `en` et `mul` (certains noms n'existent plus qu'en `mul`) ; **pour le monde, le mandat valide qui a commencé le plus tard l'emporte sur le rang « préféré »** (rangs périmés en Thaïlande et en Arabie saoudite ; europe-10 garde sa règle du J5a) ; **22 chefs d'État ou de gouvernement écrits à la main** là où Wikidata et la liste de l'agent sont tous deux périmés (`estimates.json → headOverrides`, marqués `estimate`) ; chefs de parti de Wikidata (président du parti, P488), ceux de la liste de l'agent (`politics-world.json`) là où Wikidata n'en donne pas ; un même dirigeant n'est plus dédoublé quand les deux sources l'orthographient différemment ; noms fictifs uniques dans une nation ; clés i18n orphelines retirées. **Traits écrits à la main et noms parodiques pour les 29 nations principales hors europe-10** (`parodyNations`, 40 nations avec europe-10 et Taïwan) ; ailleurs, le nom parodique est le nom fictif. Pays-Bas : `parties.json` portait le QID de l'Espagne (corrigé).
+
+### Performance (première mesure à 195 nations)
+
+- Un an de monde sans le cœur prenait 172 s, dont 165 dans `read()` : les votes projetés de chaque mesure possible de chaque bloc recalculaient des poids commerciaux (distance orthodromique et exponentielle) des millions de fois par lecture, et le runner lisait la vue une fois par nation et par mois. **Poids commerciaux mis en cache dans le contexte (ils sont statiques) et vue lue une fois par mois : 8,4 s pour l'année, résultats identiques.** `read()` coûte encore ≈ 0,23 s à 195 nations : à reprendre au J6c avec les écrans.
+- Premier essai du monde : le Japon (dette de 2,35 fois le PIB), le Soudan, l'Érythrée et le Venezuela font défaut dès février 2026 (seuil de 200 % et taux du J2 calibrés sur europe-10) : tâche ajoutée au J6b (taux effectifs de départ, seuils propres, défauts en cours au 1er janvier 2026).
+
+### Vérifications
+
+- `npm test` : seuls les trois échecs connus hors jeu ; `MainInitialize` dépassait son délai de 20 s sous la charge des cinq processus du test d'invasion et passe seul (9 sur 9). Lint et types propres sur les fichiers modifiés.
+- Navigateur : une campagne `world-2026` (France) se lance sur `giantworldmap`, les événements du 1er février mettent le jeu en pause, ×5 tenu à 46,9 ticks/s entre deux pas mensuels.
+- Les crochets git (husky) ne sont pas installés dans ce dépôt (`npm ci --ignore-scripts`) : aucun formatage au commit ; les fichiers modifiés sont formatés à la main, `DESIGN.md` excepté, comme au J0.
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.

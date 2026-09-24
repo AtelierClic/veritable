@@ -1,0 +1,173 @@
+{
+  "measuredOn": "2026-09-24",
+  "scenario": "world-2026 (195 nations, sans entités de facto ni guerres : monde provisoire du J6a)",
+  "method": "tools/veritable/headless/perfWorld.ts --years 1 --windows 2026 (cœur OpenFront + simulation, France jouée en pilote automatique, graine 42) ; navigateur : build de dev, panneau intégré, campagne France, ×5, événements « jour commencé » reçus par la page sur 10 s, passage d un 1er du mois compris",
+  "choice": "giantworldmap",
+  "giantworldmap": {
+    "map": "giantworldmap",
+    "tiles": 8002384,
+    "microstates": 28,
+    "loadMs": 1547,
+    "saveBytesDay1": 1185714,
+    "saveBytesAfterOneYear": 1280848,
+    "heapMbAtStart": 60,
+    "heapMbAfterOneYear": 129,
+    "ticks": 7299,
+    "tickMeanMs": 1.164,
+    "tickP50Ms": 0.209,
+    "tickP90Ms": 0.415,
+    "tickP99Ms": 4.74,
+    "tickMaxMs": 652.6,
+    "ticksOver10ms": 65,
+    "ticksOver100ms": 12,
+    "perfByDomain": {
+      "veritable:war:tick": {
+        "calls": 7300,
+        "totalMs": 4.046700000003511
+      },
+      "veritable:diplomacy:tick": {
+        "calls": 7300,
+        "totalMs": 446.54700000004505
+      },
+      "veritable:economy:day": {
+        "calls": 365,
+        "totalMs": 258.8043999999941
+      },
+      "veritable:events:day": {
+        "calls": 365,
+        "totalMs": 1.1873000000009597
+      },
+      "veritable:diplomacy:day": {
+        "calls": 365,
+        "totalMs": 1259.438899999996
+      },
+      "veritable:politics:week": {
+        "calls": 52,
+        "totalMs": 12.358700000006593
+      },
+      "veritable:economy:month": {
+        "calls": 12,
+        "totalMs": 3105.5886000000014
+      },
+      "veritable:politics:month": {
+        "calls": 12,
+        "totalMs": 1075.0503000000017
+      },
+      "veritable:diplomacy:month": {
+        "calls": 12,
+        "totalMs": 600.1023000000014
+      },
+      "veritable:blocs:month": {
+        "calls": 12,
+        "totalMs": 40.527000000000044
+      },
+      "veritable:events:month": {
+        "calls": 12,
+        "totalMs": 108.95670000000428
+      },
+      "veritable:save:month": {
+        "calls": 12,
+        "totalMs": 0.03130000000055588
+      },
+      "core:tick": {
+        "calls": 7299,
+        "totalMs": 1296.0112000000568
+      }
+    },
+    "landTiles": 2335403,
+    "neutralLand": 371536,
+    "bordersFileBytes": 163541,
+    "nationsBySize": {
+      "0-3": 28,
+      "4-19": 1,
+      "20-99": 8,
+      "100-999": 41,
+      "1000+": 117
+    },
+    "browserTicksPerSecondAtX5": 46.89
+  },
+  "world": {
+    "map": "world",
+    "tiles": 2000000,
+    "microstates": 29,
+    "loadMs": 537,
+    "saveBytesDay1": 1070717,
+    "saveBytesAfterOneYear": 1165963,
+    "heapMbAtStart": 58,
+    "heapMbAfterOneYear": 128,
+    "ticks": 7299,
+    "tickMeanMs": 1.086,
+    "tickP50Ms": 0.262,
+    "tickP90Ms": 0.509,
+    "tickP99Ms": 4.014,
+    "tickMaxMs": 640.3,
+    "ticksOver10ms": 16,
+    "ticksOver100ms": 12,
+    "perfByDomain": {
+      "veritable:war:tick": {
+        "calls": 7300,
+        "totalMs": 4.007700000044679
+      },
+      "veritable:diplomacy:tick": {
+        "calls": 7300,
+        "totalMs": 591.0329999999899
+      },
+      "veritable:economy:day": {
+        "calls": 365,
+        "totalMs": 277.4830999999781
+      },
+      "veritable:events:day": {
+        "calls": 365,
+        "totalMs": 1.280699999992521
+      },
+      "veritable:diplomacy:day": {
+        "calls": 365,
+        "totalMs": 890.7811000000156
+      },
+      "veritable:politics:week": {
+        "calls": 52,
+        "totalMs": 15.029100000006565
+      },
+      "veritable:economy:month": {
+        "calls": 12,
+        "totalMs": 3279.095100000002
+      },
+      "veritable:politics:month": {
+        "calls": 12,
+        "totalMs": 327.65750000000344
+      },
+      "veritable:diplomacy:month": {
+        "calls": 12,
+        "totalMs": 438.386500000001
+      },
+      "veritable:blocs:month": {
+        "calls": 12,
+        "totalMs": 101.39539999999579
+      },
+      "veritable:events:month": {
+        "calls": 12,
+        "totalMs": 256.6825999999992
+      },
+      "veritable:save:month": {
+        "calls": 12,
+        "totalMs": 0.037099999995461985
+      },
+      "core:tick": {
+        "calls": 7299,
+        "totalMs": 1440.3858999999752
+      }
+    },
+    "landTiles": 651569,
+    "neutralLand": 97271,
+    "bordersFileBytes": 48804,
+    "nationsBySize": {
+      "0-3": 29,
+      "4-19": 2,
+      "20-99": 23,
+      "100-999": 68,
+      "1000+": 73
+    },
+    "browserTicksPerSecondAtX5": 48.03,
+    "note": "Nom du joueur placé par le cœur au-dessus du golfe de Carpentarie (aucune tuile française à proximité)."
+  }
+}
