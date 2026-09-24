@@ -51,7 +51,12 @@ export type NuclearEvent =
       aim: NuclearStrike["aim"];
       threat: number;
     }
-  | { type: "nuclear-detonation"; nation: NationId; by: NationId; tiles: number }
+  | {
+      type: "nuclear-detonation";
+      nation: NationId;
+      by: NationId;
+      tiles: number;
+    }
   | { type: "nuclear-intercepted"; nation: NationId; by: NationId }
   | { type: "dead-hand"; nation: NationId; target: NationId };
 
@@ -118,7 +123,8 @@ export function threatLevel(env: NuclearEnv, id: NationId): number {
   if (
     nation === undefined ||
     nation.status !== "active" ||
-    (initial > 0 && nation.tileCount < (1 - cfg.lostTerritoryShare) * initial) ||
+    (initial > 0 &&
+      nation.tileCount < (1 - cfg.lostTerritoryShare) * initial) ||
     !env.world.capitalHeld(id) ||
     stability < cfg.collapseStability
   ) {

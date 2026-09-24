@@ -118,6 +118,9 @@ describe("zones and control", () => {
     // The fleet is back home in the west: CCC still meets it there.
     expect(sim.read().naval.blockade.CCC).toBeLessThan(blockaded);
     expect(sim.read().naval.blockade.CCC).toBeCloseTo(0.45, 2);
+    // CCC is an AI nation at war (J5), but its fleet is the weaker one: it
+    // stays home instead of blockading AAA.
+    expect(sim.read().naval.deployments.CCC).toBeUndefined();
   });
 
   it("a landing is refused without control of the zone, and taken with it", () => {

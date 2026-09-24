@@ -225,6 +225,9 @@ export function stepMilitaryMonth(
   atWar: boolean,
   // Laws in force (J4): compulsory service widens the pool.
   manpowerMultiplier = 1,
+  // Arms received from abroad this month, index points (J5); negative: what
+  // a donor sent beyond its exports.
+  armsAid = 0,
 ): void {
   const cfg = ctx.config.war;
   const population = data.population.value;
@@ -254,7 +257,8 @@ export function stepMilitaryMonth(
         economy.exports.arms,
     ) /
       12) *
-    cfg.armsToDivisionsShare;
+      cfg.armsToDivisionsShare +
+    armsAid;
   let deficit = 0;
   for (const division of nation.divisions) {
     deficit +=

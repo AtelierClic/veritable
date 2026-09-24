@@ -312,5 +312,23 @@
     "source": "manual",
     "asOf": "2026-01-01",
     "note": "Elecciones generales 2023. Intervalle : législature de quatre ans."
-  }
+  },
+  "aiAgenda": [
+    {
+      "goal": "security",
+      "weight": 0.2
+    },
+    {
+      "goal": "growth",
+      "weight": 0.55
+    },
+    {
+      "goal": "regional-influence",
+      "weight": 0.15
+    },
+    {
+      "goal": "ideology",
+      "weight": 0.1
+    }
+  ]
 }

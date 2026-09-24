@@ -1,5 +1,6 @@
 import { EventBus } from "../../core/EventBus";
 import { UserSettings } from "../../core/game/UserSettings";
+import { FrontOverlayController } from "../../veritable/ui/FrontOverlay";
 import { Controller } from "../Controller";
 import { AmbienceController } from "../controllers/AmbienceController";
 import { AttackingTroopsController } from "../controllers/AttackingTroopsController";
@@ -46,7 +47,6 @@ import { TutorialPanel } from "./layers/TutorialPanel";
 import { UnitDisplay } from "./layers/UnitDisplay";
 import { WinModal } from "./layers/WinModal";
 import { loadAllSprites } from "./SpriteLoader";
-import { FrontOverlayController } from "../../veritable/ui/FrontOverlay";
 
 export function createRenderer(
   inputEl: HTMLElement,
@@ -425,8 +425,9 @@ function hideLegacyPanels(): void {
 
 // VERITABLE: a campaign game (tolerant of the doubles of the OpenFront tests).
 function isCampaign(game: GameView): boolean {
-  const config = (game as { config?: () => { isVeritable?: () => boolean } })
-    .config?.();
+  const config = (
+    game as { config?: () => { isVeritable?: () => boolean } }
+  ).config?.();
   return config?.isVeritable?.() === true;
 }
 

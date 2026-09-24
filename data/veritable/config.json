@@ -398,6 +398,40 @@
     "falloutLoss": 0.9
   },
   "ai": {
+    "nations": {
+      "reviewShare": 0.1,
+      "reviewDaysCalm": 30,
+      "reviewDaysStakes": 7,
+      "crisisStability": 0.35,
+      "defense": {
+        "warBoost": 1,
+        "hostileBoost": 0.5,
+        "hostileRelation": -40,
+        "maxShare": 0.06,
+        "rampPerReview": 0.25
+      },
+      "war": {
+        "powerRatio": 2,
+        "aggressivenessWithoutCasusBelli": 0.8,
+        "landSharePerPowerRatio": 0.03,
+        "maxLandShare": 0.15,
+        "exhaustionCostPctGdp": 0.02,
+        "reputationCostPctGdp": 0.01,
+        "declareProbability": 0.05,
+        "minMonthsBetweenWars": 60,
+        "gainHorizonYears": 10,
+        "expectedWarYears": 3
+      },
+      "armsAid": {
+        "share": 0.1,
+        "donorRelations": 40,
+        "enemyRelations": -40
+      },
+      "navy": {
+        "landingControl": 0.6,
+        "landingCooldownMonths": 6
+      }
+    },
     "fiscal": {
       "maxDeficitToGdp": 0.03,
       "adjustPerMonth": 0.01,

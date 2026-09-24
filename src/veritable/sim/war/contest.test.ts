@@ -1,7 +1,4 @@
-import {
-  TILE_CONTESTED_BIT,
-  TILE_NATION_MASK,
-} from "../../data/schemas/save";
+import { TILE_CONTESTED_BIT, TILE_NATION_MASK } from "../../data/schemas/save";
 import { CONTEST_CEDED_BIT, ContestLedger, monthIndex } from "./contest";
 
 describe("contest of the tiles (J5)", () => {
@@ -46,9 +43,9 @@ describe("contest of the tiles (J5)", () => {
     ledger.setMonth(12 + 60);
     expect(ledger.settle(120, 60, () => true)).toBe(2);
     expect(ledger.isContested(2)).toBe(true);
-    expect(
-      Object.fromEntries(ledger.counts((t) => owner[t])),
-    ).toEqual({ L: 1 });
+    expect(Object.fromEntries(ledger.counts((t) => owner[t]))).toEqual({
+      L: 1,
+    });
   });
 
   it("land nobody holds is no longer contested", () => {

@@ -419,7 +419,9 @@ export class GameRightSidebar extends LitElement implements Controller {
   // hidden; settings, fullscreen and exit stay.
   private isCampaign(): boolean {
     const config = (
-      this.game as { config?: () => { isVeritable?: () => boolean } } | undefined
+      this.game as
+        | { config?: () => { isVeritable?: () => boolean } }
+        | undefined
     )?.config?.();
     return config?.isVeritable?.() === true;
   }

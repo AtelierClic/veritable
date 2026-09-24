@@ -6,8 +6,8 @@ import { createDataSource } from "../../../src/veritable/data/DataSource";
 import { fsDataFiles } from "../../../src/veritable/data/files.fs";
 import {
   CampaignResult,
-  parseScript,
   gainedTerritoryValue,
+  parseScript,
   parseShock,
   runCampaign,
   seriesCsv,

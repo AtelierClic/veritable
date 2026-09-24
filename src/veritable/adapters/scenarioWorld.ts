@@ -14,8 +14,8 @@ import { vt } from "../data/i18n";
 import { NationId } from "../data/schemas/common";
 import { NationData } from "../data/schemas/nation";
 import { WorldState } from "../data/schemas/save";
-import { Zones } from "../data/zonesFile";
 import { Scenario } from "../data/schemas/scenario";
+import { Zones } from "../data/zonesFile";
 import { SimData } from "../sim/economy/context";
 import { TileGrid } from "../sim/VeritableSim";
 
@@ -184,7 +184,11 @@ export function initialWorld(
         if ((sheet?.nuclear?.warheads ?? 0) > 0) {
           const silo = siloTile(game, tiles, capital, tiles[capital]);
           if (silo !== null) {
-            structures.push({ type: UnitType.MissileSilo, tile: silo, level: 1 });
+            structures.push({
+              type: UnitType.MissileSilo,
+              tile: silo,
+              level: 1,
+            });
           }
         }
         return {

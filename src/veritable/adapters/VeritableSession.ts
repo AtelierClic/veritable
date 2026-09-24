@@ -1,18 +1,14 @@
 import { Game } from "../../core/game/Game";
 import { simpleHash } from "../../core/Util";
+import { bordersTileCounts } from "../data/bordersFile";
 import { loadVeritableConfig } from "../data/loadConfig";
 import { VeritableConfig } from "../data/schemas/config";
-import { bordersTileCounts } from "../data/bordersFile";
 import { decodeSave, encodeSaveWithStats } from "../save/serialize";
 import { SimEvent, VeritableSim } from "../sim/VeritableSim";
 import { VeritableSimImpl } from "../sim/VeritableSimImpl";
 import { CoreBridge } from "./CoreBridge";
 import { DomainTiming, PerformanceProbe } from "./perfProbe";
-import {
-  MapOverlayResult,
-  SnapshotResult,
-  VeritableRequest,
-} from "./protocol";
+import { MapOverlayResult, SnapshotResult, VeritableRequest } from "./protocol";
 import {
   bindScenario,
   initialWorld,

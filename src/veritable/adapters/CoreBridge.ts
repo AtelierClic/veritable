@@ -26,7 +26,6 @@ import {
   WorldState,
 } from "../data/schemas/save";
 import { Zones } from "../data/zonesFile";
-import { ContestLedger } from "../sim/war/contest";
 import {
   FrontGeometry,
   NavalSnapshot,
@@ -35,6 +34,7 @@ import {
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
+import { ContestLedger } from "../sim/war/contest";
 import {
   captureAlong,
   frontTiles,
@@ -328,7 +328,10 @@ export class CoreBridge implements WorldPort {
       if (!id.split("|").includes(nation)) continue;
       for (const tiles of segments) {
         for (const tile of tiles) {
-          const d = Math.max(Math.abs(g.x(tile) - cx), Math.abs(g.y(tile) - cy));
+          const d = Math.max(
+            Math.abs(g.x(tile) - cx),
+            Math.abs(g.y(tile) - cy),
+          );
           if (best === null || d < best) best = d;
         }
       }
@@ -357,8 +360,16 @@ export class CoreBridge implements WorldPort {
     const radius = g.config().nukeMagnitudes(type).outer;
     const x0 = g.x(dst);
     const y0 = g.y(dst);
-    for (let y = Math.max(0, y0 - radius); y <= Math.min(g.height() - 1, y0 + radius); y++) {
-      for (let x = Math.max(0, x0 - radius); x <= Math.min(g.width() - 1, x0 + radius); x++) {
+    for (
+      let y = Math.max(0, y0 - radius);
+      y <= Math.min(g.height() - 1, y0 + radius);
+      y++
+    ) {
+      for (
+        let x = Math.max(0, x0 - radius);
+        x <= Math.min(g.width() - 1, x0 + radius);
+        x++
+      ) {
         const tile = g.ref(x, y);
         if (!g.hasOwner(tile) || g.hasFallout(tile)) continue;
         const owner = this.bySmallID.get(g.ownerID(tile));
@@ -401,7 +412,11 @@ export class CoreBridge implements WorldPort {
       if (tiles.length > 0) return tiles[Math.floor(tiles.length / 2)];
     }
     const capital = enemy.spawnTile();
-    if (aim.kind !== "city" && capital !== undefined && g.owner(capital) === enemy) {
+    if (
+      aim.kind !== "city" &&
+      capital !== undefined &&
+      g.owner(capital) === enemy
+    ) {
       return capital;
     }
     const cities = enemy

@@ -50,11 +50,7 @@ async function main(): Promise<void> {
     results.push(result);
     fs.writeFileSync(path.join(out, `seed-${seed}.csv`), seriesCsv(result));
     const crises = Object.values(result.politics).map(
-      (p) =>
-        p.unrestStarts +
-        p.coupAttempts +
-        p.fraudDetected +
-        p.revolutions,
+      (p) => p.unrestStarts + p.coupAttempts + p.fraudDetected + p.revolutions,
     );
     console.log(
       `seed ${seed}: ${result.wallMs} ms; alternations ${Object.values(result.politics).reduce((s, p) => s + p.alternations, 0)}; crises ${crises.reduce((a, b) => a + b, 0)}; regimes ${Object.entries(
@@ -76,11 +72,7 @@ async function main(): Promise<void> {
   const crisisCampaigns = results.filter((r) =>
     Object.values(r.politics).some(
       (p) =>
-        p.unrestStarts +
-          p.coupAttempts +
-          p.fraudDetected +
-          p.revolutions >
-        0,
+        p.unrestStarts + p.coupAttempts + p.fraudDetected + p.revolutions > 0,
     ),
   ).length;
   // A junta at the end of a campaign is explained by a coup in that campaign

@@ -158,7 +158,7 @@ export class FrontOverlayController implements Controller {
 
   private receive(result: MapOverlayResult): void {
     if (result.overlay.contested !== null) {
-      this.hatch = this.buildHatch(result.overlay);
+      this.updateHatch(result.overlay);
       this.contestedVersion = result.overlay.contestedVersion;
     }
     this.data = result;
@@ -167,31 +167,60 @@ export class FrontOverlayController implements Controller {
     this.renderPanel();
   }
 
-  // The contested tiles, hatched, at one pixel per tile: drawn scaled with
-  // the camera. Built again only when the contest changes.
-  private buildHatch(overlay: MapOverlay): HTMLCanvasElement | null {
-    const tiles = overlay.contested;
-    if (tiles === null || tiles.length === 0) return null;
+  // The contested tiles, hatched, at one pixel per tile, drawn scaled with
+  // the camera. The canvas and its pixels are kept: an update clears the
+  // tiles of the last one and paints the new ones, and only the box that
+  // changed is sent back to the canvas (a war changes it every second).
+  private hatchImage: ImageData | null = null;
+  private hatchTiles: Uint32Array = new Uint32Array(0);
+
+  private updateHatch(overlay: MapOverlay): void {
+    const tiles = overlay.contested ?? new Uint32Array(0);
     const { width, height } = overlay;
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext("2d");
-    if (ctx === null) return null;
-    const image = ctx.createImageData(width, height);
-    const px = image.data;
-    for (const tile of tiles) {
+    if (
+      this.hatch === null ||
+      this.hatch.width !== width ||
+      this.hatch.height !== height
+    ) {
+      this.hatch = document.createElement("canvas");
+      this.hatch.width = width;
+      this.hatch.height = height;
+      this.hatchImage = null;
+      this.hatchTiles = new Uint32Array(0);
+    }
+    const ctx = this.hatch.getContext("2d");
+    if (ctx === null) return;
+    this.hatchImage ??= ctx.createImageData(width, height);
+    const px = this.hatchImage.data;
+    let x0 = width;
+    let y0 = height;
+    let x1 = -1;
+    let y1 = -1;
+    const touch = (tile: number) => {
       const x = tile % width;
       const y = (tile - x) / width;
+      if (x < x0) x0 = x;
+      if (x > x1) x1 = x;
+      if (y < y0) y0 = y;
+      if (y > y1) y1 = y;
+      return (x + y) % 4 === 0;
+    };
+    for (const tile of this.hatchTiles) {
+      touch(tile);
+      px[tile * 4 + 3] = 0;
+    }
+    for (const tile of tiles) {
+      const stripe = touch(tile);
       const i = tile * 4;
-      const stripe = (x + y) % 4 === 0;
       px[i] = stripe ? 20 : 255;
       px[i + 1] = stripe ? 20 : 255;
       px[i + 2] = stripe ? 20 : 255;
       px[i + 3] = stripe ? 150 : 40;
     }
-    ctx.putImageData(image, 0, 0);
-    return canvas;
+    this.hatchTiles = tiles;
+    if (x1 >= 0) {
+      ctx.putImageData(this.hatchImage, 0, 0, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
+    }
   }
 
   private draw(): void {
@@ -218,15 +247,14 @@ export class FrontOverlayController implements Controller {
     const s = t.scale;
     // World coordinates (tiles) to device pixels.
     ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * origin.x, dpr * origin.y);
-    if (this.hatch !== null) {
+    if (this.hatch !== null && this.hatchTiles.length > 0) {
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(this.hatch, 0, 0);
     }
     const geometry = new Map(data.overlay.fronts.map((f) => [f.id, f]));
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    const labels: { x: number; y: number; text: string; color: string }[] =
-      [];
+    const labels: { x: number; y: number; text: string; color: string }[] = [];
     for (const front of data.fronts) {
       const lines = geometry.get(front.id);
       if (lines === undefined) continue;
@@ -427,7 +455,8 @@ export class FrontOverlayController implements Controller {
             <tr>
               <th class="text-left">${vt("map.front.factor")}</th>
               ${sides.map(
-                (id) => html`<th class="px-2 text-right">${nationName(id)}</th>`,
+                (id) =>
+                  html`<th class="px-2 text-right">${nationName(id)}</th>`,
               )}
             </tr>
           </thead>

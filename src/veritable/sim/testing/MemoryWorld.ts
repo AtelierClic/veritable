@@ -13,6 +13,7 @@ import {
   TileGrid,
   WorldPort,
 } from "../VeritableSim";
+import { ContestLedger } from "../war/contest";
 import {
   captureAlong,
   frontTiles,
@@ -20,7 +21,6 @@ import {
   segmentFront,
   Terrain,
 } from "../war/geometry";
-import { ContestLedger } from "../war/contest";
 
 // In-memory WorldPort: a tiled world without the OpenFront core. Used by the
 // simulation and save tests. Every tile is land; terrain is plains unless set;
@@ -125,8 +125,16 @@ export class MemoryWorld implements WorldPort {
         const ax = aim % this.width;
         const ay = Math.floor(aim / this.width);
         const r = this.nukeRadius;
-        for (let y = Math.max(0, ay - r); y <= Math.min(this.height - 1, ay + r); y++) {
-          for (let x = Math.max(0, ax - r); x <= Math.min(this.width - 1, ax + r); x++) {
+        for (
+          let y = Math.max(0, ay - r);
+          y <= Math.min(this.height - 1, ay + r);
+          y++
+        ) {
+          for (
+            let x = Math.max(0, ax - r);
+            x <= Math.min(this.width - 1, ax + r);
+            x++
+          ) {
             const tile = y * this.width + x;
             const owner = this.owners[tile];
             if (owner === null) continue;

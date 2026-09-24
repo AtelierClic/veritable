@@ -1,3 +1,4 @@
+import { initAi } from "../../ai/nations";
 import { NationId } from "../../data/schemas/common";
 import {
   SaveFileV5,
@@ -21,7 +22,9 @@ import { MigrationContext } from "./index";
 //     its budget;
 //   - nuclear weapons: the arsenals of the sheets, untouched (nobody fired
 //     before the J5), no pariah, no delayed annexation; the coalition calls
-//     open in the v4 were all for the defenders.
+//     open in the v4 were all for the defenders;
+//   - the nation AI: every nation reviewed within the month after the save,
+//     no defence goal yet, no arms flow.
 export function v4ToV5(
   save: SaveFileV4,
   context: MigrationContext | undefined,
@@ -69,6 +72,10 @@ export function v4ToV5(
     },
     territory: { initialTiles, structures, constructionCost: {} },
     nuclear: initNuclear(sheets),
+    ai: initAi(
+      save.nations.map((n) => n.id),
+      save.calendar.date,
+    ),
     contest,
   } as SaveFileV5;
 }

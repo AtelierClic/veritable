@@ -97,10 +97,9 @@ describe("fifty years headless", () => {
           Math.max(first[nation], prudent) + 0.25,
         );
         if (debt > prudent) {
-          expect(
-            decade(120, 0, nation),
-            `${nation} seed ${seed}`,
-          ).toBeLessThan(decade(240, 120, nation) + 0.05);
+          expect(decade(120, 0, nation), `${nation} seed ${seed}`).toBeLessThan(
+            decade(240, 120, nation) + 0.05,
+          );
         }
       }
       expect(result.final.meanStability).toBeGreaterThan(0.5);

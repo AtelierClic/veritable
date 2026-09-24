@@ -196,8 +196,7 @@ export function resolveTick(
         applyLosses(ctx, military, war, a, b);
         applyLosses(ctx, military, war, b, a);
       }
-      const attacker =
-        rA > 0 && rA >= rB ? a.nation : rB > 0 ? b.nation : null;
+      const attacker = rA > 0 && rA >= rB ? a.nation : rB > 0 ? b.nation : null;
       return {
         index: segment.index,
         tiles: segment.tiles,

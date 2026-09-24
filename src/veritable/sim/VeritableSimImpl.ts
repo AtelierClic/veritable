@@ -1,10 +1,19 @@
 import { stepFiscalRule } from "../ai/fiscal";
+import {
+  AiEnv,
+  AiEvent,
+  dueThisTick,
+  initAi,
+  review,
+  stepArmsFlows,
+} from "../ai/nations";
 import { stepWarAi } from "../ai/war";
 import { NationId } from "../data/schemas/common";
 import { VeritableConfig } from "../data/schemas/config";
 import { NationData } from "../data/schemas/nation";
 import { ROW_ID } from "../data/schemas/row";
 import {
+  AiState,
   Calendar,
   DiplomacyState,
   EconomyState,
@@ -56,6 +65,19 @@ import {
   stepNavalDay,
 } from "./naval/naval";
 import {
+  aimOf,
+  deadHandProbability,
+  fireProbability,
+  initNuclear,
+  launch,
+  loseStrikesInFlight,
+  mainThreat,
+  NuclearEnv,
+  NuclearEvent,
+  stepDeadHand,
+  stepNuclearDay,
+} from "./nuclear/nuclear";
+import {
   CoupEvent,
   stepCoups,
   stepJuntaTransition,
@@ -85,20 +107,6 @@ import {
 } from "./politics/objectives";
 import { PoliticsEvent, stepPolitics } from "./politics/politics";
 import { Rng } from "./rng";
-import { monthIndex } from "./war/contest";
-import {
-  aimOf,
-  deadHandProbability,
-  fireProbability,
-  initNuclear,
-  launch,
-  loseStrikesInFlight,
-  mainThreat,
-  NuclearEnv,
-  NuclearEvent,
-  stepDeadHand,
-  stepNuclearDay,
-} from "./nuclear/nuclear";
 import {
   ClockContext,
   DomainSystem,
@@ -116,6 +124,7 @@ import {
   VeritableSim,
   WorldPort,
 } from "./VeritableSim";
+import { monthIndex } from "./war/contest";
 import {
   enemyPairs,
   Multipliers,
@@ -173,6 +182,7 @@ type DomainEvent =
   | LeaderEvent
   | ObjectiveEvent
   | NuclearEvent
+  | AiEvent
   | { type: "bloc-suspended"; nation: NationId; bloc: string }
   | { type: "note"; nation: NationId; text: string };
 
@@ -200,6 +210,9 @@ const POLITICAL_EVENTS = new Set<string>([
   "nuclear-detonation",
   "nuclear-intercepted",
   "dead-hand",
+  "arms-aid-started",
+  "arms-aid-ended",
+  "ai-landing",
 ]);
 
 const CEASEFIRE: PeaceTerms = {
@@ -228,6 +241,15 @@ export class VeritableSimImpl implements VeritableSim {
   private naval!: NavalState;
   private territory!: TerritoryState;
   private nuclear!: NuclearState;
+  private ai!: AiState;
+  // Arms flows of the month, for the military step and the budget.
+  private armsAid: {
+    points: Record<NationId, number>;
+    cost: Record<NationId, number>;
+  } = {
+    points: {},
+    cost: {},
+  };
   private scenario!: Scenario;
   private ctx!: EconomyContext;
   private sheets = new Map<NationId, NationData>();
@@ -312,6 +334,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.military = initMilitary(this.ctx, sheets);
     this.naval = initNaval();
     this.nuclear = initNuclear(sheets);
+    this.ai = initAi(scenario.nations, scenario.startDate);
     this.journal = [
       { date: this.calendar.date, kind: "campaign-started", params: {} },
     ];
@@ -365,6 +388,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.territory = state.territory;
     this.nuclear = state.nuclear;
     loseStrikesInFlight(this.nuclear);
+    this.ai = state.ai;
     this.trade = null;
     this.syncSuspensions();
     this.invalidateFronts();
@@ -402,6 +426,7 @@ export class VeritableSimImpl implements VeritableSim {
       naval: this.naval,
       territory: this.territory,
       nuclear: this.nuclear,
+      ai: this.ai,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -731,6 +756,10 @@ export class VeritableSimImpl implements VeritableSim {
     (this.deps.perf ?? NULL_PROBE).measure("war", "tick", () =>
       this.resolveFronts(gameMinutes),
     );
+    // The nation AI: a tenth of the nations come up every tick (J5).
+    (this.deps.perf ?? NULL_PROBE).measure("diplomacy", "tick", () =>
+      this.aiTick(this.calendar.date),
+    );
     events.push(...this.pending);
     this.pending = [];
     this.metrics[METRIC_ADVANCE_CALLS] =
@@ -799,6 +828,7 @@ export class VeritableSimImpl implements VeritableSim {
         ]),
       ),
       nuclearRisk: this.nuclearRisk(),
+      ai: this.ai,
       contested: Object.fromEntries(this.deps.world.contestedCounts()),
       initialTiles: this.territory.initialTiles,
       constructionCost: this.territory.constructionCost,
@@ -1216,6 +1246,10 @@ export class VeritableSimImpl implements VeritableSim {
       transfers[r.from] = (transfers[r.from] ?? 0) - amount;
       transfers[r.to] = (transfers[r.to] ?? 0) + amount;
     }
+    // Arms sent abroad are paid by the donor's budget (J5).
+    for (const [id, cost] of Object.entries(this.armsAid.cost)) {
+      transfers[id] = (transfers[id] ?? 0) - cost;
+    }
     // What was built on the map since last month (J5).
     for (const [id, cost] of Object.entries(this.constructionMonth())) {
       transfers[id] = (transfers[id] ?? 0) - cost;
@@ -1243,7 +1277,10 @@ export class VeritableSimImpl implements VeritableSim {
       );
       for (const event of events) this.record(clock.date, event);
       if (id !== player || this.politics.autopilot) {
-        stepFiscalRule(this.ctx, economy);
+        stepFiscalRule(this.ctx, economy, {
+          defense: this.ai.nations[id]?.defenseGoal,
+          atWar: enemiesOf(this.diplomacy, id).length > 0,
+        });
       }
     }
   }
@@ -1284,6 +1321,10 @@ export class VeritableSimImpl implements VeritableSim {
     // last capture.
     const contest = this.deps.config.war.contest;
     this.deps.world.settleContested(contest.warMonths, contest.cessionMonths);
+    // Arms sent to belligerents this month (J5).
+    const flows = stepArmsFlows(this.aiEnv(clock.date));
+    this.armsAid = { points: flows.points, cost: flows.cost };
+    for (const event of flows.events) this.record(clock.date, event);
     for (const id of this.ctx.nationIds) {
       stepMilitaryMonth(
         this.ctx,
@@ -1294,6 +1335,7 @@ export class VeritableSimImpl implements VeritableSim {
         enemiesOf(this.diplomacy, id).length > 0,
         (1 + lawModifiers(this.ctx, this.politics.nations[id]).manpowerBonus) *
           (this.nuclear.fallout[id] ?? 1),
+        this.armsAid.points[id] ?? 0,
       );
     }
     const before = this.diplomacy.wars.length;
@@ -1494,6 +1536,13 @@ export class VeritableSimImpl implements VeritableSim {
       case "dead-hand":
         params = { target: event.target };
         break;
+      case "arms-aid-started":
+      case "arms-aid-ended":
+        params = { to: event.to };
+        break;
+      case "ai-landing":
+        params = { target: event.target };
+        break;
       default:
         break;
     }
@@ -1537,6 +1586,42 @@ export class VeritableSimImpl implements VeritableSim {
 
   // Nations run by the AI rules: everyone but the player, or everyone when
   // nobody plays (headless autopilot).
+  private aiEnv(date: string): AiEnv {
+    return {
+      ctx: this.ctx,
+      rng: this.rng,
+      world: this.deps.world,
+      ai: this.ai,
+      diplomacy: this.diplomacy,
+      economy: this.economy,
+      military: this.military,
+      politics: this.politics,
+      naval: this.naval,
+      nuclear: this.nuclear,
+      nations: this.nations,
+      sheets: this.sheets,
+      scenario: this.scenario,
+      aiNations: this.aiNations(),
+      player: this.playerNationId(),
+      date,
+    };
+  }
+
+  // The staggered review of the nation AI (J5).
+  private aiTick(date: string): void {
+    const env = this.aiEnv(date);
+    let changed = false;
+    for (const id of dueThisTick(env)) {
+      for (const event of review(env, id)) {
+        this.record(date, event);
+        if (event.type === "war-declared" || event.type === "ai-landing") {
+          changed = true;
+        }
+      }
+    }
+    if (changed) this.invalidateFronts();
+  }
+
   private nuclearEnv(date: string): NuclearEnv {
     return {
       ctx: this.ctx,

@@ -1,5 +1,5 @@
-import { TILE_NATION_MASK } from "./schemas/saveV1";
 import { decodeTiles, encodeTiles } from "../save/tiles";
+import { TILE_NATION_MASK } from "./schemas/saveV1";
 
 // Rasterized borders of a scenario (data/veritable/borders/<scenario>.bin),
 // produced by tools/veritable/borders and read by the scenario loader.
@@ -99,5 +99,7 @@ export function decodeBorders(bytes: Uint8Array): Borders {
 export function bordersTileCounts(borders: Borders): Record<string, number> {
   const totals = new Array<number>(borders.nations.length + 1).fill(0);
   for (const value of borders.tiles) totals[value & TILE_NATION_MASK]++;
-  return Object.fromEntries(borders.nations.map((id, i) => [id, totals[i + 1]]));
+  return Object.fromEntries(
+    borders.nations.map((id, i) => [id, totals[i + 1]]),
+  );
 }

@@ -177,7 +177,9 @@ export function decodeSave(
       : decodeTiles(bytes.subarray(contestAt + 4), size);
 
   const save = migrateToCurrent(
-    contest === undefined ? { ...header, tiles } : { ...header, tiles, contest },
+    contest === undefined
+      ? { ...header, tiles }
+      : { ...header, tiles, contest },
     options.migrations ?? MIGRATIONS,
     options.targetVersion ?? SAVE_SCHEMA_VERSION,
     options.context,

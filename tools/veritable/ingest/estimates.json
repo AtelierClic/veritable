@@ -446,5 +446,190 @@
       "note": "Coalition civique : libéraux pro-européens."
     }
   },
-  "_leaderTraitsNote": "leaderTraits : traits des chefs d'État et de gouvernement des dix nations, écrits à la main et justifiés pour les titulaires au 1er janvier 2026 ; clé <iso3>/<rôle>, `person` = libellé Wikidata au moment de l'écriture (l'outil signale un changement). partyIdeologies : idéologie manuelle des partis sans P1142 exploitable."
+  "_leaderTraitsNote": "leaderTraits : traits des chefs d'État et de gouvernement des dix nations, écrits à la main et justifiés pour les titulaires au 1er janvier 2026 ; clé <iso3>/<rôle>, `person` = libellé Wikidata au moment de l'écriture (l'outil signale un changement). partyIdeologies : idéologie manuelle des partis sans P1142 exploitable.",
+  "aiAgenda": {
+    "justification": "Agenda de l'IA (J5), poids des quatre buts, somme 1, écrit à la main d'après les priorités affichées des stratégies nationales et la posture des dernières années : la sécurité domine en Pologne (menace russe, effort de défense parmi les plus élevés de l'OTAN) et en Ukraine (guerre) ; la croissance en Allemagne, en Italie, en Espagne et en Norvège (économies d'abord commerciales) ; l'influence régionale pèse en Russie (sphère d'influence revendiquée), en France et en Turquie (projection extérieure) ; l'idéologie reste faible partout sauf en Russie. Sans source chiffrée : à revoir avec l'IA au J6.",
+    "values": {
+      "FRA": [
+        {
+          "goal": "security",
+          "weight": 0.3
+        },
+        {
+          "goal": "growth",
+          "weight": 0.3
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.3
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.1
+        }
+      ],
+      "DEU": [
+        {
+          "goal": "security",
+          "weight": 0.25
+        },
+        {
+          "goal": "growth",
+          "weight": 0.5
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.15
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.1
+        }
+      ],
+      "GBR": [
+        {
+          "goal": "security",
+          "weight": 0.35
+        },
+        {
+          "goal": "growth",
+          "weight": 0.35
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.2
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.1
+        }
+      ],
+      "ITA": [
+        {
+          "goal": "security",
+          "weight": 0.2
+        },
+        {
+          "goal": "growth",
+          "weight": 0.5
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.2
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.1
+        }
+      ],
+      "ESP": [
+        {
+          "goal": "security",
+          "weight": 0.2
+        },
+        {
+          "goal": "growth",
+          "weight": 0.55
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.15
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.1
+        }
+      ],
+      "POL": [
+        {
+          "goal": "security",
+          "weight": 0.55
+        },
+        {
+          "goal": "growth",
+          "weight": 0.3
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.1
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.05
+        }
+      ],
+      "UKR": [
+        {
+          "goal": "security",
+          "weight": 0.7
+        },
+        {
+          "goal": "growth",
+          "weight": 0.2
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.05
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.05
+        }
+      ],
+      "RUS": [
+        {
+          "goal": "security",
+          "weight": 0.3
+        },
+        {
+          "goal": "growth",
+          "weight": 0.15
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.4
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.15
+        }
+      ],
+      "TUR": [
+        {
+          "goal": "security",
+          "weight": 0.3
+        },
+        {
+          "goal": "growth",
+          "weight": 0.3
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.3
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.1
+        }
+      ],
+      "NOR": [
+        {
+          "goal": "security",
+          "weight": 0.3
+        },
+        {
+          "goal": "growth",
+          "weight": 0.5
+        },
+        {
+          "goal": "regional-influence",
+          "weight": 0.1
+        },
+        {
+          "goal": "ideology",
+          "weight": 0.1
+        }
+      ]
+    }
+  }
 }

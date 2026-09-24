@@ -7,6 +7,7 @@ import {
 import { GoodIdSchema } from "../data/schemas/goods";
 import { SPENDING_POSTS, TAX_IDS } from "../data/schemas/nation";
 import {
+  AiState,
   DiplomacyState,
   JournalEntry,
   Market,
@@ -233,7 +234,11 @@ export type SimEvent =
         | "nuclear-launch"
         | "nuclear-detonation"
         | "nuclear-intercepted"
-        | "dead-hand";
+        | "dead-hand"
+        // The nation AI (J5).
+        | "arms-aid-started"
+        | "arms-aid-ended"
+        | "ai-landing";
       date: string;
       nation: NationId;
       params: Record<string, string>;
@@ -297,6 +302,8 @@ export interface ReadonlyWorldView {
   readonly nuclear: Readonly<NuclearState>;
   readonly deadHand: Readonly<Record<NationId, number>>;
   readonly nuclearRisk: Readonly<Record<NationId, number>>;
+  // The nation AI (J5): its reviews, defence goals and arms flows.
+  readonly ai: Readonly<AiState>;
   // Contested tiles each nation holds (J5), and its tiles on the first day.
   readonly contested: Readonly<Record<NationId, number>>;
   readonly initialTiles: Readonly<Record<NationId, number>>;

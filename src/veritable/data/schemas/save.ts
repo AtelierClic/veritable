@@ -79,6 +79,10 @@ export const JOURNAL_KINDS_V5 = [
   "nuclear-detonation",
   "nuclear-intercepted",
   "dead-hand",
+  // The AI of the nations (J5).
+  "arms-aid-started",
+  "arms-aid-ended",
+  "ai-landing",
 ] as const;
 export const JournalEntryV5Schema = z.object({
   date: IsoDateSchema,
@@ -493,6 +497,28 @@ export const NuclearStateSchema = z.object({
 });
 export type NuclearState = z.infer<typeof NuclearStateSchema>;
 
+// --- the AI of the nations (J5) ---------------------------------------------------
+
+export const NationAiSchema = z.object({
+  nextReview: IsoDateSchema,
+  defenseGoal: zb.float(), // share of GDP it aims at
+  lastWar: IsoDateSchema.nullable(), // last war it declared
+  lastLanding: IsoDateSchema.nullable(),
+  blockading: NationIdSchema.nullable(),
+});
+export type NationAi = z.infer<typeof NationAiSchema>;
+
+export const AiStateSchema = z.object({
+  // Index of the next nation of the staggered review.
+  cursor: zb.uint(),
+  nations: z.record(z.string(), NationAiSchema),
+  // Arms sent this month: index points of the good "arms".
+  armsAid: z.array(
+    z.object({ from: NationIdSchema, to: NationIdSchema, points: zb.float() }),
+  ),
+});
+export type AiState = z.infer<typeof AiStateSchema>;
+
 // --- territory (J5) -----------------------------------------------------------
 
 export const TerritoryStateSchema = z.object({
@@ -522,6 +548,7 @@ export const SaveHeaderV5Schema = zb.object({
   naval: NavalStateSchema,
   territory: TerritoryStateSchema,
   nuclear: NuclearStateSchema,
+  ai: AiStateSchema,
   journal: z.array(JournalEntryV5Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),

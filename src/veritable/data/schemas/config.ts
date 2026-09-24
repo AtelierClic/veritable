@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  INTEREST_GROUPS,
-  IsoDateSchema,
-  NUCLEAR_DOCTRINES,
-} from "./common";
+import { INTEREST_GROUPS, IsoDateSchema, NUCLEAR_DOCTRINES } from "./common";
 import { GoodIdSchema } from "./goods";
 import { SPENDING_POSTS, TAX_IDS } from "./nation";
 import { GroupIdeologiesSchema } from "./politics";
@@ -420,6 +416,44 @@ export const VeritableConfigSchema = z.object({
   logistics: LogisticsConfigSchema,
   nuclear: NuclearConfigSchema,
   ai: z.object({
+    // The AI of the nations (J5, ai/nations.ts).
+    nations: z.object({
+      reviewShare: share, // nations reviewed per core tick
+      reviewDaysCalm: z.number().int().min(1),
+      reviewDaysStakes: z.number().int().min(1),
+      crisisStability: share,
+      defense: z.object({
+        warBoost: z.number().min(0),
+        hostileBoost: z.number().min(0),
+        hostileRelation: z.number(),
+        maxShare: share,
+        rampPerReview: share,
+      }),
+      war: z.object({
+        powerRatio: z.number().min(1),
+        aggressivenessWithoutCasusBelli: share,
+        landSharePerPowerRatio: share,
+        maxLandShare: share,
+        exhaustionCostPctGdp: share,
+        reputationCostPctGdp: share,
+        declareProbability: share,
+        minMonthsBetweenWars: z.number().int().min(0),
+        // The land taken stays (its contest ends), the costs end with the
+        // war: gain over this horizon against cost over the expected war.
+        gainHorizonYears: z.number().min(0),
+        expectedWarYears: z.number().min(0),
+      }),
+      armsAid: z.object({
+        share: share,
+        donorRelations: z.number(),
+        enemyRelations: z.number(),
+      }),
+      navy: z.object({
+        landingControl: share,
+        landingCooldownMonths: z.number().int().min(0),
+      }),
+    }),
+    // Minimal fiscal rule of nations nobody plays (not the J5 AI).
     fiscal: z.object({
       maxDeficitToGdp: share,
       adjustPerMonth: share,

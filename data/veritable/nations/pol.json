@@ -312,5 +312,23 @@
     "source": "manual",
     "asOf": "2026-01-01",
     "note": "Wybory parlamentarne 2023. Intervalle : Sejm de quatre ans."
-  }
+  },
+  "aiAgenda": [
+    {
+      "goal": "security",
+      "weight": 0.55
+    },
+    {
+      "goal": "growth",
+      "weight": 0.3
+    },
+    {
+      "goal": "regional-influence",
+      "weight": 0.1
+    },
+    {
+      "goal": "ideology",
+      "weight": 0.05
+    }
+  ]
 }

@@ -90,13 +90,7 @@
     "legitimacyBase": 0.6,
     "pressFreedom": 0.1,
     "mediaControl": 0.8,
-    "lawDomains": [
-      "economy",
-      "social",
-      "security",
-      "environment",
-      "defense"
-    ]
+    "lawDomains": ["economy", "social", "security", "environment", "defense"]
   },
   {
     "id": "absolute-monarchy",
@@ -109,13 +103,7 @@
     "legitimacyBase": 0.6,
     "pressFreedom": 0.2,
     "mediaControl": 0.7,
-    "lawDomains": [
-      "economy",
-      "social",
-      "security",
-      "environment",
-      "defense"
-    ]
+    "lawDomains": ["economy", "social", "security", "environment", "defense"]
   },
   {
     "id": "junta",
@@ -128,12 +116,7 @@
     "legitimacyBase": 0.4,
     "pressFreedom": 0.1,
     "mediaControl": 0.8,
-    "lawDomains": [
-      "economy",
-      "security",
-      "institutions",
-      "defense"
-    ]
+    "lawDomains": ["economy", "security", "institutions", "defense"]
   },
   {
     "id": "theocracy",
@@ -146,13 +129,7 @@
     "legitimacyBase": 0.6,
     "pressFreedom": 0.15,
     "mediaControl": 0.7,
-    "lawDomains": [
-      "economy",
-      "social",
-      "security",
-      "environment",
-      "defense"
-    ]
+    "lawDomains": ["economy", "social", "security", "environment", "defense"]
   },
   {
     "id": "failed-state",
@@ -165,9 +142,6 @@
     "legitimacyBase": 0.2,
     "pressFreedom": 0.4,
     "mediaControl": 0.2,
-    "lawDomains": [
-      "security",
-      "defense"
-    ]
+    "lawDomains": ["security", "defense"]
   }
 ]

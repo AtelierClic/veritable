@@ -318,5 +318,23 @@
     "source": "manual",
     "asOf": "2026-01-01",
     "note": "Présidentielle 2024. Intervalle : mandat présidentiel de six ans."
-  }
+  },
+  "aiAgenda": [
+    {
+      "goal": "security",
+      "weight": 0.3
+    },
+    {
+      "goal": "growth",
+      "weight": 0.15
+    },
+    {
+      "goal": "regional-influence",
+      "weight": 0.4
+    },
+    {
+      "goal": "ideology",
+      "weight": 0.15
+    }
+  ]
 }

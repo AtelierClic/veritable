@@ -4,11 +4,7 @@ import {
   SimEvent,
 } from "../sim/VeritableSim";
 import { DomainTiming } from "./perfProbe";
-import {
-  MapOverlayResult,
-  SnapshotResult,
-  VeritableRequest,
-} from "./protocol";
+import { MapOverlayResult, SnapshotResult, VeritableRequest } from "./protocol";
 
 // What RemoteVeritableSim needs from src/core/worker/WorkerClient.
 export interface VeritableWorkerChannel {

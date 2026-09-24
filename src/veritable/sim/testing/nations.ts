@@ -30,6 +30,8 @@ export interface TestNationOptions {
   electionIntervalMonths?: number;
   lastElection?: string;
   electionsSuspendedAtWarAtHome?: boolean;
+  activePersonnel?: number;
+  aiAgenda?: NationData["aiAgenda"];
   nuclear?: {
     warheads: number;
     doctrine: (typeof NUCLEAR_DOCTRINES)[number];
@@ -118,13 +120,14 @@ export function testNation(
     },
     military: {
       spendingPctGdp: 2,
-      activePersonnel: 100_000,
+      activePersonnel: options.activePersonnel ?? 100_000,
       airPower: 0.5,
       navalPower: 0.5,
       source: "test",
       asOf: "2026-01-01",
     },
     startingTech: [],
+    ...(options.aiAgenda === undefined ? {} : { aiAgenda: options.aiAgenda }),
     politics: {
       electionIntervalMonths: options.electionIntervalMonths ?? 48,
       lastElection: options.lastElection ?? "2024-01-01",

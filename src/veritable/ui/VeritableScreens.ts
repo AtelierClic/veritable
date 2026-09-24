@@ -68,8 +68,10 @@ export class VeritableScreens extends LitElement {
   @state() private error: string | null = null;
   // Nuclear shot of the player (J5): the first click arms it, the second
   // fires.
-  @state() private armedShot: { target: string; aim: "front" | "capital" } | null =
-    null;
+  @state() private armedShot: {
+    target: string;
+    aim: "front" | "capital";
+  } | null = null;
 
   private sim: RemoteVeritableSim | null = null;
   private timer: ReturnType<typeof setInterval> | null = null;

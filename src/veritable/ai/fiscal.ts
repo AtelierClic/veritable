@@ -18,11 +18,22 @@ import { EconomyContext } from "../sim/economy/context";
 // targets; the rule sets them and applies them at once (a technocratic
 // consolidation does not wait for the ramp: with the six-month lag the loop
 // under-reacted and Italian debt diverged over fifty years).
+// J5: the nation AI sets a defence goal (by the threat). At peace the rule
+// relaxes defence towards that goal rather than towards the first day (a
+// nation at war on the first day, Ukraine, would otherwise bring its war
+// effort back after the peace); at war it never trims defence and relaxes
+// towards the higher of the two.
+export interface FiscalGoals {
+  defense?: number;
+  atWar?: boolean;
+}
+
 export function stepFiscalRule(
   ctx: EconomyContext,
   nation: NationEconomy,
+  goals: FiscalGoals = {},
 ): void {
-  adjustTargets(ctx, nation);
+  adjustTargets(ctx, nation, goals);
   for (const post of SPENDING_POSTS) {
     nation.spending[post] = nation.spendingTargets[post];
   }
@@ -31,7 +42,11 @@ export function stepFiscalRule(
   }
 }
 
-function adjustTargets(ctx: EconomyContext, nation: NationEconomy): void {
+function adjustTargets(
+  ctx: EconomyContext,
+  nation: NationEconomy,
+  goals: FiscalGoals,
+): void {
   const rule = ctx.config.ai.fiscal;
   const deficit = deficitToGdp(nation);
   const step = rule.adjustPerMonth;
@@ -43,6 +58,7 @@ function adjustTargets(ctx: EconomyContext, nation: NationEconomy): void {
   if (deficit > rule.maxDeficitToGdp || debtDrifting) {
     for (const post of SPENDING_POSTS) {
       if (rule.sparedPosts.includes(post)) continue;
+      if (post === "defense" && goals.atWar === true) continue;
       nation.spendingTargets[post] *= 1 - step;
     }
     if (deficit > 2 * rule.maxDeficitToGdp) {
@@ -57,8 +73,18 @@ function adjustTargets(ctx: EconomyContext, nation: NationEconomy): void {
   }
   if (deficit < rule.relaxBelowDeficit && nation.debtRisingMonths === 0) {
     for (const post of SPENDING_POSTS) {
+      const goal =
+        goals.defense !== undefined && goals.defense > 0
+          ? goals.defense
+          : undefined;
+      const reference =
+        post !== "defense" || goal === undefined
+          ? nation.spending0[post]
+          : goals.atWar === true
+            ? Math.max(nation.spending0.defense, goal)
+            : goal;
       nation.spendingTargets[post] = Math.min(
-        nation.spending0[post],
+        reference,
         spendingCeiling(ctx, nation, post),
         nation.spendingTargets[post] * (1 + step / 2),
       );

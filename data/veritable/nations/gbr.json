@@ -318,5 +318,23 @@
     "source": "manual",
     "asOf": "2026-01-01",
     "note": "General election 2024. Intervalle : cinq ans au plus."
-  }
+  },
+  "aiAgenda": [
+    {
+      "goal": "security",
+      "weight": 0.35
+    },
+    {
+      "goal": "growth",
+      "weight": 0.35
+    },
+    {
+      "goal": "regional-influence",
+      "weight": 0.2
+    },
+    {
+      "goal": "ideology",
+      "weight": 0.1
+    }
+  ]
 }

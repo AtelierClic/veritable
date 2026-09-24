@@ -10,7 +10,11 @@ import {
 import { decodeSave, encodeSave } from "../../save/serialize";
 import { relation } from "../diplomacy/diplomacy";
 import { MemoryWorld } from "../testing/MemoryWorld";
-import { testNation, TestNationOptions, testScenario } from "../testing/nations";
+import {
+  testNation,
+  TestNationOptions,
+  testScenario,
+} from "../testing/nations";
 import { testSimData } from "../testing/simData";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { proposePeace } from "../war/peace";
@@ -178,11 +182,17 @@ describe("a shot and its consequences", () => {
       status: "in-flight",
       date: "2026-01-02",
     });
-    expect(relation(internals.diplomacy, "BBB", "CCC")).toBeLessThanOrEqual(-80);
-    expect(relation(internals.diplomacy, "BBB", "AAA")).toBeLessThanOrEqual(-80);
+    expect(relation(internals.diplomacy, "BBB", "CCC")).toBeLessThanOrEqual(
+      -80,
+    );
+    expect(relation(internals.diplomacy, "BBB", "AAA")).toBeLessThanOrEqual(
+      -80,
+    );
     // CCC (AI) sanctions the shooter; the player's nation decides for itself.
     expect(
-      view.diplomacy.sanctions.filter((s) => s.against === "BBB").map((s) => s.by),
+      view.diplomacy.sanctions
+        .filter((s) => s.against === "BBB")
+        .map((s) => s.by),
     ).toEqual(["CCC"]);
     expect(view.diplomacy.pariahs).toEqual(["BBB"]);
     expect(view.journal.map((j) => j.kind)).toContain("nuclear-launch");

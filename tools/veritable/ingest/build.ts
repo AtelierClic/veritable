@@ -318,7 +318,6 @@ export function build(scenarioId: string): void {
       capital: existing.capital,
       regime: existing.regime,
       regimeSource: existing.regimeSource,
-      politics: existing.politics,
       blocs: existing.blocs,
       nuclear:
         nuclear === undefined
@@ -381,6 +380,11 @@ export function build(scenarioId: string): void {
           " spendingPctGdp : Banque mondiale MS.MIL.XPND.GD.ZS (source primaire SIPRI).",
       },
       startingTech: [],
+      politics: existing.politics,
+      // The agenda of the nation AI (J5), written by hand and justified.
+      ...(estimates.aiAgenda?.values[n] === undefined
+        ? {}
+        : { aiAgenda: estimates.aiAgenda.values[n] }),
     };
   }
 

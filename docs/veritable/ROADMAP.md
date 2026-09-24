@@ -94,8 +94,9 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 - [ ] Blocs couche 2 (budget, votes, décisions) puis couche 3 (leadership joueur) ; 12 blocs du palier 1
 - [ ] Arbre technologique : tronc commun paliers 1 et 2 ; branches de doctrine par bloc
 - [ ] 50 événements scriptés 2026-2030 ; gabarits procéduraux ; moteur de déclenchement unique
-- [ ] Doctrines nucléaires ; probabilité de tir ; main morte ; retombées → production
-- [ ] IA des nations réécrite : agenda, traits, échelonnement, niveau de détail variable
+- [x] Doctrines nucléaires ; probabilité de tir ; main morte ; retombées → production _(2026-09-24 — niveaux de menace, dissuasion, silos OpenFront dès le premier jour, tirs par `NukeExecution`, paria et coalition, main morte qui reporte l'annexion d'un jour, section Nucléaire de l'écran des fronts ; calibrage sur la campagne de livraison du J5c)_
+- [x] IA des nations réécrite : agenda, traits, échelonnement, niveau de détail variable _(2026-09-24 — revue d'un dixième des nations par tick, mensuelle ou hebdomadaire selon l'enjeu ; défense selon la menace, déclarations de guerre sous conditions, livraisons d'armes, blocus et débarquements ; fréquence des guerres à calibrer au J5c avec les événements)_
+- [x] Corrections du J4 : dirigeants au 1er janvier 2026, formule des coups, mortalité ; fronts lisibles sur la carte et valeur des tuiles contestées ; interface héritée masquée en campagne _(2026-09-24 — tâches ajoutées au jalon)_
 - [ ] Écrans : blocs, arbre, événements
 
 **Livré quand** : sur 100 campagnes headless de 50 ans, aucune guerre nucléaire généralisée en année 1 et une distribution des guerres plausible.

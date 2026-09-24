@@ -378,8 +378,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       } else if (event.type === "coup-attempted") {
         p.coupsFoiled += 1;
         p.coupAttempts += 1;
-      }
-      else if (event.type === "revolution") p.revolutions += 1;
+      } else if (event.type === "revolution") p.revolutions += 1;
       else if (event.type === "fraud-detected") p.fraudDetected += 1;
       else if (event.type === "unrest-started") p.unrestStarts += 1;
       else if (event.type === "regime-changed" && "params" in event) {
