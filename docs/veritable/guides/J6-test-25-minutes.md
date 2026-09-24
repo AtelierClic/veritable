@@ -47,7 +47,7 @@ Panneau **Véritable** → **Sauvegarder**. Taille : 1,4 Mo au départ, 1,5 Mo a
 
 ## 4. Ce que disent les 30 campagnes (lecture, 5 min)
 
-`docs/veritable/reports/J6/world/summary.json` et `campaigns.csv` : 30 campagnes de 50 ans sur le cœur. RÉSULTATS À COMPLÉTER.
+`docs/veritable/reports/J6/world/summary.json` et `campaigns.csv` : 30 campagnes de 50 ans sur le cœur. Une campagne compte 7 à 18 guerres nouvelles (médiane 11), surtout en Afrique et en Asie, aucune paire au-delà d'un tiers des guerres ; un tir nucléaire en tout (l'Inde sur le Pakistan en 2075, au niveau 3) ; 88 % des coups dans des régimes autoritaires, des juntes ou des États faillis ; les prix restent entre 0,67 et 1,68 fois leur base. Chaque ligne de `campaigns.csv` liste les guerres d'une campagne avec leur casus belli.
 
 ## Ce qui est normal et ce qui ne l'est pas
 

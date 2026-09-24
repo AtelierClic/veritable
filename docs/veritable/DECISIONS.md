@@ -727,7 +727,13 @@ La première série de campagnes mondiales sur le cœur donnait 1 à 3 guerres n
 
 ### Campagnes mondiales (J6c.5)
 
-RÉSULTATS À COMPLÉTER.
+`docs/veritable/reports/J6/world/` (`summary.json`, `campaigns.csv`) : 30 campagnes de 50 ans sur le cœur et la carte monde (graines 1 à 30, pilote automatique, cinq processus, ≈ 1 h), sur le code final. **Les douze critères tiennent.**
+
+- **Guerres nouvelles** : médiane 11 par campagne (7 à 18), 332 en tout ; aucune paire au-delà de 33 % des guerres d'une campagne (critère : 40 %) ; guerres dans trois régions du monde dans 28 campagnes et quatre dans deux (Afrique 147, Asie 119, Europe 64, Amériques 2) ; 13 sans casus belli (3,9 %), 166 sur un territoire contesté, 152 sur un grief, 1 pour un allié attaqué. Paires les plus fréquentes : Russie–Ukraine 64, Somalie–Somaliland 47, Soudan–FSR 42, Yémen–Ansar Allah 39, Inde–Pakistan 39, RD Congo–M23 34, Israël–Palestine 22.
+- **Nucléaire** : un tir dans une campagne sur 30 (Inde sur le Pakistan au niveau 3, en 2075) ; jamais sous le niveau 2 ; aucun échange entre trois nations nucléaires ; aucun en année 1.
+- **Politique** : 1 043 coups réussis, dont 88,1 % dans des régimes fragiles (autoritaires électoraux 431, juntes 278, États faillis 210) ; 24 révolutions.
+- **Économie** : prix mondiaux entre 0,67 et 1,68 fois leur base ; 46 défauts, tous dans des nations à dette > 100 % du PIB ou stabilité < 0,4 (Cuba 21, en défaut au premier jour, de nouveau à la fin de ses cinq ans ; l'Ukraine 18, après ses guerres ; la Somalie et le Soudan 2 chacun ; la Palestine, le Venezuela et l'Inde 1).
+- **Observations** : les Amériques n'ont presque pas de guerre (peu de voisins hostiles, garantie américaine au Guyana) ; la guerre russo-ukrainienne reprend environ deux fois par campagne dans le monde (la défiance héritée garde les deux hostiles, l'Ukraine est soutenue et la Russie ne prend pas toutes ses revendications), contre moins d'une fois sur europe-10.
 
 ### Non-régression sur europe-10 (J6c.6)
 
