@@ -569,8 +569,10 @@ export class VeritableSimImpl implements VeritableSim {
     this.assertInitialized();
     this.refreshTileCounts();
     const { world, grid } = this.deps.world.capture(this.nationIds());
-    return structuredClone({
-      schemaVersion: SAVE_SCHEMA_VERSION,
+    // J6c: the tile grids come fresh from the capture — no copy of their 16
+    // MB each at the scale of the world; the rest is cloned.
+    const state = structuredClone({
+      schemaVersion: SAVE_SCHEMA_VERSION as SaveFile["schemaVersion"],
       seed: this.seed,
       rngState: this.rng.getState(),
       calendar: this.calendar,
@@ -590,9 +592,12 @@ export class VeritableSimImpl implements VeritableSim {
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
+    });
+    return {
+      ...state,
       tiles: grid.tiles,
       contest: grid.contest ?? new Uint16Array(grid.tiles.length),
-    });
+    };
   }
 
   apply(command: PlayerCommand): void {

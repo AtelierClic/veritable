@@ -168,24 +168,28 @@ export class CoreBridge implements WorldPort {
     const width = this.game.width();
     const height = this.game.height();
     const indexOf = new Map(nations.map((id, i) => [id, i + 1]));
-    const smallIdToIndex = new Map<number, number>();
+    // J6c: the saved index of each core smallID (12 bits) in a flat table,
+    // and a plain loop — the 8 million tiles of the world through a callback
+    // and a Map took some 150 ms of every monthly autosave.
+    const smallIdToIndex = new Uint16Array(1 << 12);
     for (const [smallID, id] of this.bySmallID) {
       const index = indexOf.get(id);
-      if (index !== undefined) smallIdToIndex.set(smallID, index);
+      if (index !== undefined) smallIdToIndex[smallID] = index;
     }
 
-    const tiles = new Uint16Array(width * height);
-    const contest = new Uint16Array(width * height);
-    this.game.forEachTile((tile) => {
+    const count = width * height;
+    const tiles = new Uint16Array(count);
+    const contest = new Uint16Array(count);
+    for (let tile = 0; tile < count; tile++) {
       // Tiles of non-nations (tribes) are saved unowned.
-      let value = smallIdToIndex.get(this.game.ownerID(tile)) ?? 0;
+      let value = smallIdToIndex[this.game.ownerID(tile)] ?? 0;
       if (this.game.hasFallout(tile)) value |= TILE_FALLOUT_BIT;
       if (value !== 0 && this.ledger.isContested(tile)) {
         value |= TILE_CONTESTED_BIT;
         contest[tile] = this.ledger.values[tile];
       }
       tiles[tile] = value;
-    });
+    }
     this.claims.write(tiles);
 
     const players: CorePlayerState[] = [];

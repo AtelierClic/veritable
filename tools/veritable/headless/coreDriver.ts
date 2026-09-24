@@ -59,7 +59,9 @@ export async function coreDriver(
     manifest.map4x,
     fs.readFileSync(path.join(dir, "map4x.bin")),
   );
-  const gameID = `headless-${seed}`;
+  // J6c: a game id the client accepts (8 to 10 letters and digits), so that
+  // a headless save loads in the game ("headless-42" did not).
+  const gameID = `hl${String(seed).padStart(8, "0")}`;
   const gameConfig: GameConfig = {
     gameMap: gameMapOf(pack.scenario.map),
     gameMapSize: GameMapSize.Normal,
