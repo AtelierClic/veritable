@@ -675,18 +675,18 @@ Plan, liste « à valider » (points 28 à 38) et écarts : `docs/veritable/plan
 
 ### Performance sur world-2026 (J6c.4)
 
-Mesure finale (`docs/veritable/reports/J6/perf/`, cœur, graine 42, 50 ans en 4 min 42 s) :
+Mesure finale (`docs/veritable/reports/J6/perf/`, cœur, graine 42, code final, 50 ans en 6 min 3 s) :
 
-| Fenêtre d'un an | Tick p99 | Tick maximum | Ticks > 100 ms                        | Sauvegarde au début | Tas au début |
-| --------------- | -------- | ------------ | ------------------------------------- | ------------------- | ------------ |
-| 2026            | 5,8 ms   | 113 ms       | 1 (premier pas mensuel de la session) | 1,41 Mo             | 66 Mo        |
-| 2040            | 4,0 ms   | 53 ms        | 0                                     | 1,73 Mo             | 75 Mo        |
-| 2060            | 4,1 ms   | 53 ms        | 0                                     | 1,91 Mo             | 76 Mo        |
-| 2075            | 3,8 ms   | 54 ms        | 0                                     | 2,00 Mo             | 76 Mo        |
+| Fenêtre d'un an | Tick p99 | Tick maximum | Ticks > 100 ms                          | Sauvegarde au début | Tas au début |
+| --------------- | -------- | ------------ | --------------------------------------- | ------------------- | ------------ |
+| 2026            | 6,1 ms   | 114 ms       | 2 (premiers pas mensuels de la session) | 1,41 Mo             | 67 Mo        |
+| 2040            | 4,2 ms   | 50 ms        | 0                                       | 1,73 Mo             | 75 Mo        |
+| 2060            | 4,3 ms   | 63 ms        | 0                                       | 1,98 Mo             | 76 Mo        |
+| 2075            | 3,9 ms   | 53 ms        | 0                                       | 2,06 Mo             | 76 Mo        |
 
-Sauvegarde de 2,01 Mo au bout de 50 ans (critère : moins de 5 Mo) ; tas de 67 Mo au départ à 76 Mo à la fin (stable) ; chargement en 2,8 s. **Exception** : le premier pas mensuel d'une session (le 1er février 2026 d'une nouvelle campagne, ou le premier mois qui suit un chargement) prend 113 à 124 ms, code encore froid ; ensuite 50 à 76 ms. Le préchauffage au chargement (commerce, croissance et diplomatie sur des copies, deux fois) le ramène de 666 ms ; préchauffer aussi les blocs et les événements ferait tourner des étapes qui mettent à jour la vue partagée des adhésions : écarté.
+Sauvegarde de 2,07 Mo au bout de 50 ans (critère : moins de 5 Mo) ; tas de 67 Mo au départ à 76 Mo à la fin (stable) ; chargement en 3,1 s. **Exception** : les premiers pas mensuels d'une session (le 1er février 2026 d'une nouvelle campagne, ou le premier mois qui suit un chargement) prennent 113 à 124 ms, code encore froid ; ensuite 50 à 76 ms. Le préchauffage au chargement (commerce, croissance et diplomatie sur des copies, deux fois) les ramène de 666 ms ; préchauffer aussi les blocs et les événements ferait tourner des étapes qui mettent à jour la vue partagée des adhésions : écarté.
 
-**Dans le navigateur** (navigateur intégré, build de dev, en chargeant les sauvegardes de la mesure headless, fenêtres de 12 s à ×5) : 49,9, 49,8, 50,0 et 49,6 ticks/s à partir du 1er janvier 2026, 2040, 2060 et 2075 ; 49,3, 49,4, 49,5 et 49,4 sur une fenêtre qui traverse le 1er mars (pas mensuel et sauvegarde automatique compris), une fois le premier mois passé. Critère : au moins 49.
+**Dans le navigateur** (navigateur intégré, build de dev, en chargeant les sauvegardes de la mesure headless, fenêtres de 12 s à ×5) : 49,9, 49,9, 50,0 et 49,7 ticks/s à partir du 1er janvier 2026, 2040, 2060 et 2075 ; 49,3, 49,4, 49,4 et 49,3 sur une fenêtre qui traverse le 1er mars (pas mensuel et sauvegarde automatique compris), une fois le premier mois passé. Critère : au moins 49.
 
 Ce qui a été corrigé pour y arriver, après le calibrage des guerres (qui avait porté le p99 de 2026 à 11,5 ms et le maximum à 275 ms) :
 
@@ -739,7 +739,7 @@ La première série de campagnes mondiales sur le cœur donnait 1 à 3 guerres n
 
 - **J3** (`docs/veritable/reports/J6/non-regression/J3/`, cœur, graine 42, code final) : embargo UE, gaz à l'import +37 % la première année, PIB russe −5,5 % à deux ans ; France → Espagne sans casus belli, 5 sanctionneurs à six mois, coalition de six (l'Ukraine et la Russie n'y entrent plus : ni frontière avec la France ni alliance avec l'Espagne), 453 Md$ de PIB perdus contre 91 Md$ de terres prises, stabilité 0,48 contre 0,62 ; blocus britannique, commerce maritime norvégien −53 % ; débarquement italien refusé. Les quatre critères tiennent.
 - **J4** (`docs/veritable/reports/J6/non-regression/J4/`) : les cinq critères tiennent.
-- **J5** : À COMPLÉTER.
+- **J5** (`docs/veritable/reports/J6/non-regression/J5/`, 100 campagnes de 50 ans sur le cœur, code final) : quatorze critères sur quinze ; le quinzième, une médiane de 1 à 4 guerres nouvelles (ici 0), est tombé dès le J6a avec la correction de la boucle, comme consigné alors. Boucle Russie–Ukraine : médiane 0 relance, au plus 1, 85 % des campagnes calmes quinze ans après le cessez-le-feu (les 15 relances sur un grief d'incident de frontière) ; aucun tir nucléaire, 2 révolutions, crise à dix ans dans 84 campagnes, junte à dix ans en Russie 1 et en Turquie 2, prix entre 0,84 et 1,47, aucun défaut. Une campagne de 50 ans prend 34 s en moyenne, contre 96 s avant le J6c.
 
 ### Tests joués (J6c.6)
 

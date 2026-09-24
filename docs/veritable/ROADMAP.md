@@ -106,13 +106,13 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 
 - [x] Ingestion des 195 fiches ; scénario `world-2026.json` ; carte monde _(2026-09-24 — `giantworldmap` retenue (IoU 0,9502) ; 195 nations et 13 entités de facto, mêmes sources ouvertes que les dix ; dirigeants au 1er janvier 2026)_
 - [x] Micro-États ; territoires contestés ; conflits initiaux validés à la main _(2026-09-24 — 28 micro-États, 31 régions contestées, 3 guerres, 24 conflits internes, 25 garanties, 61 sanctions sourcées, relations de départ par les votes à l'ONU ; validés à la main par Claude Code, à revoir par Lukas : `world-2026.defacto.md`)_
-- [x] Compactage du journal ; profil de performance à 195 _(2026-09-24 — résumés annuels au-delà de dix ans ; tick p99 3,8 à 5,8 ms sur 50 ans du monde)_
+- [x] Compactage du journal ; profil de performance à 195 _(2026-09-24 — résumés annuels au-delà de dix ans ; tick p99 3,9 à 6,1 ms sur 50 ans du monde)_
 - [x] Réglages LOD et échelonnement mis à l'épreuve _(2026-09-24 — revue de l'IA échelonnée, côtes relues au plus une fois par mois, sauvegarde automatique allégée)_
 - [x] Boucle Russie–Ukraine corrigée ; tests nucléaires forcés _(2026-09-24 — tâches ajoutées au jalon)_
 - [x] Écrans à l'échelle ; choix de la nation par la carte _(2026-09-24 — recherche, filtres par région et par bloc, tri, embargos de la nation choisie ; tâche ajoutée au jalon)_
 - [x] 30 campagnes mondiales de 50 ans ; non-régression du J3 au J5 ; tests joués _(2026-09-24 — tâches ajoutées au jalon ; les douze critères du monde tiennent : médiane de 11 guerres nouvelles par campagne, aucune paire au-delà de 33 %, trois régions au moins, un tir nucléaire dans une campagne sur 30, 88 % des coups en régimes fragiles ; guides J4, J5 et J6 joués, trois bogues corrigés)_
 
-**Livré quand** : ×5 tient sans saccade sur carte monde pendant 50 ans de jeu. — **Livré le 2026-09-24** (50 ans du monde sur le cœur : tick p99 de 3,8 à 5,8 ms, maximum de 53 à 54 ms en 2040, 2060 et 2075, 113 ms au seul premier pas mensuel de la session ; dans le navigateur, 49,3 à 50 ticks/s à ×5 en chargeant les sauvegardes de 2026, 2040, 2060 et 2075 ; sauvegarde de 2,0 Mo à 50 ans, tas stable ; `docs/veritable/reports/J6/`).
+**Livré quand** : ×5 tient sans saccade sur carte monde pendant 50 ans de jeu. — **Livré le 2026-09-24** (50 ans du monde sur le cœur : tick p99 de 3,9 à 6,1 ms, maximum de 50 à 63 ms en 2040, 2060 et 2075, 114 ms aux seuls premiers pas mensuels de la session ; dans le navigateur, 49,3 à 50 ticks/s à ×5 en chargeant les sauvegardes de 2026, 2040, 2060 et 2075 ; sauvegarde de 2,07 Mo à 50 ans, tas stable ; `docs/veritable/reports/J6/`).
 
 ## J7 — Le reste
 
