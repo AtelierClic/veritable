@@ -145,7 +145,7 @@
   "screen.blocs.until": "jusqu'au {date}",
   "screen.blocs.you-lead": "vous dirigez le bloc",
   "screen.blocs.simulated-members": "Membres simulés",
-  "screen.blocs.artifact": "Seuls les membres simulés votent et paient (carte Europe ; tous les pays au J6).",
+  "screen.blocs.artifact": "Seuls les membres simulés votent et paient : ce scénario ne simule pas toutes les nations du bloc.",
   "screen.blocs.rules": "Règles de décision",
   "screen.blocs.qmv": "Majorité qualifiée : {members} des votants et {population} de leur population.",
   "screen.blocs.budget": "Budget : {pct} du PIB (échelle {scale}) ; vous avez versé {paid} et reçu {received} le mois dernier.",

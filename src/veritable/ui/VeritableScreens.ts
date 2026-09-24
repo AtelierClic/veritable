@@ -1833,7 +1833,9 @@ export class VeritableScreens extends LitElement {
             >`,
         )}
       </div>
-      <div class="text-gray-400">${vt("screen.blocs.artifact")}</div>
+      ${b.members.filter((m) => m.status === "full").length < b.worldMembers
+        ? html`<div class="text-gray-400">${vt("screen.blocs.artifact")}</div>`
+        : nothing}
       <div>
         ${vt("screen.blocs.rules")} :
         ${Object.entries(b.rules).map(
