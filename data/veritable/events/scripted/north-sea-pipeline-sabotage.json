@@ -1,0 +1,89 @@
+{
+  "id": "north-sea-pipeline-sabotage",
+  "kind": "scripted",
+  "title": "event.north-sea-pipeline-sabotage.title",
+  "text": "event.north-sea-pipeline-sabotage.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2027-01-01", "2030-06-30"],
+    "nations": ["NOR", "GBR"],
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "bloc.nato",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "attribute",
+      "label": "event.north-sea-pipeline-sabotage.attribute",
+      "effects": [
+        {
+          "target": "grievance.RUS",
+          "op": "set",
+          "value": 1,
+          "months": 24
+        },
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -20
+        },
+        {
+          "target": "production.gas",
+          "op": "mul",
+          "value": 0.97
+        }
+      ]
+    },
+    {
+      "id": "protect",
+      "label": "event.north-sea-pipeline-sabotage.protect",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "production.gas",
+          "op": "mul",
+          "value": 0.98
+        }
+      ]
+    },
+    {
+      "id": "repair",
+      "label": "event.north-sea-pipeline-sabotage.repair",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "production.gas",
+          "op": "mul",
+          "value": 0.97
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

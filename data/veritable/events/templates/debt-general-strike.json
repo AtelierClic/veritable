@@ -1,0 +1,106 @@
+{
+  "id": "debt-general-strike",
+  "kind": "template",
+  "title": "event.debt-general-strike.title",
+  "text": "event.debt-general-strike.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.008,
+    "conditions": [
+      {
+        "target": "debtToGdp",
+        "op": "gt",
+        "value": 1.0
+      },
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 0
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "hold",
+      "label": "event.debt-general-strike.hold",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.007
+        },
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.99
+        },
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.2
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.15
+        }
+      ]
+    },
+    {
+      "id": "tax-wealth",
+      "label": "event.debt-general-strike.tax-wealth",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "retreat",
+      "label": "event.debt-general-strike.retreat",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,106 @@
+{
+  "id": "austerity-riots",
+  "kind": "scripted",
+  "title": "event.austerity-riots.title",
+  "text": "event.austerity-riots.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-04-01", "2030-12-31"],
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "deficitToGdp",
+        "op": "gt",
+        "value": 0.04
+      },
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 0
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "withdraw",
+      "label": "event.austerity-riots.withdraw",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        }
+      ]
+    },
+    {
+      "id": "push-through",
+      "label": "event.austerity-riots.push-through",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.006
+        },
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.2
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.1
+        }
+      ]
+    },
+    {
+      "id": "negotiate",
+      "label": "event.austerity-riots.negotiate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,88 @@
+{
+  "id": "budget-censure-motion",
+  "kind": "scripted",
+  "title": "event.budget-censure-motion.title",
+  "text": "event.budget-censure-motion.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2027-03-31"],
+    "nations": ["FRA"],
+    "monthlyProbability": 0.06,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "force",
+      "label": "event.budget-censure-motion.force",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "concede",
+      "label": "event.budget-censure-motion.concede",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "special-law",
+      "label": "event.budget-censure-motion.special-law",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

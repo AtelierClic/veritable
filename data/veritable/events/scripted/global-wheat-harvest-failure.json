@@ -1,0 +1,92 @@
+{
+  "id": "global-wheat-harvest-failure",
+  "kind": "scripted",
+  "title": "event.global-wheat-harvest-failure.title",
+  "text": "event.global-wheat-harvest-failure.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2026-05-01", "2028-10-31"],
+    "monthlyProbability": 0.04,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.food",
+      "op": "add",
+      "value": -0.12
+    }
+  ],
+  "choices": [
+    {
+      "id": "reserves",
+      "label": "event.global-wheat-harvest-failure.reserves",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "export-ban",
+      "label": "event.global-wheat-harvest-failure.export-ban",
+      "effects": [
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -8
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.12
+        }
+      ]
+    },
+    {
+      "id": "market",
+      "label": "event.global-wheat-harvest-failure.market",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.08
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

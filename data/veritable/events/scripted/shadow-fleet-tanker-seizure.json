@@ -1,0 +1,86 @@
+{
+  "id": "shadow-fleet-tanker-seizure",
+  "kind": "scripted",
+  "title": "event.shadow-fleet-tanker-seizure.title",
+  "text": "event.shadow-fleet-tanker-seizure.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2028-12-31"],
+    "nations": ["GBR"],
+    "monthlyProbability": 0.03,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "seize",
+      "label": "event.shadow-fleet-tanker-seizure.seize",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -20
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.001
+        }
+      ]
+    },
+    {
+      "id": "release",
+      "label": "event.shadow-fleet-tanker-seizure.release",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "relations.UKR",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "coalition",
+      "label": "event.shadow-fleet-tanker-seizure.coalition",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "relations.UKR",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

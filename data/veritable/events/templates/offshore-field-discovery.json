@@ -1,0 +1,75 @@
+{
+  "id": "offshore-field-discovery",
+  "kind": "template",
+  "title": "event.offshore-field-discovery.title",
+  "text": "event.offshore-field-discovery.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.002,
+    "conditions": [],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "develop",
+      "label": "event.offshore-field-discovery.develop",
+      "effects": [
+        {
+          "target": "production.gas",
+          "op": "mul",
+          "value": 1.06
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.003,
+          "months": 36
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    },
+    {
+      "id": "sovereign-fund",
+      "label": "event.offshore-field-discovery.sovereign-fund",
+      "effects": [
+        {
+          "target": "production.gas",
+          "op": "mul",
+          "value": 1.04
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "leave",
+      "label": "event.offshore-field-discovery.leave",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

@@ -1,0 +1,98 @@
+{
+  "id": "mass-pro-democracy-protests",
+  "kind": "scripted",
+  "title": "event.mass-pro-democracy-protests.title",
+  "text": "event.mass-pro-democracy-protests.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-06-01", "2030-12-31"],
+    "nations": ["RUS", "TUR"],
+    "monthlyProbability": 0.015,
+    "conditions": [
+      {
+        "target": "stability",
+        "op": "lt",
+        "value": 0.55
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "concessions",
+      "label": "event.mass-pro-democracy-protests.concessions",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    },
+    {
+      "id": "crackdown",
+      "label": "event.mass-pro-democracy-protests.crackdown",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -8
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "wait",
+      "label": "event.mass-pro-democracy-protests.wait",
+      "effects": [
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1,
+          "uncertain": true
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

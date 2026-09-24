@@ -92,6 +92,16 @@ describe("migration v4 -> v5 on a real J4 save", () => {
         .members.find((m) => m.nation === "UKR")?.status,
     ).toBe("candidate");
 
+    // Technology: what each nation had on the first day, nothing under
+    // research; events: none yet, no grievance.
+    expect(save.tech.nations.GBR.done.length).toBeGreaterThan(
+      save.tech.nations.UKR.done.length,
+    );
+    expect(save.tech.nations.FRA.baseline).toEqual(save.tech.nations.FRA.done);
+    expect(save.tech.nations.FRA.projects).toEqual([]);
+    expect(save.events.pending).toEqual([]);
+    expect(save.diplomacy.grievances).toEqual([]);
+
     // The migrated save writes and reads back as a v5, identical.
     const bytes = encodeSave(save);
     expect(peekSchemaVersion(bytes)).toBe(SAVE_SCHEMA_VERSION);

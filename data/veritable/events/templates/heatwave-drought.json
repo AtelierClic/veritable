@@ -1,0 +1,85 @@
+{
+  "id": "heatwave-drought",
+  "kind": "template",
+  "title": "event.heatwave-drought.title",
+  "text": "event.heatwave-drought.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "aid",
+      "label": "event.heatwave-drought.aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.97
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "ration",
+      "label": "event.heatwave-drought.ration",
+      "effects": [
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.97
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "adapt",
+      "label": "event.heatwave-drought.adapt",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.98
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 24
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

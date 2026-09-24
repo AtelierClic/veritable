@@ -1,0 +1,87 @@
+{
+  "id": "fighter-jet-export-deal",
+  "kind": "scripted",
+  "title": "event.fighter-jet-export-deal.title",
+  "text": "event.fighter-jet-export-deal.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2030-06-30"],
+    "nations": ["FRA", "GBR", "DEU", "ITA"],
+    "monthlyProbability": 0.006,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "sign",
+      "label": "event.fighter-jet-export-deal.sign",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "production.arms",
+          "op": "mul",
+          "value": 1.05
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02,
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "id": "conditions",
+      "label": "event.fighter-jet-export-deal.conditions",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.001
+        },
+        {
+          "target": "production.arms",
+          "op": "mul",
+          "value": 1.02
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    },
+    {
+      "id": "refuse",
+      "label": "event.fighter-jet-export-deal.refuse",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

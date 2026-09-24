@@ -1,0 +1,77 @@
+{
+  "id": "arctic-route-opening",
+  "kind": "scripted",
+  "title": "event.arctic-route-opening.title",
+  "text": "event.arctic-route-opening.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2027-06-01", "2030-10-31"],
+    "nations": ["NOR", "RUS"],
+    "monthlyProbability": 0.02,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "ports",
+      "label": "event.arctic-route-opening.ports",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.005,
+          "months": 36
+        }
+      ]
+    },
+    {
+      "id": "militarise",
+      "label": "event.arctic-route-opening.militarise",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "caution",
+      "label": "event.arctic-route-opening.caution",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

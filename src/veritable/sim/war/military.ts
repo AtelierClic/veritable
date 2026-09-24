@@ -289,8 +289,12 @@ export function stepMilitaryMonth(
   }
 
   // Air and naval power of the sheet, scaled by the arms coverage.
-  nation.airPower = data.military.airPower * economy.coverage.arms;
-  nation.navalPower = data.military.navalPower * economy.coverage.arms;
+  // x the modifiers of its technology (J5).
+  const tech = ctx.techModifiers.get(data.id);
+  nation.airPower =
+    data.military.airPower * economy.coverage.arms * (tech?.air ?? 1);
+  nation.navalPower =
+    data.military.navalPower * economy.coverage.arms * (tech?.naval ?? 1);
 
   // Exhaustion: up with the losses of the month and every month at war,
   // down in peace. Losses also hit the youth and the workers.

@@ -1,0 +1,100 @@
+{
+  "id": "russia-oil-revenue-squeeze",
+  "kind": "scripted",
+  "title": "event.russia-oil-revenue-squeeze.title",
+  "text": "event.russia-oil-revenue-squeeze.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2029-12-31"],
+    "nations": ["RUS"],
+    "monthlyProbability": 0.05,
+    "conditions": [
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 1
+      },
+      {
+        "target": "price.oil",
+        "op": "lt",
+        "value": 1.0
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "raise-taxes",
+      "label": "event.russia-oil-revenue-squeeze.raise-taxes",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.005
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "cut-civil",
+      "label": "event.russia-oil-revenue-squeeze.cut-civil",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.006
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    },
+    {
+      "id": "monetise",
+      "label": "event.russia-oil-revenue-squeeze.monetise",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.005,
+          "months": 24
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

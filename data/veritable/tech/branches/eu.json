@@ -1,0 +1,190 @@
+[
+  {
+    "id": "eu-joint-procurement",
+    "name": "tech.eu-joint-procurement.name",
+    "description": "tech.eu-joint-procurement.desc",
+    "domain": "land",
+    "bloc": "eu",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 6,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.arms",
+        "op": "mul",
+        "value": 0.97
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "eu-sovereign-cloud",
+    "name": "tech.eu-sovereign-cloud.name",
+    "description": "tech.eu-sovereign-cloud.desc",
+    "domain": "digital",
+    "bloc": "eu",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": ["digital-hyperscale-cloud"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "eu-iris2",
+    "name": "tech.eu-iris2.name",
+    "description": "tech.eu-iris2.desc",
+    "domain": "space",
+    "bloc": "eu",
+    "tier": 1,
+    "cost": 140,
+    "monthsMin": 12,
+    "requires": ["digital-post-quantum-crypto"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "eu-sky-shield",
+    "name": "tech.eu-sky-shield.name",
+    "description": "tech.eu-sky-shield.desc",
+    "domain": "air",
+    "bloc": "eu",
+    "tier": 1,
+    "cost": 130,
+    "monthsMin": 10,
+    "requires": ["air-layered-air-defence"],
+    "adoptedAbove": null,
+    "adoptedBy": ["DEU"],
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "eu-green-industry",
+    "name": "tech.eu-green-industry.name",
+    "description": "tech.eu-green-industry.desc",
+    "domain": "industry",
+    "bloc": "eu",
+    "tier": 1,
+    "cost": 110,
+    "monthsMin": 9,
+    "requires": ["energy-green-hydrogen"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.steel",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.97
+      }
+    ]
+  },
+  {
+    "id": "eu-critical-raw-materials",
+    "name": "tech.eu-critical-raw-materials.name",
+    "description": "tech.eu-critical-raw-materials.desc",
+    "domain": "industry",
+    "bloc": "eu",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 9,
+    "requires": ["industry-critical-minerals-refining"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.critical-minerals",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "consumption.critical-minerals",
+        "op": "mul",
+        "value": 0.98
+      }
+    ]
+  },
+  {
+    "id": "eu-chips-sovereignty",
+    "name": "tech.eu-chips-sovereignty.name",
+    "description": "tech.eu-chips-sovereignty.desc",
+    "domain": "industry",
+    "bloc": "eu",
+    "tier": 2,
+    "cost": 320,
+    "monthsMin": 14,
+    "requires": ["industry-advanced-chips", "eu-sovereign-cloud"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.06
+      },
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "eu-defence-union",
+    "name": "tech.eu-defence-union.name",
+    "description": "tech.eu-defence-union.desc",
+    "domain": "land",
+    "bloc": "eu",
+    "tier": 2,
+    "cost": 350,
+    "monthsMin": 16,
+    "requires": ["eu-joint-procurement", "eu-sky-shield"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.06
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  }
+]

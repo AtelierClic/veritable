@@ -1,0 +1,87 @@
+{
+  "id": "sea-climate-crisis",
+  "kind": "scripted",
+  "title": "event.sea-climate-crisis.title",
+  "text": "event.sea-climate-crisis.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2026-06-01", "2030-10-31"],
+    "monthlyProbability": 0.02,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.food",
+      "op": "add",
+      "value": -0.1
+    },
+    {
+      "target": "worldSupply.electronics",
+      "op": "add",
+      "value": -0.1
+    },
+    {
+      "target": "worldSupply.consumer-goods",
+      "op": "add",
+      "value": -0.04
+    }
+  ],
+  "choices": [
+    {
+      "id": "major-aid",
+      "label": "event.sea-climate-crisis.major-aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 8
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "technical-aid",
+      "label": "event.sea-climate-crisis.technical-aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "no-aid",
+      "label": "event.sea-climate-crisis.no-aid",
+      "effects": [
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

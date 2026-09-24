@@ -1,0 +1,86 @@
+{
+  "id": "capital-terror-attack",
+  "kind": "scripted",
+  "title": "event.capital-terror-attack.title",
+  "text": "event.capital-terror-attack.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2030-12-31"],
+    "nations": ["FRA", "DEU", "GBR", "TUR", "ESP", "ITA", "RUS"],
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "emergency",
+      "label": "event.capital-terror-attack.emergency",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": -0.12
+        }
+      ]
+    },
+    {
+      "id": "unity",
+      "label": "event.capital-terror-attack.unity",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "strike-abroad",
+      "label": "event.capital-terror-attack.strike-abroad",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

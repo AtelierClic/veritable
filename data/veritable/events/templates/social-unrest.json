@@ -1,0 +1,78 @@
+{
+  "id": "social-unrest",
+  "kind": "template",
+  "title": "event.social-unrest.title",
+  "text": "event.social-unrest.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "stability",
+        "op": "lt",
+        "value": 0.5
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "effects": [
+    {
+      "target": "unrest",
+      "op": "set",
+      "value": 1
+    }
+  ],
+  "choices": [
+    {
+      "id": "concessions",
+      "label": "event.social-unrest.concessions",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "firmness",
+      "label": "event.social-unrest.firmness",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.04,
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "id": "dialogue",
+      "label": "event.social-unrest.dialogue",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

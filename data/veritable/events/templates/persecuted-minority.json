@@ -1,0 +1,83 @@
+{
+  "id": "persecuted-minority",
+  "kind": "template",
+  "title": "event.persecuted-minority.title",
+  "text": "event.persecuted-minority.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.003,
+    "conditions": [],
+    "cooldownMonths": 60
+  },
+  "params": {
+    "other": "neighbor"
+  },
+  "choices": [
+    {
+      "id": "protect",
+      "label": "event.persecuted-minority.protect",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 36
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    },
+    {
+      "id": "quiet-diplomacy",
+      "label": "event.persecuted-minority.quiet-diplomacy",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "international",
+      "label": "event.persecuted-minority.international",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

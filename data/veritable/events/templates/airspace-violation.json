@@ -1,0 +1,73 @@
+{
+  "id": "airspace-violation",
+  "kind": "template",
+  "title": "event.airspace-violation.title",
+  "text": "event.airspace-violation.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "params": {
+    "other": "neighbor"
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.airspace-violation.escalate",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "protest",
+      "label": "event.airspace-violation.protest",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "de-escalate",
+      "label": "event.airspace-violation.de-escalate",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

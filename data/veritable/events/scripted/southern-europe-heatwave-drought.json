@@ -1,0 +1,87 @@
+{
+  "id": "southern-europe-heatwave-drought",
+  "kind": "scripted",
+  "title": "event.southern-europe-heatwave-drought.title",
+  "text": "event.southern-europe-heatwave-drought.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-06-01", "2030-09-30"],
+    "nations": ["ESP", "ITA", "TUR", "FRA"],
+    "monthlyProbability": 0.01,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "farmers-first",
+      "label": "event.southern-europe-heatwave-drought.farmers-first",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.95
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "cities-first",
+      "label": "event.southern-europe-heatwave-drought.cities-first",
+      "effects": [
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.9
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "desalination",
+      "label": "event.southern-europe-heatwave-drought.desalination",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.93
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 24
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

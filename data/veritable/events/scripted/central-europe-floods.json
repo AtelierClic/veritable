@@ -1,0 +1,81 @@
+{
+  "id": "central-europe-floods",
+  "kind": "scripted",
+  "title": "event.central-europe-floods.title",
+  "text": "event.central-europe-floods.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-05-01", "2030-10-31"],
+    "nations": ["DEU", "POL"],
+    "monthlyProbability": 0.012,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "reconstruction",
+      "label": "event.central-europe-floods.reconstruction",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "eu-fund",
+      "label": "event.central-europe-floods.eu-fund",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "minimal",
+      "label": "event.central-europe-floods.minimal",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.995
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

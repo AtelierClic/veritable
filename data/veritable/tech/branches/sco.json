@@ -1,0 +1,160 @@
+[
+  {
+    "id": "sco-counter-terrorism-intel",
+    "name": "tech.sco-counter-terrorism-intel.name",
+    "description": "tech.sco-counter-terrorism-intel.desc",
+    "domain": "land",
+    "bloc": "sco",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 6,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "sco-transport-corridors",
+    "name": "tech.sco-transport-corridors.name",
+    "description": "tech.sco-transport-corridors.desc",
+    "domain": "industry",
+    "bloc": "sco",
+    "tier": 1,
+    "cost": 110,
+    "monthsMin": 9,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0008
+      }
+    ]
+  },
+  {
+    "id": "sco-energy-club",
+    "name": "tech.sco-energy-club.name",
+    "description": "tech.sco-energy-club.desc",
+    "domain": "energy",
+    "bloc": "sco",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.gas",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "sco-joint-exercises",
+    "name": "tech.sco-joint-exercises.name",
+    "description": "tech.sco-joint-exercises.desc",
+    "domain": "land",
+    "bloc": "sco",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 6,
+    "requires": ["sco-counter-terrorism-intel"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "sco-information-sovereignty",
+    "name": "tech.sco-information-sovereignty.name",
+    "description": "tech.sco-information-sovereignty.desc",
+    "domain": "digital",
+    "bloc": "sco",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 8,
+    "requires": ["digital-hyperscale-cloud"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "sco-border-surveillance",
+    "name": "tech.sco-border-surveillance.name",
+    "description": "tech.sco-border-surveillance.desc",
+    "domain": "land",
+    "bloc": "sco",
+    "tier": 2,
+    "cost": 240,
+    "monthsMin": 11,
+    "requires": ["sco-counter-terrorism-intel", "digital-generative-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "sco-automated-rail-freight",
+    "name": "tech.sco-automated-rail-freight.name",
+    "description": "tech.sco-automated-rail-freight.desc",
+    "domain": "industry",
+    "bloc": "sco",
+    "tier": 2,
+    "cost": 280,
+    "monthsMin": 14,
+    "requires": ["sco-transport-corridors", "digital-industrial-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.001
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  }
+]

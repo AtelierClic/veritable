@@ -30,6 +30,12 @@
       "controller": "RUS",
       "claimants": ["UKR"],
       "recognizedBy": []
+    },
+    {
+      "region": "ukraine-oblasts-claimed-by-russia",
+      "controller": "UKR",
+      "claimants": ["RUS"],
+      "recognizedBy": []
     }
   ],
   "wars": [

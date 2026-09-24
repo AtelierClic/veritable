@@ -1,0 +1,87 @@
+{
+  "id": "rating-downgrade",
+  "kind": "template",
+  "title": "event.rating-downgrade.title",
+  "text": "event.rating-downgrade.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.008,
+    "conditions": [
+      {
+        "target": "debtToGdp",
+        "op": "gt",
+        "value": 0.9
+      },
+      {
+        "target": "deficitToGdp",
+        "op": "gt",
+        "value": 0.03
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "consolidate",
+      "label": "event.rating-downgrade.consolidate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.005
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "reforms",
+      "label": "event.rating-downgrade.reforms",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "ignore",
+      "label": "event.rating-downgrade.ignore",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.995
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.004,
+          "months": 24
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

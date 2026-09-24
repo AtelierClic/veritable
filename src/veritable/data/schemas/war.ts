@@ -38,6 +38,8 @@ export const CASUS_BELLI_CHECKS = [
   "ally-attacked",
   // The target is in unrest with a stability under the threshold.
   "humanitarian",
+  // An event gave the declarer a grievance against the target (J5).
+  "grievance",
   // No pretext: the maximal international reaction.
   "none",
 ] as const;

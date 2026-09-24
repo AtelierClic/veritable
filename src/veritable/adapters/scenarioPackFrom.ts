@@ -58,5 +58,7 @@ export function simDataFrom(source: DataSource, scenario: Scenario): SimData {
     names: Object.fromEntries(
       scenario.nations.map((id) => [id, source.names(id)]),
     ),
+    tech: source.tech(),
+    events: source.events(),
   };
 }

@@ -1,0 +1,72 @@
+{
+  "id": "svalbard-trawler-arrest",
+  "kind": "scripted",
+  "title": "event.svalbard-trawler-arrest.title",
+  "text": "event.svalbard-trawler-arrest.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-05-01", "2030-06-30"],
+    "nations": ["RUS"],
+    "monthlyProbability": 0.02,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.svalbard-trawler-arrest.escalate",
+      "effects": [
+        {
+          "target": "grievance.NOR",
+          "op": "set",
+          "value": 1,
+          "months": 18
+        },
+        {
+          "target": "relations.NOR",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.002
+        }
+      ]
+    },
+    {
+      "id": "protest",
+      "label": "event.svalbard-trawler-arrest.protest",
+      "effects": [
+        {
+          "target": "relations.NOR",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "negotiate",
+      "label": "event.svalbard-trawler-arrest.negotiate",
+      "effects": [
+        {
+          "target": "relations.NOR",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

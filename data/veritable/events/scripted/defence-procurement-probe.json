@@ -1,0 +1,86 @@
+{
+  "id": "defence-procurement-probe",
+  "kind": "scripted",
+  "title": "event.defence-procurement-probe.title",
+  "text": "event.defence-procurement-probe.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2027-12-31"],
+    "nations": ["UKR"],
+    "monthlyProbability": 0.04,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "full-independence",
+      "label": "event.defence-procurement-probe.full-independence",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "reshuffle",
+      "label": "event.defence-procurement-probe.reshuffle",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.02
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "curb-agency",
+      "label": "event.defence-procurement-probe.curb-agency",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 10
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.1
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

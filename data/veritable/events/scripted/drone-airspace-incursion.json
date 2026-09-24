@@ -1,0 +1,77 @@
+{
+  "id": "drone-airspace-incursion",
+  "kind": "scripted",
+  "title": "event.drone-airspace-incursion.title",
+  "text": "event.drone-airspace-incursion.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2027-12-31"],
+    "nations": ["POL"],
+    "monthlyProbability": 0.05,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.drone-airspace-incursion.escalate",
+      "effects": [
+        {
+          "target": "grievance.RUS",
+          "op": "set",
+          "value": 1,
+          "months": 18
+        },
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "air-shield",
+      "label": "event.drone-airspace-incursion.air-shield",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.004
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "restraint",
+      "label": "event.drone-airspace-incursion.restraint",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,85 @@
+{
+  "id": "ai-datacenter-investment-boom",
+  "kind": "scripted",
+  "title": "event.ai-datacenter-investment-boom.title",
+  "text": "event.ai-datacenter-investment-boom.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-04-01", "2029-12-31"],
+    "nations": ["GBR", "FRA", "DEU", "NOR", "ESP"],
+    "monthlyProbability": 0.01,
+    "conditions": [
+      {
+        "target": "stability",
+        "op": "gt",
+        "value": 0.45
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "fast-track",
+      "label": "event.ai-datacenter-investment-boom.fast-track",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.006,
+          "months": 24
+        },
+        {
+          "target": "consumption.electricity",
+          "op": "mul",
+          "value": 1.04
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "grid-first",
+      "label": "event.ai-datacenter-investment-boom.grid-first",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "production.electricity",
+          "op": "mul",
+          "value": 1.03
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.003,
+          "months": 24
+        }
+      ]
+    },
+    {
+      "id": "tax",
+      "label": "event.ai-datacenter-investment-boom.tax",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 12
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

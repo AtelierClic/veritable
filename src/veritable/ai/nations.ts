@@ -230,6 +230,7 @@ export function appraiseWar(
   const cfg = env.ctx.config.ai.nations.war;
   if (!env.ctx.landNeighbours(id, target)) return null;
   if (hasWarheads(env, target) && !hasWarheads(env, id)) return null;
+  if (relation(env.diplomacy, id, target) > cfg.maxRelations) return null;
   const cbs = availableCasusBelli(
     env.ctx,
     env.diplomacy,
@@ -256,6 +257,7 @@ export function appraiseWar(
     cfg.landSharePerPowerRatio * (Math.min(powerRatio, 10) - 1),
   );
   const gain =
+    (casusBelli === "none" ? 1 : cfg.casusBelliMotive) *
     cfg.gainHorizonYears *
     landShare *
     their.gdp *

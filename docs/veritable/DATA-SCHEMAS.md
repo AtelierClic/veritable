@@ -272,48 +272,45 @@ Palier 1 : `oil, gas, coal, electricity, food, critical-minerals, steel, consume
 
 Curseurs : les impôts et les postes de dépense ont une cible (`taxTargets`, `spendingTargets` dans la sauvegarde) que la valeur en vigueur rejoint en fermant `1 / rampMonths` de l'écart chaque mois.
 
-## event (`events/scripted/*.json`, `events/templates/*.json`)
+## event (`events/scripted/<id>.json`, `events/templates/<id>.json`)
+
+Forme du J5, validée par `src/veritable/data/schemas/event.ts` (liste complète des conditions et des effets, avec leur sens). Un fichier par événement, nommé d'après son `id`. Un événement désigne des fonctions (le chef du gouvernement, un ministre, l'état-major), jamais une personne réelle, et n'attribue aucun crime ni scandale à un dirigeant réel.
 
 ```jsonc
 {
-  "id": "sea-climate-crisis",
-  "kind": "scripted", // scripted | template
-  "title": "event.sea-climate-crisis.title",
-  "text": "event.sea-climate-crisis.text",
+  "id": "border-incident",
+  "kind": "template", // scripted (une fois par nation, 2026-2030) | template (répétable)
+  "title": "event.border-incident.title", // textes : {nation} {other} {good}
+  "text": "event.border-incident.text",
+  "scope": "nation", // nation : une nation à la fois ; world : une fois dans le monde
   "trigger": {
-    "dateRange": ["2027-01-01", "2029-12-31"],
-    "region": "southeast-asia",
-    "monthlyProbability": 0.02,
-    "conditions": [],
+    "dateRange": ["2026-01-01", "2030-12-31"], // facultatif
+    "nations": ["POL", "NOR"], // facultatif : toutes sinon
+    "monthlyProbability": 0.004,
+    "conditions": [{ "target": "stability", "op": "lt", "value": 0.5 }],
+    "once": false,
+    "cooldownMonths": 36,
   },
-  "params": {}, // pour un template : { "region": "any-region", "good": "any-good" }
+  "params": { "other": "neighbor" }, // other : neighbor | any | rival ; good : any | energy | food | industrial
+  "worldEffects": [], // scope world : appliqués une fois
+  "effects": [], // appliqués au déclenchement, avant le choix
   "choices": [
     {
-      "id": "help",
-      "label": "event.sea-climate-crisis.help",
+      "id": "escalate",
+      "label": "event.border-incident.escalate",
       "effects": [
-        { "target": "budget.balance", "op": "add", "value": -2e9 },
-        { "target": "relations.region", "op": "add", "value": 10 },
-        { "target": "leader.image", "op": "add", "value": 0.05 },
-      ],
-    },
-    {
-      "id": "ignore",
-      "label": "event.sea-climate-crisis.ignore",
-      "effects": [
-        {
-          "target": "relations.region",
-          "op": "add",
-          "value": -5,
-          "uncertain": true,
-        },
+        { "target": "grievance.other", "op": "set", "value": 1, "months": 24 },
+        { "target": "relations.other", "op": "add", "value": -15 },
+        { "target": "opinion", "op": "add", "value": -0.02, "uncertain": true },
       ],
     },
   ],
-  "pause": true,
+  "pause": true, // la fenêtre met le jeu en pause
   "journal": true,
 }
 ```
+
+Effets : `budget.pctGdp`, `gdp`, `growth` (avec `months`), `stability`, `opinion`, `legitimacy`, `exhaustion`, `capital`, `group.<groupe>`, `production.<bien>`, `consumption.<bien>`, `spending.defense`, `spending.research`, `unrest`, `relations.all|neighbors|other|<ISO3>`, `grievance.other|<ISO3>` (casus belli « grief » pour `months` mois), `worldSupply.<bien>`. Conditions : stabilité, opinion, légitimité, épuisement, dette, déficit, croissance, pénurie, couverture et prix d'un bien, guerre, troubles, démocratie, arme nucléaire, joueur, part des tuiles perdues, PIB par habitant, régime, appartenance à un bloc.
 
 ## bloc (`blocs/<slug>.json`)
 
@@ -388,20 +385,28 @@ Forme du J5 (couches 2 et 3), validée par `src/veritable/data/schemas/bloc.ts`.
 
 ## tech (`tech/trunk.json`, `tech/branches/<bloc>.json`)
 
+Forme du J5, validée par `src/veritable/data/schemas/tech.ts`. Le tronc est un tableau de nœuds (dix domaines, paliers 1 et 2) ; une branche est le tableau des nœuds d'un bloc (`bloc` renseigné).
+
 ```jsonc
 {
-  "id": "energy-nuclear-4",
-  "name": "tech.energy-nuclear-4",
-  "domain": "energy",
+  "id": "energy-smr",
+  "name": "tech.energy-smr.name",
+  "description": "tech.energy-smr.desc",
+  "domain": "energy", // energy industry agriculture digital health land naval air nuclear space
   "tier": 1,
-  "cost": 120,
-  "monthsMin": 18,
-  "requires": ["energy-nuclear-3"],
+  "cost": 110, // points de recherche
+  "monthsMin": 9,
+  "requires": ["nuclear-industry"],
+  "adoptedAbove": null, // indice de développement à partir duquel une nation l'a le 1er janvier 2026
+  "adoptedBy": ["FRA"], // facultatif : nations qui l'ont en 2026 quel que soit leur indice
+  "bloc": "eu", // facultatif : nœud de branche, réservé aux membres pleins
   "effects": [
-    { "target": "production.electricity", "op": "mul", "value": 1.1 },
+    { "target": "production.electricity", "op": "mul", "value": 1.04 },
   ],
 }
 ```
+
+Effets : `production.<bien>` et `consumption.<bien>` (`mul`, une fois, sur les capacités), `growth` (`add`, par an), `military.land`, `military.air`, `military.naval`, `research` (`mul`, tant que le nœud est en vigueur). La part de l'effet qui compte est dans `config.json` (`tech.effectScale`).
 
 ## scenario (`scenarios/<slug>.json`)
 

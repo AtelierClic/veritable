@@ -1,0 +1,83 @@
+{
+  "id": "semiconductor-supply-shock",
+  "kind": "scripted",
+  "title": "event.semiconductor-supply-shock.title",
+  "text": "event.semiconductor-supply-shock.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2027-01-01", "2030-12-31"],
+    "monthlyProbability": 0.015,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.electronics",
+      "op": "add",
+      "value": -0.12
+    }
+  ],
+  "choices": [
+    {
+      "id": "subsidise-fab",
+      "label": "event.semiconductor-supply-shock.subsidise-fab",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "production.electronics",
+          "op": "mul",
+          "value": 1.05
+        },
+        {
+          "target": "spending.research",
+          "op": "add",
+          "value": 0.002
+        }
+      ]
+    },
+    {
+      "id": "diplomacy",
+      "label": "event.semiconductor-supply-shock.diplomacy",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "absorb",
+      "label": "event.semiconductor-supply-shock.absorb",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.004,
+          "months": 12
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

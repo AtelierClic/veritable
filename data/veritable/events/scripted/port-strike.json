@@ -1,0 +1,82 @@
+{
+  "id": "port-strike",
+  "kind": "scripted",
+  "title": "event.port-strike.title",
+  "text": "event.port-strike.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2030-12-31"],
+    "nations": ["GBR", "DEU", "ITA", "ESP", "FRA"],
+    "monthlyProbability": 0.008,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "broker",
+      "label": "event.port-strike.broker",
+      "effects": [
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "requisition",
+      "label": "event.port-strike.requisition",
+      "effects": [
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "wait",
+      "label": "event.port-strike.wait",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.995
+        },
+        {
+          "target": "production.consumer-goods",
+          "op": "mul",
+          "value": 0.98
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

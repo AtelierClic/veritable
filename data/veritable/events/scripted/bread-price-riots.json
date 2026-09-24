@@ -1,0 +1,106 @@
+{
+  "id": "bread-price-riots",
+  "kind": "scripted",
+  "title": "event.bread-price-riots.title",
+  "text": "event.bread-price-riots.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2030-12-31"],
+    "monthlyProbability": 0.06,
+    "conditions": [
+      {
+        "target": "price.food",
+        "op": "gt",
+        "value": 1.15
+      },
+      {
+        "target": "gdpPerCapita",
+        "op": "lt",
+        "value": 30000
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "freeze-prices",
+      "label": "event.bread-price-riots.freeze-prices",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    },
+    {
+      "id": "vouchers",
+      "label": "event.bread-price-riots.vouchers",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    },
+    {
+      "id": "order",
+      "label": "event.bread-price-riots.order",
+      "effects": [
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.2
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.15
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

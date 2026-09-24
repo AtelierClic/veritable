@@ -1,0 +1,82 @@
+{
+  "id": "coalition-crisis",
+  "kind": "template",
+  "title": "event.coalition-crisis.title",
+  "text": "event.coalition-crisis.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.005,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "buy-support",
+      "label": "event.coalition-crisis.buy-support",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "confidence",
+      "label": "event.coalition-crisis.confidence",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.04,
+          "uncertain": true
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "minority",
+      "label": "event.coalition-crisis.minority",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

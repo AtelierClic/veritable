@@ -1,0 +1,91 @@
+{
+  "id": "youth-mass-protests",
+  "kind": "template",
+  "title": "event.youth-mass-protests.title",
+  "text": "event.youth-mass-protests.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.008,
+    "conditions": [
+      {
+        "target": "opinion",
+        "op": "lt",
+        "value": 0.4
+      }
+    ],
+    "cooldownMonths": 30
+  },
+  "choices": [
+    {
+      "id": "youth-plan",
+      "label": "event.youth-mass-protests.youth-plan",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.08
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "dialogue",
+      "label": "event.youth-mass-protests.dialogue",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "ban",
+      "label": "event.youth-mass-protests.ban",
+      "effects": [
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1,
+          "uncertain": true
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.2
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

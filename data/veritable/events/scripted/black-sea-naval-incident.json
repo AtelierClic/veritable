@@ -1,0 +1,77 @@
+{
+  "id": "black-sea-naval-incident",
+  "kind": "scripted",
+  "title": "event.black-sea-naval-incident.title",
+  "text": "event.black-sea-naval-incident.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-04-01", "2029-12-31"],
+    "nations": ["TUR"],
+    "monthlyProbability": 0.02,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.black-sea-naval-incident.escalate",
+      "effects": [
+        {
+          "target": "grievance.RUS",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "inquiry",
+      "label": "event.black-sea-naval-incident.inquiry",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "leverage",
+      "label": "event.black-sea-naval-incident.leverage",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "relations.UKR",
+          "op": "add",
+          "value": -10
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

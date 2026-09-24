@@ -1,0 +1,76 @@
+{
+  "id": "mediterranean-wildfires",
+  "kind": "scripted",
+  "title": "event.mediterranean-wildfires.title",
+  "text": "event.mediterranean-wildfires.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-07-01", "2030-09-30"],
+    "nations": ["TUR", "ITA", "ESP"],
+    "monthlyProbability": 0.012,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "fleet",
+      "label": "event.mediterranean-wildfires.fleet",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "ask-help",
+      "label": "event.mediterranean-wildfires.ask-help",
+      "effects": [
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "tourism-aid",
+      "label": "event.mediterranean-wildfires.tourism-aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

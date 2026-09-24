@@ -1,0 +1,70 @@
+{
+  "id": "regional-climate-disaster",
+  "kind": "template",
+  "title": "event.regional-climate-disaster.title",
+  "text": "event.regional-climate-disaster.text",
+  "scope": "world",
+  "trigger": {
+    "monthlyProbability": 0.006,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.food",
+      "op": "add",
+      "value": -0.06
+    },
+    {
+      "target": "worldSupply.consumer-goods",
+      "op": "add",
+      "value": -0.02
+    }
+  ],
+  "choices": [
+    {
+      "id": "aid",
+      "label": "event.regional-climate-disaster.aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 8
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "secure-supply",
+      "label": "event.regional-climate-disaster.secure-supply",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

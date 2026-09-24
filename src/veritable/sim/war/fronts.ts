@@ -37,6 +37,8 @@ export interface Multipliers {
   // (logistics, J3b) and air factor against a given enemy (air, J3b).
   supply(nation: NationId, segment: SegmentGeometry, divisions: number): number;
   air(nation: NationId, enemy: NationId): number;
+  // Land force of its technology (J5).
+  technology?(nation: NationId): number;
 }
 
 export const UNIT_MULTIPLIERS: Multipliers = {
@@ -253,7 +255,7 @@ function sideState(
     if (division.posture !== "defend") attacking = true;
     if (division.posture === "breakthrough") breakthrough = true;
   }
-  force *= supply * air;
+  force *= supply * air * (multipliers.technology?.(nation) ?? 1);
   return {
     nation,
     enemy,

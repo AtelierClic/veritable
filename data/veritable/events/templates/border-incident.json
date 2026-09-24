@@ -1,0 +1,62 @@
+{
+  "id": "border-incident",
+  "kind": "template",
+  "title": "event.border-incident.title",
+  "text": "event.border-incident.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 48
+  },
+  "params": {
+    "other": "neighbor"
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.border-incident.escalate",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 24
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "de-escalate",
+      "label": "event.border-incident.de-escalate",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

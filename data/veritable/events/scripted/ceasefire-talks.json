@@ -1,0 +1,93 @@
+{
+  "id": "ceasefire-talks",
+  "kind": "scripted",
+  "title": "event.ceasefire-talks.title",
+  "text": "event.ceasefire-talks.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2028-12-31"],
+    "nations": ["UKR", "RUS"],
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 1
+      },
+      {
+        "target": "exhaustion",
+        "op": "gt",
+        "value": 0.3
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "engage",
+      "label": "event.ceasefire-talks.engage",
+      "effects": [
+        {
+          "target": "exhaustion",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "id": "conditions",
+      "label": "event.ceasefire-talks.conditions",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "refuse",
+      "label": "event.ceasefire-talks.refuse",
+      "effects": [
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "exhaustion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

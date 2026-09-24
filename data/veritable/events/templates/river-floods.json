@@ -1,0 +1,75 @@
+{
+  "id": "river-floods",
+  "kind": "template",
+  "title": "event.river-floods.title",
+  "text": "event.river-floods.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "rebuild",
+      "label": "event.river-floods.rebuild",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "insurers",
+      "label": "event.river-floods.insurers",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.08
+        }
+      ]
+    },
+    {
+      "id": "prevention",
+      "label": "event.river-floods.prevention",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.007
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 24
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

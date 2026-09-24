@@ -1,0 +1,78 @@
+{
+  "id": "grid-cyberattack",
+  "kind": "scripted",
+  "title": "event.grid-cyberattack.title",
+  "text": "event.grid-cyberattack.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-02-01", "2030-06-30"],
+    "nations": ["DEU", "POL", "GBR", "FRA", "NOR", "ITA"],
+    "monthlyProbability": 0.008,
+    "conditions": [
+      {
+        "target": "bloc.nato",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "attribute",
+      "label": "event.grid-cyberattack.attribute",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "harden",
+      "label": "event.grid-cyberattack.harden",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "spending.research",
+          "op": "add",
+          "value": 0.002
+        }
+      ]
+    },
+    {
+      "id": "downplay",
+      "label": "event.grid-cyberattack.downplay",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.04,
+          "uncertain": true
+        },
+        {
+          "target": "production.electricity",
+          "op": "mul",
+          "value": 0.98
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

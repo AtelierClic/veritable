@@ -1,0 +1,69 @@
+{
+  "id": "wildfire-season",
+  "kind": "template",
+  "title": "event.wildfire-season.title",
+  "text": "event.wildfire-season.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "reinforce",
+      "label": "event.wildfire-season.reinforce",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "army",
+      "label": "event.wildfire-season.army",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "compensate",
+      "label": "event.wildfire-season.compensate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

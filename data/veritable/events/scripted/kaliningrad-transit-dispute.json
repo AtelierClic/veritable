@@ -1,0 +1,73 @@
+{
+  "id": "kaliningrad-transit-dispute",
+  "kind": "scripted",
+  "title": "event.kaliningrad-transit-dispute.title",
+  "text": "event.kaliningrad-transit-dispute.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-06-01", "2029-12-31"],
+    "nations": ["RUS"],
+    "monthlyProbability": 0.02,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.kaliningrad-transit-dispute.escalate",
+      "effects": [
+        {
+          "target": "grievance.POL",
+          "op": "set",
+          "value": 1,
+          "months": 24
+        },
+        {
+          "target": "relations.POL",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "sea-route",
+      "label": "event.kaliningrad-transit-dispute.sea-route",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "negotiate",
+      "label": "event.kaliningrad-transit-dispute.negotiate",
+      "effects": [
+        {
+          "target": "relations.POL",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

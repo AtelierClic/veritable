@@ -96,6 +96,9 @@ export const JOURNAL_KINDS_V5 = [
   "bloc-left",
   "bloc-article5",
   "bloc-article5-refused",
+  // Technology and events (J5).
+  "tech-completed",
+  "event-occurred",
 ] as const;
 export const JournalEntryV5Schema = z.object({
   date: IsoDateSchema,
@@ -390,6 +393,15 @@ export const DiplomacyStateSchema = z.object({
   // Nations that fired a nuclear weapon (J5): a coalition may form against
   // them whatever their power.
   pariahs: z.array(NationIdSchema),
+  // Grievances an event gave a nation against another (J5): a casus belli
+  // until the date.
+  grievances: z.array(
+    z.object({
+      by: NationIdSchema,
+      against: NationIdSchema,
+      until: IsoDateSchema,
+    }),
+  ),
   // Annexations signed while the dead hand of the annexed nation fired: the
   // land changes hands the next day, once the warhead has left its silo.
   pendingAnnexations: z.array(
@@ -633,6 +645,64 @@ export const BlocsStateSchema = z.object({
 });
 export type BlocsState = z.infer<typeof BlocsStateSchema>;
 
+// --- technology (J5) ----------------------------------------------------------
+
+export const TechProjectSchema = z.object({
+  node: z.string(),
+  points: zb.float(),
+  since: IsoDateSchema,
+});
+export const NationTechSchema = z.object({
+  // Nodes researched, in order; `baseline`: those it had on the first day
+  // (their effects are in the data of 2026, not applied again).
+  done: z.array(z.string()),
+  baseline: z.array(z.string()),
+  projects: z.array(TechProjectSchema), // at most config.tech.maxProjects
+  pointsLastMonth: zb.float(),
+});
+export type NationTech = z.infer<typeof NationTechSchema>;
+export const TechStateSchema = z.object({
+  nations: z.record(z.string(), NationTechSchema),
+});
+export type TechState = z.infer<typeof TechStateSchema>;
+
+// --- events (J5) -----------------------------------------------------------------
+
+export const EventInstanceSchema = z.object({
+  id: zb.uint(),
+  event: z.string(),
+  nation: NationIdSchema, // the subject (the player for a world event)
+  other: NationIdSchema.nullable(),
+  good: z.string().nullable(),
+  date: IsoDateSchema,
+});
+export type EventInstance = z.infer<typeof EventInstanceSchema>;
+export const EventsStateSchema = z.object({
+  nextId: zb.uint(),
+  // Pop-ups waiting for the player's choice; unanswered, the government
+  // decides at `deadline`.
+  pending: z.array(EventInstanceSchema.extend({ deadline: IsoDateSchema })),
+  // Events that happened, with the choice (the Events screen keeps the last
+  // ones; the journal keeps them all).
+  history: z.array(EventInstanceSchema.extend({ choice: z.string() })),
+  // Once-events already fired, per event: the nations ("world" for a world
+  // event); cooldowns: "event|nation" -> date when it may fire again.
+  fired: z.record(z.string(), z.array(z.string())),
+  cooldowns: z.record(z.string(), IsoDateSchema),
+  // Growth effects that last some months.
+  growth: z.array(
+    z.object({
+      nation: NationIdSchema,
+      value: zb.float(),
+      until: IsoDateSchema,
+    }),
+  ),
+  // Pop-ups shown to the player this month ("YYYY-MM").
+  popupMonth: z.string(),
+  popups: zb.uint(),
+});
+export type EventsState = z.infer<typeof EventsStateSchema>;
+
 // --- territory (J5) -----------------------------------------------------------
 
 export const TerritoryStateSchema = z.object({
@@ -663,6 +733,8 @@ export const SaveHeaderV5Schema = zb.object({
   territory: TerritoryStateSchema,
   nuclear: NuclearStateSchema,
   ai: AiStateSchema,
+  tech: TechStateSchema,
+  events: EventsStateSchema,
   journal: z.array(JournalEntryV5Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),

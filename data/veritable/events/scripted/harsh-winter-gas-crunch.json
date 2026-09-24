@@ -1,0 +1,93 @@
+{
+  "id": "harsh-winter-gas-crunch",
+  "kind": "scripted",
+  "title": "event.harsh-winter-gas-crunch.title",
+  "text": "event.harsh-winter-gas-crunch.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2026-12-01", "2027-02-28"],
+    "monthlyProbability": 0.2,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.gas",
+      "op": "add",
+      "value": -0.08
+    },
+    {
+      "target": "worldSupply.coal",
+      "op": "add",
+      "value": -0.03
+    }
+  ],
+  "choices": [
+    {
+      "id": "demand-cut",
+      "label": "event.harsh-winter-gas-crunch.demand-cut",
+      "effects": [
+        {
+          "target": "consumption.gas",
+          "op": "mul",
+          "value": 0.95
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 6
+        }
+      ]
+    },
+    {
+      "id": "price-shield",
+      "label": "event.harsh-winter-gas-crunch.price-shield",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.008
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "load-shedding",
+      "label": "event.harsh-winter-gas-crunch.load-shedding",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.08
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

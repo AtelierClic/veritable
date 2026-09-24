@@ -1,0 +1,94 @@
+{
+  "id": "respiratory-virus-wave",
+  "kind": "scripted",
+  "title": "event.respiratory-virus-wave.title",
+  "text": "event.respiratory-virus-wave.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2027-01-01", "2030-06-30"],
+    "monthlyProbability": 0.02,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.pharma",
+      "op": "add",
+      "value": -0.06
+    },
+    {
+      "target": "worldSupply.services",
+      "op": "add",
+      "value": -0.04
+    }
+  ],
+  "choices": [
+    {
+      "id": "restrictions",
+      "label": "event.respiratory-virus-wave.restrictions",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.985
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "vaccinate",
+      "label": "event.respiratory-virus-wave.vaccinate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "minimal",
+      "label": "event.respiratory-virus-wave.minimal",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.05,
+          "uncertain": true
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 6
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

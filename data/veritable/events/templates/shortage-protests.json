@@ -1,0 +1,84 @@
+{
+  "id": "shortage-protests",
+  "kind": "template",
+  "title": "event.shortage-protests.title",
+  "text": "event.shortage-protests.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.015,
+    "conditions": [
+      {
+        "target": "shortage",
+        "op": "gt",
+        "value": 0.1
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "params": {
+    "good": "any"
+  },
+  "choices": [
+    {
+      "id": "emergency-purchase",
+      "label": "event.shortage-protests.emergency-purchase",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "rationing",
+      "label": "event.shortage-protests.rationing",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    },
+    {
+      "id": "blame-abroad",
+      "label": "event.shortage-protests.blame-abroad",
+      "effects": [
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

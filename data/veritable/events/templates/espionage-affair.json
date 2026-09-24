@@ -1,0 +1,72 @@
+{
+  "id": "espionage-affair",
+  "kind": "template",
+  "title": "event.espionage-affair.title",
+  "text": "event.espionage-affair.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "params": {
+    "other": "rival"
+  },
+  "choices": [
+    {
+      "id": "expel",
+      "label": "event.espionage-affair.expel",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -12
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "quiet",
+      "label": "event.espionage-affair.quiet",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "swap",
+      "label": "event.espionage-affair.swap",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

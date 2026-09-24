@@ -1,0 +1,86 @@
+{
+  "id": "banking-stress",
+  "kind": "template",
+  "title": "event.banking-stress.title",
+  "text": "event.banking-stress.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.005,
+    "conditions": [
+      {
+        "target": "debtToGdp",
+        "op": "gt",
+        "value": 0.8
+      },
+      {
+        "target": "growth",
+        "op": "lt",
+        "value": 0.01
+      }
+    ],
+    "cooldownMonths": 48
+  },
+  "choices": [
+    {
+      "id": "bailout",
+      "label": "event.banking-stress.bailout",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.015
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "bail-in",
+      "label": "event.banking-stress.bail-in",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.99
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.08
+        }
+      ]
+    },
+    {
+      "id": "liquidity",
+      "label": "event.banking-stress.liquidity",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

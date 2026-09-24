@@ -62,6 +62,13 @@ export class CampaignController {
       for (const event of events) {
         if (event.type === "day-started") bar.setDate(event.date);
         if (event.type === "month-started") void this.autosave(event.date);
+        // An event asks the player (J5): pause when it says so, open the
+        // Events screen.
+        if (event.type === "event-popup") {
+          if (event.pause) void this.setSpeed(0);
+          screens.show("events");
+          bar.setActiveScreen(screens.current());
+        }
       }
     });
   }

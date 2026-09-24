@@ -1,0 +1,79 @@
+{
+  "id": "supply-chain-disruption",
+  "kind": "template",
+  "title": "event.supply-chain-disruption.title",
+  "text": "event.supply-chain-disruption.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "params": {
+    "good": "industrial"
+  },
+  "choices": [
+    {
+      "id": "stockpile",
+      "label": "event.supply-chain-disruption.stockpile",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "reshoring",
+      "label": "event.supply-chain-disruption.reshoring",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.003,
+          "months": 24
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "absorb",
+      "label": "event.supply-chain-disruption.absorb",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.995
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

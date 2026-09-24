@@ -1,0 +1,91 @@
+{
+  "id": "energy-price-riots",
+  "kind": "scripted",
+  "title": "event.energy-price-riots.title",
+  "text": "event.energy-price-riots.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-06-01", "2030-12-31"],
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "price.gas",
+        "op": "gt",
+        "value": 1.2
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "energy-shield",
+      "label": "event.energy-price-riots.energy-shield",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.008
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "targeted-aid",
+      "label": "event.energy-price-riots.targeted-aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    },
+    {
+      "id": "hold-firm",
+      "label": "event.energy-price-riots.hold-firm",
+      "effects": [
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.18
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.1
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

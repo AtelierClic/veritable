@@ -1,0 +1,85 @@
+{
+  "id": "recovery-fund-deadline",
+  "kind": "scripted",
+  "title": "event.recovery-fund-deadline.title",
+  "text": "event.recovery-fund-deadline.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2026-12-31"],
+    "nations": ["ITA", "ESP", "POL"],
+    "monthlyProbability": 0.1,
+    "conditions": [
+      {
+        "target": "bloc.eu",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "rush",
+      "label": "event.recovery-fund-deadline.rush",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.004,
+          "months": 12
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "id": "reallocate",
+      "label": "event.recovery-fund-deadline.reallocate",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "forfeit",
+      "label": "event.recovery-fund-deadline.forfeit",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.996
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

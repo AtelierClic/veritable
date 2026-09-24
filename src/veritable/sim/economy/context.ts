@@ -1,6 +1,7 @@
 import { Bloc, BlocMemberStatus } from "../../data/schemas/bloc";
 import { NationId } from "../../data/schemas/common";
 import { VeritableConfig } from "../../data/schemas/config";
+import { VeritableEvent } from "../../data/schemas/event";
 import { Good, GoodId } from "../../data/schemas/goods";
 import { Law } from "../../data/schemas/laws";
 import { LeadersData } from "../../data/schemas/leaders";
@@ -8,7 +9,9 @@ import { NationData } from "../../data/schemas/nation";
 import { NamePool, Objective, RegimeData } from "../../data/schemas/politics";
 import { ROW_ID, RowData } from "../../data/schemas/row";
 import { SeaZone } from "../../data/schemas/seas";
+import { TechNode } from "../../data/schemas/tech";
 import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
+import type { TechModifiers } from "../tech/tech";
 import { greatCircleKm } from "./trade";
 
 // Static data of a campaign, injected into the simulation (never imported by
@@ -31,6 +34,9 @@ export interface SimData {
   objectives: Objective[];
   leaders: Record<NationId, LeadersData>;
   names: Record<NationId, NamePool>;
+  // Technology and events (J5).
+  tech: TechNode[];
+  events: VeritableEvent[];
 }
 
 // Everything the economic systems need besides the state.
@@ -38,6 +44,11 @@ export interface EconomyContext {
   config: VeritableConfig;
   goods: Good[];
   good(id: GoodId): Good;
+  // Technology (J5): the nodes, and the modifiers in force of each nation
+  // (sim/tech, synced after each change).
+  tech: TechNode[];
+  techModifiers: Map<string, TechModifiers>;
+  events: VeritableEvent[];
   blocs: Bloc[];
   divisions: DivisionTemplate[];
   template(id: string): DivisionTemplate;
@@ -137,6 +148,9 @@ export function buildContext(
   return {
     config,
     goods: data.goods,
+    tech: data.tech,
+    techModifiers: new Map(),
+    events: data.events,
     good: (id) => {
       const good = byGood.get(id);
       if (good === undefined) throw new Error(`unknown good ${id}`);

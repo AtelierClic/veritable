@@ -1,0 +1,91 @@
+{
+  "id": "energy-bill-protests",
+  "kind": "template",
+  "title": "event.energy-bill-protests.title",
+  "text": "event.energy-bill-protests.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.012,
+    "conditions": [
+      {
+        "target": "price.gas",
+        "op": "gt",
+        "value": 1.15
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "cap",
+      "label": "event.energy-bill-protests.cap",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "cheque",
+      "label": "event.energy-bill-protests.cheque",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "market",
+      "label": "event.energy-bill-protests.market",
+      "effects": [
+        {
+          "target": "consumption.gas",
+          "op": "mul",
+          "value": 0.97
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.07
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

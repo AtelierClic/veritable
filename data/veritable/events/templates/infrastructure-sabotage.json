@@ -1,0 +1,78 @@
+{
+  "id": "infrastructure-sabotage",
+  "kind": "template",
+  "title": "event.infrastructure-sabotage.title",
+  "text": "event.infrastructure-sabotage.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 48
+  },
+  "params": {
+    "other": "rival"
+  },
+  "choices": [
+    {
+      "id": "retaliate",
+      "label": "event.infrastructure-sabotage.retaliate",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 18
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "protect",
+      "label": "event.infrastructure-sabotage.protect",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        }
+      ]
+    },
+    {
+      "id": "discreet",
+      "label": "event.infrastructure-sabotage.discreet",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,83 @@
+{
+  "id": "russia-mobilisation-wave",
+  "kind": "scripted",
+  "title": "event.russia-mobilisation-wave.title",
+  "text": "event.russia-mobilisation-wave.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2028-12-31"],
+    "nations": ["RUS"],
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "mobilise",
+      "label": "event.russia-mobilisation-wave.mobilise",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.18
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.004
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "bonuses",
+      "label": "event.russia-mobilisation-wave.bonuses",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "freeze",
+      "label": "event.russia-mobilisation-wave.freeze",
+      "effects": [
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "exhaustion",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

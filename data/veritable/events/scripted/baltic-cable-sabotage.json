@@ -1,0 +1,84 @@
+{
+  "id": "baltic-cable-sabotage",
+  "kind": "scripted",
+  "title": "event.baltic-cable-sabotage.title",
+  "text": "event.baltic-cable-sabotage.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-02-01", "2028-12-31"],
+    "nations": ["POL", "DEU", "NOR"],
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "bloc.nato",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "retaliate",
+      "label": "event.baltic-cable-sabotage.retaliate",
+      "effects": [
+        {
+          "target": "grievance.RUS",
+          "op": "set",
+          "value": 1,
+          "months": 24
+        },
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "patrol",
+      "label": "event.baltic-cable-sabotage.patrol",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    },
+    {
+      "id": "investigate",
+      "label": "event.baltic-cable-sabotage.investigate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

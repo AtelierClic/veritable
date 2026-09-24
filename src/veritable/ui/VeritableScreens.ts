@@ -4,6 +4,7 @@ import { RemoteVeritableSim } from "../adapters/RemoteVeritableSim";
 import { dataSource } from "../data/catalog";
 import { vt } from "../data/i18n";
 import { INTEREST_GROUPS } from "../data/schemas/common";
+import { EventEffect } from "../data/schemas/event";
 import { Law } from "../data/schemas/laws";
 import { SPENDING_POSTS, TAX_IDS } from "../data/schemas/nation";
 import { Ideology } from "../data/schemas/politics";
@@ -15,6 +16,7 @@ import {
   PeaceTerms,
   War,
 } from "../data/schemas/save";
+import { TECH_DOMAINS, TechEffect } from "../data/schemas/tech";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import type { Tally } from "../sim/blocs/blocs";
 import { relation } from "../sim/diplomacy/diplomacy";
@@ -30,7 +32,9 @@ export type ScreenId =
   | "election"
   | "leaders"
   | "objectives"
-  | "blocs";
+  | "blocs"
+  | "tech"
+  | "events";
 export const SCREENS: ScreenId[] = [
   "economy",
   "budget",
@@ -42,6 +46,8 @@ export const SCREENS: ScreenId[] = [
   "leaders",
   "objectives",
   "blocs",
+  "tech",
+  "events",
 ];
 
 const REFRESH_MS = 1000;
@@ -85,6 +91,8 @@ export class VeritableScreens extends LitElement {
   private readonly laws = dataSource.laws();
   private readonly regimes = dataSource.regimes();
   private readonly objectives = dataSource.objectives();
+  private readonly techNodes = dataSource.tech();
+  private readonly eventCatalogue = dataSource.events();
 
   createRenderRoot() {
     return this;
@@ -108,6 +116,12 @@ export class VeritableScreens extends LitElement {
     this.screen = this.screen === screen ? null : screen;
     if (this.screen !== null) void this.refresh();
     this.dispatchEvent(new CustomEvent("screen-changed"));
+  }
+
+  // Opens a screen (a pop-up of an event opens the Events screen).
+  show(screen: ScreenId): void {
+    if (this.screen !== screen) this.toggle(screen);
+    else void this.refresh();
   }
 
   connectedCallback(): void {
@@ -1963,6 +1977,311 @@ export class VeritableScreens extends LitElement {
     `;
   }
 
+  // --- technology (J5) ---------------------------------------------------------------
+
+  @state() private techDomain = "energy";
+
+  private techEffectLabel(effect: TechEffect): string {
+    const [head, tail] = effect.target.split(".");
+    const value =
+      effect.op === "mul"
+        ? `×${effect.value.toFixed(2)}`
+        : `+${(effect.value * 100).toFixed(2)}`;
+    if (head === "production" || head === "consumption") {
+      return vt(`screen.tech.effect.${head}`, {
+        good: vt(`good.${tail}`),
+        value,
+      });
+    }
+    return vt(`screen.tech.effect.${effect.target}`, { value });
+  }
+
+  private renderTech(view: ReadonlyWorldView) {
+    const me = view.playerNation!;
+    const mine = view.tech.nations[me];
+    if (mine === undefined) return nothing;
+    const tabs = [
+      ...TECH_DOMAINS,
+      ...new Set(
+        this.techNodes.filter((n) => n.bloc !== undefined).map((n) => n.bloc!),
+      ),
+    ];
+    const nodes = this.techNodes.filter((n) =>
+      (TECH_DOMAINS as readonly string[]).includes(this.techDomain)
+        ? n.domain === this.techDomain && n.bloc === undefined
+        : n.bloc === this.techDomain,
+    );
+    const tier1 = this.techNodes.filter(
+      (n) => n.tier === 1 && n.bloc === undefined,
+    );
+    const name = (id: string) => vt(`tech.${id}.name`);
+    return html`
+      <div>
+        ${vt("screen.tech.points", {
+          points: mine.pointsLastMonth.toFixed(1),
+          tier1: `${tier1.filter((n) => mine.done.includes(n.id)).length} / ${tier1.length}`,
+        })}
+      </div>
+      <div class="mt-1 font-bold">
+        ${vt("screen.tech.projects", {
+          max: this.config.tech.maxProjects,
+        })}
+      </div>
+      ${mine.projects.length === 0
+        ? html`<div class="text-yellow-300">${vt("screen.tech.idle")}</div>`
+        : mine.projects.map(
+            (p) =>
+              html`<div class="flex items-center gap-2">
+                <span class="w-64">${name(p.node)}</span>
+                ${this.bar(
+                  "",
+                  Math.min(
+                    1,
+                    p.points / Math.max(1, view.techCosts[p.node] ?? 1),
+                  ),
+                )}
+                <span class="w-28 text-right tabular-nums"
+                  >${p.points.toFixed(0)} /
+                  ${(view.techCosts[p.node] ?? 0).toFixed(0)}</span
+                >
+                <button
+                  class="rounded bg-gray-700 px-1"
+                  @click=${() =>
+                    void this.command({ type: "tech-cancel", node: p.node })}
+                >
+                  ${vt("screen.tech.cancel")}
+                </button>
+              </div>`,
+          )}
+      <div class="mt-1 flex flex-wrap gap-1">
+        ${tabs.map(
+          (d) =>
+            html`<button
+              class="rounded px-1 ${d === this.techDomain
+                ? "bg-blue-700"
+                : "bg-gray-700"}"
+              @click=${() => {
+                this.techDomain = d;
+              }}
+            >
+              ${(TECH_DOMAINS as readonly string[]).includes(d)
+                ? vt(`tech.domain.${d}`)
+                : vt(`bloc.${d}.name`)}
+            </button>`,
+        )}
+      </div>
+      <table class="mt-1 w-full">
+        <thead>
+          <tr class="text-left text-gray-300">
+            <th>${vt("screen.tech.node")}</th>
+            <th>${vt("screen.tech.tier")}</th>
+            <th>${vt("screen.tech.cost")}</th>
+            <th>${vt("screen.tech.effects")}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${nodes.map((n) => {
+            const refusal = view.techRefusals[n.id];
+            const done = mine.done.includes(n.id);
+            return html`<tr title=${vt(n.description)}>
+              <td class=${done ? "text-green-300" : ""}>${vt(n.name)}</td>
+              <td>${n.tier}</td>
+              <td class="tabular-nums">
+                ${(view.techCosts[n.id] ?? n.cost).toFixed(0)}
+                (${vt("screen.tech.months", { months: n.monthsMin })})
+              </td>
+              <td class="text-gray-300">
+                ${n.effects.map((e) => this.techEffectLabel(e)).join(", ")}
+              </td>
+              <td>
+                ${done
+                  ? vt("screen.tech.done")
+                  : refusal === null
+                    ? html`<button
+                        class="rounded bg-gray-700 px-1"
+                        @click=${() =>
+                          void this.command({
+                            type: "tech-research",
+                            node: n.id,
+                          })}
+                      >
+                        ${vt("screen.tech.research")}
+                      </button>`
+                    : html`<span class="text-gray-400"
+                        >${vt(`screen.tech.refusal.${refusal}`, {
+                          requires: n.requires
+                            .filter((r) => !mine.done.includes(r))
+                            .map(name)
+                            .join(", "),
+                        })}</span
+                      >`}
+              </td>
+            </tr>`;
+          })}
+        </tbody>
+      </table>
+      <div class="text-gray-400">${vt("screen.tech.note")}</div>
+    `;
+  }
+
+  // --- events (J5) -------------------------------------------------------------------
+
+  private eventEffectLabel(
+    view: ReadonlyWorldView,
+    effect: EventEffect,
+    other: string | null,
+  ): string {
+    const [head, tail] = effect.target.split(".");
+    const signed = (v: number, digits = 2) =>
+      `${v >= 0 ? "+" : ""}${v.toFixed(digits)}`;
+    const who = (t: string) =>
+      t === "all"
+        ? vt("screen.events.who.all")
+        : t === "neighbors"
+          ? vt("screen.events.who.neighbors")
+          : t === "other"
+            ? other === null
+              ? ""
+              : this.nationLabel(view, other)
+            : this.nationLabel(view, t);
+    let label: string;
+    switch (head) {
+      case "budget":
+        label = vt("screen.events.effect.budget", {
+          value: signed(effect.value * 100),
+        });
+        break;
+      case "gdp":
+      case "production":
+      case "consumption":
+        label = vt(`screen.events.effect.${head}`, {
+          good: tail === undefined ? "" : vt(`good.${tail}`),
+          value: `×${effect.value.toFixed(2)}`,
+        });
+        break;
+      case "worldSupply":
+        label = vt("screen.events.effect.worldSupply", {
+          good: vt(`good.${tail}`),
+          value: signed(effect.value * 100, 0),
+        });
+        break;
+      case "growth":
+        label = vt("screen.events.effect.growth", {
+          value: signed(effect.value * 100),
+          months: effect.months ?? 12,
+        });
+        break;
+      case "group":
+        label = vt("screen.events.effect.group", {
+          group: vt(`group.${tail}`),
+          value: signed(effect.value),
+        });
+        break;
+      case "spending":
+        label = vt("screen.events.effect.spending", {
+          post: vt(`spending.${tail}`),
+          value: signed(effect.value * 100),
+        });
+        break;
+      case "relations":
+        label = vt("screen.events.effect.relations", {
+          who: who(tail),
+          value: signed(effect.value, 0),
+        });
+        break;
+      case "grievance":
+        label = vt("screen.events.effect.grievance", {
+          who: who(tail),
+          months: effect.months ?? this.config.events.grievanceMonths,
+        });
+        break;
+      case "unrest":
+        label = vt("screen.events.effect.unrest");
+        break;
+      default:
+        label = vt(`screen.events.effect.${head}`, {
+          value: signed(effect.value),
+        });
+    }
+    return effect.uncertain === true
+      ? `${label} ${vt("screen.events.uncertain")}`
+      : label;
+  }
+
+  private renderEvents(view: ReadonlyWorldView) {
+    const params = (i: {
+      nation: string;
+      other: string | null;
+      good: string | null;
+    }) => ({
+      nation: this.nationLabel(view, i.nation),
+      other: i.other === null ? "" : this.nationLabel(view, i.other),
+      good: i.good === null ? "" : vt(`good.${i.good}`),
+    });
+    return html`
+      <div class="font-bold">${vt("screen.events.pending")}</div>
+      ${view.events.pending.length === 0
+        ? html`<div class="text-gray-400">${vt("screen.events.none")}</div>`
+        : view.events.pending.map((p) => {
+            const event = this.eventCatalogue.find((e) => e.id === p.event);
+            if (event === undefined) return nothing;
+            return html`<div class="mb-2 rounded border border-yellow-700 p-1">
+              <div class="text-sm font-bold">${vt(event.title, params(p))}</div>
+              <div>${vt(event.text, params(p))}</div>
+              ${[...(event.worldEffects ?? []), ...(event.effects ?? [])]
+                .length === 0
+                ? nothing
+                : html`<div class="text-gray-400">
+                    ${[...(event.worldEffects ?? []), ...(event.effects ?? [])]
+                      .map((e) => this.eventEffectLabel(view, e, p.other))
+                      .join(", ")}
+                  </div>`}
+              ${event.choices.map(
+                (c) =>
+                  html`<div class="mt-1">
+                    <button
+                      class="rounded bg-blue-800 px-2"
+                      @click=${() =>
+                        void this.command({
+                          type: "event-choose",
+                          id: p.id,
+                          choice: c.id,
+                        })}
+                    >
+                      ${vt(c.label, params(p))}
+                    </button>
+                    <span class="text-gray-300">
+                      ${c.effects
+                        .map((e) => this.eventEffectLabel(view, e, p.other))
+                        .join(", ")}
+                    </span>
+                  </div>`,
+              )}
+              <div class="text-gray-400">
+                ${vt("screen.events.deadline", { date: p.deadline })}
+              </div>
+            </div>`;
+          })}
+      <div class="mt-1 font-bold">${vt("screen.events.history")}</div>
+      ${[...view.events.history]
+        .reverse()
+        .slice(0, 25)
+        .map((h) => {
+          const event = this.eventCatalogue.find((e) => e.id === h.event);
+          if (event === undefined) return nothing;
+          const choice = event.choices.find((c) => c.id === h.choice);
+          const line =
+            vt(event.title, params(h)) +
+            (choice === undefined ? "" : `, ${vt(choice.label, params(h))}`);
+          return html`<div class="text-gray-300">
+            <span class="tabular-nums text-gray-500">${h.date}</span>
+            ${this.nationLabel(view, h.nation)} : ${line}
+          </div>`;
+        })}
+    `;
+  }
+
   // --- objectives and journal (J4) ----------------------------------------------------
 
   @state() private journalFilter = "";
@@ -1976,6 +2295,8 @@ export class VeritableScreens extends LitElement {
     }
     if (/^sanctions/.test(kind)) return "diplomacy";
     if (/^bloc-(?!reprimand|suspended)/.test(kind)) return "diplomacy";
+    if (kind === "tech-completed") return "economy";
+    if (kind === "event-occurred") return "other";
     if (/^(austerity|sovereign|bloc-reprimand)/.test(kind)) return "economy";
     if (kind === "campaign-started" || kind === "nation-status") return "other";
     return "politics";
@@ -2154,6 +2475,42 @@ export class VeritableScreens extends LitElement {
                 ...(j.params.why === undefined
                   ? {}
                   : { why: vt(`bloc.why.${j.params.why}`) }),
+                ...(j.params.node === undefined
+                  ? {}
+                  : { node: vt(`tech.${j.params.node}.name`) }),
+                ...(j.params.event === undefined
+                  ? {}
+                  : {
+                      event: vt(`event.${j.params.event}.title`, {
+                        nation:
+                          j.nation === undefined
+                            ? ""
+                            : this.nationLabel(view, j.nation),
+                        other:
+                          j.params.other === undefined || j.params.other === ""
+                            ? ""
+                            : this.nationLabel(view, j.params.other),
+                        good:
+                          j.params.good === undefined || j.params.good === ""
+                            ? ""
+                            : vt(`good.${j.params.good}`),
+                      }),
+                      choice:
+                        j.params.choice === undefined || j.params.choice === ""
+                          ? vt("screen.events.no-choice")
+                          : vt(`event.${j.params.event}.${j.params.choice}`, {
+                              other:
+                                j.params.other === undefined ||
+                                j.params.other === ""
+                                  ? ""
+                                  : this.nationLabel(view, j.params.other),
+                              good:
+                                j.params.good === undefined ||
+                                j.params.good === ""
+                                  ? ""
+                                  : vt(`good.${j.params.good}`),
+                            }),
+                    }),
               })}
             </div>`,
         )}
@@ -2215,7 +2572,11 @@ export class VeritableScreens extends LitElement {
                           ? this.renderLeaders(view, politics)
                           : screen === "blocs"
                             ? this.renderBlocs(view, politics)
-                            : this.renderObjectives(view, politics)}
+                            : screen === "tech"
+                              ? this.renderTech(view)
+                              : screen === "events"
+                                ? this.renderEvents(view)
+                                : this.renderObjectives(view, politics)}
       </div>
     `;
   }

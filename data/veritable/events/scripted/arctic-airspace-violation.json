@@ -1,0 +1,56 @@
+{
+  "id": "arctic-airspace-violation",
+  "kind": "scripted",
+  "title": "event.arctic-airspace-violation.title",
+  "text": "event.arctic-airspace-violation.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2029-12-31"],
+    "nations": ["NOR"],
+    "monthlyProbability": 0.03,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.arctic-airspace-violation.escalate",
+      "effects": [
+        {
+          "target": "grievance.RUS",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.002
+        }
+      ]
+    },
+    {
+      "id": "deconflict",
+      "label": "event.arctic-airspace-violation.deconflict",
+      "effects": [
+        {
+          "target": "relations.RUS",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

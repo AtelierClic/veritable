@@ -456,6 +456,68 @@ const BlocsConfigSchema = z.object({
   }),
 });
 
+// Technology (J5, sim/tech): points a month = total R&D (the budget's
+// public research over its public share) in points of GDP x
+// pointsPerRdPoint x research modifiers; a node costs cost x (1 - diffusion
+// x share of the nations that have it); at most maxProjects in parallel; a
+// bloc programme adds programBonus to its members' points. Development
+// index of the first day = gdpWeight x GDP per head / ref + (1 - gdpWeight)
+// x R&D / ref, each capped at 1.
+const TechConfigSchema = z.object({
+  publicShareOfResearch: share,
+  pointsPerRdPoint: z.number().positive(),
+  diffusion: share,
+  maxProjects: z.number().int().min(1),
+  programBonus: z.number().min(0),
+  development: z.object({
+    gdpPerCapitaRef: z.number().positive(),
+    rdRef: z.number().positive(),
+    gdpWeight: share,
+  }),
+  // The domains each goal of an AI agenda favours; other domains count for
+  // offAgendaWeight.
+  agendaDomains: z.record(z.string(), z.array(z.string())),
+  offAgendaWeight: share,
+  // The AI finishes a tier before the next: a tier-2 node counts for this.
+  tier2Weight: share,
+  // Share of a node's effect that counts: the trend growth of the data
+  // already holds the technical progress of the world, a node is the lead
+  // over it (deviation from 1 of a multiplier, or the added growth).
+  effectScale: z.object({
+    capacity: share,
+    growth: share,
+    military: share,
+    research: share,
+  }),
+});
+
+// Events (J5, sim/events). A stability effect moves opinion (stability is
+// recomputed every week from its inputs); unrest is an opinion shock that
+// brings stability under the unrest threshold. The AI scores the choices
+// with these weights (by kind of effect).
+const EventsConfigSchema = z.object({
+  maxPopupsPerMonth: z.number().int().min(0),
+  answerMonths: z.number().int().min(1),
+  defaultCooldownMonths: z.number().int().min(0),
+  uncertainProbability: share,
+  // Unrest brings stability this far under the unrest threshold.
+  unrestMargin: share,
+  // A government sometimes takes another choice than its best one.
+  aiMistakeProbability: share,
+  grievanceMonths: z.number().int().min(1),
+  historyKept: z.number().int().min(1),
+  ai: z.object({
+    stability: z.number(),
+    budget: z.number(),
+    relations: z.number(),
+    grievance: z.number(),
+    military: z.number(),
+    unrest: z.number(),
+    group: z.number(),
+    capacity: z.number(),
+  }),
+});
+
 export const VeritableConfigSchema = z.object({
   leaderNames: z.enum(["parody", "fictional"]),
   time: z.object({
@@ -479,6 +541,8 @@ export const VeritableConfigSchema = z.object({
   logistics: LogisticsConfigSchema,
   nuclear: NuclearConfigSchema,
   blocs: BlocsConfigSchema,
+  tech: TechConfigSchema,
+  events: EventsConfigSchema,
   ai: z.object({
     // The AI of the nations (J5, ai/nations.ts).
     nations: z.object({
@@ -495,6 +559,8 @@ export const VeritableConfigSchema = z.object({
       }),
       war: z.object({
         powerRatio: z.number().min(1),
+        // Never against a nation it is on better terms with (J5).
+        maxRelations: z.number(),
         aggressivenessWithoutCasusBelli: share,
         landSharePerPowerRatio: share,
         maxLandShare: share,
@@ -505,6 +571,9 @@ export const VeritableConfigSchema = z.object({
         // The land taken stays (its contest ends), the costs end with the
         // war: gain over this horizon against cost over the expected war.
         gainHorizonYears: z.number().min(0),
+        // A real casus belli (not "none") multiplies the gain the AI
+        // expects: a justified war also serves the government at home (J5).
+        casusBelliMotive: z.number().min(1),
         expectedWarYears: z.number().min(0),
       }),
       armsAid: z.object({

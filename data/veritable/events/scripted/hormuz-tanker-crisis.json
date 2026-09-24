@@ -1,0 +1,97 @@
+{
+  "id": "hormuz-tanker-crisis",
+  "kind": "scripted",
+  "title": "event.hormuz-tanker-crisis.title",
+  "text": "event.hormuz-tanker-crisis.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2030-06-30"],
+    "monthlyProbability": 0.02,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.oil",
+      "op": "add",
+      "value": -0.12
+    },
+    {
+      "target": "worldSupply.gas",
+      "op": "add",
+      "value": -0.06
+    }
+  ],
+  "choices": [
+    {
+      "id": "release-stocks",
+      "label": "event.hormuz-tanker-crisis.release-stocks",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "fuel-rebate",
+      "label": "event.hormuz-tanker-crisis.fuel-rebate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "hold",
+      "label": "event.hormuz-tanker-crisis.hold",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.1
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

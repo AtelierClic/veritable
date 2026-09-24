@@ -1,0 +1,80 @@
+{
+  "id": "epidemic-wave",
+  "kind": "template",
+  "title": "event.epidemic-wave.title",
+  "text": "event.epidemic-wave.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.002,
+    "conditions": [],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "restrictions",
+      "label": "event.epidemic-wave.restrictions",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.99
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "hospital-funds",
+      "label": "event.epidemic-wave.hospital-funds",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "business-as-usual",
+      "label": "event.epidemic-wave.business-as-usual",
+      "effects": [
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 6
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

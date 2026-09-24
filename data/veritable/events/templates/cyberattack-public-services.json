@@ -1,0 +1,69 @@
+{
+  "id": "cyberattack-public-services",
+  "kind": "template",
+  "title": "event.cyberattack-public-services.title",
+  "text": "event.cyberattack-public-services.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "params": {
+    "other": "rival"
+  },
+  "choices": [
+    {
+      "id": "attribute",
+      "label": "event.cyberattack-public-services.attribute",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "cyber-plan",
+      "label": "event.cyberattack-public-services.cyber-plan",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "spending.research",
+          "op": "add",
+          "value": 0.002
+        }
+      ]
+    },
+    {
+      "id": "quiet",
+      "label": "event.cyberattack-public-services.quiet",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.04,
+          "uncertain": true
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 6
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,87 @@
+{
+  "id": "fertilizer-price-shock",
+  "kind": "scripted",
+  "title": "event.fertilizer-price-shock.title",
+  "text": "event.fertilizer-price-shock.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2026-02-01", "2029-06-30"],
+    "monthlyProbability": 0.03,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.food",
+      "op": "add",
+      "value": -0.05
+    },
+    {
+      "target": "worldSupply.gas",
+      "op": "add",
+      "value": -0.03
+    }
+  ],
+  "choices": [
+    {
+      "id": "aid",
+      "label": "event.fertilizer-price-shock.aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "domestic-plant",
+      "label": "event.fertilizer-price-shock.domestic-plant",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 1.02
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "refuse",
+      "label": "event.fertilizer-price-shock.refuse",
+      "effects": [
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.96
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,75 @@
+{
+  "id": "terror-attack",
+  "kind": "template",
+  "title": "event.terror-attack.title",
+  "text": "event.terror-attack.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.002,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "emergency",
+      "label": "event.terror-attack.emergency",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": -0.12
+        }
+      ]
+    },
+    {
+      "id": "intelligence",
+      "label": "event.terror-attack.intelligence",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "unity",
+      "label": "event.terror-attack.unity",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,80 @@
+{
+  "id": "ministry-corruption-scandal",
+  "kind": "template",
+  "title": "event.ministry-corruption-scandal.title",
+  "text": "event.ministry-corruption-scandal.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.006,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "inquiry",
+      "label": "event.ministry-corruption-scandal.inquiry",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        }
+      ]
+    },
+    {
+      "id": "dismiss",
+      "label": "event.ministry-corruption-scandal.dismiss",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "cover",
+      "label": "event.ministry-corruption-scandal.cover",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.08,
+          "uncertain": true
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,98 @@
+{
+  "id": "industrial-relocation-wave",
+  "kind": "scripted",
+  "title": "event.industrial-relocation-wave.title",
+  "text": "event.industrial-relocation-wave.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2028-12-31"],
+    "nations": ["DEU", "ITA"],
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "growth",
+        "op": "lt",
+        "value": 0.015
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "power-price",
+      "label": "event.industrial-relocation-wave.power-price",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "production.steel",
+          "op": "mul",
+          "value": 1.03
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "restructure",
+      "label": "event.industrial-relocation-wave.restructure",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "production.steel",
+          "op": "mul",
+          "value": 0.92
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 24
+        }
+      ]
+    },
+    {
+      "id": "conditions",
+      "label": "event.industrial-relocation-wave.conditions",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "production.steel",
+          "op": "mul",
+          "value": 0.97
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

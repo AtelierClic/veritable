@@ -1,0 +1,106 @@
+{
+  "id": "austerity-riots-wave",
+  "kind": "template",
+  "title": "event.austerity-riots-wave.title",
+  "text": "event.austerity-riots-wave.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.012,
+    "conditions": [
+      {
+        "target": "deficitToGdp",
+        "op": "gt",
+        "value": 0.04
+      },
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 0
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "push-on",
+      "label": "event.austerity-riots-wave.push-on",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.006
+        },
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.2
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.12
+        }
+      ]
+    },
+    {
+      "id": "soften",
+      "label": "event.austerity-riots-wave.soften",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "abandon",
+      "label": "event.austerity-riots-wave.abandon",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

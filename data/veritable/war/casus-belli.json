@@ -18,6 +18,12 @@
     "relationsCost": 5
   },
   {
+    "id": "grievance",
+    "name": "casus.grievance",
+    "check": "grievance",
+    "relationsCost": 8
+  },
+  {
     "id": "none",
     "name": "casus.none",
     "check": "none",

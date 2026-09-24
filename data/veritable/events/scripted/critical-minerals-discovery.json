@@ -1,0 +1,82 @@
+{
+  "id": "critical-minerals-discovery",
+  "kind": "scripted",
+  "title": "event.critical-minerals-discovery.title",
+  "text": "event.critical-minerals-discovery.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2030-06-30"],
+    "nations": ["NOR", "TUR", "ESP"],
+    "monthlyProbability": 0.006,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "state-led",
+      "label": "event.critical-minerals-discovery.state-led",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "production.critical-minerals",
+          "op": "mul",
+          "value": 1.1
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    },
+    {
+      "id": "open-tender",
+      "label": "event.critical-minerals-discovery.open-tender",
+      "effects": [
+        {
+          "target": "production.critical-minerals",
+          "op": "mul",
+          "value": 1.08
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.003,
+          "months": 24
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "protect",
+      "label": "event.critical-minerals-discovery.protect",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

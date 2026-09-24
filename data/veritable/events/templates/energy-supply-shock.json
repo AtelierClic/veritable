@@ -1,0 +1,97 @@
+{
+  "id": "energy-supply-shock",
+  "kind": "template",
+  "title": "event.energy-supply-shock.title",
+  "text": "event.energy-supply-shock.text",
+  "scope": "world",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.oil",
+      "op": "add",
+      "value": -0.08
+    },
+    {
+      "target": "worldSupply.gas",
+      "op": "add",
+      "value": -0.05
+    }
+  ],
+  "choices": [
+    {
+      "id": "shield",
+      "label": "event.energy-supply-shock.shield",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "sobriety",
+      "label": "event.energy-supply-shock.sobriety",
+      "effects": [
+        {
+          "target": "consumption.oil",
+          "op": "mul",
+          "value": 0.97
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "pass-through",
+      "label": "event.energy-supply-shock.pass-through",
+      "effects": [
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

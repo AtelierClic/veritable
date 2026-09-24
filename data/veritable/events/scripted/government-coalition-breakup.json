@@ -1,0 +1,88 @@
+{
+  "id": "government-coalition-breakup",
+  "kind": "scripted",
+  "title": "event.government-coalition-breakup.title",
+  "text": "event.government-coalition-breakup.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2029-12-31"],
+    "nations": ["DEU", "ITA", "ESP", "NOR"],
+    "monthlyProbability": 0.01,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "minority",
+      "label": "event.government-coalition-breakup.minority",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "new-deal",
+      "label": "event.government-coalition-breakup.new-deal",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "dissolve",
+      "label": "event.government-coalition-breakup.dissolve",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 10
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

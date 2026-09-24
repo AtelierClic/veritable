@@ -18,6 +18,7 @@ import {
   Calendar,
   DiplomacyState,
   EconomyState,
+  EventsState,
   JournalEntry,
   MilitaryState,
   NationState,
@@ -28,6 +29,7 @@ import {
   PoliticsState,
   SAVE_SCHEMA_VERSION,
   SaveFile,
+  TechState,
   TerritoryState,
   War,
 } from "../data/schemas/save";
@@ -78,6 +80,14 @@ import {
   stepTrade,
 } from "./economy/engine";
 import { initEconomy, initPolitics } from "./economy/init";
+import {
+  chooseEvent,
+  eventGrowth,
+  EventsEnv,
+  EventsEvent,
+  initEvents,
+  stepEventsMonth,
+} from "./events/events";
 import { nationFromData, statusFromTerritory } from "./nation";
 import {
   initNaval,
@@ -137,6 +147,17 @@ import {
   PerfProbe,
   Scheduler,
 } from "./scheduler";
+import {
+  cancelResearch,
+  effectiveCost,
+  initTech,
+  researchRefusal,
+  startResearch,
+  stepTechMonth,
+  syncTech,
+  TechEnv,
+  TechEvent,
+} from "./tech/tech";
 import {
   BlocView,
   FrontGeometry,
@@ -209,6 +230,8 @@ type DomainEvent =
   | AiEvent
   | { type: "bloc-suspended"; nation: NationId; bloc: string }
   | BlocEngineEvent
+  | TechEvent
+  | Extract<EventsEvent, { type: "event-occurred" }>
   | { type: "note"; nation: NationId; text: string };
 
 // Events of the political engine: they reach the client with their journal
@@ -249,6 +272,8 @@ const POLITICAL_EVENTS = new Set<string>([
   "bloc-left",
   "bloc-article5",
   "bloc-article5-refused",
+  "tech-completed",
+  "event-occurred",
 ]);
 
 const CEASEFIRE: PeaceTerms = {
@@ -279,6 +304,8 @@ export class VeritableSimImpl implements VeritableSim {
   private nuclear!: NuclearState;
   private ai!: AiState;
   private blocs!: BlocsState;
+  private tech!: TechState;
+  private events!: EventsState;
   // Arms flows of the month, for the military step and the budget.
   private armsAid: {
     points: Record<NationId, number>;
@@ -315,16 +342,24 @@ export class VeritableSimImpl implements VeritableSim {
       {
         domain: "economy",
         onDay: () => stepPrices(this.ctx, this.economy),
-        onMonth: () => {
+        onMonth: (c) => {
           this.trade = stepTrade(this.ctx, this.economy, (e, i) =>
             maritimeFactor(this.ctx, this.naval, e, i),
           );
-          stepGrowth(this.ctx, this.economy, this.politics, this.rng, (id) =>
-            this.lostTradeShare(id),
+          stepGrowth(
+            this.ctx,
+            this.economy,
+            this.politics,
+            this.rng,
+            (id) => this.lostTradeShare(id),
+            (id) =>
+              (this.ctx.techModifiers.get(id)?.growth ?? 0) +
+              eventGrowth(this.events, id),
           );
+          this.techMonth(c);
         },
       },
-      { domain: "events" },
+      { domain: "events", onMonth: (c) => this.eventsMonth(c) },
       {
         domain: "diplomacy",
         onDay: () => this.navalDay(),
@@ -374,6 +409,9 @@ export class VeritableSimImpl implements VeritableSim {
     this.ai = initAi(scenario.nations, scenario.startDate);
     this.blocs = initBlocs(this.ctx);
     syncBlocs(this.ctx, this.blocs);
+    this.tech = initTech(this.ctx, sheets);
+    syncTech(this.ctx, this.tech);
+    this.events = initEvents();
     for (const bloc of this.blocs.blocs) {
       this.blocs.leaders[bloc.id] =
         computeLeader(
@@ -438,6 +476,9 @@ export class VeritableSimImpl implements VeritableSim {
     this.ai = state.ai;
     this.blocs = state.blocs;
     syncBlocs(this.ctx, this.blocs);
+    this.tech = state.tech;
+    syncTech(this.ctx, this.tech);
+    this.events = state.events;
     this.trade = null;
     this.syncSuspensions();
     this.invalidateFronts();
@@ -476,6 +517,8 @@ export class VeritableSimImpl implements VeritableSim {
       territory: this.territory,
       nuclear: this.nuclear,
       ai: this.ai,
+      tech: this.tech,
+      events: this.events,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -825,6 +868,24 @@ export class VeritableSimImpl implements VeritableSim {
         }
         return;
       }
+      case "tech-research":
+        startResearch(this.techEnv(date), this.requirePlayer(), cmd.node);
+        return;
+      case "tech-cancel":
+        cancelResearch(this.techEnv(date), this.requirePlayer(), cmd.node);
+        return;
+      case "event-choose": {
+        this.requirePlayer();
+        for (const event of chooseEvent(
+          this.eventsEnv(date),
+          cmd.id,
+          cmd.choice,
+        )) {
+          if (event.type === "event-occurred") this.record(date, event);
+        }
+        this.invalidateFronts();
+        return;
+      }
       case "bloc-honor": {
         const me = this.requirePlayer();
         for (const event of honorCall(
@@ -956,7 +1017,97 @@ export class VeritableSimImpl implements VeritableSim {
       objectives: this.politics.player.objectives,
       notes: this.politics.player.notes,
       blocs: this.blocViews(player),
+      tech: this.tech,
+      techCosts:
+        player === null
+          ? {}
+          : Object.fromEntries(
+              this.ctx.tech.map((n) => [
+                n.id,
+                effectiveCost(this.techEnv(this.calendar.date), n),
+              ]),
+            ),
+      techRefusals:
+        player === null
+          ? {}
+          : Object.fromEntries(
+              this.ctx.tech.map((n) => [
+                n.id,
+                researchRefusal(this.techEnv(this.calendar.date), player, n.id),
+              ]),
+            ),
+      events: this.events,
     };
+  }
+
+  private techEnv(date: string): TechEnv {
+    return {
+      ctx: this.ctx,
+      tech: this.tech,
+      economy: this.economy,
+      blocs: this.blocs,
+      sheets: this.sheets,
+      aiNations: this.aiNations(),
+      date,
+    };
+  }
+
+  // Research of the month (J5), after growth.
+  private techMonth(clock: ClockContext): void {
+    const player = this.playerNationId();
+    for (const event of stepTechMonth(this.techEnv(clock.date))) {
+      // The journal keeps the player's nodes and the firsts of the world.
+      if (event.nation === player || event.params.first === "true") {
+        this.record(clock.date, event);
+      }
+    }
+  }
+
+  private eventsEnv(date: string): EventsEnv {
+    return {
+      ctx: this.ctx,
+      rng: this.rng,
+      events: this.events,
+      economy: this.economy,
+      politics: this.politics,
+      diplomacy: this.diplomacy,
+      military: this.military,
+      nuclear: this.nuclear,
+      territory: this.territory,
+      nations: this.nations,
+      sheets: this.sheets,
+      player: this.politics.autopilot ? null : this.playerNationId(),
+      date,
+    };
+  }
+
+  // Events of the month (J5). The player's pop-ups reach the client (it
+  // pauses on those that ask it); the journal keeps the events of the
+  // player, of the world, and the scripted ones of the AI nations.
+  private eventsMonth(clock: ClockContext): void {
+    const env = this.eventsEnv(clock.date);
+    for (const event of stepEventsMonth(env)) {
+      if (event.type === "event-popup") {
+        const data = this.ctx.events.find((e) => e.id === event.instance.event);
+        this.pending.push({
+          type: "event-popup",
+          date: clock.date,
+          nation: event.nation,
+          id: event.instance.id,
+          event: event.instance.event,
+          pause: data?.pause ?? true,
+        });
+        continue;
+      }
+      const data = this.ctx.events.find((e) => e.id === event.params.event);
+      if (
+        event.nation === env.player ||
+        data?.scope === "world" ||
+        (data?.kind === "scripted" && data.journal)
+      ) {
+        this.record(clock.date, event);
+      }
+    }
   }
 
   // The blocs as the screen sees them (J5).
@@ -1047,6 +1198,7 @@ export class VeritableSimImpl implements VeritableSim {
     },
     air: (nation, enemy) =>
       airMultiplier(this.ctx, this.military, nation, enemy),
+    technology: (nation) => this.ctx.techModifiers.get(nation)?.land ?? 1,
   };
 
   // Share of the trade partners of a nation that sanction it or fight it
@@ -1728,6 +1880,8 @@ export class VeritableSimImpl implements VeritableSim {
       case "ai-landing":
         params = { target: event.target };
         break;
+      case "tech-completed":
+      case "event-occurred":
       case "bloc-proposal":
       case "bloc-decision":
       case "bloc-presidency":

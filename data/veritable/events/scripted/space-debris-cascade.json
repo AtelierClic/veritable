@@ -1,0 +1,83 @@
+{
+  "id": "space-debris-cascade",
+  "kind": "scripted",
+  "title": "event.space-debris-cascade.title",
+  "text": "event.space-debris-cascade.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2027-01-01", "2030-12-31"],
+    "monthlyProbability": 0.012,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.services",
+      "op": "add",
+      "value": -0.02
+    },
+    {
+      "target": "worldSupply.electronics",
+      "op": "add",
+      "value": -0.02
+    }
+  ],
+  "choices": [
+    {
+      "id": "cleanup",
+      "label": "event.space-debris-cascade.cleanup",
+      "effects": [
+        {
+          "target": "spending.research",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "resilience",
+      "label": "event.space-debris-cascade.resilience",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.002
+        }
+      ]
+    },
+    {
+      "id": "nothing",
+      "label": "event.space-debris-cascade.nothing",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 6
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

@@ -1,0 +1,86 @@
+{
+  "id": "coup-rumours",
+  "kind": "template",
+  "title": "event.coup-rumours.title",
+  "text": "event.coup-rumours.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.01,
+    "conditions": [
+      {
+        "target": "stability",
+        "op": "lt",
+        "value": 0.4
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "purge",
+      "label": "event.coup-rumours.purge",
+      "effects": [
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "appease",
+      "label": "event.coup-rumours.appease",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.004
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.08
+        }
+      ]
+    },
+    {
+      "id": "public-appeal",
+      "label": "event.coup-rumours.public-appeal",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.04,
+          "uncertain": true
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

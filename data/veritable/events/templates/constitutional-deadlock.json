@@ -1,0 +1,92 @@
+{
+  "id": "constitutional-deadlock",
+  "kind": "template",
+  "title": "event.constitutional-deadlock.title",
+  "text": "event.constitutional-deadlock.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      },
+      {
+        "target": "stability",
+        "op": "lt",
+        "value": 0.5
+      }
+    ],
+    "cooldownMonths": 48
+  },
+  "choices": [
+    {
+      "id": "referendum",
+      "label": "event.constitutional-deadlock.referendum",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.05,
+          "uncertain": true
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        }
+      ]
+    },
+    {
+      "id": "decree",
+      "label": "event.constitutional-deadlock.decree",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    },
+    {
+      "id": "compromise",
+      "label": "event.constitutional-deadlock.compromise",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,174 @@
+[
+  {
+    "id": "nato-federated-mission-networking",
+    "name": "tech.nato-federated-mission-networking.name",
+    "description": "tech.nato-federated-mission-networking.desc",
+    "domain": "digital",
+    "bloc": "nato",
+    "tier": 1,
+    "cost": 60,
+    "monthsMin": 5,
+    "requires": [],
+    "adoptedAbove": 0.35,
+    "adoptedBy": ["TUR"],
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "nato-iamd",
+    "name": "tech.nato-iamd.name",
+    "description": "tech.nato-iamd.desc",
+    "domain": "air",
+    "bloc": "nato",
+    "tier": 1,
+    "cost": 120,
+    "monthsMin": 9,
+    "requires": ["air-layered-air-defence"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.06
+      }
+    ]
+  },
+  {
+    "id": "nato-diana",
+    "name": "tech.nato-diana.name",
+    "description": "tech.nato-diana.desc",
+    "domain": "digital",
+    "bloc": "nato",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 6,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "nato-standard-munitions",
+    "name": "tech.nato-standard-munitions.name",
+    "description": "tech.nato-standard-munitions.desc",
+    "domain": "land",
+    "bloc": "nato",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.arms",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "consumption.arms",
+        "op": "mul",
+        "value": 0.97
+      }
+    ]
+  },
+  {
+    "id": "nato-eastern-flank-sentry",
+    "name": "tech.nato-eastern-flank-sentry.name",
+    "description": "tech.nato-eastern-flank-sentry.desc",
+    "domain": "land",
+    "bloc": "nato",
+    "tier": 1,
+    "cost": 110,
+    "monthsMin": 8,
+    "requires": ["space-sar-isr", "land-counter-drone"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "nato-multi-domain-operations",
+    "name": "tech.nato-multi-domain-operations.name",
+    "description": "tech.nato-multi-domain-operations.desc",
+    "domain": "land",
+    "bloc": "nato",
+    "tier": 2,
+    "cost": 300,
+    "monthsMin": 14,
+    "requires": [
+      "nato-federated-mission-networking",
+      "land-ai-battle-management"
+    ],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "nato-persistent-isr",
+    "name": "tech.nato-persistent-isr.name",
+    "description": "tech.nato-persistent-isr.desc",
+    "domain": "space",
+    "bloc": "nato",
+    "tier": 2,
+    "cost": 280,
+    "monthsMin": 14,
+    "requires": ["space-sar-isr", "nato-federated-mission-networking"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  }
+]

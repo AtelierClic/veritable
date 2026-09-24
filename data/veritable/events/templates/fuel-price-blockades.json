@@ -1,0 +1,90 @@
+{
+  "id": "fuel-price-blockades",
+  "kind": "template",
+  "title": "event.fuel-price-blockades.title",
+  "text": "event.fuel-price-blockades.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.012,
+    "conditions": [
+      {
+        "target": "price.oil",
+        "op": "gt",
+        "value": 1.15
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "tax-cut",
+      "label": "event.fuel-price-blockades.tax-cut",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "clear-depots",
+      "label": "event.fuel-price-blockades.clear-depots",
+      "effects": [
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "dialogue",
+      "label": "event.fuel-price-blockades.dialogue",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.997
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

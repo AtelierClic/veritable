@@ -1,0 +1,81 @@
+{
+  "id": "grain-border-blockade",
+  "kind": "scripted",
+  "title": "event.grain-border-blockade.title",
+  "text": "event.grain-border-blockade.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-02-01", "2028-12-31"],
+    "nations": ["POL"],
+    "monthlyProbability": 0.04,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "ban-imports",
+      "label": "event.grain-border-blockade.ban-imports",
+      "effects": [
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.08
+        },
+        {
+          "target": "relations.UKR",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "clear-border",
+      "label": "event.grain-border-blockade.clear-border",
+      "effects": [
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "relations.UKR",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "compensate",
+      "label": "event.grain-border-blockade.compensate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "relations.UKR",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

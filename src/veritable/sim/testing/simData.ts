@@ -8,6 +8,7 @@ import rawObjectives from "../../../../data/veritable/politics/objectives.json";
 import rawRegimes from "../../../../data/veritable/politics/regimes.json";
 import { Bloc } from "../../data/schemas/bloc";
 import { NationId } from "../../data/schemas/common";
+import { VeritableEvent } from "../../data/schemas/event";
 import { Good, GOOD_IDS, GoodId } from "../../data/schemas/goods";
 import { Law, LawsSchema } from "../../data/schemas/laws";
 import { LeadersData } from "../../data/schemas/leaders";
@@ -20,6 +21,7 @@ import {
 } from "../../data/schemas/politics";
 import { RowData } from "../../data/schemas/row";
 import { SeaZone } from "../../data/schemas/seas";
+import { TechNode } from "../../data/schemas/tech";
 import { CasusBelli, DivisionTemplate } from "../../data/schemas/war";
 import { SimData } from "../economy/context";
 
@@ -76,6 +78,12 @@ export const TEST_CASUS_BELLI: CasusBelli[] = [
     name: "casus.humanitarian",
     check: "humanitarian",
     relationsCost: 5,
+  },
+  {
+    id: "grievance",
+    name: "casus.grievance",
+    check: "grievance",
+    relationsCost: 8,
   },
   { id: "none", name: "casus.none", check: "none", relationsCost: 15 },
 ];
@@ -287,6 +295,8 @@ export function testSimData(
     seas?: SeaZone[];
     laws?: Law[];
     leaders?: Record<NationId, LeadersData>;
+    tech?: TechNode[];
+    events?: VeritableEvent[];
   } = {},
 ): SimData {
   return {
@@ -307,6 +317,8 @@ export function testSimData(
       nations.map((id) => [id, options.leaders?.[id] ?? testLeaders(id)]),
     ),
     names: Object.fromEntries(nations.map((id) => [id, testNames(id)])),
+    tech: options.tech ?? [],
+    events: options.events ?? [],
   };
 }
 

@@ -123,7 +123,7 @@ describe("war declarations of the AI", () => {
     return config;
   }
 
-  it("a very aggressive leader, twice the power of a land neighbour, a war that pays: it declares", () => {
+  it("a very aggressive leader, hostile, 1.5 times the power of a land neighbour, a war that pays: it declares", () => {
     const { sim, internals, days } = campaign(
       {
         BBB: {
@@ -139,6 +139,7 @@ describe("war declarations of the AI", () => {
       strong(),
     );
     internals.politics.nations.BBB.leader.traits.aggressiveness = 0.95;
+    setRelation(internals.diplomacy, "BBB", "CCC", -30);
     days(45);
     const wars = sim.read().diplomacy.wars;
     expect(wars).toHaveLength(1);
@@ -150,7 +151,28 @@ describe("war declarations of the AI", () => {
     expect(sim.read().journal.map((j) => j.kind)).toContain("war-declared");
   });
 
-  it("no war without a casus belli for a leader at 0.8 or less, none without twice the power, none on a nuclear power, none beyond its land borders", () => {
+  it("no war on a nation it is on better terms with than -10 (J5)", () => {
+    const { sim, internals, days } = campaign(
+      {
+        BBB: {
+          activePersonnel: 1_000_000,
+          aiAgenda: [
+            { goal: "regional-influence", weight: 0.8 },
+            { goal: "growth", weight: 0.2 },
+          ],
+          tradeOpenness: 0.05,
+        },
+        CCC: { activePersonnel: 50_000 },
+      },
+      strong(),
+    );
+    internals.politics.nations.BBB.leader.traits.aggressiveness = 0.95;
+    setRelation(internals.diplomacy, "BBB", "CCC", 0);
+    days(45);
+    expect(sim.read().diplomacy.wars).toEqual([]);
+  });
+
+  it("no war without a casus belli for a leader at 0.8 or less, none without 1.5 times the power, none on a nuclear power, none beyond its land borders", () => {
     const calm = campaign(
       {
         BBB: { activePersonnel: 1_000_000, tradeOpenness: 0.05 },

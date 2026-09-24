@@ -1,0 +1,97 @@
+{
+  "id": "pension-reform-general-strike",
+  "kind": "scripted",
+  "title": "event.pension-reform-general-strike.title",
+  "text": "event.pension-reform-general-strike.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-09-01", "2029-06-30"],
+    "nations": ["FRA", "ITA"],
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "suspend",
+      "label": "event.pension-reform-general-strike.suspend",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -15
+        }
+      ]
+    },
+    {
+      "id": "requisition",
+      "label": "event.pension-reform-general-strike.requisition",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.18
+        },
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.997
+        }
+      ]
+    },
+    {
+      "id": "negotiate",
+      "label": "event.pension-reform-general-strike.negotiate",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.995
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

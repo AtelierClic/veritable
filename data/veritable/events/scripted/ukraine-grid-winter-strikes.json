@@ -1,0 +1,92 @@
+{
+  "id": "ukraine-grid-winter-strikes",
+  "kind": "scripted",
+  "title": "event.ukraine-grid-winter-strikes.title",
+  "text": "event.ukraine-grid-winter-strikes.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-10-01", "2028-03-31"],
+    "nations": ["UKR"],
+    "monthlyProbability": 0.08,
+    "conditions": [
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "imports",
+      "label": "event.ukraine-grid-winter-strikes.imports",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "production.electricity",
+          "op": "mul",
+          "value": 0.93
+        },
+        {
+          "target": "relations.POL",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "blackouts",
+      "label": "event.ukraine-grid-winter-strikes.blackouts",
+      "effects": [
+        {
+          "target": "production.electricity",
+          "op": "mul",
+          "value": 0.9
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "exhaustion",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "air-defence",
+      "label": "event.ukraine-grid-winter-strikes.air-defence",
+      "effects": [
+        {
+          "target": "production.electricity",
+          "op": "mul",
+          "value": 0.92
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

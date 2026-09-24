@@ -18,6 +18,7 @@ import {
   BlocState,
   BlocVoteSchema,
   DiplomacyState,
+  EventsState,
   JournalEntry,
   Market,
   MilitaryState,
@@ -31,6 +32,7 @@ import {
   PinnedObjective,
   SaveFile,
   SPEEDS,
+  TechState,
   WorldState,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
@@ -174,6 +176,14 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
     bloc: z.string().min(1),
     war: z.string().min(1),
   }),
+  // Technology and events (J5).
+  z.object({ type: z.literal("tech-research"), node: z.string().min(1) }),
+  z.object({ type: z.literal("tech-cancel"), node: z.string().min(1) }),
+  z.object({
+    type: z.literal("event-choose"),
+    id: z.number().int(),
+    choice: z.string().min(1),
+  }),
 ]);
 export type PlayerCommand = z.infer<typeof PlayerCommandSchema>;
 
@@ -281,11 +291,25 @@ export type SimEvent =
         | "bloc-exit-notified"
         | "bloc-left"
         | "bloc-article5"
-        | "bloc-article5-refused";
+        | "bloc-article5-refused"
+        // Technology and events (J5).
+        | "tech-completed"
+        | "event-occurred";
       date: string;
       nation: NationId;
       params: Record<string, string>;
-    };
+    }
+  | EventPopup;
+
+// A pop-up for the player (J5): the client shows it and pauses when asked.
+export type EventPopup = {
+  type: "event-popup";
+  date: string;
+  nation: NationId;
+  id: number;
+  event: string;
+  pause: boolean;
+};
 
 // A front between two belligerents, as the simulation and the UI see it:
 // segments with the forces of both sides and the last resolution.
@@ -361,6 +385,13 @@ export interface ReadonlyWorldView {
   readonly notes: readonly Readonly<{ date: string; text: string }>[];
   // Blocs, layers 2 and 3 (J5).
   readonly blocs: readonly BlocView[];
+  // Technology (J5): what every nation has and researches; for the player,
+  // the cost of each node today and why it cannot start it (null: it can).
+  readonly tech: Readonly<TechState>;
+  readonly techCosts: Readonly<Record<string, number>>;
+  readonly techRefusals: Readonly<Record<string, string | null>>;
+  // Events (J5): the player's pop-ups waiting, the history.
+  readonly events: Readonly<EventsState>;
 }
 
 // A bloc as the screen sees it. Members: the simulated nations only, and

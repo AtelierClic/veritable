@@ -121,7 +121,12 @@ describe("fifty years headless", () => {
 });
 
 describe("cutting a gas supplier shows in the curves", () => {
+  // A shock against its control, all else equal: without the events (J5),
+  // whose draws follow the state and would part the two campaigns.
+  const calm = () => ({ ...pack, data: { ...pack.data, events: [] } });
+
   it("Russian gas cut in January 2028: price up, coverage down, growth lost", () => {
+    const pack = calm();
     const shock = parseShock("cut-gas-exports:RUS@2028-01");
     const control = runCampaign({ pack, config, seed: 42, years: 5 });
     const cut = runCampaign({ pack, config, seed: 42, years: 5, shock });
@@ -169,6 +174,7 @@ describe("cutting a gas supplier shows in the curves", () => {
   // Delivery test 1 of the J3: the full EU members stop buying Russian gas
   // and oil in January 2027.
   it("EU embargo on Russian gas and oil: Russian GDP -3 % in two years, gas import price +25 % in the first year", () => {
+    const pack = calm();
     const shock = parseShock("eu-embargo:RUS@2027-01");
     const control = runCampaign({ pack, config, seed: 42, years: 4 });
     const cut = runCampaign({ pack, config, seed: 42, years: 4, shock });

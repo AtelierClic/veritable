@@ -1,0 +1,155 @@
+[
+  {
+    "id": "brics-payment-rails",
+    "name": "tech.brics-payment-rails.name",
+    "description": "tech.brics-payment-rails.desc",
+    "domain": "digital",
+    "bloc": "brics",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "brics-food-self-reliance",
+    "name": "tech.brics-food-self-reliance.name",
+    "description": "tech.brics-food-self-reliance.desc",
+    "domain": "agriculture",
+    "bloc": "brics",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": ["agriculture-precision-farming"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "brics-import-substitution",
+    "name": "tech.brics-import-substitution.name",
+    "description": "tech.brics-import-substitution.desc",
+    "domain": "industry",
+    "bloc": "brics",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 8,
+    "requires": ["industry-cobots"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.consumer-goods",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "brics-nuclear-cooperation",
+    "name": "tech.brics-nuclear-cooperation.name",
+    "description": "tech.brics-nuclear-cooperation.desc",
+    "domain": "nuclear",
+    "bloc": "brics",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 9,
+    "requires": ["nuclear-industry"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "brics-development-bank",
+    "name": "tech.brics-development-bank.name",
+    "description": "tech.brics-development-bank.desc",
+    "domain": "industry",
+    "bloc": "brics",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 6,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.001
+      }
+    ]
+  },
+  {
+    "id": "brics-cbdc-bridge",
+    "name": "tech.brics-cbdc-bridge.name",
+    "description": "tech.brics-cbdc-bridge.desc",
+    "domain": "digital",
+    "bloc": "brics",
+    "tier": 2,
+    "cost": 260,
+    "monthsMin": 14,
+    "requires": ["brics-payment-rails", "digital-post-quantum-crypto"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.001
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "brics-sovereign-semiconductors",
+    "name": "tech.brics-sovereign-semiconductors.name",
+    "description": "tech.brics-sovereign-semiconductors.desc",
+    "domain": "industry",
+    "bloc": "brics",
+    "tier": 2,
+    "cost": 340,
+    "monthsMin": 16,
+    "requires": ["brics-import-substitution", "industry-advanced-chips"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.06
+      }
+    ]
+  }
+]

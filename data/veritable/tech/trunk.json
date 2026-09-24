@@ -1,0 +1,2313 @@
+[
+  {
+    "id": "energy-grid-storage",
+    "name": "tech.energy-grid-storage.name",
+    "description": "tech.energy-grid-storage.desc",
+    "domain": "energy",
+    "tier": 1,
+    "cost": 55,
+    "monthsMin": 4,
+    "requires": [],
+    "adoptedAbove": 0.45,
+    "adoptedBy": ["USA", "CHN", "AUS"],
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.98
+      }
+    ]
+  },
+  {
+    "id": "energy-smart-grid",
+    "name": "tech.energy-smart-grid.name",
+    "description": "tech.energy-smart-grid.desc",
+    "domain": "energy",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 6,
+    "requires": ["energy-grid-storage"],
+    "adoptedAbove": 0.6,
+    "adoptedBy": ["CHN"],
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "consumption.electricity",
+        "op": "mul",
+        "value": 0.98
+      }
+    ]
+  },
+  {
+    "id": "energy-floating-wind",
+    "name": "tech.energy-floating-wind.name",
+    "description": "tech.energy-floating-wind.desc",
+    "domain": "energy",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 9,
+    "requires": ["energy-smart-grid"],
+    "adoptedAbove": null,
+    "adoptedBy": ["NOR", "GBR", "FRA", "PRT"],
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "energy-green-hydrogen",
+    "name": "tech.energy-green-hydrogen.name",
+    "description": "tech.energy-green-hydrogen.desc",
+    "domain": "energy",
+    "tier": 1,
+    "cost": 110,
+    "monthsMin": 9,
+    "requires": ["energy-smart-grid"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.96
+      },
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.99
+      }
+    ]
+  },
+  {
+    "id": "energy-solid-state-batteries",
+    "name": "tech.energy-solid-state-batteries.name",
+    "description": "tech.energy-solid-state-batteries.desc",
+    "domain": "energy",
+    "tier": 1,
+    "cost": 115,
+    "monthsMin": 10,
+    "requires": ["energy-grid-storage", "industry-gigafactory"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.98
+      },
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "energy-ccs",
+    "name": "tech.energy-ccs.name",
+    "description": "tech.energy-ccs.desc",
+    "domain": "energy",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 7,
+    "requires": [],
+    "adoptedAbove": null,
+    "adoptedBy": ["NOR", "USA", "CAN"],
+    "effects": [
+      {
+        "target": "production.oil",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "production.gas",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "energy-long-duration-storage",
+    "name": "tech.energy-long-duration-storage.name",
+    "description": "tech.energy-long-duration-storage.desc",
+    "domain": "energy",
+    "tier": 2,
+    "cost": 190,
+    "monthsMin": 9,
+    "requires": ["energy-grid-storage", "energy-green-hydrogen"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.96
+      }
+    ]
+  },
+  {
+    "id": "energy-hydrogen-network",
+    "name": "tech.energy-hydrogen-network.name",
+    "description": "tech.energy-hydrogen-network.desc",
+    "domain": "energy",
+    "tier": 2,
+    "cost": 250,
+    "monthsMin": 14,
+    "requires": ["energy-green-hydrogen", "energy-smart-grid"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.95
+      },
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.97
+      }
+    ]
+  },
+  {
+    "id": "energy-hts-grid-cables",
+    "name": "tech.energy-hts-grid-cables.name",
+    "description": "tech.energy-hts-grid-cables.desc",
+    "domain": "energy",
+    "tier": 2,
+    "cost": 210,
+    "monthsMin": 11,
+    "requires": ["energy-smart-grid", "nuclear-hts-magnets"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.electricity",
+        "op": "mul",
+        "value": 0.97
+      },
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "energy-tandem-solar",
+    "name": "tech.energy-tandem-solar.name",
+    "description": "tech.energy-tandem-solar.desc",
+    "domain": "energy",
+    "tier": 2,
+    "cost": 165,
+    "monthsMin": 8,
+    "requires": ["energy-grid-storage"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "industry-cobots",
+    "name": "tech.industry-cobots.name",
+    "description": "tech.industry-cobots.desc",
+    "domain": "industry",
+    "tier": 1,
+    "cost": 50,
+    "monthsMin": 4,
+    "requires": [],
+    "adoptedAbove": 0.35,
+    "adoptedBy": ["CHN", "KOR", "JPN"],
+    "effects": [
+      {
+        "target": "production.consumer-goods",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "industry-gigafactory",
+    "name": "tech.industry-gigafactory.name",
+    "description": "tech.industry-gigafactory.desc",
+    "domain": "industry",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 9,
+    "requires": ["industry-cobots"],
+    "adoptedAbove": null,
+    "adoptedBy": [
+      "DEU",
+      "FRA",
+      "POL",
+      "GBR",
+      "HUN",
+      "CHN",
+      "KOR",
+      "JPN",
+      "USA"
+    ],
+    "effects": [
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "production.consumer-goods",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "industry-critical-minerals-refining",
+    "name": "tech.industry-critical-minerals-refining.name",
+    "description": "tech.industry-critical-minerals-refining.desc",
+    "domain": "industry",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 7,
+    "requires": [],
+    "adoptedAbove": null,
+    "adoptedBy": ["CHN", "IDN"],
+    "effects": [
+      {
+        "target": "production.critical-minerals",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "industry-digital-twin",
+    "name": "tech.industry-digital-twin.name",
+    "description": "tech.industry-digital-twin.desc",
+    "domain": "industry",
+    "tier": 1,
+    "cost": 85,
+    "monthsMin": 7,
+    "requires": ["industry-cobots", "digital-5g-standalone"],
+    "adoptedAbove": 0.75,
+    "effects": [
+      {
+        "target": "production.consumer-goods",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "production.steel",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "industry-green-steel",
+    "name": "tech.industry-green-steel.name",
+    "description": "tech.industry-green-steel.desc",
+    "domain": "industry",
+    "tier": 1,
+    "cost": 110,
+    "monthsMin": 10,
+    "requires": ["energy-green-hydrogen"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.steel",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "consumption.coal",
+        "op": "mul",
+        "value": 0.95
+      }
+    ]
+  },
+  {
+    "id": "industry-advanced-chips",
+    "name": "tech.industry-advanced-chips.name",
+    "description": "tech.industry-advanced-chips.desc",
+    "domain": "industry",
+    "tier": 1,
+    "cost": 145,
+    "monthsMin": 12,
+    "requires": ["industry-digital-twin"],
+    "adoptedAbove": null,
+    "adoptedBy": ["TWN", "KOR", "USA"],
+    "effects": [
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.06
+      }
+    ]
+  },
+  {
+    "id": "industry-lights-out",
+    "name": "tech.industry-lights-out.name",
+    "description": "tech.industry-lights-out.desc",
+    "domain": "industry",
+    "tier": 2,
+    "cost": 270,
+    "monthsMin": 14,
+    "requires": ["industry-digital-twin", "digital-industrial-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.consumer-goods",
+        "op": "mul",
+        "value": 1.06
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0015
+      }
+    ]
+  },
+  {
+    "id": "industry-circular-materials",
+    "name": "tech.industry-circular-materials.name",
+    "description": "tech.industry-circular-materials.desc",
+    "domain": "industry",
+    "tier": 2,
+    "cost": 190,
+    "monthsMin": 11,
+    "requires": ["industry-critical-minerals-refining"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.critical-minerals",
+        "op": "mul",
+        "value": 0.95
+      },
+      {
+        "target": "consumption.steel",
+        "op": "mul",
+        "value": 0.97
+      }
+    ]
+  },
+  {
+    "id": "industry-photonic-chips",
+    "name": "tech.industry-photonic-chips.name",
+    "description": "tech.industry-photonic-chips.desc",
+    "domain": "industry",
+    "tier": 2,
+    "cost": 325,
+    "monthsMin": 16,
+    "requires": ["industry-advanced-chips"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.07
+      },
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "industry-clean-heavy-industry",
+    "name": "tech.industry-clean-heavy-industry.name",
+    "description": "tech.industry-clean-heavy-industry.desc",
+    "domain": "industry",
+    "tier": 2,
+    "cost": 200,
+    "monthsMin": 11,
+    "requires": ["industry-green-steel", "energy-ccs"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.96
+      },
+      {
+        "target": "consumption.coal",
+        "op": "mul",
+        "value": 0.96
+      }
+    ]
+  },
+  {
+    "id": "agriculture-precision-farming",
+    "name": "tech.agriculture-precision-farming.name",
+    "description": "tech.agriculture-precision-farming.desc",
+    "domain": "agriculture",
+    "tier": 1,
+    "cost": 45,
+    "monthsMin": 4,
+    "requires": [],
+    "adoptedAbove": 0.45,
+    "adoptedBy": ["BRA", "ARG"],
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.99
+      }
+    ]
+  },
+  {
+    "id": "agriculture-smart-irrigation",
+    "name": "tech.agriculture-smart-irrigation.name",
+    "description": "tech.agriculture-smart-irrigation.desc",
+    "domain": "agriculture",
+    "tier": 1,
+    "cost": 55,
+    "monthsMin": 5,
+    "requires": ["agriculture-precision-farming"],
+    "adoptedAbove": 0.55,
+    "adoptedBy": ["ESP", "ISR"],
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "agriculture-gene-edited-crops",
+    "name": "tech.agriculture-gene-edited-crops.name",
+    "description": "tech.agriculture-gene-edited-crops.desc",
+    "domain": "agriculture",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 7,
+    "requires": ["health-genomics"],
+    "adoptedAbove": null,
+    "adoptedBy": ["USA", "JPN", "GBR", "CHN", "ARG"],
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "agriculture-biologicals",
+    "name": "tech.agriculture-biologicals.name",
+    "description": "tech.agriculture-biologicals.desc",
+    "domain": "agriculture",
+    "tier": 1,
+    "cost": 65,
+    "monthsMin": 6,
+    "requires": ["agriculture-precision-farming"],
+    "adoptedAbove": 0.7,
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.98
+      }
+    ]
+  },
+  {
+    "id": "agriculture-precision-fermentation",
+    "name": "tech.agriculture-precision-fermentation.name",
+    "description": "tech.agriculture-precision-fermentation.desc",
+    "domain": "agriculture",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 9,
+    "requires": ["health-genomics"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "agriculture-green-ammonia",
+    "name": "tech.agriculture-green-ammonia.name",
+    "description": "tech.agriculture-green-ammonia.desc",
+    "domain": "agriculture",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 9,
+    "requires": ["energy-green-hydrogen"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.97
+      },
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "agriculture-autonomous-robots",
+    "name": "tech.agriculture-autonomous-robots.name",
+    "description": "tech.agriculture-autonomous-robots.desc",
+    "domain": "agriculture",
+    "tier": 2,
+    "cost": 175,
+    "monthsMin": 8,
+    "requires": ["agriculture-precision-farming", "industry-cobots"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "agriculture-cultivated-meat",
+    "name": "tech.agriculture-cultivated-meat.name",
+    "description": "tech.agriculture-cultivated-meat.desc",
+    "domain": "agriculture",
+    "tier": 2,
+    "cost": 230,
+    "monthsMin": 14,
+    "requires": ["agriculture-precision-fermentation"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "agriculture-nitrogen-fixing-cereals",
+    "name": "tech.agriculture-nitrogen-fixing-cereals.name",
+    "description": "tech.agriculture-nitrogen-fixing-cereals.desc",
+    "domain": "agriculture",
+    "tier": 2,
+    "cost": 290,
+    "monthsMin": 16,
+    "requires": ["agriculture-gene-edited-crops", "agriculture-biologicals"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.97
+      }
+    ]
+  },
+  {
+    "id": "agriculture-climate-resilient-crops",
+    "name": "tech.agriculture-climate-resilient-crops.name",
+    "description": "tech.agriculture-climate-resilient-crops.desc",
+    "domain": "agriculture",
+    "tier": 2,
+    "cost": 190,
+    "monthsMin": 11,
+    "requires": [
+      "agriculture-gene-edited-crops",
+      "agriculture-smart-irrigation"
+    ],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.food",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "digital-hyperscale-cloud",
+    "name": "tech.digital-hyperscale-cloud.name",
+    "description": "tech.digital-hyperscale-cloud.desc",
+    "domain": "digital",
+    "tier": 1,
+    "cost": 55,
+    "monthsMin": 5,
+    "requires": [],
+    "adoptedAbove": 0.35,
+    "adoptedBy": ["USA", "CHN"],
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "digital-5g-standalone",
+    "name": "tech.digital-5g-standalone.name",
+    "description": "tech.digital-5g-standalone.desc",
+    "domain": "digital",
+    "tier": 1,
+    "cost": 45,
+    "monthsMin": 4,
+    "requires": ["digital-hyperscale-cloud"],
+    "adoptedAbove": 0.4,
+    "adoptedBy": ["CHN", "KOR", "USA", "JPN"],
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "digital-generative-ai",
+    "name": "tech.digital-generative-ai.name",
+    "description": "tech.digital-generative-ai.desc",
+    "domain": "digital",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 6,
+    "requires": ["digital-hyperscale-cloud"],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["USA", "CHN"],
+    "effects": [
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.001
+      }
+    ]
+  },
+  {
+    "id": "digital-post-quantum-crypto",
+    "name": "tech.digital-post-quantum-crypto.name",
+    "description": "tech.digital-post-quantum-crypto.desc",
+    "domain": "digital",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 6,
+    "requires": ["digital-hyperscale-cloud"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "digital-6g",
+    "name": "tech.digital-6g.name",
+    "description": "tech.digital-6g.desc",
+    "domain": "digital",
+    "tier": 1,
+    "cost": 115,
+    "monthsMin": 10,
+    "requires": ["digital-5g-standalone"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0008
+      }
+    ]
+  },
+  {
+    "id": "digital-industrial-ai",
+    "name": "tech.digital-industrial-ai.name",
+    "description": "tech.digital-industrial-ai.desc",
+    "domain": "digital",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": ["digital-generative-ai", "industry-cobots"],
+    "adoptedAbove": 0.8,
+    "effects": [
+      {
+        "target": "production.consumer-goods",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "production.steel",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "digital-fault-tolerant-quantum",
+    "name": "tech.digital-fault-tolerant-quantum.name",
+    "description": "tech.digital-fault-tolerant-quantum.desc",
+    "domain": "digital",
+    "tier": 2,
+    "cost": 365,
+    "monthsMin": 16,
+    "requires": ["digital-post-quantum-crypto", "digital-generative-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.08
+      },
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "digital-autonomous-agents",
+    "name": "tech.digital-autonomous-agents.name",
+    "description": "tech.digital-autonomous-agents.desc",
+    "domain": "digital",
+    "tier": 2,
+    "cost": 290,
+    "monthsMin": 14,
+    "requires": ["digital-generative-ai", "digital-industrial-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.002
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "digital-neuromorphic",
+    "name": "tech.digital-neuromorphic.name",
+    "description": "tech.digital-neuromorphic.desc",
+    "domain": "digital",
+    "tier": 2,
+    "cost": 250,
+    "monthsMin": 14,
+    "requires": ["digital-generative-ai", "industry-advanced-chips"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.electricity",
+        "op": "mul",
+        "value": 0.98
+      },
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "digital-quantum-network",
+    "name": "tech.digital-quantum-network.name",
+    "description": "tech.digital-quantum-network.desc",
+    "domain": "digital",
+    "tier": 2,
+    "cost": 230,
+    "monthsMin": 14,
+    "requires": ["digital-post-quantum-crypto", "digital-6g"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "health-genomics",
+    "name": "tech.health-genomics.name",
+    "description": "tech.health-genomics.desc",
+    "domain": "health",
+    "tier": 1,
+    "cost": 55,
+    "monthsMin": 5,
+    "requires": [],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["USA", "CHN", "JPN"],
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "health-mrna-platform",
+    "name": "tech.health-mrna-platform.name",
+    "description": "tech.health-mrna-platform.desc",
+    "domain": "health",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 6,
+    "requires": ["health-genomics"],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["USA"],
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "health-ai-diagnostics",
+    "name": "tech.health-ai-diagnostics.name",
+    "description": "tech.health-ai-diagnostics.desc",
+    "domain": "health",
+    "tier": 1,
+    "cost": 65,
+    "monthsMin": 5,
+    "requires": ["digital-hyperscale-cloud"],
+    "adoptedAbove": 0.75,
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "health-car-t",
+    "name": "tech.health-car-t.name",
+    "description": "tech.health-car-t.desc",
+    "domain": "health",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 8,
+    "requires": ["health-genomics"],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["USA", "CHN"],
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "health-cancer-vaccines",
+    "name": "tech.health-cancer-vaccines.name",
+    "description": "tech.health-cancer-vaccines.desc",
+    "domain": "health",
+    "tier": 1,
+    "cost": 115,
+    "monthsMin": 10,
+    "requires": ["health-mrna-platform"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "health-new-antimicrobials",
+    "name": "tech.health-new-antimicrobials.name",
+    "description": "tech.health-new-antimicrobials.desc",
+    "domain": "health",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 9,
+    "requires": ["health-genomics"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "health-gene-therapy-scale",
+    "name": "tech.health-gene-therapy-scale.name",
+    "description": "tech.health-gene-therapy-scale.desc",
+    "domain": "health",
+    "tier": 2,
+    "cost": 290,
+    "monthsMin": 14,
+    "requires": ["health-car-t", "health-mrna-platform"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.001
+      }
+    ]
+  },
+  {
+    "id": "health-ai-drug-discovery",
+    "name": "tech.health-ai-drug-discovery.name",
+    "description": "tech.health-ai-drug-discovery.desc",
+    "domain": "health",
+    "tier": 2,
+    "cost": 250,
+    "monthsMin": 11,
+    "requires": ["health-ai-diagnostics", "digital-generative-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "health-universal-flu-vaccine",
+    "name": "tech.health-universal-flu-vaccine.name",
+    "description": "tech.health-universal-flu-vaccine.desc",
+    "domain": "health",
+    "tier": 2,
+    "cost": 190,
+    "monthsMin": 11,
+    "requires": ["health-mrna-platform"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      },
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "health-xenotransplant",
+    "name": "tech.health-xenotransplant.name",
+    "description": "tech.health-xenotransplant.desc",
+    "domain": "health",
+    "tier": 2,
+    "cost": 230,
+    "monthsMin": 14,
+    "requires": ["health-genomics", "health-car-t"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "land-loitering-munitions",
+    "name": "tech.land-loitering-munitions.name",
+    "description": "tech.land-loitering-munitions.desc",
+    "domain": "land",
+    "tier": 1,
+    "cost": 65,
+    "monthsMin": 5,
+    "requires": [],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["UKR", "RUS", "TUR", "ISR", "USA", "POL", "IRN", "CHN"],
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "land-fpv-mass-drones",
+    "name": "tech.land-fpv-mass-drones.name",
+    "description": "tech.land-fpv-mass-drones.desc",
+    "domain": "land",
+    "tier": 1,
+    "cost": 55,
+    "monthsMin": 4,
+    "requires": ["land-loitering-munitions"],
+    "adoptedAbove": null,
+    "adoptedBy": ["UKR", "RUS"],
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.06
+      },
+      {
+        "target": "consumption.arms",
+        "op": "mul",
+        "value": 0.98
+      }
+    ]
+  },
+  {
+    "id": "land-counter-drone",
+    "name": "tech.land-counter-drone.name",
+    "description": "tech.land-counter-drone.desc",
+    "domain": "land",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 6,
+    "requires": ["land-loitering-munitions"],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["UKR", "RUS", "ISR", "USA", "TUR", "CHN"],
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "land-drone-swarms",
+    "name": "tech.land-drone-swarms.name",
+    "description": "tech.land-drone-swarms.desc",
+    "domain": "land",
+    "tier": 1,
+    "cost": 125,
+    "monthsMin": 9,
+    "requires": ["land-fpv-mass-drones", "digital-generative-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.07
+      }
+    ]
+  },
+  {
+    "id": "land-active-protection",
+    "name": "tech.land-active-protection.name",
+    "description": "tech.land-active-protection.desc",
+    "domain": "land",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 7,
+    "requires": ["land-counter-drone"],
+    "adoptedAbove": null,
+    "adoptedBy": ["ISR", "USA", "DEU"],
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "land-long-range-fires",
+    "name": "tech.land-long-range-fires.name",
+    "description": "tech.land-long-range-fires.desc",
+    "domain": "land",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 8,
+    "requires": ["air-precision-missiles"],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["USA", "UKR", "POL", "RUS", "TUR", "KOR", "CHN", "ISR"],
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "land-ground-robots",
+    "name": "tech.land-ground-robots.name",
+    "description": "tech.land-ground-robots.desc",
+    "domain": "land",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": ["land-fpv-mass-drones"],
+    "adoptedAbove": null,
+    "adoptedBy": ["UKR"],
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "land-autonomous-logistics",
+    "name": "tech.land-autonomous-logistics.name",
+    "description": "tech.land-autonomous-logistics.desc",
+    "domain": "land",
+    "tier": 2,
+    "cost": 210,
+    "monthsMin": 11,
+    "requires": ["land-ground-robots", "digital-generative-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.99
+      }
+    ]
+  },
+  {
+    "id": "land-next-gen-tank",
+    "name": "tech.land-next-gen-tank.name",
+    "description": "tech.land-next-gen-tank.desc",
+    "domain": "land",
+    "tier": 2,
+    "cost": 290,
+    "monthsMin": 16,
+    "requires": ["land-active-protection", "land-long-range-fires"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.07
+      }
+    ]
+  },
+  {
+    "id": "land-human-machine-teaming",
+    "name": "tech.land-human-machine-teaming.name",
+    "description": "tech.land-human-machine-teaming.desc",
+    "domain": "land",
+    "tier": 2,
+    "cost": 270,
+    "monthsMin": 14,
+    "requires": ["land-drone-swarms", "land-ground-robots"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.08
+      }
+    ]
+  },
+  {
+    "id": "land-ai-battle-management",
+    "name": "tech.land-ai-battle-management.name",
+    "description": "tech.land-ai-battle-management.desc",
+    "domain": "land",
+    "tier": 2,
+    "cost": 250,
+    "monthsMin": 11,
+    "requires": ["land-long-range-fires", "digital-generative-ai"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.06
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "naval-modern-frigates",
+    "name": "tech.naval-modern-frigates.name",
+    "description": "tech.naval-modern-frigates.desc",
+    "domain": "naval",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 8,
+    "requires": [],
+    "adoptedAbove": 0.45,
+    "adoptedBy": ["USA", "CHN", "KOR", "JPN", "TUR", "RUS"],
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "naval-sea-drones",
+    "name": "tech.naval-sea-drones.name",
+    "description": "tech.naval-sea-drones.desc",
+    "domain": "naval",
+    "tier": 1,
+    "cost": 55,
+    "monthsMin": 4,
+    "requires": ["land-loitering-munitions"],
+    "adoptedAbove": null,
+    "adoptedBy": ["UKR"],
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "naval-ssn",
+    "name": "tech.naval-ssn.name",
+    "description": "tech.naval-ssn.desc",
+    "domain": "naval",
+    "tier": 1,
+    "cost": 145,
+    "monthsMin": 12,
+    "requires": ["nuclear-industry"],
+    "adoptedAbove": null,
+    "adoptedBy": ["FRA", "GBR", "RUS", "USA", "CHN"],
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.07
+      }
+    ]
+  },
+  {
+    "id": "naval-xl-uuv",
+    "name": "tech.naval-xl-uuv.name",
+    "description": "tech.naval-xl-uuv.desc",
+    "domain": "naval",
+    "tier": 1,
+    "cost": 115,
+    "monthsMin": 10,
+    "requires": ["naval-sea-drones"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "naval-nuclear-icebreakers",
+    "name": "tech.naval-nuclear-icebreakers.name",
+    "description": "tech.naval-nuclear-icebreakers.desc",
+    "domain": "naval",
+    "tier": 1,
+    "cost": 110,
+    "monthsMin": 10,
+    "requires": ["naval-ssn"],
+    "adoptedAbove": null,
+    "adoptedBy": ["RUS"],
+    "effects": [
+      {
+        "target": "production.oil",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "production.gas",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "naval-autonomous-shipping",
+    "name": "tech.naval-autonomous-shipping.name",
+    "description": "tech.naval-autonomous-shipping.desc",
+    "domain": "naval",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 7,
+    "requires": ["digital-generative-ai"],
+    "adoptedAbove": null,
+    "adoptedBy": ["NOR"],
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.99
+      }
+    ]
+  },
+  {
+    "id": "naval-seabed-warfare",
+    "name": "tech.naval-seabed-warfare.name",
+    "description": "tech.naval-seabed-warfare.desc",
+    "domain": "naval",
+    "tier": 2,
+    "cost": 190,
+    "monthsMin": 11,
+    "requires": ["naval-xl-uuv"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "naval-drone-carriers",
+    "name": "tech.naval-drone-carriers.name",
+    "description": "tech.naval-drone-carriers.desc",
+    "domain": "naval",
+    "tier": 2,
+    "cost": 270,
+    "monthsMin": 14,
+    "requires": ["naval-xl-uuv", "air-ccav"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.07
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "naval-zero-emission-shipping",
+    "name": "tech.naval-zero-emission-shipping.name",
+    "description": "tech.naval-zero-emission-shipping.desc",
+    "domain": "naval",
+    "tier": 2,
+    "cost": 210,
+    "monthsMin": 11,
+    "requires": ["naval-autonomous-shipping", "energy-green-hydrogen"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.97
+      },
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "naval-quantum-navigation",
+    "name": "tech.naval-quantum-navigation.name",
+    "description": "tech.naval-quantum-navigation.desc",
+    "domain": "naval",
+    "tier": 2,
+    "cost": 230,
+    "monthsMin": 14,
+    "requires": ["naval-xl-uuv", "naval-ssn"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "air-precision-missiles",
+    "name": "tech.air-precision-missiles.name",
+    "description": "tech.air-precision-missiles.desc",
+    "domain": "air",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 7,
+    "requires": [],
+    "adoptedAbove": 0.45,
+    "adoptedBy": [
+      "USA",
+      "RUS",
+      "CHN",
+      "TUR",
+      "UKR",
+      "IND",
+      "ISR",
+      "KOR",
+      "POL",
+      "JPN",
+      "IRN"
+    ],
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "air-hypersonic-glide",
+    "name": "tech.air-hypersonic-glide.name",
+    "description": "tech.air-hypersonic-glide.desc",
+    "domain": "air",
+    "tier": 1,
+    "cost": 135,
+    "monthsMin": 12,
+    "requires": ["air-precision-missiles"],
+    "adoptedAbove": null,
+    "adoptedBy": ["RUS", "CHN"],
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "air-fifth-gen-fighters",
+    "name": "tech.air-fifth-gen-fighters.name",
+    "description": "tech.air-fifth-gen-fighters.desc",
+    "domain": "air",
+    "tier": 1,
+    "cost": 135,
+    "monthsMin": 12,
+    "requires": [],
+    "adoptedAbove": null,
+    "adoptedBy": [
+      "USA",
+      "CHN",
+      "RUS",
+      "GBR",
+      "NOR",
+      "ITA",
+      "ISR",
+      "JPN",
+      "KOR",
+      "AUS",
+      "NLD",
+      "DNK"
+    ],
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.07
+      }
+    ]
+  },
+  {
+    "id": "air-male-drones",
+    "name": "tech.air-male-drones.name",
+    "description": "tech.air-male-drones.desc",
+    "domain": "air",
+    "tier": 1,
+    "cost": 65,
+    "monthsMin": 6,
+    "requires": ["air-precision-missiles"],
+    "adoptedAbove": null,
+    "adoptedBy": [
+      "TUR",
+      "USA",
+      "ISR",
+      "CHN",
+      "IRN",
+      "FRA",
+      "GBR",
+      "ITA",
+      "DEU",
+      "UKR",
+      "POL",
+      "RUS"
+    ],
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "air-layered-air-defence",
+    "name": "tech.air-layered-air-defence.name",
+    "description": "tech.air-layered-air-defence.desc",
+    "domain": "air",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 8,
+    "requires": ["air-precision-missiles"],
+    "adoptedAbove": 0.45,
+    "adoptedBy": [
+      "POL",
+      "UKR",
+      "RUS",
+      "ISR",
+      "TUR",
+      "USA",
+      "CHN",
+      "KOR",
+      "JPN",
+      "IND"
+    ],
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "air-ccav",
+    "name": "tech.air-ccav.name",
+    "description": "tech.air-ccav.desc",
+    "domain": "air",
+    "tier": 1,
+    "cost": 125,
+    "monthsMin": 10,
+    "requires": ["air-fifth-gen-fighters", "air-male-drones"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.06
+      }
+    ]
+  },
+  {
+    "id": "air-sixth-gen",
+    "name": "tech.air-sixth-gen.name",
+    "description": "tech.air-sixth-gen.desc",
+    "domain": "air",
+    "tier": 2,
+    "cost": 385,
+    "monthsMin": 16,
+    "requires": ["air-fifth-gen-fighters", "air-ccav"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.08
+      }
+    ]
+  },
+  {
+    "id": "air-directed-energy-defence",
+    "name": "tech.air-directed-energy-defence.name",
+    "description": "tech.air-directed-energy-defence.desc",
+    "domain": "air",
+    "tier": 2,
+    "cost": 270,
+    "monthsMin": 14,
+    "requires": ["air-layered-air-defence", "land-counter-drone"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.06
+      },
+      {
+        "target": "consumption.arms",
+        "op": "mul",
+        "value": 0.98
+      }
+    ]
+  },
+  {
+    "id": "air-hypersonic-defence",
+    "name": "tech.air-hypersonic-defence.name",
+    "description": "tech.air-hypersonic-defence.desc",
+    "domain": "air",
+    "tier": 2,
+    "cost": 305,
+    "monthsMin": 16,
+    "requires": ["air-layered-air-defence", "space-missile-warning"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.06
+      }
+    ]
+  },
+  {
+    "id": "air-synthetic-fuels",
+    "name": "tech.air-synthetic-fuels.name",
+    "description": "tech.air-synthetic-fuels.desc",
+    "domain": "air",
+    "tier": 2,
+    "cost": 175,
+    "monthsMin": 11,
+    "requires": ["energy-green-hydrogen"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.oil",
+        "op": "mul",
+        "value": 0.97
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "nuclear-industry",
+    "name": "tech.nuclear-industry.name",
+    "description": "tech.nuclear-industry.desc",
+    "domain": "nuclear",
+    "tier": 1,
+    "cost": 70,
+    "monthsMin": 6,
+    "requires": [],
+    "adoptedAbove": null,
+    "adoptedBy": [
+      "ARE",
+      "ARG",
+      "ARM",
+      "BEL",
+      "BGR",
+      "BLR",
+      "BRA",
+      "CAN",
+      "CHE",
+      "CHN",
+      "CZE",
+      "ESP",
+      "FIN",
+      "FRA",
+      "GBR",
+      "HUN",
+      "IND",
+      "IRN",
+      "JPN",
+      "KOR",
+      "MEX",
+      "NLD",
+      "PAK",
+      "ROU",
+      "RUS",
+      "SVK",
+      "SVN",
+      "SWE",
+      "UKR",
+      "USA",
+      "ZAF"
+    ],
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "nuclear-gen3-reactors",
+    "name": "tech.nuclear-gen3-reactors.name",
+    "description": "tech.nuclear-gen3-reactors.desc",
+    "domain": "nuclear",
+    "tier": 1,
+    "cost": 125,
+    "monthsMin": 12,
+    "requires": ["nuclear-industry"],
+    "adoptedAbove": null,
+    "adoptedBy": [
+      "FRA",
+      "FIN",
+      "RUS",
+      "CHN",
+      "KOR",
+      "USA",
+      "ARE",
+      "BLR",
+      "IND",
+      "JPN"
+    ],
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "nuclear-smr",
+    "name": "tech.nuclear-smr.name",
+    "description": "tech.nuclear-smr.desc",
+    "domain": "nuclear",
+    "tier": 1,
+    "cost": 115,
+    "monthsMin": 12,
+    "requires": ["nuclear-industry"],
+    "adoptedAbove": null,
+    "adoptedBy": ["RUS"],
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "nuclear-closed-fuel-cycle",
+    "name": "tech.nuclear-closed-fuel-cycle.name",
+    "description": "tech.nuclear-closed-fuel-cycle.desc",
+    "domain": "nuclear",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 9,
+    "requires": ["nuclear-industry"],
+    "adoptedAbove": null,
+    "adoptedBy": ["FRA", "RUS"],
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "consumption.critical-minerals",
+        "op": "mul",
+        "value": 0.98
+      }
+    ]
+  },
+  {
+    "id": "nuclear-sea-deterrent",
+    "name": "tech.nuclear-sea-deterrent.name",
+    "description": "tech.nuclear-sea-deterrent.desc",
+    "domain": "nuclear",
+    "tier": 1,
+    "cost": 135,
+    "monthsMin": 12,
+    "requires": ["naval-ssn"],
+    "adoptedAbove": null,
+    "adoptedBy": ["FRA", "GBR", "RUS", "USA", "CHN"],
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "nuclear-hts-magnets",
+    "name": "tech.nuclear-hts-magnets.name",
+    "description": "tech.nuclear-hts-magnets.desc",
+    "domain": "nuclear",
+    "tier": 1,
+    "cost": 110,
+    "monthsMin": 9,
+    "requires": [],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "nuclear-fusion-demonstrator",
+    "name": "tech.nuclear-fusion-demonstrator.name",
+    "description": "tech.nuclear-fusion-demonstrator.desc",
+    "domain": "nuclear",
+    "tier": 2,
+    "cost": 385,
+    "monthsMin": 16,
+    "requires": ["nuclear-hts-magnets"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.04
+      },
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "nuclear-gen4-fast-reactors",
+    "name": "tech.nuclear-gen4-fast-reactors.name",
+    "description": "tech.nuclear-gen4-fast-reactors.desc",
+    "domain": "nuclear",
+    "tier": 2,
+    "cost": 305,
+    "monthsMin": 16,
+    "requires": ["nuclear-closed-fuel-cycle", "nuclear-gen3-reactors"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.06
+      },
+      {
+        "target": "consumption.critical-minerals",
+        "op": "mul",
+        "value": 0.97
+      }
+    ]
+  },
+  {
+    "id": "nuclear-industrial-heat",
+    "name": "tech.nuclear-industrial-heat.name",
+    "description": "tech.nuclear-industrial-heat.desc",
+    "domain": "nuclear",
+    "tier": 2,
+    "cost": 210,
+    "monthsMin": 11,
+    "requires": ["nuclear-smr", "energy-green-hydrogen"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "consumption.gas",
+        "op": "mul",
+        "value": 0.96
+      },
+      {
+        "target": "production.electricity",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "nuclear-resilient-command",
+    "name": "tech.nuclear-resilient-command.name",
+    "description": "tech.nuclear-resilient-command.desc",
+    "domain": "nuclear",
+    "tier": 2,
+    "cost": 240,
+    "monthsMin": 14,
+    "requires": ["nuclear-sea-deterrent", "digital-post-quantum-crypto"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "space-sar-isr",
+    "name": "tech.space-sar-isr.name",
+    "description": "tech.space-sar-isr.desc",
+    "domain": "space",
+    "tier": 1,
+    "cost": 80,
+    "monthsMin": 7,
+    "requires": [],
+    "adoptedAbove": 0.7,
+    "adoptedBy": ["USA", "CHN", "RUS", "ISR", "ITA", "ESP", "JPN", "IND"],
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  },
+  {
+    "id": "space-reusable-launchers",
+    "name": "tech.space-reusable-launchers.name",
+    "description": "tech.space-reusable-launchers.desc",
+    "domain": "space",
+    "tier": 1,
+    "cost": 115,
+    "monthsMin": 10,
+    "requires": [],
+    "adoptedAbove": null,
+    "adoptedBy": ["USA"],
+    "effects": [
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "space-leo-constellations",
+    "name": "tech.space-leo-constellations.name",
+    "description": "tech.space-leo-constellations.desc",
+    "domain": "space",
+    "tier": 1,
+    "cost": 100,
+    "monthsMin": 9,
+    "requires": ["space-reusable-launchers"],
+    "adoptedAbove": null,
+    "adoptedBy": ["USA"],
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "space-direct-to-cell",
+    "name": "tech.space-direct-to-cell.name",
+    "description": "tech.space-direct-to-cell.desc",
+    "domain": "space",
+    "tier": 1,
+    "cost": 90,
+    "monthsMin": 7,
+    "requires": ["space-leo-constellations"],
+    "adoptedAbove": null,
+    "adoptedBy": ["USA"],
+    "effects": [
+      {
+        "target": "production.services",
+        "op": "mul",
+        "value": 1.02
+      },
+      {
+        "target": "growth",
+        "op": "add",
+        "value": 0.0005
+      }
+    ]
+  },
+  {
+    "id": "space-missile-warning",
+    "name": "tech.space-missile-warning.name",
+    "description": "tech.space-missile-warning.desc",
+    "domain": "space",
+    "tier": 1,
+    "cost": 125,
+    "monthsMin": 10,
+    "requires": ["space-sar-isr"],
+    "adoptedAbove": null,
+    "adoptedBy": ["USA", "RUS", "CHN"],
+    "effects": [
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "space-heavy-lift",
+    "name": "tech.space-heavy-lift.name",
+    "description": "tech.space-heavy-lift.desc",
+    "domain": "space",
+    "tier": 1,
+    "cost": 135,
+    "monthsMin": 12,
+    "requires": ["space-reusable-launchers"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.04
+      }
+    ]
+  },
+  {
+    "id": "space-lunar-isru",
+    "name": "tech.space-lunar-isru.name",
+    "description": "tech.space-lunar-isru.desc",
+    "domain": "space",
+    "tier": 2,
+    "cost": 335,
+    "monthsMin": 16,
+    "requires": ["space-heavy-lift"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.05
+      }
+    ]
+  },
+  {
+    "id": "space-in-orbit-manufacturing",
+    "name": "tech.space-in-orbit-manufacturing.name",
+    "description": "tech.space-in-orbit-manufacturing.desc",
+    "domain": "space",
+    "tier": 2,
+    "cost": 250,
+    "monthsMin": 14,
+    "requires": ["space-heavy-lift"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "production.electronics",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "production.pharma",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "space-orbital-servicing",
+    "name": "tech.space-orbital-servicing.name",
+    "description": "tech.space-orbital-servicing.desc",
+    "domain": "space",
+    "tier": 2,
+    "cost": 190,
+    "monthsMin": 11,
+    "requires": ["space-leo-constellations"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "research",
+        "op": "mul",
+        "value": 1.03
+      },
+      {
+        "target": "military.air",
+        "op": "mul",
+        "value": 1.02
+      }
+    ]
+  },
+  {
+    "id": "space-persistent-surveillance",
+    "name": "tech.space-persistent-surveillance.name",
+    "description": "tech.space-persistent-surveillance.desc",
+    "domain": "space",
+    "tier": 2,
+    "cost": 290,
+    "monthsMin": 14,
+    "requires": ["space-sar-isr", "space-missile-warning"],
+    "adoptedAbove": null,
+    "effects": [
+      {
+        "target": "military.naval",
+        "op": "mul",
+        "value": 1.05
+      },
+      {
+        "target": "military.land",
+        "op": "mul",
+        "value": 1.03
+      }
+    ]
+  }
+]

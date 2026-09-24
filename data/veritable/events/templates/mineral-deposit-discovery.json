@@ -1,0 +1,75 @@
+{
+  "id": "mineral-deposit-discovery",
+  "kind": "template",
+  "title": "event.mineral-deposit-discovery.title",
+  "text": "event.mineral-deposit-discovery.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.002,
+    "conditions": [],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "exploit",
+      "label": "event.mineral-deposit-discovery.exploit",
+      "effects": [
+        {
+          "target": "production.critical-minerals",
+          "op": "mul",
+          "value": 1.08
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.003,
+          "months": 24
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "public-stake",
+      "label": "event.mineral-deposit-discovery.public-stake",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "production.critical-minerals",
+          "op": "mul",
+          "value": 1.06
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "protect",
+      "label": "event.mineral-deposit-discovery.protect",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

@@ -1,0 +1,84 @@
+{
+  "id": "migration-crisis",
+  "kind": "template",
+  "title": "event.migration-crisis.title",
+  "text": "event.migration-crisis.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "welcome",
+      "label": "event.migration-crisis.welcome",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "label": "event.migration-crisis.close",
+      "effects": [
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "partners",
+      "label": "event.migration-crisis.partners",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

@@ -1,0 +1,83 @@
+{
+  "id": "investment-boom",
+  "kind": "template",
+  "title": "event.investment-boom.title",
+  "text": "event.investment-boom.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.005,
+    "conditions": [
+      {
+        "target": "growth",
+        "op": "gt",
+        "value": 0.015
+      },
+      {
+        "target": "stability",
+        "op": "gt",
+        "value": 0.55
+      }
+    ],
+    "cooldownMonths": 48
+  },
+  "choices": [
+    {
+      "id": "incentives",
+      "label": "event.investment-boom.incentives",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.008,
+          "months": 24
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "conditions",
+      "label": "event.investment-boom.conditions",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.004,
+          "months": 24
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "let-market",
+      "label": "event.investment-boom.let-market",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.005,
+          "months": 24
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

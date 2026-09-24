@@ -1,0 +1,92 @@
+{
+  "id": "ets2-carbon-price-protests",
+  "kind": "scripted",
+  "title": "event.ets2-carbon-price-protests.title",
+  "text": "event.ets2-carbon-price-protests.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2027-06-01", "2029-12-31"],
+    "monthlyProbability": 0.012,
+    "conditions": [
+      {
+        "target": "bloc.eu",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "compensate",
+      "label": "event.ets2-carbon-price-protests.compensate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "seek-delay",
+      "label": "event.ets2-carbon-price-protests.seek-delay",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "hold",
+      "label": "event.ets2-carbon-price-protests.hold",
+      "effects": [
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.14
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

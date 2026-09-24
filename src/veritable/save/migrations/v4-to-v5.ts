@@ -9,7 +9,9 @@ import {
 import { SaveFileV4 } from "../../data/schemas/saveV4";
 import { computeLeader, initBlocs, syncBlocs } from "../../sim/blocs/blocs";
 import { buildContext } from "../../sim/economy/context";
+import { initEvents } from "../../sim/events/events";
 import { initNuclear } from "../../sim/nuclear/nuclear";
+import { initTech } from "../../sim/tech/tech";
 import { monthIndex } from "../../sim/war/contest";
 import { MigrationContext } from "./index";
 
@@ -30,7 +32,9 @@ import { MigrationContext } from "./index";
 //     no defence goal yet, no arms flow;
 //   - the blocs (layers 2 and 3): the members of the data, no measure, no
 //     budget paid yet, the leader of the month; the wars of the v4 do not
-//     call collective defence after the fact.
+//     call collective defence after the fact;
+//   - technology: what each nation had on the first day (development index
+//     of its sheet), nothing in research; events: none yet, no grievance.
 export function v4ToV5(
   save: SaveFileV4,
   context: MigrationContext | undefined,
@@ -68,6 +72,11 @@ export function v4ToV5(
     ...save,
     schemaVersion: 5,
     blocs: migrateBlocs(save, context, sheets),
+    tech:
+      context === undefined
+        ? { nations: {} }
+        : initTech(buildContext(context.config, context.data, sheets), sheets),
+    events: initEvents(),
     diplomacy: {
       ...save.diplomacy,
       coalitionCalls: save.diplomacy.coalitionCalls.map((c) => ({
@@ -76,6 +85,7 @@ export function v4ToV5(
       })),
       pariahs: [],
       pendingAnnexations: [],
+      grievances: [],
     },
     territory: { initialTiles, structures, constructionCost: {} },
     nuclear: initNuclear(sheets),

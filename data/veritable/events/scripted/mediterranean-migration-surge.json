@@ -1,0 +1,86 @@
+{
+  "id": "mediterranean-migration-surge",
+  "kind": "scripted",
+  "title": "event.mediterranean-migration-surge.title",
+  "text": "event.mediterranean-migration-surge.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-04-01", "2030-10-31"],
+    "nations": ["ITA", "ESP"],
+    "monthlyProbability": 0.012,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "eu-sharing",
+      "label": "event.mediterranean-migration-surge.eu-sharing",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "hard-line",
+      "label": "event.mediterranean-migration-surge.hard-line",
+      "effects": [
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": -0.15
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "reception",
+      "label": "event.mediterranean-migration-surge.reception",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

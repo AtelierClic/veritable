@@ -65,7 +65,8 @@ export const NULL_PROBE: PerfProbe = {
 const CLOCKS: Record<ClockKind, readonly Domain[]> = {
   day: ["economy", "events", "diplomacy"],
   week: ["politics"],
-  month: ["economy", "politics", "diplomacy", "blocs", "save"],
+  // Events (J5) run once a month too, after the blocs.
+  month: ["economy", "politics", "diplomacy", "blocs", "events", "save"],
   tick: [], // the fronts run outside the scheduler
 };
 

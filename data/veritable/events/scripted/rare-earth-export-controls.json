@@ -1,0 +1,84 @@
+{
+  "id": "rare-earth-export-controls",
+  "kind": "scripted",
+  "title": "event.rare-earth-export-controls.title",
+  "text": "event.rare-earth-export-controls.text",
+  "scope": "world",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2029-12-31"],
+    "monthlyProbability": 0.025,
+    "conditions": [],
+    "once": true
+  },
+  "worldEffects": [
+    {
+      "target": "worldSupply.critical-minerals",
+      "op": "add",
+      "value": -0.12
+    },
+    {
+      "target": "worldSupply.electronics",
+      "op": "add",
+      "value": -0.05
+    }
+  ],
+  "choices": [
+    {
+      "id": "stockpile",
+      "label": "event.rare-earth-export-controls.stockpile",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "recycling",
+      "label": "event.rare-earth-export-controls.recycling",
+      "effects": [
+        {
+          "target": "spending.research",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 24
+        }
+      ]
+    },
+    {
+      "id": "absorb",
+      "label": "event.rare-earth-export-controls.absorb",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.004,
+          "months": 12
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

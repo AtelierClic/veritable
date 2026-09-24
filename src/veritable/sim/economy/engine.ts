@@ -353,6 +353,8 @@ export function stepGrowth(
   // Share of the trade partners of a nation (by distance and GDP) that
   // sanction it or fight it: sanctions are not cosmetic (J3a).
   lostTradeShare: (id: string) => number = () => 0,
+  // Extra trend growth per year: technology and events (J5).
+  extraGrowth: (id: string) => number = () => 0,
 ): void {
   const cfg = ctx.config.economy;
   const c = cfg.growth;
@@ -375,7 +377,7 @@ export function stepGrowth(
       nation.investmentReference;
     const exportShare = nation.exportsValue / nation.gdp;
     const g =
-      nation.growthBase / 12 +
+      (nation.growthBase + extraGrowth(id)) / 12 +
       c.alpha * investment -
       c.beta * nation.shortage -
       (politics.nations[id].unrest ? c.gamma : 0) +

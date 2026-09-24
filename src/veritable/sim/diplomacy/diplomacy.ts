@@ -139,6 +139,7 @@ export function initDiplomacy(
     wars: [],
     sanctions: [],
     coalitionCalls: [],
+    grievances: [],
     pariahs: [],
     pendingAnnexations: [],
     contestedRegions: [],
@@ -224,6 +225,11 @@ export function casusBelliValid(
         (r) => r.controller === target && r.claimants.includes(declarer),
       );
     }
+    // Expired grievances are pruned by the events every month.
+    case "grievance":
+      return state.grievances.some(
+        (g) => g.by === declarer && g.against === target,
+      );
     case "ally-attacked": {
       return state.wars.some(
         (w) =>

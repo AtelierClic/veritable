@@ -1,0 +1,88 @@
+{
+  "id": "sovereign-rating-downgrade",
+  "kind": "scripted",
+  "title": "event.sovereign-rating-downgrade.title",
+  "text": "event.sovereign-rating-downgrade.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-03-01", "2030-12-31"],
+    "monthlyProbability": 0.015,
+    "conditions": [
+      {
+        "target": "debtToGdp",
+        "op": "gt",
+        "value": 0.9
+      },
+      {
+        "target": "deficitToGdp",
+        "op": "gt",
+        "value": 0.03
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "consolidation",
+      "label": "event.sovereign-rating-downgrade.consolidation",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.004
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    },
+    {
+      "id": "reforms",
+      "label": "event.sovereign-rating-downgrade.reforms",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "dismiss",
+      "label": "event.sovereign-rating-downgrade.dismiss",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.995
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.004,
+          "months": 24
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

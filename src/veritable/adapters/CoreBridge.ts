@@ -229,6 +229,7 @@ export class CoreBridge implements WorldPort {
     const game = this.game;
 
     this.ledger.load(grid.tiles, grid.contest);
+    this.contestedCache = null;
     grid.tiles.forEach((value, tile) => {
       const owner = value & TILE_NATION_MASK;
       if (owner !== 0) {
@@ -289,9 +290,26 @@ export class CoreBridge implements WorldPort {
     this.ledger.setMonth(month);
   }
 
+  // Read with every view (the screens poll it every second): kept until the
+  // ledger changes or the month turns (fallout can take a contested tile
+  // without the ledger knowing).
+  private contestedCache: {
+    version: number;
+    month: number;
+    counts: ReadonlyMap<NationId, number>;
+  } | null = null;
+
   contestedCounts(): ReadonlyMap<NationId, number> {
     if (this.pending !== null) return new Map();
-    return this.ledger.counts((tile) => this.nationAt(tile));
+    const version = this.ledger.version();
+    const month = this.ledger.currentMonth();
+    const cache = this.contestedCache;
+    if (cache !== null && cache.version === version && cache.month === month) {
+      return cache.counts;
+    }
+    const counts = this.ledger.counts((tile) => this.nationAt(tile));
+    this.contestedCache = { version, month, counts };
+    return counts;
   }
 
   cede(winner: NationId): number {

@@ -1,0 +1,84 @@
+{
+  "id": "lira-slide",
+  "kind": "scripted",
+  "title": "event.lira-slide.title",
+  "text": "event.lira-slide.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2029-12-31"],
+    "nations": ["TUR"],
+    "monthlyProbability": 0.03,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "rate-hike",
+      "label": "event.lira-slide.rate-hike",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.006,
+          "months": 18
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "capital-controls",
+      "label": "event.lira-slide.capital-controls",
+      "effects": [
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.1
+        }
+      ]
+    },
+    {
+      "id": "wage-rise",
+      "label": "event.lira-slide.wage-rise",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

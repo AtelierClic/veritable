@@ -1,0 +1,57 @@
+{
+  "id": "naval-standoff",
+  "kind": "template",
+  "title": "event.naval-standoff.title",
+  "text": "event.naval-standoff.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [],
+    "cooldownMonths": 36
+  },
+  "params": {
+    "other": "rival"
+  },
+  "choices": [
+    {
+      "id": "escalate",
+      "label": "event.naval-standoff.escalate",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.002
+        }
+      ]
+    },
+    {
+      "id": "de-escalate",
+      "label": "event.naval-standoff.de-escalate",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

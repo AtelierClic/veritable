@@ -1,0 +1,81 @@
+{
+  "id": "health-service-winter-crisis",
+  "kind": "scripted",
+  "title": "event.health-service-winter-crisis.title",
+  "text": "event.health-service-winter-crisis.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-11-01", "2029-02-28"],
+    "nations": ["GBR"],
+    "monthlyProbability": 0.04,
+    "conditions": [],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "funding",
+      "label": "event.health-service-winter-crisis.funding",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "private",
+      "label": "event.health-service-winter-crisis.private",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "hold",
+      "label": "event.health-service-winter-crisis.hold",
+      "effects": [
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.12
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

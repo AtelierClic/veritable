@@ -1,0 +1,88 @@
+{
+  "id": "regional-bank-stress",
+  "kind": "scripted",
+  "title": "event.regional-bank-stress.title",
+  "text": "event.regional-bank-stress.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-06-01", "2030-06-30"],
+    "nations": ["ITA", "ESP", "DEU", "GBR"],
+    "monthlyProbability": 0.006,
+    "conditions": [
+      {
+        "target": "growth",
+        "op": "lt",
+        "value": 0.015
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "bailout",
+      "label": "event.regional-bank-stress.bailout",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.012
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "bail-in",
+      "label": "event.regional-bank-stress.bail-in",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.99
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.08
+        }
+      ]
+    },
+    {
+      "id": "guarantee",
+      "label": "event.regional-bank-stress.guarantee",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.995,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

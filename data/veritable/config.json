@@ -460,6 +460,52 @@
       "applySovereigntyBelow": -0.3
     }
   },
+  "tech": {
+    "publicShareOfResearch": 0.35,
+    "pointsPerRdPoint": 13,
+    "diffusion": 0.5,
+    "maxProjects": 3,
+    "programBonus": 0.25,
+    "development": {
+      "gdpPerCapitaRef": 60000,
+      "rdRef": 0.035,
+      "gdpWeight": 0.6
+    },
+    "agendaDomains": {
+      "security": ["land", "naval", "air", "nuclear", "space"],
+      "growth": ["energy", "industry", "agriculture", "digital", "health"],
+      "regional-influence": ["space", "digital", "nuclear", "naval"],
+      "ideology": ["health", "agriculture", "energy"]
+    },
+    "offAgendaWeight": 0.2,
+    "tier2Weight": 0.5,
+    "effectScale": {
+      "capacity": 0.3,
+      "growth": 0.3,
+      "military": 0.5,
+      "research": 0.5
+    }
+  },
+  "events": {
+    "maxPopupsPerMonth": 2,
+    "answerMonths": 1,
+    "defaultCooldownMonths": 36,
+    "uncertainProbability": 0.5,
+    "unrestMargin": 0.07,
+    "aiMistakeProbability": 0.2,
+    "grievanceMonths": 24,
+    "historyKept": 60,
+    "ai": {
+      "stability": 3,
+      "budget": 20,
+      "relations": 0.01,
+      "grievance": 0.3,
+      "military": 20,
+      "unrest": 1,
+      "group": 0.5,
+      "capacity": 5
+    }
+  },
   "ai": {
     "nations": {
       "reviewShare": 0.1,
@@ -474,15 +520,17 @@
         "rampPerReview": 0.25
       },
       "war": {
-        "powerRatio": 2,
+        "powerRatio": 1.5,
+        "maxRelations": -10,
         "aggressivenessWithoutCasusBelli": 0.8,
-        "landSharePerPowerRatio": 0.03,
+        "landSharePerPowerRatio": 0.06,
         "maxLandShare": 0.15,
         "exhaustionCostPctGdp": 0.02,
         "reputationCostPctGdp": 0.01,
         "declareProbability": 0.05,
         "minMonthsBetweenWars": 60,
         "gainHorizonYears": 10,
+        "casusBelliMotive": 2,
         "expectedWarYears": 3
       },
       "armsAid": {

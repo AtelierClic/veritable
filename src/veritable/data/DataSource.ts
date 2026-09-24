@@ -2,6 +2,7 @@ import { Borders, decodeBorders } from "./bordersFile";
 import { Bloc, BlocSchema } from "./schemas/bloc";
 import { NationId } from "./schemas/common";
 import { VeritableConfig, VeritableConfigSchema } from "./schemas/config";
+import { EventSchema, VeritableEvent } from "./schemas/event";
 import { Good, GoodsSchema } from "./schemas/goods";
 import { Law, LawsSchema } from "./schemas/laws";
 import { LeadersData, LeadersDataSchema } from "./schemas/leaders";
@@ -19,6 +20,7 @@ import {
 import { RowData, RowSchema } from "./schemas/row";
 import { Scenario, ScenarioSchema } from "./schemas/scenario";
 import { Seas, SeasSchema } from "./schemas/seas";
+import { TechFileSchema, TechNode } from "./schemas/tech";
 import {
   CasusBelli,
   CasusBelliCatalogueSchema,
@@ -74,6 +76,9 @@ export interface DataSource {
   laws(): Law[];
   names(id: NationId): NamePool;
   leaders(id: NationId): LeadersData;
+  // Technology and events (J5).
+  tech(): TechNode[];
+  events(): VeritableEvent[];
 }
 
 export function createDataSource(files: RawDataFiles): DataSource {
@@ -171,6 +176,24 @@ export function createDataSource(files: RawDataFiles): DataSource {
       }),
     zones: async (scenario) =>
       decodeZones(await files.bytes(`borders/${scenario.id}.zones.bin`)),
+    // The trunk, then the branches in file order.
+    tech: () =>
+      once("tech", () => [
+        ...TechFileSchema.parse(files.json("tech/trunk.json")),
+        ...files
+          .list("tech/branches", ".json")
+          .sort()
+          .flatMap((path) => TechFileSchema.parse(files.json(path))),
+      ]),
+    events: () =>
+      once("events", () =>
+        ["events/scripted", "events/templates"].flatMap((dir) =>
+          files
+            .list(dir, ".json")
+            .sort()
+            .map((path) => EventSchema.parse(files.json(path))),
+        ),
+      ),
   };
 }
 

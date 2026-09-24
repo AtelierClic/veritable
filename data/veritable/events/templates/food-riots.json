@@ -1,0 +1,90 @@
+{
+  "id": "food-riots",
+  "kind": "template",
+  "title": "event.food-riots.title",
+  "text": "event.food-riots.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "coverage.food",
+        "op": "lt",
+        "value": 0.9
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "subsidise",
+      "label": "event.food-riots.subsidise",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "ration",
+      "label": "event.food-riots.ration",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    },
+    {
+      "id": "crackdown",
+      "label": "event.food-riots.crackdown",
+      "effects": [
+        {
+          "target": "unrest",
+          "op": "set",
+          "value": 1
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.2
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.15
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

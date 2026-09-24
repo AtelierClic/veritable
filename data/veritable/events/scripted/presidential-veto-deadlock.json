@@ -1,0 +1,83 @@
+{
+  "id": "presidential-veto-deadlock",
+  "kind": "scripted",
+  "title": "event.presidential-veto-deadlock.title",
+  "text": "event.presidential-veto-deadlock.text",
+  "scope": "nation",
+  "trigger": {
+    "dateRange": ["2026-01-01", "2027-10-31"],
+    "nations": ["POL"],
+    "monthlyProbability": 0.05,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "once": true
+  },
+  "choices": [
+    {
+      "id": "compromise",
+      "label": "event.presidential-veto-deadlock.compromise",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "bypass",
+      "label": "event.presidential-veto-deadlock.bypass",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.07
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    },
+    {
+      "id": "wait",
+      "label": "event.presidential-veto-deadlock.wait",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 12
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}
