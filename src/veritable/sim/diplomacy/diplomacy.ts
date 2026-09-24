@@ -287,6 +287,20 @@ function powerShare(
   return total > 0 ? militaryPower(ctx, military, id) / total : 0;
 }
 
+// Relations every other nation loses with an aggressor at the declaration
+// (and every month of a war without casus belli), for the AI's appraisal.
+export function declarationRelationsCost(
+  ctx: EconomyContext,
+  military: MilitaryState,
+  aggressor: NationId,
+  casusBelliId: string,
+): number {
+  const entry =
+    ctx.casusBelli.find((c) => c.id === casusBelliId) ??
+    ctx.casusBelli.find((c) => c.check === "none")!;
+  return entry.relationsCost * (1 + powerShare(ctx, military, aggressor));
+}
+
 // Relations every nation loses with the aggressor for one month of war.
 function monthlyCost(
   ctx: EconomyContext,
@@ -453,16 +467,28 @@ export interface AffinityInputs {
   blocsOf(nation: NationId): readonly string[];
   sanctioning(by: NationId, against: NationId): boolean;
   enemies(nation: NationId): readonly NationId[];
+  // Inherited mistrust of the pair (J6c, <= 0).
+  mistrust(a: NationId, b: NationId): number;
+}
+
+function mistrustOf(
+  ctx: EconomyContext,
+  date: string | undefined,
+): (a: NationId, b: NationId) => number {
+  const factor = ctx.mistrustFactor(date);
+  return (a, b) => factor * Math.min(0, ctx.startRelation(a, b) ?? 0);
 }
 
 export function directAffinityInputs(
   ctx: EconomyContext,
   state: DiplomacyState,
+  date?: string,
 ): AffinityInputs {
   return {
     blocsOf: (nation) => ctx.blocsOf(nation),
     sanctioning: (by, against) => isSanctioning(state, by, against),
     enemies: (nation) => enemiesOf(state, nation),
+    mistrust: mistrustOf(ctx, date),
   };
 }
 
@@ -470,6 +496,7 @@ export function directAffinityInputs(
 export function cachedAffinityInputs(
   ctx: EconomyContext,
   state: DiplomacyState,
+  date?: string,
 ): AffinityInputs {
   const blocs = new Map<NationId, readonly string[]>();
   const enemies = new Map<NationId, readonly NationId[]>();
@@ -500,6 +527,7 @@ export function cachedAffinityInputs(
       }
       return list;
     },
+    mistrust: mistrustOf(ctx, date),
   };
 }
 
@@ -542,7 +570,8 @@ function fightsAnAlly(
 // Where the relations of two nations settle: common blocs and the
 // ideological proximity of their governments (J4). J6b: a common bloc weighs
 // by its type; sanctions between the two, or a war of either against an ally
-// of the other, pull the affinity down.
+// of the other, pull the affinity down. J6c: so does the mistrust inherited
+// from the first day, which fades.
 export function affinityOf(
   ctx: EconomyContext,
   state: DiplomacyState,
@@ -585,7 +614,8 @@ export function affinityOf(
     Math.min(cfg.blocRelationCap, blocs) +
       cfg.affinityIdeology * proximity -
       sanctions -
-      allyAtWar,
+      allyAtWar +
+      inputs.mistrust(a, b),
     -100,
     100,
   );
@@ -661,7 +691,7 @@ export function stepDiplomacyMonth(
     for (const a of war.aggressors) unjustAggressors.add(a);
   }
   // Blocs, sanctions and wars do not move during steps 1 and 4.
-  const inputs = cachedAffinityInputs(ctx, state);
+  const inputs = cachedAffinityInputs(ctx, state, date);
   const fighting = new Set<string>();
   for (const war of state.wars) {
     for (const x of war.aggressors) {
@@ -798,12 +828,21 @@ export function stepDiplomacyMonth(
       against = "aggressors";
     }
     const side = against === "aggressors" ? "defenders" : "aggressors";
+    // J6c: only a nation able to fight joins — a land neighbour of the side
+    // it would fight, or an ally of the principal of the side it would join
+    // (a common bloc of an ally type, a guarantee). At 208 nations every
+    // nation at odds with a pariah joined its war, Vanuatu included.
+    const principal = war[side][0];
     for (const nation of aiNations) {
       if (warSide(war, nation) !== null) continue;
       const hostile = war[against].some(
         (a) => relation(state, nation, a) < cfg.coalition.relationsBelow,
       );
       if (!hostile) continue;
+      const able =
+        war[against].some((a) => ctx.landNeighbours(nation, a)) ||
+        (principal !== undefined && allies(ctx, nation, principal));
+      if (!able) continue;
       if (
         !state.coalitionCalls.some(
           (c) => c.war === war.id && c.nation === nation,

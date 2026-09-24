@@ -24,6 +24,40 @@ window.vt = {
     if (!b) throw new Error("no button " + label);
     return b;
   },
+  // Clicks the button "label" in the row (tr, li or div) whose text holds
+  // "rowText".
+  rowButton(root, rowText, label) {
+    const rows = [...root.querySelectorAll("tr, li, div")].filter(
+      (r) => r.textContent.includes(rowText),
+    );
+    for (const row of rows.reverse()) {
+      const b = [...row.querySelectorAll("button")].find(
+        (x) => x.textContent.replace(/\s+/g, " ").trim() === label,
+      );
+      if (b) { b.click(); return true; }
+    }
+    return false;
+  },
+  // Saves of the test, kept in the page: a snapshot now, a reload later.
+  saves: {},
+  async keep(name) {
+    const snap = await this.sim().snapshot();
+    this.saves[name] = snap.bytes;
+    return snap.gameDate;
+  },
+  async reload(name) {
+    const bytes = this.saves[name];
+    const before = this.sim();
+    this.panel().load(bytes, name);
+    for (let i = 0; i < 240; i++) {
+      await this.sleep(500);
+      const s = this.screens();
+      if (s && s.sim && s.sim !== before && this.bar()) {
+        try { const v = await s.sim.read(); if (v && v.date) return v.date; } catch (e) {}
+      }
+    }
+    throw new Error("the save did not load");
+  },
   sim() {
     const s = this.screens();
     return (s && s.sim) || this.panel().sim;

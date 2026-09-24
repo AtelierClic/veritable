@@ -138,10 +138,13 @@ export const EventSchema = z.object({
     once: z.boolean().optional(),
     cooldownMonths: z.number().int().min(0).optional(),
   }),
-  // Templates: how the other nation and the good are drawn.
+  // Templates: how the other nation and the good are drawn. A
+  // "tense-neighbor" is a land neighbour with relations at or under
+  // events.tenseNeighbourRelations (J6c); without one the event does not
+  // fire.
   params: z
     .object({
-      other: z.enum(["neighbor", "any", "rival"]).optional(),
+      other: z.enum(["neighbor", "tense-neighbor", "any", "rival"]).optional(),
       good: z.enum(["any", "energy", "food", "industrial"]).optional(),
     })
     .optional(),

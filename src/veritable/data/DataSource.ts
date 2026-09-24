@@ -4,6 +4,7 @@ import { Bloc, BlocSchema } from "./schemas/bloc";
 import { NationId } from "./schemas/common";
 import { VeritableConfig, VeritableConfigSchema } from "./schemas/config";
 import { EventSchema, VeritableEvent } from "./schemas/event";
+import { Georef, GeorefSchema } from "./schemas/georef";
 import { Good, GoodsSchema } from "./schemas/goods";
 import { Law, LawsSchema } from "./schemas/laws";
 import { LeadersData, LeadersDataSchema } from "./schemas/leaders";
@@ -72,6 +73,8 @@ export interface DataSource {
   borders(scenario: Scenario): Promise<Borders>;
   // Maritime zones (J3b): the seeds of the map, and their rasterization.
   seas(map: string): Seas;
+  // The georeferencing of a map (J6c: the size of its tiles).
+  georef(map: string): Georef;
   zones(scenario: Scenario): Promise<Zones>;
   // Contested regions (J6): null when the scenario has no regions file.
   regions(scenario: Scenario): Promise<Regions | null>;
@@ -149,6 +152,10 @@ export function createDataSource(files: RawDataFiles): DataSource {
     seas: (map) =>
       once(`seas:${map}`, () =>
         SeasSchema.parse(files.json(`maps/${map}.seas.json`)),
+      ),
+    georef: (map) =>
+      once(`georef:${map}`, () =>
+        GeorefSchema.parse(files.json(`maps/${map}.georef.json`)),
       ),
     regimes: () =>
       once("regimes", () =>

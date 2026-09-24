@@ -19,6 +19,7 @@ import { VeritableSimImpl } from "../VeritableSimImpl";
 import {
   affinityOf,
   allies,
+  directAffinityInputs,
   imposeSanctions,
   isSanctioning,
   relation,
@@ -167,6 +168,55 @@ describe("the affinity (J6b)", () => {
     expect(affinityOf(ctx, diplomacy, politics, "AAA", "DDD")).toBe(
       before - ctx.config.diplomacy.affinityAllyAtWar,
     );
+  });
+});
+
+describe("the inherited mistrust (J6c)", () => {
+  const startRelations = {
+    scenario: "test",
+    asOf: "2026-01-01",
+    source: "test",
+    note: "",
+    nations: ["AAA", "BBB", "CCC", "DDD"],
+    // AB AC AD BC BD CD
+    values: [55, -60, 10, 0, -20, 35],
+  };
+
+  it("pulls down the affinity of a pair hostile on the first day, by half every halfLifeYears", () => {
+    const plain = campaign().internals;
+    const { ctx, diplomacy, politics } = campaign(
+      {},
+      { startRelations, startDate: "2026-01-01" },
+    ).internals;
+    const cfg = ctx.config.diplomacy.mistrust;
+    const without = (a: string, b: string) =>
+      affinityOf(plain.ctx, plain.diplomacy, plain.politics, a, b);
+    const at = (a: string, b: string, date?: string) =>
+      affinityOf(
+        ctx,
+        diplomacy,
+        politics,
+        a,
+        b,
+        false,
+        directAffinityInputs(ctx, diplomacy, date),
+      );
+    expect(at("AAA", "CCC", "2026-01-01") - without("AAA", "CCC")).toBe(
+      -60 * cfg.share,
+    );
+    expect(at("BBB", "DDD") - without("BBB", "DDD")).toBe(-20 * cfg.share);
+    const later = `${2026 + cfg.halfLifeYears}-01-01`;
+    expect(at("AAA", "CCC", later) - without("AAA", "CCC")).toBeCloseTo(
+      -30 * cfg.share,
+      2,
+    );
+    // A friendly first day brings nothing more.
+    expect(at("AAA", "BBB") - without("AAA", "BBB")).toBe(0);
+  });
+
+  it("is nothing without a relations file (europe-10)", () => {
+    const { ctx, diplomacy } = campaign().internals;
+    expect(directAffinityInputs(ctx, diplomacy).mistrust("AAA", "CCC")).toBe(0);
   });
 });
 

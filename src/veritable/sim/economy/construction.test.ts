@@ -63,6 +63,22 @@ describe("structures built on the map are paid by the national budget", () => {
     expect(sim.read().constructionCost.AAA).toBe(prices.Port);
   });
 
+  it("nothing for what the restore of the first day places after the first count (J6c)", () => {
+    const { sim, world, month } = setup();
+    // The core counts nothing while the restore that places the capital's
+    // city and the silos is pending: the count of the first day is empty.
+    (
+      sim as unknown as { territory: { structures: object } }
+    ).territory.structures = {};
+    world.built.set("AAA", { City: 1, MissileSilo: 1 });
+    month();
+    expect(sim.read().constructionCost).toEqual({ AAA: 0, BBB: 0 });
+    // From then on, what is built is paid.
+    world.built.set("AAA", { City: 2, MissileSilo: 1 });
+    month();
+    expect(sim.read().constructionCost.AAA).toBeGreaterThan(0);
+  });
+
   it("the counts survive a save", () => {
     const { sim, world, month } = setup();
     world.built.set("AAA", { City: 3 });

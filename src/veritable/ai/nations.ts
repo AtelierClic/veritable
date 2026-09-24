@@ -17,7 +17,9 @@ import { defenseGuarantors } from "../sim/blocs/blocs";
 import { dateOfDay } from "../sim/calendar";
 import { claimWeight } from "../sim/diplomacy/claims";
 import {
+  allies,
   availableCasusBelli,
+  declarationRelationsCost,
   declareWar,
   DiplomacyEvent,
   enemiesOf,
@@ -258,18 +260,48 @@ function defendedPower(env: AiEnv, id: NationId, target: NationId): number {
 }
 
 // Share of the partners of `id` (trade weights) likely to sanction it for a
-// war on `target`: those that share a bloc with the target.
-function expectedSanctions(env: AiEnv, id: NationId, target: NationId): number {
-  const blocs = env.ctx.blocsOf(target);
+// war on `target`, by the rule the AI nations follow (sim/diplomacy): the
+// target itself, and the partners that share a bloc with it and whose
+// relations with `id` would fall under the sanction threshold — the cost of
+// the declaration (every month of the war without casus belli), and the
+// drift of an ally of the target towards a lower affinity (J6c). Counting
+// every partner sharing any bloc with the target, forums included, made
+// every war too dear at the scale of the world.
+function expectedSanctions(
+  env: AiEnv,
+  id: NationId,
+  target: NationId,
+  casusBelli: string,
+): number {
+  const cfg = env.ctx.config;
+  const months = 12 * cfg.ai.nations.war.expectedWarYears;
+  const perCharge = declarationRelationsCost(
+    env.ctx,
+    env.military,
+    id,
+    casusBelli,
+  );
+  const fall = casusBelli === "none" ? perCharge * months : perCharge;
+  const drift = Math.min(
+    cfg.diplomacy.affinityAllyAtWar,
+    cfg.diplomacy.relationDecayPerMonth * months,
+  );
   let total = 0;
   let hostile = 0;
   for (const other of env.ctx.nationIds) {
     if (other === id) continue;
     const w = env.ctx.partnerWeight(id, other);
     total += w;
-    const shares =
-      other === target || env.ctx.blocsOf(other).some((b) => blocs.includes(b));
-    if (shares) hostile += w;
+    if (other === target) {
+      hostile += w;
+      continue;
+    }
+    if (env.ctx.commonBlocs(other, target) === 0) continue;
+    const after =
+      relation(env.diplomacy, other, id) -
+      fall -
+      (allies(env.ctx, other, target) ? drift : 0);
+    if (after < cfg.diplomacy.sanction.relationsBelow) hostile += w;
   }
   return total > 0 ? hostile / total : 0;
 }
@@ -338,14 +370,20 @@ export function appraiseWar(
   const sanctions =
     env.ctx.config.economy.sanctionFriction *
     own.tradeOpenness *
-    expectedSanctions(env, id, target);
+    expectedSanctions(env, id, target, casusBelli);
+  // J6c: exhaustion and reputation scale with the size of the war — the
+  // losses that wear a nation out fall as the gap in power grows; a war on a
+  // much weaker neighbour does not cost what a war on an equal does. Full at
+  // the least ratio the AI goes to war with.
+  const scale = Math.min(1, cfg.powerRatio / powerRatio);
   const cost =
     cfg.expectedWarYears *
     duration *
     own.gdp *
     (sanctions +
-      cfg.exhaustionCostPctGdp +
-      cfg.reputationCostPctGdp * (casusBelli === "none" ? 3 : 1)) *
+      scale *
+        (cfg.exhaustionCostPctGdp +
+          cfg.reputationCostPctGdp * (casusBelli === "none" ? 3 : 1))) *
     (0.5 + agenda(env, id, "growth"));
   return {
     target,

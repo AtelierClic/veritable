@@ -26,6 +26,10 @@ const jsonFiles = {
     eager: true,
     import: "default",
   }),
+  ...import.meta.glob<unknown>("../../../data/veritable/maps/*.georef.json", {
+    eager: true,
+    import: "default",
+  }),
 };
 
 // Inlined as a data: URL — the game worker runs from a blob: URL, where

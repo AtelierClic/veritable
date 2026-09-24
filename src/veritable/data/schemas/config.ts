@@ -274,6 +274,14 @@ const DiplomacyConfigSchema = z.object({
   allyBlocTypes: z.array(
     z.enum(["military-alliance", "economic-union", "forum"]),
   ),
+  // Inherited mistrust (J6c): the hostility of the first day's relations
+  // (scenario file) that the affinity does not explain — rivalries, old
+  // wars — pulls the affinity of the pair down by share x the negative
+  // first-day relation, halving every halfLifeYears.
+  mistrust: z.object({
+    share: share,
+    halfLifeYears: z.number().positive(),
+  }),
   // Satisfaction lost by the youth and business groups of an aggressor.
   declarationGroupHit: share,
   // Humanitarian casus belli: the target is in unrest below this stability.
@@ -549,6 +557,9 @@ const EventsConfigSchema = z.object({
   // A government sometimes takes another choice than its best one.
   aiMistakeProbability: share,
   grievanceMonths: z.number().int().min(1),
+  // A "tense neighbour" (J6c): a land neighbour with relations at or under
+  // this value; the incidents of a tense border are drawn among them.
+  tenseNeighbourRelations: z.number(),
   historyKept: z.number().int().min(1),
   ai: z.object({
     stability: z.number(),
@@ -571,6 +582,10 @@ export const VeritableConfigSchema = z.object({
     // Start of a campaign whose scenario does not say otherwise.
     defaultStartDate: IsoDateSchema,
   }),
+  // J6c: the war constants in tiles (distances, speeds of conquest, the
+  // value of a tile) are calibrated on the Europe map; a map of another
+  // scale converts them (data/mapScale.ts). Its tiles per radian.
+  mapScale: z.object({ referenceGeorefScale: z.number().positive() }),
   save: z.object({
     // Monthly automatic saves kept; older ones are rotated out.
     autosaveSlots: z.number().int().min(1),

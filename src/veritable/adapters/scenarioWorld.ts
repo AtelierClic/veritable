@@ -31,6 +31,9 @@ export interface ScenarioPack {
   // Tiles of the contested regions (J6, claims); none without a regions file.
   regions?: ReadonlyMap<string, Uint32Array>;
   data: SimData; // goods, rest of the world, blocs, geography
+  // Tiles per radian of the map (its georeferencing, J6c): the size of a
+  // tile, for the war constants calibrated on the Europe map.
+  georefScale?: number;
 }
 
 export interface NationBinding {

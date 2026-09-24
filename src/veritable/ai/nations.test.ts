@@ -1,4 +1,5 @@
 import { loadVeritableConfig } from "../data/loadConfig";
+import { Bloc } from "../data/schemas/bloc";
 import { VeritableConfig } from "../data/schemas/config";
 import { NationData } from "../data/schemas/nation";
 import {
@@ -15,8 +16,9 @@ import {
   TestNationOptions,
   testScenario,
 } from "../sim/testing/nations";
-import { testSimData } from "../sim/testing/simData";
+import { testBloc, testSimData } from "../sim/testing/simData";
 import { VeritableSimImpl } from "../sim/VeritableSimImpl";
+import { AiEnv, appraiseWar } from "./nations";
 
 const DAY = 1440;
 
@@ -35,6 +37,7 @@ function campaign(
   options: Record<string, TestNationOptions> = {},
   config: VeritableConfig = quietConfig(),
   ids = ["AAA", "BBB", "CCC", "DDD"],
+  blocs: Bloc[] = [],
 ) {
   const sheets = new Map<string, NationData>(
     ids.map((id) => [id, testNation(id, options[id] ?? {})]),
@@ -42,7 +45,7 @@ function campaign(
   const sim = new VeritableSimImpl({
     config,
     world: new MemoryWorld(4, 4),
-    data: testSimData(ids, { landNeighbours: [["BBB", "CCC"]] }),
+    data: testSimData(ids, { landNeighbours: [["BBB", "CCC"]], blocs }),
     nationData: (id) => sheets.get(id),
   });
   sim.init(testScenario(ids), 21);
@@ -222,6 +225,69 @@ describe("war declarations of the AI", () => {
     expect(
       far.sim.read().diplomacy.wars.filter((w) => w.aggressors[0] === "DDD"),
     ).toEqual([]);
+  });
+});
+
+describe("the sanctions a war would bring (J6c)", () => {
+  it("come only from the partners of the target that would turn hostile to the aggressor, a common forum or not", () => {
+    // DDD shares a forum with CCC, the target of BBB.
+    const forum = testBloc({
+      id: "club",
+      type: "forum",
+      members: [
+        { nation: "CCC", status: "full" },
+        { nation: "DDD", status: "full" },
+      ],
+    });
+    const { sim, internals } = campaign(
+      {
+        BBB: { activePersonnel: 1_000_000, tradeOpenness: 0.5 },
+        CCC: { activePersonnel: 50_000 },
+      },
+      quietConfig(),
+      ["AAA", "BBB", "CCC", "DDD"],
+      [forum],
+    );
+    const d = internals.diplomacy;
+    setRelation(d, "BBB", "CCC", -30);
+    d.grievances.push({ by: "BBB", against: "CCC", until: "2027-06-01" });
+    const env = () =>
+      (sim as unknown as { aiEnv(date: string): AiEnv }).aiEnv("2026-01-01");
+    setRelation(d, "DDD", "BBB", 50);
+    const friendly = appraiseWar(env(), "BBB", "CCC")!;
+    setRelation(d, "DDD", "BBB", -35);
+    const hostile = appraiseWar(env(), "BBB", "CCC")!;
+    expect(friendly.casusBelli).toBe("grievance");
+    expect(hostile.cost).toBeGreaterThan(friendly.cost);
+  });
+});
+
+describe("the cost of a war by its size (J6c)", () => {
+  it("exhaustion and reputation fall as the gap in power grows", () => {
+    const appraise = (target: number) => {
+      const { sim, internals } = campaign(
+        {
+          BBB: { activePersonnel: 1_000_000, tradeOpenness: 0.05 },
+          CCC: { activePersonnel: target },
+        },
+        quietConfig(),
+      );
+      setRelation(internals.diplomacy, "BBB", "CCC", -30);
+      internals.diplomacy.grievances.push({
+        by: "BBB",
+        against: "CCC",
+        until: "2027-06-01",
+      });
+      const env = (sim as unknown as { aiEnv(date: string): AiEnv }).aiEnv(
+        "2026-01-01",
+      );
+      return appraiseWar(env, "BBB", "CCC")!;
+    };
+    const equalish = appraise(600_000);
+    const weak = appraise(60_000);
+    expect(weak.powerRatio).toBeGreaterThan(equalish.powerRatio);
+    // Same trade and sanctions: before the J6c both cost the same.
+    expect(weak.cost).toBeLessThan(equalish.cost * 0.6);
   });
 });
 

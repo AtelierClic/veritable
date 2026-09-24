@@ -1757,13 +1757,21 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   // Structures built since the last count, at their cost: the legacy gold is
-  // no resource in a campaign, the national budget pays (J5).
+  // no resource in a campaign, the national budget pays (J5). J6c: a nation
+  // never counted pays nothing — its first count is the reference. The
+  // count of the first day is taken while the world still waits for the
+  // restore that places the capital's city and the silos, so it is empty;
+  // every nation paid them in its first month (8 Md$: ruin for Vanuatu).
   private constructionMonth(): Record<NationId, number> {
     const prices = this.deps.config.budget.structureCostUsd;
     const counts = this.deps.world.structureCounts();
     const costs: Record<NationId, number> = {};
     for (const [id, count] of counts) {
-      const before = this.territory.structures[id] ?? {};
+      const before = this.territory.structures[id];
+      if (before === undefined) {
+        costs[id] = 0;
+        continue;
+      }
       let cost = 0;
       for (const [type, n] of Object.entries(count)) {
         cost += Math.max(0, n - (before[type] ?? 0)) * (prices[type] ?? 0);

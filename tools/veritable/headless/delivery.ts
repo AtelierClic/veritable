@@ -268,6 +268,7 @@ export function aggregate(campaigns: Campaign[]) {
           atLeast70pctCoupsInFragileRegimes: world.fragileCoupShare >= 0.7,
           pricesBounded: low >= 0.5 && high <= 2,
           defaultsOnlyInIndebtedOrUnstable: world.otherDefaults.length === 0,
+          noNonFiniteDebt: world.nonFinite.length === 0,
         }
       : europe;
   return {
@@ -360,12 +361,27 @@ function worldMetrics(campaigns: Campaign[]) {
   const defaults = campaigns.flatMap((c) =>
     (c.delivery.defaults ?? []).map((d) => ({ ...d, seed: c.seed })),
   );
+  // A debt that is not a number (a GDP at zero) is written null in the JSON:
+  // it is listed, never taken for a debt above 100 %.
+  const fixed = (x: number | null) =>
+    typeof x === "number" && Number.isFinite(x) ? x.toFixed(2) : "NaN";
   const otherDefaults = defaults
-    .filter((d) => !(d.debtToGdp > 1 || d.stability < 0.4))
+    .filter(
+      (d) =>
+        !(
+          (typeof d.debtToGdp === "number" && d.debtToGdp > 1) ||
+          d.stability < 0.4
+        ),
+    )
     .map(
       (d) =>
-        `${d.nation}@${d.date} debt ${d.debtToGdp.toFixed(2)} stability ${d.stability.toFixed(2)} (seed ${d.seed})`,
+        `${d.nation}@${d.date} debt ${fixed(d.debtToGdp)} stability ${fixed(d.stability)} (seed ${d.seed})`,
     );
+  const nonFinite = defaults
+    .filter(
+      (d) => typeof d.debtToGdp !== "number" || !Number.isFinite(d.debtToGdp),
+    )
+    .map((d) => `${d.nation}@${d.date} (seed ${d.seed})`);
   return {
     pairShareMax: Math.max(0, ...pairShares),
     pairShareMedian: median(pairShares),
@@ -385,6 +401,7 @@ function worldMetrics(campaigns: Campaign[]) {
     fragileCoupShare: coups.length === 0 ? 1 : fragile / coups.length,
     defaults: defaults.length,
     otherDefaults,
+    nonFinite,
   };
 }
 

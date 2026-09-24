@@ -30,6 +30,7 @@ interface Setup {
   autopilot?: boolean;
   config?: VeritableConfig;
   blocsData?: Bloc[];
+  landNeighbours?: [string, string][];
 }
 
 function campaign(setup: Setup) {
@@ -62,7 +63,10 @@ function campaign(setup: Setup) {
   const sim = new VeritableSimImpl({
     config: setup.config ?? quietConfig(),
     world: memory,
-    data: testSimData(ids, { blocs: setup.blocsData }),
+    data: testSimData(ids, {
+      blocs: setup.blocsData,
+      landNeighbours: setup.landNeighbours,
+    }),
     nationData: (id) => sheets.get(id),
     scenario,
     autopilot: setup.autopilot,
@@ -338,6 +342,11 @@ describe("international reaction", () => {
         CCC: { personnel: 100_000 },
         DDD: { personnel: 100_000 },
       },
+      // J6c: the coalition takes the nations able to fight the aggressor.
+      landNeighbours: [
+        ["AAA", "CCC"],
+        ["AAA", "DDD"],
+      ],
     });
     sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
     months(18);
@@ -359,6 +368,7 @@ describe("international reaction", () => {
         CCC: { personnel: 900_000 },
         DDD: { personnel: 100_000 },
       },
+      landNeighbours: [["AAA", "DDD"]],
     });
     sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
     // CCC, far stronger than the aggressor, has already joined the victim.
@@ -383,6 +393,29 @@ describe("international reaction", () => {
       after.coalitionCalls.some((c) => c.nation === "DDD") ||
         after.wars[0].defenders.includes("DDD"),
     ).toBe(true);
+  });
+
+  it("only nations able to fight join a coalition: a land neighbour of the aggressor or an ally of its victim (J6c)", () => {
+    const setup = (landNeighbours: [string, string][]) =>
+      campaign({
+        nations: {
+          AAA: { personnel: 600_000 },
+          BBB: { personnel: 100_000 },
+          CCC: { personnel: 100_000 },
+          DDD: { personnel: 100_000 },
+        },
+        landNeighbours,
+      });
+    // DDD shares no bloc with BBB (the header of this file): alone and far,
+    // it stays out however hostile.
+    const far = setup([["AAA", "CCC"]]);
+    far.sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    setRelation(far.sim.read().diplomacy as DiplomacyState, "AAA", "DDD", -90);
+    far.months(18);
+    expect(far.sim.read().diplomacy.wars[0].defenders).not.toContain("DDD");
+    expect(
+      far.sim.read().diplomacy.coalitionCalls.some((c) => c.nation === "DDD"),
+    ).toBe(false);
   });
 
   it("no coalition with a casus belli, however strong the aggressor", () => {

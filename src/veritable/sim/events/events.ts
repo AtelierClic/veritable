@@ -165,7 +165,7 @@ function holds(env: EventsEnv, nation: NationId, c: EventCondition): boolean {
 function otherOf(
   env: EventsEnv,
   nation: NationId,
-  kind: "neighbor" | "any" | "rival",
+  kind: "neighbor" | "tense-neighbor" | "any" | "rival",
 ): NationId | null {
   const others = env.ctx.nationIds.filter((n) => n !== nation);
   if (kind === "rival") {
@@ -180,10 +180,17 @@ function otherOf(
     }
     return worst;
   }
+  const tense = env.ctx.config.events.tenseNeighbourRelations;
   const pool =
     kind === "neighbor"
       ? others.filter((n) => env.ctx.landNeighbours(nation, n))
-      : others;
+      : kind === "tense-neighbor"
+        ? others.filter(
+            (n) =>
+              env.ctx.landNeighbours(nation, n) &&
+              relation(env.diplomacy, nation, n) <= tense,
+          )
+        : others;
   return pool.length === 0 ? null : env.rng.pick(pool);
 }
 

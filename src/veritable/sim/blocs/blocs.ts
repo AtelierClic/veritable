@@ -20,6 +20,7 @@ import {
 import {
   addRelation,
   DiplomacyEvent,
+  directAffinityInputs,
   imposeSanctions,
   isSanctioning,
   joinWar,
@@ -1293,7 +1294,14 @@ function aiProposal(env: BlocEnv, id: string): BlocStepEvent[] {
     );
     if (
       policy &&
-      !policyLiftable(ctx, env.diplomacy, env.politics, leader, target)
+      !policyLiftable(
+        ctx,
+        env.diplomacy,
+        env.politics,
+        leader,
+        target,
+        directAffinityInputs(ctx, env.diplomacy, env.date),
+      )
     ) {
       continue;
     }

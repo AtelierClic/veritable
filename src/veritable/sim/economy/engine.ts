@@ -321,7 +321,15 @@ export function stepTrade(
           ? 1
           : Math.min(1, (Math.min(supply, demand) + received) / demand);
       imports[k] += received * importPrice * 1e6;
-      const dumped = isEmbargoed ? unsold : 0;
+      // J6c: only what the embargoes kept from its buyers — what it withheld,
+      // and its unsold in the share of its market they closed — is dumped at
+      // the discount and leaves the supply that forms the price. At 208
+      // nations a producer embargoed by one small buyer had all its ordinary
+      // unsold taken off the market: the Gulf's surplus left the price, which
+      // rose, and they produced more.
+      const dumped = isEmbargoed
+        ? withheld[k] + flows.unsold[k] * lostShare[k]
+        : 0;
       // What is re-routed or dumped sells at the discount, which narrows as
       // the circumvention of the good builds up (new buyers, shadow fleet).
       const circumvention = nation.circumvention[good.id];
@@ -333,7 +341,7 @@ export function stepTrade(
         rents[k] +=
           (supply - dumped * dumpDiscount - shipped * rerouted) * price * 1e6;
       }
-      if (isEmbargoed) stranded += unsold;
+      if (isEmbargoed) stranded += dumped;
       // The imported share of the basket is paid at the import price.
       const importedShare =
         demand <= 1e-12 ? 0 : Math.min(1, received / demand);

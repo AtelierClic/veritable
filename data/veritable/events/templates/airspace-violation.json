@@ -5,12 +5,12 @@
   "text": "event.airspace-violation.text",
   "scope": "nation",
   "trigger": {
-    "monthlyProbability": 0.004,
+    "monthlyProbability": 0.012,
     "conditions": [],
     "cooldownMonths": 36
   },
   "params": {
-    "other": "neighbor"
+    "other": "tense-neighbor"
   },
   "choices": [
     {

@@ -199,6 +199,54 @@ describe("events", () => {
     expect(read().events.history.length).toBe(1);
   });
 
+  it("a tense-neighbour incident falls on a hostile land neighbour, never on a friendly one, and does not fire without one (J6c)", () => {
+    const incident = event({
+      id: "border-incident",
+      kind: "template",
+      trigger: {
+        nations: ["AAA"],
+        monthlyProbability: 1,
+        conditions: [],
+        cooldownMonths: 100,
+      },
+      params: { other: "tense-neighbor" },
+      choices: [
+        {
+          id: "escalate",
+          label: "event.border-incident.escalate",
+          effects: [
+            { target: "grievance.other", op: "set", value: 1, months: 6 },
+          ],
+        },
+      ],
+    });
+    const neighbours: [string, string][] = [
+      ["AAA", "BBB"],
+      ["AAA", "CCC"],
+    ];
+    const hostile = campaign({
+      autopilot: true,
+      landNeighbours: neighbours,
+      events: [incident],
+    });
+    const internals = hostile.sim as unknown as {
+      diplomacy: { relations: Record<string, Record<string, number>> };
+    };
+    internals.diplomacy.relations.AAA.CCC = -50;
+    hostile.months(1);
+    expect(hostile.sim.read().diplomacy.grievances).toEqual([
+      { by: "AAA", against: "CCC", until: "2026-08-01" },
+    ]);
+    // No tense border: the incident does not happen.
+    const calm = campaign({
+      autopilot: true,
+      landNeighbours: neighbours,
+      events: [incident],
+    });
+    calm.months(3);
+    expect(calm.sim.read().events.history).toEqual([]);
+  });
+
   it("a world event happens once and moves the world's supply", () => {
     const { sim, months } = campaign({
       autopilot: true,

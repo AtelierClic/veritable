@@ -2,6 +2,7 @@ import { Game } from "../../core/game/Game";
 import { simpleHash } from "../../core/Util";
 import { bordersTileCounts } from "../data/bordersFile";
 import { loadVeritableConfig } from "../data/loadConfig";
+import { configForMap } from "../data/mapScale";
 import { VeritableConfig } from "../data/schemas/config";
 import { decodeSave, encodeSaveWithStats } from "../save/serialize";
 import { SimEvent, VeritableSim } from "../sim/VeritableSim";
@@ -45,7 +46,11 @@ export class VeritableSession {
   // first.
   static create(game: Game, options: SessionOptions): VeritableSession {
     const { coreStart, pack, saveBytes } = options;
-    const config = options.config ?? loadVeritableConfig();
+    // J6c: the war constants at the scale of the scenario's map.
+    const config = configForMap(
+      options.config ?? loadVeritableConfig(),
+      pack.georefScale,
+    );
     const playerNation = playerNationOf(
       pack,
       coreStart.config.veritablePlayerNation,

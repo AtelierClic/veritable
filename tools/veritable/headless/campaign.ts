@@ -1,5 +1,6 @@
 import { BordersWorld } from "../../../src/veritable/adapters/BordersWorld";
 import { ScenarioPack } from "../../../src/veritable/adapters/scenarioWorld";
+import { configForMap } from "../../../src/veritable/data/mapScale";
 import { VeritableConfig } from "../../../src/veritable/data/schemas/config";
 import { GOOD_IDS, GoodId } from "../../../src/veritable/data/schemas/goods";
 import { encodeSave } from "../../../src/veritable/save/serialize";
@@ -138,7 +139,9 @@ export function simDriver(
 ): Driver {
   const probe = new TimingProbe();
   const sim = new VeritableSimImpl({
-    config,
+    // J6c: the war constants at the scale of the scenario's map (the
+    // session does it on the core).
+    config: configForMap(config, pack.georefScale),
     world: new BordersWorld(pack.borders, pack.zones, undefined, pack.regions),
     data: pack.data,
     nationData: (id) => pack.nations.find((n) => n.id === id),
@@ -451,12 +454,25 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       delivery.peaces.push({ war: event.war, date: event.date });
     }
     const last = series[series.length - 1];
+    // The regime a coup overthrew: the "regime-changed" that follows it
+    // (the sample of the month may already show the junta).
     if (event.type === "coup-succeeded") {
       delivery.coups.push({
         nation: event.nation,
         date: event.date,
         regime: last.regime[event.nation] ?? "",
       });
+    }
+    if (event.type === "regime-changed" && "params" in event) {
+      const coup = delivery.coups[delivery.coups.length - 1];
+      if (
+        coup !== undefined &&
+        coup.nation === event.nation &&
+        coup.date === event.date &&
+        event.params.to === "junta"
+      ) {
+        coup.regime = event.params.from;
+      }
     }
     if (event.type === "sovereign-default") {
       delivery.defaults.push({

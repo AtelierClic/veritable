@@ -41,6 +41,7 @@ export async function loadScenarioPackFrom(
     zones,
     regions: regions?.regions ?? new Map(),
     data: simDataFrom(source, scenario),
+    georefScale: source.georef(meta.map).scale,
   };
 }
 
@@ -80,6 +81,7 @@ export function simDataFrom(source: DataSource, scenario: Scenario): SimData {
     events: source.events(),
     // The world of 2026 (J6b).
     startRelations: source.relations(scenario) ?? undefined,
+    startDate: scenario.startDate,
     guarantees: scenario.guarantees,
     internalConflicts: scenario.internalConflicts,
   };

@@ -42,6 +42,8 @@ export interface SimData {
   // The world of 2026 (J6b): relations of the first day, bilateral
   // guarantees and internal conflicts of the scenario.
   startRelations?: RelationsFile;
+  // First day of the scenario (J6c: the inherited mistrust fades from it).
+  startDate?: string;
   guarantees?: NonNullable<Scenario["guarantees"]>;
   internalConflicts?: NonNullable<Scenario["internalConflicts"]>;
 }
@@ -123,6 +125,10 @@ export interface EconomyContext {
   // Relation of a pair on the first day from the scenario's file (J6b), null
   // without one (the rule of the J3 applies).
   startRelation(a: string, b: string): number | null;
+  // Inherited mistrust of a pair at a date (J6c, <= 0): share x the
+  // negative first-day relation, halving every halfLifeYears from the first
+  // day; 0 without a relations file. Without a date, its first-day value.
+  mistrustFactor(date?: string): number;
 }
 
 export function buildContext(
@@ -296,6 +302,13 @@ export function buildContext(
       data.startRelations === undefined
         ? null
         : relationIn(data.startRelations, relationIndex, a, b),
+    mistrustFactor: (date) => {
+      const cfg = config.diplomacy.mistrust;
+      if (date === undefined || data.startDate === undefined) return cfg.share;
+      const years =
+        (Date.parse(date) - Date.parse(data.startDate)) / (365.25 * 86_400_000);
+      return cfg.share * Math.pow(0.5, Math.max(0, years) / cfg.halfLifeYears);
+    },
     membersOf: (bloc) =>
       [...(memberships.get(bloc)?.keys() ?? [])].filter((n) => full(bloc, n)),
     blocsOf,

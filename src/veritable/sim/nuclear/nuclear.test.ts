@@ -53,7 +53,8 @@ function campaign(
   const sim = new VeritableSimImpl({
     config,
     world,
-    data: testSimData(ids),
+    // J6c: CCC borders BBB (a coalition takes nations able to fight).
+    data: testSimData(ids, { landNeighbours: [["BBB", "CCC"]] }),
     nationData: (id) => sheets.get(id),
   });
   sim.init(testScenario(ids), 11);

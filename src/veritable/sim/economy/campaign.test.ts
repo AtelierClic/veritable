@@ -633,6 +633,25 @@ describe("J3 corrections of the J2", () => {
     expect(view.economies.BBB.priceIndex).toBeLessThan(1.02);
   });
 
+  it("an exporter embargoed by one small buyer keeps its ordinary unsold on the market: only what the embargo kept from it leaves the price (J6c)", () => {
+    const config = quietConfig();
+    const ids = ["AAA", "BBB", "CCC"];
+    const nations = ids.map((id) => testNation(id));
+    const ctx = buildContext(config, testSimData(ids), nations);
+    const economy = initEconomy(ctx, nations, testRow());
+    // AAA floods the market with oil; CCC alone embargoes it.
+    const a = economy.nations.AAA;
+    a.production.oil = 20 * (a.production.oil + a.consumption.oil + 1);
+    economy.market.embargoes.push({ from: "AAA", to: "CCC", good: "oil" });
+    stepTrade(ctx, economy);
+    const shipped =
+      economy.nations.BBB.imports.oil + economy.nations.CCC.imports.oil;
+    const unsold = a.exports.oil - shipped;
+    expect(unsold).toBeGreaterThan(0);
+    // Before the J6c, all of it left the supply that forms the price.
+    expect(economy.market.stranded.oil).toBeLessThan(0.5 * unsold);
+  });
+
   it("stepTrade and stepGrowth are the monthly steps behind the campaign", () => {
     const config = quietConfig();
     const nations = [testNation("AAA")];
