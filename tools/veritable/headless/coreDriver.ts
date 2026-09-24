@@ -116,9 +116,22 @@ export async function coreDriver(
   new GameRunner(game, new Executor(game, gameID, undefined), () => {}).init();
   // The first ticks load the scenario; campaign time starts with the first
   // tick that advances the simulation, which belongs to the first day.
+  // J6c: a tick as the GameRunner of the game runs it, with the buffers of
+  // packed updates emptied every tick (the renderer's side). Left full, the
+  // player updates of 208 nations outgrew the longest array V8 allows after
+  // about thirty years of the world, and every headless heap measure grew
+  // with them.
+  const tick = () => {
+    game.executeNextTick();
+    game.drainPackedTileUpdates();
+    game.drainPackedMotionPlans();
+    game.drainPackedPlayerUpdates();
+    game.drainPackedAttackUpdates();
+    game.drainNukeImpacts();
+  };
   let pending: SimEvent[] = [];
   while (session.sim.read().elapsedGameMinutes === 0) {
-    game.executeNextTick();
+    tick();
     pending = session.onCoreTick();
   }
   let ticksIntoDay = 1;
@@ -133,7 +146,7 @@ export async function coreDriver(
       pending = [];
       for (let i = ticksIntoDay; i < ticksPerDay; i++) {
         const t0 = performance.now();
-        game.executeNextTick();
+        tick();
         const t1 = performance.now();
         coreMs += t1 - t0;
         coreTicks++;

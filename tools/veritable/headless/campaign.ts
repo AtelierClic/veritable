@@ -236,6 +236,16 @@ export interface DeliveryMetrics {
   techCompleted: number;
   eventsOccurred: number;
   blocDecisions: number;
+  // J6c (world criteria): the regime a successful coup overthrew, the
+  // debt and stability of a nation that defaulted (both as sampled at the
+  // start of the month).
+  coups: { nation: string; date: string; regime: string }[];
+  defaults: {
+    nation: string;
+    date: string;
+    debtToGdp: number;
+    stability: number;
+  }[];
 }
 
 export interface CampaignResult {
@@ -402,6 +412,8 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     techCompleted: 0,
     eventsOccurred: 0,
     blocDecisions: 0,
+    coups: [],
+    defaults: [],
   };
   // J6: the view read once for all nations (195 reads a month cost more than
   // the simulation of the world).
@@ -437,6 +449,22 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     }
     if (event.type === "peace-signed") {
       delivery.peaces.push({ war: event.war, date: event.date });
+    }
+    const last = series[series.length - 1];
+    if (event.type === "coup-succeeded") {
+      delivery.coups.push({
+        nation: event.nation,
+        date: event.date,
+        regime: last.regime[event.nation] ?? "",
+      });
+    }
+    if (event.type === "sovereign-default") {
+      delivery.defaults.push({
+        nation: event.nation,
+        date: event.date,
+        debtToGdp: last.debtToGdp[event.nation] ?? 0,
+        stability: last.stability[event.nation] ?? 0,
+      });
     }
     if (event.type === "nuclear-launch" && "params" in event) {
       delivery.nuclearShots.push({

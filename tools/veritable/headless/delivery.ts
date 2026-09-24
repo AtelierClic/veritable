@@ -22,7 +22,34 @@ type Campaign = Omit<CampaignResult, "series"> & {
   yearlyPrices: { date: string; prices: Record<string, number> }[];
 };
 
-const NUCLEAR = ["FRA", "GBR", "RUS"];
+// The nation sheets, for the region of the world and the arsenal of the
+// first day (J6c: the criteria of the world).
+const NATIONS_DIR = path.resolve(HERE, "../../../data/veritable/nations");
+const sheets = new Map<
+  string,
+  { region: string | null; nuclear: boolean } | null
+>();
+function sheetOf(id: string): { region: string | null; nuclear: boolean } {
+  if (!sheets.has(id)) {
+    const file = path.join(NATIONS_DIR, `${id.toLowerCase()}.json`);
+    if (!fs.existsSync(file)) {
+      sheets.set(id, null);
+    } else {
+      const data = JSON.parse(fs.readFileSync(file, "utf8")) as {
+        geography?: { region: string };
+        nuclear: { warheads: number } | null;
+      };
+      sheets.set(id, {
+        region: data.geography?.region ?? null,
+        nuclear: (data.nuclear?.warheads ?? 0) > 0,
+      });
+    }
+  }
+  return sheets.get(id) ?? { region: null, nuclear: false };
+}
+
+// Regimes the world criteria call fragile (J6c).
+const FRAGILE = ["electoral-authoritarian", "junta", "failed-state"];
 
 async function runAll(
   seeds: number[],
@@ -158,7 +185,7 @@ export function aggregate(campaigns: Campaign[]) {
       new Set(
         c.delivery.nuclearShots
           .map((s) => s.by)
-          .filter((b) => NUCLEAR.includes(b)),
+          .filter((b) => sheetOf(b).nuclear),
       ).size >= 3,
   );
   const revolutions = campaigns.flatMap((c) => c.delivery.revolutions);
@@ -205,7 +232,8 @@ export function aggregate(campaigns: Campaign[]) {
       ];
     }),
   );
-  const criteria = {
+  const world = worldMetrics(campaigns);
+  const europe = {
     noShotInYearOne: shots.every((s) => s.date >= yearOne),
     shotsInAtMost5pct: campaignsWithShots.length <= 0.05 * n,
     neverBelowLevel2: shots.every((s) => s.threat >= 2),
@@ -224,9 +252,28 @@ export function aggregate(campaigns: Campaign[]) {
     rusUkrRelaunchMedianAtMost1: loop.relaunchMedian <= 1,
     calm15YearsInAtLeast40pct: loop.calmShare >= 0.4,
   };
+  // J6c: the campaigns of the world have their own criteria.
+  const criteria =
+    campaigns[0]?.scenario === "world-2026"
+      ? {
+          warsMedian10to30: median(wars) >= 10 && median(wars) <= 30,
+          noPairAbove40pct: world.pairAbove40pct.length === 0,
+          warsInAtLeast3Regions: world.regionsMin >= 3,
+          under30pctWithoutCasusBelli:
+            allWars.length === 0 || withoutCasus / allWars.length < 0.3,
+          noShotInYearOne: shots.every((s) => s.date >= yearOne),
+          shotsInAtMost10pct: campaignsWithShots.length <= 0.1 * n,
+          neverBelowLevel2: shots.every((s) => s.threat >= 2),
+          noThreeWayExchange: threeWay.length === 0,
+          atLeast70pctCoupsInFragileRegimes: world.fragileCoupShare >= 0.7,
+          pricesBounded: low >= 0.5 && high <= 2,
+          defaultsOnlyInIndebtedOrUnstable: world.otherDefaults.length === 0,
+        }
+      : europe;
   return {
     campaigns: n,
     criteria,
+    world,
     loop,
     wars: {
       median: median(wars),
@@ -275,6 +322,69 @@ export function aggregate(campaigns: Campaign[]) {
         Math.max(1, n),
     },
     wallMsMean: campaigns.reduce((s, c) => s + c.wallMs, 0) / Math.max(1, n),
+  };
+}
+
+// The measures behind the criteria of the world (J6c): the share of the
+// most frequent pair of belligerents in each campaign, the regions of the
+// world its aggressors come from, the regimes the coups overthrew, the
+// debt and stability of the nations that defaulted.
+function worldMetrics(campaigns: Campaign[]) {
+  const pairShares: number[] = [];
+  const pairAbove40pct: string[] = [];
+  const regionCounts: number[] = [];
+  const pairs: Record<string, number> = {};
+  const regions: Record<string, number> = {};
+  for (const c of campaigns) {
+    const wars = c.delivery.newWars;
+    const count: Record<string, number> = {};
+    const seen = new Set<string>();
+    for (const w of wars) {
+      const pair = [w.by, w.target].sort().join("-");
+      count[pair] = (count[pair] ?? 0) + 1;
+      pairs[pair] = (pairs[pair] ?? 0) + 1;
+      const region = sheetOf(w.by).region ?? "?";
+      seen.add(region);
+      regions[region] = (regions[region] ?? 0) + 1;
+    }
+    const top = Object.entries(count).sort((a, b) => b[1] - a[1])[0];
+    const share = top === undefined ? 0 : top[1] / wars.length;
+    pairShares.push(share);
+    if (share > 0.4) {
+      pairAbove40pct.push(`seed ${c.seed}: ${top[0]} ${top[1]}/${wars.length}`);
+    }
+    regionCounts.push(seen.size);
+  }
+  const coups = campaigns.flatMap((c) => c.delivery.coups ?? []);
+  const fragile = coups.filter((k) => FRAGILE.includes(k.regime)).length;
+  const defaults = campaigns.flatMap((c) =>
+    (c.delivery.defaults ?? []).map((d) => ({ ...d, seed: c.seed })),
+  );
+  const otherDefaults = defaults
+    .filter((d) => !(d.debtToGdp > 1 || d.stability < 0.4))
+    .map(
+      (d) =>
+        `${d.nation}@${d.date} debt ${d.debtToGdp.toFixed(2)} stability ${d.stability.toFixed(2)} (seed ${d.seed})`,
+    );
+  return {
+    pairShareMax: Math.max(0, ...pairShares),
+    pairShareMedian: median(pairShares),
+    pairAbove40pct,
+    regionsMin: campaigns.length === 0 ? 0 : Math.min(...regionCounts),
+    regionsPerCampaign: histogram(regionCounts),
+    warsByRegion: Object.fromEntries(
+      Object.entries(regions).sort((a, b) => b[1] - a[1]),
+    ),
+    pairs: Object.fromEntries(
+      Object.entries(pairs)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 30),
+    ),
+    coups: coups.length,
+    coupsByRegime: histogramOf(coups.map((k) => k.regime)),
+    fragileCoupShare: coups.length === 0 ? 1 : fragile / coups.length,
+    defaults: defaults.length,
+    otherDefaults,
   };
 }
 
@@ -389,7 +499,7 @@ async function main(): Promise<void> {
     );
   }
   process.stdout.write(
-    `${JSON.stringify({ criteria: summary.criteria, loop: summary.loop, wars: summary.wars, nuclear: { campaignsWithShots: summary.nuclear.campaignsWithShots, shots: summary.nuclear.shots, byThreat: summary.nuclear.byThreat }, politics: summary.politics, prices: summary.prices, technology: summary.technology }, null, 1)}\n`,
+    `${JSON.stringify({ criteria: summary.criteria, world: summary.world, loop: summary.loop, wars: summary.wars, nuclear: { campaignsWithShots: summary.nuclear.campaignsWithShots, shots: summary.nuclear.shots, byThreat: summary.nuclear.byThreat }, politics: summary.politics, prices: summary.prices, technology: summary.technology }, null, 1)}\n`,
   );
 }
 
