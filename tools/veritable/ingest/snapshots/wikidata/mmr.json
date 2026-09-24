@@ -1,0 +1,54 @@
+{
+ "nation": "MMR",
+ "country": "Q836",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q3462649",
+    "label": "Min Aung Hlaing",
+    "born": "1956-07-03",
+    "died": null,
+    "parties": [
+     "Q1318070"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1318070",
+   "label": "Parti de l'union",
+   "ideologies": [
+    {
+     "qid": "Q177266",
+     "label": "militarisme"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q7710081",
+    "label": "Than Htay",
+    "born": "1954-11-12",
+    "died": null,
+    "parties": [
+     "Q1318070"
+    ]
+   }
+  }
+ ]
+}

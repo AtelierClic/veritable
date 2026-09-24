@@ -1,0 +1,162 @@
+{
+ "nation": "CHE",
+ "country": "Q39",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q30917",
+    "label": "Conseil fédéral",
+    "born": null,
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q30917",
+    "label": "Conseil fédéral",
+    "born": null,
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q385258",
+   "label": "Union démocratique du centre",
+   "ideologies": [
+    {
+     "qid": "Q1203128",
+     "label": "non-interventionnisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q21294613",
+    "label": "Marco Chiesa",
+    "born": "1974-10-10",
+    "died": null,
+    "parties": [
+     "Q385258"
+    ]
+   }
+  },
+  {
+   "qid": "Q303745",
+   "label": "Parti socialiste suisse",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q118308",
+    "label": "Christian Levrat",
+    "born": "1970-07-07",
+    "died": null,
+    "parties": [
+     "Q303745"
+    ]
+   }
+  },
+  {
+   "qid": "Q202638",
+   "label": "Parti libéral-radical",
+   "ideologies": [
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    }
+   ],
+   "leader": {
+    "qid": "Q23060472",
+    "label": "Thierry Burkart",
+    "born": "1975-08-21",
+    "died": null,
+    "parties": [
+     "Q13850128",
+     "Q202638"
+    ]
+   }
+  },
+  {
+   "qid": "Q100934025",
+   "label": "Le Centre",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q659739",
+   "label": "Les Verts Suisse",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    }
+   ],
+   "leader": {
+    "qid": "Q21152666",
+    "label": "Lisa Mazzone",
+    "born": "1988-01-25",
+    "died": null,
+    "parties": [
+     "Q659739"
+    ]
+   }
+  },
+  {
+   "qid": "Q545900",
+   "label": "Vert'libéraux",
+   "ideologies": [
+    {
+     "qid": "Q1321721",
+     "label": "libéralisme vert"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

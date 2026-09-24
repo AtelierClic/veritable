@@ -1,0 +1,315 @@
+{
+  "nation": "KAZ",
+  "actors": [
+    {
+      "id": "kaz-oljas-bektenov",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.kaz-oljas-bektenov.parody",
+        "fictional": "leader.kaz-oljas-bektenov.fictional"
+      },
+      "born": "1980-12-13",
+      "party": "kaz-amanat",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.3,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.3,
+        "charisma": 0.35,
+        "competence": 0.55
+      },
+      "wikidata": "Q124436646",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Ancien chef de l'agence anticorruption devenu premier ministre technocrate, chargé de la modernisation administrative voulue par Tokayev ; traits modérés, rôle plus économique que diplomatique."
+    },
+    {
+      "id": "kaz-kassym-jomart-tokaiev",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.kaz-kassym-jomart-tokaiev.parody",
+        "fictional": "leader.kaz-kassym-jomart-tokaiev.fictional"
+      },
+      "born": "1953-05-17",
+      "party": "kaz-amanat",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.55,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.2,
+        "corruption": 0.4,
+        "charisma": 0.4,
+        "competence": 0.6
+      },
+      "wikidata": "Q200881",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Ancien diplomate, successeur prudent de Noursoultan Nazarbaïev ; autorité forte mais réformatrice depuis les émeutes de janvier 2022 (limitation du clan présidentiel sortant) ; agressivité faible, équilibre calculé entre Russie, Chine et Occident."
+    },
+    {
+      "id": "kaz-aidarbek-khodjanazarov",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.kaz-aidarbek-khodjanazarov.parody",
+        "fictional": "leader.kaz-aidarbek-khodjanazarov.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "kaz-republique",
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.35,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.39,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "kaz-erlan-qoshanov",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.kaz-erlan-qoshanov.parody",
+        "fictional": "leader.kaz-erlan-qoshanov.fictional"
+      },
+      "born": "1962-08-14",
+      "party": "kaz-amanat",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.033,
+        "sovereignty": 0.033,
+        "aggressiveness": 0.3132,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q29587228",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "kaz-ali-bektaev",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.kaz-ali-bektaev.parody",
+        "fictional": "leader.kaz-ali-bektaev.fictional"
+      },
+      "born": "1962-04-20",
+      "party": "kaz-parti-patriotique-democrate-populaire-auyl",
+      "traits": {
+        "economic": -0.3,
+        "authority": -0.05,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.31,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q25493939",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "kaz-azat-peruashev",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.kaz-azat-peruashev.parody",
+        "fictional": "leader.kaz-azat-peruashev.fictional"
+      },
+      "born": "1967-09-08",
+      "party": "kaz-ak-jol",
+      "traits": {
+        "economic": 0.7,
+        "authority": -0.05,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.24999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q17489784",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "kaz-ermukhamet-ertysbayev",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.kaz-ermukhamet-ertysbayev.parody",
+        "fictional": "leader.kaz-ermukhamet-ertysbayev.fictional"
+      },
+      "born": "1956-11-19",
+      "party": "kaz-parti-populaire-du-kazakhstan",
+      "traits": {
+        "economic": -0.467,
+        "authority": 0.083,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.3466,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1046021",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "kaz-jarmakhan-tuyakbay",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.kaz-jarmakhan-tuyakbay.parody",
+        "fictional": "leader.kaz-jarmakhan-tuyakbay.fictional"
+      },
+      "born": "1947-11-22",
+      "party": "kaz-parti-national-social-democrate",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1967799",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "kaz-amanat",
+      "name": "party.kaz-amanat",
+      "wikidata": "Q111077075",
+      "ideologies": ["Q1414298", "Q216920", "Q729119"],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.033,
+        "sovereignty": 0.033
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.539,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives (Mäjilis) du 19 mars 2023"
+      },
+      "leader": "kaz-erlan-qoshanov"
+    },
+    {
+      "id": "kaz-parti-patriotique-democrate-populaire-auyl",
+      "name": "party.kaz-parti-patriotique-democrate-populaire-auyl",
+      "wikidata": "Q4736147",
+      "ideologies": ["Q121254", "Q492050"],
+      "ideology": {
+        "economic": -0.3,
+        "authority": -0.05,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.109,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives (Mäjilis) du 19 mars 2023"
+      },
+      "leader": "kaz-ali-bektaev"
+    },
+    {
+      "id": "kaz-republique",
+      "name": "party.kaz-republique",
+      "wikidata": "Q116686278",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.5,
+        "authority": 0.35,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0859,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives (Mäjilis) du 19 mars 2023"
+      },
+      "leader": "kaz-aidarbek-khodjanazarov"
+    },
+    {
+      "id": "kaz-ak-jol",
+      "name": "party.kaz-ak-jol",
+      "wikidata": "Q1186246",
+      "ideologies": ["Q1043096", "Q729119"],
+      "ideology": {
+        "economic": 0.7,
+        "authority": -0.05,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.0841,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives (Mäjilis) du 19 mars 2023"
+      },
+      "leader": "kaz-azat-peruashev"
+    },
+    {
+      "id": "kaz-parti-populaire-du-kazakhstan",
+      "name": "party.kaz-parti-populaire-du-kazakhstan",
+      "wikidata": "Q2166484",
+      "ideologies": [
+        "Q1414298",
+        "Q210189",
+        "Q389647",
+        "Q478004",
+        "Q6186",
+        "Q6241",
+        "Q695838",
+        "Q7272",
+        "Q865354"
+      ],
+      "ideology": {
+        "economic": -0.467,
+        "authority": 0.083,
+        "sovereignty": 0.15
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (6 of 9)",
+      "support": 0.068,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives (Mäjilis) du 19 mars 2023"
+      },
+      "leader": "kaz-ermukhamet-ertysbayev"
+    },
+    {
+      "id": "kaz-parti-national-social-democrate",
+      "name": "party.kaz-parti-national-social-democrate",
+      "wikidata": "Q1569210",
+      "ideologies": ["Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.052,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives (Mäjilis) du 19 mars 2023"
+      },
+      "leader": "kaz-jarmakhan-tuyakbay"
+    }
+  ]
+}

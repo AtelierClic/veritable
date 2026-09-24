@@ -1,0 +1,145 @@
+{
+ "nation": "ISL",
+ "country": "Q189",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q108856371",
+    "label": "Kristrún Mjöll Frostadóttir",
+    "born": "1988-05-12",
+    "died": null,
+    "parties": [
+     "Q1141127"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q24494577",
+    "label": "Halla Tómasdóttir",
+    "born": "1968-10-11",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1141127",
+   "label": "Alliance",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q108856371",
+    "label": "Kristrún Mjöll Frostadóttir",
+    "born": "1988-05-12",
+    "died": null,
+    "parties": [
+     "Q1141127"
+    ]
+   }
+  },
+  {
+   "qid": "Q6016153",
+   "label": "Independence Party",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q27273216",
+   "label": "Parti du peuple",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q42666551",
+    "label": "Inga Sæland",
+    "born": "1959-08-03",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q1046777",
+   "label": "Parti du progrès",
+   "ideologies": [
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q201075",
+    "label": "Sigurður Ingi Jóhannsson",
+    "born": "1962-04-20",
+    "died": null,
+    "parties": [
+     "Q1046777"
+    ]
+   }
+  },
+  {
+   "qid": "Q1974972",
+   "label": "Parti de l'unité du peuple - Parti socialiste",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q198403",
+   "label": "Parti pirate",
+   "ideologies": [
+    {
+     "qid": "Q171174",
+     "label": "démocratie directe"
+    }
+   ],
+   "leader": {
+    "qid": "Q144270",
+    "label": "Birgitta Jónsdóttir",
+    "born": "1967-04-17",
+    "died": null,
+    "parties": [
+     "Q198403"
+    ]
+   }
+  }
+ ]
+}

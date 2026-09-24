@@ -1,0 +1,226 @@
+{
+  "nation": "GEO",
+  "actors": [
+    {
+      "id": "geo-irakli-kobakhidze",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.geo-irakli-kobakhidze.parody",
+        "fictional": "leader.geo-irakli-kobakhidze.fictional"
+      },
+      "born": "1978-09-25",
+      "party": "geo-reve-georgien",
+      "traits": {
+        "economic": 0.033,
+        "authority": 0.033,
+        "sovereignty": 0.267,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q27885302",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "geo-mikheil-kavelachvili",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.geo-mikheil-kavelachvili.parody",
+        "fictional": "leader.geo-mikheil-kavelachvili.fictional"
+      },
+      "born": "1971-07-22",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q711893",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "geo-bidzina-ivanishvili",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.geo-bidzina-ivanishvili.parody",
+        "fictional": "leader.geo-bidzina-ivanishvili.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "geo-",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.2,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.18,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "geo-bidzina-ivanichvili",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.geo-bidzina-ivanichvili.parody",
+        "fictional": "leader.geo-bidzina-ivanichvili.fictional"
+      },
+      "born": "1956-02-18",
+      "party": "geo-reve-georgien",
+      "traits": {
+        "economic": 0.033,
+        "authority": 0.033,
+        "sovereignty": 0.267,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57794",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "geo-mikheil-saakachvili",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.geo-mikheil-saakachvili.parody",
+        "fictional": "leader.geo-mikheil-saakachvili.fictional"
+      },
+      "born": "1967-12-21",
+      "party": "geo-mouvement-national-uni",
+      "traits": {
+        "economic": 0.314,
+        "authority": 0.086,
+        "sovereignty": -0.057,
+        "aggressiveness": 0.30579999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q43330",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "geo-reve-georgien",
+      "name": "party.geo-reve-georgien",
+      "wikidata": "Q46516",
+      "ideologies": ["Q180490", "Q201712", "Q223200", "Q494792"],
+      "ideology": {
+        "economic": 0.033,
+        "authority": 0.033,
+        "sovereignty": 0.267
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.54,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 octobre 2024 (Commission électorale centrale) — résultat contesté par l'opposition et des observateurs internationaux"
+      },
+      "leader": "geo-bidzina-ivanichvili"
+    },
+    {
+      "id": "geo-coalition-pour-le-changement",
+      "name": "party.geo-coalition-pour-le-changement",
+      "wikidata": "Q130377057",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": -0.5,
+        "sovereignty": -0.6
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.11,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 octobre 2024 (Commission électorale centrale) — résultat contesté par l'opposition et des observateurs internationaux"
+      },
+      "leader": null
+    },
+    {
+      "id": "geo-mouvement-national-uni",
+      "name": "party.geo-mouvement-national-uni",
+      "wikidata": "Q1057495",
+      "ideologies": [
+        "Q1043096",
+        "Q180490",
+        "Q182121",
+        "Q3781399",
+        "Q388698",
+        "Q59599",
+        "Q660018",
+        "Q729119"
+      ],
+      "ideology": {
+        "economic": 0.314,
+        "authority": 0.086,
+        "sovereignty": -0.057
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (7 of 8)",
+      "support": 0.1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 octobre 2024 (Commission électorale centrale) — résultat contesté par l'opposition et des observateurs internationaux"
+      },
+      "leader": "geo-mikheil-saakachvili"
+    },
+    {
+      "id": "geo-georgie-forte",
+      "name": "party.geo-georgie-forte",
+      "wikidata": "Q130377133",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": -0.3,
+        "sovereignty": -0.5
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.08,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 octobre 2024 (Commission électorale centrale) — résultat contesté par l'opposition et des observateurs internationaux"
+      },
+      "leader": null
+    },
+    {
+      "id": "geo-",
+      "name": "party.geo-",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.2,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.07,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 octobre 2024 (Commission électorale centrale) — résultat contesté par l'opposition et des observateurs internationaux"
+      },
+      "leader": "geo-bidzina-ivanishvili"
+    }
+  ]
+}

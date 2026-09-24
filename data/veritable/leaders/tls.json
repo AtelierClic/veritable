@@ -1,0 +1,175 @@
+{
+  "nation": "TLS",
+  "actors": [
+    {
+      "id": "tls-xanana-gusmao",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.tls-xanana-gusmao.parody",
+        "fictional": "leader.tls-xanana-gusmao.fictional"
+      },
+      "born": "1946-06-20",
+      "party": "tls-congres-national-de-reconstruction-timoraise",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.19999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q11509",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tls-jose-ramos-horta",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.tls-jose-ramos-horta.parody",
+        "fictional": "leader.tls-jose-ramos-horta.fictional"
+      },
+      "born": "1949-12-26",
+      "party": "tls-front-revolutionnaire-pour-l-independance-du-tim",
+      "traits": {
+        "economic": -0.675,
+        "authority": 0.025,
+        "sovereignty": 0.125,
+        "aggressiveness": 0.33,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q11665",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tls-armanda-berta-dos-santos",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tls-armanda-berta-dos-santos.parody",
+        "fictional": "leader.tls-armanda-berta-dos-santos.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tls-khunto",
+      "traits": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tls-mariano-assanami-sabino",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tls-mariano-assanami-sabino.parody",
+        "fictional": "leader.tls-mariano-assanami-sabino.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tls-democratic-party-timor-leste",
+      "traits": {
+        "economic": 0,
+        "authority": -0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.27999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "tls-congres-national-de-reconstruction-timoraise",
+      "name": "party.tls-congres-national-de-reconstruction-timoraise",
+      "wikidata": "Q1126036",
+      "ideologies": ["Q121254", "Q189280"],
+      "ideology": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.402,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection au Parlement national du 21 mai 2023"
+      },
+      "leader": "tls-xanana-gusmao"
+    },
+    {
+      "id": "tls-front-revolutionnaire-pour-l-independance-du-tim",
+      "name": "party.tls-front-revolutionnaire-pour-l-independance-du-tim",
+      "wikidata": "Q935996",
+      "ideologies": ["Q1202972", "Q121254", "Q189280", "Q211930"],
+      "ideology": {
+        "economic": -0.675,
+        "authority": 0.025,
+        "sovereignty": 0.125
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.231,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection au Parlement national du 21 mai 2023"
+      },
+      "leader": "tls-jose-ramos-horta"
+    },
+    {
+      "id": "tls-khunto",
+      "name": "party.tls-khunto",
+      "wikidata": "Q1571660",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.086,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection au Parlement national du 21 mai 2023"
+      },
+      "leader": "tls-armanda-berta-dos-santos"
+    },
+    {
+      "id": "tls-democratic-party-timor-leste",
+      "name": "party.tls-democratic-party-timor-leste",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": -0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.08,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection au Parlement national du 21 mai 2023"
+      },
+      "leader": "tls-mariano-assanami-sabino"
+    }
+  ]
+}

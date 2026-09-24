@@ -1,0 +1,96 @@
+{
+ "nation": "ALB",
+ "country": "Q222",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q316901",
+    "label": "Edi Rama",
+    "born": "1964-07-04",
+    "died": null,
+    "parties": [
+     "Q642882"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q107422711",
+    "label": "Bajram Begaj",
+    "born": "1967-03-20",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q642882",
+   "label": "Parti socialiste d'Albanie",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q316901",
+    "label": "Edi Rama",
+    "born": "1964-07-04",
+    "died": null,
+    "parties": [
+     "Q642882"
+    ]
+   }
+  },
+  {
+   "qid": "Q1533055",
+   "label": "parti social-démocrate",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q126915964",
+   "label": "Opportunity Party",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

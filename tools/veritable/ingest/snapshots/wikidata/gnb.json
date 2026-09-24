@@ -1,0 +1,33 @@
+{
+ "nation": "GNB",
+ "country": "Q1007",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q627337",
+    "label": "Rui Duarte de Barros",
+    "born": "1960-02-18",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q7318729",
+   "label": "Revolutionary Armed Forces of the People",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q62258541",
+   "label": "Mouvement pour l'alternance démocratique, Groupe des 15",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

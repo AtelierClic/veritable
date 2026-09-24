@@ -1,0 +1,90 @@
+{
+ "nation": "URY",
+ "country": "Q77",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q19946921",
+    "label": "Yamandú Orsi",
+    "born": "1967-06-13",
+    "died": null,
+    "parties": [
+     "Q1066799",
+     "Q1570461"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q19946921",
+    "label": "Yamandú Orsi",
+    "born": "1967-06-13",
+    "died": null,
+    "parties": [
+     "Q1066799",
+     "Q1570461"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1549793",
+   "label": "Parti national",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q6700272",
+    "label": "Luis Alberto Héber",
+    "born": "1957-12-22",
+    "died": null,
+    "parties": [
+     "Q1549793"
+    ]
+   }
+  },
+  {
+   "qid": "Q1430823",
+   "label": "Parti colorado",
+   "ideologies": [
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q63495952",
+   "label": "Cabildo ouvert",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

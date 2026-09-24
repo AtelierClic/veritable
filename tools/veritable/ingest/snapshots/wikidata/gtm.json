@@ -1,0 +1,100 @@
+{
+ "nation": "GTM",
+ "country": "Q774",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q107254030",
+    "label": "Bernardo Arévalo",
+    "born": "1958-10-07",
+    "died": null,
+    "parties": [
+     "Q56274977"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q107254030",
+    "label": "Bernardo Arévalo",
+    "born": "1958-10-07",
+    "died": null,
+    "parties": [
+     "Q56274977"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q54263394",
+   "label": "Vamos",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1237557",
+   "label": "Union nationale de l'espérance",
+   "ideologies": [
+    {
+     "qid": "Q1080800",
+     "label": "gauche chrétienne"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q7416788",
+    "label": "Sandra Torres",
+    "born": "1955-10-05",
+    "died": null,
+    "parties": [
+     "Q1237557"
+    ]
+   }
+  },
+  {
+   "qid": "Q56274977",
+   "label": "Mouvement Semilla",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q60741353",
+     "label": "anti-corruption"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

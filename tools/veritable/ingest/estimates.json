@@ -100,8 +100,8 @@
       },
       "USA": {
         "activePersonnel": 1330000,
-        "airPower": 1.0,
-        "navalPower": 1.0
+        "airPower": 1,
+        "navalPower": 1
       },
       "CHN": {
         "activePersonnel": 2035000,
@@ -211,7 +211,7 @@
       "ETH": {
         "activePersonnel": 138000,
         "airPower": 0.15,
-        "navalPower": 0.0
+        "navalPower": 0
       },
       "ARG": {
         "activePersonnel": 72000,
@@ -236,7 +236,7 @@
       "KAZ": {
         "activePersonnel": 39000,
         "airPower": 0.2,
-        "navalPower": 0.0
+        "navalPower": 0
       },
       "NLD": {
         "activePersonnel": 33000,
@@ -296,17 +296,17 @@
       "BLR": {
         "activePersonnel": 48000,
         "airPower": 0.25,
-        "navalPower": 0.0
+        "navalPower": 0
       },
       "AZE": {
         "activePersonnel": 64000,
         "airPower": 0.25,
-        "navalPower": 0.0
+        "navalPower": 0
       },
       "ARM": {
         "activePersonnel": 42000,
         "airPower": 0.15,
-        "navalPower": 0.0
+        "navalPower": 0
       },
       "GEO": {
         "activePersonnel": 20000,
@@ -316,7 +316,7 @@
       "SRB": {
         "activePersonnel": 28000,
         "airPower": 0.2,
-        "navalPower": 0.0
+        "navalPower": 0
       },
       "CUB": {
         "activePersonnel": 49000,
@@ -429,7 +429,765 @@
     },
     "armsShareOfMilitarySpending": 0.25
   },
+  "headOverrides": {
+    "BIH/head-of-state": {
+      "person": "Željka Cvijanović",
+      "born": "1967-03-04",
+      "party": "Savez nezavisnih socijaldemokrata",
+      "note": "Présidence collégiale tournante tous les huit mois : Željka Cvijanović la préside depuis le 16 juillet 2025 (Wikidata : Denis Bećirović ; liste de l'agent : Željko Komšić). Estimation, à valider."
+    },
+    "CHE/head-of-state": {
+      "person": "Guy Parmelin",
+      "born": "1959-11-09",
+      "party": "Schweizerische Volkspartei",
+      "note": "Le Conseil fédéral est le chef d'État collégial (Wikidata) ; le président de la Confédération pour 2026, Guy Parmelin, l'incarne dans le jeu. Estimation, à valider."
+    },
+    "CHE/head-of-government": {
+      "person": "Guy Parmelin",
+      "born": "1959-11-09",
+      "party": "Schweizerische Volkspartei",
+      "note": "Le Conseil fédéral gouverne collégialement ; le président de la Confédération pour 2026 l'incarne dans le jeu. Estimation, à valider."
+    },
+    "HTI/head-of-state": {
+      "person": "Laurent Saint-Cyr",
+      "note": "Coordonnateur du Conseil présidentiel de transition depuis août 2025 (Wikidata donne le conseil lui-même). Estimation, à valider."
+    },
+    "SDN/head-of-government": {
+      "person": "Kamil Idris",
+      "born": "1954-08-26",
+      "note": "Premier ministre nommé en mai 2025 (Wikidata : Abdallah Hamdok, démissionnaire en 2022). Estimation, à valider."
+    },
+    "GHA/head-of-government": {
+      "person": "John Mahama",
+      "born": "1958-11-29",
+      "party": "National Democratic Congress",
+      "note": "Président, chef de l'État et du gouvernement depuis le 7 janvier 2025 (Wikidata garde Nana Akufo-Addo en chef du gouvernement). Estimation, à valider."
+    },
+    "SEN/head-of-government": {
+      "person": "Ousmane Sonko",
+      "born": "1974-07-15",
+      "party": "PASTEF",
+      "note": "Premier ministre depuis avril 2024 (Wikidata donne le président). Estimation, à valider."
+    },
+    "BFA/head-of-government": {
+      "person": "Jean-Emmanuel Ouédraogo",
+      "note": "Premier ministre de la transition depuis décembre 2024 (Wikidata : Apollinaire Kyélem de Tambèla). Estimation, à valider."
+    },
+    "GNB/head-of-government": {
+      "person": "Ilídio Vieira Té",
+      "note": "Premier ministre nommé par la junte après le coup du 26 novembre 2025 (Wikidata : Rui Duarte de Barros). Estimation, à valider."
+    },
+    "GAB/head-of-government": {
+      "person": "Brice Clotaire Oligui Nguema",
+      "born": "1975-03-03",
+      "party": "Union Démocratique des Bâtisseurs",
+      "note": "Le poste de Premier ministre est supprimé depuis la constitution de 2024 ; le président gouverne (Wikidata : Raymond Ndong Sima). Estimation, à valider."
+    },
+    "COD/head-of-government": {
+      "person": "Judith Suminwa",
+      "born": "1967-10-23",
+      "party": "Union Sacrée de la Nation",
+      "note": "Première ministre depuis juin 2024 (Wikidata : Sylvestre Ilunga Ilunkamba). Estimation, à valider."
+    },
+    "SOM/head-of-government": {
+      "person": "Hamza Abdi Barre",
+      "born": "1972-01-01",
+      "note": "Premier ministre depuis juin 2022 (Wikidata : Mohamed Hussein Roble) ; année de naissance seule connue. Estimation, à valider."
+    },
+    "MWI/head-of-state": {
+      "person": "Peter Mutharika",
+      "born": "1940-07-18",
+      "party": "Democratic Progressive Party",
+      "note": "Élu en septembre 2025, investi le 4 octobre 2025 (Wikidata : Lazarus Chakwera). Estimation, à valider."
+    },
+    "MWI/head-of-government": {
+      "person": "Peter Mutharika",
+      "born": "1940-07-18",
+      "party": "Democratic Progressive Party",
+      "note": "Élu en septembre 2025, investi le 4 octobre 2025 (Wikidata : Lazarus Chakwera). Estimation, à valider."
+    },
+    "MDG/head-of-government": {
+      "person": "Herintsalama Rajaonarivelo",
+      "note": "Premier ministre nommé en octobre 2025 après la prise du pouvoir par le colonel Randrianirina (Wikidata : Ruphin Zafisambo). Estimation, à valider."
+    },
+    "MUS/head-of-government": {
+      "person": "Navin Ramgoolam",
+      "born": "1947-07-14",
+      "party": "Alliance du Changement",
+      "note": "Premier ministre depuis novembre 2024 (Wikidata : Pravind Jugnauth). Estimation, à valider."
+    },
+    "IRQ/head-of-state": {
+      "person": "Abdul Latif Rashid",
+      "born": "1944-08-10",
+      "party": "Patriotic Union of Kurdistan",
+      "note": "Président depuis octobre 2022, en fonction au 1er janvier 2026 ; son successeur n'est élu qu'après la législature de novembre 2025 (Wikidata : Nizar Amedi). Estimation, à valider."
+    },
+    "NPL/head-of-government": {
+      "person": "Sushila Karki",
+      "born": "1952-06-07",
+      "note": "Première ministre par intérim depuis le 12 septembre 2025 (Wikidata : Pushpa Kamal Dahal). Estimation, à valider."
+    },
+    "KOR/head-of-government": {
+      "person": "Kim Min-seok",
+      "born": "1964-05-27",
+      "party": "Democratic Party of Korea",
+      "note": "Premier ministre depuis juillet 2025 (Wikidata donne le président dans les deux rôles). Estimation, à valider."
+    },
+    "WSM/head-of-government": {
+      "person": "Laʻauli Leuatea Schmidt",
+      "party": "FAST Party",
+      "note": "Premier ministre depuis septembre 2025 (Wikidata : Fiamē Naomi Mataʻafa). Estimation, à valider."
+    },
+    "THA/head-of-government": {
+      "person": "Anutin Charnvirakul",
+      "born": "1966-09-13",
+      "party": "Bhumjaithai Party",
+      "note": "Premier ministre depuis le 7 septembre 2025 (Wikidata : Phumtham Wechayachai, intérimaire en 2025). Estimation, à valider."
+    },
+    "VUT/head-of-government": {
+      "person": "Jotham Napat",
+      "party": "Leaders Party of Vanuatu",
+      "note": "Premier ministre depuis février 2025 (Wikidata : Bob Loughman). Estimation, à valider."
+    }
+  },
   "leaderTraits": {
+    "USA/head-of-state": {
+      "person": "Donald Trump",
+      "traits": {
+        "economic": 0.45,
+        "authority": 0.6,
+        "sovereignty": 0.75,
+        "aggressiveness": 0.65,
+        "corruption": 0.55,
+        "charisma": 0.75,
+        "competence": 0.5
+      },
+      "note": "Populiste de droite, protectionniste (droits de douane, souveraineté +0,75) ; autorité au-dessus de la moyenne (contestation du résultat de 2020, pressions sur la justice et les médias) ; agressivité élevée (frappes contre le narcotrafic, menaces territoriales sur le Groenland et Panama) ; charisme fort ; corruption documentée (contentieux civils, grâces présidentielles à des proches)."
+    },
+    "CHN/head-of-state": {
+      "person": "Xi Jinping",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.85,
+        "sovereignty": 0.55,
+        "aggressiveness": 0.55,
+        "corruption": 0.35,
+        "charisma": 0.55,
+        "competence": 0.75
+      },
+      "note": "Économie dirigée par le parti (capitalisme d'État, légèrement à gauche) ; autorité très forte (concentration des pouvoirs, absence de limite de mandat depuis 2018) ; souveraineté marquée (Taïwan, mer de Chine méridionale) sans franchir le seuil du conflit ouvert ; compétence élevée après plus d'une décennie au pouvoir ; corruption modérée (grandes campagnes anti-corruption, mais opacité du système)."
+    },
+    "CHN/head-of-government": {
+      "person": "Li Qiang",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.6,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.3,
+        "corruption": 0.3,
+        "charisma": 0.4,
+        "competence": 0.65
+      },
+      "note": "Premier ministre loyal à Xi Jinping, exécutant plus que décideur autonome ; autorité et économie alignées sur la ligne du parti ; compétence reconnue en gestion économique (ancien secrétaire du parti à Shanghai)."
+    },
+    "IND/head-of-state": {
+      "person": "Droupadi Murmu",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.2,
+        "charisma": 0.45,
+        "competence": 0.5
+      },
+      "note": "Présidente largement cérémonielle dans le régime parlementaire indien ; traits modérés, proches du centre, sans agenda personnel affirmé ; agressivité faible, le pouvoir exécutif appartenant au premier ministre."
+    },
+    "IND/head-of-government": {
+      "person": "Narendra Modi",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.45,
+        "sovereignty": 0.55,
+        "aggressiveness": 0.45,
+        "corruption": 0.3,
+        "charisma": 0.8,
+        "competence": 0.65
+      },
+      "note": "Nationaliste hindou (Hindutva), libéral en économie mais interventionniste sur les grands projets industriels ; fermeté assumée envers le Pakistan et la Chine (agressivité au-dessus de la moyenne) ; charisme électoral exceptionnel (trois mandats consécutifs)."
+    },
+    "JPN/head-of-state": {
+      "person": "Naruhito",
+      "traits": {
+        "economic": 0,
+        "authority": -0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.1,
+        "corruption": 0.1,
+        "charisma": 0.45,
+        "competence": 0.5
+      },
+      "note": "Empereur sans pouvoir exécutif dans la monarchie constitutionnelle japonaise ; traits neutres et très modérés, fonction purement représentative et symbolique."
+    },
+    "JPN/head-of-government": {
+      "person": "Sanae Takaichi",
+      "traits": {
+        "economic": 0.35,
+        "authority": 0.3,
+        "sovereignty": 0.45,
+        "aggressiveness": 0.3,
+        "corruption": 0.25,
+        "charisma": 0.55,
+        "competence": 0.55
+      },
+      "note": "Première femme première ministre du Japon, aile conservatrice du PLD, proche de la ligne de Shinzo Abe sur la défense et la souveraineté ; agressivité modérée, prudence institutionnelle du système japonais ; corruption perçue faible."
+    },
+    "BRA/head-of-state": {
+      "person": "Luiz Inácio Lula da Silva",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.1,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.3,
+        "corruption": 0.45,
+        "charisma": 0.7,
+        "competence": 0.6
+      },
+      "note": "Gauche historique, tiers-mondiste modéré (souveraineté −0,2, non-alignement) ; agressivité faible en politique étrangère, privilégie la médiation ; charisme élevé (figure ouvrière, plusieurs mandats) ; corruption documentée par l'affaire Lava Jato, condamnations ensuite annulées pour vice de procédure."
+    },
+    "CAN/head-of-state": {
+      "person": "Charles III",
+      "traits": {
+        "economic": 0,
+        "authority": -0.15,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.1,
+        "corruption": 0.1,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "note": "Chef de l'État cérémoniel du Canada, sans pouvoir exécutif réel ; traits neutres et modérés, fonction protocolaire exercée via le gouverneur général."
+    },
+    "CAN/head-of-government": {
+      "person": "Mark Carney",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.15,
+        "sovereignty": -0.15,
+        "aggressiveness": 0.25,
+        "corruption": 0.15,
+        "charisma": 0.5,
+        "competence": 0.7
+      },
+      "note": "Ancien banquier central (Banque du Canada, Banque d'Angleterre), technocrate pragmatique ; fermeté commerciale envers les tarifs douaniers américains sans agressivité militaire ; compétence économique très élevée, corruption perçue faible."
+    },
+    "AUS/head-of-state": {
+      "person": "Charles III",
+      "traits": {
+        "economic": 0,
+        "authority": -0.15,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.1,
+        "corruption": 0.1,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "note": "Chef de l'État cérémoniel de l'Australie, sans pouvoir exécutif réel ; traits neutres et modérés, fonction protocolaire exercée via le gouverneur général."
+    },
+    "AUS/head-of-government": {
+      "person": "Anthony Albanese",
+      "traits": {
+        "economic": -0.25,
+        "authority": -0.2,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.25,
+        "corruption": 0.15,
+        "charisma": 0.5,
+        "competence": 0.55
+      },
+      "note": "Centre-gauche travailliste, social-démocrate modéré ; alliance AUKUS maintenue mais diplomatie prudente envers la Chine, premier partenaire commercial ; corruption perçue faible, compétence de gestionnaire plus que de tribun."
+    },
+    "KOR/head-of-state": {
+      "person": "Lee Jae-myung",
+      "traits": {
+        "economic": -0.2,
+        "authority": -0.05,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.35,
+        "corruption": 0.35,
+        "charisma": 0.6,
+        "competence": 0.55
+      },
+      "note": "Centre-gauche pragmatique, réformiste ; agressivité modérée en politique étrangère (fermeté envers la Corée du Nord mais recherche de dialogue) ; charisme fort après une victoire électorale marquée par la crise de la loi martiale de 2024 ; plusieurs procédures judiciaires antérieures, sans condamnation définitive à cette date."
+    },
+    "KOR/head-of-government": {
+      "person": "Kim Min-seok",
+      "traits": {
+        "economic": -0.15,
+        "authority": -0.05,
+        "sovereignty": -0.05,
+        "aggressiveness": 0.25,
+        "corruption": 0.25,
+        "charisma": 0.4,
+        "competence": 0.55
+      },
+      "note": "Premier ministre technocrate du gouvernement Lee Jae-myung, rôle d'exécution plus que d'impulsion politique ; traits proches de la ligne du président, modérés."
+    },
+    "MEX/head-of-state": {
+      "person": "Claudia Sheinbaum",
+      "traits": {
+        "economic": -0.5,
+        "authority": 0.15,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.3,
+        "corruption": 0.35,
+        "charisma": 0.55,
+        "competence": 0.6
+      },
+      "note": "Gauche héritière du mouvement lopézobradoriste, interventionniste en économie ; ferme face aux pressions commerciales américaines (souveraineté +0,2) sans agressivité offensive ; compétence reconnue (formation de scientifique, ex-maire de Mexico)."
+    },
+    "IDN/head-of-state": {
+      "person": "Prabowo Subianto",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.35,
+        "sovereignty": 0.35,
+        "aggressiveness": 0.45,
+        "corruption": 0.4,
+        "charisma": 0.6,
+        "competence": 0.5
+      },
+      "note": "Ancien général controversé (accusations d'enlèvements pendant l'ère Suharto, jamais jugées), élu après plusieurs tentatives ; nationalisme économique assumé (souveraineté +0,35) ; agressivité au-dessus de la moyenne en rhétorique, modération dans les faits ; charisme militaire fort."
+    },
+    "SAU/head-of-state": {
+      "person": "Salmane ben Abdelaziz Al Saoud",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.85,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.3,
+        "corruption": 0.4,
+        "charisma": 0.4,
+        "competence": 0.4
+      },
+      "note": "Monarque absolu, autorité très forte par construction du régime ; âgé, gouvernance largement déléguée à son fils le prince héritier ; agressivité et charisme modérés, rôle aujourd'hui davantage symbolique que directement décisionnel."
+    },
+    "SAU/head-of-government": {
+      "person": "Mohammed ben Salmane Al Saoud",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.75,
+        "sovereignty": 0.35,
+        "aggressiveness": 0.6,
+        "corruption": 0.4,
+        "charisma": 0.65,
+        "competence": 0.6
+      },
+      "note": "Véritable homme fort du royaume depuis 2017, réformateur économique (Vision 2030, ouverture sociale) et autoritaire en politique intérieure (purge anti-corruption de 2017, affaire Khashoggi) ; agressivité élevée en politique étrangère (guerre au Yémen) ; charisme fort auprès de la jeunesse saoudienne."
+    },
+    "ZAF/head-of-state": {
+      "person": "Cyril Ramaphosa",
+      "traits": {
+        "economic": -0.2,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.2,
+        "corruption": 0.35,
+        "charisma": 0.55,
+        "competence": 0.55
+      },
+      "note": "Centre-gauche modéré, continuité de l'ANC ; diplomate prudent (médiation plutôt que confrontation, agressivité faible) ; compétence élevée (ancien homme d'affaires) ; affaire « Farmgate » (espèces cachées à la ferme) entachant sa réputation sans poursuite aboutie."
+    },
+    "ARG/head-of-state": {
+      "person": "Javier Milei",
+      "traits": {
+        "economic": 0.9,
+        "authority": 0.25,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.4,
+        "corruption": 0.15,
+        "charisma": 0.75,
+        "competence": 0.5
+      },
+      "note": "Libertarien radical (économie +0,9, dollarisation, réduction drastique de la dépense publique) ; charisme flamboyant et polarisant ; agressivité verbale forte mais peu de politique étrangère conflictuelle ; corruption perçue faible, discours anti-establishment."
+    },
+    "ISR/head-of-state": {
+      "person": "Isaac Herzog",
+      "traits": {
+        "economic": -0.05,
+        "authority": -0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.2,
+        "corruption": 0.15,
+        "charisma": 0.5,
+        "competence": 0.55
+      },
+      "note": "Président largement représentatif dans le régime parlementaire israélien (grâces, nomination du formateur de gouvernement) ; traits modérés et consensuels, sans agenda partisan affiché."
+    },
+    "ISR/head-of-government": {
+      "person": "Benyamin Netanyahou",
+      "traits": {
+        "economic": 0.35,
+        "authority": 0.4,
+        "sovereignty": 0.55,
+        "aggressiveness": 0.75,
+        "corruption": 0.55,
+        "charisma": 0.7,
+        "competence": 0.6
+      },
+      "note": "Le plus long premier ministre de l'histoire d'Israël, libéral en économie et droitier sur la sécurité ; agressivité élevée (guerre de Gaza, frappes régionales contre l'Iran et ses proxys) ; procès en cours pour corruption, fraude et abus de confiance, non jugé définitivement à cette date."
+    },
+    "IRN/head-of-state": {
+      "person": "Ali Khamenei",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.95,
+        "sovereignty": 0.85,
+        "aggressiveness": 0.55,
+        "corruption": 0.3,
+        "charisma": 0.45,
+        "competence": 0.55
+      },
+      "note": "Guide suprême depuis 1989, autorité maximale dans le système théocratique iranien ; souveraineté très marquée (rejet de l'ingérence occidentale) ; agressivité par proxys régionaux plutôt que par confrontation directe ; charisme religieux plus qu'électoral."
+    },
+    "IRN/head-of-government": {
+      "person": "Massoud Pezeshkian",
+      "traits": {
+        "economic": -0.15,
+        "authority": 0.2,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.25,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "note": "Président réformateur modéré élu en 2024, chirurgien de formation, cherche l'ouverture économique et diplomatique dans les limites fixées par le Guide suprême ; agressivité plus faible que l'establishment sécuritaire du pays."
+    },
+    "PAK/head-of-state": {
+      "person": "Asif Ali Zardari",
+      "traits": {
+        "economic": -0.2,
+        "authority": 0,
+        "sovereignty": 0,
+        "aggressiveness": 0.2,
+        "corruption": 0.55,
+        "charisma": 0.4,
+        "competence": 0.4
+      },
+      "note": "Président aux pouvoirs restreints dans le régime parlementaire pakistanais, rôle surtout protocolaire ; réputation de longue date entachée par des accusations de corruption (surnom médiatique « Mr Ten Percent »), jamais définitivement établies en justice."
+    },
+    "PAK/head-of-government": {
+      "person": "Shehbaz Sharif",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.15,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.45,
+        "charisma": 0.4,
+        "competence": 0.5
+      },
+      "note": "Centre-droit, gestionnaire réputé plus technocrate que son frère Nawaz ; tensions frontalières récurrentes avec l'Inde et l'Afghanistan (agressivité au-dessus de la moyenne régionale) ; accusations de corruption anciennes, non définitivement tranchées."
+    },
+    "PRK/head-of-state": {
+      "person": "Kim Jong-un",
+      "traits": {
+        "economic": -0.85,
+        "authority": 0.98,
+        "sovereignty": 0.95,
+        "aggressiveness": 0.75,
+        "corruption": 0.5,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "note": "Économie planifiée à l'extrême, autorité et souveraineté maximales dans l'État à parti unique le plus fermé au monde ; agressivité élevée (essais balistiques et nucléaires réguliers), sans atteindre le niveau des puissances les plus interventionnistes."
+    },
+    "PRK/head-of-government": {
+      "person": "Pak Thae-song",
+      "traits": {
+        "economic": -0.8,
+        "authority": 0.85,
+        "sovereignty": 0.8,
+        "aggressiveness": 0.4,
+        "corruption": 0.4,
+        "charisma": 0.35,
+        "competence": 0.5
+      },
+      "note": "Chef du gouvernement chargé de l'économie planifiée nord-coréenne, subordonné à Kim Jong-un ; autorité et souveraineté très marquées par construction du régime, agressivité plus faible que le sommet de l'État, rôle économique et non militaire."
+    },
+    "EGY/head-of-state": {
+      "person": "Abdel Fattah al-Sissi",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.75,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.35,
+        "corruption": 0.45,
+        "charisma": 0.4,
+        "competence": 0.5
+      },
+      "note": "Ancien chef d'état-major arrivé au pouvoir après le coup d'État de 2013, autorité forte (répression de l'opposition, état d'urgence prolongé) ; agressivité modérée, prudence militaire malgré les tensions régionales (Éthiopie, Gaza) ; corruption perçue via l'économie dirigée par l'armée."
+    },
+    "EGY/head-of-government": {
+      "person": "Mostafa Madbouly",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.4,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.2,
+        "corruption": 0.35,
+        "charisma": 0.35,
+        "competence": 0.55
+      },
+      "note": "Ancien urbaniste devenu premier ministre technocrate, chargé des grands projets d'infrastructure (nouvelle capitale administrative) ; traits économiques et d'autorité alignés sur la présidence, agressivité faible, rôle non diplomatique de premier plan."
+    },
+    "NGA/head-of-state": {
+      "person": "Bola Ahmed Tinubu",
+      "traits": {
+        "economic": 0.35,
+        "authority": 0.25,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.25,
+        "corruption": 0.55,
+        "charisma": 0.55,
+        "competence": 0.45
+      },
+      "note": "Libéral sur le papier (suppression des subventions au carburant), figure politique de longue date à Lagos ; accusations de corruption anciennes et récurrentes (affaires jamais tranchées) ; compétence contestée face à la crise économique et sécuritaire du pays."
+    },
+    "ETH/head-of-state": {
+      "person": "Taye Atske Selassie",
+      "traits": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.2,
+        "charisma": 0.4,
+        "competence": 0.5
+      },
+      "note": "Président largement honorifique du régime éthiopien, diplomate de carrière ; traits modérés, le pouvoir exécutif appartenant au premier ministre."
+    },
+    "ETH/head-of-government": {
+      "person": "Abiy Ahmed",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.55,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.55,
+        "corruption": 0.4,
+        "charisma": 0.7,
+        "competence": 0.5
+      },
+      "note": "Prix Nobel de la paix 2019 pour l'accord avec l'Érythrée, puis conduite de la guerre du Tigré (2020-2022) qui ternit ce bilan ; agressivité élevée en pratique malgré le prix Nobel ; charisme oratoire fort, compétence contestée face aux crises internes multiples (Amhara, Oromia)."
+    },
+    "VEN/head-of-state": {
+      "person": "Nicolás Maduro",
+      "traits": {
+        "economic": -0.75,
+        "authority": 0.85,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.5,
+        "corruption": 0.7,
+        "charisma": 0.45,
+        "competence": 0.35
+      },
+      "note": "Socialisme d'État en crise économique prolongée, autorité très forte (répression de l'opposition, résultat de la présidentielle de 2024 contesté par une large partie de la communauté internationale) ; corruption largement documentée (sanctions américaines, accusations de narcotrafic) ; compétence économique faible au vu de l'hyperinflation passée."
+    },
+    "ARE/head-of-state": {
+      "person": "Mohammed ben Zayed Al Nahyane",
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.7,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.4,
+        "corruption": 0.3,
+        "charisma": 0.55,
+        "competence": 0.7
+      },
+      "note": "Monarchie fédérale à forte autorité, libéralisme économique assumé (hub financier et commercial) ; interventionnisme régional actif (Yémen, Libye, Soudan par proxys, agressivité au-dessus de la moyenne) ; compétence élevée dans la diversification économique post-pétrole."
+    },
+    "ARE/head-of-government": {
+      "person": "Mohammed ben Rachid Al Maktoum",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.55,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.25,
+        "corruption": 0.25,
+        "charisma": 0.65,
+        "competence": 0.7
+      },
+      "note": "Artisan du développement de Dubaï en hub mondial du commerce et de la finance, libéralisme économique assumé ; autorité forte en interne, agressivité faible en politique étrangère (rôle de médiateur régional) ; compétence entrepreneuriale très reconnue."
+    },
+    "NLD/head-of-state": {
+      "person": "Willem-Alexander",
+      "traits": {
+        "economic": 0,
+        "authority": -0.15,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.1,
+        "corruption": 0.1,
+        "charisma": 0.5,
+        "competence": 0.55
+      },
+      "note": "Roi sans pouvoir exécutif réel dans la monarchie constitutionnelle néerlandaise ; traits neutres et modérés, fonction protocolaire et de formateur de gouvernement."
+    },
+    "NLD/head-of-government": {
+      "person": "Dick Schoof",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.15,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.15,
+        "charisma": 0.3,
+        "competence": 0.5
+      },
+      "note": "Ancien haut fonctionnaire (renseignement, sécurité) nommé premier ministre de compromis sans étiquette partisane en 2024, gère les affaires courantes pendant la formation d'un nouveau gouvernement ; traits modérés, charisme politique limité."
+    },
+    "SWE/head-of-state": {
+      "person": "Carl XVI Gustaf",
+      "traits": {
+        "economic": 0,
+        "authority": -0.15,
+        "sovereignty": -0.15,
+        "aggressiveness": 0.1,
+        "corruption": 0.1,
+        "charisma": 0.45,
+        "competence": 0.5
+      },
+      "note": "Roi sans pouvoir exécutif dans la monarchie constitutionnelle suédoise, le plus ancien chef d'État européen encore en fonction (depuis 1973) ; traits neutres et très modérés."
+    },
+    "SWE/head-of-government": {
+      "person": "Ulf Kristersson",
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.25,
+        "corruption": 0.15,
+        "charisma": 0.45,
+        "competence": 0.55
+      },
+      "note": "Centre-droit libéral, gouverne avec le soutien externe des Démocrates de Suède ; adhésion à l'OTAN menée à terme sous son mandat ; agressivité faible, corruption perçue très faible dans la tradition politique suédoise."
+    },
+    "VNM/head-of-state": {
+      "person": "To Lam",
+      "traits": {
+        "economic": -0.15,
+        "authority": 0.8,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.35,
+        "corruption": 0.35,
+        "charisma": 0.45,
+        "competence": 0.6
+      },
+      "note": "Ancien ministre de la Sécurité publique devenu secrétaire général du parti unique, autorité forte (campagne anti-corruption qui a aussi consolidé son pouvoir personnel) ; économie encadrée par le parti mais ouverte au commerce extérieur ; agressivité modérée, tensions maritimes avec la Chine gérées avec prudence."
+    },
+    "VNM/head-of-government": {
+      "person": "Pham Minh Chinh",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.6,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.25,
+        "corruption": 0.3,
+        "charisma": 0.45,
+        "competence": 0.6
+      },
+      "note": "Chef du gouvernement chargé de l'ouverture économique du Vietnam (attraction des investissements étrangers), autorité du parti unique maintenue ; agressivité faible, diplomatie d'équilibre entre grandes puissances."
+    },
+    "THA/head-of-state": {
+      "person": "Rama X (Maha Vajiralongkorn)",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.3,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.15,
+        "corruption": 0.3,
+        "charisma": 0.35,
+        "competence": 0.4
+      },
+      "note": "Roi constitutionnellement au-dessus de la politique, mais dont l'influence informelle sur l'armée et les institutions reste documentée en Thaïlande ; autorité légèrement supérieure à un monarque strictement cérémoniel ; agressivité faible, fonction non directement exécutive."
+    },
+    "THA/head-of-government": {
+      "person": "Anutin Charnvirakul",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.25,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.25,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.45
+      },
+      "note": "Homme d'affaires devenu chef d'un parti pivot de coalition, arrivé au pouvoir en septembre 2025 après une crise politique ; traits proches du centre-droit thaïlandais, gouvernement de coalition fragile."
+    },
+    "PHL/head-of-state": {
+      "person": "Ferdinand Marcos Jr.",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.3,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.4,
+        "corruption": 0.55,
+        "charisma": 0.55,
+        "competence": 0.45
+      },
+      "note": "Fils du dictateur déchu de 1986, revenu au pouvoir par les urnes ; fermeté croissante face à la Chine en mer de Chine méridionale (agressivité au-dessus de la moyenne) ; corruption perçue liée à l'héritage familial (biens mal acquis jamais totalement restitués)."
+    },
+    "BGD/head-of-state": {
+      "person": "Mohammed Shahabuddin",
+      "traits": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.2,
+        "charisma": 0.35,
+        "competence": 0.4
+      },
+      "note": "Président largement honorifique du régime parlementaire bangladais, en fonction depuis avant la crise politique de 2024 ; traits modérés, le pouvoir réel appartenant au chef du gouvernement."
+    },
+    "BGD/head-of-government": {
+      "person": "Muhammad Yunus",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.3,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.1,
+        "charisma": 0.65,
+        "competence": 0.65
+      },
+      "note": "Prix Nobel de la paix 2006 pour le microcrédit (Grameen Bank), à la tête du gouvernement intérimaire depuis la chute de Sheikh Hasina en août 2024 ; libéral au sens civique, autorité faible par choix (transition vers des élections) ; corruption perçue très faible, réputation internationale forte."
+    },
+    "KAZ/head-of-state": {
+      "person": "Kassym-Jomart Tokayev",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.55,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.2,
+        "corruption": 0.4,
+        "charisma": 0.4,
+        "competence": 0.6
+      },
+      "note": "Ancien diplomate, successeur prudent de Noursoultan Nazarbaïev ; autorité forte mais réformatrice depuis les émeutes de janvier 2022 (limitation du clan présidentiel sortant) ; agressivité faible, équilibre calculé entre Russie, Chine et Occident."
+    },
+    "KAZ/head-of-government": {
+      "person": "Olzhas Bektenov",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.3,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.3,
+        "charisma": 0.35,
+        "competence": 0.55
+      },
+      "note": "Ancien chef de l'agence anticorruption devenu premier ministre technocrate, chargé de la modernisation administrative voulue par Tokayev ; traits modérés, rôle plus économique que diplomatique."
+    },
     "FRA/head-of-state": {
       "person": "Emmanuel Macron",
       "traits": {
@@ -447,7 +1205,7 @@
       "person": "Sébastien Lecornu",
       "traits": {
         "economic": 0.3,
-        "authority": 0.0,
+        "authority": 0,
         "sovereignty": -0.4,
         "aggressiveness": 0.3,
         "corruption": 0.15,
@@ -539,7 +1297,7 @@
       "person": "Philippe VI d'Espagne",
       "traits": {
         "economic": 0.1,
-        "authority": 0.0,
+        "authority": 0,
         "sovereignty": -0.3,
         "aggressiveness": 0.1,
         "corruption": 0.05,
@@ -673,8 +1431,8 @@
     "NOR/head-of-state": {
       "person": "Harald V de Norvège",
       "traits": {
-        "economic": 0.0,
-        "authority": 0.0,
+        "economic": 0,
+        "authority": 0,
         "sovereignty": -0.2,
         "aggressiveness": 0.05,
         "corruption": 0.05,
@@ -1177,5 +1935,48 @@
         "MOZ"
       ]
     }
-  }
+  },
+  "parodyNations": [
+    "FRA",
+    "DEU",
+    "GBR",
+    "ITA",
+    "ESP",
+    "POL",
+    "UKR",
+    "RUS",
+    "TUR",
+    "NOR",
+    "USA",
+    "CHN",
+    "IND",
+    "JPN",
+    "BRA",
+    "CAN",
+    "AUS",
+    "KOR",
+    "MEX",
+    "IDN",
+    "SAU",
+    "ZAF",
+    "ARG",
+    "ISR",
+    "IRN",
+    "PAK",
+    "PRK",
+    "EGY",
+    "NGA",
+    "ETH",
+    "VEN",
+    "ARE",
+    "NLD",
+    "SWE",
+    "VNM",
+    "THA",
+    "PHL",
+    "BGD",
+    "KAZ",
+    "TWN"
+  ],
+  "_parodyNationsNote": "J6 : les quarante nations principales (europe-10, le G20 hors UE, les puissances nucléaires, des puissances régionales) ont des noms parodiques écrits à la main ; les autres portent leur nom fictif même en mode parodie (consigne du J6)."
 }

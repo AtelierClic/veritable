@@ -1,0 +1,58 @@
+{
+ "nation": "TUN",
+ "country": "Q948",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q108892374",
+    "label": "Sarra Zaafrani",
+    "born": "1963-01-26",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q16120878",
+    "label": "Kaïs Saïed",
+    "born": "1958-02-22",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q692022",
+   "label": "Ennahdha",
+   "ideologies": [
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q360792",
+    "label": "Rached Ghannouchi",
+    "born": "1941-06-22",
+    "died": null,
+    "parties": [
+     "Q692022"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,54 @@
+{
+ "nation": "SVK",
+ "country": "Q214",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57606",
+    "label": "Robert Fico",
+    "born": "1964-09-15",
+    "died": null,
+    "parties": [
+     "Q821929"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q17330556",
+    "label": "Peter Pellegrini",
+    "born": "1975-10-06",
+    "died": null,
+    "parties": [
+     "Q96754424"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1519778",
+   "label": "Republika",
+   "ideologies": [
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    }
+   ],
+   "leader": {
+    "qid": "Q38655134",
+    "label": "Milan Uhrík",
+    "born": "1984-12-21",
+    "died": null,
+    "parties": [
+     "Q1519778"
+    ]
+   }
+  }
+ ]
+}

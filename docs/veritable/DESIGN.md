@@ -348,7 +348,7 @@ Un tronc commun à toutes les nations, plus des branches de doctrine propres aux
 
 Le monde démarre au 1er janvier 2026, tel qu'il est et non tel que l'ONU l'officialise : frontières de facto, guerres en cours, régimes en place.
 
-**Frontières.** Les polygones Natural Earth (version de facto) sont rasterisés sur la grille tuilée par un script rejouable — la résolution de la carte changera. Un territoire occupé ou sécessionniste appartient à celui qui le contrôle, avec une étiquette « contesté » qui pèse sur la reconnaissance du contrôleur et alimente les casus belli. Les cas connus sont listés dans le fichier de scénario : Crimée et Donbass, Taïwan, Chypre-Nord, Kosovo, Sahara occidental, Cisjordanie et Gaza, Cachemire, Somaliland, Transnistrie, Abkhazie et Ossétie du Sud, Haut-Karabakh — chacun avec son contrôleur de facto et sa liste de reconnaissances.
+**Frontières.** Les polygones Natural Earth (version de facto) sont rasterisés sur la grille tuilée par un script rejouable — la résolution de la carte changera. Un territoire occupé ou sécessionniste appartient à celui qui le contrôle, avec une étiquette « contesté » qui pèse sur la reconnaissance du contrôleur et alimente les casus belli. Les cas connus sont listés dans le fichier de scénario : Crimée et Donbass, Taïwan, Chypre-Nord, Kosovo, Sahara occidental, Cisjordanie et Gaza, Cachemire, Somaliland, Transnistrie, Abkhazie et Ossétie du Sud — chacun avec son contrôleur de facto et sa liste de reconnaissances. Le Haut-Karabakh n'est plus contesté : l'Azerbaïdjan l'a repris en septembre 2023 et la république d'Artsakh s'est dissoute le 1er janvier 2024 (correction du J6).
 
 **Micro-États.** Vatican, Monaco, Saint-Marin, Liechtenstein, Andorre, Malte, Singapour et les États insulaires trop petits pour une tuile existent comme nations sans territoire propre, rattachées à une tuile hôte pour l'affichage. Le découplage nation/tuiles rend cela gratuit.
 
@@ -358,18 +358,27 @@ Le monde démarre au 1er janvier 2026, tel qu'il est et non tel que l'ONU l'offi
 
 Avec un binaire distribué sous AGPL, une source à licence fermée est un blocage, pas un détail. Les licences se revérifient au moment de la collecte, et le jeu est ancré sur un instantané daté.
 
-| Source | Usage | Licence |
-| --- | --- | --- |
-| Natural Earth | Frontières de facto, polygones par pays | Domaine public |
-| Banque mondiale | PIB, population, dette, commerce agrégé | CC BY 4.0 |
-| Our World in Data | Énergie, pétrole, émissions, alimentation | Ouverte (CC BY) |
-| EIA (États-Unis) | Production et consommation d'énergie | Domaine public |
-| SIPRI | Dépenses militaires, transferts d'armes | Consultable ; conditions de redistribution à vérifier |
-| Wikidata | Dirigeants, partis, régimes, blocs, capitales | CC0 |
-| UN Comtrade / BACI (CEPII) | Flux commerciaux bilatéraux par bien | À vérifier avant redistribution |
-| V-Dem | Classification des régimes de départ | À vérifier |
-| UCDP (Uppsala) | Conflits armés en cours | À vérifier |
-| IISS Military Balance | Effectifs détaillés | **Payante, licence fermée — à éviter** |
+Licences vérifiées le 2026-09-24 sur les pages de conditions de chaque source (J6).
+
+| Source | Usage | Licence | Traitement dans le dépôt |
+| --- | --- | --- | --- |
+| Natural Earth (v5.1.2) | Frontières de facto, zones contestées, provinces, capitales | Domaine public | Fichiers en cache hors git, empreintes épinglées ; produits commités |
+| Banque mondiale (Open Data) | PIB, population, budget, commerce, R&D, armée (dont indicateurs de source SIPRI et IISS) | CC BY 4.0, sans restriction tierce sur MS.MIL.XPND.GD.ZS ni MS.MIL.TOTL.P1 | Instantanés commités (JSON du J2, CSV du J6) |
+| Our World in Data, énergie | Production et consommation d'énergie (séries EIA, Ember, Energy Institute) | CC BY 4.0 (EIA domaine public, Ember CC BY 4.0 ; conditions propres de l'Energy Institute non vérifiées) | CSV en cache, commit épinglé |
+| EIA (États-Unis) | Énergie, par Our World in Data | Domaine public | Via OWID (l'API EIA demande une clé) |
+| FMI, Perspectives de l'économie mondiale et Moniteur des finances publiques | Dette publique, PIB et budget à défaut de la Banque mondiale | Tous droits réservés, permission au cas par cas | Cache hors git ; valeurs isolées attribuées dans les fiches |
+| FAOSTAT | Alimentation (non utilisé au J6 : céréales par la Banque mondiale) | CC BY 4.0, avec clause contre la promotion commerciale | Utilisable avec attribution |
+| V-Dem v16 (Regimes of the World), par Our World in Data | Classification des régimes de départ | **CC BY-SA 4.0 (partage à l'identique)** | Instantané dérivé `snapshots/vdem/row.csv` sous CC BY-SA 4.0 ; le champ `regime` des fiches qui en dérive l'est aussi (à valider) |
+| SIPRI (dépenses, transferts, forces nucléaires) | Arsenaux nucléaires ; dépenses militaires par la Banque mondiale | Conditions propriétaires : usage non commercial, moins de 10 % d'un jeu de données | Valeurs isolées attribuées seulement, aucun fichier brut |
+| FAS, « Status of World Nuclear Forces » | Recoupement des arsenaux | Aucune licence ouverte | Valeurs isolées attribuées seulement |
+| Wikidata | Dirigeants, partis, dates de naissance, idéologies | CC0 | Instantanés commités |
+| Votes à l'Assemblée générale de l'ONU (Voeten, Strezhnev, Bailey, Harvard Dataverse) | Relations de départ | CC0 1.0 | Utilisable librement ; citation académique par courtoisie |
+| UCDP (Uppsala), version 26.1 | Conflits armés en cours | CC BY 4.0 | Utilisable avec attribution |
+| Sanctions de l'UE (liste consolidée) | Sanctions de départ | CC BY 4.0 (la carte des sanctions, application, non vérifiée) | Valeurs dérivées attribuées |
+| OFAC (États-Unis) | Sanctions de départ | Domaine public | Valeurs dérivées attribuées |
+| Liste consolidée des sanctions de l'ONU | — | **Redistribution et dérivés interdits** | Non utilisée ; les régimes de l'ONU sont repris des listes de l'UE et de l'OFAC |
+| UN Comtrade / BACI (CEPII) | Flux commerciaux bilatéraux par bien | À vérifier avant redistribution | Non utilisé |
+| IISS Military Balance | Effectifs détaillés | **Payante, licence fermée — à éviter** | Non utilisé directement (effectifs par la Banque mondiale) |
 
 **Pipeline.** Un dossier de scripts télécharge les sources, les normalise et produit les JSON validés par zod. Chaque fiche pays porte la date et la source de chaque champ. Refaire l'attribution à la main serait absurde : tout est rejouable.
 

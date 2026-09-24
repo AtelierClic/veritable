@@ -1,0 +1,97 @@
+{
+ "nation": "HND",
+ "country": "Q783",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q8044708",
+    "label": "Xiomara Castro",
+    "born": "1959-09-30",
+    "died": null,
+    "parties": [
+     "Q970952"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q8044708",
+    "label": "Xiomara Castro",
+    "born": "1959-09-30",
+    "died": null,
+    "parties": [
+     "Q970952"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1579466",
+   "label": "Parti national du Honduras",
+   "ideologies": [
+    {
+     "qid": "Q2327432",
+     "label": "humanisme chrétien"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q538272",
+   "label": "Parti libéral du Honduras",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q9008954",
+    "label": "Mauricio Villeda Bermúdez",
+    "born": "1948-04-27",
+    "died": null,
+    "parties": [
+     "Q538272"
+    ]
+   }
+  },
+  {
+   "qid": "Q970952",
+   "label": "Liberté et refondation",
+   "ideologies": [
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q191060",
+    "label": "Manuel Zelaya",
+    "born": "1952-09-20",
+    "died": null,
+    "parties": [
+     "Q538272",
+     "Q970952"
+    ]
+   }
+  }
+ ]
+}

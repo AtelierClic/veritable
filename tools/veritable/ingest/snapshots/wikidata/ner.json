@@ -1,0 +1,32 @@
+{
+ "nation": "NER",
+ "country": "Q1032",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q2646711",
+    "label": "Ali Mahamane Lamine Zeine",
+    "born": "1965-01-01",
+    "died": null,
+    "parties": [
+     "Q1968011"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q120965176",
+    "label": "Abdourahamane Tchiani",
+    "born": "1961-01-01",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

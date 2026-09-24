@@ -1,0 +1,112 @@
+{
+ "nation": "UGA",
+ "country": "Q1036",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q62481397",
+    "label": "Robinah Nabbanja",
+    "born": "1969-12-17",
+    "died": null,
+    "parties": [
+     "Q382674"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57274",
+    "label": "Yoweri Museveni",
+    "born": "1944-09-15",
+    "died": null,
+    "parties": [
+     "Q382674"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q382674",
+   "label": "Mouvement de résistance nationale",
+   "ideologies": [
+    {
+     "qid": "Q162719",
+     "label": "néolibéralisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q7877691",
+     "label": "nationalisme ougandais"
+    }
+   ],
+   "leader": {
+    "qid": "Q57274",
+    "label": "Yoweri Museveni",
+    "born": "1944-09-15",
+    "died": null,
+    "parties": [
+     "Q382674"
+    ]
+   }
+  },
+  {
+   "qid": "Q97627856",
+   "label": "Plateforme de l'unité nationale",
+   "ideologies": [
+    {
+     "qid": "Q1194747",
+     "label": "constitutionnalisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4935806",
+    "label": "Bobi Wine",
+    "born": "1982-02-12",
+    "died": null,
+    "parties": [
+     "Q97627856"
+    ]
+   }
+  },
+  {
+   "qid": "Q5473101",
+   "label": "Forum pour le changement démocratique",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q105760454",
+    "label": "Patrick Oboi Amuriat",
+    "born": null,
+    "died": null,
+    "parties": [
+     "Q5473101"
+    ]
+   }
+  }
+ ]
+}

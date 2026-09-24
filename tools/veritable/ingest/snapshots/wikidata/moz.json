@@ -1,0 +1,106 @@
+{
+ "nation": "MOZ",
+ "country": "Q1029",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6761049",
+    "label": "Maria Benvida Levy",
+    "born": "1969-03-24",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q97058466",
+    "label": "Daniel Chapo",
+    "born": "1977-01-06",
+    "died": null,
+    "parties": [
+     "Q504564"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q504564",
+   "label": "Front de libération du Mozambique",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q5448556",
+    "label": "Filipe Nyusi",
+    "born": "1959-02-09",
+    "died": null,
+    "parties": [
+     "Q504564"
+    ]
+   }
+  },
+  {
+   "qid": "Q64657923",
+   "label": "Parti optimiste pour le développement du Mozambique",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q65160558",
+     "label": "Machelism"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1425821",
+   "label": "Résistance nationale du Mozambique",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q55106039",
+    "label": "Ossufo Momade",
+    "born": "1961-01-30",
+    "died": null,
+    "parties": [
+     "Q1425821"
+    ]
+   }
+  }
+ ]
+}

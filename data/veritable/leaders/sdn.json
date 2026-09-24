@@ -1,0 +1,52 @@
+{
+  "nation": "SDN",
+  "actors": [
+    {
+      "id": "sdn-kamil-idris",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.sdn-kamil-idris.parody",
+        "fictional": "leader.sdn-kamil-idris.fictional"
+      },
+      "born": "1954-08-26",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre nommé en mai 2025 (Wikidata : Abdallah Hamdok, démissionnaire en 2022). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "sdn-abdel-fattah-abdelrahmane-al-burhan",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.sdn-abdel-fattah-abdelrahmane-al-burhan.parody",
+        "fictional": "leader.sdn-abdel-fattah-abdelrahmane-al-burhan.fictional"
+      },
+      "born": "1960-07-11",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q63111184",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

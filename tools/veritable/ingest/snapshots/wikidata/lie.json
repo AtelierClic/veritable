@@ -1,0 +1,119 @@
+{
+ "nation": "LIE",
+ "country": "Q347",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q129676165",
+    "label": "Brigitte Haas",
+    "born": "1964-12-27",
+    "died": null,
+    "parties": [
+     "Q49673"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57454",
+    "label": "Hans-Adam II de Liechtenstein",
+    "born": "1945-02-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q49673",
+   "label": "Union patriotique",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q49670",
+   "label": "Parti progressiste des citoyens",
+   "ideologies": [
+    {
+     "qid": "Q216669",
+     "label": "monarchisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q59564160",
+    "label": "Thomas Banzer",
+    "born": "1950-01-01",
+    "died": null,
+    "parties": [
+     "Q49670"
+    ]
+   }
+  },
+  {
+   "qid": "Q64441611",
+   "label": "Démocrates pour le Liechtenstein",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q49668",
+   "label": "Liste libre",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    }
+   ],
+   "leader": {
+    "qid": "Q2069720",
+    "label": "Pepo Frick",
+    "born": "1952-05-13",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,161 @@
+{
+ "nation": "MDA",
+ "country": "Q217",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q136489383",
+    "label": "Alexandru Munteanu",
+    "born": "1964-01-20",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q15071069",
+    "label": "Maia Sandu",
+    "born": "1972-05-24",
+    "died": null,
+    "parties": [
+     "Q663461"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q24909066",
+   "label": "Parti action et solidarité",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q60741353",
+     "label": "anti-corruption"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q104374081",
+    "label": "Igor Grosu",
+    "born": "1972-11-30",
+    "died": null,
+    "parties": [
+     "Q24909066"
+    ]
+   }
+  },
+  {
+   "qid": "Q135670828",
+   "label": "Bloc patriotique",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q4300333",
+     "label": "moldavisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4164146",
+    "label": "Igor Dodon",
+    "born": "1975-02-18",
+    "died": null,
+    "parties": [
+     "Q2603304"
+    ]
+   }
+  },
+  {
+   "qid": "Q7314695",
+   "label": "Notre Parti",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q4300333",
+     "label": "moldavisme"
+    },
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    },
+    {
+     "qid": "Q739609",
+     "label": "christianisme social"
+    }
+   ],
+   "leader": {
+    "qid": "Q16691871",
+    "label": "Renato Usatîi",
+    "born": "1978-11-04",
+    "died": null,
+    "parties": [
+     "Q7314695"
+    ]
+   }
+  },
+  {
+   "qid": "Q22079647",
+   "label": "Plateforme vérité et dignité",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q21746918",
+    "label": "Andrei Năstase",
+    "born": "1975-08-06",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

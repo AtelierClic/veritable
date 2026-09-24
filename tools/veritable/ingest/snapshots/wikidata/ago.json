@@ -1,0 +1,129 @@
+{
+ "nation": "AGO",
+ "country": "Q916",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q28650390",
+    "label": "João Lourenço",
+    "born": "1954-03-05",
+    "died": null,
+    "parties": [
+     "Q28551"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q28650390",
+    "label": "João Lourenço",
+    "born": "1954-03-05",
+    "died": null,
+    "parties": [
+     "Q28551"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q28551",
+   "label": "Mouvement populaire de libération de l'Angola",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q28650390",
+    "label": "João Lourenço",
+    "born": "1954-03-05",
+    "died": null,
+    "parties": [
+     "Q28551"
+    ]
+   }
+  },
+  {
+   "qid": "Q28699",
+   "label": "Union nationale pour l'indépendance totale de l'Angola",
+   "ideologies": [
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q167651",
+     "label": "maoïsme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q590478",
+     "label": "socialisme africain"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q916",
+     "label": "Angola"
+    }
+   ],
+   "leader": {
+    "qid": "Q59164305",
+    "label": "Adalberto Costa Júnior",
+    "born": "1962-05-08",
+    "died": null,
+    "parties": [
+     "Q28699"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,207 @@
+{
+  "nation": "PER",
+  "actors": [
+    {
+      "id": "per-jose-jeri",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.per-jose-jeri.parody",
+        "fictional": "leader.per-jose-jeri.fictional"
+      },
+      "born": "1986-11-13",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q107480088",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "per-vladimir-cerron",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.per-vladimir-cerron.parody",
+        "fictional": "leader.per-vladimir-cerron.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "per-perou-libre",
+      "traits": {
+        "economic": -0.4,
+        "authority": 0.4,
+        "sovereignty": 0.375,
+        "aggressiveness": 0.455,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "per-keiko-fujimori",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.per-keiko-fujimori.parody",
+        "fictional": "leader.per-keiko-fujimori.fictional"
+      },
+      "born": "1975-05-25",
+      "party": "per-force-populaire",
+      "traits": {
+        "economic": 0.433,
+        "authority": 0.433,
+        "sovereignty": 0.433,
+        "aggressiveness": 0.4732,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q235137",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "per-cesar-acuna-peralta",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.per-cesar-acuna-peralta.parody",
+        "fictional": "leader.per-cesar-acuna-peralta.fictional"
+      },
+      "born": "1952-08-11",
+      "party": "per-alliance-pour-le-progres",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.48,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5065409",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "per-rafael-lopez-aliaga",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.per-rafael-lopez-aliaga.parody",
+        "fictional": "leader.per-rafael-lopez-aliaga.fictional"
+      },
+      "born": "1961-02-11",
+      "party": "per-renovation-populaire",
+      "traits": {
+        "economic": 0.325,
+        "authority": 0.55,
+        "sovereignty": 0.45,
+        "aggressiveness": 0.5,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q99884320",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "per-perou-libre",
+      "name": "party.per-perou-libre",
+      "wikidata": "Q102333715",
+      "ideologies": [
+        "Q107199795",
+        "Q109325461",
+        "Q1144178",
+        "Q1414298",
+        "Q48790341",
+        "Q6186",
+        "Q7264",
+        "Q912036"
+      ],
+      "ideology": {
+        "economic": -0.4,
+        "authority": 0.4,
+        "sovereignty": 0.375
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 8)",
+      "support": 0.134,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 11 avril 2021 (Congrès de la République, premier tour ; pourcentages approximatifs)"
+      },
+      "leader": "per-vladimir-cerron"
+    },
+    {
+      "id": "per-force-populaire",
+      "name": "party.per-force-populaire",
+      "wikidata": "Q1472820",
+      "ideologies": ["Q162719", "Q182121", "Q436860", "Q5507447", "Q7169"],
+      "ideology": {
+        "economic": 0.433,
+        "authority": 0.433,
+        "sovereignty": 0.433
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 5)",
+      "support": 0.117,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 11 avril 2021 (Congrès de la République, premier tour ; pourcentages approximatifs)"
+      },
+      "leader": "per-keiko-fujimori"
+    },
+    {
+      "id": "per-alliance-pour-le-progres",
+      "name": "party.per-alliance-pour-le-progres",
+      "wikidata": "Q4732394",
+      "ideologies": ["Q180490"],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 11 avril 2021 (Congrès de la République, premier tour ; pourcentages approximatifs)"
+      },
+      "leader": "per-cesar-acuna-peralta"
+    },
+    {
+      "id": "per-renovation-populaire",
+      "name": "party.per-renovation-populaire",
+      "wikidata": "Q101116021",
+      "ideologies": ["Q1414298", "Q182121", "Q436860", "Q575220", "Q578881"],
+      "ideology": {
+        "economic": 0.325,
+        "authority": 0.55,
+        "sovereignty": 0.45
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 5)",
+      "support": 0.07,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 11 avril 2021 (Congrès de la République, premier tour ; pourcentages approximatifs)"
+      },
+      "leader": "per-rafael-lopez-aliaga"
+    }
+  ]
+}

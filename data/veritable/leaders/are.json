@@ -1,0 +1,52 @@
+{
+  "nation": "ARE",
+  "actors": [
+    {
+      "id": "are-mohammed-ben-rachid-al-maktoum",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.are-mohammed-ben-rachid-al-maktoum.parody",
+        "fictional": "leader.are-mohammed-ben-rachid-al-maktoum.fictional"
+      },
+      "born": "1949-07-15",
+      "party": null,
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.55,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.25,
+        "corruption": 0.25,
+        "charisma": 0.65,
+        "competence": 0.7
+      },
+      "wikidata": "Q57655",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Artisan du développement de Dubaï en hub mondial du commerce et de la finance, libéralisme économique assumé ; autorité forte en interne, agressivité faible en politique étrangère (rôle de médiateur régional) ; compétence entrepreneuriale très reconnue."
+    },
+    {
+      "id": "are-mohammed-ben-zayed-al-nahyane",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.are-mohammed-ben-zayed-al-nahyane.parody",
+        "fictional": "leader.are-mohammed-ben-zayed-al-nahyane.fictional"
+      },
+      "born": "1961-03-11",
+      "party": null,
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.7,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.4,
+        "corruption": 0.3,
+        "charisma": 0.55,
+        "competence": 0.7
+      },
+      "wikidata": "Q1951896",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Monarchie fédérale à forte autorité, libéralisme économique assumé (hub financier et commercial) ; interventionnisme régional actif (Yémen, Libye, Soudan par proxys, agressivité au-dessus de la moyenne) ; compétence élevée dans la diversification économique post-pétrole."
+    }
+  ],
+  "parties": []
+}

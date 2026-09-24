@@ -1,0 +1,46 @@
+{
+ "nation": "EGY",
+ "country": "Q79",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q54901515",
+    "label": "Moustafa Madbouli",
+    "born": "1966-04-28",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q307871",
+    "label": "Abdel Fattah al-Sissi",
+    "born": "1954-11-19",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q15980860",
+   "label": "Parti populaire républicain (Égypte)",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

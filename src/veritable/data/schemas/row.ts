@@ -23,3 +23,19 @@ export const RowSchema = z.object({
   ),
 });
 export type RowData = z.infer<typeof RowSchema>;
+
+// A scenario that holds every nation of the world has no rest of the world
+// (J6): the same participant, with nothing, so the market code is unchanged.
+export function emptyRow(goods: readonly string[], scenario: string): RowData {
+  const zero = { value: 0, source: "none", asOf: "n/a" };
+  return {
+    id: ROW_ID,
+    name: "nation.row.name",
+    scenario,
+    note: "Aucun reste du monde : le scénario tient toutes les nations.",
+    gdp: zero,
+    goods: Object.fromEntries(
+      goods.map((g) => [g, { production: zero, consumption: zero }]),
+    ) as RowData["goods"],
+  };
+}

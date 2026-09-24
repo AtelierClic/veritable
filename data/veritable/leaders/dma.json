@@ -1,0 +1,114 @@
+{
+  "nation": "DMA",
+  "actors": [
+    {
+      "id": "dma-roosevelt-skerrit",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.dma-roosevelt-skerrit.parody",
+        "fictional": "leader.dma-roosevelt-skerrit.fictional"
+      },
+      "born": "1972-06-08",
+      "party": "dma-parti-travailliste-de-la-dominique",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57823",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "dma-sylvanie-burton",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.dma-sylvanie-burton.parody",
+        "fictional": "leader.dma-sylvanie-burton.fictional"
+      },
+      "born": "1956-01-01",
+      "party": "dma-parti-travailliste-de-la-dominique",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q122208779",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "dma-lennox-linton",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.dma-lennox-linton.parody",
+        "fictional": "leader.dma-lennox-linton.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "dma-parti-uni-des-travailleurs",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0,
+        "sovereignty": 0,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "dma-parti-travailliste-de-la-dominique",
+      "name": "party.dma-parti-travailliste-de-la-dominique",
+      "wikidata": "Q1287573",
+      "ideologies": ["Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.62,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 6 décembre 2022"
+      },
+      "leader": "dma-roosevelt-skerrit"
+    },
+    {
+      "id": "dma-parti-uni-des-travailleurs",
+      "name": "party.dma-parti-uni-des-travailleurs",
+      "wikidata": "Q1253956",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.29,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 6 décembre 2022"
+      },
+      "leader": "dma-lennox-linton"
+    }
+  ]
+}

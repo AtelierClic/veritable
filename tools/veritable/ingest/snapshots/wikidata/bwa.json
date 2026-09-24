@@ -1,0 +1,74 @@
+{
+ "nation": "BWA",
+ "country": "Q963",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q18618881",
+    "label": "Duma Boko",
+    "born": "1969-12-31",
+    "died": null,
+    "parties": [
+     "Q18347306"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q18347306",
+   "label": "Coalition pour un changement démocratique",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q859825",
+   "label": "Parti démocratique du Botswana",
+   "ideologies": [
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    },
+    {
+     "qid": "Q7333466",
+     "label": "conservatisme paternaliste"
+    }
+   ],
+   "leader": {
+    "qid": "Q5217839",
+    "label": "Daniel Kwelagobe",
+    "born": "1943-09-01",
+    "died": null,
+    "parties": [
+     "Q859825"
+    ]
+   }
+  },
+  {
+   "qid": "Q4894021",
+   "label": "Parti du congrès botswanais",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q72976241",
+   "label": "Botswana Patriotic Front",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

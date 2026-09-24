@@ -1,0 +1,65 @@
+{
+ "nation": "COD",
+ "country": "Q974",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q63967715",
+    "label": "Sylvestre Ilunga Ilunkamba",
+    "born": "1947-03-28",
+    "died": null,
+    "parties": [
+     "Q1235589"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q29032770",
+    "label": "Félix Tshisekedi",
+    "born": "1963-06-13",
+    "died": null,
+    "parties": [
+     "Q1629663"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q118967549",
+   "label": "Union sacrée de la Nation",
+   "ideologies": [
+    {
+     "qid": "Q7174",
+     "label": "démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q29032770",
+    "label": "Félix Tshisekedi",
+    "born": "1963-06-13",
+    "died": null,
+    "parties": [
+     "Q1629663"
+    ]
+   }
+  },
+  {
+   "qid": "Q3087061",
+   "label": "Parti lumumbiste unifié",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

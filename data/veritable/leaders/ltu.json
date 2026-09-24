@@ -1,0 +1,282 @@
+{
+  "nation": "LTU",
+  "actors": [
+    {
+      "id": "ltu-inga-ruginiene",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.ltu-inga-ruginiene.parody",
+        "fictional": "leader.ltu-inga-ruginiene.fictional"
+      },
+      "born": "1981-05-24",
+      "party": "ltu-parti-social-democrate-lituanien",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q124516173",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "ltu-gitanas-nauseda",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.ltu-gitanas-nauseda.parody",
+        "fictional": "leader.ltu-gitanas-nauseda.fictional"
+      },
+      "born": "1964-05-19",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q9268379",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "ltu-mindaugas-sinkevicius",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ltu-mindaugas-sinkevicius.parody",
+        "fictional": "leader.ltu-mindaugas-sinkevicius.fictional"
+      },
+      "born": "1984-06-20",
+      "party": "ltu-parti-social-democrate-lituanien",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1936326",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ltu-remigijus-zemaitaitis",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ltu-remigijus-zemaitaitis.parody",
+        "fictional": "leader.ltu-remigijus-zemaitaitis.fictional"
+      },
+      "born": "1982-05-30",
+      "party": "ltu-aube-du-niemen",
+      "traits": {
+        "economic": 0.05,
+        "authority": 0.15,
+        "sovereignty": 0.55,
+        "aggressiveness": 0.43999999999999995,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q59725",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ltu-laurynas-kasciunas",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ltu-laurynas-kasciunas.parody",
+        "fictional": "leader.ltu-laurynas-kasciunas.fictional"
+      },
+      "born": "1982-01-08",
+      "party": "ltu-union-patriotique-chretiens-democrates-lituanien",
+      "traits": {
+        "economic": 0.45,
+        "authority": 0.15,
+        "sovereignty": -0.15,
+        "aggressiveness": 0.29999999999999993,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q28735068",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ltu-ausrine-armonaite",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ltu-ausrine-armonaite.parody",
+        "fictional": "leader.ltu-ausrine-armonaite.fictional"
+      },
+      "born": "1989-05-26",
+      "party": "ltu-parti-de-la-liberte",
+      "traits": {
+        "economic": 0.025,
+        "authority": -0.45,
+        "sovereignty": -0.525,
+        "aggressiveness": 0.10499999999999995,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q27808316",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ltu-viktorija-cmilyte",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ltu-viktorija-cmilyte.parody",
+        "fictional": "leader.ltu-viktorija-cmilyte.fictional"
+      },
+      "born": "1983-08-06",
+      "party": "ltu-mouvement-liberal-de-la-republique-de-lituanie",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q270330",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "ltu-parti-social-democrate-lituanien",
+      "name": "party.ltu-parti-social-democrate-lituanien",
+      "wikidata": "Q4362",
+      "ideologies": ["Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.19,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)"
+      },
+      "leader": "ltu-mindaugas-sinkevicius"
+    },
+    {
+      "id": "ltu-aube-du-niemen",
+      "name": "party.ltu-aube-du-niemen",
+      "wikidata": "Q124472979",
+      "ideologies": ["Q2684060", "Q6235", "Q794394"],
+      "ideology": {
+        "economic": 0.05,
+        "authority": 0.15,
+        "sovereignty": 0.55
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.15,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)"
+      },
+      "leader": "ltu-remigijus-zemaitaitis"
+    },
+    {
+      "id": "ltu-union-patriotique-chretiens-democrates-lituanien",
+      "name": "party.ltu-union-patriotique-chretiens-democrates-lituanien",
+      "wikidata": "Q81556",
+      "ideologies": ["Q1043096", "Q209158"],
+      "ideology": {
+        "economic": 0.45,
+        "authority": 0.15,
+        "sovereignty": -0.15
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.14,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)"
+      },
+      "leader": "ltu-laurynas-kasciunas"
+    },
+    {
+      "id": "ltu-parti-de-la-liberte",
+      "name": "party.ltu-parti-de-la-liberte",
+      "wikidata": "Q64252730",
+      "ideologies": ["Q201712", "Q3781399", "Q6216", "Q821102"],
+      "ideology": {
+        "economic": 0.025,
+        "authority": -0.45,
+        "sovereignty": -0.525
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.08,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)"
+      },
+      "leader": "ltu-ausrine-armonaite"
+    },
+    {
+      "id": "ltu-mouvement-liberal-de-la-republique-de-lituanie",
+      "name": "party.ltu-mouvement-liberal-de-la-republique-de-lituanie",
+      "wikidata": "Q1466907",
+      "ideologies": ["Q617609"],
+      "ideology": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.07,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)"
+      },
+      "leader": "ltu-viktorija-cmilyte"
+    },
+    {
+      "id": "ltu-demokratai-uz-lietuva",
+      "name": "party.ltu-demokratai-uz-lietuva",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.13,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)"
+      },
+      "leader": null
+    }
+  ]
+}

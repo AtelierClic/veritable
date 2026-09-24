@@ -1,0 +1,83 @@
+{
+ "nation": "SRB",
+ "country": "Q403",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q42478807",
+    "label": "Duro Macut",
+    "born": "1963-11-22",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q222031",
+    "label": "Aleksandar Vučić",
+    "born": "1970-03-05",
+    "died": null,
+    "parties": [
+     "Q253586"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q123212013",
+   "label": "Serbie contre la violence (coalition)",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q60741353",
+     "label": "anti-corruption"
+    }
+   ],
+   "leader": {
+    "qid": "Q113502376",
+    "label": "Radomir Lazović",
+    "born": "1980-09-05",
+    "died": null,
+    "parties": [
+     "Q119249720",
+     "Q61361605"
+    ]
+   }
+  },
+  {
+   "qid": "Q752521",
+   "label": "Parti socialiste de Serbie",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57843",
+    "label": "Ivica Dačić",
+    "born": "1966-01-01",
+    "died": null,
+    "parties": [
+     "Q641691",
+     "Q752521"
+    ]
+   }
+  }
+ ]
+}

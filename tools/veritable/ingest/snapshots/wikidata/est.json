@@ -1,0 +1,138 @@
+{
+ "nation": "EST",
+ "country": "Q191",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q1789192",
+    "label": "Kristen Michal",
+    "born": "1975-07-12",
+    "died": null,
+    "parties": [
+     "Q738947"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12358575",
+    "label": "Alar Karis",
+    "born": "1958-03-26",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q738947",
+   "label": "Parti de la réforme",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    }
+   ],
+   "leader": {
+    "qid": "Q1789192",
+    "label": "Kristen Michal",
+    "born": "1975-07-12",
+    "died": null,
+    "parties": [
+     "Q738947"
+    ]
+   }
+  },
+  {
+   "qid": "Q16409581",
+   "label": "Q16409581",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q928652",
+   "label": "Parti du centre d'Estonie",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4250802",
+    "label": "Mihhail Kõlvart",
+    "born": "1977-11-24",
+    "died": null,
+    "parties": [
+     "Q928652"
+    ]
+   }
+  },
+  {
+   "qid": "Q56249403",
+   "label": "Estonie 200",
+   "ideologies": [
+    {
+     "qid": "Q190044",
+     "label": "technocratie"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q20933505",
+    "label": "Kristina Kallas",
+    "born": "1976-01-29",
+    "died": null,
+    "parties": [
+     "Q56249403",
+     "Q913551"
+    ]
+   }
+  },
+  {
+   "qid": "Q913551",
+   "label": "parti social-démocrate",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q12368349",
+    "label": "Lauri Läänemets",
+    "born": "1983-01-31",
+    "died": null,
+    "parties": [
+     "Q913551"
+    ]
+   }
+  }
+ ]
+}

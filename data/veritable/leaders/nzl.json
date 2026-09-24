@@ -1,0 +1,282 @@
+{
+  "nation": "NZL",
+  "actors": [
+    {
+      "id": "nzl-christopher-luxon",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.nzl-christopher-luxon.parody",
+        "fictional": "leader.nzl-christopher-luxon.fictional"
+      },
+      "born": "1970-07-19",
+      "party": "nzl-parti-national-de-nouvelle-zelande",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q74370310",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "nzl-charles-iii",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.nzl-charles-iii.parody",
+        "fictional": "leader.nzl-charles-iii.fictional"
+      },
+      "born": "1948-11-14",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q43274",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "nzl-marama-davidson",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nzl-marama-davidson.parody",
+        "fictional": "leader.nzl-marama-davidson.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "nzl-parti-vert-d-aotearoa-nouvelle-zelande",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.45,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.12999999999999995,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nzl-jacinda-ardern",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nzl-jacinda-ardern.parody",
+        "fictional": "leader.nzl-jacinda-ardern.fictional"
+      },
+      "born": "1980-07-26",
+      "party": "nzl-parti-travailliste-neo-zelandais",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q3606816",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nzl-david-seymour",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nzl-david-seymour.parody",
+        "fictional": "leader.nzl-david-seymour.fictional"
+      },
+      "born": "1983-06-24",
+      "party": "nzl-act-new-zealand",
+      "traits": {
+        "economic": 0.8,
+        "authority": 0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.36,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q17055796",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nzl-winston-peters",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nzl-winston-peters.parody",
+        "fictional": "leader.nzl-winston-peters.fictional"
+      },
+      "born": "1945-04-11",
+      "party": "nzl-new-zealand-first",
+      "traits": {
+        "economic": 0.025,
+        "authority": 0.425,
+        "sovereignty": 0.625,
+        "aggressiveness": 0.51,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1396178",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nzl-rawiri-waititi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nzl-rawiri-waititi.parody",
+        "fictional": "leader.nzl-rawiri-waititi.fictional"
+      },
+      "born": "1980-10-17",
+      "party": "nzl-parti-maori",
+      "traits": {
+        "economic": 0.4,
+        "authority": -0.6,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.09999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q99872114",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "nzl-parti-national-de-nouvelle-zelande",
+      "name": "party.nzl-parti-national-de-nouvelle-zelande",
+      "wikidata": "Q204716",
+      "ideologies": ["Q1043096"],
+      "ideology": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.381,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 octobre 2023"
+      },
+      "leader": "nzl-christopher-luxon"
+    },
+    {
+      "id": "nzl-parti-travailliste-neo-zelandais",
+      "name": "party.nzl-parti-travailliste-neo-zelandais",
+      "wikidata": "Q1048192",
+      "ideologies": ["Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.2691,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 octobre 2023"
+      },
+      "leader": "nzl-jacinda-ardern"
+    },
+    {
+      "id": "nzl-parti-vert-d-aotearoa-nouvelle-zelande",
+      "name": "party.nzl-parti-vert-d-aotearoa-nouvelle-zelande",
+      "wikidata": "Q1327761",
+      "ideologies": ["Q1661415", "Q821102"],
+      "ideology": {
+        "economic": -0.4,
+        "authority": -0.45,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.119,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 octobre 2023"
+      },
+      "leader": "nzl-marama-davidson"
+    },
+    {
+      "id": "nzl-act-new-zealand",
+      "name": "party.nzl-act-new-zealand",
+      "wikidata": "Q288838",
+      "ideologies": ["Q250598", "Q794394", "Q853562"],
+      "ideology": {
+        "economic": 0.8,
+        "authority": 0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.086,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 octobre 2023"
+      },
+      "leader": "nzl-david-seymour"
+    },
+    {
+      "id": "nzl-new-zealand-first",
+      "name": "party.nzl-new-zealand-first",
+      "wikidata": "Q180059",
+      "ideologies": ["Q1414298", "Q179073", "Q180490", "Q6235"],
+      "ideology": {
+        "economic": 0.025,
+        "authority": 0.425,
+        "sovereignty": 0.625
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.061,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 octobre 2023"
+      },
+      "leader": "nzl-winston-peters"
+    },
+    {
+      "id": "nzl-parti-maori",
+      "name": "party.nzl-parti-maori",
+      "wikidata": "Q1375170",
+      "ideologies": ["Q6216", "Q920486"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": -0.6,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.0308,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 octobre 2023"
+      },
+      "leader": "nzl-rawiri-waititi"
+    }
+  ]
+}

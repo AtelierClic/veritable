@@ -1,0 +1,74 @@
+{
+ "nation": "PRK",
+ "country": "Q423",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16905281",
+    "label": "Pak Thae-song",
+    "born": "1955-09-14",
+    "died": null,
+    "parties": [
+     "Q49623"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q56226",
+    "label": "Kim Jong-un",
+    "born": "1984-01-08",
+    "died": null,
+    "parties": [
+     "Q49623"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q49623",
+   "label": "Parti du travail de Corée",
+   "ideologies": [
+    {
+     "qid": "Q181800",
+     "label": "Juche"
+    },
+    {
+     "qid": "Q28319806",
+     "label": "kimilsungisme-kimjongilisme"
+    },
+    {
+     "qid": "Q482555",
+     "label": "Réunification de la Corée"
+    },
+    {
+     "qid": "Q502144",
+     "label": "Songun"
+    },
+    {
+     "qid": "Q53840100",
+     "label": "Byongjin"
+    },
+    {
+     "qid": "Q712541",
+     "label": "théorie du sang pur en Corée"
+    }
+   ],
+   "leader": {
+    "qid": "Q56226",
+    "label": "Kim Jong-un",
+    "born": "1984-01-08",
+    "died": null,
+    "parties": [
+     "Q49623"
+    ]
+   }
+  }
+ ]
+}

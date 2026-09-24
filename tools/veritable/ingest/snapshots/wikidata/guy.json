@@ -1,0 +1,64 @@
+{
+ "nation": "GUY",
+ "country": "Q734",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q98053664",
+    "label": "Mark Phillips",
+    "born": "1961-10-05",
+    "died": null,
+    "parties": [
+     "Q1972521"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q64840184",
+    "label": "Irfaan Ali",
+    "born": "1980-04-25",
+    "died": null,
+    "parties": [
+     "Q1972521"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1972521",
+   "label": "Parti populaire progressiste",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q7264",
+     "label": "marxisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q212760",
+    "label": "Bharrat Jagdeo",
+    "born": "1964-01-23",
+    "died": null,
+    "parties": [
+     "Q1972521"
+    ]
+   }
+  },
+  {
+   "qid": "Q25403305",
+   "label": "A Partnership for National Unity – Alliance for Change",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

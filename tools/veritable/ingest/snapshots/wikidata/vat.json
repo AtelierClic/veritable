@@ -1,0 +1,30 @@
+{
+ "nation": "VAT",
+ "country": "Q237",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q109385659",
+    "label": "Raffaella Petrini",
+    "born": "1969-01-15",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q6109517",
+    "label": "Léon XIV",
+    "born": "1955-09-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

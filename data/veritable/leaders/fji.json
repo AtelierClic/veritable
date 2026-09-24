@@ -1,0 +1,175 @@
+{
+  "nation": "FJI",
+  "actors": [
+    {
+      "id": "fji-sitiveni-rabuka",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.fji-sitiveni-rabuka.parody",
+        "fictional": "leader.fji-sitiveni-rabuka.fictional"
+      },
+      "born": "1948-09-13",
+      "party": "fji-people-s-alliance-party",
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q981549",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "fji-wiliame-katonivere",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.fji-wiliame-katonivere.parody",
+        "fictional": "leader.fji-wiliame-katonivere.fictional"
+      },
+      "born": "1964-04-20",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q109012733",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "fji-frank-bainimarama",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fji-frank-bainimarama.parody",
+        "fictional": "leader.fji-frank-bainimarama.fictional"
+      },
+      "born": "1954-04-27",
+      "party": "fji-fidji-d-abord",
+      "traits": {
+        "economic": 0.133,
+        "authority": 0.1,
+        "sovereignty": 0.333,
+        "aggressiveness": 0.3866,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57830",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "fji-biman-prasad",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fji-biman-prasad.parody",
+        "fictional": "leader.fji-biman-prasad.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "fji-parti-de-la-federation-nationale",
+      "traits": {
+        "economic": -0.25,
+        "authority": -0.3,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.15999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q18124383",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "fji-fidji-d-abord",
+      "name": "party.fji-fidji-d-abord",
+      "wikidata": "Q17069868",
+      "ideologies": ["Q180490", "Q6216", "Q6235"],
+      "ideology": {
+        "economic": 0.133,
+        "authority": 0.1,
+        "sovereignty": 0.333
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.4255,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 décembre 2022"
+      },
+      "leader": "fji-frank-bainimarama"
+    },
+    {
+      "id": "fji-parti-de-la-federation-nationale",
+      "name": "party.fji-parti-de-la-federation-nationale",
+      "wikidata": "Q6972579",
+      "ideologies": ["Q121254", "Q204886", "Q494792"],
+      "ideology": {
+        "economic": -0.25,
+        "authority": -0.3,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.0889,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 décembre 2022"
+      },
+      "leader": "fji-biman-prasad"
+    },
+    {
+      "id": "fji-parti-liberal-social-democrate",
+      "name": "party.fji-parti-liberal-social-democrate",
+      "wikidata": "Q7550539",
+      "ideologies": ["Q179073", "Q24905525", "Q522903", "Q637251"],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.5,
+        "sovereignty": 0.8
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 4)",
+      "support": 0.0514,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 décembre 2022"
+      },
+      "leader": "fji-sitiveni-rabuka"
+    },
+    {
+      "id": "fji-people-s-alliance-party",
+      "name": "party.fji-people-s-alliance-party",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.3582,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 décembre 2022"
+      },
+      "leader": "fji-sitiveni-rabuka"
+    }
+  ]
+}

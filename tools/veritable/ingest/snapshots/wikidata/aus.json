@@ -1,0 +1,130 @@
+{
+ "nation": "AUS",
+ "country": "Q408",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q335697",
+    "label": "Anthony Albanese",
+    "born": "1963-03-02",
+    "died": null,
+    "parties": [
+     "Q216082"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q216082",
+   "label": "Parti travailliste australien",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q335697",
+    "label": "Anthony Albanese",
+    "born": "1963-03-02",
+    "died": null,
+    "parties": [
+     "Q216082"
+    ]
+   }
+  },
+  {
+   "qid": "Q125912868",
+   "label": "Liberal–National Coalition (New South Wales)",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q781486",
+   "label": "Verts australiens",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q6489515",
+    "label": "Larissa Waters",
+    "born": "1977-02-09",
+    "died": null,
+    "parties": [
+     "Q781486"
+    ]
+   }
+  },
+  {
+   "qid": "Q1585274",
+   "label": "One Nation",
+   "ideologies": [
+    {
+     "qid": "Q104841377",
+     "label": "Hansonism"
+    },
+    {
+     "qid": "Q23073467",
+     "label": "nationalisme australien"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    }
+   ],
+   "leader": {
+    "qid": "Q466220",
+    "label": "Pauline Hanson",
+    "born": "1954-05-27",
+    "died": null,
+    "parties": [
+     "Q1585274",
+     "Q2063859"
+    ]
+   }
+  }
+ ]
+}

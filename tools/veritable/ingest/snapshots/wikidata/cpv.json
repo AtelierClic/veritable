@@ -1,0 +1,80 @@
+{
+ "nation": "CPV",
+ "country": "Q1011",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q23899522",
+    "label": "Ulisses Correia e Silva",
+    "born": "1962-06-04",
+    "died": null,
+    "parties": [
+     "Q1951190"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57649",
+    "label": "José Maria Neves",
+    "born": "1960-03-28",
+    "died": null,
+    "parties": [
+     "Q497464"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1951190",
+   "label": "Mouvement pour la démocratie",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q497464",
+   "label": "Parti africain pour l'indépendance du Cap-Vert",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q57649",
+    "label": "José Maria Neves",
+    "born": "1960-03-28",
+    "died": null,
+    "parties": [
+     "Q497464"
+    ]
+   }
+  },
+  {
+   "qid": "Q3550046",
+   "label": "Union cap-verdienne indépendante et démocratique",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

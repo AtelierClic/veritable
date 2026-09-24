@@ -1,0 +1,198 @@
+{
+  "nation": "MAR",
+  "actors": [
+    {
+      "id": "mar-aziz-akhannouch",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.mar-aziz-akhannouch.parody",
+        "fictional": "leader.mar-aziz-akhannouch.fictional"
+      },
+      "born": "1961-08-16",
+      "party": "mar-rassemblement-national-des-independants-rni",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.32,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1638114",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "mar-mohammed-vi",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.mar-mohammed-vi.parody",
+        "fictional": "leader.mar-mohammed-vi.fictional"
+      },
+      "born": "1963-08-21",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57553",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "mar-abdellatif-ouahbi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mar-abdellatif-ouahbi.parody",
+        "fictional": "leader.mar-abdellatif-ouahbi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "mar-parti-authenticite-et-modernite-pam",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.32,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mar-abdelilah-benkirane",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mar-abdelilah-benkirane.parody",
+        "fictional": "leader.mar-abdelilah-benkirane.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "mar-parti-de-la-justice-et-du-developpement-pjd",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.1,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.33999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mar-nizar-baraka",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mar-nizar-baraka.parody",
+        "fictional": "leader.mar-nizar-baraka.fictional"
+      },
+      "born": "1964-02-06",
+      "party": "mar-parti-de-l-istiqlal",
+      "traits": {
+        "economic": 0.233,
+        "authority": 0.5,
+        "sovereignty": 0.533,
+        "aggressiveness": 0.5066,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q562410",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "mar-parti-de-l-istiqlal",
+      "name": "party.mar-parti-de-l-istiqlal",
+      "wikidata": "Q477273",
+      "ideologies": ["Q1414298", "Q216669", "Q6235", "Q7169"],
+      "ideology": {
+        "economic": 0.233,
+        "authority": 0.5,
+        "sovereignty": 0.533
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.205,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 8 septembre 2021 (Chambre des représentants, 395 sièges) : RNI 102 sièges, PAM 87, Istiqlal 81, PJD 13 (effondré depuis 125 en 2016) ; participation 50,35 %. Coalition gouvernementale RNI-PAM-Istiqlal sous Akhannouch, toujours en fonction au 1er janvier 2026 (prochaines législatives attendues en 2026)."
+      },
+      "leader": "mar-nizar-baraka"
+    },
+    {
+      "id": "mar-rassemblement-national-des-independants-rni",
+      "name": "party.mar-rassemblement-national-des-independants-rni",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.258,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 8 septembre 2021 (Chambre des représentants, 395 sièges) : RNI 102 sièges, PAM 87, Istiqlal 81, PJD 13 (effondré depuis 125 en 2016) ; participation 50,35 %. Coalition gouvernementale RNI-PAM-Istiqlal sous Akhannouch, toujours en fonction au 1er janvier 2026 (prochaines législatives attendues en 2026)."
+      },
+      "leader": "mar-aziz-akhannouch"
+    },
+    {
+      "id": "mar-parti-authenticite-et-modernite-pam",
+      "name": "party.mar-parti-authenticite-et-modernite-pam",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.22,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 8 septembre 2021 (Chambre des représentants, 395 sièges) : RNI 102 sièges, PAM 87, Istiqlal 81, PJD 13 (effondré depuis 125 en 2016) ; participation 50,35 %. Coalition gouvernementale RNI-PAM-Istiqlal sous Akhannouch, toujours en fonction au 1er janvier 2026 (prochaines législatives attendues en 2026)."
+      },
+      "leader": "mar-abdellatif-ouahbi"
+    },
+    {
+      "id": "mar-parti-de-la-justice-et-du-developpement-pjd",
+      "name": "party.mar-parti-de-la-justice-et-du-developpement-pjd",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": -0.1,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.033,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 8 septembre 2021 (Chambre des représentants, 395 sièges) : RNI 102 sièges, PAM 87, Istiqlal 81, PJD 13 (effondré depuis 125 en 2016) ; participation 50,35 %. Coalition gouvernementale RNI-PAM-Istiqlal sous Akhannouch, toujours en fonction au 1er janvier 2026 (prochaines législatives attendues en 2026)."
+      },
+      "leader": "mar-abdelilah-benkirane"
+    }
+  ]
+}

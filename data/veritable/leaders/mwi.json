@@ -1,0 +1,175 @@
+{
+  "nation": "MWI",
+  "actors": [
+    {
+      "id": "mwi-peter-mutharika",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.mwi-peter-mutharika.parody",
+        "fictional": "leader.mwi-peter-mutharika.fictional"
+      },
+      "born": "1940-07-18",
+      "party": "mwi-parti-democrate-progressiste",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.34,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Élu en septembre 2025, investi le 4 octobre 2025 (Wikidata : Lazarus Chakwera). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "mwi-atupele-muluzi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mwi-atupele-muluzi.parody",
+        "fictional": "leader.mwi-atupele-muluzi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "mwi-front-uni-democratique",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0,
+        "sovereignty": 0,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mwi-saulos-chilima-s-successor-a-verifier",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mwi-saulos-chilima-s-successor-a-verifier.parody",
+        "fictional": "leader.mwi-saulos-chilima-s-successor-a-verifier.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "mwi-utm-party",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.27999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mwi-lazarus-chakwera",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mwi-lazarus-chakwera.parody",
+        "fictional": "leader.mwi-lazarus-chakwera.fictional"
+      },
+      "born": "1955-04-05",
+      "party": "mwi-parti-du-congres-du-malawi",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q16202782",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "mwi-parti-democrate-progressiste",
+      "name": "party.mwi-parti-democrate-progressiste",
+      "wikidata": "Q1185876",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.1,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.34,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 16 septembre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximées à partir des sièges (229 au total), les voix précises par parti n'étant pas toutes publiées."
+      },
+      "leader": "mwi-peter-mutharika"
+    },
+    {
+      "id": "mwi-parti-du-congres-du-malawi",
+      "name": "party.mwi-parti-du-congres-du-malawi",
+      "wikidata": "Q1037389",
+      "ideologies": ["Q213843", "Q3874021", "Q7169"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 3)",
+      "support": 0.23,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 16 septembre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximées à partir des sièges (229 au total), les voix précises par parti n'étant pas toutes publiées."
+      },
+      "leader": "mwi-lazarus-chakwera"
+    },
+    {
+      "id": "mwi-front-uni-democratique",
+      "name": "party.mwi-front-uni-democratique",
+      "wikidata": "Q775844",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.017,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 16 septembre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximées à partir des sièges (229 au total), les voix précises par parti n'étant pas toutes publiées."
+      },
+      "leader": "mwi-atupele-muluzi"
+    },
+    {
+      "id": "mwi-utm-party",
+      "name": "party.mwi-utm-party",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": -0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.035,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 16 septembre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximées à partir des sièges (229 au total), les voix précises par parti n'étant pas toutes publiées."
+      },
+      "leader": "mwi-saulos-chilima-s-successor-a-verifier"
+    }
+  ]
+}

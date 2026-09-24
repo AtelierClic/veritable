@@ -1,0 +1,62 @@
+{
+ "nation": "VNM",
+ "country": "Q881",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q10806940",
+    "label": "Phạm Minh Chính",
+    "born": "1958-12-10",
+    "died": null,
+    "parties": [
+     "Q427325"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q10831196",
+    "label": "Tô Lâm",
+    "born": "1957-07-10",
+    "died": null,
+    "parties": [
+     "Q427325"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q427325",
+   "label": "Parti communiste du Vietnam",
+   "ideologies": [
+    {
+     "qid": "Q14475917",
+     "label": "Économie de marché à orientation socialiste"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q30681024",
+     "label": "nationalisme vietnamien"
+    },
+    {
+     "qid": "Q375332",
+     "label": "Patriotisme socialiste"
+    },
+    {
+     "qid": "Q904148",
+     "label": "pensée Hô Chi Minh"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+  "nation": "SOM",
+  "actors": [
+    {
+      "id": "som-hamza-abdi-barre",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.som-hamza-abdi-barre.parody",
+        "fictional": "leader.som-hamza-abdi-barre.fictional"
+      },
+      "born": "1972-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre depuis juin 2022 (Wikidata : Mohamed Hussein Roble) ; année de naissance seule connue. Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "som-hassan-sheikh-mohamoud",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.som-hassan-sheikh-mohamoud.parody",
+        "fictional": "leader.som-hassan-sheikh-mohamoud.fictional"
+      },
+      "born": "1955-11-29",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q319153",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

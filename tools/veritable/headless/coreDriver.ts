@@ -5,7 +5,6 @@ import { Executor } from "../../../src/core/execution/ExecutionManager";
 import {
   Difficulty,
   GameMapSize,
-  GameMapType,
   GameMode,
   GameType,
   PlayerInfo,
@@ -18,6 +17,7 @@ import { GameRunner } from "../../../src/core/GameRunner";
 import { PseudoRandom } from "../../../src/core/PseudoRandom";
 import { GameConfig } from "../../../src/core/Schemas";
 import { simpleHash } from "../../../src/core/Util";
+import { gameMapOf } from "../../../src/veritable/adapters/scenarioMap";
 import {
   coreRoster,
   ScenarioPack,
@@ -38,20 +38,14 @@ const MAPS = path.resolve(
   "../../../resources/maps",
 );
 
-function mapOf(name: string): GameMapType {
-  const match = Object.values(GameMapType).find(
-    (m) => m.toLowerCase().replace(/\s+/g, "") === name.toLowerCase(),
-  );
-  if (match === undefined) throw new Error(`unknown map: ${name}`);
-  return match;
-}
-
 export async function coreDriver(
   pack: ScenarioPack,
   config: VeritableConfig,
   seed: number,
   player: string,
   autopilot: boolean,
+  // J6: the duration of every tick (core + simulation), for the profiles.
+  onTick?: (ms: number) => void,
 ): Promise<Driver> {
   const dir = path.join(MAPS, pack.scenario.map);
   const manifest = JSON.parse(
@@ -67,7 +61,7 @@ export async function coreDriver(
   );
   const gameID = `headless-${seed}`;
   const gameConfig: GameConfig = {
-    gameMap: mapOf(pack.scenario.map),
+    gameMap: gameMapOf(pack.scenario.map),
     gameMapSize: GameMapSize.Normal,
     gameMode: GameMode.FFA,
     gameType: GameType.Singleplayer,
@@ -140,9 +134,11 @@ export async function coreDriver(
       for (let i = ticksIntoDay; i < ticksPerDay; i++) {
         const t0 = performance.now();
         game.executeNextTick();
-        coreMs += performance.now() - t0;
+        const t1 = performance.now();
+        coreMs += t1 - t0;
         coreTicks++;
         events.push(...session.onCoreTick());
+        onTick?.(performance.now() - t0);
       }
       ticksIntoDay = 0;
       return events;

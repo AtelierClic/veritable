@@ -10,6 +10,7 @@ import { encodeZones } from "../../../src/veritable/data/zonesFile";
 import {
   buildBorders,
   buildRegions,
+  demoteMicrostates,
   Inset,
   Override,
   RegionSpec,
@@ -164,6 +165,7 @@ async function runCalibrate(args: string[]): Promise<void> {
         rotation: round(g.rotation, 4),
         tx: round(g.tx, 3),
         ty: round(g.ty, 3),
+        ...(g.seam === true ? { seam: true } : {}),
         fit: {
           method: "coastline-iou",
           iou: round(result.iou, 4),
@@ -339,6 +341,15 @@ async function runRasterize(args: string[]): Promise<void> {
   const { overrides, regions: regionSpecs } =
     await loadOverrides(overridesFile);
 
+  const attachments: Record<string, string> =
+    scenario.borders.attachments === undefined
+      ? {}
+      : JSON.parse(
+          fs.readFileSync(
+            path.join(data, scenario.borders.attachments),
+            "utf8",
+          ),
+        ).attach;
   const { borders, report, natural } = buildBorders(
     mask,
     stored,
@@ -347,7 +358,30 @@ async function runRasterize(args: string[]): Promise<void> {
     insets,
     scenario.nations,
     MAX_ORPHAN_DISTANCE_TILES,
+    new Map(Object.entries(attachments)),
   );
+  // Capitals projected on the map (sheets of the scenario's nations).
+  const project = toTile(stored);
+  const projected: Record<string, [number, number]> = {};
+  for (const id of scenario.nations as string[]) {
+    const sheet = JSON.parse(
+      fs.readFileSync(
+        path.join(data, "nations", `${id.toLowerCase()}.json`),
+        "utf8",
+      ),
+    );
+    projected[id] = project(sheet.capital.lon, sheet.capital.lat);
+  }
+  // Micro-states (J6): under the scenario's threshold, no tile, a host tile.
+  const microstates =
+    scenario.borders.microstateTiles === undefined
+      ? {}
+      : demoteMicrostates(borders, scenario.borders.microstateTiles, projected);
+  if (Object.keys(microstates).length > 0) {
+    console.log(
+      `micro-states (< ${scenario.borders.microstateTiles} tiles): ${Object.keys(microstates).join(" ")}`,
+    );
+  }
 
   const bin = path.join(data, scenario.borders.rasterized);
   fs.mkdirSync(path.dirname(bin), { recursive: true });
@@ -395,17 +429,15 @@ async function runRasterize(args: string[]): Promise<void> {
       2,
     ) + "\n",
   );
-  // Capital tiles: lon/lat of the nation sheet -> nearest tile of the nation.
-  const project = toTile(stored);
+  // Capital tiles: lon/lat of the nation sheet -> nearest tile of the nation
+  // (a micro-state: its host tile).
   const capitals: Record<string, [number, number]> = {};
   scenario.nations.forEach((id: string, n: number) => {
-    const sheet = JSON.parse(
-      fs.readFileSync(
-        path.join(data, "nations", `${id.toLowerCase()}.json`),
-        "utf8",
-      ),
-    );
-    const [x, y] = project(sheet.capital.lon, sheet.capital.lat);
+    if (id in microstates) {
+      capitals[id] = microstates[id];
+      return;
+    }
+    const [x, y] = projected[id];
     capitals[id] = nearestTileOf(borders, n + 1, Math.floor(x), Math.floor(y));
   });
   fs.writeFileSync(
@@ -417,6 +449,7 @@ async function runRasterize(args: string[]): Promise<void> {
         width: borders.width,
         height: borders.height,
         capitals,
+        microstates,
         ...landAdjacency(borders, mask.land),
       },
       null,

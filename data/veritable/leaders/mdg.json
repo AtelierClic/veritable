@@ -1,0 +1,72 @@
+{
+  "nation": "MDG",
+  "actors": [
+    {
+      "id": "mdg-herintsalama-rajaonarivelo",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.mdg-herintsalama-rajaonarivelo.parody",
+        "fictional": "leader.mdg-herintsalama-rajaonarivelo.fictional"
+      },
+      "born": "1965-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre nommé en octobre 2025 après la prise du pouvoir par le colonel Randrianirina (Wikidata : Ruphin Zafisambo). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "mdg-michael-randrianirina",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.mdg-michael-randrianirina.parody",
+        "fictional": "leader.mdg-michael-randrianirina.fictional"
+      },
+      "born": "1973-08-23",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q136500275",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "mdg-nous-tous-ensemble-avec-andry-rajoelina",
+      "name": "party.mdg-nous-tous-ensemble-avec-andry-rajoelina",
+      "wikidata": "Q86680874",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.3,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.43,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 29 mai 2024 (Assemblée nationale) — dernières tenues avant le coup d'État d'octobre 2025 ; parts approximatives, à vérifier. Le pouvoir actuel n'est pas issu de ce scrutin."
+      },
+      "leader": null
+    }
+  ]
+}

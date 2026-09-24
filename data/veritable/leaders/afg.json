@@ -1,0 +1,52 @@
+{
+  "nation": "AFG",
+  "actors": [
+    {
+      "id": "afg-mohammad-hassan-akhund",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.afg-mohammad-hassan-akhund.parody",
+        "fictional": "leader.afg-mohammad-hassan-akhund.fictional"
+      },
+      "born": "1945-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q108444479",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "afg-haibatullah-akhundzada",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.afg-haibatullah-akhundzada.parody",
+        "fictional": "leader.afg-haibatullah-akhundzada.fictional"
+      },
+      "born": "1967-10-19",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q24237654",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

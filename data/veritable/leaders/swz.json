@@ -1,0 +1,52 @@
+{
+  "nation": "SWZ",
+  "actors": [
+    {
+      "id": "swz-russell-dlamini",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.swz-russell-dlamini.parody",
+        "fictional": "leader.swz-russell-dlamini.fictional"
+      },
+      "born": "1973-10-23",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q123342092",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "swz-mswati-iii",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.swz-mswati-iii.parody",
+        "fictional": "leader.swz-mswati-iii.fictional"
+      },
+      "born": "1968-04-19",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57340",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

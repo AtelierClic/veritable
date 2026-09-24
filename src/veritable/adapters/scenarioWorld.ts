@@ -176,7 +176,9 @@ export function initialWorld(
   return {
     world: {
       coreStart,
-      players: bindings.map(({ nationId, player }) => {
+      // A micro-state (J6) has no tile: no spawn, no city on its host tile.
+      players: bindings.flatMap(({ nationId, player }) => {
+        if (pack.meta.microstates?.[nationId] !== undefined) return [];
         const [x, y] = pack.meta.capitals[nationId];
         const capital = game.ref(x, y);
         const structures = [{ type: UnitType.City, tile: capital, level: 1 }];

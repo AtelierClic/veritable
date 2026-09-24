@@ -1,0 +1,41 @@
+{
+ "nation": "COM",
+ "country": "Q970",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q515602",
+    "label": "Azali Assoumani",
+    "born": "1959-01-01",
+    "died": null,
+    "parties": [
+     "Q5166253"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q515602",
+    "label": "Azali Assoumani",
+    "born": "1959-01-01",
+    "died": null,
+    "parties": [
+     "Q5166253"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q5166253",
+   "label": "Convention pour le Renouveau des Comores",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

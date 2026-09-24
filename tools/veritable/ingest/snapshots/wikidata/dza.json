@@ -1,0 +1,44 @@
+{
+ "nation": "DZA",
+ "country": "Q262",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q133540883",
+    "label": "Sifi Ghrieb",
+    "born": "1971-01-20",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q2821166",
+    "label": "Abdelmadjid Tebboune",
+    "born": "1945-11-17",
+    "died": null,
+    "parties": [
+     "Q204543"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q3088407",
+   "label": "Front El Moustakbal",
+   "ideologies": [
+    {
+     "qid": "Q4724100",
+     "label": "nationalisme algérien"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

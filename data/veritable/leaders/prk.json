@@ -1,0 +1,79 @@
+{
+  "nation": "PRK",
+  "actors": [
+    {
+      "id": "prk-pak-thae-song",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.prk-pak-thae-song.parody",
+        "fictional": "leader.prk-pak-thae-song.fictional"
+      },
+      "born": "1955-09-14",
+      "party": "prk-parti-du-travail-de-coree",
+      "traits": {
+        "economic": -0.8,
+        "authority": 0.85,
+        "sovereignty": 0.8,
+        "aggressiveness": 0.4,
+        "corruption": 0.4,
+        "charisma": 0.35,
+        "competence": 0.5
+      },
+      "wikidata": "Q16905281",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Chef du gouvernement chargé de l'économie planifiée nord-coréenne, subordonné à Kim Jong-un ; autorité et souveraineté très marquées par construction du régime, agressivité plus faible que le sommet de l'État, rôle économique et non militaire."
+    },
+    {
+      "id": "prk-kim-jong-un",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.prk-kim-jong-un.parody",
+        "fictional": "leader.prk-kim-jong-un.fictional"
+      },
+      "born": "1984-01-08",
+      "party": "prk-parti-du-travail-de-coree",
+      "traits": {
+        "economic": -0.85,
+        "authority": 0.98,
+        "sovereignty": 0.95,
+        "aggressiveness": 0.75,
+        "corruption": 0.5,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q56226",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Économie planifiée à l'extrême, autorité et souveraineté maximales dans l'État à parti unique le plus fermé au monde ; agressivité élevée (essais balistiques et nucléaires réguliers), sans atteindre le niveau des puissances les plus interventionnistes."
+    }
+  ],
+  "parties": [
+    {
+      "id": "prk-parti-du-travail-de-coree",
+      "name": "party.prk-parti-du-travail-de-coree",
+      "wikidata": "Q49623",
+      "ideologies": [
+        "Q181800",
+        "Q28319806",
+        "Q482555",
+        "Q502144",
+        "Q53840100",
+        "Q712541"
+      ],
+      "ideology": {
+        "economic": -0.9,
+        "authority": 0.98,
+        "sovereignty": 0.9
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.98,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à l'Assemblée populaire suprême du 10 mars 2019, candidat unique par circonscription ; incertitude sur la tenue d'un scrutin plus récent"
+      },
+      "leader": "prk-kim-jong-un"
+    }
+  ]
+}

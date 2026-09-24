@@ -421,6 +421,4741 @@
           "qid": "Q500190"
         }
       ]
+    },
+    "ALB": {
+      "wikidataCountry": "Q222",
+      "election": "Législatives du 11 mai 2025 (Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "Partia Socialiste e Shqipërisë",
+          "lang": "sq",
+          "support": 0.5327,
+          "qid": "Q642882"
+        },
+        {
+          "label": "Partia Demokratike – Aleanca për Shqipërinë Madhështore",
+          "lang": "sq",
+          "support": 0.3293
+        },
+        {
+          "label": "Nisma Shqipëria Bëhet",
+          "lang": "sq",
+          "support": 0.04
+        },
+        {
+          "label": "Partia Social Demokrate e Shqipërisë",
+          "lang": "sq",
+          "support": 0.031,
+          "qid": "Q1533055"
+        },
+        {
+          "label": "Partia Mundësia",
+          "lang": "sq",
+          "support": 0.0305,
+          "qid": "Q126915964"
+        }
+      ]
+    },
+    "AND": {
+      "wikidataCountry": "Q228",
+      "election": "Élections générales du 2 avril 2023 (Conseil général)",
+      "parties": [
+        {
+          "label": "Demòcrates per Andorra + Compromís Ciutadà",
+          "lang": "ca",
+          "support": 0.3266
+        },
+        {
+          "label": "Concòrdia",
+          "lang": "ca",
+          "support": 0.2143,
+          "qid": "Q116153001"
+        },
+        {
+          "label": "Partit Socialdemòcrata + Socialdemocràcia i Progrés",
+          "lang": "ca",
+          "support": 0.2105
+        },
+        {
+          "label": "Andorra Endavant",
+          "lang": "ca",
+          "support": 0.16,
+          "qid": "Q116465504"
+        },
+        {
+          "label": "Acció",
+          "lang": "ca",
+          "support": 0.042
+        }
+      ]
+    },
+    "ARM": {
+      "wikidataCountry": "Q399",
+      "election": "Législatives anticipées du 20 juin 2021 (Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "Civil Contract",
+          "lang": "en",
+          "support": 0.5395,
+          "qid": "Q17305307"
+        },
+        {
+          "label": "Armenia Alliance",
+          "lang": "en",
+          "support": 0.2111,
+          "qid": "Q106833126"
+        },
+        {
+          "label": "I Have Honor Alliance",
+          "lang": "en",
+          "support": 0.0522,
+          "qid": "Q107087931"
+        }
+      ]
+    },
+    "AUT": {
+      "wikidataCountry": "Q40",
+      "election": "Législatives du 29 septembre 2024 (ministère fédéral de l'Intérieur)",
+      "parties": [
+        {
+          "label": "Freiheitliche Partei Österreichs",
+          "lang": "de",
+          "support": 0.2885,
+          "qid": "Q131692"
+        },
+        {
+          "label": "Österreichische Volkspartei",
+          "lang": "de",
+          "support": 0.2627,
+          "qid": "Q186867"
+        },
+        {
+          "label": "Sozialdemokratische Partei Österreichs",
+          "lang": "de",
+          "support": 0.2114,
+          "qid": "Q179111"
+        },
+        {
+          "label": "NEOS",
+          "lang": "de",
+          "support": 0.0914,
+          "qid": "Q13564543"
+        },
+        {
+          "label": "Die Grünen",
+          "lang": "de",
+          "support": 0.0824,
+          "qid": "Q193178"
+        }
+      ]
+    },
+    "AZE": {
+      "wikidataCountry": "Q227",
+      "election": "Législatives du 1er septembre 2024 (Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "Yeni Azərbaycan Partiyası",
+          "lang": "az",
+          "support": 0.544,
+          "qid": "Q876402"
+        },
+        {
+          "label": "Müstəqillər",
+          "lang": "az",
+          "support": 0.352
+        },
+        {
+          "label": "Vətəndaş Həmrəyliyi Partiyası",
+          "lang": "az",
+          "support": 0.024,
+          "qid": "Q1021186"
+        }
+      ]
+    },
+    "BLR": {
+      "wikidataCountry": "Q184",
+      "election": "Législatives du 25 février 2024 (Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "Белая Русь",
+          "lang": "ru",
+          "support": 0.4636,
+          "qid": "Q14340731"
+        },
+        {
+          "label": "Беспартийные",
+          "lang": "ru",
+          "support": 0.3636
+        },
+        {
+          "label": "Республиканская партия труда и справедливости",
+          "lang": "ru",
+          "support": 0.0727,
+          "qid": "Q2436636"
+        },
+        {
+          "label": "Коммунистическая партия Беларуси",
+          "lang": "ru",
+          "support": 0.0636,
+          "qid": "Q325413"
+        },
+        {
+          "label": "Либерально-демократическая партия Беларуси",
+          "lang": "ru",
+          "support": 0.0364
+        }
+      ]
+    },
+    "CZE": {
+      "wikidataCountry": "Q213",
+      "election": "Législatives des 3-4 octobre 2025 (Office tchèque de la statistique)",
+      "parties": [
+        {
+          "label": "ANO 2011",
+          "lang": "cs",
+          "support": 0.3452,
+          "qid": "Q10728124"
+        },
+        {
+          "label": "SPOLU",
+          "lang": "cs",
+          "support": 0.2336,
+          "qid": "Q104527897"
+        },
+        {
+          "label": "Starostové a nezávislí",
+          "lang": "cs",
+          "support": 0.1123,
+          "qid": "Q1586610"
+        },
+        {
+          "label": "Česká pirátská strana",
+          "lang": "cs",
+          "support": 0.0897,
+          "qid": "Q341085"
+        },
+        {
+          "label": "Svoboda a přímá demokracie",
+          "lang": "cs",
+          "support": 0.0778,
+          "qid": "Q20058756"
+        },
+        {
+          "label": "Motoristé sobě",
+          "lang": "cs",
+          "support": 0.0677,
+          "qid": "Q29789623"
+        }
+      ]
+    },
+    "HUN": {
+      "wikidataCountry": "Q28",
+      "election": "Législatives du 3 avril 2022 (Office national des élections)",
+      "parties": [
+        {
+          "label": "Fidesz-KDNP",
+          "lang": "hu",
+          "support": 0.5413,
+          "qid": "Q50583624"
+        },
+        {
+          "label": "Egységben Magyarországért",
+          "lang": "hu",
+          "support": 0.3444,
+          "qid": "Q97196460"
+        },
+        {
+          "label": "Mi Hazánk Mozgalom",
+          "lang": "hu",
+          "support": 0.0588,
+          "qid": "Q55443054"
+        }
+      ]
+    },
+    "BEL": {
+      "wikidataCountry": "Q31",
+      "election": "Fédérales du 9 juin 2024 (Chambre des représentants, SPF Intérieur)",
+      "parties": [
+        {
+          "label": "Nieuw-Vlaamse Alliantie",
+          "lang": "nl",
+          "support": 0.144,
+          "qid": "Q28982"
+        },
+        {
+          "label": "Vlaams Belang",
+          "lang": "nl",
+          "support": 0.138,
+          "qid": "Q682990"
+        },
+        {
+          "label": "Mouvement Réformateur",
+          "lang": "fr",
+          "support": 0.113,
+          "qid": "Q533384"
+        },
+        {
+          "label": "Vooruit",
+          "lang": "nl",
+          "support": 0.097,
+          "qid": "Q939354"
+        },
+        {
+          "label": "Parti Socialiste",
+          "lang": "fr",
+          "support": 0.09,
+          "qid": "Q645787"
+        },
+        {
+          "label": "Parti du Travail de Belgique / Partij van de Arbeid",
+          "lang": "fr",
+          "support": 0.085
+        },
+        {
+          "label": "Les Engagés",
+          "lang": "fr",
+          "support": 0.088,
+          "qid": "Q840814"
+        },
+        {
+          "label": "Christen-Democratisch en Vlaams",
+          "lang": "nl",
+          "support": 0.082,
+          "qid": "Q750673"
+        }
+      ]
+    },
+    "BIH": {
+      "wikidataCountry": "Q225",
+      "election": "Législatives du 2 octobre 2022 (Chambre des représentants, Commission électorale centrale) — répartition par entité, la part « nationale » ci-dessous est une estimation de mémoire d'entraînement à vérifier",
+      "parties": [
+        {
+          "label": "Stranka demokratske akcije",
+          "lang": "bs",
+          "support": 0.17,
+          "qid": "Q1132677"
+        },
+        {
+          "label": "Savez nezavisnih socijaldemokrata",
+          "lang": "sr",
+          "support": 0.17,
+          "qid": "Q1258283"
+        },
+        {
+          "label": "Hrvatska demokratska zajednica BiH",
+          "lang": "hr",
+          "support": 0.09,
+          "qid": "Q16792"
+        },
+        {
+          "label": "Narod i Pravda",
+          "lang": "bs",
+          "support": 0.08,
+          "qid": "Q97515918"
+        },
+        {
+          "label": "Partija demokratskog progresa",
+          "lang": "sr",
+          "support": 0.06,
+          "qid": "Q1648272"
+        },
+        {
+          "label": "Naša Stranka",
+          "lang": "bs",
+          "support": 0.05,
+          "qid": "Q946306"
+        },
+        {
+          "label": "Demokratska fronta",
+          "lang": "bs",
+          "support": 0.04,
+          "qid": "Q13231807"
+        }
+      ]
+    },
+    "BGR": {
+      "wikidataCountry": "Q219",
+      "election": "Législatives du 27 octobre 2024 (Assemblée nationale, Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "GERB-SDS",
+          "lang": "bg",
+          "support": 0.25,
+          "qid": "Q115817806"
+        },
+        {
+          "label": "Продължаваме Промяната – Демократична България",
+          "lang": "bg",
+          "support": 0.14,
+          "qid": "Q116769868"
+        },
+        {
+          "label": "Възраждане",
+          "lang": "bg",
+          "support": 0.13
+        },
+        {
+          "label": "ДПС – Ново начало",
+          "lang": "bg",
+          "support": 0.12,
+          "qid": "Q130305932"
+        },
+        {
+          "label": "Българска социалистическа партия",
+          "lang": "bg",
+          "support": 0.07,
+          "qid": "Q752259"
+        },
+        {
+          "label": "Има такъв народ",
+          "lang": "bg",
+          "support": 0.05,
+          "qid": "Q98098908"
+        },
+        {
+          "label": "Морал, Единство, Чест",
+          "lang": "bg",
+          "support": 0.05
+        }
+      ]
+    },
+    "HRV": {
+      "wikidataCountry": "Q224",
+      "election": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État)",
+      "parties": [
+        {
+          "label": "Hrvatska demokratska zajednica",
+          "lang": "hr",
+          "support": 0.34,
+          "qid": "Q738439"
+        },
+        {
+          "label": "Rijeke pravde",
+          "lang": "hr",
+          "support": 0.25
+        },
+        {
+          "label": "Domovinski pokret",
+          "lang": "hr",
+          "support": 0.1,
+          "qid": "Q86756923"
+        },
+        {
+          "label": "Most",
+          "lang": "hr",
+          "support": 0.07
+        },
+        {
+          "label": "Fokus",
+          "lang": "hr",
+          "support": 0.04
+        }
+      ]
+    },
+    "CYP": {
+      "wikidataCountry": "Q229",
+      "election": "Législatives du 30 mai 2021 (Chambre des représentants, Commission électorale)",
+      "parties": [
+        {
+          "label": "Δημοκρατικός Συναγερμός",
+          "lang": "el",
+          "support": 0.278,
+          "qid": "Q644973"
+        },
+        {
+          "label": "Ανορθωτικό Κόμμα Εργαζόμενου Λαού",
+          "lang": "el",
+          "support": 0.223,
+          "qid": "Q212158"
+        },
+        {
+          "label": "Δημοκρατικό Κόμμα",
+          "lang": "el",
+          "support": 0.113
+        },
+        {
+          "label": "Εθνικό Λαϊκό Μέτωπο",
+          "lang": "el",
+          "support": 0.068,
+          "qid": "Q2748384"
+        },
+        {
+          "label": "Κίνημα Σοσιαλδημοκρατών ΕΔΕΚ",
+          "lang": "el",
+          "support": 0.067
+        },
+        {
+          "label": "Δημοκρατική Παράταξη",
+          "lang": "el",
+          "support": 0.061,
+          "qid": "Q60785287"
+        },
+        {
+          "label": "Κίνημα Οικολόγων – Συνεργασία Πολιτών",
+          "lang": "el",
+          "support": 0.044
+        }
+      ]
+    },
+    "GEO": {
+      "wikidataCountry": "Q230",
+      "election": "Législatives du 26 octobre 2024 (Commission électorale centrale) — résultat contesté par l'opposition et des observateurs internationaux",
+      "parties": [
+        {
+          "label": "ქართული ოცნება",
+          "lang": "ka",
+          "support": 0.54,
+          "qid": "Q46516"
+        },
+        {
+          "label": "Coalition for Change",
+          "lang": "en",
+          "support": 0.11,
+          "qid": "Q130377057"
+        },
+        {
+          "label": "ერთიანი ნაციონალური მოძრაობა",
+          "lang": "ka",
+          "support": 0.1,
+          "qid": "Q1057495"
+        },
+        {
+          "label": "Strong Georgia",
+          "lang": "en",
+          "support": 0.08,
+          "qid": "Q130377133"
+        },
+        {
+          "label": "გახარია საქართველოსთვის",
+          "lang": "ka",
+          "support": 0.07
+        }
+      ]
+    },
+    "LTU": {
+      "wikidataCountry": "Q37",
+      "election": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)",
+      "parties": [
+        {
+          "label": "Lietuvos socialdemokratų partija",
+          "lang": "lt",
+          "support": 0.19,
+          "qid": "Q4362"
+        },
+        {
+          "label": "Nemuno Aušra",
+          "lang": "lt",
+          "support": 0.15,
+          "qid": "Q124472979"
+        },
+        {
+          "label": "Tėvynės sąjunga – Lietuvos krikščionys demokratai",
+          "lang": "lt",
+          "support": 0.14,
+          "qid": "Q81556"
+        },
+        {
+          "label": "Demokratai „Už Lietuvą\"",
+          "lang": "lt",
+          "support": 0.13
+        },
+        {
+          "label": "Laisvės partija",
+          "lang": "lt",
+          "support": 0.08,
+          "qid": "Q64252730"
+        },
+        {
+          "label": "Lietuvos Respublikos liberalų sąjūdis",
+          "lang": "lt",
+          "support": 0.07,
+          "qid": "Q1466907"
+        }
+      ]
+    },
+    "DNK": {
+      "wikidataCountry": "Q35",
+      "election": "Législatives du 1er novembre 2022",
+      "parties": [
+        {
+          "label": "Socialdemokratiet",
+          "lang": "da",
+          "support": 0.275,
+          "qid": "Q212101"
+        },
+        {
+          "label": "Venstre",
+          "lang": "da",
+          "support": 0.1332,
+          "qid": "Q217321"
+        },
+        {
+          "label": "Moderaterne",
+          "lang": "da",
+          "support": 0.0927,
+          "qid": "Q107110050"
+        },
+        {
+          "label": "Socialistisk Folkeparti",
+          "lang": "da",
+          "support": 0.083,
+          "qid": "Q615603"
+        },
+        {
+          "label": "Danmarksdemokraterne",
+          "lang": "da",
+          "support": 0.0812,
+          "qid": "Q112677506"
+        },
+        {
+          "label": "Liberal Alliance",
+          "lang": "da",
+          "support": 0.0789,
+          "qid": "Q478180"
+        },
+        {
+          "label": "Det Konservative Folkeparti",
+          "lang": "da",
+          "support": 0.0551,
+          "qid": "Q902619"
+        },
+        {
+          "label": "Enhedslisten",
+          "lang": "da",
+          "support": 0.0513,
+          "qid": "Q25785"
+        }
+      ]
+    },
+    "EST": {
+      "wikidataCountry": "Q191",
+      "election": "Législatives du 5 mars 2023 (Riigikogu)",
+      "parties": [
+        {
+          "label": "Eesti Reformierakond",
+          "lang": "et",
+          "support": 0.3124,
+          "qid": "Q738947"
+        },
+        {
+          "label": "Eesti Konservatiivne Rahvaerakond",
+          "lang": "et",
+          "support": 0.1605,
+          "qid": "Q16409581"
+        },
+        {
+          "label": "Eesti Keskerakond",
+          "lang": "et",
+          "support": 0.1528,
+          "qid": "Q928652"
+        },
+        {
+          "label": "Eesti 200",
+          "lang": "et",
+          "support": 0.1333,
+          "qid": "Q56249403"
+        },
+        {
+          "label": "Sotsiaaldemokraatlik Erakond",
+          "lang": "et",
+          "support": 0.0927,
+          "qid": "Q913551"
+        },
+        {
+          "label": "Isamaa",
+          "lang": "et",
+          "support": 0.0821
+        }
+      ]
+    },
+    "FIN": {
+      "wikidataCountry": "Q33",
+      "election": "Législatives du 2 avril 2023 (Eduskunta)",
+      "parties": [
+        {
+          "label": "Kansallinen Kokoomus",
+          "lang": "fi",
+          "support": 0.2082
+        },
+        {
+          "label": "Perussuomalaiset",
+          "lang": "fi",
+          "support": 0.2006,
+          "qid": "Q634277"
+        },
+        {
+          "label": "Suomen Sosialidemokraattinen Puolue",
+          "lang": "fi",
+          "support": 0.1995,
+          "qid": "Q499029"
+        },
+        {
+          "label": "Suomen Keskusta",
+          "lang": "fi",
+          "support": 0.1129,
+          "qid": "Q506591"
+        },
+        {
+          "label": "Vasemmistoliitto",
+          "lang": "fi",
+          "support": 0.0706,
+          "qid": "Q385927"
+        },
+        {
+          "label": "Vihreä liitto",
+          "lang": "fi",
+          "support": 0.0704,
+          "qid": "Q196695"
+        },
+        {
+          "label": "Suomen ruotsalainen kansanpuolue",
+          "lang": "sv",
+          "support": 0.0431,
+          "qid": "Q845537"
+        },
+        {
+          "label": "Suomen Kristillisdemokraatit",
+          "lang": "fi",
+          "support": 0.0422,
+          "qid": "Q1138982"
+        }
+      ]
+    },
+    "GRC": {
+      "wikidataCountry": "Q41",
+      "election": "Législatives du 25 juin 2023 (second scrutin de 2023, Vouli)",
+      "parties": [
+        {
+          "label": "Νέα Δημοκρατία",
+          "lang": "el",
+          "support": 0.4056,
+          "qid": "Q223153"
+        },
+        {
+          "label": "ΣΥΡΙΖΑ",
+          "lang": "el",
+          "support": 0.1783,
+          "qid": "Q222897"
+        },
+        {
+          "label": "ΠΑΣΟΚ – Κίνημα Αλλαγής",
+          "lang": "el",
+          "support": 0.1184,
+          "qid": "Q46505372"
+        },
+        {
+          "label": "Κομμουνιστικό Κόμμα Ελλάδας",
+          "lang": "el",
+          "support": 0.0769,
+          "qid": "Q192406"
+        },
+        {
+          "label": "Σπαρτιάτες",
+          "lang": "el",
+          "support": 0.0468,
+          "qid": "Q119458066"
+        },
+        {
+          "label": "Ελληνική Λύση",
+          "lang": "el",
+          "support": 0.0444,
+          "qid": "Q50736163"
+        },
+        {
+          "label": "Νίκη",
+          "lang": "el",
+          "support": 0.037
+        },
+        {
+          "label": "Πλεύση Ελευθερίας",
+          "lang": "el",
+          "support": 0.0317,
+          "qid": "Q24204945"
+        }
+      ]
+    },
+    "IRL": {
+      "wikidataCountry": "Q27",
+      "election": "Législatives du 29 novembre 2024 (Dáil Éireann)",
+      "parties": [
+        {
+          "label": "Fianna Fáil",
+          "lang": "ga",
+          "support": 0.219,
+          "qid": "Q216517"
+        },
+        {
+          "label": "Fine Gael",
+          "lang": "ga",
+          "support": 0.208,
+          "qid": "Q5450078"
+        },
+        {
+          "label": "Sinn Féin",
+          "lang": "ga",
+          "support": 0.19,
+          "qid": "Q76382"
+        },
+        {
+          "label": "Social Democrats",
+          "lang": "en",
+          "support": 0.048,
+          "qid": "Q20682633"
+        },
+        {
+          "label": "Labour Party",
+          "lang": "en",
+          "support": 0.047
+        },
+        {
+          "label": "Aontú",
+          "lang": "ga",
+          "support": 0.039,
+          "qid": "Q61090509"
+        },
+        {
+          "label": "Independent Ireland",
+          "lang": "en",
+          "support": 0.036,
+          "qid": "Q124516371"
+        },
+        {
+          "label": "Green Party",
+          "lang": "en",
+          "support": 0.03
+        }
+      ]
+    },
+    "LIE": {
+      "wikidataCountry": "Q347",
+      "election": "Législatives du 9 février 2025 (Landtag)",
+      "parties": [
+        {
+          "label": "Vaterländische Union",
+          "lang": "de",
+          "support": 0.3832,
+          "qid": "Q49673"
+        },
+        {
+          "label": "Fortschrittliche Bürgerpartei",
+          "lang": "de",
+          "support": 0.2748,
+          "qid": "Q49670"
+        },
+        {
+          "label": "Demokraten pro Liechtenstein",
+          "lang": "de",
+          "support": 0.2332,
+          "qid": "Q64441611"
+        },
+        {
+          "label": "Freie Liste",
+          "lang": "de",
+          "support": 0.1087,
+          "qid": "Q49668"
+        }
+      ]
+    },
+    "LUX": {
+      "wikidataCountry": "Q32",
+      "election": "Législatives du 8 octobre 2023 (Chambre des Députés)",
+      "parties": [
+        {
+          "label": "Chrëschtlech Sozial Vollekspartei",
+          "lang": "lb",
+          "support": 0.298,
+          "qid": "Q1344670"
+        },
+        {
+          "label": "Demokratesch Partei",
+          "lang": "lb",
+          "support": 0.1913,
+          "qid": "Q1029792"
+        },
+        {
+          "label": "Lëtzebuerger Sozialistesch Aarbechterpartei",
+          "lang": "lb",
+          "support": 0.1818,
+          "qid": "Q1070311"
+        },
+        {
+          "label": "Alternativ Demokratesch Reformpartei",
+          "lang": "lb",
+          "support": 0.0954,
+          "qid": "Q339280"
+        },
+        {
+          "label": "déi gréng",
+          "lang": "lb",
+          "support": 0.0832,
+          "qid": "Q767761"
+        },
+        {
+          "label": "Piratepartei Lëtzebuerg",
+          "lang": "lb",
+          "support": 0.0666,
+          "qid": "Q3079953"
+        },
+        {
+          "label": "déi Lénk",
+          "lang": "lb",
+          "support": 0.0364,
+          "qid": "Q1270494"
+        }
+      ]
+    },
+    "ISL": {
+      "wikidataCountry": "Q189",
+      "election": "Législatives anticipées du 30 novembre 2024",
+      "parties": [
+        {
+          "label": "Samfylkingin",
+          "lang": "is",
+          "support": 0.2075,
+          "qid": "Q1141127"
+        },
+        {
+          "label": "Sjálfstæðisflokkurinn",
+          "lang": "is",
+          "support": 0.1936,
+          "qid": "Q6016153"
+        },
+        {
+          "label": "Viðreisn",
+          "lang": "is",
+          "support": 0.1582
+        },
+        {
+          "label": "Flokkur fólksins",
+          "lang": "is",
+          "support": 0.1378,
+          "qid": "Q27273216"
+        },
+        {
+          "label": "Miðflokkurinn",
+          "lang": "is",
+          "support": 0.121
+        },
+        {
+          "label": "Framsóknarflokkurinn",
+          "lang": "is",
+          "support": 0.078,
+          "qid": "Q1046777"
+        },
+        {
+          "label": "Sósíalistaflokkur Íslands",
+          "lang": "is",
+          "support": 0.0396,
+          "qid": "Q1974972"
+        },
+        {
+          "label": "Píratar",
+          "lang": "is",
+          "support": 0.0302,
+          "qid": "Q198403"
+        }
+      ]
+    },
+    "KAZ": {
+      "wikidataCountry": "Q232",
+      "election": "Législatives (Mäjilis) du 19 mars 2023",
+      "parties": [
+        {
+          "label": "Amanat",
+          "lang": "kk",
+          "support": 0.539,
+          "qid": "Q111077075"
+        },
+        {
+          "label": "Auyl",
+          "lang": "kk",
+          "support": 0.109,
+          "qid": "Q4736147"
+        },
+        {
+          "label": "Respublica",
+          "lang": "kk",
+          "support": 0.0859,
+          "qid": "Q116686278"
+        },
+        {
+          "label": "Aq Jol",
+          "lang": "kk",
+          "support": 0.0841,
+          "qid": "Q1186246"
+        },
+        {
+          "label": "People's Party of Kazakhstan",
+          "lang": "ru",
+          "support": 0.068,
+          "qid": "Q2166484"
+        },
+        {
+          "label": "Nationwide Social Democratic Party",
+          "lang": "ru",
+          "support": 0.052,
+          "qid": "Q1569210"
+        }
+      ]
+    },
+    "LVA": {
+      "wikidataCountry": "Q211",
+      "election": "Législatives du 1er octobre 2022",
+      "parties": [
+        {
+          "label": "Jaunā Vienotība",
+          "lang": "lv",
+          "support": 0.1919,
+          "qid": "Q98104169"
+        },
+        {
+          "label": "Zaļo un Zemnieku savienība",
+          "lang": "lv",
+          "support": 0.1258,
+          "qid": "Q167928"
+        },
+        {
+          "label": "Apvienotais saraksts",
+          "lang": "lv",
+          "support": 0.1114,
+          "qid": "Q113163582"
+        },
+        {
+          "label": "Nacionālā apvienība",
+          "lang": "lv",
+          "support": 0.094,
+          "qid": "Q1576026"
+        },
+        {
+          "label": "Stabilitātei!",
+          "lang": "lv",
+          "support": 0.0688,
+          "qid": "Q112227296"
+        },
+        {
+          "label": "Latvija pirmajā vietā",
+          "lang": "lv",
+          "support": 0.0631,
+          "qid": "Q108096403"
+        },
+        {
+          "label": "Progresīvie",
+          "lang": "lv",
+          "support": 0.0623,
+          "qid": "Q28966907"
+        }
+      ]
+    },
+    "MLT": {
+      "wikidataCountry": "Q233",
+      "election": "Législatives du 26 mars 2022",
+      "parties": [
+        {
+          "label": "Labour Party",
+          "lang": "en",
+          "support": 0.5511
+        },
+        {
+          "label": "Nationalist Party",
+          "lang": "en",
+          "support": 0.4174,
+          "qid": "Q594056"
+        }
+      ]
+    },
+    "MDA": {
+      "wikidataCountry": "Q217",
+      "election": "Législatives du 28 septembre 2025",
+      "parties": [
+        {
+          "label": "Partidul Acțiune și Solidaritate",
+          "lang": "ro",
+          "support": 0.502,
+          "qid": "Q24909066"
+        },
+        {
+          "label": "Blocul Electoral Patriotic",
+          "lang": "ro",
+          "support": 0.242,
+          "qid": "Q135670828"
+        },
+        {
+          "label": "Blocul Electoral Alternativa",
+          "lang": "ro",
+          "support": 0.0796
+        },
+        {
+          "label": "Partidul Nostru",
+          "lang": "ro",
+          "support": 0.062,
+          "qid": "Q7314695"
+        },
+        {
+          "label": "Platforma Demnitate și Adevăr",
+          "lang": "ro",
+          "support": 0.0562,
+          "qid": "Q22079647"
+        }
+      ]
+    },
+    "MCO": {
+      "wikidataCountry": "Q235",
+      "election": "Élection du Conseil national du 5 février 2023",
+      "parties": [
+        {
+          "label": "Union Nationale Monégasque",
+          "lang": "fr",
+          "support": 0.896,
+          "qid": "Q116693824"
+        }
+      ]
+    },
+    "NLD": {
+      "wikidataCountry": "Q55",
+      "election": "Législatives anticipées du 29 octobre 2025",
+      "parties": [
+        {
+          "label": "D66",
+          "lang": "nl",
+          "support": 0.1694,
+          "qid": "Q747910"
+        },
+        {
+          "label": "PVV",
+          "lang": "nl",
+          "support": 0.1666,
+          "qid": "Q332739"
+        },
+        {
+          "label": "VVD",
+          "lang": "nl",
+          "support": 0.1424,
+          "qid": "Q239333"
+        },
+        {
+          "label": "GroenLinks-PvdA",
+          "lang": "nl",
+          "support": 0.1279,
+          "qid": "Q138640099"
+        },
+        {
+          "label": "CDA",
+          "lang": "nl",
+          "support": 0.1179,
+          "qid": "Q273749"
+        },
+        {
+          "label": "JA21",
+          "lang": "nl",
+          "support": 0.0595,
+          "qid": "Q104244010"
+        },
+        {
+          "label": "Forum voor Democratie",
+          "lang": "nl",
+          "support": 0.0454,
+          "qid": "Q28163962"
+        },
+        {
+          "label": "BoerBurgerBeweging",
+          "lang": "nl",
+          "support": 0.0265,
+          "qid": "Q101083924"
+        }
+      ]
+    },
+    "MNE": {
+      "wikidataCountry": "Q236",
+      "election": "Législatives du 11 juin 2023 (Commission électorale d'État du Monténégro)",
+      "parties": [
+        {
+          "label": "Pokret Evropa sad (Europe Now!)",
+          "lang": "sr",
+          "support": 0.2553
+        },
+        {
+          "label": "Demokratska partija socijalista (DPS) – Zajedno!",
+          "lang": "sr",
+          "support": 0.2322
+        },
+        {
+          "label": "Za budućnost Crne Gore (ZBCG)",
+          "lang": "sr",
+          "support": 0.1474
+        },
+        {
+          "label": "Aleksa i Dritan – Hrabro se broji!",
+          "lang": "sr",
+          "support": 0.1248
+        },
+        {
+          "label": "Bošnjačka stranka (BS)",
+          "lang": "sr",
+          "support": 0.0708
+        },
+        {
+          "label": "Socijalistička narodna partija – DEMOS (SNP–DEMOS)",
+          "lang": "sr",
+          "support": 0.0313
+        }
+      ]
+    },
+    "MKD": {
+      "wikidataCountry": "Q221",
+      "election": "Législatives du 8 mai 2024 (Commission électorale d'État)",
+      "parties": [
+        {
+          "label": "Твоја Македонија (ВМРО-ДПМНЕ)",
+          "lang": "mk",
+          "support": 0.4458
+        },
+        {
+          "label": "Твоја Европска Иднина (СДСМ)",
+          "lang": "mk",
+          "support": 0.1578
+        },
+        {
+          "label": "Европски фронт (ДУИ)",
+          "lang": "mk",
+          "support": 0.1406
+        },
+        {
+          "label": "VLEN",
+          "lang": "sq",
+          "support": 0.1092,
+          "qid": "Q126192947"
+        },
+        {
+          "label": "Левица",
+          "lang": "mk",
+          "support": 0.0701
+        },
+        {
+          "label": "За нашата Македонија (ЗНАМ)",
+          "lang": "mk",
+          "support": 0.0574
+        }
+      ]
+    },
+    "PRT": {
+      "wikidataCountry": "Q45",
+      "election": "Législatives anticipées du 18 mai 2025 (Comissão Nacional de Eleições)",
+      "parties": [
+        {
+          "label": "Aliança Democrática (AD)",
+          "lang": "pt",
+          "support": 0.318
+        },
+        {
+          "label": "Chega",
+          "lang": "pt",
+          "support": 0.228,
+          "qid": "Q63645885"
+        },
+        {
+          "label": "Partido Socialista (PS)",
+          "lang": "pt",
+          "support": 0.228
+        },
+        {
+          "label": "Iniciativa Liberal (IL)",
+          "lang": "pt",
+          "support": 0.054
+        },
+        {
+          "label": "LIVRE",
+          "lang": "pt",
+          "support": 0.041,
+          "qid": "Q16947563"
+        },
+        {
+          "label": "Coligação Democrática Unitária (CDU – PCP-PEV)",
+          "lang": "pt",
+          "support": 0.029
+        },
+        {
+          "label": "Bloco de Esquerda (BE)",
+          "lang": "pt",
+          "support": 0.02
+        }
+      ]
+    },
+    "ROU": {
+      "wikidataCountry": "Q218",
+      "election": "Législatives du 1er décembre 2024 (Autoritatea Electorală Permanentă)",
+      "parties": [
+        {
+          "label": "Partidul Social Democrat (PSD)",
+          "lang": "ro",
+          "support": 0.2196
+        },
+        {
+          "label": "Alianța pentru Unirea Românilor (AUR)",
+          "lang": "ro",
+          "support": 0.1801
+        },
+        {
+          "label": "Partidul Național Liberal (PNL)",
+          "lang": "ro",
+          "support": 0.132
+        },
+        {
+          "label": "Uniunea Salvați România (USR)",
+          "lang": "ro",
+          "support": 0.124
+        },
+        {
+          "label": "SOS România",
+          "lang": "ro",
+          "support": 0.0736,
+          "qid": "Q113470144"
+        },
+        {
+          "label": "Partidul Oamenilor Tineri (POT)",
+          "lang": "ro",
+          "support": 0.0646
+        },
+        {
+          "label": "Uniunea Democrată Maghiară din România (UDMR)",
+          "lang": "ro",
+          "support": 0.0633
+        }
+      ]
+    },
+    "SMR": {
+      "wikidataCountry": "Q238",
+      "election": "Élections générales du 9 juin 2024 (Consiglio Grande e Generale)",
+      "parties": [
+        {
+          "label": "Partito Democratico Cristiano Sammarinese (PDCS)",
+          "lang": "it",
+          "support": 0.3414
+        },
+        {
+          "label": "Libera / Partito Socialista",
+          "lang": "it",
+          "support": 0.1575
+        },
+        {
+          "label": "Partito dei Socialisti e dei Democratici (PSD)",
+          "lang": "it",
+          "support": 0.1219
+        },
+        {
+          "label": "Repubblica Futura",
+          "lang": "it",
+          "support": 0.1198,
+          "qid": "Q39056971"
+        },
+        {
+          "label": "Domani Motus Liberi (DML)",
+          "lang": "it",
+          "support": 0.0847
+        },
+        {
+          "label": "RETE Movimento",
+          "lang": "it",
+          "support": 0.0507
+        }
+      ]
+    },
+    "SVK": {
+      "wikidataCountry": "Q214",
+      "election": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)",
+      "parties": [
+        {
+          "label": "Smer – slovenská sociálna demokracia (Smer-SD)",
+          "lang": "sk",
+          "support": 0.2295
+        },
+        {
+          "label": "Progresívne Slovensko (PS)",
+          "lang": "sk",
+          "support": 0.1796
+        },
+        {
+          "label": "Hlas – sociálna demokracia (Hlas-SD)",
+          "lang": "sk",
+          "support": 0.147
+        },
+        {
+          "label": "Slovensko (ex-OĽaNO a priatelia)",
+          "lang": "sk",
+          "support": 0.089
+        },
+        {
+          "label": "Kresťanskodemokratické hnutie (KDH)",
+          "lang": "sk",
+          "support": 0.0682
+        },
+        {
+          "label": "Sloboda a Solidarita (SaS)",
+          "lang": "sk",
+          "support": 0.0632
+        },
+        {
+          "label": "Slovenská národná strana (SNS)",
+          "lang": "sk",
+          "support": 0.0563
+        },
+        {
+          "label": "Republika",
+          "lang": "sk",
+          "support": 0.0475,
+          "qid": "Q1519778"
+        }
+      ]
+    },
+    "SVN": {
+      "wikidataCountry": "Q215",
+      "election": "Législatives du 24 avril 2022 (Commission électorale nationale)",
+      "parties": [
+        {
+          "label": "Gibanje Svoboda (GS)",
+          "lang": "sl",
+          "support": 0.3445
+        },
+        {
+          "label": "Slovenska demokratska stranka (SDS)",
+          "lang": "sl",
+          "support": 0.2348
+        },
+        {
+          "label": "Nova Slovenija (NSi)",
+          "lang": "sl",
+          "support": 0.0686
+        },
+        {
+          "label": "Socialni demokrati (SD)",
+          "lang": "sl",
+          "support": 0.0669
+        },
+        {
+          "label": "Levica",
+          "lang": "sl",
+          "support": 0.0446,
+          "qid": "Q30668436"
+        }
+      ]
+    },
+    "KGZ": {
+      "wikidataCountry": "Q813",
+      "election": "Législatives du 30 novembre 2025 (scrutin plurinominal SNTV, Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "Yntymak",
+          "lang": "ky",
+          "support": 0.03,
+          "qid": "Q110094656"
+        }
+      ]
+    },
+    "SRB": {
+      "wikidataCountry": "Q403",
+      "election": "Législatives du 17 décembre 2023 (Commission électorale de la République de Serbie)",
+      "parties": [
+        {
+          "label": "Srbija ne sme da stane",
+          "lang": "sr",
+          "support": 0.48
+        },
+        {
+          "label": "Srbija protiv nasilja",
+          "lang": "sr",
+          "support": 0.24,
+          "qid": "Q123212013"
+        },
+        {
+          "label": "Socijalistička partija Srbije",
+          "lang": "sr",
+          "support": 0.07,
+          "qid": "Q752521"
+        },
+        {
+          "label": "NADA",
+          "lang": "sr",
+          "support": 0.05
+        },
+        {
+          "label": "Mi – Glas iz naroda",
+          "lang": "sr",
+          "support": 0.05
+        }
+      ]
+    },
+    "SWE": {
+      "wikidataCountry": "Q34",
+      "election": "Législatives du 11 septembre 2022 (Valmyndigheten, autorité électorale suédoise)",
+      "parties": [
+        {
+          "label": "Sveriges socialdemokratiska arbetareparti",
+          "lang": "sv",
+          "support": 0.3,
+          "qid": "Q105112"
+        },
+        {
+          "label": "Sverigedemokraterna",
+          "lang": "sv",
+          "support": 0.21,
+          "qid": "Q504069"
+        },
+        {
+          "label": "Moderaterna",
+          "lang": "sv",
+          "support": 0.19,
+          "qid": "Q110843"
+        },
+        {
+          "label": "Vänsterpartiet",
+          "lang": "sv",
+          "support": 0.07,
+          "qid": "Q110837"
+        },
+        {
+          "label": "Centerpartiet",
+          "lang": "sv",
+          "support": 0.07,
+          "qid": "Q110832"
+        },
+        {
+          "label": "Kristdemokraterna",
+          "lang": "sv",
+          "support": 0.05,
+          "qid": "Q213654"
+        },
+        {
+          "label": "Miljöpartiet de gröna",
+          "lang": "sv",
+          "support": 0.05,
+          "qid": "Q213451"
+        },
+        {
+          "label": "Liberalerna",
+          "lang": "sv",
+          "support": 0.05,
+          "qid": "Q110857"
+        }
+      ]
+    },
+    "CHE": {
+      "wikidataCountry": "Q39",
+      "election": "Élections fédérales du 22 octobre 2023 (Conseil national, Chancellerie fédérale)",
+      "parties": [
+        {
+          "label": "Schweizerische Volkspartei",
+          "lang": "de",
+          "support": 0.28,
+          "qid": "Q385258"
+        },
+        {
+          "label": "Sozialdemokratische Partei der Schweiz",
+          "lang": "de",
+          "support": 0.18,
+          "qid": "Q303745"
+        },
+        {
+          "label": "FDP.Die Liberalen",
+          "lang": "de",
+          "support": 0.14,
+          "qid": "Q202638"
+        },
+        {
+          "label": "Die Mitte",
+          "lang": "de",
+          "support": 0.14,
+          "qid": "Q100934025"
+        },
+        {
+          "label": "Grüne Schweiz",
+          "lang": "de",
+          "support": 0.1,
+          "qid": "Q659739"
+        },
+        {
+          "label": "Grünliberale Partei",
+          "lang": "de",
+          "support": 0.08,
+          "qid": "Q545900"
+        }
+      ]
+    },
+    "TJK": {
+      "wikidataCountry": "Q863",
+      "election": "Législatives du 2 mars 2025 (Assemblée des représentants, Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "People's Democratic Party of Tajikistan",
+          "lang": "en",
+          "support": 0.52,
+          "qid": "Q1045162"
+        },
+        {
+          "label": "Agrarian Party of Tajikistan",
+          "lang": "en",
+          "support": 0.21
+        },
+        {
+          "label": "Party of Economic Reforms of Tajikistan",
+          "lang": "en",
+          "support": 0.13
+        },
+        {
+          "label": "Socialist Party of Tajikistan",
+          "lang": "en",
+          "support": 0.05,
+          "qid": "Q7482830"
+        },
+        {
+          "label": "Democratic Party of Tajikistan",
+          "lang": "en",
+          "support": 0.05
+        }
+      ]
+    },
+    "TKM": {
+      "wikidataCountry": "Q874",
+      "election": "Législatives du 26 mars 2023 (Mejlis, Commission électorale centrale)",
+      "parties": [
+        {
+          "label": "Democratic Party of Turkmenistan",
+          "lang": "en",
+          "support": 0.52,
+          "qid": "Q1152752"
+        },
+        {
+          "label": "Agrarian Party of Turkmenistan",
+          "lang": "en",
+          "support": 0.19,
+          "qid": "Q56305135"
+        },
+        {
+          "label": "Party of Industrialists and Entrepreneurs of Turkmenistan",
+          "lang": "en",
+          "support": 0.14,
+          "qid": "Q13628510"
+        }
+      ]
+    },
+    "UZB": {
+      "wikidataCountry": "Q265",
+      "election": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément",
+      "parties": [
+        {
+          "label": "Oʻzbekiston Liberal-Demokratik Partiyasi",
+          "lang": "uz",
+          "support": 0.43,
+          "qid": "Q1146334"
+        },
+        {
+          "label": "Milliy Tiklanish",
+          "lang": "uz",
+          "support": 0.19,
+          "qid": "Q7076484"
+        },
+        {
+          "label": "Adolat Sotsial-Demokratik Partiyasi",
+          "lang": "uz",
+          "support": 0.14,
+          "qid": "Q6317086"
+        },
+        {
+          "label": "Xalq Demokratik Partiyasi",
+          "lang": "uz",
+          "support": 0.13
+        },
+        {
+          "label": "Ekologik Partiyasi",
+          "lang": "uz",
+          "support": 0.11
+        }
+      ]
+    },
+    "VAT": {
+      "wikidataCountry": "Q237",
+      "election": "Aucune élection législative : le chef de l'État est élu à vie par le conclave des cardinaux (dernier conclave : 7-8 mai 2025)",
+      "parties": []
+    },
+    "ATG": {
+      "wikidataCountry": "Q781",
+      "election": "Élections générales du 18 janvier 2023",
+      "parties": [
+        {
+          "label": "Antigua and Barbuda Labour Party",
+          "lang": "en",
+          "support": 0.4706,
+          "qid": "Q1277738"
+        },
+        {
+          "label": "United Progressive Party",
+          "lang": "en",
+          "support": 0.4522,
+          "qid": "Q1285399"
+        }
+      ]
+    },
+    "ARG": {
+      "wikidataCountry": "Q414",
+      "election": "Élections législatives de mi-mandat du 26 octobre 2025 (Chambre des députés)",
+      "parties": [
+        {
+          "label": "La Libertad Avanza",
+          "lang": "es",
+          "support": 0.4066,
+          "qid": "Q129572375"
+        },
+        {
+          "label": "Fuerza Patria",
+          "lang": "es",
+          "support": 0.337
+        },
+        {
+          "label": "Unión Peronista",
+          "lang": "es",
+          "support": 0.0773
+        },
+        {
+          "label": "Frente de Izquierda y de los Trabajadores - Unidad",
+          "lang": "es",
+          "support": 0.039
+        },
+        {
+          "label": "Innovación Federal",
+          "lang": "es",
+          "support": 0.0214
+        }
+      ]
+    },
+    "BHS": {
+      "wikidataCountry": "Q778",
+      "election": "Élections générales du 16 septembre 2021",
+      "parties": [
+        {
+          "label": "Progressive Liberal Party",
+          "lang": "en",
+          "support": 0.5259,
+          "qid": "Q2566823"
+        },
+        {
+          "label": "Free National Movement",
+          "lang": "en",
+          "support": 0.3645,
+          "qid": "Q2566343"
+        }
+      ]
+    },
+    "BRB": {
+      "wikidataCountry": "Q244",
+      "election": "Élections générales du 19 janvier 2022",
+      "parties": [
+        {
+          "label": "Barbados Labour Party",
+          "lang": "en",
+          "support": 0.69,
+          "qid": "Q740420"
+        },
+        {
+          "label": "Democratic Labour Party",
+          "lang": "en",
+          "support": 0.29,
+          "qid": "Q956182"
+        }
+      ]
+    },
+    "BLZ": {
+      "wikidataCountry": "Q242",
+      "election": "Élections générales du 12 mars 2025",
+      "parties": [
+        {
+          "label": "People's United Party",
+          "lang": "en",
+          "support": 0.596,
+          "qid": "Q1759613"
+        },
+        {
+          "label": "United Democratic Party",
+          "lang": "en",
+          "support": 0.388,
+          "qid": "Q1809323"
+        }
+      ]
+    },
+    "BOL": {
+      "wikidataCountry": "Q750",
+      "election": "Élections générales du 17 août 2025 (Chambre des députés)",
+      "parties": [
+        {
+          "label": "Partido Demócrata Cristiano",
+          "lang": "es",
+          "support": 0.377
+        },
+        {
+          "label": "Libre",
+          "lang": "es",
+          "support": 0.3
+        },
+        {
+          "label": "Alianza Unidad",
+          "lang": "es",
+          "support": 0.2
+        },
+        {
+          "label": "Alianza Popular",
+          "lang": "es",
+          "support": 0.062
+        },
+        {
+          "label": "APB Súmate",
+          "lang": "es",
+          "support": 0.038,
+          "qid": "Q131629757"
+        }
+      ]
+    },
+    "BRA": {
+      "wikidataCountry": "Q155",
+      "election": "Élections législatives du 2 octobre 2022 (Chambre des députés)",
+      "parties": [
+        {
+          "label": "Partido Liberal",
+          "lang": "pt",
+          "support": 0.1664,
+          "qid": "Q2731720"
+        },
+        {
+          "label": "Federação Brasil da Esperança (PT-PCdoB-PV)",
+          "lang": "pt",
+          "support": 0.1403
+        },
+        {
+          "label": "União Brasil",
+          "lang": "pt",
+          "support": 0.0934,
+          "qid": "Q108837483"
+        },
+        {
+          "label": "Progressistas",
+          "lang": "pt",
+          "support": 0.0795,
+          "qid": "Q732852"
+        },
+        {
+          "label": "Partido Social Democrático",
+          "lang": "pt",
+          "support": 0.0758,
+          "qid": "Q2054750"
+        },
+        {
+          "label": "Movimento Democrático Brasileiro",
+          "lang": "pt",
+          "support": 0.0719,
+          "qid": "Q1322751"
+        }
+      ]
+    },
+    "CAN": {
+      "wikidataCountry": "Q16",
+      "election": "Élection fédérale du 28 avril 2025",
+      "parties": [
+        {
+          "label": "Parti libéral du Canada",
+          "lang": "fr",
+          "support": 0.4376,
+          "qid": "Q138345"
+        },
+        {
+          "label": "Parti conservateur du Canada",
+          "lang": "fr",
+          "support": 0.4131,
+          "qid": "Q488523"
+        },
+        {
+          "label": "Bloc Québécois",
+          "lang": "fr",
+          "support": 0.0629,
+          "qid": "Q735105"
+        },
+        {
+          "label": "Nouveau Parti démocratique",
+          "lang": "fr",
+          "support": 0.0629,
+          "qid": "Q130765"
+        }
+      ]
+    },
+    "CHL": {
+      "wikidataCountry": "Q298",
+      "election": "Élections législatives du 16 novembre 2025 (Chambre des députés)",
+      "parties": [
+        {
+          "label": "Unidad por Chile",
+          "lang": "es",
+          "support": 0.3061,
+          "qid": "Q115130534"
+        },
+        {
+          "label": "Cambio por Chile",
+          "lang": "es",
+          "support": 0.2302,
+          "qid": "Q135898014"
+        },
+        {
+          "label": "Chile Grande y Unido",
+          "lang": "es",
+          "support": 0.2105,
+          "qid": "Q136226250"
+        },
+        {
+          "label": "Partido de la Gente",
+          "lang": "es",
+          "support": 0.1199,
+          "qid": "Q107012458"
+        },
+        {
+          "label": "Federación Regionalista Verde Social",
+          "lang": "es",
+          "support": 0.0691,
+          "qid": "Q28868044"
+        }
+      ]
+    },
+    "COL": {
+      "wikidataCountry": "Q739",
+      "election": "Élections législatives du 13 mars 2022 (Chambre des représentants, pourcentages estimés)",
+      "parties": [
+        {
+          "label": "Pacto Histórico",
+          "lang": "es",
+          "support": 0.19,
+          "qid": "Q135581316"
+        },
+        {
+          "label": "Partido Liberal Colombiano",
+          "lang": "es",
+          "support": 0.15,
+          "qid": "Q939021"
+        },
+        {
+          "label": "Partido Conservador Colombiano",
+          "lang": "es",
+          "support": 0.14,
+          "qid": "Q747333"
+        },
+        {
+          "label": "Cambio Radical",
+          "lang": "es",
+          "support": 0.13,
+          "qid": "Q429642"
+        },
+        {
+          "label": "Centro Democrático",
+          "lang": "es",
+          "support": 0.11,
+          "qid": "Q15909095"
+        },
+        {
+          "label": "Partido de la U",
+          "lang": "es",
+          "support": 0.08,
+          "qid": "Q973542"
+        }
+      ]
+    },
+    "CRI": {
+      "wikidataCountry": "Q800",
+      "election": "Élections législatives du 6 février 2022 (Assemblée législative)",
+      "parties": [
+        {
+          "label": "Partido Liberación Nacional",
+          "lang": "es",
+          "support": 0.2482,
+          "qid": "Q82591"
+        },
+        {
+          "label": "Partido Progreso Social Democrático",
+          "lang": "es",
+          "support": 0.1504,
+          "qid": "Q109717771"
+        },
+        {
+          "label": "Partido Unidad Social Cristiana",
+          "lang": "es",
+          "support": 0.1141,
+          "qid": "Q1056879"
+        },
+        {
+          "label": "Partido Nueva República",
+          "lang": "es",
+          "support": 0.1007,
+          "qid": "Q61862296"
+        },
+        {
+          "label": "Partido Liberal Progresista",
+          "lang": "es",
+          "support": 0.0906
+        },
+        {
+          "label": "Frente Amplio",
+          "lang": "es",
+          "support": 0.0833,
+          "qid": "Q403054"
+        }
+      ]
+    },
+    "CUB": {
+      "wikidataCountry": "Q241",
+      "election": "Élections à l'Assemblée nationale du pouvoir populaire du 26 mars 2023 (liste unique adoubée par le Parti)",
+      "parties": [
+        {
+          "label": "Partido Comunista de Cuba",
+          "lang": "es",
+          "support": 0.721,
+          "qid": "Q371402"
+        }
+      ]
+    },
+    "DMA": {
+      "wikidataCountry": "Q784",
+      "election": "Élections générales du 6 décembre 2022",
+      "parties": [
+        {
+          "label": "Dominica Labour Party",
+          "lang": "en",
+          "support": 0.62,
+          "qid": "Q1287573"
+        },
+        {
+          "label": "United Workers' Party",
+          "lang": "en",
+          "support": 0.29,
+          "qid": "Q1253956"
+        }
+      ]
+    },
+    "DOM": {
+      "wikidataCountry": "Q786",
+      "election": "Élections législatives du 19 mai 2024 (Chambre des députés)",
+      "parties": [
+        {
+          "label": "Partido Revolucionario Moderno",
+          "lang": "es",
+          "support": 0.4839,
+          "qid": "Q17515858"
+        },
+        {
+          "label": "Fuerza del Pueblo",
+          "lang": "es",
+          "support": 0.29,
+          "qid": "Q75670036"
+        },
+        {
+          "label": "Partido Reformista Social Cristiano",
+          "lang": "es",
+          "support": 0.03,
+          "qid": "Q2153476"
+        }
+      ]
+    },
+    "ECU": {
+      "wikidataCountry": "Q736",
+      "election": "Élections législatives du 9 février 2025 (Assemblée nationale, pourcentages estimés à partir des sièges)",
+      "parties": [
+        {
+          "label": "Revolución Ciudadana",
+          "lang": "es",
+          "support": 0.44,
+          "qid": "Q55407092"
+        },
+        {
+          "label": "Acción Democrática Nacional",
+          "lang": "es",
+          "support": 0.4,
+          "qid": "Q120971997"
+        },
+        {
+          "label": "Pachakutik",
+          "lang": "es",
+          "support": 0.07,
+          "qid": "Q1972741"
+        }
+      ]
+    },
+    "SLV": {
+      "wikidataCountry": "Q792",
+      "election": "Élections législatives du 4 février 2024 (Assemblée législative)",
+      "parties": [
+        {
+          "label": "Nuevas Ideas",
+          "lang": "es",
+          "support": 0.7056,
+          "qid": "Q57986086"
+        },
+        {
+          "label": "Alianza Republicana Nacionalista",
+          "lang": "es",
+          "support": 0.06,
+          "qid": "Q1146480"
+        }
+      ]
+    },
+    "GRD": {
+      "wikidataCountry": "Q769",
+      "election": "Élections générales du 23 juin 2022",
+      "parties": [
+        {
+          "label": "National Democratic Congress",
+          "lang": "en",
+          "support": 0.5184,
+          "qid": "Q1254278"
+        },
+        {
+          "label": "New National Party",
+          "lang": "en",
+          "support": 0.4776,
+          "qid": "Q1288287"
+        }
+      ]
+    },
+    "GTM": {
+      "wikidataCountry": "Q774",
+      "election": "Élections législatives du 25 juin 2023 (Congrès de la République)",
+      "parties": [
+        {
+          "label": "Vamos",
+          "lang": "es",
+          "support": 0.1869,
+          "qid": "Q54263394"
+        },
+        {
+          "label": "Unidad Nacional de la Esperanza",
+          "lang": "es",
+          "support": 0.1585,
+          "qid": "Q1237557"
+        },
+        {
+          "label": "Movimiento Semilla",
+          "lang": "es",
+          "support": 0.1461,
+          "qid": "Q56274977"
+        },
+        {
+          "label": "Valor-Unionista",
+          "lang": "es",
+          "support": 0.0484
+        }
+      ]
+    },
+    "GUY": {
+      "wikidataCountry": "Q734",
+      "election": "Élections générales du 1er septembre 2025 (Assemblée nationale)",
+      "parties": [
+        {
+          "label": "People's Progressive Party/Civic",
+          "lang": "en",
+          "support": 0.5531,
+          "qid": "Q1972521"
+        },
+        {
+          "label": "We Invest in Nationhood",
+          "lang": "en",
+          "support": 0.2487
+        },
+        {
+          "label": "A Partnership for National Unity",
+          "lang": "en",
+          "support": 0.1779,
+          "qid": "Q25403305"
+        }
+      ]
+    },
+    "HTI": {
+      "wikidataCountry": "Q790",
+      "election": "Aucune élection tenue depuis les législatives partielles et la présidentielle de 2016 ; un scrutin général est envisagé pour 2026 sous l'égide du Conseil présidentiel de transition, non encore tenu au 1er janvier 2026",
+      "parties": [
+        {
+          "label": "Parti Haïtien Tèt Kale",
+          "lang": "fr",
+          "support": 0.3,
+          "qid": "Q21207600"
+        },
+        {
+          "label": "Fanmi Lavalas",
+          "lang": "fr",
+          "support": 0.2,
+          "qid": "Q1395689"
+        }
+      ]
+    },
+    "HND": {
+      "wikidataCountry": "Q783",
+      "election": "Élection générale du 30 novembre 2025 (résultat très contesté, proclamé le 24 décembre 2025 ; pourcentages des partis estimés à partir du vote présidentiel)",
+      "parties": [
+        {
+          "label": "Partido Nacional de Honduras",
+          "lang": "es",
+          "support": 0.4,
+          "qid": "Q1579466"
+        },
+        {
+          "label": "Partido Liberal de Honduras",
+          "lang": "es",
+          "support": 0.39,
+          "qid": "Q538272"
+        },
+        {
+          "label": "Libertad y Refundación",
+          "lang": "es",
+          "support": 0.19,
+          "qid": "Q970952"
+        }
+      ]
+    },
+    "JAM": {
+      "wikidataCountry": "Q766",
+      "election": "Élections générales du 3 septembre 2025",
+      "parties": [
+        {
+          "label": "Jamaica Labour Party",
+          "lang": "en",
+          "support": 0.5054,
+          "qid": "Q1539301"
+        },
+        {
+          "label": "People's National Party",
+          "lang": "en",
+          "support": 0.4916,
+          "qid": "Q1162691"
+        }
+      ]
+    },
+    "MEX": {
+      "wikidataCountry": "Q96",
+      "election": "Élections législatives du 2 juin 2024 (Chambre des députés)",
+      "parties": [
+        {
+          "label": "Movimiento Regeneración Nacional",
+          "lang": "es",
+          "support": 0.424,
+          "qid": "Q15717618"
+        },
+        {
+          "label": "Partido Acción Nacional",
+          "lang": "es",
+          "support": 0.1755,
+          "qid": "Q851087"
+        },
+        {
+          "label": "Partido Revolucionario Institucional",
+          "lang": "es",
+          "support": 0.1157,
+          "qid": "Q682969"
+        },
+        {
+          "label": "Movimiento Ciudadano",
+          "lang": "es",
+          "support": 0.1134,
+          "qid": "Q10920094"
+        },
+        {
+          "label": "Partido Verde Ecologista de México",
+          "lang": "es",
+          "support": 0.0872,
+          "qid": "Q383718"
+        },
+        {
+          "label": "Partido del Trabajo",
+          "lang": "es",
+          "support": 0.0568,
+          "qid": "Q540320"
+        }
+      ]
+    },
+    "NIC": {
+      "wikidataCountry": "Q811",
+      "election": "Élections générales du 7 novembre 2021 (Assemblée nationale, principaux opposants emprisonnés ou empêchés de se présenter)",
+      "parties": [
+        {
+          "label": "Frente Sandinista de Liberación Nacional",
+          "lang": "es",
+          "support": 0.7587,
+          "qid": "Q27389"
+        },
+        {
+          "label": "Partido Liberal Constitucionalista",
+          "lang": "es",
+          "support": 0.14,
+          "qid": "Q1422066"
+        }
+      ]
+    },
+    "PAN": {
+      "wikidataCountry": "Q804",
+      "election": "Élections législatives du 5 mai 2024 (Assemblée nationale ; environ 24 % des sièges à des indépendants, non repris ci-dessous)",
+      "parties": [
+        {
+          "label": "Realizando Metas",
+          "lang": "es",
+          "support": 0.1717,
+          "qid": "Q106319619"
+        },
+        {
+          "label": "Partido Revolucionario Democrático",
+          "lang": "es",
+          "support": 0.1625,
+          "qid": "Q1630365"
+        },
+        {
+          "label": "Cambio Democrático",
+          "lang": "es",
+          "support": 0.1119,
+          "qid": "Q5255581"
+        },
+        {
+          "label": "Partido Panameñista",
+          "lang": "es",
+          "support": 0.1064,
+          "qid": "Q628468"
+        },
+        {
+          "label": "Movimiento Otro Camino",
+          "lang": "es",
+          "support": 0.0699,
+          "qid": "Q112828175"
+        }
+      ]
+    },
+    "PRY": {
+      "wikidataCountry": "Q733",
+      "election": "Élections législatives du 30 avril 2023 (Chambre des députés, pourcentages estimés à partir des sièges)",
+      "parties": [
+        {
+          "label": "Asociación Nacional Republicana (Partido Colorado)",
+          "lang": "es",
+          "support": 0.43
+        },
+        {
+          "label": "Partido Liberal Radical Auténtico",
+          "lang": "es",
+          "support": 0.21,
+          "qid": "Q2735114"
+        },
+        {
+          "label": "Cruzada Nacional",
+          "lang": "es",
+          "support": 0.12
+        }
+      ]
+    },
+    "PER": {
+      "wikidataCountry": "Q419",
+      "election": "Élections générales du 11 avril 2021 (Congrès de la République, premier tour ; pourcentages approximatifs)",
+      "parties": [
+        {
+          "label": "Perú Libre",
+          "lang": "es",
+          "support": 0.134,
+          "qid": "Q102333715"
+        },
+        {
+          "label": "Fuerza Popular",
+          "lang": "es",
+          "support": 0.117,
+          "qid": "Q1472820"
+        },
+        {
+          "label": "Alianza para el Progreso",
+          "lang": "es",
+          "support": 0.1,
+          "qid": "Q4732394"
+        },
+        {
+          "label": "Renovación Popular",
+          "lang": "es",
+          "support": 0.07,
+          "qid": "Q101116021"
+        }
+      ]
+    },
+    "KNA": {
+      "wikidataCountry": "Q763",
+      "election": "Élections générales du 5 août 2022",
+      "parties": [
+        {
+          "label": "Saint Kitts and Nevis Labour Party",
+          "lang": "en",
+          "support": 0.4575,
+          "qid": "Q250738"
+        },
+        {
+          "label": "People's Labour Party",
+          "lang": "en",
+          "support": 0.1714,
+          "qid": "Q22080592"
+        },
+        {
+          "label": "People's Action Movement",
+          "lang": "en",
+          "support": 0.1613,
+          "qid": "Q3102757"
+        },
+        {
+          "label": "Concerned Citizens Movement",
+          "lang": "en",
+          "support": 0.1182
+        }
+      ]
+    },
+    "LCA": {
+      "wikidataCountry": "Q760",
+      "election": "Élections générales du 26 juillet 2021",
+      "parties": [
+        {
+          "label": "Saint Lucia Labour Party",
+          "lang": "en",
+          "support": 0.54,
+          "qid": "Q1292804"
+        },
+        {
+          "label": "United Workers' Party",
+          "lang": "en",
+          "support": 0.44
+        }
+      ]
+    },
+    "VCT": {
+      "wikidataCountry": "Q757",
+      "election": "Élections générales du 27 novembre 2025",
+      "parties": [
+        {
+          "label": "New Democratic Party",
+          "lang": "en",
+          "support": 0.53,
+          "qid": "Q1255291"
+        },
+        {
+          "label": "Unity Labour Party",
+          "lang": "en",
+          "support": 0.46,
+          "qid": "Q1277617"
+        }
+      ]
+    },
+    "SUR": {
+      "wikidataCountry": "Q730",
+      "election": "Élections générales du 25 mai 2025 (Assemblée nationale)",
+      "parties": [
+        {
+          "label": "Nationale Democratische Partij",
+          "lang": "nl",
+          "support": 0.3418,
+          "qid": "Q2420320"
+        },
+        {
+          "label": "Vooruitstrevende Hervormingspartij",
+          "lang": "nl",
+          "support": 0.3178
+        },
+        {
+          "label": "Algemene Bevrijdings- en Ontwikkelingspartij",
+          "lang": "nl",
+          "support": 0.1163,
+          "qid": "Q3634106"
+        },
+        {
+          "label": "Nationale Partij Suriname",
+          "lang": "nl",
+          "support": 0.1142,
+          "qid": "Q2564279"
+        },
+        {
+          "label": "Pertjajah Luhur",
+          "lang": "nl",
+          "support": 0.0377,
+          "qid": "Q195501"
+        }
+      ]
+    },
+    "TTO": {
+      "wikidataCountry": "Q754",
+      "election": "Élections générales du 28 avril 2025 (pourcentages de voix estimés)",
+      "parties": [
+        {
+          "label": "United National Congress",
+          "lang": "en",
+          "support": 0.53,
+          "qid": "Q1024804"
+        },
+        {
+          "label": "People's National Movement",
+          "lang": "en",
+          "support": 0.44,
+          "qid": "Q3326740"
+        }
+      ]
+    },
+    "USA": {
+      "wikidataCountry": "Q30",
+      "election": "Élection générale du 5 novembre 2024 (Chambre des représentants, vote populaire national)",
+      "parties": [
+        {
+          "label": "Republican Party",
+          "lang": "en",
+          "support": 0.4975,
+          "qid": "Q29468"
+        },
+        {
+          "label": "Democratic Party",
+          "lang": "en",
+          "support": 0.4719,
+          "qid": "Q29552"
+        }
+      ]
+    },
+    "URY": {
+      "wikidataCountry": "Q77",
+      "election": "Élections législatives du 27 octobre 2024 (Chambre des représentants)",
+      "parties": [
+        {
+          "label": "Frente Amplio",
+          "lang": "es",
+          "support": 0.4394
+        },
+        {
+          "label": "Partido Nacional",
+          "lang": "es",
+          "support": 0.2677,
+          "qid": "Q1549793"
+        },
+        {
+          "label": "Partido Colorado",
+          "lang": "es",
+          "support": 0.1685,
+          "qid": "Q1430823"
+        },
+        {
+          "label": "Cabildo Abierto",
+          "lang": "es",
+          "support": 0.0258,
+          "qid": "Q63495952"
+        }
+      ]
+    },
+    "VEN": {
+      "wikidataCountry": "Q717",
+      "election": "Élections à l'Assemblée nationale du 6 décembre 2020 (boycottées par l'opposition principale, sans valeur compétitive réelle)",
+      "parties": [
+        {
+          "label": "Gran Polo Patriótico Simón Bolívar (PSUV et alliés)",
+          "lang": "es",
+          "support": 0.676
+        }
+      ]
+    },
+    "DZA": {
+      "wikidataCountry": "Q262",
+      "election": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %).",
+      "parties": [
+        {
+          "label": "Front de Libération Nationale (FLN)",
+          "lang": "fr",
+          "support": 0.241
+        },
+        {
+          "label": "Mouvement de la Société pour la Paix (MSP)",
+          "lang": "fr",
+          "support": 0.16
+        },
+        {
+          "label": "Rassemblement National Démocratique (RND)",
+          "lang": "fr",
+          "support": 0.143
+        },
+        {
+          "label": "Front El Moustakbal",
+          "lang": "fr",
+          "support": 0.118,
+          "qid": "Q3088407"
+        },
+        {
+          "label": "Mouvement El-Bina El-Watani",
+          "lang": "fr",
+          "support": 0.096
+        },
+        {
+          "label": "Listes indépendantes",
+          "lang": "fr",
+          "support": 0.206
+        }
+      ]
+    },
+    "MAR": {
+      "wikidataCountry": "Q1028",
+      "election": "Législatives du 8 septembre 2021 (Chambre des représentants, 395 sièges) : RNI 102 sièges, PAM 87, Istiqlal 81, PJD 13 (effondré depuis 125 en 2016) ; participation 50,35 %. Coalition gouvernementale RNI-PAM-Istiqlal sous Akhannouch, toujours en fonction au 1er janvier 2026 (prochaines législatives attendues en 2026).",
+      "parties": [
+        {
+          "label": "Rassemblement National des Indépendants (RNI)",
+          "lang": "fr",
+          "support": 0.258
+        },
+        {
+          "label": "Parti Authenticité et Modernité (PAM)",
+          "lang": "fr",
+          "support": 0.22
+        },
+        {
+          "label": "Parti de l'Istiqlal",
+          "lang": "fr",
+          "support": 0.205,
+          "qid": "Q477273"
+        },
+        {
+          "label": "Parti de la Justice et du Développement (PJD)",
+          "lang": "fr",
+          "support": 0.033
+        }
+      ]
+    },
+    "TUN": {
+      "wikidataCountry": "Q948",
+      "election": "Législatives du 17 décembre 2022 et 29 janvier 2023 (nouveau Parlement de 161 sièges, scrutin uninominal sous la constitution 2022) : participation historiquement basse (11,22 % puis 11,4 %), boycottée par la quasi-totalité des partis (Ennahdha, Parti Destourien Libre, Front de salut national...) ; des indépendants ont été élus dans 154 sièges sur 161. Le paysage partisan structuré a cessé d'exister comme force parlementaire ; les parts ci-dessous sont des estimations du poids social des deux principaux partis avant la répression (dernière élection réellement compétitive, 2019), pas des sièges obtenus en 2022-2023.",
+      "parties": [
+        {
+          "label": "Ennahdha",
+          "lang": "fr",
+          "support": 0.18,
+          "qid": "Q692022"
+        },
+        {
+          "label": "Parti Destourien Libre (PDL)",
+          "lang": "fr",
+          "support": 0.12
+        }
+      ]
+    },
+    "LBY": {
+      "wikidataCountry": "Q1016",
+      "election": "Aucune élection législative depuis le scrutin de 2014 (Chambre des représentants, siégeant depuis à Tobrouk/Benghazi) ; la présidentielle de décembre 2021 a été annulée avant le premier tour. Aucun scrutin national n'a depuis recomposé les forces politiques ; les blocs armés et régionaux ont remplacé les partis comme unités politiques pertinentes, d'où l'absence de « parties » ci-dessous.",
+      "parties": []
+    },
+    "EGY": {
+      "wikidataCountry": "Q79",
+      "election": "Législatives des 10-11 et 24-25 novembre 2025 (premier et second tours, ballottages en décembre 2025) pour la Chambre des représentants (596 sièges dont 28 nommés par le président) : Mostakbal Watan (Avenir de la Nation) 231 sièges (38,8 %), Homat Al-Watan (Défenseurs de la Patrie) 91 (15,3 %), Front National 70 (11,7 %), Parti républicain du peuple 28 (4,7 %), reste indépendants et petites formations. Chambre installée le 11 janvier 2026 (nomination des 28 membres présidentiels), soit dix jours après la date de référence de la campagne ; parts calculées en sièges (le scrutin mixte listes/individuel ne produit pas de part de voix nationale unique). La Chambre sortante, élue en 2020, est en fin de mandat au 1er janvier 2026.",
+      "parties": [
+        {
+          "label": "Mostakbal Watan",
+          "lang": "ar",
+          "support": 0.388
+        },
+        {
+          "label": "Homat Al-Watan",
+          "lang": "ar",
+          "support": 0.153
+        },
+        {
+          "label": "National Front",
+          "lang": "en",
+          "support": 0.117
+        },
+        {
+          "label": "Republican People's Party",
+          "lang": "en",
+          "support": 0.047,
+          "qid": "Q15980860"
+        }
+      ]
+    },
+    "SDN": {
+      "wikidataCountry": "Q1049",
+      "election": "Aucune élection nationale depuis la chute d'Omar el-Béchir en avril 2019 ; la transition civile a été interrompue par le coup d'État du 25 octobre 2021, puis par la guerre civile d'avril 2023. Aucun parlement en fonction, d'où l'absence de « parties » ci-dessous ; le pouvoir est exercé par le Conseil souverain de transition sous autorité militaire, avec un premier ministre civil (Kamil Idris) depuis mai 2025.",
+      "parties": []
+    },
+    "SSD": {
+      "wikidataCountry": "Q958",
+      "election": "Aucune élection nationale n'a jamais eu lieu depuis l'indépendance de 2011 ; les élections prévues par l'accord de paix ont été reportées à plusieurs reprises (2015, 2021...), la dernière prolongation du mandat de transition fixant l'échéance à décembre 2026. L'Assemblée législative nationale actuelle résulte d'un partage des sièges négocié entre le SPLM (gouvernement), le SPLM-IO (opposition de Riek Machar, désormais suspendu et poursuivi) et la SSOA, non d'un scrutin ; les parts ci-dessous sont des estimations du poids politique négocié, pas des résultats électoraux.",
+      "parties": [
+        {
+          "label": "SPLM (Sudan People's Liberation Movement)",
+          "lang": "en",
+          "support": 0.5
+        },
+        {
+          "label": "SPLM-IO (SPLM in Opposition)",
+          "lang": "en",
+          "support": 0.3
+        },
+        {
+          "label": "South Sudan Opposition Alliance (SSOA)",
+          "lang": "en",
+          "support": 0.1
+        }
+      ]
+    },
+    "TCD": {
+      "wikidataCountry": "Q657",
+      "election": "Législatives du 29 décembre 2024 (188 sièges, les premières depuis 2011) : Mouvement Patriotique du Salut (MPS) 124 sièges (45,18 %), Rassemblement National des Démocrates Tchadiens/Le Réveil (RNDT) 11 (6,96 %), Rassemblement pour la Démocratie et le Progrès (RDP) 8 (6,05 %), Union Nationale pour la Démocratie et le Renouveau (UNDR) 7 (3,90 %), reste petites formations et indépendants ; participation 52,38 %.",
+      "parties": [
+        {
+          "label": "Mouvement Patriotique du Salut (MPS)",
+          "lang": "fr",
+          "support": 0.452
+        },
+        {
+          "label": "RNDT/Le Réveil",
+          "lang": "fr",
+          "support": 0.07
+        },
+        {
+          "label": "Rassemblement pour la Démocratie et le Progrès (RDP)",
+          "lang": "fr",
+          "support": 0.061
+        },
+        {
+          "label": "Union Nationale pour la Démocratie et le Renouveau (UNDR)",
+          "lang": "fr",
+          "support": 0.039
+        }
+      ]
+    },
+    "MRT": {
+      "wikidataCountry": "Q1025",
+      "election": "Législatives des 13 et 27 mai 2023 (Assemblée nationale, 176 sièges) : El Insaf 107 sièges (35,25 % de la liste nationale), Tewassoul 11 (10,24 %), Union pour la Démocratie et le Progrès (UDP) 10 (6,06 %), coalition Sawab-RAG 5 (4,10 %), Espoir Mauritanie (El Wiam) 7 (3,33 %) ; participation 71,59 %.",
+      "parties": [
+        {
+          "label": "El Insaf",
+          "lang": "fr",
+          "support": 0.353,
+          "qid": "Q112939010"
+        },
+        {
+          "label": "Tewassoul",
+          "lang": "fr",
+          "support": 0.102,
+          "qid": "Q12184844"
+        },
+        {
+          "label": "Union pour la Démocratie et le Progrès (UDP)",
+          "lang": "fr",
+          "support": 0.061
+        },
+        {
+          "label": "Coalition Sawab-RAG",
+          "lang": "fr",
+          "support": 0.041
+        },
+        {
+          "label": "Espoir Mauritanie (El Wiam)",
+          "lang": "fr",
+          "support": 0.033
+        }
+      ]
+    },
+    "NER": {
+      "wikidataCountry": "Q1032",
+      "election": "Aucune élection depuis le coup d'État de juillet 2023 ; les partis politiques sont suspendus, la vie politique encadrée par le CNSP. La charte de la transition adoptée en 2025 fixe un mandat présidentiel de cinq ans (jusqu'en 2030) sans échéance électorale précisée avant cela.",
+      "parties": []
+    },
+    "MLI": {
+      "wikidataCountry": "Q912",
+      "election": "Aucune élection depuis les coups d'État de 2020-2021 ; tous les partis politiques ont été dissous par décret en mai 2025, d'où l'absence de « parties » ci-dessous. La transition militaire n'a plus d'échéance électorale fixée ; le mandat présidentiel de 2025 est renouvelable indéfiniment sans scrutin.",
+      "parties": []
+    },
+    "NGA": {
+      "wikidataCountry": "Q1033",
+      "election": "Élections générales du 25 février 2023 (présidentielle et Assemblée nationale le même jour). Parts de sièges à la Chambre des représentants (360 sièges) utilisées en l'absence de décompte national fiable des voix par parti pour les législatives.",
+      "parties": [
+        {
+          "label": "All Progressives Congress",
+          "lang": "en",
+          "support": 0.67,
+          "qid": "Q4729266"
+        },
+        {
+          "label": "Peoples Democratic Party",
+          "lang": "en",
+          "support": 0.2,
+          "qid": "Q1551163"
+        },
+        {
+          "label": "Labour Party",
+          "lang": "en",
+          "support": 0.061
+        },
+        {
+          "label": "New Nigeria Peoples Party",
+          "lang": "en",
+          "support": 0.042,
+          "qid": "Q113485137"
+        }
+      ]
+    },
+    "GHA": {
+      "wikidataCountry": "Q117",
+      "election": "Élections générales du 7 décembre 2024 (présidentielle et Parlement le même jour, 276 sièges). Parts de sièges utilisées comme approximation des parts de voix législatives, non publiées séparément du scrutin présidentiel.",
+      "parties": [
+        {
+          "label": "National Democratic Congress",
+          "lang": "en",
+          "support": 0.667,
+          "qid": "Q200875"
+        },
+        {
+          "label": "New Patriotic Party",
+          "lang": "en",
+          "support": 0.319,
+          "qid": "Q1148441"
+        }
+      ]
+    },
+    "CIV": {
+      "wikidataCountry": "Q1008",
+      "election": "Élections législatives du 27 décembre 2025 (255 sièges), qui ont remplacé l'Assemblée élue en mars 2021 ; nouvelle Assemblée pas encore installée au 1er janvier 2026 (élection du président de l'Assemblée le 17 janvier 2026) mais composition déjà connue et utilisée ici. Scrutin marqué par le boycott du PPA-CI et une participation de 35,04%.",
+      "parties": [
+        {
+          "label": "Rassemblement des Houphouëtistes pour la Démocratie et la Paix",
+          "lang": "fr",
+          "support": 0.773,
+          "qid": "Q2132038"
+        },
+        {
+          "label": "PDCI-RDA",
+          "lang": "fr",
+          "support": 0.125,
+          "qid": "Q1455532"
+        },
+        {
+          "label": "Indépendants",
+          "lang": "fr",
+          "support": 0.09
+        }
+      ]
+    },
+    "SEN": {
+      "wikidataCountry": "Q1041",
+      "election": "Élections législatives du 17 novembre 2024, 165 sièges ; parts de voix officielles.",
+      "parties": [
+        {
+          "label": "PASTEF",
+          "lang": "fr",
+          "support": 0.5497,
+          "qid": "Q98347378"
+        },
+        {
+          "label": "Takku Wallu Sénégal",
+          "lang": "fr",
+          "support": 0.1467,
+          "qid": "Q131294669"
+        },
+        {
+          "label": "Jàmm ak Njariñ",
+          "lang": "wo",
+          "support": 0.0913,
+          "qid": "Q131290774"
+        },
+        {
+          "label": "Sàmm Sa Kàddu",
+          "lang": "wo",
+          "support": 0.0613,
+          "qid": "Q131319041"
+        }
+      ]
+    },
+    "GIN": {
+      "wikidataCountry": "Q1006",
+      "election": "Aucune assemblée élue depuis le coup d'État du 5 septembre 2021. Le Conseil national de la transition (CNT, deuxième mandature 2021-2026) est composé de membres nommés, sans étiquette partisane représentative. Les partis politiques n'étaient pas formellement dissous au 1er janvier 2026 (dissolution générale du 29 janvier 2026, postérieure à la date de référence), mais aucune élection législative pluraliste n'a eu lieu depuis le coup.",
+      "parties": []
+    },
+    "SLE": {
+      "wikidataCountry": "Q1044",
+      "election": "Élections générales du 24 juin 2023 (présidentielle et Parlement le même jour), 149 sièges dont 14 réservés à des chefs suprêmes coutumiers sans étiquette partisane, exclus des parts ci-dessous.",
+      "parties": [
+        {
+          "label": "Sierra Leone People's Party",
+          "lang": "en",
+          "support": 0.544,
+          "qid": "Q2033938"
+        },
+        {
+          "label": "All People's Congress",
+          "lang": "en",
+          "support": 0.362,
+          "qid": "Q385749"
+        }
+      ]
+    },
+    "LBR": {
+      "wikidataCountry": "Q1014",
+      "election": "Élections générales du 10 octobre 2023 (premier tour), Chambre des représentants (73 sièges) ; environ 26% des sièges reviennent à des indépendants et à de très petits partis non listés ici (chacun sous le seuil de 2%).",
+      "parties": [
+        {
+          "label": "Congress for Democratic Change",
+          "lang": "en",
+          "support": 0.342,
+          "qid": "Q1125914"
+        },
+        {
+          "label": "Unity Party",
+          "lang": "en",
+          "support": 0.151,
+          "qid": "Q550159"
+        },
+        {
+          "label": "Liberty Party",
+          "lang": "en",
+          "support": 0.082
+        },
+        {
+          "label": "Movement for Democracy and Reconstruction",
+          "lang": "en",
+          "support": 0.055,
+          "qid": "Q123631082"
+        }
+      ]
+    },
+    "TGO": {
+      "wikidataCountry": "Q945",
+      "election": "Élections législatives du 29 avril 2024, 113 sièges ; parts de sièges utilisées (décompte national des voix par parti non clairement publié). Quatre petits partis d'opposition ou indépendants se partagent les 5 sièges restants, chacun sous le seuil de 2%.",
+      "parties": [
+        {
+          "label": "Union pour la République",
+          "lang": "fr",
+          "support": 0.956,
+          "qid": "Q22080618"
+        }
+      ]
+    },
+    "BEN": {
+      "wikidataCountry": "Q962",
+      "election": "Élections législatives du 8 janvier 2023, 109 sièges ; parts de voix officielles.",
+      "parties": [
+        {
+          "label": "Union Progressiste le Renouveau",
+          "lang": "fr",
+          "support": 0.3756,
+          "qid": "Q96332854"
+        },
+        {
+          "label": "Bloc Républicain",
+          "lang": "fr",
+          "support": 0.2923,
+          "qid": "Q96273366"
+        },
+        {
+          "label": "Les Démocrates",
+          "lang": "fr",
+          "support": 0.2416
+        }
+      ]
+    },
+    "GMB": {
+      "wikidataCountry": "Q1005",
+      "election": "Élections législatives du 9 avril 2022, 58 sièges au total (53 élus au suffrage direct + 5 nommés par le président, non partisans et non comptés dans les parts ci-dessous).",
+      "parties": [
+        {
+          "label": "National People's Party",
+          "lang": "en",
+          "support": 0.2919,
+          "qid": "Q97180861"
+        },
+        {
+          "label": "United Democratic Party",
+          "lang": "en",
+          "support": 0.2804,
+          "qid": "Q2495179"
+        },
+        {
+          "label": "Indépendants",
+          "lang": "fr",
+          "support": 0.2176
+        },
+        {
+          "label": "People's Democratic Organisation for Independence and Socialism",
+          "lang": "en",
+          "support": 0.0501,
+          "qid": "Q2069620"
+        },
+        {
+          "label": "Alliance for Patriotic Reorientation and Construction",
+          "lang": "en",
+          "support": 0.0319,
+          "qid": "Q2143319"
+        },
+        {
+          "label": "National Reconciliation Party",
+          "lang": "en",
+          "support": 0.0287,
+          "qid": "Q1786600"
+        }
+      ]
+    },
+    "BFA": {
+      "wikidataCountry": "Q965",
+      "election": "Aucune assemblée élue depuis le coup d'État du 30 septembre 2022. Une Assemblée législative de transition (ALT), aux membres nommés (partis, société civile, régions, forces de défense et de sécurité), en tient lieu. Partis politiques non dissous au 1er janvier 2026 mais fortement restreints dans leur activité.",
+      "parties": []
+    },
+    "CPV": {
+      "wikidataCountry": "Q1011",
+      "election": "Élections législatives du 18 avril 2021 (Assemblée nationale) — distinctes de la présidentielle utilisée pour lastElection. Des législatives ultérieures ont eu lieu en 2026 (le MpD y perd le pouvoir face au PAICV) mais tombent après la date de référence du 1er janvier 2026 et sont donc exclues ici.",
+      "parties": [
+        {
+          "label": "Movimento para a Democracia",
+          "lang": "pt",
+          "support": 0.5,
+          "qid": "Q1951190"
+        },
+        {
+          "label": "Partido Africano da Independência de Cabo Verde",
+          "lang": "pt",
+          "support": 0.4,
+          "qid": "Q497464"
+        },
+        {
+          "label": "União Caboverdiana Independente e Democrática",
+          "lang": "pt",
+          "support": 0.09,
+          "qid": "Q3550046"
+        }
+      ]
+    },
+    "GNB": {
+      "wikidataCountry": "Q1007",
+      "election": "Institutions politiques suspendues depuis le coup du 26-27 novembre 2025 ; l'Assemblée nationale populaire était de toute façon dissoute par décret présidentiel depuis décembre 2023, sans nouvelle élection depuis. Dernière législative tenue : 4 juin 2023 (le PAIGC en tête). Les parts ci-dessous sont des estimations approximatives de mémoire pour cette élection, non vérifiées par une recherche web cette session (budget de recherche épuisé) — à confirmer. Les partis restent légalement constitués mais sans rôle institutionnel actif au 1er janvier 2026.",
+      "parties": [
+        {
+          "label": "PAIGC",
+          "lang": "fr",
+          "support": 0.44,
+          "qid": "Q7318729"
+        },
+        {
+          "label": "Madem G15",
+          "lang": "fr",
+          "support": 0.27,
+          "qid": "Q62258541"
+        }
+      ]
+    },
+    "CMR": {
+      "wikidataCountry": "Q1009",
+      "election": "Parts de voix de la présidentielle du 12 octobre 2025 (tour unique), retenues à la place de la législative du 9 février 2020 (RDPC 139 sièges sur 180, très datée et en sièges non en voix) car plus représentatives du rapport de force actuel et exprimées en voix réelles publiées. Les prochaines législatives étaient prévues pour 2026 mais rien ne confirme qu'elles aient eu lieu avant le 1er janvier. Maurice Kamto (MRC) n'a pas pu se présenter en 2025 et n'apparaît donc pas ici malgré son poids historique.",
+      "parties": [
+        {
+          "label": "Rassemblement Démocratique du Peuple Camerounais",
+          "lang": "fr",
+          "support": 0.5366,
+          "qid": "Q953447"
+        },
+        {
+          "label": "Front pour le Salut National du Cameroun",
+          "lang": "fr",
+          "support": 0.3519,
+          "qid": "Q117316405"
+        },
+        {
+          "label": "Parti Camerounais pour la Réconciliation Nationale",
+          "lang": "fr",
+          "support": 0.0342,
+          "qid": "Q97177912"
+        }
+      ]
+    },
+    "GAB": {
+      "wikidataCountry": "Q1000",
+      "election": "Élections législatives de 2025 (date exacte non confirmée cette session, probablement au second semestre). Parts de sièges pour les partis autres que l'UDB, faute de détail des voix consolidé ; l'UDB a obtenu 44 % des voix au premier tour mais 101 des 140 sièges (effet amplificateur du scrutin majoritaire à deux tours par circonscription).",
+      "parties": [
+        {
+          "label": "Union Démocratique des Bâtisseurs",
+          "lang": "fr",
+          "support": 0.44,
+          "qid": "Q134311805"
+        },
+        {
+          "label": "Parti Démocratique Gabonais",
+          "lang": "fr",
+          "support": 0.12,
+          "qid": "Q1762536"
+        }
+      ]
+    },
+    "GNQ": {
+      "wikidataCountry": "Q983",
+      "election": "Élections législatives du 20 novembre 2022 (Chambre des députés et Sénat) ; part de sièges (100 % dans les deux chambres pour le PDGE et sa coalition EDGE), aucune donnée de voix fiable publiée, aucune opposition représentée.",
+      "parties": [
+        {
+          "label": "Partido Democrático de Guinea Ecuatorial",
+          "lang": "es",
+          "support": 1,
+          "qid": "Q945167"
+        }
+      ]
+    },
+    "STP": {
+      "wikidataCountry": "Q1039",
+      "election": "Élections législatives de septembre 2022 (Assemblée nationale) ; victoire de l'ADI de Patrice Trovoada face au MLSTP-PSD sortant. Parts approximatives, non revérifiées précisément cette session.",
+      "parties": [
+        {
+          "label": "Ação Democrática Independente",
+          "lang": "pt",
+          "support": 0.48,
+          "qid": "Q2788422"
+        },
+        {
+          "label": "Movimento de Libertação de São Tomé e Príncipe – Partido Social Democrata",
+          "lang": "pt",
+          "support": 0.32,
+          "qid": "Q1276673"
+        }
+      ]
+    },
+    "COG": {
+      "wikidataCountry": "Q971",
+      "election": "Élections législatives de juillet 2022 (Assemblée nationale, deux tours) ; parts de sièges faute de détail des voix par parti dans les sources consultées.",
+      "parties": [
+        {
+          "label": "Parti Congolais du Travail",
+          "lang": "fr",
+          "support": 0.74,
+          "qid": "Q1785816"
+        },
+        {
+          "label": "Union Panafricaine pour la Démocratie Sociale",
+          "lang": "fr",
+          "support": 0.05,
+          "qid": "Q3550401"
+        },
+        {
+          "label": "Union des Démocrates Humanistes-Yuki",
+          "lang": "fr",
+          "support": 0.05
+        }
+      ]
+    },
+    "COD": {
+      "wikidataCountry": "Q974",
+      "election": "Élections législatives du 20 décembre 2023 (Assemblée nationale), concomitantes à la présidentielle. Paysage très fragmenté (listes multiples par circonscription, foule de micro-partis et indépendants) ; parts ci-dessous approximatives, la coalition Union Sacrée de la Nation ayant obtenu une majorité écrasante mais mal détaillée par parti dans les sources consultées cette session (budget de recherche web épuisé avant vérification complète) — à confirmer.",
+      "parties": [
+        {
+          "label": "Union Sacrée de la Nation",
+          "lang": "fr",
+          "support": 0.8,
+          "qid": "Q118967549"
+        },
+        {
+          "label": "Ensemble pour la République",
+          "lang": "fr",
+          "support": 0.05,
+          "qid": "Q3087061"
+        }
+      ]
+    },
+    "CAF": {
+      "wikidataCountry": "Q929",
+      "election": "Assemblée nationale très fragmentée (nombreux indépendants, scrutins étalés sur plusieurs années par circonscription en raison de l'insécurité depuis la législative de fin 2020-2022). Parts ci-dessous des estimations approximatives non vérifiées par recherche web cette session (budget épuisé) — à confirmer en priorité.",
+      "parties": [
+        {
+          "label": "Mouvement Cœurs Unis",
+          "lang": "fr",
+          "support": 0.35,
+          "qid": "Q104581386"
+        },
+        {
+          "label": "Union pour le Renouveau Centrafricain",
+          "lang": "fr",
+          "support": 0.1,
+          "qid": "Q23900268"
+        }
+      ]
+    },
+    "BDI": {
+      "wikidataCountry": "Q967",
+      "election": "Élections législatives du 5 juin 2025 (Assemblée nationale) ; parts de voix réelles publiées.",
+      "parties": [
+        {
+          "label": "CNDD-FDD",
+          "lang": "fr",
+          "support": 0.9651,
+          "qid": "Q2271402"
+        }
+      ]
+    },
+    "ETH": {
+      "wikidataCountry": "Q115",
+      "election": "Élections législatives du 21 juin 2021 (Chambre des représentants des peuples) ; plusieurs circonscriptions du Tigré et d'autres zones en conflit n'ont pas voté ce jour-là et ont voté plus tard ou pas du tout. Aucune élection générale n'a eu lieu depuis au 1er janvier 2026.",
+      "parties": [
+        {
+          "label": "Prosperity Party",
+          "lang": "en",
+          "support": 0.88,
+          "qid": "Q78108696"
+        },
+        {
+          "label": "National Movement of Amhara",
+          "lang": "en",
+          "support": 0.02,
+          "qid": "Q104830589"
+        }
+      ]
+    },
+    "ERI": {
+      "wikidataCountry": "Q986",
+      "election": "Aucune élection n'a jamais eu lieu depuis l'indépendance ; le FPDJ est l'unique parti légal.",
+      "parties": [
+        {
+          "label": "People's Front for Democracy and Justice",
+          "lang": "en",
+          "support": 1,
+          "qid": "Q863376"
+        }
+      ]
+    },
+    "DJI": {
+      "wikidataCountry": "Q977",
+      "election": "Élections législatives du 24 février 2023 (Assemblée nationale) — date à vérifier avec précision.",
+      "parties": [
+        {
+          "label": "Union pour la Majorité Présidentielle",
+          "lang": "fr",
+          "support": 0.9,
+          "qid": "Q1538413"
+        },
+        {
+          "label": "Union pour le Salut National",
+          "lang": "fr",
+          "support": 0.1
+        }
+      ]
+    },
+    "SOM": {
+      "wikidataCountry": "Q1045",
+      "election": "Pas d'élection législative au suffrage direct : les membres du Parlement fédéral sont désignés par des collèges de délégués claniques, puis élisent le président. Aucune part de vote populaire n'est publiée ; liste de partis non pertinente pour ce mode de scrutin.",
+      "parties": []
+    },
+    "KEN": {
+      "wikidataCountry": "Q114",
+      "election": "Élections générales du 9 août 2022 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximatives par parti (les coalitions Kenya Kwanza et Azimio la Umoja regroupent plusieurs partis).",
+      "parties": [
+        {
+          "label": "United Democratic Alliance",
+          "lang": "en",
+          "support": 0.26,
+          "qid": "Q105637541"
+        },
+        {
+          "label": "Orange Democratic Movement",
+          "lang": "en",
+          "support": 0.25,
+          "qid": "Q1640905"
+        },
+        {
+          "label": "Jubilee Party",
+          "lang": "en",
+          "support": 0.08,
+          "qid": "Q27963537"
+        },
+        {
+          "label": "Wiper Democratic Movement",
+          "lang": "en",
+          "support": 0.06,
+          "qid": "Q5251223"
+        },
+        {
+          "label": "Amani National Congress",
+          "lang": "en",
+          "support": 0.04,
+          "qid": "Q47489380"
+        }
+      ]
+    },
+    "UGA": {
+      "wikidataCountry": "Q1036",
+      "election": "Élections générales du 14 janvier 2021 (Parlement, concomitantes à la présidentielle).",
+      "parties": [
+        {
+          "label": "National Resistance Movement",
+          "lang": "en",
+          "support": 0.59,
+          "qid": "Q382674"
+        },
+        {
+          "label": "National Unity Platform",
+          "lang": "en",
+          "support": 0.22,
+          "qid": "Q97627856"
+        },
+        {
+          "label": "Forum for Democratic Change",
+          "lang": "en",
+          "support": 0.05,
+          "qid": "Q5473101"
+        }
+      ]
+    },
+    "RWA": {
+      "wikidataCountry": "Q1037",
+      "election": "Élections législatives de la Chambre des députés des 15-16 juillet 2024 (53 sièges élus au suffrage direct sur 80), concomitantes à la présidentielle.",
+      "parties": [
+        {
+          "label": "Front patriotique rwandais",
+          "lang": "fr",
+          "support": 0.6883,
+          "qid": "Q690240"
+        },
+        {
+          "label": "Liberal Party",
+          "lang": "en",
+          "support": 0.0866
+        },
+        {
+          "label": "Parti social-démocrate",
+          "lang": "fr",
+          "support": 0.0862
+        },
+        {
+          "label": "Democratic Green Party of Rwanda",
+          "lang": "en",
+          "support": 0.0456,
+          "qid": "Q3366824"
+        }
+      ]
+    },
+    "TZA": {
+      "wikidataCountry": "Q924",
+      "election": "Élections générales du 29 octobre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; CCM a obtenu 383 sièges sur environ 393 élus, les deux principaux partis d'opposition ayant été empêchés de concourir.",
+      "parties": [
+        {
+          "label": "Chama Cha Mapinduzi",
+          "lang": "sw",
+          "support": 0.97,
+          "qid": "Q652091"
+        },
+        {
+          "label": "ACT-Wazalendo",
+          "lang": "sw",
+          "support": 0.02,
+          "qid": "Q18161932"
+        }
+      ]
+    },
+    "MWI": {
+      "wikidataCountry": "Q1020",
+      "election": "Élections générales du 16 septembre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximées à partir des sièges (229 au total), les voix précises par parti n'étant pas toutes publiées.",
+      "parties": [
+        {
+          "label": "Democratic Progressive Party",
+          "lang": "en",
+          "support": 0.34,
+          "qid": "Q1185876"
+        },
+        {
+          "label": "Malawi Congress Party",
+          "lang": "en",
+          "support": 0.23,
+          "qid": "Q1037389"
+        },
+        {
+          "label": "UTM Party",
+          "lang": "en",
+          "support": 0.035
+        },
+        {
+          "label": "United Democratic Front",
+          "lang": "en",
+          "support": 0.017,
+          "qid": "Q775844"
+        }
+      ]
+    },
+    "ZMB": {
+      "wikidataCountry": "Q953",
+      "election": "Élections générales du 12 août 2021 (Assemblée nationale, concomitantes à la présidentielle).",
+      "parties": [
+        {
+          "label": "United Party for National Development",
+          "lang": "en",
+          "support": 0.54,
+          "qid": "Q1781632"
+        },
+        {
+          "label": "Patriotic Front",
+          "lang": "en",
+          "support": 0.34,
+          "qid": "Q2058159"
+        }
+      ]
+    },
+    "MDG": {
+      "wikidataCountry": "Q1019",
+      "election": "Élections législatives du 29 mai 2024 (Assemblée nationale) — dernières tenues avant le coup d'État d'octobre 2025 ; parts approximatives, à vérifier. Le pouvoir actuel n'est pas issu de ce scrutin.",
+      "parties": [
+        {
+          "label": "Isika Rehetra Miaraka amin'i Andry Rajoelina",
+          "lang": "mg",
+          "support": 0.43,
+          "qid": "Q86680874"
+        }
+      ]
+    },
+    "ZAF": {
+      "wikidataCountry": "Q258",
+      "election": "Élections générales du 29 mai 2024 (Assemblée nationale, 400 sièges).",
+      "parties": [
+        {
+          "label": "African National Congress",
+          "lang": "en",
+          "support": 0.4018,
+          "qid": "Q83162"
+        },
+        {
+          "label": "Democratic Alliance",
+          "lang": "en",
+          "support": 0.2181,
+          "qid": "Q761877"
+        },
+        {
+          "label": "uMkhonto weSizwe",
+          "lang": "en",
+          "support": 0.1458,
+          "qid": "Q1136236"
+        },
+        {
+          "label": "Economic Freedom Fighters",
+          "lang": "en",
+          "support": 0.0952,
+          "qid": "Q15613585"
+        },
+        {
+          "label": "Inkatha Freedom Party",
+          "lang": "en",
+          "support": 0.0385,
+          "qid": "Q654444"
+        },
+        {
+          "label": "Patriotic Alliance",
+          "lang": "en",
+          "support": 0.0206,
+          "qid": "Q15980906"
+        }
+      ]
+    },
+    "NAM": {
+      "wikidataCountry": "Q1030",
+      "election": "Élections générales du 27 novembre 2024 (Assemblée nationale, 96 sièges élus, concomitantes à la présidentielle).",
+      "parties": [
+        {
+          "label": "SWAPO",
+          "lang": "en",
+          "support": 0.5337,
+          "qid": "Q467711"
+        },
+        {
+          "label": "Independent Patriots for Change",
+          "lang": "en",
+          "support": 0.202,
+          "qid": "Q98081326"
+        },
+        {
+          "label": "Affirmative Repositioning",
+          "lang": "en",
+          "support": 0.0661,
+          "qid": "Q19891949"
+        },
+        {
+          "label": "Popular Democratic Movement",
+          "lang": "en",
+          "support": 0.0548
+        },
+        {
+          "label": "Landless People's Movement",
+          "lang": "en",
+          "support": 0.0521,
+          "qid": "Q60518792"
+        },
+        {
+          "label": "United Democratic Front",
+          "lang": "en",
+          "support": 0.0154,
+          "qid": "Q488574"
+        }
+      ]
+    },
+    "BWA": {
+      "wikidataCountry": "Q963",
+      "election": "Élections générales du 30 octobre 2024 (Assemblée nationale, 61 sièges élus).",
+      "parties": [
+        {
+          "label": "Umbrella for Democratic Change",
+          "lang": "en",
+          "support": 0.3721,
+          "qid": "Q18347306"
+        },
+        {
+          "label": "Botswana Democratic Party",
+          "lang": "en",
+          "support": 0.3047,
+          "qid": "Q859825"
+        },
+        {
+          "label": "Botswana Congress Party",
+          "lang": "en",
+          "support": 0.2106,
+          "qid": "Q4894021"
+        },
+        {
+          "label": "Botswana Patriotic Front",
+          "lang": "en",
+          "support": 0.0826,
+          "qid": "Q72976241"
+        }
+      ]
+    },
+    "LSO": {
+      "wikidataCountry": "Q1013",
+      "election": "Élections générales du 7 octobre 2022 (Assemblée nationale, 120 sièges).",
+      "parties": [
+        {
+          "label": "Revolution for Prosperity",
+          "lang": "en",
+          "support": 0.4,
+          "qid": "Q114562488"
+        },
+        {
+          "label": "Democratic Congress",
+          "lang": "en",
+          "support": 0.19,
+          "qid": "Q1185836"
+        },
+        {
+          "label": "All Basotho Convention",
+          "lang": "en",
+          "support": 0.09,
+          "qid": "Q1346132"
+        }
+      ]
+    },
+    "SWZ": {
+      "wikidataCountry": "Q1050",
+      "election": "Élections à la Chambre d'assemblée de septembre-octobre 2023, sur base non partisane (Tinkhundla) : les candidats se présentent à titre individuel, aucun parti n'est autorisé à concourir, donc aucune part de vote par parti n'est publiable.",
+      "parties": []
+    },
+    "MOZ": {
+      "wikidataCountry": "Q1029",
+      "election": "Élections générales du 9 octobre 2024 (Assemblée de la République, 250 sièges, concomitantes à la présidentielle) ; résultats officiels contestés par l'opposition.",
+      "parties": [
+        {
+          "label": "FRELIMO",
+          "lang": "pt",
+          "support": 0.65,
+          "qid": "Q504564"
+        },
+        {
+          "label": "PODEMOS",
+          "lang": "pt",
+          "support": 0.24,
+          "qid": "Q64657923"
+        },
+        {
+          "label": "RENAMO",
+          "lang": "pt",
+          "support": 0.06,
+          "qid": "Q1425821"
+        }
+      ]
+    },
+    "ZWE": {
+      "wikidataCountry": "Q954",
+      "election": "Élections générales du 23 août 2023 (Assemblée nationale, concomitantes à la présidentielle).",
+      "parties": [
+        {
+          "label": "ZANU-PF",
+          "lang": "en",
+          "support": 0.53,
+          "qid": "Q1910161"
+        },
+        {
+          "label": "Citizens Coalition for Change",
+          "lang": "en",
+          "support": 0.4,
+          "qid": "Q110664645"
+        }
+      ]
+    },
+    "AGO": {
+      "wikidataCountry": "Q916",
+      "election": "Élections générales du 24 août 2022 (Assemblée nationale, 220 sièges) : le MPLA arrivé en tête, Lourenço reste donc président.",
+      "parties": [
+        {
+          "label": "MPLA",
+          "lang": "pt",
+          "support": 0.5117,
+          "qid": "Q28551"
+        },
+        {
+          "label": "UNITA",
+          "lang": "pt",
+          "support": 0.4395,
+          "qid": "Q28699"
+        }
+      ]
+    },
+    "COM": {
+      "wikidataCountry": "Q970",
+      "election": "Élections législatives de l'Assemblée de l'Union du 19 janvier 2020 — dernières dont Claude Code est raisonnablement certain de la date ; une élection législative ultérieure a pu avoir lieu avant le 1er janvier 2026 et resterait à vérifier.",
+      "parties": [
+        {
+          "label": "Convention pour le renouveau des Comores",
+          "lang": "fr",
+          "support": 0.8,
+          "qid": "Q5166253"
+        }
+      ]
+    },
+    "SYC": {
+      "wikidataCountry": "Q1042",
+      "election": "Élections à l'Assemblée nationale d'octobre 2025, concomitantes au cycle présidentiel (dates exactes des deux tours à vérifier).",
+      "parties": [
+        {
+          "label": "United Seychelles",
+          "lang": "en",
+          "support": 0.4914,
+          "qid": "Q206395"
+        },
+        {
+          "label": "Linyon Demokratik Seselwa",
+          "lang": "en",
+          "support": 0.4481,
+          "qid": "Q48797479"
+        }
+      ]
+    },
+    "MUS": {
+      "wikidataCountry": "Q1027",
+      "election": "Élections générales du 10 novembre 2024 (Assemblée nationale, 62 sièges élus + sièges du meilleur perdant) ; parts exprimées au niveau des alliances électorales, qui regroupent plusieurs partis.",
+      "parties": [
+        {
+          "label": "Alliance du Changement",
+          "lang": "fr",
+          "support": 0.6138,
+          "qid": "Q131314612"
+        },
+        {
+          "label": "Alliance Lepep",
+          "lang": "fr",
+          "support": 0.2729,
+          "qid": "Q131127801"
+        },
+        {
+          "label": "Linion Reform",
+          "lang": "fr",
+          "support": 0.0499
+        }
+      ]
+    },
+    "AFG": {
+      "wikidataCountry": "Q889",
+      "election": "Aucune élection nationale depuis la chute de la République en août 2021 ; la présidentielle de 2019 est caduque.",
+      "parties": []
+    },
+    "AUS": {
+      "wikidataCountry": "Q408",
+      "election": "Élection fédérale du 3 mai 2025 (Chambre des représentants, vote de premier ordre de préférence)",
+      "parties": [
+        {
+          "label": "Australian Labor Party",
+          "lang": "en",
+          "support": 0.3456,
+          "qid": "Q216082"
+        },
+        {
+          "label": "Liberal–National Coalition",
+          "lang": "en",
+          "support": 0.3182,
+          "qid": "Q125912868"
+        },
+        {
+          "label": "Australian Greens",
+          "lang": "en",
+          "support": 0.122,
+          "qid": "Q781486"
+        },
+        {
+          "label": "Pauline Hanson's One Nation",
+          "lang": "en",
+          "support": 0.064,
+          "qid": "Q1585274"
+        }
+      ]
+    },
+    "BHR": {
+      "wikidataCountry": "Q398",
+      "election": "Élection de la Chambre des députés du 12 novembre 2022 (second tour le 26 novembre)",
+      "parties": [
+        {
+          "label": "Al Asalah",
+          "lang": "en",
+          "support": 0.05,
+          "qid": "Q4115954"
+        },
+        {
+          "label": "Al-Minbar Islamic Society",
+          "lang": "en",
+          "support": 0.03
+        },
+        {
+          "label": "National Democratic Action Society",
+          "lang": "en",
+          "support": 0.02,
+          "qid": "Q6972195"
+        }
+      ]
+    },
+    "BGD": {
+      "wikidataCountry": "Q902",
+      "election": "Élection générale du 12 février 2026, non tenue au 1er janvier 2026 ; parts de vote ci-dessous = estimations de sondages pré-électoraux de fin 2025, pas un résultat réel (la dernière élection tenue, janvier 2024, a été boycottée par l'opposition et sa légitimité rejetée par le mouvement de 2024).",
+      "parties": [
+        {
+          "label": "Bangladesh Nationalist Party",
+          "lang": "en",
+          "support": 0.38,
+          "qid": "Q496810"
+        },
+        {
+          "label": "Jamaat-e-Islami Bangladesh",
+          "lang": "en",
+          "support": 0.12,
+          "qid": "Q2475664"
+        },
+        {
+          "label": "National Citizen Party",
+          "lang": "en",
+          "support": 0.08,
+          "qid": "Q132406145"
+        }
+      ]
+    },
+    "BTN": {
+      "wikidataCountry": "Q917",
+      "election": "Second tour de l'élection à l'Assemblée nationale du 9 janvier 2024 (premier tour le 30 novembre 2023, qui qualifie les deux meilleurs partis)",
+      "parties": [
+        {
+          "label": "People's Democratic Party",
+          "lang": "en",
+          "support": 0.5498,
+          "qid": "Q2578342"
+        },
+        {
+          "label": "Bhutan Tendrel Party",
+          "lang": "en",
+          "support": 0.4502,
+          "qid": "Q116457147"
+        }
+      ]
+    },
+    "BRN": {
+      "wikidataCountry": "Q921",
+      "election": "Aucune élection nationale ; le Parti populaire de Brunei (BPP), seul parti légal, est inactif.",
+      "parties": []
+    },
+    "KHM": {
+      "wikidataCountry": "Q424",
+      "election": "Élection à l'Assemblée nationale du 23 juillet 2023, sans opposition crédible (Parti des bougies disqualifié)",
+      "parties": [
+        {
+          "label": "Cambodian People's Party",
+          "lang": "en",
+          "support": 0.82,
+          "qid": "Q769308"
+        },
+        {
+          "label": "FUNCINPEC",
+          "lang": "en",
+          "support": 0.05,
+          "qid": "Q117815"
+        }
+      ]
+    },
+    "CHN": {
+      "wikidataCountry": "Q148",
+      "election": "Élection indirecte à plusieurs degrés du 14e Congrès national du peuple, première session le 5 mars 2023",
+      "parties": [
+        {
+          "label": "Chinese Communist Party",
+          "lang": "en",
+          "support": 0.95,
+          "qid": "Q17427"
+        },
+        {
+          "label": "China Democratic League",
+          "lang": "en",
+          "support": 0.01,
+          "qid": "Q1348513"
+        }
+      ]
+    },
+    "FJI": {
+      "wikidataCountry": "Q712",
+      "election": "Élection générale du 14 décembre 2022",
+      "parties": [
+        {
+          "label": "FijiFirst",
+          "lang": "en",
+          "support": 0.4255,
+          "qid": "Q17069868"
+        },
+        {
+          "label": "People's Alliance Party",
+          "lang": "en",
+          "support": 0.3582
+        },
+        {
+          "label": "National Federation Party",
+          "lang": "en",
+          "support": 0.0889,
+          "qid": "Q6972579"
+        },
+        {
+          "label": "SODELPA",
+          "lang": "en",
+          "support": 0.0514,
+          "qid": "Q7550539"
+        }
+      ]
+    },
+    "IND": {
+      "wikidataCountry": "Q668",
+      "election": "Élections générales à la Lok Sabha, avril-juin 2024, résultats le 4 juin 2024",
+      "parties": [
+        {
+          "label": "Bharatiya Janata Party",
+          "lang": "en",
+          "support": 0.3656,
+          "qid": "Q10230"
+        },
+        {
+          "label": "Indian National Congress",
+          "lang": "en",
+          "support": 0.2119,
+          "qid": "Q10225"
+        },
+        {
+          "label": "Samajwadi Party",
+          "lang": "en",
+          "support": 0.045,
+          "qid": "Q1546941"
+        },
+        {
+          "label": "All India Trinamool Congress",
+          "lang": "en",
+          "support": 0.044,
+          "qid": "Q912899"
+        },
+        {
+          "label": "Dravida Munnetra Kazhagam",
+          "lang": "en",
+          "support": 0.025,
+          "qid": "Q1255973"
+        },
+        {
+          "label": "Telugu Desam Party",
+          "lang": "en",
+          "support": 0.022,
+          "qid": "Q2279320"
+        }
+      ]
+    },
+    "IDN": {
+      "wikidataCountry": "Q252",
+      "election": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle",
+      "parties": [
+        {
+          "label": "Indonesian Democratic Party of Struggle",
+          "lang": "id",
+          "support": 0.1672,
+          "qid": "Q1186306"
+        },
+        {
+          "label": "Golkar",
+          "lang": "id",
+          "support": 0.1529,
+          "qid": "Q1536552"
+        },
+        {
+          "label": "Gerindra",
+          "lang": "id",
+          "support": 0.1322,
+          "qid": "Q4261459"
+        },
+        {
+          "label": "National Awakening Party",
+          "lang": "id",
+          "support": 0.106,
+          "qid": "Q1257317"
+        },
+        {
+          "label": "NasDem Party",
+          "lang": "id",
+          "support": 0.097,
+          "qid": "Q4207219"
+        },
+        {
+          "label": "Prosperous Justice Party",
+          "lang": "id",
+          "support": 0.084,
+          "qid": "Q1511101"
+        },
+        {
+          "label": "Democratic Party",
+          "lang": "id",
+          "support": 0.074
+        },
+        {
+          "label": "National Mandate Party",
+          "lang": "id",
+          "support": 0.072,
+          "qid": "Q2434365"
+        }
+      ]
+    },
+    "IRN": {
+      "wikidataCountry": "Q794",
+      "election": "Élection législative (Majlis) de mars 2024 ; estimation des courants faute de partis structurés, faible confiance",
+      "parties": [
+        {
+          "label": "Paydari Front",
+          "lang": "en",
+          "support": 0.3
+        },
+        {
+          "label": "Comprehensive Coalition of Islamic Revolution Forces",
+          "lang": "en",
+          "support": 0.3
+        },
+        {
+          "label": "Reform Front",
+          "lang": "en",
+          "support": 0.1
+        }
+      ]
+    },
+    "IRQ": {
+      "wikidataCountry": "Q796",
+      "election": "Élections législatives du 11 novembre 2025 (329 sièges) ; parts de sièges utilisées à défaut de pourcentages de voix nationaux fiables dans ce scrutin par circonscription",
+      "parties": [
+        {
+          "label": "Reconstruction and Development Coalition",
+          "lang": "en",
+          "support": 0.14
+        },
+        {
+          "label": "State of Law Coalition",
+          "lang": "en",
+          "support": 0.088,
+          "qid": "Q1971776"
+        },
+        {
+          "label": "Kurdistan Democratic Party",
+          "lang": "en",
+          "support": 0.082,
+          "qid": "Q781221"
+        },
+        {
+          "label": "Taqaddum",
+          "lang": "en",
+          "support": 0.082
+        },
+        {
+          "label": "Patriotic Union of Kurdistan",
+          "lang": "en",
+          "support": 0.05,
+          "qid": "Q677505"
+        }
+      ]
+    },
+    "ISR": {
+      "wikidataCountry": "Q801",
+      "election": "Élection à la Knesset du 1er novembre 2022 (25e Knesset)",
+      "parties": [
+        {
+          "label": "Likud",
+          "lang": "en",
+          "support": 0.2341,
+          "qid": "Q187009"
+        },
+        {
+          "label": "Yesh Atid",
+          "lang": "en",
+          "support": 0.1779,
+          "qid": "Q622716"
+        },
+        {
+          "label": "Religious Zionist Party",
+          "lang": "en",
+          "support": 0.1084,
+          "qid": "Q2665610"
+        },
+        {
+          "label": "National Unity",
+          "lang": "en",
+          "support": 0.0914
+        },
+        {
+          "label": "Shas",
+          "lang": "en",
+          "support": 0.0825,
+          "qid": "Q904635"
+        },
+        {
+          "label": "United Torah Judaism",
+          "lang": "en",
+          "support": 0.0527,
+          "qid": "Q1466053"
+        },
+        {
+          "label": "Yisrael Beiteinu",
+          "lang": "en",
+          "support": 0.0445,
+          "qid": "Q514442"
+        },
+        {
+          "label": "United Arab List",
+          "lang": "en",
+          "support": 0.0409,
+          "qid": "Q249078"
+        }
+      ]
+    },
+    "JPN": {
+      "wikidataCountry": "Q17",
+      "election": "Élection à la Chambre des représentants du 27 octobre 2024 (vote proportionnel de circonscription)",
+      "parties": [
+        {
+          "label": "Liberal Democratic Party",
+          "lang": "en",
+          "support": 0.2673,
+          "qid": "Q232595"
+        },
+        {
+          "label": "Constitutional Democratic Party",
+          "lang": "en",
+          "support": 0.2124,
+          "qid": "Q41532587"
+        },
+        {
+          "label": "Democratic Party for the People",
+          "lang": "en",
+          "support": 0.1118,
+          "qid": "Q52729635"
+        },
+        {
+          "label": "Japan Innovation Party",
+          "lang": "en",
+          "support": 0.0993,
+          "qid": "Q21499745"
+        },
+        {
+          "label": "Komeito",
+          "lang": "en",
+          "support": 0.08,
+          "qid": "Q1061354"
+        },
+        {
+          "label": "Japanese Communist Party",
+          "lang": "en",
+          "support": 0.0616,
+          "qid": "Q641600"
+        },
+        {
+          "label": "Reiwa Shinsengumi",
+          "lang": "en",
+          "support": 0.0459,
+          "qid": "Q64405573"
+        },
+        {
+          "label": "Sanseito",
+          "lang": "en",
+          "support": 0.0294,
+          "qid": "Q113009668"
+        }
+      ]
+    },
+    "JOR": {
+      "wikidataCountry": "Q810",
+      "election": "Élection à la Chambre des députés du 10 septembre 2024, première sous la nouvelle loi électorale à listes nationales partielles",
+      "parties": [
+        {
+          "label": "Islamic Action Front",
+          "lang": "en",
+          "support": 0.283,
+          "qid": "Q1674114"
+        },
+        {
+          "label": "National Charter Party",
+          "lang": "en",
+          "support": 0.09,
+          "qid": "Q130426065"
+        },
+        {
+          "label": "Al-Eradah Party",
+          "lang": "en",
+          "support": 0.08
+        },
+        {
+          "label": "Progress Party (Jordan)",
+          "lang": "en",
+          "support": 0.035
+        }
+      ]
+    },
+    "KIR": {
+      "wikidataCountry": "Q710",
+      "election": "Élection présidentielle du 25 octobre 2024 (second tour), estimation de date à confirmer",
+      "parties": [
+        {
+          "label": "Tobwaan Kiribati Party",
+          "lang": "en",
+          "support": 0.52,
+          "qid": "Q23058731"
+        },
+        {
+          "label": "Boutokaan Kiribati Moa Party",
+          "lang": "en",
+          "support": 0.42,
+          "qid": "Q96373866"
+        }
+      ]
+    },
+    "KWT": {
+      "wikidataCountry": "Q817",
+      "election": "Élection à l'Assemblée nationale du 4 avril 2024, dernière avant la suspension du 10 mai 2024 ; aucun parti politique formel n'est autorisé au Koweït (candidats individuels, blocs informels)",
+      "parties": []
+    },
+    "LAO": {
+      "wikidataCountry": "Q819",
+      "election": "Élection à l'Assemblée nationale du 21 février 2021",
+      "parties": [
+        {
+          "label": "Lao People's Revolutionary Party",
+          "lang": "en",
+          "support": 0.92,
+          "qid": "Q756180"
+        }
+      ]
+    },
+    "LBN": {
+      "wikidataCountry": "Q822",
+      "election": "Élection législative du 15 mai 2022 ; parts estimées d'après les sièges (128 au total), le scrutin confessionnel par circonscription ne produit pas de pourcentage national de voix homogène",
+      "parties": [
+        {
+          "label": "Lebanese Forces",
+          "lang": "en",
+          "support": 0.148,
+          "qid": "Q1146346"
+        },
+        {
+          "label": "Free Patriotic Movement",
+          "lang": "en",
+          "support": 0.14,
+          "qid": "Q1454007"
+        },
+        {
+          "label": "Amal Movement",
+          "lang": "en",
+          "support": 0.117,
+          "qid": "Q452670"
+        },
+        {
+          "label": "Hezbollah",
+          "lang": "en",
+          "support": 0.117,
+          "qid": "Q41053"
+        },
+        {
+          "label": "Progressive Socialist Party",
+          "lang": "en",
+          "support": 0.063,
+          "qid": "Q113104"
+        },
+        {
+          "label": "Kataeb Party",
+          "lang": "en",
+          "support": 0.031,
+          "qid": "Q502276"
+        }
+      ]
+    },
+    "MYS": {
+      "wikidataCountry": "Q833",
+      "election": "Élection générale du 19 novembre 2022, parts de vote par coalition (les partis composant chaque coalition ne publient pas de résultat national séparé)",
+      "parties": [
+        {
+          "label": "Pakatan Harapan",
+          "lang": "en",
+          "support": 0.3799,
+          "qid": "Q21004257"
+        },
+        {
+          "label": "Perikatan Nasional",
+          "lang": "en",
+          "support": 0.3023,
+          "qid": "Q86890510"
+        },
+        {
+          "label": "Barisan Nasional",
+          "lang": "en",
+          "support": 0.2216
+        }
+      ]
+    },
+    "MDV": {
+      "wikidataCountry": "Q826",
+      "election": "Élection au Majlis du peuple du 21 avril 2024, parts estimées d'après les sièges (93 au total)",
+      "parties": [
+        {
+          "label": "People's National Congress",
+          "lang": "en",
+          "support": 0.71,
+          "qid": "Q61750742"
+        },
+        {
+          "label": "Maldivian Democratic Party",
+          "lang": "en",
+          "support": 0.13,
+          "qid": "Q1778600"
+        }
+      ]
+    },
+    "MHL": {
+      "wikidataCountry": "Q709",
+      "election": "Élection générale au Nitijela du 20 novembre 2023, sans parti formel",
+      "parties": []
+    },
+    "FSM": {
+      "wikidataCountry": "Q702",
+      "election": "Élection générale au Congrès de mars 2023, sans parti politique",
+      "parties": []
+    },
+    "MNG": {
+      "wikidataCountry": "Q711",
+      "election": "Élection au Grand Khoural d'État du 28 juin 2024 (126 sièges, nouveau système mixte)",
+      "parties": [
+        {
+          "label": "Mongolian People's Party",
+          "lang": "en",
+          "support": 0.54,
+          "qid": "Q1127178"
+        },
+        {
+          "label": "Democratic Party (Mongolia)",
+          "lang": "en",
+          "support": 0.33
+        },
+        {
+          "label": "HUN Party",
+          "lang": "en",
+          "support": 0.06,
+          "qid": "Q17028413"
+        },
+        {
+          "label": "National Coalition Party",
+          "lang": "en",
+          "support": 0.03
+        }
+      ]
+    },
+    "MMR": {
+      "wikidataCountry": "Q836",
+      "election": "Scrutin militaire en trois phases débuté le 28 décembre 2025, non achevé au 1er janvier 2026 ; l'élection de 2020 (large victoire de la LND) a été annulée par le coup d'État.",
+      "parties": [
+        {
+          "label": "Union Solidarity and Development Party",
+          "lang": "en",
+          "support": 0.4,
+          "qid": "Q1318070"
+        }
+      ]
+    },
+    "NRU": {
+      "wikidataCountry": "Q697",
+      "election": "Élection générale au Parlement d'octobre 2023, sans parti formel",
+      "parties": []
+    },
+    "NPL": {
+      "wikidataCountry": "Q837",
+      "election": "Élection à la Chambre des représentants du 20 novembre 2022 (Chambre dissoute en septembre 2025 ; nouveau scrutin le 5 mars 2026)",
+      "parties": [
+        {
+          "label": "Nepali Congress",
+          "lang": "en",
+          "support": 0.324,
+          "qid": "Q216660"
+        },
+        {
+          "label": "CPN (Unified Marxist–Leninist)",
+          "lang": "en",
+          "support": 0.284
+        },
+        {
+          "label": "CPN (Maoist Centre)",
+          "lang": "en",
+          "support": 0.116
+        },
+        {
+          "label": "Rastriya Swatantra Party",
+          "lang": "en",
+          "support": 0.073,
+          "qid": "Q112895056"
+        },
+        {
+          "label": "Rastriya Prajatantra Party",
+          "lang": "en",
+          "support": 0.047,
+          "qid": "Q2632719"
+        },
+        {
+          "label": "Janata Samajbadi Party",
+          "lang": "en",
+          "support": 0.045,
+          "qid": "Q92259330"
+        }
+      ]
+    },
+    "NZL": {
+      "wikidataCountry": "Q664",
+      "election": "Élection générale du 14 octobre 2023",
+      "parties": [
+        {
+          "label": "New Zealand National Party",
+          "lang": "en",
+          "support": 0.381,
+          "qid": "Q204716"
+        },
+        {
+          "label": "New Zealand Labour Party",
+          "lang": "en",
+          "support": 0.2691,
+          "qid": "Q1048192"
+        },
+        {
+          "label": "Green Party of Aotearoa New Zealand",
+          "lang": "en",
+          "support": 0.119,
+          "qid": "Q1327761"
+        },
+        {
+          "label": "ACT New Zealand",
+          "lang": "en",
+          "support": 0.086,
+          "qid": "Q288838"
+        },
+        {
+          "label": "New Zealand First",
+          "lang": "en",
+          "support": 0.061,
+          "qid": "Q180059"
+        },
+        {
+          "label": "Te Pāti Māori",
+          "lang": "en",
+          "support": 0.0308,
+          "qid": "Q1375170"
+        }
+      ]
+    },
+    "PRK": {
+      "wikidataCountry": "Q423",
+      "election": "Élection à l'Assemblée populaire suprême du 10 mars 2019, candidat unique par circonscription ; incertitude sur la tenue d'un scrutin plus récent",
+      "parties": [
+        {
+          "label": "Workers' Party of Korea",
+          "lang": "en",
+          "support": 0.98,
+          "qid": "Q49623"
+        }
+      ]
+    },
+    "OMN": {
+      "wikidataCountry": "Q842",
+      "election": "Élection au Majlis al-Choura du 8 octobre 2023, sans parti politique (les partis sont interdits)",
+      "parties": []
+    },
+    "PAK": {
+      "wikidataCountry": "Q843",
+      "election": "Élection à l'Assemblée nationale du 8 février 2024",
+      "parties": [
+        {
+          "label": "Pakistan Tehreek-e-Insaf",
+          "lang": "en",
+          "support": 0.3117,
+          "qid": "Q284454"
+        },
+        {
+          "label": "Pakistan Muslim League (N)",
+          "lang": "en",
+          "support": 0.2364,
+          "qid": "Q799577"
+        },
+        {
+          "label": "Pakistan Peoples Party",
+          "lang": "en",
+          "support": 0.1392,
+          "qid": "Q186591"
+        },
+        {
+          "label": "Muttahida Qaumi Movement–Pakistan",
+          "lang": "en",
+          "support": 0.027
+        },
+        {
+          "label": "Jamiat Ulema-e-Islam (F)",
+          "lang": "en",
+          "support": 0.027,
+          "qid": "Q13211655"
+        }
+      ]
+    },
+    "PLW": {
+      "wikidataCountry": "Q695",
+      "election": "Élection présidentielle du 5 novembre 2024, sans parti politique",
+      "parties": []
+    },
+    "PNG": {
+      "wikidataCountry": "Q691",
+      "election": "Élection générale de juillet-août 2022 (118 sièges), parts très approximatives dans un système ultra-fragmenté dominé par des indépendants",
+      "parties": [
+        {
+          "label": "Pangu Pati",
+          "lang": "en",
+          "support": 0.33,
+          "qid": "Q2007531"
+        },
+        {
+          "label": "People's National Congress Party",
+          "lang": "en",
+          "support": 0.08,
+          "qid": "Q24708"
+        },
+        {
+          "label": "National Alliance Party",
+          "lang": "en",
+          "support": 0.06,
+          "qid": "Q1313018"
+        }
+      ]
+    },
+    "PHL": {
+      "wikidataCountry": "Q928",
+      "election": "Élections de mi-mandat (Sénat, Chambre des représentants, locales) du 12 mai 2025 ; estimation grossière par alliance faute de résultat national par parti dans un système très personnalisé",
+      "parties": [
+        {
+          "label": "Lakas–CMD",
+          "lang": "en",
+          "support": 0.2,
+          "qid": "Q3240730"
+        },
+        {
+          "label": "PDP–Laban",
+          "lang": "en",
+          "support": 0.1,
+          "qid": "Q7140531"
+        },
+        {
+          "label": "Nacionalista Party",
+          "lang": "en",
+          "support": 0.08,
+          "qid": "Q302210"
+        }
+      ]
+    },
+    "QAT": {
+      "wikidataCountry": "Q846",
+      "election": "Le Conseil consultatif (Choura), partiellement élu en 2021, est redevenu intégralement nommé par l'émir après le référendum constitutionnel de juillet 2024 ; aucun parti politique n'est autorisé.",
+      "parties": []
+    },
+    "KOR": {
+      "wikidataCountry": "Q884",
+      "election": "Élection à l'Assemblée nationale du 10 avril 2024 (résultats donnés pour les partis principaux et leurs listes proportionnelles satellites regroupées)",
+      "parties": [
+        {
+          "label": "Democratic Party of Korea",
+          "lang": "en",
+          "support": 0.41,
+          "qid": "Q15978686"
+        },
+        {
+          "label": "People Power Party",
+          "lang": "en",
+          "support": 0.36,
+          "qid": "Q85412437"
+        },
+        {
+          "label": "Rebuilding Korea Party",
+          "lang": "en",
+          "support": 0.23,
+          "qid": "Q124657368"
+        }
+      ]
+    },
+    "WSM": {
+      "wikidataCountry": "Q683",
+      "election": "Élection générale anticipée du 29 août 2025, provoquée par la scission du parti FAST",
+      "parties": [
+        {
+          "label": "FAST Party",
+          "lang": "en",
+          "support": 0.64,
+          "qid": "Q104853338"
+        },
+        {
+          "label": "Human Rights Protection Party",
+          "lang": "en",
+          "support": 0.3,
+          "qid": "Q1256720"
+        }
+      ]
+    },
+    "SAU": {
+      "wikidataCountry": "Q851",
+      "election": "Aucune élection nationale ; aucun parti politique n'est autorisé.",
+      "parties": []
+    },
+    "SGP": {
+      "wikidataCountry": "Q334",
+      "election": "Élection générale du 3 mai 2025",
+      "parties": [
+        {
+          "label": "People's Action Party",
+          "lang": "en",
+          "support": 0.6557,
+          "qid": "Q371395"
+        },
+        {
+          "label": "Workers' Party (Singapore)",
+          "lang": "en",
+          "support": 0.1499
+        },
+        {
+          "label": "Progress Singapore Party",
+          "lang": "en",
+          "support": 0.06,
+          "qid": "Q66120569"
+        }
+      ]
+    },
+    "SLB": {
+      "wikidataCountry": "Q685",
+      "election": "Élection générale du 17 avril 2024 (couplée aux élections provinciales), parts très approximatives dans un Parlement dominé par des indépendants",
+      "parties": [
+        {
+          "label": "OUR Party (Solomon Islands)",
+          "lang": "en",
+          "support": 0.2
+        },
+        {
+          "label": "Democratic Alliance Party",
+          "lang": "en",
+          "support": 0.1,
+          "qid": "Q24228933"
+        }
+      ]
+    },
+    "LKA": {
+      "wikidataCountry": "Q854",
+      "election": "Élection parlementaire du 14 novembre 2024",
+      "parties": [
+        {
+          "label": "National People's Power",
+          "lang": "en",
+          "support": 0.6156,
+          "qid": "Q104901719"
+        },
+        {
+          "label": "Samagi Jana Balawegaya",
+          "lang": "en",
+          "support": 0.177,
+          "qid": "Q85847146"
+        },
+        {
+          "label": "New Democratic Front",
+          "lang": "en",
+          "support": 0.031,
+          "qid": "Q7006885"
+        },
+        {
+          "label": "Ilankai Tamil Arasu Kachchi",
+          "lang": "en",
+          "support": 0.029,
+          "qid": "Q3522458"
+        }
+      ]
+    },
+    "SYR": {
+      "wikidataCountry": "Q858",
+      "election": "Aucune élection nationale n'a désigné le pouvoir exécutif ; l'Assemblée du peuple formée en octobre 2025 est partiellement élue par collèges indirects et partiellement nommée, sans compétition partisane.",
+      "parties": []
+    },
+    "THA": {
+      "wikidataCountry": "Q869",
+      "election": "Élection générale du 14 mai 2023 (vote de liste nationale) ; le Parti Avancer, vainqueur, a été dissous par la Cour constitutionnelle en août 2024 et a reformé le Parti du peuple",
+      "parties": [
+        {
+          "label": "People's Party (Thailand)",
+          "lang": "en",
+          "support": 0.3799
+        },
+        {
+          "label": "Pheu Thai Party",
+          "lang": "en",
+          "support": 0.2884,
+          "qid": "Q1142913"
+        },
+        {
+          "label": "United Thai Nation Party",
+          "lang": "en",
+          "support": 0.0472,
+          "qid": "Q115864566"
+        },
+        {
+          "label": "Bhumjaithai Party",
+          "lang": "en",
+          "support": 0.0368,
+          "qid": "Q855111"
+        },
+        {
+          "label": "Palang Pracharath Party",
+          "lang": "en",
+          "support": 0.03,
+          "qid": "Q55077745"
+        },
+        {
+          "label": "Democrat Party (Thailand)",
+          "lang": "en",
+          "support": 0.025,
+          "qid": "Q1186248"
+        }
+      ]
+    },
+    "TLS": {
+      "wikidataCountry": "Q574",
+      "election": "Élection au Parlement national du 21 mai 2023",
+      "parties": [
+        {
+          "label": "National Congress for Timorese Reconstruction",
+          "lang": "en",
+          "support": 0.402,
+          "qid": "Q1126036"
+        },
+        {
+          "label": "Revolutionary Front for an Independent East Timor",
+          "lang": "en",
+          "support": 0.231,
+          "qid": "Q935996"
+        },
+        {
+          "label": "KHUNTO",
+          "lang": "en",
+          "support": 0.086,
+          "qid": "Q1571660"
+        },
+        {
+          "label": "Democratic Party (Timor-Leste)",
+          "lang": "en",
+          "support": 0.08
+        }
+      ]
+    },
+    "TON": {
+      "wikidataCountry": "Q678",
+      "election": "Élection générale de novembre 2025 (date exacte incertaine) ; pas de système de partis structuré, essentiellement des indépendants parmi les 17 sièges du peuple, plus 9 sièges réservés aux nobles élus séparément",
+      "parties": []
+    },
+    "TUV": {
+      "wikidataCountry": "Q672",
+      "election": "Élection générale du 26 janvier 2024, sans aucun parti politique",
+      "parties": []
+    },
+    "ARE": {
+      "wikidataCountry": "Q878",
+      "election": "Élection partielle (moitié des sièges) du Conseil national fédéral du 6 octobre 2023, collège électoral restreint désigné par les émirats ; aucun parti politique n'est autorisé",
+      "parties": []
+    },
+    "VUT": {
+      "wikidataCountry": "Q686",
+      "election": "Élection générale anticipée du 16 janvier 2025 (52 sièges), parts de sièges faute de pourcentages de voix nationaux",
+      "parties": [
+        {
+          "label": "Leaders Party of Vanuatu",
+          "lang": "en",
+          "support": 0.173,
+          "qid": "Q24907935"
+        },
+        {
+          "label": "Vanua'aku Pati",
+          "lang": "en",
+          "support": 0.135,
+          "qid": "Q31373"
+        },
+        {
+          "label": "Union of Moderate Parties",
+          "lang": "en",
+          "support": 0.115,
+          "qid": "Q31360"
+        },
+        {
+          "label": "Iauko Group",
+          "lang": "en",
+          "support": 0.115,
+          "qid": "Q24661025"
+        },
+        {
+          "label": "Reunification Movement for Change",
+          "lang": "en",
+          "support": 0.096,
+          "qid": "Q1987899"
+        },
+        {
+          "label": "Graon mo Jastis Pati",
+          "lang": "en",
+          "support": 0.096,
+          "qid": "Q3366161"
+        }
+      ]
+    },
+    "VNM": {
+      "wikidataCountry": "Q881",
+      "election": "Élection à l'Assemblée nationale du 23 mai 2021",
+      "parties": [
+        {
+          "label": "Communist Party of Vietnam",
+          "lang": "en",
+          "support": 0.95,
+          "qid": "Q427325"
+        }
+      ]
+    },
+    "YEM": {
+      "wikidataCountry": "Q805",
+      "election": "Aucune élection depuis les législatives de 2003 ; le Conseil présidentiel de direction est issu d'un accord politique inter-yéménite d'avril 2022, non d'un scrutin.",
+      "parties": []
+    },
+    "PSE": {
+      "wikidataCountry": "Q219060",
+      "election": "Élection au Conseil législatif palestinien du 25 janvier 2006, seule élection législative jamais tenue (Gaza, remportée par le Hamas, échappe depuis 2007 au contrôle de l'Autorité décrite ici)",
+      "parties": [
+        {
+          "label": "Change and Reform (Hamas)",
+          "lang": "en",
+          "support": 0.4445
+        },
+        {
+          "label": "Fatah",
+          "lang": "en",
+          "support": 0.4143,
+          "qid": "Q178888"
+        },
+        {
+          "label": "Popular Front for the Liberation of Palestine",
+          "lang": "en",
+          "support": 0.0425,
+          "qid": "Q921699"
+        }
+      ]
     }
   }
 }

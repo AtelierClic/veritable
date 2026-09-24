@@ -1,0 +1,152 @@
+{
+  "nation": "EGY",
+  "actors": [
+    {
+      "id": "egy-moustafa-madbouli",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.egy-moustafa-madbouli.parody",
+        "fictional": "leader.egy-moustafa-madbouli.fictional"
+      },
+      "born": "1966-04-28",
+      "party": null,
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.4,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.2,
+        "corruption": 0.35,
+        "charisma": 0.35,
+        "competence": 0.55
+      },
+      "wikidata": "Q54901515",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Ancien urbaniste devenu premier ministre technocrate, chargé des grands projets d'infrastructure (nouvelle capitale administrative) ; traits économiques et d'autorité alignés sur la présidence, agressivité faible, rôle non diplomatique de premier plan."
+    },
+    {
+      "id": "egy-abdel-fattah-al-sissi",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.egy-abdel-fattah-al-sissi.parody",
+        "fictional": "leader.egy-abdel-fattah-al-sissi.fictional"
+      },
+      "born": "1954-11-19",
+      "party": null,
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.75,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.35,
+        "corruption": 0.45,
+        "charisma": 0.4,
+        "competence": 0.5
+      },
+      "wikidata": "Q307871",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Ancien chef d'état-major arrivé au pouvoir après le coup d'État de 2013, autorité forte (répression de l'opposition, état d'urgence prolongé) ; agressivité modérée, prudence militaire malgré les tensions régionales (Éthiopie, Gaza) ; corruption perçue via l'économie dirigée par l'armée."
+    },
+    {
+      "id": "egy-abdel-wahab-abdel-razek",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.egy-abdel-wahab-abdel-razek.parody",
+        "fictional": "leader.egy-abdel-wahab-abdel-razek.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "egy-mostakbal-watan",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.7,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.48,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "egy-parti-populaire-republicain-egypte",
+      "name": "party.egy-parti-populaire-republicain-egypte",
+      "wikidata": "Q15980860",
+      "ideologies": ["Q201712"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.047,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives des 10-11 et 24-25 novembre 2025 (premier et second tours, ballottages en décembre 2025) pour la Chambre des représentants (596 sièges dont 28 nommés par le président) : Mostakbal Watan (Avenir de la Nation) 231 sièges (38,8 %), Homat Al-Watan (Défenseurs de la Patrie) 91 (15,3 %), Front National 70 (11,7 %), Parti républicain du peuple 28 (4,7 %), reste indépendants et petites formations. Chambre installée le 11 janvier 2026 (nomination des 28 membres présidentiels), soit dix jours après la date de référence de la campagne ; parts calculées en sièges (le scrutin mixte listes/individuel ne produit pas de part de voix nationale unique). La Chambre sortante, élue en 2020, est en fin de mandat au 1er janvier 2026."
+      },
+      "leader": null
+    },
+    {
+      "id": "egy-mostakbal-watan",
+      "name": "party.egy-mostakbal-watan",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.7,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.388,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives des 10-11 et 24-25 novembre 2025 (premier et second tours, ballottages en décembre 2025) pour la Chambre des représentants (596 sièges dont 28 nommés par le président) : Mostakbal Watan (Avenir de la Nation) 231 sièges (38,8 %), Homat Al-Watan (Défenseurs de la Patrie) 91 (15,3 %), Front National 70 (11,7 %), Parti républicain du peuple 28 (4,7 %), reste indépendants et petites formations. Chambre installée le 11 janvier 2026 (nomination des 28 membres présidentiels), soit dix jours après la date de référence de la campagne ; parts calculées en sièges (le scrutin mixte listes/individuel ne produit pas de part de voix nationale unique). La Chambre sortante, élue en 2020, est en fin de mandat au 1er janvier 2026."
+      },
+      "leader": "egy-abdel-wahab-abdel-razek"
+    },
+    {
+      "id": "egy-homat-al-watan",
+      "name": "party.egy-homat-al-watan",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.7,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.153,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives des 10-11 et 24-25 novembre 2025 (premier et second tours, ballottages en décembre 2025) pour la Chambre des représentants (596 sièges dont 28 nommés par le président) : Mostakbal Watan (Avenir de la Nation) 231 sièges (38,8 %), Homat Al-Watan (Défenseurs de la Patrie) 91 (15,3 %), Front National 70 (11,7 %), Parti républicain du peuple 28 (4,7 %), reste indépendants et petites formations. Chambre installée le 11 janvier 2026 (nomination des 28 membres présidentiels), soit dix jours après la date de référence de la campagne ; parts calculées en sièges (le scrutin mixte listes/individuel ne produit pas de part de voix nationale unique). La Chambre sortante, élue en 2020, est en fin de mandat au 1er janvier 2026."
+      },
+      "leader": null
+    },
+    {
+      "id": "egy-national-front",
+      "name": "party.egy-national-front",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.6,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.117,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives des 10-11 et 24-25 novembre 2025 (premier et second tours, ballottages en décembre 2025) pour la Chambre des représentants (596 sièges dont 28 nommés par le président) : Mostakbal Watan (Avenir de la Nation) 231 sièges (38,8 %), Homat Al-Watan (Défenseurs de la Patrie) 91 (15,3 %), Front National 70 (11,7 %), Parti républicain du peuple 28 (4,7 %), reste indépendants et petites formations. Chambre installée le 11 janvier 2026 (nomination des 28 membres présidentiels), soit dix jours après la date de référence de la campagne ; parts calculées en sièges (le scrutin mixte listes/individuel ne produit pas de part de voix nationale unique). La Chambre sortante, élue en 2020, est en fin de mandat au 1er janvier 2026."
+      },
+      "leader": null
+    }
+  ]
+}

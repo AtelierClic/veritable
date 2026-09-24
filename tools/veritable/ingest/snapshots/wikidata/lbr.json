@@ -1,0 +1,63 @@
+{
+ "nation": "LBR",
+ "country": "Q1014",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q2630483",
+    "label": "Joseph Boakai",
+    "born": "1944-11-30",
+    "died": null,
+    "parties": [
+     "Q550159"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q2630483",
+    "label": "Joseph Boakai",
+    "born": "1944-11-30",
+    "died": null,
+    "parties": [
+     "Q550159"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1125914",
+   "label": "Congrès pour le changement démocratique",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q550159",
+   "label": "Parti de l'unité",
+   "ideologies": [
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q123631082",
+   "label": "Movement for Democracy and Reconstruction",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

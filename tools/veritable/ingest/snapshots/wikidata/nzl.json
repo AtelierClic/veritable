@@ -1,0 +1,167 @@
+{
+ "nation": "NZL",
+ "country": "Q664",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q74370310",
+    "label": "Christopher Luxon",
+    "born": "1970-07-19",
+    "died": null,
+    "parties": [
+     "Q204716"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q204716",
+   "label": "Parti national de Nouvelle-Zélande",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q74370310",
+    "label": "Christopher Luxon",
+    "born": "1970-07-19",
+    "died": null,
+    "parties": [
+     "Q204716"
+    ]
+   }
+  },
+  {
+   "qid": "Q1048192",
+   "label": "Parti travailliste néo-zélandais",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q3606816",
+    "label": "Jacinda Ardern",
+    "born": "1980-07-26",
+    "died": null,
+    "parties": [
+     "Q1048192"
+    ]
+   }
+  },
+  {
+   "qid": "Q1327761",
+   "label": "Parti vert d'Aotearoa Nouvelle-Zélande",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q288838",
+   "label": "ACT New Zealand",
+   "ideologies": [
+    {
+     "qid": "Q250598",
+     "label": "libertarianisme de droite"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    },
+    {
+     "qid": "Q853562",
+     "label": "libertarianisme conservateur"
+    }
+   ],
+   "leader": {
+    "qid": "Q17055796",
+    "label": "David Seymour",
+    "born": "1983-06-24",
+    "died": null,
+    "parties": [
+     "Q288838"
+    ]
+   }
+  },
+  {
+   "qid": "Q180059",
+   "label": "New Zealand First",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q179073",
+     "label": "protectionnisme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1396178",
+    "label": "Winston Peters",
+    "born": "1945-04-11",
+    "died": null,
+    "parties": [
+     "Q180059"
+    ]
+   }
+  },
+  {
+   "qid": "Q1375170",
+   "label": "Parti māori",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q920486",
+     "label": "droit des peuples autochtones"
+    }
+   ],
+   "leader": {
+    "qid": "Q99872114",
+    "label": "Rawiri Waititi",
+    "born": "1980-10-17",
+    "died": null,
+    "parties": [
+     "Q1375170"
+    ]
+   }
+  }
+ ]
+}

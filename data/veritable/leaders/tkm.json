@@ -1,0 +1,164 @@
+{
+  "nation": "TKM",
+  "actors": [
+    {
+      "id": "tkm-serdar-berdimuhamedow",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.tkm-serdar-berdimuhamedow.parody",
+        "fictional": "leader.tkm-serdar-berdimuhamedow.fictional"
+      },
+      "born": "1981-09-22",
+      "party": "tkm-parti-democratique-du-turkmenistan",
+      "traits": {
+        "economic": -0.05,
+        "authority": 0.325,
+        "sovereignty": 0.425,
+        "aggressiveness": 0.45,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q51874548",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tkm-ata-serdarow",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tkm-ata-serdarow.parody",
+        "fictional": "leader.tkm-ata-serdarow.fictional"
+      },
+      "born": "1964-01-01",
+      "party": "tkm-parti-democratique-du-turkmenistan",
+      "traits": {
+        "economic": -0.05,
+        "authority": 0.325,
+        "sovereignty": 0.425,
+        "aggressiveness": 0.45,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4417193",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tkm-recep-bazarov",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tkm-recep-bazarov.parody",
+        "fictional": "leader.tkm-recep-bazarov.fictional"
+      },
+      "born": "1958-01-01",
+      "party": "tkm-parti-agraire-du-turkmenistan",
+      "traits": {
+        "economic": -0.25,
+        "authority": 0.35,
+        "sovereignty": 0.45,
+        "aggressiveness": 0.46,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4075203",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tkm-ovezmammed-mammedov",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tkm-ovezmammed-mammedov.parody",
+        "fictional": "leader.tkm-ovezmammed-mammedov.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tkm-parti-des-industriels-et-des-entrepreneurs",
+      "traits": {
+        "economic": -0.4,
+        "authority": 0.5,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.48000000000000004,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q16731898",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "tkm-parti-democratique-du-turkmenistan",
+      "name": "party.tkm-parti-democratique-du-turkmenistan",
+      "wikidata": "Q1152752",
+      "ideologies": [
+        "Q128135",
+        "Q1414298",
+        "Q216920",
+        "Q322294",
+        "Q478004",
+        "Q6229",
+        "Q6235"
+      ],
+      "ideology": {
+        "economic": -0.05,
+        "authority": 0.325,
+        "sovereignty": 0.425
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 7)",
+      "support": 0.52,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 mars 2023 (Mejlis, Commission électorale centrale)"
+      },
+      "leader": "tkm-ata-serdarow"
+    },
+    {
+      "id": "tkm-parti-agraire-du-turkmenistan",
+      "name": "party.tkm-parti-agraire-du-turkmenistan",
+      "wikidata": "Q56305135",
+      "ideologies": ["Q322294", "Q492050"],
+      "ideology": {
+        "economic": -0.25,
+        "authority": 0.35,
+        "sovereignty": 0.45
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.19,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 mars 2023 (Mejlis, Commission électorale centrale)"
+      },
+      "leader": "tkm-recep-bazarov"
+    },
+    {
+      "id": "tkm-parti-des-industriels-et-des-entrepreneurs",
+      "name": "party.tkm-parti-des-industriels-et-des-entrepreneurs",
+      "wikidata": "Q13628510",
+      "ideologies": ["Q202398", "Q322294"],
+      "ideology": {
+        "economic": -0.4,
+        "authority": 0.5,
+        "sovereignty": 0.4
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.14,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 26 mars 2023 (Mejlis, Commission électorale centrale)"
+      },
+      "leader": "tkm-ovezmammed-mammedov"
+    }
+  ]
+}

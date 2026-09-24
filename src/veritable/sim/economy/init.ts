@@ -150,7 +150,7 @@ export function initEconomy(
   nations: readonly NationData[],
   row: RowData,
 ): EconomyState {
-  return {
+  const state: EconomyState = {
     market: {
       prices: perGood((g) => ctx.good(g).basePrice),
       importPrices: perGood((g) => ctx.good(g).basePrice),
@@ -163,6 +163,25 @@ export function initEconomy(
     },
     nations: Object.fromEntries(nations.map((n) => [n.id, initNation(ctx, n)])),
   };
+  // Without a rest of the world (J6) nothing closes the world balance: the
+  // demand of every nation is scaled, good by good, to the world production,
+  // so that statistical gaps between the series do not move the prices.
+  if (row.gdp.value === 0) {
+    for (const good of ctx.goods) {
+      let produced = 0;
+      let consumed = 0;
+      for (const n of Object.values(state.nations)) {
+        produced += n.production[good.id];
+        consumed += n.consumption[good.id];
+      }
+      if (produced <= 0 || consumed <= 0) continue;
+      const factor = produced / consumed;
+      for (const n of Object.values(state.nations)) {
+        n.consumption[good.id] *= factor;
+      }
+    }
+  }
+  return state;
 }
 
 export function initPolitics(

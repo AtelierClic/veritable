@@ -1,0 +1,77 @@
+{
+ "nation": "BRB",
+ "country": "Q244",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6827147",
+    "label": "Mia Mottley",
+    "born": "1965-10-01",
+    "died": null,
+    "parties": [
+     "Q740420"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q9333540",
+    "label": "Sandra Mason",
+    "born": "1949-01-17",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q740420",
+   "label": "Parti travailliste de la Barbade",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q6827147",
+    "label": "Mia Mottley",
+    "born": "1965-10-01",
+    "died": null,
+    "parties": [
+     "Q740420"
+    ]
+   }
+  },
+  {
+   "qid": "Q956182",
+   "label": "Parti travailliste démocrate",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q110291649",
+    "label": "Verla De Peiza",
+    "born": "1971-10-07",
+    "died": null,
+    "parties": [
+     "Q956182"
+    ]
+   }
+  }
+ ]
+}

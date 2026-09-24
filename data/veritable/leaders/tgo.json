@@ -1,0 +1,72 @@
+{
+  "nation": "TGO",
+  "actors": [
+    {
+      "id": "tgo-faure-essozimna-gnassingbe",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.tgo-faure-essozimna-gnassingbe.parody",
+        "fictional": "leader.tgo-faure-essozimna-gnassingbe.fictional"
+      },
+      "born": "1966-06-06",
+      "party": "tgo-union-pour-la-republique",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.7,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.48,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4414",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tgo-jean-lucien-savi-de-tove",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.tgo-jean-lucien-savi-de-tove.parody",
+        "fictional": "leader.tgo-jean-lucien-savi-de-tove.fictional"
+      },
+      "born": "1939-05-07",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q6169516",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "tgo-union-pour-la-republique",
+      "name": "party.tgo-union-pour-la-republique",
+      "wikidata": "Q22080618",
+      "ideologies": ["Q3874021", "Q6229"],
+      "ideology": {
+        "economic": 0.15,
+        "authority": 0.7,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.956,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 29 avril 2024, 113 sièges ; parts de sièges utilisées (décompte national des voix par parti non clairement publié). Quatre petits partis d'opposition ou indépendants se partagent les 5 sièges restants, chacun sous le seuil de 2%."
+      },
+      "leader": "tgo-faure-essozimna-gnassingbe"
+    }
+  ]
+}

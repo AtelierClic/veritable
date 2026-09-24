@@ -1,0 +1,29 @@
+{
+  "nation": "SAU",
+  "actors": [
+    {
+      "id": "sau-salmane-ben-abdelaziz-al-saoud",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.sau-salmane-ben-abdelaziz-al-saoud.parody",
+        "fictional": "leader.sau-salmane-ben-abdelaziz-al-saoud.fictional"
+      },
+      "born": "1935-12-31",
+      "party": null,
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.85,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.3,
+        "corruption": 0.4,
+        "charisma": 0.4,
+        "competence": 0.4
+      },
+      "wikidata": "Q367825",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Monarque absolu, autorité très forte par construction du régime ; âgé, gouvernance largement déléguée à son fils le prince héritier ; agressivité et charisme modérés, rôle aujourd'hui davantage symbolique que directement décisionnel."
+    }
+  ],
+  "parties": []
+}

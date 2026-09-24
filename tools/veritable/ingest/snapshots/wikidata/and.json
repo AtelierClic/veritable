@@ -1,0 +1,83 @@
+{
+ "nation": "AND",
+ "country": "Q228",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q21001195",
+    "label": "Xavier Espot Zamora",
+    "born": "1979-10-30",
+    "died": null,
+    "parties": [
+     "Q24863"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q93244592",
+    "label": "Josep-Lluís Serrano Pentinat",
+    "born": "1977-03-19",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q116153001",
+   "label": "Concorde",
+   "ideologies": [
+    {
+     "qid": "Q1377153",
+     "label": "européisme"
+    },
+    {
+     "qid": "Q219416",
+     "label": "durabilité"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q116480325",
+    "label": "Olalla Losada Seguin",
+    "born": null,
+    "died": null,
+    "parties": [
+     "Q116153001"
+    ]
+   }
+  },
+  {
+   "qid": "Q116465504",
+   "label": "Andorre en avant",
+   "ideologies": [
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q116465502",
+    "label": "Carine Montaner Raynaud",
+    "born": "1978-06-06",
+    "died": null,
+    "parties": [
+     "Q116465504"
+    ]
+   }
+  }
+ ]
+}

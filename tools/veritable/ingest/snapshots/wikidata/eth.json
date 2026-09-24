@@ -1,0 +1,60 @@
+{
+ "nation": "ETH",
+ "country": "Q115",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q50365049",
+    "label": "Abiy Ahmed",
+    "born": "1976-08-15",
+    "died": null,
+    "parties": [
+     "Q1145280",
+     "Q1186219",
+     "Q78108696"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q124831090",
+    "label": "Taye Atskeselassie",
+    "born": "1956-01-13",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q78108696",
+   "label": "Parti de la prospérité",
+   "ideologies": [
+    {
+     "qid": "Q13143039",
+     "label": "Nationalisme éthiopien"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q104830589",
+   "label": "National Movement of Amhara",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

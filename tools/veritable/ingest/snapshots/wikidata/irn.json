@@ -1,0 +1,34 @@
+{
+ "nation": "IRN",
+ "country": "Q794",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5933752",
+    "label": "Masoud Pezeshkian",
+    "born": "1954-09-29",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57336",
+    "label": "Ali Khamenei",
+    "born": "1939-04-19",
+    "died": "2026-02-28",
+    "parties": [
+     "Q1817687"
+    ]
+   }
+  }
+ ],
+ "parties": []
+}

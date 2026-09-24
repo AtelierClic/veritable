@@ -1,0 +1,282 @@
+{
+  "nation": "NAM",
+  "actors": [
+    {
+      "id": "nam-elijah-ngurare",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.nam-elijah-ngurare.parody",
+        "fictional": "leader.nam-elijah-ngurare.fictional"
+      },
+      "born": "1970-10-28",
+      "party": "nam-organisation-du-peuple-du-sud-ouest-africain",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.2,
+        "sovereignty": 0.067,
+        "aggressiveness": 0.27340000000000003,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5360975",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "nam-netumbo-nandi-ndaitwah",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.nam-netumbo-nandi-ndaitwah.parody",
+        "fictional": "leader.nam-netumbo-nandi-ndaitwah.fictional"
+      },
+      "born": "1952-10-29",
+      "party": "nam-organisation-du-peuple-du-sud-ouest-africain",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.2,
+        "sovereignty": 0.067,
+        "aggressiveness": 0.27340000000000003,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q527020",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "nam-panduleni-itula",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nam-panduleni-itula.parody",
+        "fictional": "leader.nam-panduleni-itula.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "nam-patriotes-independants-pour-le-changement",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.2,
+        "sovereignty": 0,
+        "aggressiveness": 0.26,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nam-job-amupanda",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nam-job-amupanda.parody",
+        "fictional": "leader.nam-job-amupanda.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "nam-repositionnement-affirme",
+      "traits": {
+        "economic": -0.9,
+        "authority": 0.7,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.49999999999999994,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nam-bernadus-swartbooi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nam-bernadus-swartbooi.parody",
+        "fictional": "leader.nam-bernadus-swartbooi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "nam-mouvement-populaire-des-sans-terre",
+      "traits": {
+        "economic": -0.533,
+        "authority": -0.2,
+        "sovereignty": -0.067,
+        "aggressiveness": 0.2466,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nam-mchenry-venaani",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nam-mchenry-venaani.parody",
+        "fictional": "leader.nam-mchenry-venaani.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "nam-popular-democratic-movement",
+      "traits": {
+        "economic": 0.2,
+        "authority": -0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.25999999999999995,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nam-hifikepunye-pohamba",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nam-hifikepunye-pohamba.parody",
+        "fictional": "leader.nam-hifikepunye-pohamba.fictional"
+      },
+      "born": "1935-08-18",
+      "party": "nam-organisation-du-peuple-du-sud-ouest-africain",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.2,
+        "sovereignty": 0.067,
+        "aggressiveness": 0.27340000000000003,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57469",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "nam-organisation-du-peuple-du-sud-ouest-africain",
+      "name": "party.nam-organisation-du-peuple-du-sud-ouest-africain",
+      "wikidata": "Q467711",
+      "ideologies": ["Q1144178", "Q1202972", "Q121254", "Q189280", "Q3874021"],
+      "ideology": {
+        "economic": -0.6,
+        "authority": -0.2,
+        "sovereignty": 0.067
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 5)",
+      "support": 0.5337,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 27 novembre 2024 (Assemblée nationale, 96 sièges élus, concomitantes à la présidentielle)."
+      },
+      "leader": "nam-hifikepunye-pohamba"
+    },
+    {
+      "id": "nam-patriotes-independants-pour-le-changement",
+      "name": "party.nam-patriotes-independants-pour-le-changement",
+      "wikidata": "Q98081326",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.2,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.202,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 27 novembre 2024 (Assemblée nationale, 96 sièges élus, concomitantes à la présidentielle)."
+      },
+      "leader": "nam-panduleni-itula"
+    },
+    {
+      "id": "nam-repositionnement-affirme",
+      "name": "party.nam-repositionnement-affirme",
+      "wikidata": "Q19891949",
+      "ideologies": ["Q19894672", "Q208128", "Q211930", "Q282739"],
+      "ideology": {
+        "economic": -0.9,
+        "authority": 0.7,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 4)",
+      "support": 0.0661,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 27 novembre 2024 (Assemblée nationale, 96 sièges élus, concomitantes à la présidentielle)."
+      },
+      "leader": "nam-job-amupanda"
+    },
+    {
+      "id": "nam-mouvement-populaire-des-sans-terre",
+      "name": "party.nam-mouvement-populaire-des-sans-terre",
+      "wikidata": "Q60518792",
+      "ideologies": ["Q11900614", "Q121254", "Q208128", "Q2855609", "Q681541"],
+      "ideology": {
+        "economic": -0.533,
+        "authority": -0.2,
+        "sovereignty": -0.067
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 5)",
+      "support": 0.0521,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 27 novembre 2024 (Assemblée nationale, 96 sièges élus, concomitantes à la présidentielle)."
+      },
+      "leader": "nam-bernadus-swartbooi"
+    },
+    {
+      "id": "nam-front-democratique-uni",
+      "name": "party.nam-front-democratique-uni",
+      "wikidata": "Q488574",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0154,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 27 novembre 2024 (Assemblée nationale, 96 sièges élus, concomitantes à la présidentielle)."
+      },
+      "leader": null
+    },
+    {
+      "id": "nam-popular-democratic-movement",
+      "name": "party.nam-popular-democratic-movement",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": -0.1,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0548,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 27 novembre 2024 (Assemblée nationale, 96 sièges élus, concomitantes à la présidentielle)."
+      },
+      "leader": "nam-mchenry-venaani"
+    }
+  ]
+}

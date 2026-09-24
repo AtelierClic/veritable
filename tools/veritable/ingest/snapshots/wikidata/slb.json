@@ -1,0 +1,37 @@
+{
+ "nation": "SLB",
+ "country": "Q685",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6180897",
+    "label": "Jeremiah Manele",
+    "born": "1968-04-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q24228933",
+   "label": "Alliance démocratique",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

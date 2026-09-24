@@ -1,0 +1,265 @@
+{
+ "nation": "GRC",
+ "country": "Q41",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q552751",
+    "label": "Kyriákos Mitsotákis",
+    "born": "1968-03-04",
+    "died": null,
+    "parties": [
+     "Q223153"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q20995518",
+    "label": "Konstantínos Tasoúlas",
+    "born": "1959-07-17",
+    "died": null,
+    "parties": [
+     "Q223153"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q223153",
+   "label": "Nouvelle Démocratie",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q552751",
+    "label": "Kyriákos Mitsotákis",
+    "born": "1968-03-04",
+    "died": null,
+    "parties": [
+     "Q223153"
+    ]
+   }
+  },
+  {
+   "qid": "Q222897",
+   "label": "SYRIZA",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q899743",
+    "label": "Lacune",
+    "born": null,
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q46505372",
+   "label": "Mouvement pour le changement",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q17116940",
+    "label": "Níkos Androulákis",
+    "born": "1979-02-07",
+    "died": null,
+    "parties": [
+     "Q203934",
+     "Q46505372"
+    ]
+   }
+  },
+  {
+   "qid": "Q192406",
+   "label": "Parti communiste de Grèce",
+   "ideologies": [
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q1337795",
+     "label": "internationalisme"
+    },
+    {
+     "qid": "Q193852",
+     "label": "centralisme démocratique"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q10920455",
+    "label": "Dimitris Koutsoumbas",
+    "born": "1955-08-10",
+    "died": null,
+    "parties": [
+     "Q192406"
+    ]
+   }
+  },
+  {
+   "qid": "Q119458066",
+   "label": "Spartiates",
+   "ideologies": [
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q3555771",
+     "label": "nationalisme grec"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q38352698",
+     "label": "ultranationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q119949250",
+    "label": "Vassílis Stíngas",
+    "born": "1964-01-13",
+    "died": null,
+    "parties": [
+     "Q119458066",
+     "Q2064301",
+     "Q226085"
+    ]
+   }
+  },
+  {
+   "qid": "Q50736163",
+   "label": "Solution grecque",
+   "ideologies": [
+    {
+     "qid": "Q130472842",
+     "label": "antiglobalisme de droite"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q24905525",
+     "label": "nationalisme chrétien"
+    },
+    {
+     "qid": "Q3555771",
+     "label": "nationalisme grec"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q6452486",
+    "label": "Kyriákos Velópoulos",
+    "born": "1965-10-24",
+    "died": null,
+    "parties": [
+     "Q50736163"
+    ]
+   }
+  },
+  {
+   "qid": "Q24204945",
+   "label": "Trajet de liberté",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q912036",
+     "label": "souverainisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

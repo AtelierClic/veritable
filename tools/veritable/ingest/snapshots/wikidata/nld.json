@@ -1,0 +1,236 @@
+{
+ "nation": "NLD",
+ "country": "Q55",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q22338116",
+    "label": "Dick Schoof",
+    "born": "1957-03-08",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q154952",
+    "label": "Willem-Alexander des Pays-Bas",
+    "born": "1967-04-27",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q747910",
+   "label": "Démocrates 66",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q28860866",
+    "label": "Rob Jetten",
+    "born": "1987-03-25",
+    "died": null,
+    "parties": [
+     "Q747910"
+    ]
+   }
+  },
+  {
+   "qid": "Q332739",
+   "label": "Parti pour la liberté",
+   "ideologies": [
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q105338",
+    "label": "Geert Wilders",
+    "born": "1963-09-06",
+    "died": null,
+    "parties": [
+     "Q332739"
+    ]
+   }
+  },
+  {
+   "qid": "Q239333",
+   "label": "Parti populaire pour la liberté et la démocratie",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q704120",
+    "label": "Onno Hoes",
+    "born": "1961-06-05",
+    "died": null,
+    "parties": [
+     "Q239333"
+    ]
+   }
+  },
+  {
+   "qid": "Q138640099",
+   "label": "GROENLINKS-PvdA-Progressief Schiedam",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q273749",
+   "label": "Appel chrétien-démocrate",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q466938",
+     "label": "principe de subsidiarité"
+    }
+   ],
+   "leader": {
+    "qid": "Q2703673",
+    "label": "Hans Huibers",
+    "born": "1961-04-28",
+    "died": null,
+    "parties": [
+     "Q273749"
+    ]
+   }
+  },
+  {
+   "qid": "Q104244010",
+   "label": "JA21",
+   "ideologies": [
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2350960",
+    "label": "Joost Eerdmans",
+    "born": "1971-01-09",
+    "died": null,
+    "parties": [
+     "Q104244010",
+     "Q1361398",
+     "Q2171254",
+     "Q2300506"
+    ]
+   }
+  },
+  {
+   "qid": "Q28163962",
+   "label": "Forum pour la démocratie",
+   "ideologies": [
+    {
+     "qid": "Q171174",
+     "label": "démocratie directe"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q4774354",
+     "label": "anti-écologisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4462875",
+    "label": "Thierry Baudet",
+    "born": "1983-01-28",
+    "died": null,
+    "parties": [
+     "Q28163962"
+    ]
+   }
+  },
+  {
+   "qid": "Q101083924",
+   "label": "BoerBurgerBeweging",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q122169435",
+    "label": "Henk Vermeer",
+    "born": "1966-08-21",
+    "died": null,
+    "parties": [
+     "Q101083924",
+     "Q110860246"
+    ]
+   }
+  }
+ ]
+}

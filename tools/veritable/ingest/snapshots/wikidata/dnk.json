@@ -1,0 +1,257 @@
+{
+ "nation": "DNK",
+ "country": "Q35",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5015",
+    "label": "Mette Frederiksen",
+    "born": "1977-11-19",
+    "died": null,
+    "parties": [
+     "Q212101"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1004037",
+    "label": "Frédéric X de Danemark",
+    "born": "1968-05-26",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q212101",
+   "label": "Sociaux-démocrates",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q5015",
+    "label": "Mette Frederiksen",
+    "born": "1977-11-19",
+    "died": null,
+    "parties": [
+     "Q212101"
+    ]
+   }
+  },
+  {
+   "qid": "Q217321",
+   "label": "Venstre",
+   "ideologies": [
+    {
+     "qid": "Q3282509",
+     "label": "Nordic agrarian parties"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    }
+   ],
+   "leader": {
+    "qid": "Q3080572",
+    "label": "Troels Lund Poulsen",
+    "born": "1976-03-30",
+    "died": null,
+    "parties": [
+     "Q217321"
+    ]
+   }
+  },
+  {
+   "qid": "Q107110050",
+   "label": "Modérés",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q182397",
+    "label": "Lars Løkke Rasmussen",
+    "born": "1964-05-15",
+    "died": null,
+    "parties": [
+     "Q107110050"
+    ]
+   }
+  },
+  {
+   "qid": "Q615603",
+   "label": "Parti populaire socialiste",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q268919",
+     "label": "socialisme de marché"
+    },
+    {
+     "qid": "Q7229732",
+     "label": "Popular socialism (Nordic countries)"
+    }
+   ],
+   "leader": {
+    "qid": "Q531614",
+    "label": "Pia Olsen Dyhr",
+    "born": "1971-11-30",
+    "died": null,
+    "parties": [
+     "Q615603"
+    ]
+   }
+  },
+  {
+   "qid": "Q112677506",
+   "label": "Démocrates danois",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q188961",
+     "label": "décentralisation"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q660018",
+     "label": "national-libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q3121413",
+    "label": "Inger Støjberg",
+    "born": "1973-03-16",
+    "died": null,
+    "parties": [
+     "Q112677506"
+    ]
+   }
+  },
+  {
+   "qid": "Q478180",
+   "label": "Alliance libérale",
+   "ideologies": [
+    {
+     "qid": "Q178598",
+     "label": "libertarianisme"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    }
+   ],
+   "leader": {
+    "qid": "Q21208022",
+    "label": "Alex Vanopslagh",
+    "born": "1991-10-17",
+    "died": null,
+    "parties": [
+     "Q478180"
+    ]
+   }
+  },
+  {
+   "qid": "Q902619",
+   "label": "Parti populaire conservateur",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q28859676",
+     "label": "conservatisme social"
+    }
+   ],
+   "leader": {
+    "qid": "Q64439195",
+    "label": "Mona Juul",
+    "born": "1967-09-20",
+    "died": null,
+    "parties": [
+     "Q902619"
+    ]
+   }
+  },
+  {
+   "qid": "Q25785",
+   "label": "Liste de l'unité",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q275595",
+     "label": "écosocialisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q64441614",
+    "label": "Mai Villadsen",
+    "born": "1991-12-26",
+    "died": null,
+    "parties": [
+     "Q25785"
+    ]
+   }
+  }
+ ]
+}

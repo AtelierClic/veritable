@@ -1,0 +1,56 @@
+{
+ "nation": "SVN",
+ "country": "Q215",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q18645045",
+    "label": "Robert Golob",
+    "born": "1967-01-23",
+    "died": null,
+    "parties": [
+     "Q106704283"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12797332",
+    "label": "Nataša Pirc Musar",
+    "born": "1968-05-09",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q30668436",
+   "label": "La Gauche",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q275595",
+     "label": "écosocialisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q65899442",
+    "label": "Asta Vrečko",
+    "born": "1984-08-13",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

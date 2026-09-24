@@ -1,0 +1,30 @@
+{
+ "nation": "MLI",
+ "country": "Q912",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q113577661",
+    "label": "Abdoulaye Maïga",
+    "born": "1981-05-12",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q98497406",
+    "label": "Assimi Goïta",
+    "born": "1983-11-09",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

@@ -1,0 +1,64 @@
+{
+ "nation": "MAR",
+ "country": "Q1028",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q1638114",
+    "label": "Aziz Akhannouch",
+    "born": "1961-08-16",
+    "died": null,
+    "parties": [
+     "Q1630297"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57553",
+    "label": "Mohammed VI",
+    "born": "1963-08-21",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q477273",
+   "label": "Parti de l'Istiqlal",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q216669",
+     "label": "monarchisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q562410",
+    "label": "Nizar Baraka",
+    "born": "1964-02-06",
+    "died": null,
+    "parties": [
+     "Q477273"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,156 @@
+{
+  "nation": "UGA",
+  "actors": [
+    {
+      "id": "uga-robinah-nabbanja",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.uga-robinah-nabbanja.parody",
+        "fictional": "leader.uga-robinah-nabbanja.fictional"
+      },
+      "born": "1969-12-17",
+      "party": "uga-mouvement-de-resistance-nationale",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q62481397",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "uga-yoweri-museveni",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.uga-yoweri-museveni.parody",
+        "fictional": "leader.uga-yoweri-museveni.fictional"
+      },
+      "born": "1944-09-15",
+      "party": "uga-mouvement-de-resistance-nationale",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57274",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "uga-bobi-wine",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.uga-bobi-wine.parody",
+        "fictional": "leader.uga-bobi-wine.fictional"
+      },
+      "born": "1982-02-12",
+      "party": "uga-plateforme-de-l-unite-nationale",
+      "traits": {
+        "economic": -0.15,
+        "authority": -0.5,
+        "sovereignty": -0.45,
+        "aggressiveness": 0.10999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4935806",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "uga-patrick-oboi-amuriat",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.uga-patrick-oboi-amuriat.parody",
+        "fictional": "leader.uga-patrick-oboi-amuriat.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "uga-forum-pour-le-changement-democratique",
+      "traits": {
+        "economic": 0.25,
+        "authority": -0.1,
+        "sovereignty": -0.05,
+        "aggressiveness": 0.26999999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q105760454",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "uga-mouvement-de-resistance-nationale",
+      "name": "party.uga-mouvement-de-resistance-nationale",
+      "wikidata": "Q382674",
+      "ideologies": ["Q162719", "Q7169", "Q7877691"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 3)",
+      "support": 0.59,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 14 janvier 2021 (Parlement, concomitantes à la présidentielle)."
+      },
+      "leader": "uga-yoweri-museveni"
+    },
+    {
+      "id": "uga-plateforme-de-l-unite-nationale",
+      "name": "party.uga-plateforme-de-l-unite-nationale",
+      "wikidata": "Q97627856",
+      "ideologies": ["Q1194747", "Q201712", "Q821102"],
+      "ideology": {
+        "economic": -0.15,
+        "authority": -0.5,
+        "sovereignty": -0.45
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.22,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 14 janvier 2021 (Parlement, concomitantes à la présidentielle)."
+      },
+      "leader": "uga-bobi-wine"
+    },
+    {
+      "id": "uga-forum-pour-le-changement-democratique",
+      "name": "party.uga-forum-pour-le-changement-democratique",
+      "wikidata": "Q5473101",
+      "ideologies": ["Q1043096", "Q216920"],
+      "ideology": {
+        "economic": 0.25,
+        "authority": -0.1,
+        "sovereignty": -0.05
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.05,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 14 janvier 2021 (Parlement, concomitantes à la présidentielle)."
+      },
+      "leader": "uga-patrick-oboi-amuriat"
+    }
+  ]
+}

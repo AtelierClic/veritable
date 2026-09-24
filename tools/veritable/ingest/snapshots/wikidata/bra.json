@@ -1,0 +1,129 @@
+{
+ "nation": "BRA",
+ "country": "Q155",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q37181",
+    "label": "Luiz Inácio Lula da Silva",
+    "born": "1945-10-27",
+    "died": null,
+    "parties": [
+     "Q657089"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q37181",
+    "label": "Luiz Inácio Lula da Silva",
+    "born": "1945-10-27",
+    "died": null,
+    "parties": [
+     "Q657089"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2731720",
+   "label": "Parti libéral",
+   "ideologies": [
+    {
+     "qid": "Q106571755",
+     "label": "Bolsonarisme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q108837483",
+   "label": "Union Brésil",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q2917241",
+    "label": "Luciano Bivar",
+    "born": "1944-11-29",
+    "died": null,
+    "parties": [
+     "Q2366265"
+    ]
+   }
+  },
+  {
+   "qid": "Q732852",
+   "label": "Progressistas",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q15985219",
+    "label": "Ciro Nogueira",
+    "born": "1968-11-21",
+    "died": null,
+    "parties": [
+     "Q732852"
+    ]
+   }
+  },
+  {
+   "qid": "Q2054750",
+   "label": "Partido Social Democrático",
+   "ideologies": [
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1322751",
+   "label": "Mouvement démocratique brésilien",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q463533",
+    "label": "Michel Temer",
+    "born": "1940-09-23",
+    "died": null,
+    "parties": [
+     "Q1322751"
+    ]
+   }
+  }
+ ]
+}

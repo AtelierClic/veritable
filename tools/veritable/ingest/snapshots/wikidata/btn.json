@@ -1,0 +1,66 @@
+{
+ "nation": "BTN",
+ "country": "Q917",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q7849613",
+    "label": "Tshering Tobgay",
+    "born": "1965-09-19",
+    "died": null,
+    "parties": [
+     "Q2578342"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57376",
+    "label": "Jigme Khesar Namgyel Wangchuck",
+    "born": "1980-02-21",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2578342",
+   "label": "Parti démocratique populaire",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q216669",
+     "label": "monarchisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q7849613",
+    "label": "Tshering Tobgay",
+    "born": "1965-09-19",
+    "died": null,
+    "parties": [
+     "Q2578342"
+    ]
+   }
+  },
+  {
+   "qid": "Q116457147",
+   "label": "Parti tendrel du Bhoutan",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,91 @@
+{
+  "nation": "TZA",
+  "actors": [
+    {
+      "id": "tza-samia-suluhu-hassan",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.tza-samia-suluhu-hassan.parody",
+        "fictional": "leader.tza-samia-suluhu-hassan.fictional"
+      },
+      "born": "1960-01-27",
+      "party": "tza-parti-de-la-revolution",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.19999999999999998,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q16193885",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tza-jakaya-kikwete",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tza-jakaya-kikwete.parody",
+        "fictional": "leader.tza-jakaya-kikwete.fictional"
+      },
+      "born": "1950-10-07",
+      "party": "tza-parti-de-la-revolution",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.19999999999999998,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57488",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "tza-parti-de-la-revolution",
+      "name": "party.tza-parti-de-la-revolution",
+      "wikidata": "Q652091",
+      "ideologies": ["Q121254", "Q189280", "Q2166287", "Q282739", "Q590478"],
+      "ideology": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 5)",
+      "support": 0.97,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 29 octobre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; CCM a obtenu 383 sièges sur environ 393 élus, les deux principaux partis d'opposition ayant été empêchés de concourir."
+      },
+      "leader": "tza-jakaya-kikwete"
+    },
+    {
+      "id": "tza-alliance-pour-le-changement-et-la-transparence",
+      "name": "party.tza-alliance-pour-le-changement-et-la-transparence",
+      "wikidata": "Q18161932",
+      "ideologies": ["Q189280"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.02,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 29 octobre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; CCM a obtenu 383 sièges sur environ 393 élus, les deux principaux partis d'opposition ayant été empêchés de concourir."
+      },
+      "leader": null
+    }
+  ]
+}

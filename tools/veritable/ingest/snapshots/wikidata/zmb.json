@@ -1,0 +1,61 @@
+{
+ "nation": "ZMB",
+ "country": "Q953",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q717185",
+    "label": "Hakainde Hichilema",
+    "born": "1962-06-04",
+    "died": null,
+    "parties": [
+     "Q1781632"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1781632",
+   "label": "Parti unifié pour le développement national",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q717185",
+    "label": "Hakainde Hichilema",
+    "born": "1962-06-04",
+    "died": null,
+    "parties": [
+     "Q1781632"
+    ]
+   }
+  },
+  {
+   "qid": "Q2058159",
+   "label": "Front patriotique",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

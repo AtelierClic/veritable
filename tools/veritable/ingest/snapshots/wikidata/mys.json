@@ -1,0 +1,66 @@
+{
+ "nation": "MYS",
+ "country": "Q833",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q299574",
+    "label": "Anwar Ibrahim",
+    "born": "1947-08-10",
+    "died": null,
+    "parties": [
+     "Q1756601"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q2657043",
+    "label": "Ibrahim Ismail de Johor",
+    "born": "1958-11-22",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q21004257",
+   "label": "Pakatan Harapan",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q299574",
+    "label": "Anwar Ibrahim",
+    "born": "1947-08-10",
+    "died": null,
+    "parties": [
+     "Q1756601"
+    ]
+   }
+  },
+  {
+   "qid": "Q86890510",
+   "label": "Perikatan Nasional",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

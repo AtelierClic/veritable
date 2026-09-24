@@ -1,0 +1,132 @@
+{
+ "nation": "NAM",
+ "country": "Q1030",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5360975",
+    "label": "Elijah Ngurare",
+    "born": "1970-10-28",
+    "died": null,
+    "parties": [
+     "Q467711"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q527020",
+    "label": "Netumbo Nandi-Ndaitwah",
+    "born": "1952-10-29",
+    "died": null,
+    "parties": [
+     "Q467711"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q467711",
+   "label": "Organisation du peuple du Sud-Ouest africain",
+   "ideologies": [
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q3874021",
+     "label": "nationalisme africain"
+    }
+   ],
+   "leader": {
+    "qid": "Q57469",
+    "label": "Hifikepunye Pohamba",
+    "born": "1935-08-18",
+    "died": null,
+    "parties": [
+     "Q467711"
+    ]
+   }
+  },
+  {
+   "qid": "Q98081326",
+   "label": "Patriotes indépendants pour le changement",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q19891949",
+   "label": "Repositionnement affirmé",
+   "ideologies": [
+    {
+     "qid": "Q19894672",
+     "label": "Sankarisme"
+    },
+    {
+     "qid": "Q208128",
+     "label": "réforme agraire"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q282739",
+     "label": "panafricanisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q60518792",
+   "label": "Mouvement populaire des sans-terre",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q208128",
+     "label": "réforme agraire"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q681541",
+     "label": "réforme agricole"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q488574",
+   "label": "Front démocratique uni",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

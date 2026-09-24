@@ -1,0 +1,52 @@
+{
+ "nation": "DMA",
+ "country": "Q784",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57823",
+    "label": "Roosevelt Skerrit",
+    "born": "1972-06-08",
+    "died": null,
+    "parties": [
+     "Q1287573"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q122208779",
+    "label": "Sylvanie Burton",
+    "born": "1956-01-01",
+    "died": null,
+    "parties": [
+     "Q1287573"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1287573",
+   "label": "Parti travailliste de la Dominique",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1253956",
+   "label": "Parti uni des travailleurs",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

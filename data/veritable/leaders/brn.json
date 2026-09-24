@@ -1,0 +1,29 @@
+{
+  "nation": "BRN",
+  "actors": [
+    {
+      "id": "brn-hassanal-bolkiah",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.brn-hassanal-bolkiah.parody",
+        "fictional": "leader.brn-hassanal-bolkiah.fictional"
+      },
+      "born": "1946-07-15",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57327",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

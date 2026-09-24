@@ -1,0 +1,347 @@
+{
+  "id": "PRK",
+  "name": "nation.prk.name",
+  "capital": {
+    "name": "nation.prk.capital",
+    "lon": 125.753,
+    "lat": 39.0214,
+    "source": "natural-earth v5.1.2, ne_10m_populated_places (Admin-0 capital)",
+    "asOf": "2026-01-01"
+  },
+  "regime": "single-party",
+  "regimeSource": {
+    "source": "vdem-row:2025 (V-Dem v16 par OWID, CC BY-SA 4.0)",
+    "asOf": "2026-01-01",
+    "note": "autocratie fermée (V-Dem), forme donnée. État à parti unique le plus fermé au monde : Kim Jong-un cumule le secrétariat général du Parti du travail de Corée et la présidence des Affaires de l'État (chef de l'État depuis la révision constitutionnelle de 2019) ; le premier ministre gère l'administration économique courante sous son autorité totale. Élections à candidat unique par circonscription, sans opposition réelle ; deux « partis » satellites (social-démocrate, chondoïste) existent sous le Front pour la réunification de la patrie sans aucun pouvoir. Date de la dernière élection à l'Assemblée populaire suprême de mémoire modérée, non revérifiée par recherche web."
+  },
+  "blocs": [],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": [],
+  "nuclear": {
+    "warheads": 50,
+    "doctrine": "unpredictable",
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "Inventaires totaux d'ogives en janvier 2025 : SIPRI Yearbook 2025, chapitre « World nuclear forces » (https://www.sipri.org/yearbook/2025/06), recoupé avec la FAS, « Status of World Nuclear Forces 2025 » ; valeurs isolées attribuées (les conditions du SIPRI et de la FAS ne permettent pas de redistribuer leurs tableaux). Doctrines fixées par la consigne du J6 : États-Unis, Russie, Pakistan emploi en premier possible (Nuclear Posture Review 2022 ; Fondements de la politique d'État en matière de dissuasion nucléaire, révision de 2024 ; dissuasion « à spectre complet ») ; Chine et Inde non-emploi en premier (déclarations officielles, doctrine indienne de 2003) ; Israël non déclarée (opacité) ; Corée du Nord imprévisible (loi de 2022 sur la politique des forces nucléaires) ; France et Royaume-Uni inchangées. La Russie passe de 5 500 (J2, de mémoire) à 5 459 (SIPRI)."
+  },
+  "population": {
+    "value": 26571000,
+    "source": "worldbank:SP.POP.TOTL",
+    "asOf": "2025"
+  },
+  "gdp": {
+    "value": 28000000000,
+    "source": "estimate",
+    "asOf": "2026-09-24",
+    "note": "PIB absent de la Banque mondiale et du FMI : Corée du Nord environ 28 Md$ (ordre de grandeur des estimations de la Banque de Corée), Vatican environ 0,3 Md$ (ordre de grandeur de son budget)."
+  },
+  "debtToGdp": {
+    "value": 0.3,
+    "source": "estimate",
+    "asOf": "2026-09-24",
+    "note": "Dette publique absente des Perspectives de l'économie mondiale du FMI : ordres de grandeur publics (Cuba environ 120 % du PIB, Libye et Yémen environ 80 %, Somalie après l'allègement PPTE de 2023 environ 35 %, Palestine environ 35 %, Monaco et le Vatican sans dette notable, Corée du Nord inconnue, 30 %)."
+  },
+  "economy": {
+    "tradeOpenness": {
+      "value": 0.8,
+      "source": "estimate",
+      "asOf": "2026-09-24",
+      "note": "Ouverture commerciale absente : médiane mondiale."
+    },
+    "growthBase": {
+      "value": 0.02,
+      "source": "estimate",
+      "asOf": "2026-09-24",
+      "note": "Croissance absente : 2 %/an (estimation)."
+    },
+    "goods": {
+      "oil": {
+        "production": {
+          "value": 0,
+          "source": "owid-energy@7e387a16:oil_production",
+          "asOf": "2016"
+        },
+        "consumption": {
+          "value": 0,
+          "source": "owid-energy@7e387a16:oil_consumption",
+          "asOf": "n/a",
+          "note": "Série absente de la source : production nulle ou négligeable."
+        }
+      },
+      "gas": {
+        "production": {
+          "value": 0,
+          "source": "owid-energy@7e387a16:gas_production",
+          "asOf": "2016"
+        },
+        "consumption": {
+          "value": 0,
+          "source": "owid-energy@7e387a16:gas_consumption",
+          "asOf": "n/a",
+          "note": "Série absente de la source : production nulle ou négligeable."
+        }
+      },
+      "coal": {
+        "production": {
+          "value": 233.824,
+          "source": "owid-energy@7e387a16:coal_production",
+          "asOf": "2016"
+        },
+        "consumption": {
+          "value": 0,
+          "source": "owid-energy@7e387a16:coal_consumption",
+          "asOf": "n/a",
+          "note": "Série absente de la source : production nulle ou négligeable."
+        }
+      },
+      "electricity": {
+        "production": {
+          "value": 27.1,
+          "source": "owid-energy@7e387a16:electricity_generation",
+          "asOf": "2024"
+        },
+        "consumption": {
+          "value": 27.1,
+          "source": "owid-energy@7e387a16:electricity_demand",
+          "asOf": "2024"
+        }
+      },
+      "food": {
+        "production": {
+          "value": 4.7873,
+          "source": "worldbank:AG.PRD.CREL.MT",
+          "asOf": "2023"
+        },
+        "consumption": {
+          "value": 10.1026,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "Consommation apparente : population × production mondiale de céréales par habitant (Banque mondiale). Aucune série ouverte de consommation homogène."
+        }
+      },
+      "steel": {
+        "production": {
+          "value": 0.2016,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.06 (valeur ajoutée absente : 0.12 du PIB, estimation) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 0.249851,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "consumer-goods": {
+        "production": {
+          "value": 1.512,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.45 (valeur ajoutée absente : 0.12 du PIB, estimation) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 1.87388,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "pharma": {
+        "production": {
+          "value": 0.168,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.05 (valeur ajoutée absente : 0.12 du PIB, estimation) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 0.208209,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "electronics": {
+        "production": {
+          "value": 0,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après exportations de haute technologie × 0.59073 (part électronique de la valeur ajoutée manufacturière mondiale) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 0.499701,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "services": {
+        "production": {
+          "value": 15.4,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée des services (valeur ajoutée absente : 0.55 du PIB, estimation) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 16.724,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "arms": {
+        "production": {
+          "value": 1.4,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après dépenses militaires × 0.25 (part d'équipement) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 1.4,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part des dépenses militaires mondiales (Banque mondiale), Md$."
+        }
+      },
+      "critical-minerals": {
+        "production": {
+          "value": 0,
+          "source": "estimate",
+          "asOf": "2026-09-24",
+          "note": "Part de la valeur mondiale des minerais critiques (hors nations estimées à la main) au prorata des exportations de minerais et métaux (Banque mondiale TX.VAL.MMTL.ZS.UN × TX.VAL.MRCH.CD.WT), Md$."
+        },
+        "consumption": {
+          "value": 0.17744,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale (estimation) × part du PIB mondial (Banque mondiale), Md$."
+        }
+      }
+    },
+    "electricityFromFossil": {
+      "gas": {
+        "value": 0,
+        "source": "owid-energy@7e387a16:gas_electricity",
+        "asOf": "2024"
+      },
+      "coal": {
+        "value": 9.23,
+        "source": "owid-energy@7e387a16:coal_electricity",
+        "asOf": "2024"
+      },
+      "oil": {
+        "value": 0.7,
+        "source": "owid-energy@7e387a16:oil_electricity",
+        "asOf": "2024"
+      }
+    },
+    "budget": {
+      "revenuePctGdp": {
+        "value": 0.25,
+        "source": "estimate",
+        "asOf": "2026-09-24",
+        "note": "Recettes absentes de la Banque mondiale et du FMI : ordre de grandeur mondial."
+      },
+      "expensePctGdp": {
+        "value": 0.27,
+        "source": "estimate",
+        "asOf": "2026-09-24",
+        "note": "Dépenses absentes de la Banque mondiale et du FMI : ordre de grandeur mondial."
+      },
+      "grantsPctGdp": {
+        "value": 0,
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Dons budgétaires extérieurs. Ukraine : soutien budgétaire international d'environ 40 Md$ par an pour un PIB d'environ 190 Md$ ; sans lui le déficit de guerre (dépenses 66 % du PIB, recettes 34 %, Banque mondiale) ferait exploser la dette en deux ans. Nul pour les autres."
+      },
+      "revenueShares": {
+        "value": {
+          "income": 0.42,
+          "corporate": 0.14,
+          "vat": 0.435,
+          "tariffs": 0.005,
+          "rents": 0
+        },
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Répartition des recettes entre impôts, faute de ventilation ouverte homogène : ordre de grandeur OCDE pour les pays développés. Droits de douane : environ 0,5 % des recettes (ressource propre de l'UE, marginale ailleurs). Rentes sur ressources : nulles, sauf pour les exportateurs d'hydrocarbures (Russie, Norvège), où elles prennent la part indiquée, prélevée sur les autres impôts."
+      },
+      "spending": {
+        "defense": {
+          "value": 0.2,
+          "source": "estimate",
+          "asOf": "2026-09-24",
+          "note": "Dépense militaire absente de la Banque mondiale : Corée du Nord 20 % du PIB (ordre de grandeur des estimations publiques, 15 à 25 %), Érythrée 10 % (mobilisation permanente), petits États 0,5 à 3 %."
+        },
+        "healthEducation": {
+          "value": 0.07,
+          "source": "derived",
+          "asOf": "2026-09-24",
+          "note": "Dépenses publiques de santé + d'éducation (Banque mondiale SH.XPD.GHED.GD.ZS + SE.XPD.TOTL.GD.ZS, estimations à défaut)."
+        },
+        "research": {
+          "value": 0.00105,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "social": {
+          "value": 0.013,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "infrastructure": {
+          "value": 0.004,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "subsidies": {
+          "value": 0.003,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        }
+      }
+    }
+  },
+  "military": {
+    "spendingPctGdp": 20,
+    "activePersonnel": 1280000,
+    "airPower": 0.25,
+    "navalPower": 0.2,
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "J6 : grandes et moyennes puissances hors europe-10, écrites à la main sur la même échelle relative (0 à 1) que les dix nations du J2 : États-Unis 1 et 1 (référence), Chine 0,85 et 0,9 (première flotte en nombre de coques), Inde, Japon, Corée du Sud entre 0,5 et 0,7, etc. Effectifs d'active : ordres de grandeur publics de 2024-2025 (hors paramilitaires et réserves). À valider. spendingPctGdp : Banque mondiale MS.MIL.XPND.GD.ZS (source primaire SIPRI)."
+  },
+  "startingTech": [],
+  "politics": {
+    "electionIntervalMonths": 60,
+    "lastElection": "2021-04-01",
+    "electionsSuspendedAtWarAtHome": false,
+    "source": "estimate (politics-world.json)",
+    "asOf": "2026-01-01",
+    "note": "Élection à l'Assemblée populaire suprême du 10 mars 2019, candidat unique par circonscription ; incertitude sur la tenue d'un scrutin plus récent. Élection en retard au 1er janvier 2026 (dernière le 2019-03-10) : la suivante est placée trois mois plus tard (estimation)."
+  },
+  "aiAgenda": [
+    {
+      "goal": "security",
+      "weight": 0.4
+    },
+    {
+      "goal": "growth",
+      "weight": 0.23333
+    },
+    {
+      "goal": "regional-influence",
+      "weight": 0.13333
+    },
+    {
+      "goal": "ideology",
+      "weight": 0.23333
+    }
+  ]
+}

@@ -56,6 +56,14 @@ export interface Georef {
   rotation: number; // degrees, counter-clockwise
   tx: number; // tile coordinates of the projection origin
   ty: number;
+  // A world map in plate carree (J6): rings are cut at the seam, the
+  // meridian opposite lon0, like the world projections.
+  seam?: boolean;
+}
+
+// Does the rasterizer cut rings at the seam of this georeference?
+export function hasSeam(g: Georef): boolean {
+  return WORLD_PROJECTIONS.includes(g.projection) || g.seam === true;
 }
 
 const RAD = Math.PI / 180;
@@ -197,8 +205,18 @@ export function toTile(g: Georef): ToTile {
   const forward = forwardProjection(g);
   const cos = Math.cos(g.rotation * RAD) * g.scale;
   const sin = Math.sin(g.rotation * RAD) * g.scale;
+  // Points of a world map fall within half a turn of the centre meridian
+  // (rings are already cut there by the rasterizer).
+  const seam = hasSeam(g);
   return (lonDeg, latDeg) => {
-    const [px, y] = forward(lonDeg, latDeg);
+    // Only what lies beyond half a turn moves: a vertex the rasterizer put
+    // exactly on the seam (+180 or -180) stays on its side.
+    let lon = lonDeg;
+    if (seam) {
+      while (lon - g.lon0 > 180) lon -= 360;
+      while (lon - g.lon0 < -180) lon += 360;
+    }
+    const [px, y] = forward(lon, latDeg);
     const x = px * g.aspect;
     return [g.tx + cos * x - sin * y, g.ty - (sin * x + cos * y)];
   };

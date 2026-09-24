@@ -1,0 +1,175 @@
+{
+  "nation": "TCD",
+  "actors": [
+    {
+      "id": "tcd-mahamat-idriss-deby",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.tcd-mahamat-idriss-deby.parody",
+        "fictional": "leader.tcd-mahamat-idriss-deby.fictional"
+      },
+      "born": "1984-04-04",
+      "party": "tcd-mouvement-patriotique-du-salut-mps",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.6,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.45999999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q16206405",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tcd-allamaye-halina",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.tcd-allamaye-halina.parody",
+        "fictional": "leader.tcd-allamaye-halina.fictional"
+      },
+      "born": "1965-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tcd-albert-pahimi-padacke",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tcd-albert-pahimi-padacke.parody",
+        "fictional": "leader.tcd-albert-pahimi-padacke.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tcd-rndt-le-reveil",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tcd-saleh-kebzabo",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tcd-saleh-kebzabo.parody",
+        "fictional": "leader.tcd-saleh-kebzabo.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tcd-union-nationale-pour-la-democratie-et-le-renouve",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.32,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "tcd-mouvement-patriotique-du-salut-mps",
+      "name": "party.tcd-mouvement-patriotique-du-salut-mps",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.6,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.452,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 29 décembre 2024 (188 sièges, les premières depuis 2011) : Mouvement Patriotique du Salut (MPS) 124 sièges (45,18 %), Rassemblement National des Démocrates Tchadiens/Le Réveil (RNDT) 11 (6,96 %), Rassemblement pour la Démocratie et le Progrès (RDP) 8 (6,05 %), Union Nationale pour la Démocratie et le Renouveau (UNDR) 7 (3,90 %), reste petites formations et indépendants ; participation 52,38 %."
+      },
+      "leader": "tcd-mahamat-idriss-deby"
+    },
+    {
+      "id": "tcd-rndt-le-reveil",
+      "name": "party.tcd-rndt-le-reveil",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.07,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 29 décembre 2024 (188 sièges, les premières depuis 2011) : Mouvement Patriotique du Salut (MPS) 124 sièges (45,18 %), Rassemblement National des Démocrates Tchadiens/Le Réveil (RNDT) 11 (6,96 %), Rassemblement pour la Démocratie et le Progrès (RDP) 8 (6,05 %), Union Nationale pour la Démocratie et le Renouveau (UNDR) 7 (3,90 %), reste petites formations et indépendants ; participation 52,38 %."
+      },
+      "leader": "tcd-albert-pahimi-padacke"
+    },
+    {
+      "id": "tcd-rassemblement-pour-la-democratie-et-le-progres-r",
+      "name": "party.tcd-rassemblement-pour-la-democratie-et-le-progres-r",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.061,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 29 décembre 2024 (188 sièges, les premières depuis 2011) : Mouvement Patriotique du Salut (MPS) 124 sièges (45,18 %), Rassemblement National des Démocrates Tchadiens/Le Réveil (RNDT) 11 (6,96 %), Rassemblement pour la Démocratie et le Progrès (RDP) 8 (6,05 %), Union Nationale pour la Démocratie et le Renouveau (UNDR) 7 (3,90 %), reste petites formations et indépendants ; participation 52,38 %."
+      },
+      "leader": null
+    },
+    {
+      "id": "tcd-union-nationale-pour-la-democratie-et-le-renouve",
+      "name": "party.tcd-union-nationale-pour-la-democratie-et-le-renouve",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.039,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 29 décembre 2024 (188 sièges, les premières depuis 2011) : Mouvement Patriotique du Salut (MPS) 124 sièges (45,18 %), Rassemblement National des Démocrates Tchadiens/Le Réveil (RNDT) 11 (6,96 %), Rassemblement pour la Démocratie et le Progrès (RDP) 8 (6,05 %), Union Nationale pour la Démocratie et le Renouveau (UNDR) 7 (3,90 %), reste petites formations et indépendants ; participation 52,38 %."
+      },
+      "leader": "tcd-saleh-kebzabo"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+ "nation": "PAK",
+ "country": "Q843",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q2096387",
+    "label": "Shahbaz Sharif",
+    "born": "1951-09-23",
+    "died": null,
+    "parties": [
+     "Q799577"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57373",
+    "label": "Asif Ali Zardari",
+    "born": "1955-07-26",
+    "died": null,
+    "parties": [
+     "Q186591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q284454",
+   "label": "Mouvement du Pakistan pour la Justice",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q192451",
+     "label": "État-providence"
+    },
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    },
+    {
+     "qid": "Q3301382",
+     "label": "nationalisme pakistanais"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": {
+    "qid": "Q1543422",
+    "label": "Shah Mehmood Qureshi",
+    "born": "1956-06-22",
+    "died": null,
+    "parties": [
+     "Q284454",
+     "Q6082125"
+    ]
+   }
+  },
+  {
+   "qid": "Q799577",
+   "label": "Ligue musulmane du Pakistan (N)",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q13217263",
+    "label": "Raja Zafar ul Haq",
+    "born": "1935-11-18",
+    "died": null,
+    "parties": [
+     "Q799577"
+    ]
+   }
+  },
+  {
+   "qid": "Q186591",
+   "label": "Parti du peuple pakistanais",
+   "ideologies": [
+    {
+     "qid": "Q1150339",
+     "label": "socialisme islamique"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q244338",
+    "label": "Bilawal Bhutto Zardari",
+    "born": "1988-09-21",
+    "died": null,
+    "parties": [
+     "Q186591"
+    ]
+   }
+  },
+  {
+   "qid": "Q13211655",
+   "label": "Jamiat Ulema-e-Islam",
+   "ideologies": [
+    {
+     "qid": "Q189746",
+     "label": "islamisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q3067725",
+    "label": "Fazal-ur-Rehman",
+    "born": "1953-06-19",
+    "died": null,
+    "parties": [
+     "Q13211655",
+     "Q3133587"
+    ]
+   }
+  }
+ ]
+}

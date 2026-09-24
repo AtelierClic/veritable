@@ -1,0 +1,52 @@
+{
+  "nation": "MLI",
+  "actors": [
+    {
+      "id": "mli-abdoulaye-maiga",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.mli-abdoulaye-maiga.parody",
+        "fictional": "leader.mli-abdoulaye-maiga.fictional"
+      },
+      "born": "1981-05-12",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q113577661",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "mli-assimi-goita",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.mli-assimi-goita.parody",
+        "fictional": "leader.mli-assimi-goita.fictional"
+      },
+      "born": "1983-11-09",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q98497406",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

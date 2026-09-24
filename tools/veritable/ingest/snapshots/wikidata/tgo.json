@@ -1,0 +1,60 @@
+{
+ "nation": "TGO",
+ "country": "Q945",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q4414",
+    "label": "Faure Essozimna Gnassingbé",
+    "born": "1966-06-06",
+    "died": null,
+    "parties": [
+     "Q1514253",
+     "Q22080618"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q6169516",
+    "label": "Jean-Lucien Savi de Tové",
+    "born": "1939-05-07",
+    "died": null,
+    "parties": [
+     "Q2996378"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q22080618",
+   "label": "Union pour la République",
+   "ideologies": [
+    {
+     "qid": "Q3874021",
+     "label": "nationalisme africain"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4414",
+    "label": "Faure Essozimna Gnassingbé",
+    "born": "1966-06-06",
+    "died": null,
+    "parties": [
+     "Q1514253",
+     "Q22080618"
+    ]
+   }
+  }
+ ]
+}

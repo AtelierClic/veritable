@@ -1,0 +1,76 @@
+{
+  "nation": "ZWE",
+  "actors": [
+    {
+      "id": "zwe-emmerson-mnangagwa",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.zwe-emmerson-mnangagwa.parody",
+        "fictional": "leader.zwe-emmerson-mnangagwa.fictional"
+      },
+      "born": "1942-09-15",
+      "party": "zwe-union-nationale-africaine-du-zimbabwe-front-patr",
+      "traits": {
+        "economic": 0,
+        "authority": 0.4,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.48,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q510523",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "zwe-union-nationale-africaine-du-zimbabwe-front-patr",
+      "name": "party.zwe-union-nationale-africaine-du-zimbabwe-front-patr",
+      "wikidata": "Q1910161",
+      "ideologies": [
+        "Q11900614",
+        "Q1414298",
+        "Q282739",
+        "Q3874021",
+        "Q590478",
+        "Q6235",
+        "Q7169"
+      ],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.4,
+        "sovereignty": 0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 7)",
+      "support": 0.53,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 23 août 2023 (Assemblée nationale, concomitantes à la présidentielle)."
+      },
+      "leader": "zwe-emmerson-mnangagwa"
+    },
+    {
+      "id": "zwe-coalition-citoyenne-pour-le-changement",
+      "name": "party.zwe-coalition-citoyenne-pour-le-changement",
+      "wikidata": "Q110664645",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": -0.3,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.4,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 23 août 2023 (Assemblée nationale, concomitantes à la présidentielle)."
+      },
+      "leader": null
+    }
+  ]
+}

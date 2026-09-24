@@ -1,0 +1,72 @@
+{
+  "nation": "BDI",
+  "actors": [
+    {
+      "id": "bdi-gervais-ndirakobuca",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.bdi-gervais-ndirakobuca.parody",
+        "fictional": "leader.bdi-gervais-ndirakobuca.fictional"
+      },
+      "born": "1970-01-01",
+      "party": "bdi-conseil-national-pour-la-defense-de-la-democrati",
+      "traits": {
+        "economic": 0,
+        "authority": 0.6,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.5599999999999999,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q107136851",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "bdi-evariste-ndayishimiye",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.bdi-evariste-ndayishimiye.parody",
+        "fictional": "leader.bdi-evariste-ndayishimiye.fictional"
+      },
+      "born": "1968-06-17",
+      "party": "bdi-conseil-national-pour-la-defense-de-la-democrati",
+      "traits": {
+        "economic": 0,
+        "authority": 0.6,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.5599999999999999,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q27329764",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "bdi-conseil-national-pour-la-defense-de-la-democrati",
+      "name": "party.bdi-conseil-national-pour-la-defense-de-la-democrati",
+      "wikidata": "Q2271402",
+      "ideologies": ["Q180490", "Q637251"],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.6,
+        "sovereignty": 0.7
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.9651,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 5 juin 2025 (Assemblée nationale) ; parts de voix réelles publiées."
+      },
+      "leader": "bdi-evariste-ndayishimiye"
+    }
+  ]
+}

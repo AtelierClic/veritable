@@ -1,0 +1,224 @@
+{
+ "nation": "MEX",
+ "country": "Q96",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5771800",
+    "label": "Claudia Sheinbaum",
+    "born": "1962-06-24",
+    "died": null,
+    "parties": [
+     "Q15717618",
+     "Q767010"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q5771800",
+    "label": "Claudia Sheinbaum",
+    "born": "1962-06-24",
+    "died": null,
+    "parties": [
+     "Q15717618",
+     "Q767010"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q15717618",
+   "label": "Mouvement de régénération nationale",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q1203128",
+     "label": "non-interventionnisme"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q23808011",
+     "label": "post-neoliberalism"
+    },
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q15156389",
+    "label": "Luisa María Alcalde Luján",
+    "born": "1987-08-24",
+    "died": null,
+    "parties": [
+     "Q15717618"
+    ]
+   }
+  },
+  {
+   "qid": "Q851087",
+   "label": "Parti action nationale",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q46158",
+     "label": "humanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q24770901",
+    "label": "Jorge Romero Herrera",
+    "born": "1979-01-03",
+    "died": null,
+    "parties": [
+     "Q851087"
+    ]
+   }
+  },
+  {
+   "qid": "Q682969",
+   "label": "Parti révolutionnaire institutionnel",
+   "ideologies": [
+    {
+     "qid": "Q1194747",
+     "label": "constitutionnalisme"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1660379",
+     "label": "Industrialisation par substitution aux importations"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q192886",
+     "label": "corporatisme"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q5665275",
+    "label": "Alejandro Moreno Cárdenas",
+    "born": "1975-04-25",
+    "died": null,
+    "parties": [
+     "Q682969",
+     "Q767010"
+    ]
+   }
+  },
+  {
+   "qid": "Q10920094",
+   "label": "Movimiento Ciudadano",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q8025128",
+     "label": "milieu excentré"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q383718",
+   "label": "Parti vert écologiste du Mexique",
+   "ideologies": [
+    {
+     "qid": "Q1062758",
+     "label": "conservatisme écologique"
+    },
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q540320",
+   "label": "Parti du travail",
+   "ideologies": [
+    {
+     "qid": "Q167651",
+     "label": "maoïsme"
+    },
+    {
+     "qid": "Q1757356",
+     "label": "centralisme"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q3897681",
+     "label": "Patria grande"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1984540",
+    "label": "Alberto Anaya",
+    "born": "1946-11-15",
+    "died": null,
+    "parties": [
+     "Q540320"
+    ]
+   }
+  }
+ ]
+}

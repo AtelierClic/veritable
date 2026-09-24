@@ -1,0 +1,193 @@
+{
+ "nation": "LBN",
+ "country": "Q822",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q638463",
+    "label": "Nawaf Salam",
+    "born": "1953-12-15",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q29033962",
+    "label": "Joseph Aoun",
+    "born": "1964-01-10",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1146346",
+   "label": "Forces libanaises",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q328776",
+    "label": "Amine Gemayel",
+    "born": "1942-01-22",
+    "died": null,
+    "parties": [
+     "Q502276"
+    ]
+   }
+  },
+  {
+   "qid": "Q1454007",
+   "label": "Courant patriotique libre",
+   "ideologies": [
+    {
+     "qid": "Q6510998",
+     "label": "nationalisme libanais"
+    }
+   ],
+   "leader": {
+    "qid": "Q363392",
+    "label": "Michel Aoun",
+    "born": "1933-09-30",
+    "died": null,
+    "parties": [
+     "Q1454007"
+    ]
+   }
+  },
+  {
+   "qid": "Q452670",
+   "label": "Amal",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q704220",
+    "label": "Nabih Berri",
+    "born": "1938-01-28",
+    "died": null,
+    "parties": [
+     "Q452670"
+    ]
+   }
+  },
+  {
+   "qid": "Q41053",
+   "label": "Hezbollah",
+   "ideologies": [
+    {
+     "qid": "Q114213",
+     "label": "nationalisme arabe"
+    },
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q189746",
+     "label": "islamisme"
+    },
+    {
+     "qid": "Q19606413",
+     "label": "antioccidentalisme"
+    },
+    {
+     "qid": "Q22649",
+     "label": "antisémitisme"
+    },
+    {
+     "qid": "Q430032",
+     "label": "panislamisme"
+    },
+    {
+     "qid": "Q584548",
+     "label": "antisionisme"
+    },
+    {
+     "qid": "Q7225128",
+     "label": "Khomeinisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q113104",
+   "label": "Parti socialiste progressiste",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q380437",
+    "label": "Walid Joumblatt",
+    "born": "1949-08-07",
+    "died": null,
+    "parties": [
+     "Q113104"
+    ]
+   }
+  },
+  {
+   "qid": "Q502276",
+   "label": "Phalanges libanaises",
+   "ideologies": [
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q2006421",
+     "label": "phénicianisme"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2919005",
+    "label": "Samy Gemayel",
+    "born": "1980-12-03",
+    "died": null,
+    "parties": [
+     "Q502276"
+    ]
+   }
+  }
+ ]
+}

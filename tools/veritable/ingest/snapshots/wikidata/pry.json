@@ -1,0 +1,54 @@
+{
+ "nation": "PRY",
+ "country": "Q733",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q22695687",
+    "label": "Santiago Peña Palacios",
+    "born": "1978-11-16",
+    "died": null,
+    "parties": [
+     "Q928949"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q22695687",
+    "label": "Santiago Peña Palacios",
+    "born": "1978-11-16",
+    "died": null,
+    "parties": [
+     "Q928949"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2735114",
+   "label": "Parti libéral radical authentique",
+   "ideologies": [
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q913401",
+     "label": "radicalisme classique"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

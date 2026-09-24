@@ -1,0 +1,69 @@
+{
+ "nation": "MDV",
+ "country": "Q826",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q116293030",
+    "label": "Mohamed Muizzu",
+    "born": "1978-06-15",
+    "died": null,
+    "parties": [
+     "Q61750742"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q116293030",
+    "label": "Mohamed Muizzu",
+    "born": "1978-06-15",
+    "died": null,
+    "parties": [
+     "Q61750742"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q61750742",
+   "label": "Congrès national du peuple (Maldives)",
+   "ideologies": [
+    {
+     "qid": "Q2019152",
+     "label": "nationalisme religieux"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1778600",
+   "label": "Parti démocratique maldivien",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q192125",
+     "label": "démocratie libérale"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

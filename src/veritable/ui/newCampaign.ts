@@ -1,12 +1,12 @@
 import {
   Difficulty,
   GameMapSize,
-  GameMapType,
   GameMode,
   GameType,
 } from "../../core/game/Game";
 import { GameStartInfo } from "../../core/Schemas";
 import { generateID } from "../../core/Util";
+import { gameMapOf } from "../adapters/scenarioMap";
 import { veritableSoloConfig } from "../adapters/soloConfig";
 import { loadNation, loadScenario, scenarioIds } from "../data/catalog";
 import { vt } from "../data/i18n";
@@ -56,7 +56,9 @@ export function newCampaignStartInfo(
     ],
     config: veritableSoloConfig(
       {
-        gameMap: GameMapType.Europe,
+        // J6: the map of the scenario (europe-10: Europe; world-2026: the
+        // world map).
+        gameMap: gameMapOf(loadScenario(scenarioId).map),
         gameMapSize: GameMapSize.Normal,
         gameType: GameType.Singleplayer,
         gameMode: GameMode.FFA,

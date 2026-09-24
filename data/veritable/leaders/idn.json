@@ -1,0 +1,343 @@
+{
+  "nation": "IDN",
+  "actors": [
+    {
+      "id": "idn-prabowo-subianto",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.idn-prabowo-subianto.parody",
+        "fictional": "leader.idn-prabowo-subianto.fictional"
+      },
+      "born": "1951-10-17",
+      "party": "idn-parti-de-la-grande-mouvement-indonesie",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.35,
+        "sovereignty": 0.35,
+        "aggressiveness": 0.45,
+        "corruption": 0.4,
+        "charisma": 0.6,
+        "competence": 0.5
+      },
+      "wikidata": "Q2107268",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Ancien général controversé (accusations d'enlèvements pendant l'ère Suharto, jamais jugées), élu après plusieurs tentatives ; nationalisme économique assumé (souveraineté +0,35) ; agressivité au-dessus de la moyenne en rhétorique, modération dans les faits ; charisme militaire fort."
+    },
+    {
+      "id": "idn-surya-paloh",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.idn-surya-paloh.parody",
+        "fictional": "leader.idn-surya-paloh.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "idn-parti-national-democrate",
+      "traits": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.45,
+        "aggressiveness": 0.41000000000000003,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "idn-agus-harimurti-yudhoyono",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.idn-agus-harimurti-yudhoyono.parody",
+        "fictional": "leader.idn-agus-harimurti-yudhoyono.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "idn-democratic-party",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0,
+        "sovereignty": 0,
+        "aggressiveness": 0.3,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "idn-megawati-soekarnoputri",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.idn-megawati-soekarnoputri.parody",
+        "fictional": "leader.idn-megawati-soekarnoputri.fictional"
+      },
+      "born": "1947-01-23",
+      "party": "idn-parti-democratique-indonesien-de-lutte",
+      "traits": {
+        "economic": -0.3,
+        "authority": 0.05,
+        "sovereignty": 0.375,
+        "aggressiveness": 0.385,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q76179",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "idn-airlangga-hartarto",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.idn-airlangga-hartarto.parody",
+        "fictional": "leader.idn-airlangga-hartarto.fictional"
+      },
+      "born": "1962-10-01",
+      "party": "idn-golkar",
+      "traits": {
+        "economic": 0.433,
+        "authority": 0.3,
+        "sovereignty": 0.467,
+        "aggressiveness": 0.4534,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q12471140",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "idn-muhaimin-iskandar",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.idn-muhaimin-iskandar.parody",
+        "fictional": "leader.idn-muhaimin-iskandar.fictional"
+      },
+      "born": "1966-09-24",
+      "party": "idn-parti-du-reveil-national",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.6,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.5,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q12499327",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "idn-ahmad-syaikhu",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.idn-ahmad-syaikhu.parody",
+        "fictional": "leader.idn-ahmad-syaikhu.fictional"
+      },
+      "born": "1965-01-23",
+      "party": "idn-parti-de-la-justice-et-de-la-prosperite",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.8,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q12470972",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "idn-hatta-rajasa",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.idn-hatta-rajasa.parody",
+        "fictional": "leader.idn-hatta-rajasa.fictional"
+      },
+      "born": "1953-09-18",
+      "party": "idn-parti-du-mandat-national",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.34,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4201732",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "idn-parti-democratique-indonesien-de-lutte",
+      "name": "party.idn-parti-democratique-indonesien-de-lutte",
+      "wikidata": "Q1186306",
+      "ideologies": ["Q1202972", "Q180490", "Q2049221", "Q555887", "Q821102"],
+      "ideology": {
+        "economic": -0.3,
+        "authority": 0.05,
+        "sovereignty": 0.375
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 5)",
+      "support": 0.1672,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-megawati-soekarnoputri"
+    },
+    {
+      "id": "idn-golkar",
+      "name": "party.idn-golkar",
+      "wikidata": "Q1536552",
+      "ideologies": ["Q2049221", "Q6235", "Q729119", "Q852739"],
+      "ideology": {
+        "economic": 0.433,
+        "authority": 0.3,
+        "sovereignty": 0.467
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.1529,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-airlangga-hartarto"
+    },
+    {
+      "id": "idn-parti-de-la-grande-mouvement-indonesie",
+      "name": "party.idn-parti-de-la-grande-mouvement-indonesie",
+      "wikidata": "Q4261459",
+      "ideologies": ["Q182121", "Q2049221", "Q436860", "Q6235", "Q852739"],
+      "ideology": {
+        "economic": 0.35,
+        "authority": 0.5,
+        "sovereignty": 0.675
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 5)",
+      "support": 0.1322,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-prabowo-subianto"
+    },
+    {
+      "id": "idn-parti-du-reveil-national",
+      "name": "party.idn-parti-du-reveil-national",
+      "wikidata": "Q1257317",
+      "ideologies": ["Q1414298", "Q2049221", "Q2641411"],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.6,
+        "sovereignty": 0.4
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 3)",
+      "support": 0.106,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-muhaimin-iskandar"
+    },
+    {
+      "id": "idn-parti-national-democrate",
+      "name": "party.idn-parti-national-democrate",
+      "wikidata": "Q4207219",
+      "ideologies": ["Q192886", "Q2049221", "Q216920", "Q6235"],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.45
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 4)",
+      "support": 0.097,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-surya-paloh"
+    },
+    {
+      "id": "idn-parti-de-la-justice-et-de-la-prosperite",
+      "name": "party.idn-parti-de-la-justice-et-de-la-prosperite",
+      "wikidata": "Q1511101",
+      "ideologies": ["Q189746", "Q2049221"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.8,
+        "sovereignty": 0.6
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.084,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-ahmad-syaikhu"
+    },
+    {
+      "id": "idn-parti-du-mandat-national",
+      "name": "party.idn-parti-du-mandat-national",
+      "wikidata": "Q2434365",
+      "ideologies": ["Q2049221", "Q2641411"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.072,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-hatta-rajasa"
+    },
+    {
+      "id": "idn-democratic-party",
+      "name": "party.idn-democratic-party",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.074,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle"
+      },
+      "leader": "idn-agus-harimurti-yudhoyono"
+    }
+  ]
+}

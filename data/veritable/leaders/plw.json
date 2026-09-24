@@ -1,0 +1,29 @@
+{
+  "nation": "PLW",
+  "actors": [
+    {
+      "id": "plw-surangel-whipps-jr",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.plw-surangel-whipps-jr.parody",
+        "fictional": "leader.plw-surangel-whipps-jr.fictional"
+      },
+      "born": "1968-08-09",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q26703072",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

@@ -1,0 +1,57 @@
+{
+ "nation": "HTI",
+ "country": "Q790",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q131140314",
+    "label": "Alix Didier Fils-Aimé",
+    "born": "1971-11-14",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q124846311",
+    "label": "Conseil présidentiel de transition",
+    "born": null,
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q21207600",
+   "label": "Parti haïtien Tèt Kale",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1395689",
+   "label": "Fanmi Lavalas",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

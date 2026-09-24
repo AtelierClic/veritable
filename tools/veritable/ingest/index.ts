@@ -11,6 +11,7 @@ import {
   WorldBankKey,
 } from "./sources";
 import { fetchWikidata, relockWikidata } from "./wikidata";
+import { fetchWikidataWorld } from "./wikidataWorld";
 import { fetchWorld } from "./world";
 
 // Open sources -> data/veritable/. Replayable:
@@ -62,6 +63,12 @@ async function main(): Promise<void> {
       return fetchImf(scenario.nations);
     case "fetch-world":
       return fetchWorld(scenario.nations);
+    case "fetch-wikidata-world": {
+      const only = args.includes("--only")
+        ? option(args, "only").split(",")
+        : scenario.nations;
+      return fetchWikidataWorld(only, scenario.startDate);
+    }
     case "fetch-wikidata": {
       // --only FRA,DEU: those nations only, the others' snapshots untouched.
       const only = option(args, "only")?.split(",");
@@ -110,10 +117,31 @@ async function main(): Promise<void> {
           asOf: estimates.asOf,
           leaderTraits: estimates.leaderTraits ?? {},
           partyIdeologies: estimates.partyIdeologies ?? {},
+          parodyNations: estimates.parodyNations,
+          headOverrides: estimates.headOverrides,
         },
         i18n,
       );
       writeLeaders(files);
+      // Names of people and parties no longer in the data of the nations
+      // built (J6: a rebuild after a correction of Wikidata).
+      const actorIds = new Set(
+        Object.values(files).flatMap((f) => f.actors.map((a) => a.id)),
+      );
+      const partyIds = new Set(
+        Object.values(files).flatMap((f) => f.parties.map((p) => p.id)),
+      );
+      const built = new Set(Object.keys(files).map((n) => n.toLowerCase()));
+      for (const key of Object.keys(i18n)) {
+        const actor = /^leader\.([a-z]{3})-(.+)\.(parody|fictional)$/.exec(key);
+        if (actor !== null && built.has(actor[1])) {
+          if (!actorIds.has(`${actor[1]}-${actor[2]}`)) delete i18n[key];
+        }
+        const party = /^party\.([a-z]{3})-(.+)$/.exec(key);
+        if (party !== null && built.has(party[1])) {
+          if (!partyIds.has(`${party[1]}-${party[2]}`)) delete i18n[key];
+        }
+      }
       fs.writeFileSync(i18nFile, JSON.stringify(i18n, null, 2) + "\n");
       for (const w of warnings) console.log(`warning: ${w}`);
       for (const m of missingParody) console.log(`missing parody name: ${m}`);

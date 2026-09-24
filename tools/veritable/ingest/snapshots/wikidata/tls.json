@@ -1,0 +1,97 @@
+{
+ "nation": "TLS",
+ "country": "Q574",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q11509",
+    "label": "Xanana Gusmão",
+    "born": "1946-06-20",
+    "died": null,
+    "parties": [
+     "Q1126036",
+     "Q935996"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q11665",
+    "label": "José Ramos-Horta",
+    "born": "1949-12-26",
+    "died": null,
+    "parties": [
+     "Q935996"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1126036",
+   "label": "Congrès national de reconstruction timoraise",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q11509",
+    "label": "Xanana Gusmão",
+    "born": "1946-06-20",
+    "died": null,
+    "parties": [
+     "Q1126036",
+     "Q935996"
+    ]
+   }
+  },
+  {
+   "qid": "Q935996",
+   "label": "Front révolutionnaire pour l'indépendance du Timor oriental",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11665",
+    "label": "José Ramos-Horta",
+    "born": "1949-12-26",
+    "died": null,
+    "parties": [
+     "Q935996"
+    ]
+   }
+  },
+  {
+   "qid": "Q1571660",
+   "label": "KHUNTO",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,136 @@
+{
+ "nation": "HUN",
+ "country": "Q28",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57641",
+    "label": "Viktor Orbán",
+    "born": "1963-05-31",
+    "died": null,
+    "parties": [
+     "Q387006"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q28599854",
+    "label": "Tamás Sulyok",
+    "born": "1956-03-24",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q50583624",
+   "label": "Fidesz–KDNP",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q97196460",
+   "label": "Unis pour la Hongrie",
+   "ideologies": [
+    {
+     "qid": "Q192125",
+     "label": "démocratie libérale"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q210189",
+     "label": "antifascisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    },
+    {
+     "qid": "Q649132",
+     "label": "antinationalisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q55443054",
+   "label": "Mouvement Notre patrie",
+   "ideologies": [
+    {
+     "qid": "Q130472842",
+     "label": "antiglobalisme de droite"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q15136979",
+     "label": "nationalisme hongrois"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q38352698",
+     "label": "ultranationalisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q592886",
+     "label": "Grande Hongrie"
+    },
+    {
+     "qid": "Q834554",
+     "label": "catholicisme politique"
+    }
+   ],
+   "leader": {
+    "qid": "Q832910",
+    "label": "László Toroczkai",
+    "born": "1978-03-10",
+    "died": null,
+    "parties": [
+     "Q55443054"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,314 @@
+{
+  "nation": "LBN",
+  "actors": [
+    {
+      "id": "lbn-nawaf-salam",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.lbn-nawaf-salam.parody",
+        "fictional": "leader.lbn-nawaf-salam.fictional"
+      },
+      "born": "1953-12-15",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q638463",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "lbn-joseph-aoun",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.lbn-joseph-aoun.parody",
+        "fictional": "leader.lbn-joseph-aoun.fictional"
+      },
+      "born": "1964-01-10",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q29033962",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "lbn-naim-qassem",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbn-naim-qassem.parody",
+        "fictional": "leader.lbn-naim-qassem.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "lbn-hezbollah",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.85,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.61,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "lbn-amine-gemayel",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbn-amine-gemayel.parody",
+        "fictional": "leader.lbn-amine-gemayel.fictional"
+      },
+      "born": "1942-01-22",
+      "party": "lbn-forces-libanaises",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.425,
+        "sovereignty": 0.45,
+        "aggressiveness": 0.47500000000000003,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q328776",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "lbn-michel-aoun",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbn-michel-aoun.parody",
+        "fictional": "leader.lbn-michel-aoun.fictional"
+      },
+      "born": "1933-09-30",
+      "party": "lbn-courant-patriotique-libre",
+      "traits": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q363392",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "lbn-nabih-berri",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbn-nabih-berri.parody",
+        "fictional": "leader.lbn-nabih-berri.fictional"
+      },
+      "born": "1938-01-28",
+      "party": "lbn-amal",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q704220",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "lbn-walid-joumblatt",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbn-walid-joumblatt.parody",
+        "fictional": "leader.lbn-walid-joumblatt.fictional"
+      },
+      "born": "1949-08-07",
+      "party": "lbn-parti-socialiste-progressiste",
+      "traits": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.21999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q380437",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "lbn-samy-gemayel",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbn-samy-gemayel.parody",
+        "fictional": "leader.lbn-samy-gemayel.fictional"
+      },
+      "born": "1980-12-03",
+      "party": "lbn-phalanges-libanaises",
+      "traits": {
+        "economic": 0.325,
+        "authority": -0.1,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.23999999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2919005",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "lbn-forces-libanaises",
+      "name": "party.lbn-forces-libanaises",
+      "wikidata": "Q1146346",
+      "ideologies": ["Q209158", "Q6235", "Q7169", "Q852739"],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.425,
+        "sovereignty": 0.45
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.148,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative du 15 mai 2022 ; parts estimées d'après les sièges (128 au total), le scrutin confessionnel par circonscription ne produit pas de pourcentage national de voix homogène"
+      },
+      "leader": "lbn-amine-gemayel"
+    },
+    {
+      "id": "lbn-courant-patriotique-libre",
+      "name": "party.lbn-courant-patriotique-libre",
+      "wikidata": "Q1454007",
+      "ideologies": ["Q6510998"],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.14,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative du 15 mai 2022 ; parts estimées d'après les sièges (128 au total), le scrutin confessionnel par circonscription ne produit pas de pourcentage national de voix homogène"
+      },
+      "leader": "lbn-michel-aoun"
+    },
+    {
+      "id": "lbn-amal",
+      "name": "party.lbn-amal",
+      "wikidata": "Q452670",
+      "ideologies": ["Q7169"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.117,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative du 15 mai 2022 ; parts estimées d'après les sièges (128 au total), le scrutin confessionnel par circonscription ne produit pas de pourcentage national de voix homogène"
+      },
+      "leader": "lbn-nabih-berri"
+    },
+    {
+      "id": "lbn-hezbollah",
+      "name": "party.lbn-hezbollah",
+      "wikidata": "Q41053",
+      "ideologies": [
+        "Q114213",
+        "Q1144178",
+        "Q189746",
+        "Q19606413",
+        "Q22649",
+        "Q430032",
+        "Q584548",
+        "Q7225128"
+      ],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.85,
+        "sovereignty": 0.7
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 8)",
+      "support": 0.117,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative du 15 mai 2022 ; parts estimées d'après les sièges (128 au total), le scrutin confessionnel par circonscription ne produit pas de pourcentage national de voix homogène"
+      },
+      "leader": "lbn-naim-qassem"
+    },
+    {
+      "id": "lbn-parti-socialiste-progressiste",
+      "name": "party.lbn-parti-socialiste-progressiste",
+      "wikidata": "Q113104",
+      "ideologies": ["Q189280"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.063,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative du 15 mai 2022 ; parts estimées d'après les sièges (128 au total), le scrutin confessionnel par circonscription ne produit pas de pourcentage national de voix homogène"
+      },
+      "leader": "lbn-walid-joumblatt"
+    },
+    {
+      "id": "lbn-phalanges-libanaises",
+      "name": "party.lbn-phalanges-libanaises",
+      "wikidata": "Q502276",
+      "ideologies": ["Q182121", "Q2006421", "Q204886", "Q209158", "Q6216"],
+      "ideology": {
+        "economic": 0.325,
+        "authority": -0.1,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 5)",
+      "support": 0.031,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative du 15 mai 2022 ; parts estimées d'après les sièges (128 au total), le scrutin confessionnel par circonscription ne produit pas de pourcentage national de voix homogène"
+      },
+      "leader": "lbn-samy-gemayel"
+    }
+  ]
+}

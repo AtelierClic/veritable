@@ -1,0 +1,90 @@
+{
+ "nation": "ZWE",
+ "country": "Q954",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q510523",
+    "label": "Emmerson Mnangagwa",
+    "born": "1942-09-15",
+    "died": null,
+    "parties": [
+     "Q1383387",
+     "Q1910161",
+     "Q203423"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q510523",
+    "label": "Emmerson Mnangagwa",
+    "born": "1942-09-15",
+    "died": null,
+    "parties": [
+     "Q1383387",
+     "Q1910161",
+     "Q203423"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1910161",
+   "label": "Union nationale africaine du Zimbabwe - Front patriotique",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q282739",
+     "label": "panafricanisme"
+    },
+    {
+     "qid": "Q3874021",
+     "label": "nationalisme africain"
+    },
+    {
+     "qid": "Q590478",
+     "label": "socialisme africain"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q510523",
+    "label": "Emmerson Mnangagwa",
+    "born": "1942-09-15",
+    "died": null,
+    "parties": [
+     "Q1383387",
+     "Q1910161",
+     "Q203423"
+    ]
+   }
+  },
+  {
+   "qid": "Q110664645",
+   "label": "Coalition citoyenne pour le changement",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

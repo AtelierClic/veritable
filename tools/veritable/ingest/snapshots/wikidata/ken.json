@@ -1,0 +1,107 @@
+{
+ "nation": "KEN",
+ "country": "Q114",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q195725",
+    "label": "William Ruto",
+    "born": "1966-12-21",
+    "died": null,
+    "parties": [
+     "Q105637541"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q195725",
+    "label": "William Ruto",
+    "born": "1966-12-21",
+    "died": null,
+    "parties": [
+     "Q105637541"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q105637541",
+   "label": "United Democratic Alliance",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q195725",
+    "label": "William Ruto",
+    "born": "1966-12-21",
+    "died": null,
+    "parties": [
+     "Q105637541"
+    ]
+   }
+  },
+  {
+   "qid": "Q1640905",
+   "label": "Mouvement démocrate orange",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    }
+   ],
+   "leader": {
+    "qid": "Q5724462",
+    "label": "Henry Kosgey",
+    "born": "1947-07-14",
+    "died": null,
+    "parties": [
+     "Q1422517"
+    ]
+   }
+  },
+  {
+   "qid": "Q27963537",
+   "label": "Parti du jubilé",
+   "ideologies": [
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q5251223",
+   "label": "Mouvement démocratique Wiper",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q47489380",
+   "label": "Amani National Congress",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q1954003",
+    "label": "Musalia Mudavadi",
+    "born": "1960-09-21",
+    "died": null,
+    "parties": [
+     "Q7887687"
+    ]
+   }
+  }
+ ]
+}

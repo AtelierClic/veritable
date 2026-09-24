@@ -1,0 +1,192 @@
+{
+ "nation": "LVA",
+ "country": "Q211",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q61121565",
+    "label": "Evika Siliņa",
+    "born": "1975-08-03",
+    "died": null,
+    "parties": [
+     "Q384826",
+     "Q98104169",
+     "Q992046"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3047551",
+    "label": "Edgars Rinkēvičs",
+    "born": "1973-09-21",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q98104169",
+   "label": "Nouvelle unité",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q167928",
+   "label": "Union des verts et des paysans",
+   "ideologies": [
+    {
+     "qid": "Q1062758",
+     "label": "conservatisme écologique"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q113163582",
+   "label": "Liste Unie",
+   "ideologies": [
+    {
+     "qid": "Q1062758",
+     "label": "conservatisme écologique"
+    },
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q109864567",
+    "label": "Uldis Pīlēns",
+    "born": "1956-10-02",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q1576026",
+   "label": "Alliance nationale",
+   "ideologies": [
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1491211",
+    "label": "Gaidis Bērziņš",
+    "born": "1970-10-20",
+    "died": null,
+    "parties": [
+     "Q1576026"
+    ]
+   }
+  },
+  {
+   "qid": "Q112227296",
+   "label": "Pour la stabilité !",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q108096403",
+   "label": "Lettonie d'abord",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q406265",
+    "label": "Ainārs Šlesers",
+    "born": "1970-01-22",
+    "died": null,
+    "parties": [
+     "Q108096403",
+     "Q16355792",
+     "Q1756085",
+     "Q2021874",
+     "Q2577092"
+    ]
+   }
+  },
+  {
+   "qid": "Q28966907",
+   "label": "Les Progressistes",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q115493492",
+    "label": "Andris Šuvajevs",
+    "born": "1991-06-18",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

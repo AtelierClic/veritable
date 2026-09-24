@@ -1,0 +1,51 @@
+{
+ "nation": "LSO",
+ "country": "Q1013",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q114588964",
+    "label": "Sam Matekane",
+    "born": "1958-03-15",
+    "died": null,
+    "parties": [
+     "Q114562488"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57537",
+    "label": "Letsie III du Lesotho",
+    "born": "1963-07-17",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q114562488",
+   "label": "Révolution pour la prospérité",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1185836",
+   "label": "Congrès démocratique",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1346132",
+   "label": "All Basotho Convention",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

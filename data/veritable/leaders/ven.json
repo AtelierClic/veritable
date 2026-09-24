@@ -1,0 +1,49 @@
+{
+  "nation": "VEN",
+  "actors": [
+    {
+      "id": "ven-nicolas-maduro",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.ven-nicolas-maduro.parody",
+        "fictional": "leader.ven-nicolas-maduro.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "ven-gran-polo-patriotico-simon-bolivar-psuv-et-allie",
+      "traits": {
+        "economic": -0.75,
+        "authority": 0.85,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.5,
+        "corruption": 0.7,
+        "charisma": 0.45,
+        "competence": 0.35
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Socialisme d'État en crise économique prolongée, autorité très forte (répression de l'opposition, résultat de la présidentielle de 2024 contesté par une large partie de la communauté internationale) ; corruption largement documentée (sanctions américaines, accusations de narcotrafic) ; compétence économique faible au vu de l'hyperinflation passée."
+    }
+  ],
+  "parties": [
+    {
+      "id": "ven-gran-polo-patriotico-simon-bolivar-psuv-et-allie",
+      "name": "party.ven-gran-polo-patriotico-simon-bolivar-psuv-et-allie",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.8,
+        "authority": 0.9,
+        "sovereignty": 0.6
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.676,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections à l'Assemblée nationale du 6 décembre 2020 (boycottées par l'opposition principale, sans valeur compétitive réelle)"
+      },
+      "leader": "ven-nicolas-maduro"
+    }
+  ]
+}

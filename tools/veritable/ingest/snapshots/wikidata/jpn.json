@@ -1,0 +1,291 @@
+{
+ "nation": "JPN",
+ "country": "Q17",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q1705028",
+    "label": "Sanae Takaichi",
+    "born": "1961-03-07",
+    "died": null,
+    "parties": [
+     "Q232595"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q217096",
+    "label": "Naruhito",
+    "born": "1960-02-23",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q232595",
+   "label": "Parti libéral-démocrate",
+   "ideologies": [
+    {
+     "qid": "Q1331440",
+     "label": "nationalisme japonais"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1705028",
+    "label": "Sanae Takaichi",
+    "born": "1961-03-07",
+    "died": null,
+    "parties": [
+     "Q232595"
+    ]
+   }
+  },
+  {
+   "qid": "Q41532587",
+   "label": "Parti démocrate constitutionnel",
+   "ideologies": [
+    {
+     "qid": "Q1194747",
+     "label": "constitutionnalisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q810220",
+     "label": "grassroots democracy"
+    }
+   ],
+   "leader": {
+    "qid": "Q732087",
+    "label": "Yukio Edano",
+    "born": "1964-05-31",
+    "died": null,
+    "parties": [
+     "Q99233271"
+    ]
+   }
+  },
+  {
+   "qid": "Q52729635",
+   "label": "Parti démocrate du peuple",
+   "ideologies": [
+    {
+     "qid": "Q131201",
+     "label": "développement durable"
+    },
+    {
+     "qid": "Q574580",
+     "label": "mouvement antinucléaire"
+    },
+    {
+     "qid": "Q58848",
+     "label": "pacifisme"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11572647",
+    "label": "Yūichirō Tamaki",
+    "born": "1969-05-01",
+    "died": null,
+    "parties": [
+     "Q200314",
+     "Q23055252",
+     "Q41040535",
+     "Q52729635",
+     "Q99527550"
+    ]
+   }
+  },
+  {
+   "qid": "Q21499745",
+   "label": "Parti japonais de l'innovation",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1061354",
+   "label": "Nouveau Kōmeitō",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q472716",
+     "label": "bouddhisme engagé"
+    }
+   ],
+   "leader": {
+    "qid": "Q1737905",
+    "label": "Keiichi Ishii",
+    "born": "1958-03-20",
+    "died": null,
+    "parties": [
+     "Q1061354",
+     "Q137787102"
+    ]
+   }
+  },
+  {
+   "qid": "Q641600",
+   "label": "Parti communiste japonais",
+   "ideologies": [
+    {
+     "qid": "Q1203128",
+     "label": "non-interventionnisme"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q506674",
+     "label": "antimilitarisme"
+    },
+    {
+     "qid": "Q56027198",
+     "label": "anti-Anpo"
+    },
+    {
+     "qid": "Q58848",
+     "label": "pacifisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    },
+    {
+     "qid": "Q865354",
+     "label": "socialisme scientifique"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11576938",
+    "label": "Tomoko Tamura",
+    "born": "1965-07-04",
+    "died": null,
+    "parties": [
+     "Q641600"
+    ]
+   }
+  },
+  {
+   "qid": "Q64405573",
+   "label": "Reiwa Shinsengumi",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q459426",
+     "label": "bien-être animal"
+    },
+    {
+     "qid": "Q574580",
+     "label": "mouvement antinucléaire"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11469361",
+    "label": "Jōji Yamamoto",
+    "born": "1962-09-20",
+    "died": null,
+    "parties": [
+     "Q200314",
+     "Q64405573"
+    ]
+   }
+  },
+  {
+   "qid": "Q113009668",
+   "label": "Sanseitō",
+   "ideologies": [
+    {
+     "qid": "Q1331440",
+     "label": "nationalisme japonais"
+    },
+    {
+     "qid": "Q191442",
+     "label": "mouvement antimondialisation"
+    },
+    {
+     "qid": "Q2466570",
+     "label": "conservatisme traditionaliste"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q9091203",
+     "label": "ultraconservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11590855",
+    "label": "Sōhei Kamiya",
+    "born": "1977-10-12",
+    "died": null,
+    "parties": [
+     "Q113009668"
+    ]
+   }
+  }
+ ]
+}

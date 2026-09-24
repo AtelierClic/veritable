@@ -1,0 +1,282 @@
+{
+  "nation": "EST",
+  "actors": [
+    {
+      "id": "est-kristen-michal",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.est-kristen-michal.parody",
+        "fictional": "leader.est-kristen-michal.fictional"
+      },
+      "born": "1975-07-12",
+      "party": "est-parti-de-la-reforme",
+      "traits": {
+        "economic": 0.3,
+        "authority": -0.05,
+        "sovereignty": -0.45,
+        "aggressiveness": 0.19999999999999996,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1789192",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "est-alar-karis",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.est-alar-karis.parody",
+        "fictional": "leader.est-alar-karis.fictional"
+      },
+      "born": "1958-03-26",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q12358575",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "est-martin-helme",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.est-martin-helme.parody",
+        "fictional": "leader.est-martin-helme.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "est-q16409581",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.55,
+        "sovereignty": 0.85,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "est-urmas-reinsalu",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.est-urmas-reinsalu.parody",
+        "fictional": "leader.est-urmas-reinsalu.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "est-isamaa",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.25,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "est-mihhail-kolvart",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.est-mihhail-kolvart.parody",
+        "fictional": "leader.est-mihhail-kolvart.fictional"
+      },
+      "born": "1977-11-24",
+      "party": "est-parti-du-centre-d-estonie",
+      "traits": {
+        "economic": 0,
+        "authority": -0.05,
+        "sovereignty": 0,
+        "aggressiveness": 0.29,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4250802",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "est-kristina-kallas",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.est-kristina-kallas.parody",
+        "fictional": "leader.est-kristina-kallas.fictional"
+      },
+      "born": "1976-01-29",
+      "party": "est-estonie-200",
+      "traits": {
+        "economic": 0.2,
+        "authority": -0.4,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.09999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q20933505",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "est-lauri-laanemets",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.est-lauri-laanemets.parody",
+        "fictional": "leader.est-lauri-laanemets.fictional"
+      },
+      "born": "1983-01-31",
+      "party": "est-parti-social-democrate",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q12368349",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "est-parti-de-la-reforme",
+      "name": "party.est-parti-de-la-reforme",
+      "wikidata": "Q738947",
+      "ideologies": ["Q3781399", "Q617609", "Q794394"],
+      "ideology": {
+        "economic": 0.3,
+        "authority": -0.05,
+        "sovereignty": -0.45
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.3124,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 5 mars 2023 (Riigikogu)"
+      },
+      "leader": "est-kristen-michal"
+    },
+    {
+      "id": "est-q16409581",
+      "name": "party.est-q16409581",
+      "wikidata": "Q16409581",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.15,
+        "authority": 0.55,
+        "sovereignty": 0.85
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1605,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 5 mars 2023 (Riigikogu)"
+      },
+      "leader": "est-martin-helme"
+    },
+    {
+      "id": "est-parti-du-centre-d-estonie",
+      "name": "party.est-parti-du-centre-d-estonie",
+      "wikidata": "Q928652",
+      "ideologies": ["Q180490", "Q201712"],
+      "ideology": {
+        "economic": 0,
+        "authority": -0.05,
+        "sovereignty": 0
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.1528,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 5 mars 2023 (Riigikogu)"
+      },
+      "leader": "est-mihhail-kolvart"
+    },
+    {
+      "id": "est-estonie-200",
+      "name": "party.est-estonie-200",
+      "wikidata": "Q56249403",
+      "ideologies": ["Q190044", "Q3781399", "Q6216"],
+      "ideology": {
+        "economic": 0.2,
+        "authority": -0.4,
+        "sovereignty": -0.6
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.1333,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 5 mars 2023 (Riigikogu)"
+      },
+      "leader": "est-kristina-kallas"
+    },
+    {
+      "id": "est-parti-social-democrate",
+      "name": "party.est-parti-social-democrate",
+      "wikidata": "Q913551",
+      "ideologies": ["Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.0927,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 5 mars 2023 (Riigikogu)"
+      },
+      "leader": "est-lauri-laanemets"
+    },
+    {
+      "id": "est-isamaa",
+      "name": "party.est-isamaa",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.25,
+        "sovereignty": 0.15
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0821,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 5 mars 2023 (Riigikogu)"
+      },
+      "leader": "est-urmas-reinsalu"
+    }
+  ]
+}

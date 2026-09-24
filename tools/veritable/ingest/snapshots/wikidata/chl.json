@@ -1,0 +1,66 @@
+{
+ "nation": "CHL",
+ "country": "Q298",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q16297876",
+    "label": "Gabriel Boric",
+    "born": "1986-02-11",
+    "died": null,
+    "parties": [
+     "Q126899719"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q115130534",
+   "label": "Unité pour le Chili",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q135898014",
+   "label": "Changement pour le Chili",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q136226250",
+   "label": "Chile Grande y Unido",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q107012458",
+   "label": "Party of the People (Chile)",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q28868044",
+   "label": "Fédération régionaliste verte sociale",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q188961",
+     "label": "décentralisation"
+    },
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

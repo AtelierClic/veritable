@@ -1,0 +1,32 @@
+{
+ "nation": "TON",
+ "country": "Q678",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5437258",
+    "label": "Fatafehi Fakafanua",
+    "born": "1985-03-20",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q208497",
+    "label": "Tupou VI de Tonga",
+    "born": "1959-07-12",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

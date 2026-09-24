@@ -1,0 +1,76 @@
+{
+ "nation": "SEN",
+ "country": "Q1041",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q124382437",
+    "label": "Bassirou Diomaye Faye",
+    "born": "1980-03-25",
+    "died": null,
+    "parties": [
+     "Q98347378"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q124382437",
+    "label": "Bassirou Diomaye Faye",
+    "born": "1980-03-25",
+    "died": null,
+    "parties": [
+     "Q98347378"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q98347378",
+   "label": "Patriotes africains du Sénégal pour le travail, l'éthique et la fraternité",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q282739",
+     "label": "panafricanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q56312650",
+    "label": "Ousmane Sonko",
+    "born": "1974-07-15",
+    "died": null,
+    "parties": [
+     "Q98347378"
+    ]
+   }
+  },
+  {
+   "qid": "Q131294669",
+   "label": "Takku Wallu Sénégal",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q131290774",
+   "label": "Jàmm ak Njariñ",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q131319041",
+   "label": "Sàmm Sa Kàddu",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

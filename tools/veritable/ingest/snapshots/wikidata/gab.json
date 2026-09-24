@@ -1,0 +1,62 @@
+{
+ "nation": "GAB",
+ "country": "Q1000",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57856",
+    "label": "Raymond Ndong Sima",
+    "born": "1955-01-23",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q122067521",
+    "label": "Brice Oligui Nguema",
+    "born": "1975-03-03",
+    "died": null,
+    "parties": [
+     "Q134311805"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q134311805",
+   "label": "Union démocratique des bâtisseurs",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1762536",
+   "label": "Parti démocratique gabonais",
+   "ideologies": [
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q282739",
+     "label": "panafricanisme"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

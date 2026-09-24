@@ -1,0 +1,218 @@
+{
+ "nation": "BIH",
+ "country": "Q225",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q387491",
+    "label": "Borjana Krišto",
+    "born": "1961-08-13",
+    "died": null,
+    "parties": [
+     "Q16792"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q13081568",
+    "label": "Denis Bećirović",
+    "born": "1975-11-28",
+    "died": null,
+    "parties": [
+     "Q1143161"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1132677",
+   "label": "Parti d'action démocratique",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q430032",
+     "label": "panislamisme"
+    },
+    {
+     "qid": "Q4947424",
+     "label": "nationalisme bosniaque"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q312355",
+    "label": "Bakir Izetbegović",
+    "born": "1956-06-28",
+    "died": null,
+    "parties": [
+     "Q1132677"
+    ]
+   }
+  },
+  {
+   "qid": "Q1258283",
+   "label": "Alliance des sociaux-démocrates indépendants",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q17097756",
+     "label": "nationalisme serbe"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q335688",
+    "label": "Milorad Dodik",
+    "born": "1959-03-12",
+    "died": null,
+    "parties": [
+     "Q1258283",
+     "Q641691"
+    ]
+   }
+  },
+  {
+   "qid": "Q16792",
+   "label": "Union démocratique croate de Bosnie et Herzégovine",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": {
+    "qid": "Q559756",
+    "label": "Dragan Čović",
+    "born": "1956-08-20",
+    "died": null,
+    "parties": [
+     "Q16792"
+    ]
+   }
+  },
+  {
+   "qid": "Q97515918",
+   "label": "Peuple et justice",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q102101678",
+    "label": "Elmedin Konaković",
+    "born": "1974-09-03",
+    "died": null,
+    "parties": [
+     "Q97515918"
+    ]
+   }
+  },
+  {
+   "qid": "Q1648272",
+   "label": "Parti du progrès démocratique",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q47504756",
+    "label": "Draško Stanivuković",
+    "born": "1993-01-01",
+    "died": null,
+    "parties": [
+     "Q1648272"
+    ]
+   }
+  },
+  {
+   "qid": "Q946306",
+   "label": "Notre Parti",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q13231807",
+   "label": "Front démocratique",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q297825",
+    "label": "Željko Komšić",
+    "born": "1964-01-20",
+    "died": null,
+    "parties": [
+     "Q1143161",
+     "Q13231807"
+    ]
+   }
+  }
+ ]
+}

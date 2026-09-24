@@ -1,0 +1,30 @@
+{
+ "nation": "TUV",
+ "country": "Q672",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5441662",
+    "label": "Feleti Teo",
+    "born": "1962-10-09",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

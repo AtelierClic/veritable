@@ -1,0 +1,41 @@
+{
+ "nation": "DJI",
+ "country": "Q977",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q10522744",
+    "label": "Abdoulkader Kamil Mohamed",
+    "born": "1952-07-01",
+    "died": null,
+    "parties": [
+     "Q1817797"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57390",
+    "label": "Ismail Omar Guelleh",
+    "born": "1947-11-27",
+    "died": null,
+    "parties": [
+     "Q1817797"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1538413",
+   "label": "Union pour la majorité présidentielle",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

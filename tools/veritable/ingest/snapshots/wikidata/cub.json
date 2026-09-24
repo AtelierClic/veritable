@@ -1,0 +1,66 @@
+{
+ "nation": "CUB",
+ "country": "Q241",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q79358625",
+    "label": "Manuel Marrero Cruz",
+    "born": "1963-07-11",
+    "died": null,
+    "parties": [
+     "Q371402"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1932603",
+    "label": "Miguel Díaz-Canel",
+    "born": "1960-04-20",
+    "died": null,
+    "parties": [
+     "Q371402"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q371402",
+   "label": "Parti communiste de Cuba",
+   "ideologies": [
+    {
+     "qid": "Q1049968",
+     "label": "Castrisme"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q2287593",
+     "label": "guévarisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1932603",
+    "label": "Miguel Díaz-Canel",
+    "born": "1960-04-20",
+    "died": null,
+    "parties": [
+     "Q371402"
+    ]
+   }
+  }
+ ]
+}

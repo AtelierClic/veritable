@@ -1,0 +1,67 @@
+{
+ "nation": "CIV",
+ "country": "Q1008",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q3434569",
+    "label": "Robert Beugré Mambé",
+    "born": "1952-01-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57413",
+    "label": "Alassane Ouattara",
+    "born": "1942-01-01",
+    "died": null,
+    "parties": [
+     "Q1455532"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2132038",
+   "label": "Rassemblement des houphouëtistes pour la démocratie et la paix",
+   "ideologies": [
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1455532",
+   "label": "Parti démocratique de Côte d'Ivoire",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q3874021",
+     "label": "nationalisme africain"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

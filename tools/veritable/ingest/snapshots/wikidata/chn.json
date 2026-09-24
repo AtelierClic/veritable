@@ -1,0 +1,93 @@
+{
+ "nation": "CHN",
+ "country": "Q148",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q4414390",
+    "label": "Li Qiang",
+    "born": "1959-07-23",
+    "died": null,
+    "parties": [
+     "Q17427"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q15031",
+    "label": "Xi Jinping",
+    "born": "1953-06-15",
+    "died": null,
+    "parties": [
+     "Q17427"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q17427",
+   "label": "Parti communiste chinois",
+   "ideologies": [
+    {
+     "qid": "Q2301091",
+     "label": "socialisme à caractéristiques chinoises"
+    },
+    {
+     "qid": "Q2991653",
+     "label": "Concept de développement scientifique"
+    },
+    {
+     "qid": "Q375332",
+     "label": "Patriotisme socialiste"
+    },
+    {
+     "qid": "Q38247759",
+     "label": "pensée de Xi Jinping"
+    },
+    {
+     "qid": "Q431420",
+     "label": "théorie de Deng Xiaoping"
+    },
+    {
+     "qid": "Q5100919",
+     "label": "réunification de la Chine"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    },
+    {
+     "qid": "Q656448",
+     "label": "Trois représentations"
+    }
+   ],
+   "leader": {
+    "qid": "Q15031",
+    "label": "Xi Jinping",
+    "born": "1953-06-15",
+    "died": null,
+    "parties": [
+     "Q17427"
+    ]
+   }
+  },
+  {
+   "qid": "Q1348513",
+   "label": "Ligue démocratique de Chine",
+   "ideologies": [
+    {
+     "qid": "Q2301091",
+     "label": "socialisme à caractéristiques chinoises"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

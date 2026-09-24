@@ -1,0 +1,73 @@
+{
+ "nation": "GHA",
+ "country": "Q117",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q718601",
+    "label": "Nana Addo Dankwa Akufo-Addo",
+    "born": "1944-03-29",
+    "died": null,
+    "parties": [
+     "Q1148441"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q50678",
+    "label": "John Dramani Mahama",
+    "born": "1958-11-29",
+    "died": null,
+    "parties": [
+     "Q200875"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q200875",
+   "label": "Congrès démocratique national",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q50678",
+    "label": "John Dramani Mahama",
+    "born": "1958-11-29",
+    "died": null,
+    "parties": [
+     "Q200875"
+    ]
+   }
+  },
+  {
+   "qid": "Q1148441",
+   "label": "Nouveau Parti patriotique",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q718601",
+    "label": "Nana Addo Dankwa Akufo-Addo",
+    "born": "1944-03-29",
+    "died": null,
+    "parties": [
+     "Q1148441"
+    ]
+   }
+  }
+ ]
+}

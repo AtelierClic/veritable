@@ -1,0 +1,139 @@
+{
+  "nation": "USA",
+  "actors": [
+    {
+      "id": "usa-donald-trump",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.usa-donald-trump.parody",
+        "fictional": "leader.usa-donald-trump.fictional"
+      },
+      "born": "1946-06-14",
+      "party": "usa-parti-republicain",
+      "traits": {
+        "economic": 0.45,
+        "authority": 0.6,
+        "sovereignty": 0.75,
+        "aggressiveness": 0.65,
+        "corruption": 0.55,
+        "charisma": 0.75,
+        "competence": 0.5
+      },
+      "wikidata": "Q22686",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Populiste de droite, protectionniste (droits de douane, souveraineté +0,75) ; autorité au-dessus de la moyenne (contestation du résultat de 2020, pressions sur la justice et les médias) ; agressivité élevée (frappes contre le narcotrafic, menaces territoriales sur le Groenland et Panama) ; charisme fort ; corruption documentée (contentieux civils, grâces présidentielles à des proches)."
+    },
+    {
+      "id": "usa-michael-whatley",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.usa-michael-whatley.parody",
+        "fictional": "leader.usa-michael-whatley.fictional"
+      },
+      "born": "1968-10-01",
+      "party": "usa-parti-republicain",
+      "traits": {
+        "economic": 0.362,
+        "authority": 0.485,
+        "sovereignty": 0.331,
+        "aggressiveness": 0.46320000000000006,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q124450754",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "usa-ken-martin",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.usa-ken-martin.parody",
+        "fictional": "leader.usa-ken-martin.fictional"
+      },
+      "born": "1973-07-17",
+      "party": "usa-parti-democrate",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.5,
+        "aggressiveness": 0.09999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q6388085",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "usa-parti-republicain",
+      "name": "party.usa-parti-republicain",
+      "wikidata": "Q29468",
+      "ideologies": [
+        "Q1074954",
+        "Q1129261",
+        "Q1322213",
+        "Q1414298",
+        "Q162719",
+        "Q182121",
+        "Q192139",
+        "Q209158",
+        "Q2585032",
+        "Q309310",
+        "Q31838499",
+        "Q324530",
+        "Q3700346",
+        "Q381255",
+        "Q464148",
+        "Q4774354",
+        "Q575220",
+        "Q660018",
+        "Q7169",
+        "Q729119",
+        "Q852739",
+        "Q853562",
+        "Q9091203",
+        "Q980036"
+      ],
+      "ideology": {
+        "economic": 0.362,
+        "authority": 0.485,
+        "sovereignty": 0.331
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (13 of 24)",
+      "support": 0.4975,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 5 novembre 2024 (Chambre des représentants, vote populaire national)"
+      },
+      "leader": "usa-michael-whatley"
+    },
+    {
+      "id": "usa-parti-democrate",
+      "name": "party.usa-parti-democrate",
+      "wikidata": "Q29552",
+      "ideologies": ["Q16152203", "Q201712"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.4719,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 5 novembre 2024 (Chambre des représentants, vote populaire national)"
+      },
+      "leader": "usa-ken-martin"
+    }
+  ]
+}

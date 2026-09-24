@@ -1,0 +1,156 @@
+{
+ "nation": "COL",
+ "country": "Q739",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q704022",
+    "label": "Gustavo Petro",
+    "born": "1960-04-19",
+    "died": null,
+    "parties": [
+     "Q6025219"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q704022",
+    "label": "Gustavo Petro",
+    "born": "1960-04-19",
+    "died": null,
+    "parties": [
+     "Q6025219"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q135581316",
+   "label": "Pacte historique",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q939021",
+   "label": "Parti libéral colombien",
+   "ideologies": [
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": {
+    "qid": "Q332020",
+    "label": "César Gaviria",
+    "born": "1947-03-31",
+    "died": null,
+    "parties": [
+     "Q939021"
+    ]
+   }
+  },
+  {
+   "qid": "Q747333",
+   "label": "Parti conservateur colombien",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q6050566",
+    "label": "Omar Yepes",
+    "born": "1937-07-25",
+    "died": null,
+    "parties": [
+     "Q747333"
+    ]
+   }
+  },
+  {
+   "qid": "Q429642",
+   "label": "Changement radical",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q15909095",
+   "label": "centre démocratique",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q162719",
+     "label": "néolibéralisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q7900570",
+     "label": "Uribe"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q973542",
+   "label": "Parti social d'unité nationale",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": {
+    "qid": "Q5276782",
+    "label": "Dilian Francisca Toro",
+    "born": "1959-01-06",
+    "died": null,
+    "parties": [
+     "Q973542"
+    ]
+   }
+  }
+ ]
+}

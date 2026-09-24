@@ -26,7 +26,10 @@ export function effectiveProduction(
   nation: NationEconomy,
   good: Good,
 ): number {
-  const capacity = nation.production[good.id];
+  // Without a rest of the world (J6), its supply shock hits every producer.
+  const capacity =
+    nation.production[good.id] *
+    (ctx.hasRow ? 1 : 1 + ctx.worldSupplyShock(good.id));
   if (good.id === "electricity") {
     let lost = 0;
     for (const fuel of FOSSIL_FUELS) {

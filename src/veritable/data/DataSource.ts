@@ -42,6 +42,8 @@ export interface BordersMeta {
   width: number;
   height: number;
   capitals: Record<NationId, [number, number]>;
+  // Micro-states (J6): nations without a tile, with their host tile.
+  microstates?: Record<NationId, [number, number]>;
   // Pairs of nations sharing a land border on the map, and the nations that
   // touch neutral land (i.e. the rest of the world).
   landNeighbours: [NationId, NationId][];

@@ -1,0 +1,127 @@
+{
+ "nation": "GEO",
+ "country": "Q230",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q27885302",
+    "label": "Irakli Kobakhidzé",
+    "born": "1978-09-25",
+    "died": null,
+    "parties": [
+     "Q46516"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q711893",
+    "label": "Mikheïl Kavelachvili",
+    "born": "1971-07-22",
+    "died": null,
+    "parties": [
+     "Q115806730"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q46516",
+   "label": "Rêve géorgien",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": {
+    "qid": "Q57794",
+    "label": "Bidzina Ivanichvili",
+    "born": "1956-02-18",
+    "died": null,
+    "parties": [
+     "Q46516"
+    ]
+   }
+  },
+  {
+   "qid": "Q130377057",
+   "label": "Coalition pour le changement",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1057495",
+   "label": "Mouvement national uni",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q660018",
+     "label": "national-libéralisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q43330",
+    "label": "Mikheil Saakachvili",
+    "born": "1967-12-21",
+    "died": null,
+    "parties": [
+     "Q1057495",
+     "Q29788384",
+     "Q639395"
+    ]
+   }
+  },
+  {
+   "qid": "Q130377133",
+   "label": "Géorgie forte",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+  "nation": "GNQ",
+  "actors": [
+    {
+      "id": "gnq-manuel-osa-nsue-nsua",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.gnq-manuel-osa-nsue-nsua.parody",
+        "fictional": "leader.gnq-manuel-osa-nsue-nsua.fictional"
+      },
+      "born": "1976-07-21",
+      "party": "gnq-parti-democratique-de-guinee-equatoriale",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.9,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.52,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q129263796",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "gnq-teodoro-obiang-nguema-mbasogo",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.gnq-teodoro-obiang-nguema-mbasogo.parody",
+        "fictional": "leader.gnq-teodoro-obiang-nguema-mbasogo.fictional"
+      },
+      "born": "1942-06-05",
+      "party": "gnq-parti-democratique-de-guinee-equatoriale",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.9,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.52,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57385",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "gnq-parti-democratique-de-guinee-equatoriale",
+      "name": "party.gnq-parti-democratique-de-guinee-equatoriale",
+      "wikidata": "Q945167",
+      "ideologies": ["Q177266", "Q3874021", "Q576309", "Q6229"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.9,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 20 novembre 2022 (Chambre des députés et Sénat) ; part de sièges (100 % dans les deux chambres pour le PDGE et sa coalition EDGE), aucune donnée de voix fiable publiée, aucune opposition représentée."
+      },
+      "leader": "gnq-teodoro-obiang-nguema-mbasogo"
+    }
+  ]
+}

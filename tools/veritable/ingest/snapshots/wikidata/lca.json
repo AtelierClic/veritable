@@ -1,0 +1,44 @@
+{
+ "nation": "LCA",
+ "country": "Q760",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q7184214",
+    "label": "Philip Pierre",
+    "born": "1954-09-18",
+    "died": null,
+    "parties": [
+     "Q1292804"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1292804",
+   "label": "Parti travailliste de Sainte-Lucie",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

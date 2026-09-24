@@ -1,0 +1,314 @@
+{
+  "nation": "THA",
+  "actors": [
+    {
+      "id": "tha-anutin-charnvirakul",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.tha-anutin-charnvirakul.parody",
+        "fictional": "leader.tha-anutin-charnvirakul.fictional"
+      },
+      "born": "1966-09-13",
+      "party": "tha-parti-de-la-fierte-thai",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.25,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.25,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.45
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre depuis le 7 septembre 2025 (Wikidata : Phumtham Wechayachai, intérimaire en 2025). Estimation, à valider. Homme d'affaires devenu chef d'un parti pivot de coalition, arrivé au pouvoir en septembre 2025 après une crise politique ; traits proches du centre-droit thaïlandais, gouvernement de coalition fragile."
+    },
+    {
+      "id": "tha-rama-x",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.tha-rama-x.parody",
+        "fictional": "leader.tha-rama-x.fictional"
+      },
+      "born": "1952-07-28",
+      "party": null,
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.3,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.15,
+        "corruption": 0.3,
+        "charisma": 0.35,
+        "competence": 0.4
+      },
+      "wikidata": "Q548733",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Roi constitutionnellement au-dessus de la politique, mais dont l'influence informelle sur l'armée et les institutions reste documentée en Thaïlande ; autorité légèrement supérieure à un monarque strictement cérémoniel ; agressivité faible, fonction non directement exécutive."
+    },
+    {
+      "id": "tha-paetongtarn-shinawatra",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tha-paetongtarn-shinawatra.parody",
+        "fictional": "leader.tha-paetongtarn-shinawatra.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tha-pheu-thai",
+      "traits": {
+        "economic": 0.35,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.34,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tha-prawit-wongsuwan",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tha-prawit-wongsuwan.parody",
+        "fictional": "leader.tha-prawit-wongsuwan.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tha-palang-pracharat",
+      "traits": {
+        "economic": 0.433,
+        "authority": 0.233,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.4066,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tha-natthaphong-ruengpanyawut",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tha-natthaphong-ruengpanyawut.parody",
+        "fictional": "leader.tha-natthaphong-ruengpanyawut.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tha-people-s-party-thailand",
+      "traits": {
+        "economic": -0.2,
+        "authority": -0.5,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.13999999999999999,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tha-phiraphan-salirathawiphak",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tha-phiraphan-salirathawiphak.parody",
+        "fictional": "leader.tha-phiraphan-salirathawiphak.fictional"
+      },
+      "born": "1959-02-21",
+      "party": "tha-parti-de-la-nation-thaie-unie",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.45,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.51,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q13018257",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tha-anutin-charnvirakul",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tha-anutin-charnvirakul.parody",
+        "fictional": "leader.tha-anutin-charnvirakul.fictional"
+      },
+      "born": "1966-09-13",
+      "party": "tha-parti-de-la-fierte-thai",
+      "traits": {
+        "economic": 0.167,
+        "authority": 0.217,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.39339999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q16139757",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "tha-pramual-pongthawaradet",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tha-pramual-pongthawaradet.parody",
+        "fictional": "leader.tha-pramual-pongthawaradet.fictional"
+      },
+      "born": "1953-01-01",
+      "party": "tha-parti-democrate",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q25542573",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "tha-pheu-thai",
+      "name": "party.tha-pheu-thai",
+      "wikidata": "Q1142913",
+      "ideologies": ["Q180490", "Q729119"],
+      "ideology": {
+        "economic": 0.35,
+        "authority": 0.1,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.2884,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 mai 2023 (vote de liste nationale) ; le Parti Avancer, vainqueur, a été dissous par la Cour constitutionnelle en août 2024 et a reformé le Parti du peuple"
+      },
+      "leader": "tha-paetongtarn-shinawatra"
+    },
+    {
+      "id": "tha-parti-de-la-nation-thaie-unie",
+      "name": "party.tha-parti-de-la-nation-thaie-unie",
+      "wikidata": "Q115864566",
+      "ideologies": ["Q6235", "Q7169", "Q943197"],
+      "ideology": {
+        "economic": 0.25,
+        "authority": 0.45,
+        "sovereignty": 0.6
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.0472,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 mai 2023 (vote de liste nationale) ; le Parti Avancer, vainqueur, a été dissous par la Cour constitutionnelle en août 2024 et a reformé le Parti du peuple"
+      },
+      "leader": "tha-phiraphan-salirathawiphak"
+    },
+    {
+      "id": "tha-parti-de-la-fierte-thai",
+      "name": "party.tha-parti-de-la-fierte-thai",
+      "wikidata": "Q855111",
+      "ideologies": [
+        "Q1203128",
+        "Q1414298",
+        "Q180490",
+        "Q216669",
+        "Q2855609",
+        "Q6235",
+        "Q7169",
+        "Q729119"
+      ],
+      "ideology": {
+        "economic": 0.167,
+        "authority": 0.217,
+        "sovereignty": 0.25
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (6 of 8)",
+      "support": 0.0368,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 mai 2023 (vote de liste nationale) ; le Parti Avancer, vainqueur, a été dissous par la Cour constitutionnelle en août 2024 et a reformé le Parti du peuple"
+      },
+      "leader": "tha-anutin-charnvirakul"
+    },
+    {
+      "id": "tha-palang-pracharat",
+      "name": "party.tha-palang-pracharat",
+      "wikidata": "Q55077745",
+      "ideologies": ["Q177266", "Q6235", "Q7169", "Q729119"],
+      "ideology": {
+        "economic": 0.433,
+        "authority": 0.233,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.03,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 mai 2023 (vote de liste nationale) ; le Parti Avancer, vainqueur, a été dissous par la Cour constitutionnelle en août 2024 et a reformé le Parti du peuple"
+      },
+      "leader": "tha-prawit-wongsuwan"
+    },
+    {
+      "id": "tha-parti-democrate",
+      "name": "party.tha-parti-democrate",
+      "wikidata": "Q1186248",
+      "ideologies": ["Q617609", "Q794394"],
+      "ideology": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.025,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 mai 2023 (vote de liste nationale) ; le Parti Avancer, vainqueur, a été dissous par la Cour constitutionnelle en août 2024 et a reformé le Parti du peuple"
+      },
+      "leader": "tha-pramual-pongthawaradet"
+    },
+    {
+      "id": "tha-people-s-party-thailand",
+      "name": "party.tha-people-s-party-thailand",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.2,
+        "authority": -0.5,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.3799,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale du 14 mai 2023 (vote de liste nationale) ; le Parti Avancer, vainqueur, a été dissous par la Cour constitutionnelle en août 2024 et a reformé le Parti du peuple"
+      },
+      "leader": "tha-natthaphong-ruengpanyawut"
+    }
+  ]
+}

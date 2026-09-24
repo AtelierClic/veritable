@@ -1,0 +1,93 @@
+{
+ "nation": "PRT",
+ "country": "Q45",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q11764394",
+    "label": "Luís Montenegro",
+    "born": "1973-02-16",
+    "died": null,
+    "parties": [
+     "Q595575"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q6756617",
+    "label": "Marcelo Rebelo de Sousa",
+    "born": "1948-12-12",
+    "died": null,
+    "parties": [
+     "Q595575"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q63645885",
+   "label": "Chega",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q1558113",
+     "label": "antisystème"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q69935603",
+    "label": "André Ventura",
+    "born": "1983-01-15",
+    "died": null,
+    "parties": [
+     "Q63645885"
+    ]
+   }
+  },
+  {
+   "qid": "Q16947563",
+   "label": "Libre",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

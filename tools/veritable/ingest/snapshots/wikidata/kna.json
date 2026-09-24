@@ -1,0 +1,69 @@
+{
+ "nation": "KNA",
+ "country": "Q763",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q113443525",
+    "label": "Terrance Drew",
+    "born": "1976-11-22",
+    "died": null,
+    "parties": [
+     "Q250738"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q250738",
+   "label": "Parti travailliste de Saint-Christophe-et-Niévès",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q57738",
+    "label": "Denzil Douglas",
+    "born": "1953-01-14",
+    "died": null,
+    "parties": [
+     "Q250738"
+    ]
+   }
+  },
+  {
+   "qid": "Q22080592",
+   "label": "Parti travailliste du peuple",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q3102757",
+   "label": "Mouvement d'action populaire",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

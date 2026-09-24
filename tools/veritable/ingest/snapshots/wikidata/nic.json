@@ -1,0 +1,95 @@
+{
+ "nation": "NIC",
+ "country": "Q811",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57402",
+    "label": "Daniel Ortega",
+    "born": "1945-11-11",
+    "died": null,
+    "parties": [
+     "Q27389"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57402",
+    "label": "Daniel Ortega",
+    "born": "1945-11-11",
+    "died": null,
+    "parties": [
+     "Q27389"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q27389",
+   "label": "Front sandiniste de libération nationale",
+   "ideologies": [
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q2252089",
+     "label": "sandinisme"
+    },
+    {
+     "qid": "Q7264",
+     "label": "marxisme"
+    },
+    {
+     "qid": "Q739609",
+     "label": "christianisme social"
+    },
+    {
+     "qid": "Q8813",
+     "label": "bolivarisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57402",
+    "label": "Daniel Ortega",
+    "born": "1945-11-11",
+    "died": null,
+    "parties": [
+     "Q27389"
+    ]
+   }
+  },
+  {
+   "qid": "Q1422066",
+   "label": "Parti libéral constitutionnaliste",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q107406987",
+    "label": "María Haydee Osuna",
+    "born": null,
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

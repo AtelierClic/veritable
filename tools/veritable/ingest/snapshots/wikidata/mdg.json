@@ -1,0 +1,37 @@
+{
+ "nation": "MDG",
+ "country": "Q1019",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q136448305",
+    "label": "Ruphin Zafisambo",
+    "born": null,
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q136500275",
+    "label": "Michael Randrianirina",
+    "born": "1973-08-23",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q86680874",
+   "label": "Nous tous, ensemble avec Andry Rajoelina",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

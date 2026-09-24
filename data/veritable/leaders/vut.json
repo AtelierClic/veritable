@@ -1,0 +1,259 @@
+{
+  "nation": "VUT",
+  "actors": [
+    {
+      "id": "vut-jotham-napat",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.vut-jotham-napat.parody",
+        "fictional": "leader.vut-jotham-napat.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "vut-parti-des-dirigeants-du-vanuatu",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.36,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre depuis février 2025 (Wikidata : Bob Loughman). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "vut-nikenike-vurobaravu",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.vut-nikenike-vurobaravu.parody",
+        "fictional": "leader.vut-nikenike-vurobaravu.fictional"
+      },
+      "born": "1951-12-03",
+      "party": "vut-vanua-aku-pati",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.5,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q113239716",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "vut-ralph-regenvanu",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.vut-ralph-regenvanu.parody",
+        "fictional": "leader.vut-ralph-regenvanu.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "vut-vanua-aku-pati",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.5,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "vut-ishmael-kalsakau",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.vut-ishmael-kalsakau.parody",
+        "fictional": "leader.vut-ishmael-kalsakau.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "vut-union-des-partis-moderes",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "vut-marc-ati",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.vut-marc-ati.parody",
+        "fictional": "leader.vut-marc-ati.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "vut-groupe-iauko",
+      "traits": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.36,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q109923917",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "vut-ralph-regenvanu",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.vut-ralph-regenvanu.parody",
+        "fictional": "leader.vut-ralph-regenvanu.fictional"
+      },
+      "born": "1970-09-20",
+      "party": "vut-parti-terre-et-justice",
+      "traits": {
+        "economic": 0.25,
+        "authority": 0.55,
+        "sovereignty": 0.85,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q578951",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "vut-parti-des-dirigeants-du-vanuatu",
+      "name": "party.vut-parti-des-dirigeants-du-vanuatu",
+      "wikidata": "Q24907935",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.173,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale anticipée du 16 janvier 2025 (52 sièges), parts de sièges faute de pourcentages de voix nationaux"
+      },
+      "leader": "vut-jotham-napat"
+    },
+    {
+      "id": "vut-vanua-aku-pati",
+      "name": "party.vut-vanua-aku-pati",
+      "wikidata": "Q31373",
+      "ideologies": ["Q6235", "Q979616"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.5,
+        "sovereignty": 0.9
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.135,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale anticipée du 16 janvier 2025 (52 sièges), parts de sièges faute de pourcentages de voix nationaux"
+      },
+      "leader": "vut-ralph-regenvanu"
+    },
+    {
+      "id": "vut-union-des-partis-moderes",
+      "name": "party.vut-union-des-partis-moderes",
+      "wikidata": "Q31360",
+      "ideologies": ["Q617609"],
+      "ideology": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.115,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale anticipée du 16 janvier 2025 (52 sièges), parts de sièges faute de pourcentages de voix nationaux"
+      },
+      "leader": "vut-ishmael-kalsakau"
+    },
+    {
+      "id": "vut-groupe-iauko",
+      "name": "party.vut-groupe-iauko",
+      "wikidata": "Q24661025",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.115,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale anticipée du 16 janvier 2025 (52 sièges), parts de sièges faute de pourcentages de voix nationaux"
+      },
+      "leader": "vut-marc-ati"
+    },
+    {
+      "id": "vut-namangi-aute",
+      "name": "party.vut-namangi-aute",
+      "wikidata": "Q1987899",
+      "ideologies": ["Q11168082", "Q2684060"],
+      "ideology": {
+        "economic": 0,
+        "authority": -0.2,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.096,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale anticipée du 16 janvier 2025 (52 sièges), parts de sièges faute de pourcentages de voix nationaux"
+      },
+      "leader": null
+    },
+    {
+      "id": "vut-parti-terre-et-justice",
+      "name": "party.vut-parti-terre-et-justice",
+      "wikidata": "Q3366161",
+      "ideologies": ["Q11168082", "Q208128", "Q6235", "Q852739"],
+      "ideology": {
+        "economic": 0.25,
+        "authority": 0.55,
+        "sovereignty": 0.85
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 4)",
+      "support": 0.096,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection générale anticipée du 16 janvier 2025 (52 sièges), parts de sièges faute de pourcentages de voix nationaux"
+      },
+      "leader": "vut-ralph-regenvanu"
+    }
+  ]
+}

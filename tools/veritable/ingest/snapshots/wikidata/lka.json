@@ -1,0 +1,72 @@
+{
+ "nation": "LKA",
+ "country": "Q854",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q98298397",
+    "label": "Harini Amarasuriya",
+    "born": "1970-03-06",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q4777855",
+    "label": "Anura Kumara Dissanayake",
+    "born": "1968-11-24",
+    "died": null,
+    "parties": [
+     "Q104901719",
+     "Q1682545"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q104901719",
+   "label": "Pouvoir populaire national",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q85847146",
+   "label": "Samagi Jana Balawegaya",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q7006885",
+   "label": "Nouveau Front démocratique",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q3522458",
+   "label": "Ilankai Tamil Arasu Kachchi",
+   "ideologies": [
+    {
+     "qid": "Q16932654",
+     "label": "nationalisme tamoul sri-lankais"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

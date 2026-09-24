@@ -1,0 +1,123 @@
+{
+  "nation": "CHN",
+  "actors": [
+    {
+      "id": "chn-li-qiang",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.chn-li-qiang.parody",
+        "fictional": "leader.chn-li-qiang.fictional"
+      },
+      "born": "1959-07-23",
+      "party": "chn-parti-communiste-chinois",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.6,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.3,
+        "corruption": 0.3,
+        "charisma": 0.4,
+        "competence": 0.65
+      },
+      "wikidata": "Q4414390",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre loyal à Xi Jinping, exécutant plus que décideur autonome ; autorité et économie alignées sur la ligne du parti ; compétence reconnue en gestion économique (ancien secrétaire du parti à Shanghai)."
+    },
+    {
+      "id": "chn-xi-jinping",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.chn-xi-jinping.parody",
+        "fictional": "leader.chn-xi-jinping.fictional"
+      },
+      "born": "1953-06-15",
+      "party": "chn-parti-communiste-chinois",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.85,
+        "sovereignty": 0.55,
+        "aggressiveness": 0.55,
+        "corruption": 0.35,
+        "charisma": 0.55,
+        "competence": 0.75
+      },
+      "wikidata": "Q15031",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Économie dirigée par le parti (capitalisme d'État, légèrement à gauche) ; autorité très forte (concentration des pouvoirs, absence de limite de mandat depuis 2018) ; souveraineté marquée (Taïwan, mer de Chine méridionale) sans franchir le seuil du conflit ouvert ; compétence élevée après plus d'une décennie au pouvoir ; corruption modérée (grandes campagnes anti-corruption, mais opacité du système)."
+    },
+    {
+      "id": "chn-ding-zhongli",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.chn-ding-zhongli.parody",
+        "fictional": "leader.chn-ding-zhongli.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "chn-ligue-democratique-de-chine",
+      "traits": {
+        "economic": 0,
+        "authority": 0.7,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.49999999999999994,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "chn-parti-communiste-chinois",
+      "name": "party.chn-parti-communiste-chinois",
+      "wikidata": "Q17427",
+      "ideologies": [
+        "Q2301091",
+        "Q2991653",
+        "Q375332",
+        "Q38247759",
+        "Q431420",
+        "Q5100919",
+        "Q6186",
+        "Q656448"
+      ],
+      "ideology": {
+        "economic": -0.9,
+        "authority": 0.5,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 8)",
+      "support": 0.95,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection indirecte à plusieurs degrés du 14e Congrès national du peuple, première session le 5 mars 2023"
+      },
+      "leader": "chn-xi-jinping"
+    },
+    {
+      "id": "chn-ligue-democratique-de-chine",
+      "name": "party.chn-ligue-democratique-de-chine",
+      "wikidata": "Q1348513",
+      "ideologies": ["Q2301091"],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.7,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.01,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection indirecte à plusieurs degrés du 14e Congrès national du peuple, première session le 5 mars 2023"
+      },
+      "leader": "chn-ding-zhongli"
+    }
+  ]
+}

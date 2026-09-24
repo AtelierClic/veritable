@@ -1,0 +1,57 @@
+{
+ "nation": "BEN",
+ "country": "Q962",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16669148",
+    "label": "Patrice Talon",
+    "born": "1958-05-01",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q16669148",
+    "label": "Patrice Talon",
+    "born": "1958-05-01",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q96332854",
+   "label": "Union progressiste le renouveau",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q96273366",
+   "label": "Bloc républicain",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

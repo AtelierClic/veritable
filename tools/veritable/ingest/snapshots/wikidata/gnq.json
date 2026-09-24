@@ -1,0 +1,66 @@
+{
+ "nation": "GNQ",
+ "country": "Q983",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q129263796",
+    "label": "Manuel Osa Nsue Nsua",
+    "born": "1976-07-21",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57385",
+    "label": "Teodoro Obiang Nguema Mbasogo",
+    "born": "1942-06-05",
+    "died": null,
+    "parties": [
+     "Q1606430",
+     "Q945167"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q945167",
+   "label": "Parti démocratique de Guinée équatoriale",
+   "ideologies": [
+    {
+     "qid": "Q177266",
+     "label": "militarisme"
+    },
+    {
+     "qid": "Q3874021",
+     "label": "nationalisme africain"
+    },
+    {
+     "qid": "Q576309",
+     "label": "anticolonialisme"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57385",
+    "label": "Teodoro Obiang Nguema Mbasogo",
+    "born": "1942-06-05",
+    "died": null,
+    "parties": [
+     "Q1606430",
+     "Q945167"
+    ]
+   }
+  }
+ ]
+}

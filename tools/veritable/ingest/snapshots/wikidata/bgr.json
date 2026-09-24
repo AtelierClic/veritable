@@ -1,0 +1,168 @@
+{
+ "nation": "BGR",
+ "country": "Q219",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q59978016",
+    "label": "Rossen Jeliazkov",
+    "born": "1968-04-05",
+    "died": null,
+    "parties": [
+     "Q133968"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q26257557",
+    "label": "Roumen Radev",
+    "born": "1963-06-18",
+    "died": null,
+    "parties": [
+     "Q138546752"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q115817806",
+   "label": "GERB-SDS",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57775",
+    "label": "Boïko Borissov",
+    "born": "1959-06-13",
+    "died": null,
+    "parties": [
+     "Q133968"
+    ]
+   }
+  },
+  {
+   "qid": "Q116769868",
+   "label": "Nous continuons le changement - Bulgarie démocratique",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    },
+    {
+     "qid": "Q60741353",
+     "label": "anti-corruption"
+    }
+   ],
+   "leader": {
+    "qid": "Q12272416",
+    "label": "Assen Vassilev",
+    "born": "1977-09-09",
+    "died": null,
+    "parties": [
+     "Q108601789"
+    ]
+   }
+  },
+  {
+   "qid": "Q130305932",
+   "label": "Mouvement des droits et des libertés - Nouveau départ",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q752259",
+   "label": "Parti socialiste bulgare",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q17409332",
+    "label": "Atanas Zafirov",
+    "born": "1971-09-29",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q98098908",
+   "label": "Il y a un tel peuple",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q171174",
+     "label": "démocratie directe"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q18481451",
+     "label": "anti-élitisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q60741353",
+     "label": "anti-corruption"
+    }
+   ],
+   "leader": {
+    "qid": "Q1850325",
+    "label": "Slavi Trifonov",
+    "born": "1966-10-18",
+    "died": null,
+    "parties": [
+     "Q98098908"
+    ]
+   }
+  }
+ ]
+}

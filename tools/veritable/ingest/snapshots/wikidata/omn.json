@@ -1,0 +1,30 @@
+{
+ "nation": "OMN",
+ "country": "Q842",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q12250314",
+    "label": "Haïtham bin Tariq Al Saïd",
+    "born": "1955-10-11",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12250314",
+    "label": "Haïtham bin Tariq Al Saïd",
+    "born": "1955-10-11",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

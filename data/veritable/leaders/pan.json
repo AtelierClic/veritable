@@ -1,0 +1,240 @@
+{
+  "nation": "PAN",
+  "actors": [
+    {
+      "id": "pan-jose-raul-mulino",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.pan-jose-raul-mulino.parody",
+        "fictional": "leader.pan-jose-raul-mulino.fictional"
+      },
+      "born": "1959-06-13",
+      "party": "pan-realiser-les-objectifs",
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.3,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.4,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q108454869",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "pan-benicio-robinson",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pan-benicio-robinson.parody",
+        "fictional": "leader.pan-benicio-robinson.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "pan-parti-revolutionnaire-democratique",
+      "traits": {
+        "economic": -0.3,
+        "authority": 0.05,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.33,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pan-ricardo-martinelli",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pan-ricardo-martinelli.parody",
+        "fictional": "leader.pan-ricardo-martinelli.fictional"
+      },
+      "born": "1952-03-29",
+      "party": "pan-realiser-les-objectifs",
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.3,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.4,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57491",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pan-romulo-roux",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pan-romulo-roux.parody",
+        "fictional": "leader.pan-romulo-roux.fictional"
+      },
+      "born": "1965-01-08",
+      "party": "pan-democratic-change",
+      "traits": {
+        "economic": 0.167,
+        "authority": 0.2,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.39999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q56066098",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pan-juan-carlos-varela",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pan-juan-carlos-varela.parody",
+        "fictional": "leader.pan-juan-carlos-varela.fictional"
+      },
+      "born": "1963-12-12",
+      "party": "pan-parti-panamiste",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.5,
+        "sovereignty": 0.65,
+        "aggressiveness": 0.53,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1134096",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "pan-ricardo-lombana",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.pan-ricardo-lombana.parody",
+        "fictional": "leader.pan-ricardo-lombana.fictional"
+      },
+      "born": "1973-11-26",
+      "party": "pan-another-way-movement",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.2,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.24,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q62022065",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "pan-realiser-les-objectifs",
+      "name": "party.pan-realiser-les-objectifs",
+      "wikidata": "Q106319619",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.5,
+        "authority": 0.3,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1717,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 5 mai 2024 (Assemblée nationale ; environ 24 % des sièges à des indépendants, non repris ci-dessous)"
+      },
+      "leader": "pan-ricardo-martinelli"
+    },
+    {
+      "id": "pan-parti-revolutionnaire-democratique",
+      "name": "party.pan-parti-revolutionnaire-democratique",
+      "wikidata": "Q1630365",
+      "ideologies": ["Q121254", "Q180490"],
+      "ideology": {
+        "economic": -0.3,
+        "authority": 0.05,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.1625,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 5 mai 2024 (Assemblée nationale ; environ 24 % des sièges à des indépendants, non repris ci-dessous)"
+      },
+      "leader": "pan-benicio-robinson"
+    },
+    {
+      "id": "pan-democratic-change",
+      "name": "party.pan-democratic-change",
+      "wikidata": "Q5255581",
+      "ideologies": ["Q1043096", "Q180490", "Q59599"],
+      "ideology": {
+        "economic": 0.167,
+        "authority": 0.2,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.1119,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 5 mai 2024 (Assemblée nationale ; environ 24 % des sièges à des indépendants, non repris ci-dessous)"
+      },
+      "leader": "pan-romulo-roux"
+    },
+    {
+      "id": "pan-parti-panamiste",
+      "name": "party.pan-parti-panamiste",
+      "wikidata": "Q628468",
+      "ideologies": ["Q180490", "Q852739"],
+      "ideology": {
+        "economic": 0.15,
+        "authority": 0.5,
+        "sovereignty": 0.65
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.1064,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 5 mai 2024 (Assemblée nationale ; environ 24 % des sièges à des indépendants, non repris ci-dessous)"
+      },
+      "leader": "pan-juan-carlos-varela"
+    },
+    {
+      "id": "pan-another-way-movement",
+      "name": "party.pan-another-way-movement",
+      "wikidata": "Q112828175",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.2,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0699,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 5 mai 2024 (Assemblée nationale ; environ 24 % des sièges à des indépendants, non repris ci-dessous)"
+      },
+      "leader": "pan-ricardo-lombana"
+    }
+  ]
+}

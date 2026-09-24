@@ -1,0 +1,90 @@
+{
+ "nation": "ERI",
+ "country": "Q986",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57348",
+    "label": "Issayas Afewerki",
+    "born": "1946-02-02",
+    "died": null,
+    "parties": [
+     "Q863376"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57348",
+    "label": "Issayas Afewerki",
+    "born": "1946-02-02",
+    "died": null,
+    "parties": [
+     "Q863376"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q863376",
+   "label": "Front populaire pour la démocratie et la justice",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q128135",
+     "label": "totalitarisme"
+    },
+    {
+     "qid": "Q177266",
+     "label": "militarisme"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q3336986",
+     "label": "nationalisme révolutionnaire"
+    },
+    {
+     "qid": "Q478004",
+     "label": "anticléricalisme"
+    },
+    {
+     "qid": "Q590478",
+     "label": "socialisme africain"
+    },
+    {
+     "qid": "Q60743224",
+     "label": "nationalisme érythréen"
+    },
+    {
+     "qid": "Q7264",
+     "label": "marxisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57348",
+    "label": "Issayas Afewerki",
+    "born": "1946-02-02",
+    "died": null,
+    "parties": [
+     "Q863376"
+    ]
+   }
+  }
+ ]
+}

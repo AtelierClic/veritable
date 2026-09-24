@@ -1,0 +1,152 @@
+{
+  "nation": "LBR",
+  "actors": [
+    {
+      "id": "lbr-joseph-boakai",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.lbr-joseph-boakai.parody",
+        "fictional": "leader.lbr-joseph-boakai.fictional"
+      },
+      "born": "1944-11-30",
+      "party": "lbr-parti-de-l-unite",
+      "traits": {
+        "economic": 0.8,
+        "authority": -0.2,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.2,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2630483",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "lbr-george-weah",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbr-george-weah.parody",
+        "fictional": "leader.lbr-george-weah.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "lbr-congres-pour-le-changement-democratique",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.48,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "lbr-musa-hassan-bility",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.lbr-musa-hassan-bility.parody",
+        "fictional": "leader.lbr-musa-hassan-bility.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "lbr-liberty-party",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.27999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "lbr-congres-pour-le-changement-democratique",
+      "name": "party.lbr-congres-pour-le-changement-democratique",
+      "wikidata": "Q1125914",
+      "ideologies": ["Q180490"],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.342,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 10 octobre 2023 (premier tour), Chambre des représentants (73 sièges) ; environ 26% des sièges reviennent à des indépendants et à de très petits partis non listés ici (chacun sous le seuil de 2%)."
+      },
+      "leader": "lbr-george-weah"
+    },
+    {
+      "id": "lbr-parti-de-l-unite",
+      "name": "party.lbr-parti-de-l-unite",
+      "wikidata": "Q550159",
+      "ideologies": ["Q729119"],
+      "ideology": {
+        "economic": 0.8,
+        "authority": -0.2,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.151,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 10 octobre 2023 (premier tour), Chambre des représentants (73 sièges) ; environ 26% des sièges reviennent à des indépendants et à de très petits partis non listés ici (chacun sous le seuil de 2%)."
+      },
+      "leader": "lbr-joseph-boakai"
+    },
+    {
+      "id": "lbr-movement-for-democracy-and-reconstruction",
+      "name": "party.lbr-movement-for-democracy-and-reconstruction",
+      "wikidata": "Q123631082",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.055,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 10 octobre 2023 (premier tour), Chambre des représentants (73 sièges) ; environ 26% des sièges reviennent à des indépendants et à de très petits partis non listés ici (chacun sous le seuil de 2%)."
+      },
+      "leader": null
+    },
+    {
+      "id": "lbr-liberty-party",
+      "name": "party.lbr-liberty-party",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.082,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 10 octobre 2023 (premier tour), Chambre des représentants (73 sièges) ; environ 26% des sièges reviennent à des indépendants et à de très petits partis non listés ici (chacun sous le seuil de 2%)."
+      },
+      "leader": "lbr-musa-hassan-bility"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "nation": "IRQ",
+  "actors": [
+    {
+      "id": "irq-mohammed-chia-al-soudani",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.irq-mohammed-chia-al-soudani.parody",
+        "fictional": "leader.irq-mohammed-chia-al-soudani.fictional"
+      },
+      "born": "1970-03-04",
+      "party": "irq-reconstruction-and-development-coalition",
+      "traits": {
+        "economic": 0,
+        "authority": 0.3,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.4,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q3700793",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "irq-abdul-latif-rashid",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.irq-abdul-latif-rashid.parody",
+        "fictional": "leader.irq-abdul-latif-rashid.fictional"
+      },
+      "born": "1944-08-10",
+      "party": "irq-union-patriotique-du-kurdistan",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Président depuis octobre 2022, en fonction au 1er janvier 2026 ; son successeur n'est élu qu'après la législature de novembre 2025 (Wikidata : Nizar Amedi). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "irq-mohammed-al-halbousi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.irq-mohammed-al-halbousi.parody",
+        "fictional": "leader.irq-mohammed-al-halbousi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "irq-taqaddum",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.2,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "irq-nouri-al-maliki",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.irq-nouri-al-maliki.parody",
+        "fictional": "leader.irq-nouri-al-maliki.fictional"
+      },
+      "born": "1950-06-20",
+      "party": "irq-coalition-de-l-etat-de-droit",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57673",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "irq-massoud-barzani",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.irq-massoud-barzani.parody",
+        "fictional": "leader.irq-massoud-barzani.fictional"
+      },
+      "born": "1946-08-16",
+      "party": "irq-parti-democratique-du-kurdistan",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.2,
+        "sovereignty": 0.333,
+        "aggressiveness": 0.40659999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q315927",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "irq-bafel-talabani",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.irq-bafel-talabani.parody",
+        "fictional": "leader.irq-bafel-talabani.fictional"
+      },
+      "born": "1973-01-01",
+      "party": "irq-union-patriotique-du-kurdistan",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q39650449",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "irq-coalition-de-l-etat-de-droit",
+      "name": "party.irq-coalition-de-l-etat-de-droit",
+      "wikidata": "Q1971776",
+      "ideologies": ["Q9585"],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.088,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 11 novembre 2025 (329 sièges) ; parts de sièges utilisées à défaut de pourcentages de voix nationaux fiables dans ce scrutin par circonscription"
+      },
+      "leader": "irq-nouri-al-maliki"
+    },
+    {
+      "id": "irq-parti-democratique-du-kurdistan",
+      "name": "party.irq-parti-democratique-du-kurdistan",
+      "wikidata": "Q781221",
+      "ideologies": ["Q162719", "Q180490", "Q2684060", "Q7057435", "Q7169"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.2,
+        "sovereignty": 0.333
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 5)",
+      "support": 0.082,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 11 novembre 2025 (329 sièges) ; parts de sièges utilisées à défaut de pourcentages de voix nationaux fiables dans ce scrutin par circonscription"
+      },
+      "leader": "irq-massoud-barzani"
+    },
+    {
+      "id": "irq-union-patriotique-du-kurdistan",
+      "name": "party.irq-union-patriotique-du-kurdistan",
+      "wikidata": "Q677505",
+      "ideologies": ["Q121254", "Q494792", "Q7057435"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 3)",
+      "support": 0.05,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 11 novembre 2025 (329 sièges) ; parts de sièges utilisées à défaut de pourcentages de voix nationaux fiables dans ce scrutin par circonscription"
+      },
+      "leader": "irq-bafel-talabani"
+    },
+    {
+      "id": "irq-reconstruction-and-development-coalition",
+      "name": "party.irq-reconstruction-and-development-coalition",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.3,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.14,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 11 novembre 2025 (329 sièges) ; parts de sièges utilisées à défaut de pourcentages de voix nationaux fiables dans ce scrutin par circonscription"
+      },
+      "leader": "irq-mohammed-chia-al-soudani"
+    },
+    {
+      "id": "irq-taqaddum",
+      "name": "party.irq-taqaddum",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.2,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.082,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 11 novembre 2025 (329 sièges) ; parts de sièges utilisées à défaut de pourcentages de voix nationaux fiables dans ce scrutin par circonscription"
+      },
+      "leader": "irq-mohammed-al-halbousi"
+    }
+  ]
+}

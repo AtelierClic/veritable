@@ -1,0 +1,45 @@
+{
+ "nation": "CAF",
+ "country": "Q929",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q88310768",
+    "label": "Félix Moloua",
+    "born": "1957-06-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57758",
+    "label": "Faustin-Archange Touadéra",
+    "born": "1957-04-21",
+    "died": null,
+    "parties": [
+     "Q104581386"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q104581386",
+   "label": "Mouvement Cœurs Unis",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q23900268",
+   "label": "Union pour le renouveau centrafricain",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

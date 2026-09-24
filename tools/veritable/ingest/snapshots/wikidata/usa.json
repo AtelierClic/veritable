@@ -1,0 +1,169 @@
+{
+ "nation": "USA",
+ "country": "Q30",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q22686",
+    "label": "Donald Trump",
+    "born": "1946-06-14",
+    "died": null,
+    "parties": [
+     "Q29468"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q22686",
+    "label": "Donald Trump",
+    "born": "1946-06-14",
+    "died": null,
+    "parties": [
+     "Q29468"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q29468",
+   "label": "Parti républicain",
+   "ideologies": [
+    {
+     "qid": "Q1074954",
+     "label": "paléo-conservatisme"
+    },
+    {
+     "qid": "Q1129261",
+     "label": "mouvement anti-avortement"
+    },
+    {
+     "qid": "Q1322213",
+     "label": "droite chrétienne"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q162719",
+     "label": "néolibéralisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q192139",
+     "label": "néo-conservatisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q2585032",
+     "label": "conservatisme aux États-unis"
+    },
+    {
+     "qid": "Q309310",
+     "label": "isolationnisme"
+    },
+    {
+     "qid": "Q31838499",
+     "label": "trumpisme"
+    },
+    {
+     "qid": "Q324530",
+     "label": "communautarisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q381255",
+     "label": "américanocentrisme"
+    },
+    {
+     "qid": "Q464148",
+     "label": "exceptionnalisme américain"
+    },
+    {
+     "qid": "Q4774354",
+     "label": "anti-écologisme"
+    },
+    {
+     "qid": "Q575220",
+     "label": "antiféminisme"
+    },
+    {
+     "qid": "Q660018",
+     "label": "national-libéralisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    },
+    {
+     "qid": "Q853562",
+     "label": "libertarianisme conservateur"
+    },
+    {
+     "qid": "Q9091203",
+     "label": "ultraconservatisme"
+    },
+    {
+     "qid": "Q980036",
+     "label": "federalism in the United States"
+    }
+   ],
+   "leader": {
+    "qid": "Q124450754",
+    "label": "Michael Whatley",
+    "born": "1968-10-01",
+    "died": null,
+    "parties": [
+     "Q29468"
+    ]
+   }
+  },
+  {
+   "qid": "Q29552",
+   "label": "Parti démocrate",
+   "ideologies": [
+    {
+     "qid": "Q16152203",
+     "label": "libéralisme moderne aux États-Unis"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q6388085",
+    "label": "Ken Martin",
+    "born": "1973-07-17",
+    "died": null,
+    "parties": [
+     "Q29552"
+    ]
+   }
+  }
+ ]
+}

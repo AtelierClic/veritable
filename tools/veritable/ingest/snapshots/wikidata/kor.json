@@ -1,0 +1,101 @@
+{
+ "nation": "KOR",
+ "country": "Q884",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q12612463",
+    "label": "Lee Jae-myung",
+    "born": "1963-12-08",
+    "died": null,
+    "parties": [
+     "Q15978686"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12612463",
+    "label": "Lee Jae-myung",
+    "born": "1963-12-08",
+    "died": null,
+    "parties": [
+     "Q15978686"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q15978686",
+   "label": "Parti Minju",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q12612463",
+    "label": "Lee Jae-myung",
+    "born": "1963-12-08",
+    "died": null,
+    "parties": [
+     "Q15978686"
+    ]
+   }
+  },
+  {
+   "qid": "Q85412437",
+   "label": "Pouvoir des nationaux",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q124657368",
+   "label": "Reconstruire la Corée",
+   "ideologies": [
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q12616590",
+    "label": "Cho Kuk",
+    "born": "1965-04-06",
+    "died": null,
+    "parties": [
+     "Q124657368",
+     "Q15978686"
+    ]
+   }
+  }
+ ]
+}

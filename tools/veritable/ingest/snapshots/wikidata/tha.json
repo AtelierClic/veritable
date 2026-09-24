@@ -1,0 +1,169 @@
+{
+ "nation": "THA",
+ "country": "Q869",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q13018661",
+    "label": "Phumtham Wechayachai",
+    "born": "1953-12-05",
+    "died": null,
+    "parties": [
+     "Q1142913"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q548733",
+    "label": "Rama X",
+    "born": "1952-07-28",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1142913",
+   "label": "Pheu Thai",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q115864566",
+   "label": "Parti de la Nation thaïe unie",
+   "ideologies": [
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q943197",
+     "label": "royalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q13018257",
+    "label": "Phiraphan Salirathawiphak",
+    "born": "1959-02-21",
+    "died": null,
+    "parties": [
+     "Q115864566",
+     "Q1186248"
+    ]
+   }
+  },
+  {
+   "qid": "Q855111",
+   "label": "Parti de la fierté thaï",
+   "ideologies": [
+    {
+     "qid": "Q1203128",
+     "label": "non-interventionnisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q216669",
+     "label": "monarchisme"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q16139757",
+    "label": "Anutin Charnvirakul",
+    "born": "1966-09-13",
+    "died": null,
+    "parties": [
+     "Q855111"
+    ]
+   }
+  },
+  {
+   "qid": "Q55077745",
+   "label": "Palang Pracharat",
+   "ideologies": [
+    {
+     "qid": "Q177266",
+     "label": "militarisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1186248",
+   "label": "Parti démocrate",
+   "ideologies": [
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    }
+   ],
+   "leader": {
+    "qid": "Q25542573",
+    "label": "Pramual Pongthawaradet",
+    "born": "1953-01-01",
+    "died": null,
+    "parties": [
+     "Q1186248"
+    ]
+   }
+  }
+ ]
+}

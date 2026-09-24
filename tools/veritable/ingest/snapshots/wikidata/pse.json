@@ -1,0 +1,73 @@
+{
+ "nation": "PSE",
+ "country": "Q219060",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16192933",
+    "label": "Mohammad Chtayyeh",
+    "born": "1958-01-17",
+    "died": null,
+    "parties": [
+     "Q178888"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q127998",
+    "label": "Mahmoud Abbas",
+    "born": "1935-11-15",
+    "died": null,
+    "parties": [
+     "Q178888"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q178888",
+   "label": "Fatah",
+   "ideologies": [
+    {
+     "qid": "Q1616403",
+     "label": "nationalisme palestinien"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q127998",
+    "label": "Mahmoud Abbas",
+    "born": "1935-11-15",
+    "died": null,
+    "parties": [
+     "Q178888"
+    ]
+   }
+  },
+  {
+   "qid": "Q921699",
+   "label": "Front populaire de libération de la Palestine-Commandement général",
+   "ideologies": [
+    {
+     "qid": "Q1616403",
+     "label": "nationalisme palestinien"
+    },
+    {
+     "qid": "Q584548",
+     "label": "antisionisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

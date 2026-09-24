@@ -1,0 +1,69 @@
+{
+ "nation": "MRT",
+ "country": "Q1025",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q66793577",
+    "label": "Moctar Ould Djay",
+    "born": "1973-12-28",
+    "died": null,
+    "parties": [
+     "Q112939010"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12241106",
+    "label": "Mohammed ould al-Ghazouani",
+    "born": "1956-12-31",
+    "died": null,
+    "parties": [
+     "Q112939010",
+     "Q7886485"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q112939010",
+   "label": "Parti El Insaf",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q12184844",
+   "label": "Rassemblement national pour la réforme et le développement",
+   "ideologies": [
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    },
+    {
+     "qid": "Q65344004",
+     "label": "Sunni Islamism"
+    },
+    {
+     "qid": "Q65352237",
+     "label": "conservatisme religieux"
+    }
+   ],
+   "leader": {
+    "qid": "Q122946178",
+    "label": "Hamadi Ould Sid'El Moctar",
+    "born": null,
+    "died": null,
+    "parties": [
+     "Q12184844"
+    ]
+   }
+  }
+ ]
+}

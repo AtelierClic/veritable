@@ -1,0 +1,181 @@
+{
+ "nation": "UZB",
+ "country": "Q265",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q28002959",
+    "label": "Abdulla Nigʻmatovich Oripov",
+    "born": "1961-05-24",
+    "died": null,
+    "parties": [
+     "Q1146334"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57808",
+    "label": "Chavkat Mirzioïev",
+    "born": "1957-07-24",
+    "died": null,
+    "parties": [
+     "Q1029663",
+     "Q1146334",
+     "Q2945416",
+     "Q7076484",
+     "Q79854"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1146334",
+   "label": "Parti libéral-démocrate d'Ouzbékistan",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q478004",
+     "label": "anticléricalisme"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q84091097",
+    "label": "Aktam Haitov",
+    "born": "1974-03-12",
+    "died": null,
+    "parties": [
+     "Q1146334"
+    ]
+   }
+  },
+  {
+   "qid": "Q7076484",
+   "label": "Parti démocrate de la renaissance nationale d'Ouzbékistan",
+   "ideologies": [
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q15986535",
+     "label": "national democracy"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q478004",
+     "label": "anticléricalisme"
+    },
+    {
+     "qid": "Q50685643",
+     "label": "pérennialisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q83834",
+     "label": "anti-soviétisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q84723065",
+    "label": "Alisher Qodirov",
+    "born": "1975-03-12",
+    "died": null,
+    "parties": [
+     "Q7076484"
+    ]
+   }
+  },
+  {
+   "qid": "Q6317086",
+   "label": "Parti social-démocrate de la justice",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q695838",
+     "label": "internationalisme institutionnel"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q109493520",
+    "label": "Q109493520",
+    "born": "1959-02-27",
+    "died": null,
+    "parties": [
+     "Q6317086",
+     "Q79854"
+    ]
+   }
+  }
+ ]
+}

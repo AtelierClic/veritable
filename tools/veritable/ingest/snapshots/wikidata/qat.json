@@ -1,0 +1,32 @@
+{
+ "nation": "QAT",
+ "country": "Q846",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q23020336",
+    "label": "Mohammed ben Abderrahmane Al-Thani",
+    "born": "1980-11-01",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1855372",
+    "label": "Tamim ben Hamad Al Thani",
+    "born": "1980-06-03",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

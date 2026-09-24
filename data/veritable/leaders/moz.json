@@ -1,0 +1,179 @@
+{
+  "nation": "MOZ",
+  "actors": [
+    {
+      "id": "moz-maria-benvida-levy",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.moz-maria-benvida-levy.parody",
+        "fictional": "leader.moz-maria-benvida-levy.fictional"
+      },
+      "born": "1969-03-24",
+      "party": "moz-front-de-liberation-du-mozambique",
+      "traits": {
+        "economic": -0.8,
+        "authority": 0.2,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q6761049",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "moz-daniel-chapo",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.moz-daniel-chapo.parody",
+        "fictional": "leader.moz-daniel-chapo.fictional"
+      },
+      "born": "1977-01-06",
+      "party": "moz-front-de-liberation-du-mozambique",
+      "traits": {
+        "economic": -0.8,
+        "authority": 0.2,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q97058466",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "moz-venancio-mondlane",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.moz-venancio-mondlane.parody",
+        "fictional": "leader.moz-venancio-mondlane.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "moz-parti-optimiste-pour-le-developpement-du-mozambi",
+      "traits": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.21999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "moz-filipe-nyusi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.moz-filipe-nyusi.parody",
+        "fictional": "leader.moz-filipe-nyusi.fictional"
+      },
+      "born": "1959-02-09",
+      "party": "moz-front-de-liberation-du-mozambique",
+      "traits": {
+        "economic": -0.8,
+        "authority": 0.2,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5448556",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "moz-ossufo-momade",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.moz-ossufo-momade.parody",
+        "fictional": "leader.moz-ossufo-momade.fictional"
+      },
+      "born": "1961-01-30",
+      "party": "moz-resistance-nationale-du-mozambique",
+      "traits": {
+        "economic": 0.26,
+        "authority": 0.36,
+        "sovereignty": 0.36,
+        "aggressiveness": 0.444,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q55106039",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "moz-front-de-liberation-du-mozambique",
+      "name": "party.moz-front-de-liberation-du-mozambique",
+      "wikidata": "Q504564",
+      "ideologies": ["Q189280", "Q211930"],
+      "ideology": {
+        "economic": -0.8,
+        "authority": 0.2,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.65,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 9 octobre 2024 (Assemblée de la République, 250 sièges, concomitantes à la présidentielle) ; résultats officiels contestés par l'opposition."
+      },
+      "leader": "moz-filipe-nyusi"
+    },
+    {
+      "id": "moz-parti-optimiste-pour-le-developpement-du-mozambi",
+      "name": "party.moz-parti-optimiste-pour-le-developpement-du-mozambi",
+      "wikidata": "Q64657923",
+      "ideologies": ["Q189280", "Q65160558"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.24,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 9 octobre 2024 (Assemblée de la République, 250 sièges, concomitantes à la présidentielle) ; résultats officiels contestés par l'opposition."
+      },
+      "leader": "moz-venancio-mondlane"
+    },
+    {
+      "id": "moz-resistance-nationale-du-mozambique",
+      "name": "party.moz-resistance-nationale-du-mozambique",
+      "wikidata": "Q1425821",
+      "ideologies": ["Q180490", "Q182121", "Q209158", "Q6235", "Q7169"],
+      "ideology": {
+        "economic": 0.26,
+        "authority": 0.36,
+        "sovereignty": 0.36
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 5)",
+      "support": 0.06,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 9 octobre 2024 (Assemblée de la République, 250 sièges, concomitantes à la présidentielle) ; résultats officiels contestés par l'opposition."
+      },
+      "leader": "moz-ossufo-momade"
+    }
+  ]
+}

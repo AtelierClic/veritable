@@ -1,0 +1,80 @@
+{
+ "nation": "BGD",
+ "country": "Q902",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q43969",
+    "label": "Muhammad Yunus",
+    "born": "1940-06-28",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q116763154",
+    "label": "Mohammad Shahabuddin",
+    "born": "1949-12-10",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q496810",
+   "label": "Parti nationaliste du Bangladesh",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q4855479",
+     "label": "nationalisme bangladais"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q2475664",
+   "label": "Bangladesh Jamaat-e-Islami",
+   "ideologies": [
+    {
+     "qid": "Q189746",
+     "label": "islamisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q16406038",
+    "label": "Shafiqur Rahman",
+    "born": "1958-10-31",
+    "died": null,
+    "parties": [
+     "Q2475664"
+    ]
+   }
+  },
+  {
+   "qid": "Q132406145",
+   "label": "National Citizen Party",
+   "ideologies": [
+    {
+     "qid": "Q333024",
+     "label": "pluralisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+{
+ "nation": "SLV",
+ "country": "Q792",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q17712353",
+    "label": "Nayib Bukele",
+    "born": "1981-07-24",
+    "died": null,
+    "parties": [
+     "Q57986086"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q17712353",
+    "label": "Nayib Bukele",
+    "born": "1981-07-24",
+    "died": null,
+    "parties": [
+     "Q57986086"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q57986086",
+   "label": "Nouvelles idées",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1146480",
+   "label": "Alliance républicaine nationaliste",
+   "ideologies": [
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q29547067",
+    "label": "Mauricio Interiano",
+    "born": "1970-03-07",
+    "died": null,
+    "parties": [
+     "Q1146480"
+    ]
+   }
+  }
+ ]
+}

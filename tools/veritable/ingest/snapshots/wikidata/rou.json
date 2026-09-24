@@ -1,0 +1,86 @@
+{
+ "nation": "ROU",
+ "country": "Q218",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q18538164",
+    "label": "Ilie Bolojan",
+    "born": "1969-03-17",
+    "died": null,
+    "parties": [
+     "Q686228"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q11163124",
+    "label": "Nicușor Dan",
+    "born": "1969-12-20",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q113470144",
+   "label": "Parti S.O.S. Roumanie",
+   "ideologies": [
+    {
+     "qid": "Q110132273",
+     "label": "Neo-Legionarism"
+    },
+    {
+     "qid": "Q1322213",
+     "label": "droite chrétienne"
+    },
+    {
+     "qid": "Q17025987",
+     "label": "nationalisme roumain"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    },
+    {
+     "qid": "Q912036",
+     "label": "souverainisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q104381399",
+    "label": "Diana Șoșoacă",
+    "born": "1975-11-13",
+    "died": null,
+    "parties": [
+     "Q113470144"
+    ]
+   }
+  }
+ ]
+}

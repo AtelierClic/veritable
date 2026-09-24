@@ -6,7 +6,6 @@ import {
 } from "../../data/schemas/bloc";
 import { NationId } from "../../data/schemas/common";
 import { NationData } from "../../data/schemas/nation";
-import { ROW_ID } from "../../data/schemas/row";
 import {
   BlocMeasure,
   BlocProposal,
@@ -285,10 +284,7 @@ export function tradeShare(
   a: NationId,
   b: NationId,
 ): number {
-  let total = ctx.partnerWeight(a, ROW_ID);
-  for (const other of ctx.nationIds) {
-    if (other !== a) total += ctx.partnerWeight(a, other);
-  }
+  const total = ctx.partnerTotal(a);
   return total > 0 ? ctx.partnerWeight(a, b) / total : 0;
 }
 

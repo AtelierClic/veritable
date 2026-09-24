@@ -1,0 +1,112 @@
+{
+ "nation": "BLR",
+ "country": "Q184",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q56235580",
+    "label": "Alaxandare Tourchine",
+    "born": "1975-07-02",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q2866",
+    "label": "Alexandre Loukachenko",
+    "born": "1954-08-30",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q14340731",
+   "label": "Belaïa Rous'",
+   "ideologies": [
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q3919171",
+    "label": "Guennadi Davydko",
+    "born": "1955-09-29",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q2436636",
+   "label": "Parti républicain du travail et de la justice",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q700386",
+     "label": "russophilie"
+    }
+   ],
+   "leader": {
+    "qid": "Q110252190",
+    "label": "Aliaksandr Khijniak",
+    "born": "1978-03-16",
+    "died": null,
+    "parties": [
+     "Q2436636"
+    ]
+   }
+  },
+  {
+   "qid": "Q325413",
+   "label": "Parti communiste de Biélorussie",
+   "ideologies": [
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q81376708",
+    "label": "Aliaksiej Sokal",
+    "born": "1973-11-18",
+    "died": null,
+    "parties": [
+     "Q325413"
+    ]
+   }
+  }
+ ]
+}

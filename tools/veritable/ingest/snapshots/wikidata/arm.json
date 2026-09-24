@@ -1,0 +1,131 @@
+{
+ "nation": "ARM",
+ "country": "Q399",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q7035479",
+    "label": "Nikol Pachinian",
+    "born": "1975-06-01",
+    "died": null,
+    "parties": [
+     "Q17305307"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3553274",
+    "label": "Vahagn Khatchatrian",
+    "born": "1959-04-22",
+    "died": null,
+    "parties": [
+     "Q7049542"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q17305307",
+   "label": "Contrat civil",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3448005",
+     "label": "centrisme radical"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q878445",
+     "label": "réformisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q7035479",
+    "label": "Nikol Pachinian",
+    "born": "1975-06-01",
+    "died": null,
+    "parties": [
+     "Q17305307"
+    ]
+   }
+  },
+  {
+   "qid": "Q106833126",
+   "label": "Armenia Alliance",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q2895399",
+     "label": "nationalisme arménien"
+    }
+   ],
+   "leader": {
+    "qid": "Q54988246",
+    "label": "Ishkhan Saghatelian",
+    "born": "1982-05-06",
+    "died": null,
+    "parties": [
+     "Q106833126",
+     "Q318657"
+    ]
+   }
+  },
+  {
+   "qid": "Q107087931",
+   "label": "Alliance « J'ai l'honneur »",
+   "ideologies": [
+    {
+     "qid": "Q2895399",
+     "label": "nationalisme arménien"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q53226857",
+    "label": "Arthur Vanetsyan",
+    "born": "1979-12-08",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+{
+ "nation": "PNG",
+ "country": "Q691",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6138903",
+    "label": "James Marape",
+    "born": "1971-04-24",
+    "died": null,
+    "parties": [
+     "Q2007531"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2007531",
+   "label": "Pangu Pati",
+   "ideologies": [
+    {
+     "qid": "Q1080800",
+     "label": "gauche chrétienne"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q13876576",
+     "label": "indigénisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q24708",
+   "label": "People's National Congress Party",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q57892",
+    "label": "Peter O'Neill",
+    "born": "1965-02-13",
+    "died": null,
+    "parties": [
+     "Q24708"
+    ]
+   }
+  },
+  {
+   "qid": "Q1313018",
+   "label": "Parti de l'alliance nationale",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

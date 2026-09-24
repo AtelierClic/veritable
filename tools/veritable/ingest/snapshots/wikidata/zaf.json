@@ -1,0 +1,195 @@
+{
+ "nation": "ZAF",
+ "country": "Q258",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q1148669",
+    "label": "Cyril Ramaphosa",
+    "born": "1952-11-17",
+    "died": null,
+    "parties": [
+     "Q83162"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1148669",
+    "label": "Cyril Ramaphosa",
+    "born": "1952-11-17",
+    "died": null,
+    "parties": [
+     "Q83162"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q83162",
+   "label": "Congrès national africain",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q3874021",
+     "label": "nationalisme africain"
+    }
+   ],
+   "leader": {
+    "qid": "Q1148669",
+    "label": "Cyril Ramaphosa",
+    "born": "1952-11-17",
+    "died": null,
+    "parties": [
+     "Q83162"
+    ]
+   }
+  },
+  {
+   "qid": "Q761877",
+   "label": "Alliance démocratique",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q6258967",
+    "label": "John Steenhuisen",
+    "born": "1976-03-25",
+    "died": null,
+    "parties": [
+     "Q761877"
+    ]
+   }
+  },
+  {
+   "qid": "Q1136236",
+   "label": "Umkhonto we Sizwe",
+   "ideologies": [
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q932620",
+    "label": "Ronnie Kasrils",
+    "born": "1938-11-15",
+    "died": null,
+    "parties": [
+     "Q83162"
+    ]
+   }
+  },
+  {
+   "qid": "Q15613585",
+   "label": "Economic Freedom Fighters",
+   "ideologies": [
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q282739",
+     "label": "panafricanisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    },
+    {
+     "qid": "Q582965",
+     "label": "antiracisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q983163",
+    "label": "Julius Malema",
+    "born": "1981-03-03",
+    "died": null,
+    "parties": [
+     "Q15613585"
+    ]
+   }
+  },
+  {
+   "qid": "Q654444",
+   "label": "Parti Inkatha de la liberté",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q66737976",
+    "label": "Velenkosini Hlabisa",
+    "born": "1965-01-05",
+    "died": null,
+    "parties": [
+     "Q654444"
+    ]
+   }
+  },
+  {
+   "qid": "Q15980906",
+   "label": "Alliance patriotique (Afrique du Sud)",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": {
+    "qid": "Q22279143",
+    "label": "Gayton McKenzie",
+    "born": "1974-01-01",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

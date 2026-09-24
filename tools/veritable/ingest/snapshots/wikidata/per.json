@@ -1,0 +1,152 @@
+{
+ "nation": "PER",
+ "country": "Q419",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q107480088",
+    "label": "José Jerí",
+    "born": "1986-11-13",
+    "died": null,
+    "parties": [
+     "Q5255708"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q102333715",
+   "label": "Pérou Libre",
+   "ideologies": [
+    {
+     "qid": "Q107199795",
+     "label": "Mariáteguism"
+    },
+    {
+     "qid": "Q109325461",
+     "label": "Q109325461"
+    },
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q48790341",
+     "label": "Antifujimorism"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    },
+    {
+     "qid": "Q7264",
+     "label": "marxisme"
+    },
+    {
+     "qid": "Q912036",
+     "label": "souverainisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1472820",
+   "label": "Force populaire",
+   "ideologies": [
+    {
+     "qid": "Q162719",
+     "label": "néolibéralisme"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q5507447",
+     "label": "Fujimorism"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q235137",
+    "label": "Keiko Fujimori",
+    "born": "1975-05-25",
+    "died": null,
+    "parties": [
+     "Q1472820"
+    ]
+   }
+  },
+  {
+   "qid": "Q4732394",
+   "label": "Alliance pour le progrès",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q5065409",
+    "label": "César Acuña Peralta",
+    "born": "1952-08-11",
+    "died": null,
+    "parties": [
+     "Q4732394"
+    ]
+   }
+  },
+  {
+   "qid": "Q101116021",
+   "label": "Rénovation populaire",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q575220",
+     "label": "antiféminisme"
+    },
+    {
+     "qid": "Q578881",
+     "label": "fondamentalisme chrétien"
+    }
+   ],
+   "leader": {
+    "qid": "Q99884320",
+    "label": "Rafael López Aliaga",
+    "born": "1961-02-11",
+    "died": null,
+    "parties": [
+     "Q101116021",
+     "Q285457"
+    ]
+   }
+  }
+ ]
+}

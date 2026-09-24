@@ -19,8 +19,8 @@ import { jsonSha256, Lock, LOCK_FILE, readLock, SNAPSHOT_DIR } from "./sources";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const PARTIES_FILE = path.join(HERE, "parties.json");
 const SPARQL_URL = "https://query.wikidata.org/sparql";
-const SEARCH_URL = "https://www.wikidata.org/w/api.php";
-const USER_AGENT =
+export const SEARCH_URL = "https://www.wikidata.org/w/api.php";
+export const USER_AGENT =
   "veritable-ingest/0.1 (https://github.com/AtelierClic/veritable; open-source game data)";
 
 export interface PartyEntry {
@@ -74,13 +74,16 @@ export function wikidataSnapshot(nation: string): string {
   return path.join(SNAPSHOT_DIR, "wikidata", `${nation.toLowerCase()}.json`);
 }
 
-type Binding = Record<string, { type: string; value: string }>;
+export type Binding = Record<string, { type: string; value: string }>;
 
 const PAUSE_MS = 1500; // between requests: Wikidata rate-limits eagerly
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // One request, retried with backoff on 429 / 5xx.
-async function request(url: string, init: RequestInit): Promise<Response> {
+export async function request(
+  url: string,
+  init: RequestInit,
+): Promise<Response> {
   for (let attempt = 0; ; attempt++) {
     await sleep(PAUSE_MS);
     let response: Response;
@@ -103,7 +106,7 @@ async function request(url: string, init: RequestInit): Promise<Response> {
   }
 }
 
-async function sparql(query: string): Promise<Binding[]> {
+export async function sparql(query: string): Promise<Binding[]> {
   const response = await request(SPARQL_URL, {
     method: "POST",
     headers: {
@@ -117,8 +120,8 @@ async function sparql(query: string): Promise<Binding[]> {
   return json.results.bindings;
 }
 
-const qidOf = (uri: string) => uri.slice(uri.lastIndexOf("/") + 1);
-const dateOf = (v: string | undefined) =>
+export const qidOf = (uri: string) => uri.slice(uri.lastIndexOf("/") + 1);
+export const dateOf = (v: string | undefined) =>
   v === undefined ? null : v.slice(0, 10);
 
 // Labels: French first, English otherwise (the label service is unreliable
@@ -172,7 +175,7 @@ SELECT DISTINCT ?party ?partyEn WHERE {
 
 // Statements are fetched with their rank and qualifiers, and filtered here:
 // the same filters written in SPARQL time out on the public endpoint.
-interface Dated {
+export interface Dated {
   start: string | null;
   end: string | null;
   rank: string;
@@ -180,7 +183,7 @@ interface Dated {
 
 // Valid on `date`: not deprecated, started on or before it (or undated),
 // not ended by it.
-function validAt(s: Dated, date: string): boolean {
+export function validAt(s: Dated, date: string): boolean {
   if (s.rank.endsWith("DeprecatedRank")) return false;
   if (s.start !== null && s.start > date) return false;
   if (s.end !== null && s.end <= date) return false;
@@ -190,7 +193,7 @@ function validAt(s: Dated, date: string): boolean {
 // Among the valid statements: the preferred-rank one first (Wikidata marks
 // the current holder so; former chairs often keep a statement without an end
 // date), then the one that started last; ties by QID for determinism.
-function latest<T extends Dated & { qid: string }>(
+export function latest<T extends Dated & { qid: string }>(
   items: T[],
   date: string,
 ): T | undefined {
@@ -205,7 +208,7 @@ function latest<T extends Dated & { qid: string }>(
     )[0];
 }
 
-const datedOf = (b: Binding) => ({
+export const datedOf = (b: Binding) => ({
   start: dateOf(b.start?.value),
   end: dateOf(b.end?.value),
   rank: b.rank?.value ?? "",
@@ -385,7 +388,12 @@ export async function fetchWikidata(
     if (entry === undefined) throw new Error(`parties.json: no ${nation}`);
     console.log(`${nation} (${entry.wikidataCountry})`);
     for (const party of entry.parties) {
-      party.qid = await resolveParty(party, entry.wikidataCountry);
+      // J6: a party Wikidata does not know is left out (logged), not fatal.
+      try {
+        party.qid = await resolveParty(party, entry.wikidataCountry);
+      } catch (error) {
+        console.log(`  ${party.label}: ${(error as Error).message}, skipped`);
+      }
     }
     const snapshot: WikidataSnapshot = {
       nation,
@@ -397,8 +405,11 @@ export async function fetchWikidata(
       parties: [],
     };
     for (const party of entry.parties) {
-      snapshot.parties.push(await fetchParty(party.qid!, referenceDate));
+      if (party.qid === undefined) continue;
+      snapshot.parties.push(await fetchParty(party.qid, referenceDate));
     }
+    // The resolved QIDs after every nation too (J6: a long run).
+    fs.writeFileSync(PARTIES_FILE, JSON.stringify(parties, null, 2) + "\n");
     await fillLabels(snapshot);
     const text = JSON.stringify(snapshot, null, 1) + "\n";
     fs.writeFileSync(wikidataSnapshot(nation), text);

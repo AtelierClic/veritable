@@ -1,0 +1,91 @@
+{
+  "nation": "GAB",
+  "actors": [
+    {
+      "id": "gab-brice-clotaire-oligui-nguema",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.gab-brice-clotaire-oligui-nguema.parody",
+        "fictional": "leader.gab-brice-clotaire-oligui-nguema.fictional"
+      },
+      "born": "1975-03-03",
+      "party": "gab-union-democratique-des-batisseurs",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.35,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.43,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Le poste de Premier ministre est supprimé depuis la constitution de 2024 ; le président gouverne (Wikidata : Raymond Ndong Sima). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "gab-brice-oligui-nguema",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.gab-brice-oligui-nguema.parody",
+        "fictional": "leader.gab-brice-oligui-nguema.fictional"
+      },
+      "born": "1975-03-03",
+      "party": "gab-union-democratique-des-batisseurs",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.35,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.43,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q122067521",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "gab-union-democratique-des-batisseurs",
+      "name": "party.gab-union-democratique-des-batisseurs",
+      "wikidata": "Q134311805",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.35,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.44,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de 2025 (date exacte non confirmée cette session, probablement au second semestre). Parts de sièges pour les partis autres que l'UDB, faute de détail des voix consolidé ; l'UDB a obtenu 44 % des voix au premier tour mais 101 des 140 sièges (effet amplificateur du scrutin majoritaire à deux tours par circonscription)."
+      },
+      "leader": "gab-brice-oligui-nguema"
+    },
+    {
+      "id": "gab-parti-democratique-gabonais",
+      "name": "party.gab-parti-democratique-gabonais",
+      "wikidata": "Q1762536",
+      "ideologies": ["Q216920", "Q282739", "Q6229", "Q7169"],
+      "ideology": {
+        "economic": 0.15,
+        "authority": 0.05,
+        "sovereignty": 0.15
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 4)",
+      "support": 0.12,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de 2025 (date exacte non confirmée cette session, probablement au second semestre). Parts de sièges pour les partis autres que l'UDB, faute de détail des voix consolidé ; l'UDB a obtenu 44 % des voix au premier tour mais 101 des 140 sièges (effet amplificateur du scrutin majoritaire à deux tours par circonscription)."
+      },
+      "leader": null
+    }
+  ]
+}

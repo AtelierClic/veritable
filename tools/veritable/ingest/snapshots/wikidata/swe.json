@@ -1,0 +1,281 @@
+{
+ "nation": "SWE",
+ "country": "Q34",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q1780398",
+    "label": "Ulf Kristersson",
+    "born": "1963-12-29",
+    "died": null,
+    "parties": [
+     "Q110843"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q45068",
+    "label": "Charles XVI Gustave de Suède",
+    "born": "1946-04-30",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q105112",
+   "label": "Parti social-démocrate suédois des travailleurs",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q4935873",
+    "label": "Magdalena Andersson",
+    "born": "1967-01-23",
+    "died": null,
+    "parties": [
+     "Q105112"
+    ]
+   }
+  },
+  {
+   "qid": "Q504069",
+   "label": "Démocrates de Suède",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q56810772",
+     "label": "Swedish nationalism"
+    },
+    {
+     "qid": "Q64717200",
+     "label": "mouvement anti-genre"
+    },
+    {
+     "qid": "Q65344895",
+     "label": "anti-islamisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q518776",
+    "label": "Jimmie Åkesson",
+    "born": "1979-05-17",
+    "died": null,
+    "parties": [
+     "Q504069"
+    ]
+   }
+  },
+  {
+   "qid": "Q110843",
+   "label": "Parti modéré de rassemblement",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q1780398",
+    "label": "Ulf Kristersson",
+    "born": "1963-12-29",
+    "died": null,
+    "parties": [
+     "Q110843"
+    ]
+   }
+  },
+  {
+   "qid": "Q110837",
+   "label": "parti de gauche",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q7252",
+     "label": "féminisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q18238235",
+    "label": "Nooshi Dadgostar",
+    "born": "1985-06-20",
+    "died": null,
+    "parties": [
+     "Q110837"
+    ]
+   }
+  },
+  {
+   "qid": "Q110832",
+   "label": "Parti du centre",
+   "ideologies": [
+    {
+     "qid": "Q1321721",
+     "label": "libéralisme vert"
+    },
+    {
+     "qid": "Q188961",
+     "label": "décentralisation"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4974920",
+    "label": "Elisabeth Thand Ringqvist",
+    "born": "1972-02-20",
+    "died": null,
+    "parties": [
+     "Q110832"
+    ]
+   }
+  },
+  {
+   "qid": "Q213654",
+   "label": "Les chrétiens-démocrates",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q64717200",
+     "label": "mouvement anti-genre"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4941329",
+    "label": "Ebba Busch Thor",
+    "born": "1987-02-11",
+    "died": null,
+    "parties": [
+     "Q213654"
+    ]
+   }
+  },
+  {
+   "qid": "Q213451",
+   "label": "Parti de l'environnement Les Verts",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q24018140",
+    "label": "Amanda Lind",
+    "born": "1980-08-02",
+    "died": null,
+    "parties": [
+     "Q213451"
+    ]
+   }
+  },
+  {
+   "qid": "Q110857",
+   "label": "Les Libéraux",
+   "ideologies": [
+    {
+     "qid": "Q1987244",
+     "label": "féminisme libéral"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q123516132",
+    "label": "Simona Mohamsson",
+    "born": "1994-12-27",
+    "died": null,
+    "parties": [
+     "Q110857"
+    ]
+   }
+  }
+ ]
+}

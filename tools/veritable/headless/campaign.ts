@@ -293,8 +293,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     a.date < b.date ? -1 : 1,
   );
 
-  const sample = (date: string) => {
-    const view = driver.read();
+  const sample = (date: string, view: ReadonlyWorldView = driver.read()) => {
     const pick = (f: (id: string) => number) =>
       Object.fromEntries(pack.scenario.nations.map((id) => [id, f(id)]));
     const row: MonthRow = {
@@ -404,8 +403,10 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     eventsOccurred: 0,
     blocDecisions: 0,
   };
-  const tierShare = (id: string) => {
-    const done = driver.read().tech.nations[id]?.done ?? [];
+  // J6: the view read once for all nations (195 reads a month cost more than
+  // the simulation of the world).
+  const tierShare = (view: ReadonlyWorldView, id: string) => {
+    const done = view.tech.nations[id]?.done ?? [];
     return tier1.length === 0
       ? 0
       : tier1.filter((n) => done.includes(n)).length / tier1.length;
@@ -491,14 +492,14 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       wars.push(`${event.nation}>${event.against}@${event.date}`);
     }
     if (event.type === "month-started") {
-      sample(event.date);
       const view = driver.read();
+      sample(event.date, view);
       for (const id of pack.scenario.nations) {
-        if (delivery.tier1CompleteAt[id] === null && tierShare(id) >= 1) {
+        if (delivery.tier1CompleteAt[id] === null && tierShare(view, id) >= 1) {
           delivery.tier1CompleteAt[id] = event.date;
         }
         if (event.date === `${startYear0 + 9}-01-01`) {
-          delivery.tier1ShareIn2035[id] = tierShare(id);
+          delivery.tier1ShareIn2035[id] = tierShare(view, id);
         }
         if (event.date === tenYears) {
           delivery.regimeAt10Years[id] = view.politics[id].regime;

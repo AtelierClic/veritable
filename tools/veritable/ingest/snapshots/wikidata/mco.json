@@ -1,0 +1,37 @@
+{
+ "nation": "MCO",
+ "country": "Q235",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q29934395",
+    "label": "Christophe Mirmand",
+    "born": "1961-07-22",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3910",
+    "label": "Albert II de Monaco",
+    "born": "1958-03-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q116693824",
+   "label": "Union nationale monégasque",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

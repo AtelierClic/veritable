@@ -1,0 +1,71 @@
+{
+ "nation": "DOM",
+ "country": "Q786",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16594097",
+    "label": "Luis Abinader",
+    "born": "1967-07-12",
+    "died": null,
+    "parties": [
+     "Q17515858"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q16594097",
+    "label": "Luis Abinader",
+    "born": "1967-07-12",
+    "died": null,
+    "parties": [
+     "Q17515858"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q17515858",
+   "label": "Parti moderne révolutionnaire",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    },
+    {
+     "qid": "Q878445",
+     "label": "réformisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q75670036",
+   "label": "Fuerza del Pueblo",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q2153476",
+   "label": "Parti réformiste social chrétien",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

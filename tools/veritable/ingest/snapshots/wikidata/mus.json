@@ -1,0 +1,47 @@
+{
+ "nation": "MUS",
+ "country": "Q1027",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q3401447",
+    "label": "Pravind Jugnauth",
+    "born": "1961-12-25",
+    "died": null,
+    "parties": [
+     "Q6851928"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q131403499",
+    "label": "Dharam Gokhool",
+    "born": "1949-10-25",
+    "died": null,
+    "parties": [
+     "Q3366796"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q131314612",
+   "label": "Alliance du changement",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q131127801",
+   "label": "Alliance Lepep",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

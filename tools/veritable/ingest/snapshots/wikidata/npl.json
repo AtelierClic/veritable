@@ -1,0 +1,109 @@
+{
+ "nation": "NPL",
+ "country": "Q837",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q315500",
+    "label": "Pushpa Kamal Dahal",
+    "born": "1954-12-11",
+    "died": null,
+    "parties": [
+     "Q506537"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3183124",
+    "label": "Ram Chandra Poudel",
+    "born": "1944-10-15",
+    "died": null,
+    "parties": [
+     "Q216660",
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q216660",
+   "label": "Congrès népalais",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q112895056",
+   "label": "Parti national indépendant",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q14474324",
+    "label": "Rabi Lamichhane",
+    "born": "1988-09-05",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q2632719",
+   "label": "Parti national démocratique",
+   "ideologies": [
+    {
+     "qid": "Q1307223",
+     "label": "Nationalisme hindou"
+    },
+    {
+     "qid": "Q41614",
+     "label": "monarchie constitutionnelle"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q6355538",
+    "label": "Kamal Thapa",
+    "born": "1955-08-04",
+    "died": null,
+    "parties": [
+     "Q1782937"
+    ]
+   }
+  },
+  {
+   "qid": "Q92259330",
+   "label": "Parti socialiste populaire du Népal",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

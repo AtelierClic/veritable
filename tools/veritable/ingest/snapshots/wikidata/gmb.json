@@ -1,0 +1,133 @@
+{
+ "nation": "GMB",
+ "country": "Q1005",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q27917049",
+    "label": "Adama Barrow",
+    "born": "1965-02-15",
+    "died": null,
+    "parties": [
+     "Q97180861"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q27917049",
+    "label": "Adama Barrow",
+    "born": "1965-02-15",
+    "died": null,
+    "parties": [
+     "Q97180861"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q97180861",
+   "label": "Parti national du peuple",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q2495179",
+   "label": "Parti démocratique unifié",
+   "ideologies": [
+    {
+     "qid": "Q1194747",
+     "label": "constitutionnalisme"
+    },
+    {
+     "qid": "Q192125",
+     "label": "démocratie libérale"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q710820",
+    "label": "Ousainou Darboe",
+    "born": "1948-08-08",
+    "died": null,
+    "parties": [
+     "Q2495179"
+    ]
+   }
+  },
+  {
+   "qid": "Q2069620",
+   "label": "Organisation démocratique du peuple pour l'indépendance et le socialisme",
+   "ideologies": [
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q7272",
+     "label": "socialisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2281872",
+    "label": "Sidia Jatta",
+    "born": "1945-01-01",
+    "died": null,
+    "parties": [
+     "Q2069620"
+    ]
+   }
+  },
+  {
+   "qid": "Q2143319",
+   "label": "Alliance patriotique pour la réorientation et la construction",
+   "ideologies": [
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    },
+    {
+     "qid": "Q65352237",
+     "label": "conservatisme religieux"
+    }
+   ],
+   "leader": {
+    "qid": "Q57356",
+    "label": "Yahya Jammeh",
+    "born": "1965-05-25",
+    "died": null,
+    "parties": [
+     "Q2143319"
+    ]
+   }
+  },
+  {
+   "qid": "Q1786600",
+   "label": "Parti de la réconciliation nationale",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1572664",
+    "label": "Hamat Bah",
+    "born": "1960-05-01",
+    "died": null,
+    "parties": [
+     "Q1786600"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,105 @@
+{
+ "nation": "TJK",
+ "country": "Q863",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q15222839",
+    "label": "Kokhir Rasulzoda",
+    "born": "1961-03-08",
+    "died": null,
+    "parties": [
+     "Q1045162"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57366",
+    "label": "Emomalii Rahmon",
+    "born": "1952-10-05",
+    "died": null,
+    "parties": [
+     "Q1045162"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1045162",
+   "label": "Parti démocratique populaire du Tadjikistan",
+   "ideologies": [
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q478004",
+     "label": "anticléricalisme"
+    },
+    {
+     "qid": "Q50685643",
+     "label": "pérennialisme"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57366",
+    "label": "Emomalii Rahmon",
+    "born": "1952-10-05",
+    "died": null,
+    "parties": [
+     "Q1045162"
+    ]
+   }
+  },
+  {
+   "qid": "Q7482830",
+   "label": "Parti socialiste du Tadjikistan",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q7272",
+     "label": "socialisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4665221",
+    "label": "Abduhalim Ghafforov",
+    "born": "1951-12-24",
+    "died": null,
+    "parties": [
+     "Q7482830"
+    ]
+   }
+  }
+ ]
+}

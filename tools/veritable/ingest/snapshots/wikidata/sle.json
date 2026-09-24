@@ -1,0 +1,75 @@
+{
+ "nation": "SLE",
+ "country": "Q1044",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q23728768",
+    "label": "David Sengeh",
+    "born": "1986-02-25",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q283829",
+    "label": "Julius Maada Bio",
+    "born": "1964-05-12",
+    "died": null,
+    "parties": [
+     "Q2033938"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2033938",
+   "label": "Parti du peuple de Sierra Leone",
+   "ideologies": [
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q283829",
+    "label": "Julius Maada Bio",
+    "born": "1964-05-12",
+    "died": null,
+    "parties": [
+     "Q2033938"
+    ]
+   }
+  },
+  {
+   "qid": "Q385749",
+   "label": "Congrès de tout le peuple",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q57460",
+    "label": "Ernest Bai Koroma",
+    "born": "1953-10-02",
+    "died": null,
+    "parties": [
+     "Q385749"
+    ]
+   }
+  }
+ ]
+}

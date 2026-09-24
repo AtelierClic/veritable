@@ -1,0 +1,123 @@
+{
+ "nation": "VUT",
+ "country": "Q686",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16190741",
+    "label": "Bob Loughman",
+    "born": "1961-03-08",
+    "died": null,
+    "parties": [
+     "Q31373"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q113239716",
+    "label": "Nikenike Vurobaravu",
+    "born": "1951-12-03",
+    "died": null,
+    "parties": [
+     "Q31373"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q24907935",
+   "label": "Parti des dirigeants du Vanuatu",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q31373",
+   "label": "Vanua'aku Pati",
+   "ideologies": [
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q979616",
+     "label": "socialisme mélanésien"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q31360",
+   "label": "Union des partis modérés",
+   "ideologies": [
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q24661025",
+   "label": "Groupe Iauko",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q109923917",
+    "label": "Marc Ati",
+    "born": null,
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q1987899",
+   "label": "Namangi-Aute",
+   "ideologies": [
+    {
+     "qid": "Q11168082",
+     "label": "conservatisme culturel"
+    },
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q3366161",
+   "label": "Parti Terre et Justice",
+   "ideologies": [
+    {
+     "qid": "Q11168082",
+     "label": "conservatisme culturel"
+    },
+    {
+     "qid": "Q208128",
+     "label": "réforme agraire"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q578951",
+    "label": "Ralph Regenvanu",
+    "born": "1970-09-20",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

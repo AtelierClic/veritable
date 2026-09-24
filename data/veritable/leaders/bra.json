@@ -1,0 +1,259 @@
+{
+  "nation": "BRA",
+  "actors": [
+    {
+      "id": "bra-luiz-inacio-lula-da-silva",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.bra-luiz-inacio-lula-da-silva.parody",
+        "fictional": "leader.bra-luiz-inacio-lula-da-silva.fictional"
+      },
+      "born": "1945-10-27",
+      "party": "bra-federacao-brasil-da-esperanca-pt-pcdob-pv",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.1,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.3,
+        "corruption": 0.45,
+        "charisma": 0.7,
+        "competence": 0.6
+      },
+      "wikidata": "Q37181",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Gauche historique, tiers-mondiste modéré (souveraineté −0,2, non-alignement) ; agressivité faible en politique étrangère, privilégie la médiation ; charisme élevé (figure ouvrière, plusieurs mandats) ; corruption documentée par l'affaire Lava Jato, condamnations ensuite annulées pour vice de procédure."
+    },
+    {
+      "id": "bra-valdemar-costa-neto",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.bra-valdemar-costa-neto.parody",
+        "fictional": "leader.bra-valdemar-costa-neto.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "bra-parti-liberal",
+      "traits": {
+        "economic": 0.225,
+        "authority": 0.025,
+        "sovereignty": 0,
+        "aggressiveness": 0.305,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "bra-gilberto-kassab",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.bra-gilberto-kassab.parody",
+        "fictional": "leader.bra-gilberto-kassab.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "bra-partido-social-democratico",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "bra-luciano-bivar",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.bra-luciano-bivar.parody",
+        "fictional": "leader.bra-luciano-bivar.fictional"
+      },
+      "born": "1944-11-29",
+      "party": "bra-union-bresil",
+      "traits": {
+        "economic": 0.7,
+        "authority": -0.05,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.24999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2917241",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "bra-ciro-nogueira",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.bra-ciro-nogueira.parody",
+        "fictional": "leader.bra-ciro-nogueira.fictional"
+      },
+      "born": "1968-11-21",
+      "party": "bra-progressistas",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q15985219",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "bra-michel-temer",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.bra-michel-temer.parody",
+        "fictional": "leader.bra-michel-temer.fictional"
+      },
+      "born": "1940-09-23",
+      "party": "bra-mouvement-democratique-bresilien",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0,
+        "sovereignty": 0,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q463533",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "bra-parti-liberal",
+      "name": "party.bra-parti-liberal",
+      "wikidata": "Q2731720",
+      "ideologies": ["Q106571755", "Q180490", "Q209158", "Q729119", "Q877848"],
+      "ideology": {
+        "economic": 0.225,
+        "authority": 0.025,
+        "sovereignty": 0
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 5)",
+      "support": 0.1664,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 octobre 2022 (Chambre des députés)"
+      },
+      "leader": "bra-valdemar-costa-neto"
+    },
+    {
+      "id": "bra-union-bresil",
+      "name": "party.bra-union-bresil",
+      "wikidata": "Q108837483",
+      "ideologies": ["Q1043096", "Q729119"],
+      "ideology": {
+        "economic": 0.7,
+        "authority": -0.05,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.0934,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 octobre 2022 (Chambre des députés)"
+      },
+      "leader": "bra-luciano-bivar"
+    },
+    {
+      "id": "bra-progressistas",
+      "name": "party.bra-progressistas",
+      "wikidata": "Q732852",
+      "ideologies": ["Q7169"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.0795,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 octobre 2022 (Chambre des députés)"
+      },
+      "leader": "bra-ciro-nogueira"
+    },
+    {
+      "id": "bra-partido-social-democratico",
+      "name": "party.bra-partido-social-democratico",
+      "wikidata": "Q2054750",
+      "ideologies": ["Q617609"],
+      "ideology": {
+        "economic": 0.6,
+        "authority": 0.1,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.0758,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 octobre 2022 (Chambre des députés)"
+      },
+      "leader": "bra-gilberto-kassab"
+    },
+    {
+      "id": "bra-mouvement-democratique-bresilien",
+      "name": "party.bra-mouvement-democratique-bresilien",
+      "wikidata": "Q1322751",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0719,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 octobre 2022 (Chambre des députés)"
+      },
+      "leader": "bra-michel-temer"
+    },
+    {
+      "id": "bra-federacao-brasil-da-esperanca-pt-pcdob-pv",
+      "name": "party.bra-federacao-brasil-da-esperanca-pt-pcdob-pv",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.1,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1403,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 octobre 2022 (Chambre des députés)"
+      },
+      "leader": "bra-luiz-inacio-lula-da-silva"
+    }
+  ]
+}

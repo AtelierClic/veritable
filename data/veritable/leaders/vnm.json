@@ -1,0 +1,72 @@
+{
+  "nation": "VNM",
+  "actors": [
+    {
+      "id": "vnm-pham-minh-chinh",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.vnm-pham-minh-chinh.parody",
+        "fictional": "leader.vnm-pham-minh-chinh.fictional"
+      },
+      "born": "1958-12-10",
+      "party": "vnm-parti-communiste-du-vietnam",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.6,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.25,
+        "corruption": 0.3,
+        "charisma": 0.45,
+        "competence": 0.6
+      },
+      "wikidata": "Q10806940",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Chef du gouvernement chargé de l'ouverture économique du Vietnam (attraction des investissements étrangers), autorité du parti unique maintenue ; agressivité faible, diplomatie d'équilibre entre grandes puissances."
+    },
+    {
+      "id": "vnm-to-lam",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.vnm-to-lam.parody",
+        "fictional": "leader.vnm-to-lam.fictional"
+      },
+      "born": "1957-07-10",
+      "party": "vnm-parti-communiste-du-vietnam",
+      "traits": {
+        "economic": -0.15,
+        "authority": 0.8,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.35,
+        "corruption": 0.35,
+        "charisma": 0.45,
+        "competence": 0.6
+      },
+      "wikidata": "Q10831196",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Ancien ministre de la Sécurité publique devenu secrétaire général du parti unique, autorité forte (campagne anti-corruption qui a aussi consolidé son pouvoir personnel) ; économie encadrée par le parti mais ouverte au commerce extérieur ; agressivité modérée, tensions maritimes avec la Chine gérées avec prudence."
+    }
+  ],
+  "parties": [
+    {
+      "id": "vnm-parti-communiste-du-vietnam",
+      "name": "party.vnm-parti-communiste-du-vietnam",
+      "wikidata": "Q427325",
+      "ideologies": ["Q14475917", "Q211930", "Q30681024", "Q375332", "Q904148"],
+      "ideology": {
+        "economic": -0.9,
+        "authority": 0.7,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 5)",
+      "support": 0.95,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à l'Assemblée nationale du 23 mai 2021"
+      },
+      "leader": "vnm-to-lam"
+    }
+  ]
+}

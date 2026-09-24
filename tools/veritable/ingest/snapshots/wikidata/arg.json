@@ -1,0 +1,48 @@
+{
+ "nation": "ARG",
+ "country": "Q414",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q52395487",
+    "label": "Javier Milei",
+    "born": "1970-10-22",
+    "died": null,
+    "parties": [
+     "Q108454548",
+     "Q113554426"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q52395487",
+    "label": "Javier Milei",
+    "born": "1970-10-22",
+    "died": null,
+    "parties": [
+     "Q108454548",
+     "Q113554426"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q129572375",
+   "label": "La Libertad Avanza",
+   "ideologies": [
+    {
+     "qid": "Q192424",
+     "label": "anarcho-capitalisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

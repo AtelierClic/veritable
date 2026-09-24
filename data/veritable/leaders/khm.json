@@ -1,0 +1,137 @@
+{
+  "nation": "KHM",
+  "actors": [
+    {
+      "id": "khm-hun-manet",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.khm-hun-manet.parody",
+        "fictional": "leader.khm-hun-manet.fictional"
+      },
+      "born": "1977-10-20",
+      "party": "khm-parti-du-peuple-cambodgien",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.48,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q13024351",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "khm-norodom-sihamoni",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.khm-norodom-sihamoni.parody",
+        "fictional": "leader.khm-norodom-sihamoni.fictional"
+      },
+      "born": "1953-05-14",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57319",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "khm-norodom-chakravuth",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.khm-norodom-chakravuth.parody",
+        "fictional": "leader.khm-norodom-chakravuth.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "khm-front-uni-national-pour-un-cambodge-independant-",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "khm-hun-sen",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.khm-hun-sen.parody",
+        "fictional": "leader.khm-hun-sen.fictional"
+      },
+      "born": "1952-08-05",
+      "party": "khm-parti-du-peuple-cambodgien",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.48,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57788",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "khm-parti-du-peuple-cambodgien",
+      "name": "party.khm-parti-du-peuple-cambodgien",
+      "wikidata": "Q769308",
+      "ideologies": ["Q180490", "Q23808093", "Q6229"],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 3)",
+      "support": 0.82,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à l'Assemblée nationale du 23 juillet 2023, sans opposition crédible (Parti des bougies disqualifié)"
+      },
+      "leader": "khm-hun-sen"
+    },
+    {
+      "id": "khm-front-uni-national-pour-un-cambodge-independant-",
+      "name": "party.khm-front-uni-national-pour-un-cambodge-independant-",
+      "wikidata": "Q117815",
+      "ideologies": ["Q216669", "Q7169"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.05,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à l'Assemblée nationale du 23 juillet 2023, sans opposition crédible (Parti des bougies disqualifié)"
+      },
+      "leader": "khm-norodom-chakravuth"
+    }
+  ]
+}

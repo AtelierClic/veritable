@@ -1,0 +1,114 @@
+{
+  "nation": "GNB",
+  "actors": [
+    {
+      "id": "gnb-ilidio-vieira-te",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.gnb-ilidio-vieira-te.parody",
+        "fictional": "leader.gnb-ilidio-vieira-te.fictional"
+      },
+      "born": "1965-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre nommé par la junte après le coup du 26 novembre 2025 (Wikidata : Rui Duarte de Barros). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "gnb-horta-n-tam",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.gnb-horta-n-tam.parody",
+        "fictional": "leader.gnb-horta-n-tam.fictional"
+      },
+      "born": "1965-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "gnb-domingos-simoes-pereira",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gnb-domingos-simoes-pereira.parody",
+        "fictional": "leader.gnb-domingos-simoes-pereira.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "gnb-revolutionary-armed-forces-of-the-people",
+      "traits": {
+        "economic": -0.3,
+        "authority": -0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.31999999999999995,
+        "corruption": 0.3,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "gnb-revolutionary-armed-forces-of-the-people",
+      "name": "party.gnb-revolutionary-armed-forces-of-the-people",
+      "wikidata": "Q7318729",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.3,
+        "authority": -0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.44,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Institutions politiques suspendues depuis le coup du 26-27 novembre 2025 ; l'Assemblée nationale populaire était de toute façon dissoute par décret présidentiel depuis décembre 2023, sans nouvelle élection depuis. Dernière législative tenue : 4 juin 2023 (le PAIGC en tête). Les parts ci-dessous sont des estimations approximatives de mémoire pour cette élection, non vérifiées par une recherche web cette session (budget de recherche épuisé) — à confirmer. Les partis restent légalement constitués mais sans rôle institutionnel actif au 1er janvier 2026."
+      },
+      "leader": "gnb-domingos-simoes-pereira"
+    },
+    {
+      "id": "gnb-mouvement-pour-l-alternance-democratique-groupe-",
+      "name": "party.gnb-mouvement-pour-l-alternance-democratique-groupe-",
+      "wikidata": "Q62258541",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.2,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.27,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Institutions politiques suspendues depuis le coup du 26-27 novembre 2025 ; l'Assemblée nationale populaire était de toute façon dissoute par décret présidentiel depuis décembre 2023, sans nouvelle élection depuis. Dernière législative tenue : 4 juin 2023 (le PAIGC en tête). Les parts ci-dessous sont des estimations approximatives de mémoire pour cette élection, non vérifiées par une recherche web cette session (budget de recherche épuisé) — à confirmer. Les partis restent légalement constitués mais sans rôle institutionnel actif au 1er janvier 2026."
+      },
+      "leader": null
+    }
+  ]
+}

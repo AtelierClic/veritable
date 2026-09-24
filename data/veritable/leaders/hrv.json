@@ -1,0 +1,194 @@
+{
+  "nation": "HRV",
+  "actors": [
+    {
+      "id": "hrv-andrej-plenkovic",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.hrv-andrej-plenkovic.parody",
+        "fictional": "leader.hrv-andrej-plenkovic.fictional"
+      },
+      "born": "1970-04-08",
+      "party": "hrv-union-democratique-croate",
+      "traits": {
+        "economic": 0.333,
+        "authority": 0.3,
+        "sovereignty": 0.033,
+        "aggressiveness": 0.3666,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q11685764",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "hrv-zoran-milanovic",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.hrv-zoran-milanovic.parody",
+        "fictional": "leader.hrv-zoran-milanovic.fictional"
+      },
+      "born": "1966-10-30",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57687",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "hrv-nikola-grmoja",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.hrv-nikola-grmoja.parody",
+        "fictional": "leader.hrv-nikola-grmoja.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "hrv-most",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.1,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "hrv-ivan-penava",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.hrv-ivan-penava.parody",
+        "fictional": "leader.hrv-ivan-penava.fictional"
+      },
+      "born": "1974-12-31",
+      "party": "hrv-mouvement-patriotique-de-miroslav-skoro",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.6,
+        "sovereignty": 0.8,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q97236508",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "hrv-union-democratique-croate",
+      "name": "party.hrv-union-democratique-croate",
+      "wikidata": "Q738439",
+      "ideologies": ["Q1265120", "Q209158", "Q388698", "Q852739"],
+      "ideology": {
+        "economic": 0.333,
+        "authority": 0.3,
+        "sovereignty": 0.033
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.34,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État)"
+      },
+      "leader": "hrv-andrej-plenkovic"
+    },
+    {
+      "id": "hrv-mouvement-patriotique-de-miroslav-skoro",
+      "name": "party.hrv-mouvement-patriotique-de-miroslav-skoro",
+      "wikidata": "Q86756923",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.6,
+        "sovereignty": 0.8
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État)"
+      },
+      "leader": "hrv-ivan-penava"
+    },
+    {
+      "id": "hrv-rijeke-pravde",
+      "name": "party.hrv-rijeke-pravde",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.4,
+        "authority": -0.2,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.25,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État)"
+      },
+      "leader": null
+    },
+    {
+      "id": "hrv-most",
+      "name": "party.hrv-most",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.1,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.07,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État)"
+      },
+      "leader": "hrv-nikola-grmoja"
+    },
+    {
+      "id": "hrv-fokus",
+      "name": "party.hrv-fokus",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.04,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État)"
+      },
+      "leader": null
+    }
+  ]
+}

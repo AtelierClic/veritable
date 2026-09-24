@@ -1,0 +1,223 @@
+{
+  "nation": "CYP",
+  "actors": [
+    {
+      "id": "cyp-nikos-christodoulidis",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.cyp-nikos-christodoulidis.parody",
+        "fictional": "leader.cyp-nikos-christodoulidis.fictional"
+      },
+      "born": "1973-12-06",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q48905549",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "cyp-stefanos-stefanou",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.cyp-stefanos-stefanou.parody",
+        "fictional": "leader.cyp-stefanos-stefanou.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "cyp-parti-progressiste-du-peuple-travailleur",
+      "traits": {
+        "economic": -0.733,
+        "authority": 0.233,
+        "sovereignty": 0.033,
+        "aggressiveness": 0.3532,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "cyp-christos-christou",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.cyp-christos-christou.parody",
+        "fictional": "leader.cyp-christos-christou.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "cyp-ethniko-laiko-metopo",
+      "traits": {
+        "economic": 0.167,
+        "authority": 0.667,
+        "sovereignty": 0.867,
+        "aggressiveness": 0.6068,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "cyp-annita-demetriou",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.cyp-annita-demetriou.parody",
+        "fictional": "leader.cyp-annita-demetriou.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "cyp-",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.36,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "cyp-annita-dimitriou",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.cyp-annita-dimitriou.parody",
+        "fictional": "leader.cyp-annita-dimitriou.fictional"
+      },
+      "born": "1985-10-18",
+      "party": "cyp-rassemblement-democrate",
+      "traits": {
+        "economic": 0.425,
+        "authority": -0.025,
+        "sovereignty": -0.35,
+        "aggressiveness": 0.22499999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q47984268",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "cyp-rassemblement-democrate",
+      "name": "party.cyp-rassemblement-democrate",
+      "wikidata": "Q644973",
+      "ideologies": ["Q1043096", "Q209158", "Q3781399", "Q729119"],
+      "ideology": {
+        "economic": 0.425,
+        "authority": -0.025,
+        "sovereignty": -0.35
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.278,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 mai 2021 (Chambre des représentants, Commission électorale)"
+      },
+      "leader": "cyp-annita-dimitriou"
+    },
+    {
+      "id": "cyp-parti-progressiste-du-peuple-travailleur",
+      "name": "party.cyp-parti-progressiste-du-peuple-travailleur",
+      "wikidata": "Q212158",
+      "ideologies": ["Q211930", "Q6186", "Q821102"],
+      "ideology": {
+        "economic": -0.733,
+        "authority": 0.233,
+        "sovereignty": 0.033
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.223,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 mai 2021 (Chambre des représentants, Commission électorale)"
+      },
+      "leader": "cyp-stefanos-stefanou"
+    },
+    {
+      "id": "cyp-ethniko-laiko-metopo",
+      "name": "party.cyp-ethniko-laiko-metopo",
+      "wikidata": "Q2748384",
+      "ideologies": [
+        "Q2075264",
+        "Q223200",
+        "Q28220597",
+        "Q38352698",
+        "Q696116"
+      ],
+      "ideology": {
+        "economic": 0.167,
+        "authority": 0.667,
+        "sovereignty": 0.867
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 5)",
+      "support": 0.068,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 mai 2021 (Chambre des représentants, Commission électorale)"
+      },
+      "leader": "cyp-christos-christou"
+    },
+    {
+      "id": "cyp-front-democratique",
+      "name": "party.cyp-front-democratique",
+      "wikidata": "Q60785287",
+      "ideologies": ["Q201712", "Q27628449"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.061,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 mai 2021 (Chambre des représentants, Commission électorale)"
+      },
+      "leader": null
+    },
+    {
+      "id": "cyp-",
+      "name": "party.cyp-",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.113,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 mai 2021 (Chambre des représentants, Commission électorale)"
+      },
+      "leader": "cyp-annita-demetriou"
+    }
+  ]
+}

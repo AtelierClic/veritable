@@ -1,0 +1,41 @@
+{
+ "nation": "MKD",
+ "country": "Q221",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q46675558",
+    "label": "Hristijan Mickoski",
+    "born": "1977-09-29",
+    "died": null,
+    "parties": [
+     "Q945717"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12277168",
+    "label": "Gordana Siljanovska-Davkova",
+    "born": "1953-05-11",
+    "died": null,
+    "parties": [
+     "Q945717"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q126192947",
+   "label": "VLEN Coalition",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

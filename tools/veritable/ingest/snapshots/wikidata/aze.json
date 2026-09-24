@@ -1,0 +1,117 @@
+{
+ "nation": "AZE",
+ "country": "Q227",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q12850075",
+    "label": "Ali Asadow",
+    "born": "1956-11-30",
+    "died": null,
+    "parties": [
+     "Q876402"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57371",
+    "label": "Ilham Aliyev",
+    "born": "1961-12-24",
+    "died": null,
+    "parties": [
+     "Q876402"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q876402",
+   "label": "Parti du nouvel Azerbaïdjan",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q4832431",
+     "label": "Nationalisme azerbaïdjanais"
+    },
+    {
+     "qid": "Q518886",
+     "label": "économie sociale de marché"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q83280",
+     "label": "panturquisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57371",
+    "label": "Ilham Aliyev",
+    "born": "1961-12-24",
+    "died": null,
+    "parties": [
+     "Q876402"
+    ]
+   }
+  },
+  {
+   "qid": "Q1021186",
+   "label": "Parti de la solidarité civique",
+   "ideologies": [
+    {
+     "qid": "Q15986535",
+     "label": "national democracy"
+    },
+    {
+     "qid": "Q192125",
+     "label": "démocratie libérale"
+    },
+    {
+     "qid": "Q2483698",
+     "label": "solidarisme"
+    },
+    {
+     "qid": "Q2979",
+     "label": "liberté"
+    },
+    {
+     "qid": "Q773009",
+     "label": "égalité"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

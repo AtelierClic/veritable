@@ -1,0 +1,64 @@
+{
+ "nation": "SYC",
+ "country": "Q1042",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16190544",
+    "label": "Patrick Herminie",
+    "born": "1963-09-22",
+    "died": null,
+    "parties": [
+     "Q206395"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q16190544",
+    "label": "Patrick Herminie",
+    "born": "1963-09-22",
+    "died": null,
+    "parties": [
+     "Q206395"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q206395",
+   "label": "Seychelles unies",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q16190544",
+    "label": "Patrick Herminie",
+    "born": "1963-09-22",
+    "died": null,
+    "parties": [
+     "Q206395"
+    ]
+   }
+  },
+  {
+   "qid": "Q48797479",
+   "label": "Linyon Demokratik Seselwa",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

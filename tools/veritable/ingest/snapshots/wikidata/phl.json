@@ -1,0 +1,96 @@
+{
+ "nation": "PHL",
+ "country": "Q928",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q983324",
+    "label": "Bongbong Marcos",
+    "born": "1957-09-13",
+    "died": null,
+    "parties": [
+     "Q60749150"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q983324",
+    "label": "Bongbong Marcos",
+    "born": "1957-09-13",
+    "died": null,
+    "parties": [
+     "Q60749150"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q3240730",
+   "label": "Lakas-CMD",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    },
+    {
+     "qid": "Q3707310",
+     "label": "Nationalisme philippin"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q7140531",
+   "label": "Parti démocrate philippin",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q302210",
+   "label": "Parti nationaliste",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q3707310",
+     "label": "Nationalisme philippin"
+    }
+   ],
+   "leader": {
+    "qid": "Q561797",
+    "label": "Manny Villar",
+    "born": "1949-12-13",
+    "died": null,
+    "parties": [
+     "Q302210"
+    ]
+   }
+  }
+ ]
+}

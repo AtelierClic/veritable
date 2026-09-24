@@ -1,0 +1,60 @@
+{
+ "nation": "LAO",
+ "country": "Q819",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q104914585",
+    "label": "Sonexay Siphandone",
+    "born": "1966-01-26",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q58323",
+    "label": "Thongloun Sisoulith",
+    "born": "1945-11-10",
+    "died": null,
+    "parties": [
+     "Q756180"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q756180",
+   "label": "Parti révolutionnaire populaire lao",
+   "ideologies": [
+    {
+     "qid": "Q104864469",
+     "label": "Pensée de Kaysone Phomvihane"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57444",
+    "label": "Choummaly Sayasone",
+    "born": "1936-03-06",
+    "died": null,
+    "parties": [
+     "Q756180"
+    ]
+   }
+  }
+ ]
+}

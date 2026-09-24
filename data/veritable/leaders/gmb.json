@@ -1,0 +1,236 @@
+{
+  "nation": "GMB",
+  "actors": [
+    {
+      "id": "gmb-adama-barrow",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.gmb-adama-barrow.parody",
+        "fictional": "leader.gmb-adama-barrow.fictional"
+      },
+      "born": "1965-02-15",
+      "party": "gmb-parti-national-du-peuple",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.15,
+        "sovereignty": 0,
+        "aggressiveness": 0.32999999999999996,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q27917049",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "gmb-ousainou-darboe",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gmb-ousainou-darboe.parody",
+        "fictional": "leader.gmb-ousainou-darboe.fictional"
+      },
+      "born": "1948-08-08",
+      "party": "gmb-parti-democratique-unifie",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.5,
+        "aggressiveness": 0.09999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q710820",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "gmb-sidia-jatta",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gmb-sidia-jatta.parody",
+        "fictional": "leader.gmb-sidia-jatta.fictional"
+      },
+      "born": "1945-01-01",
+      "party": "gmb-organisation-democratique-du-peuple-pour-l-indep",
+      "traits": {
+        "economic": -0.7,
+        "authority": -0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.27999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2281872",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "gmb-yahya-jammeh",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gmb-yahya-jammeh.parody",
+        "fictional": "leader.gmb-yahya-jammeh.fictional"
+      },
+      "born": "1965-05-25",
+      "party": "gmb-alliance-patriotique-pour-la-reorientation-et-la",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.35,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.45,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57356",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "gmb-hamat-bah",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.gmb-hamat-bah.parody",
+        "fictional": "leader.gmb-hamat-bah.fictional"
+      },
+      "born": "1960-05-01",
+      "party": "gmb-parti-de-la-reconciliation-nationale",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.48,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1572664",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "gmb-parti-national-du-peuple",
+      "name": "party.gmb-parti-national-du-peuple",
+      "wikidata": "Q97180861",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.15,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.2919,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 9 avril 2022, 58 sièges au total (53 élus au suffrage direct + 5 nommés par le président, non partisans et non comptés dans les parts ci-dessous)."
+      },
+      "leader": "gmb-adama-barrow"
+    },
+    {
+      "id": "gmb-parti-democratique-unifie",
+      "name": "party.gmb-parti-democratique-unifie",
+      "wikidata": "Q2495179",
+      "ideologies": ["Q1194747", "Q192125", "Q201712"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 3)",
+      "support": 0.2804,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 9 avril 2022, 58 sièges au total (53 élus au suffrage direct + 5 nommés par le président, non partisans et non comptés dans les parts ci-dessous)."
+      },
+      "leader": "gmb-ousainou-darboe"
+    },
+    {
+      "id": "gmb-organisation-democratique-du-peuple-pour-l-indep",
+      "name": "party.gmb-organisation-democratique-du-peuple-pour-l-indep",
+      "wikidata": "Q2069620",
+      "ideologies": ["Q1144178", "Q7272"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.0501,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 9 avril 2022, 58 sièges au total (53 élus au suffrage direct + 5 nommés par le président, non partisans et non comptés dans les parts ci-dessous)."
+      },
+      "leader": "gmb-sidia-jatta"
+    },
+    {
+      "id": "gmb-alliance-patriotique-pour-la-reorientation-et-la",
+      "name": "party.gmb-alliance-patriotique-pour-la-reorientation-et-la",
+      "wikidata": "Q2143319",
+      "ideologies": ["Q6229", "Q65352237"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.35,
+        "sovereignty": 0.4
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0319,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 9 avril 2022, 58 sièges au total (53 élus au suffrage direct + 5 nommés par le président, non partisans et non comptés dans les parts ci-dessous)."
+      },
+      "leader": "gmb-yahya-jammeh"
+    },
+    {
+      "id": "gmb-parti-de-la-reconciliation-nationale",
+      "name": "party.gmb-parti-de-la-reconciliation-nationale",
+      "wikidata": "Q1786600",
+      "ideologies": ["Q180490"],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0.4,
+        "sovereignty": 0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.0287,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 9 avril 2022, 58 sièges au total (53 élus au suffrage direct + 5 nommés par le président, non partisans et non comptés dans les parts ci-dessous)."
+      },
+      "leader": "gmb-hamat-bah"
+    },
+    {
+      "id": "gmb-independants",
+      "name": "party.gmb-independants",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.2176,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 9 avril 2022, 58 sièges au total (53 élus au suffrage direct + 5 nommés par le président, non partisans et non comptés dans les parts ci-dessous)."
+      },
+      "leader": null
+    }
+  ]
+}

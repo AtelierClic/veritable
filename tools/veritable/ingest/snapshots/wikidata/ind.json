@@ -1,0 +1,226 @@
+{
+ "nation": "IND",
+ "country": "Q668",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q1058",
+    "label": "Narendra Modi",
+    "born": "1950-09-17",
+    "died": null,
+    "parties": [
+     "Q10230"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q19901232",
+    "label": "Draupadi Murmu",
+    "born": "1958-06-20",
+    "died": null,
+    "parties": [
+     "Q10230"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q10230",
+   "label": "Bharatiya Janata Party",
+   "ideologies": [
+    {
+     "qid": "Q1307223",
+     "label": "Nationalisme hindou"
+    },
+    {
+     "qid": "Q1993616",
+     "label": "nationalisme culturel"
+    },
+    {
+     "qid": "Q281347",
+     "label": "Hindutva"
+    },
+    {
+     "qid": "Q4105807",
+     "label": "Gandhian socialism"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q56209385",
+     "label": "humanisme intégral"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q16193764",
+    "label": "Jagat Prakash Nadda",
+    "born": "1960-12-02",
+    "died": null,
+    "parties": [
+     "Q10230"
+    ]
+   }
+  },
+  {
+   "qid": "Q10225",
+   "label": "Congrès national indien",
+   "ideologies": [
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    }
+   ],
+   "leader": {
+    "qid": "Q6744197",
+    "label": "Mallikarjun Kharge",
+    "born": "1942-07-21",
+    "died": null,
+    "parties": [
+     "Q10225"
+    ]
+   }
+  },
+  {
+   "qid": "Q1546941",
+   "label": "Samajwadi Party",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q417657",
+    "label": "Akhilesh Yadav",
+    "born": "1973-07-01",
+    "died": null,
+    "parties": [
+     "Q1546941"
+    ]
+   }
+  },
+  {
+   "qid": "Q912899",
+   "label": "All India Trinamool Congress",
+   "ideologies": [
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q7272",
+     "label": "socialisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q465041",
+    "label": "Mamata Banerjee",
+    "born": "1955-01-05",
+    "died": null,
+    "parties": [
+     "Q912899"
+    ]
+   }
+  },
+  {
+   "qid": "Q1255973",
+   "label": "Dravida Munnetra Kazhagam",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q264892",
+     "label": "justice sociale"
+    },
+    {
+     "qid": "Q3618563",
+     "label": "racisme anti-hindou"
+    },
+    {
+     "qid": "Q56136199",
+     "label": "Secessionism"
+    },
+    {
+     "qid": "Q7066",
+     "label": "athéisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q983475",
+    "label": "M. K. Stalin",
+    "born": "1953-03-01",
+    "died": null,
+    "parties": [
+     "Q1255973"
+    ]
+   }
+  },
+  {
+   "qid": "Q2279320",
+   "label": "Telugu Desam Party",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q2698984",
+     "label": "conservatisme fiscal"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q3518013",
+    "label": "Nara Chandrababu Naidu",
+    "born": "1950-04-20",
+    "died": null,
+    "parties": [
+     "Q10225",
+     "Q2279320"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+  "nation": "CUB",
+  "actors": [
+    {
+      "id": "cub-manuel-marrero-cruz",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.cub-manuel-marrero-cruz.parody",
+        "fictional": "leader.cub-manuel-marrero-cruz.fictional"
+      },
+      "born": "1963-07-11",
+      "party": "cub-parti-communiste-de-cuba",
+      "traits": {
+        "economic": -0.9,
+        "authority": 0.6,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.47,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q79358625",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "cub-miguel-diaz-canel",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.cub-miguel-diaz-canel.parody",
+        "fictional": "leader.cub-miguel-diaz-canel.fictional"
+      },
+      "born": "1960-04-20",
+      "party": "cub-parti-communiste-de-cuba",
+      "traits": {
+        "economic": -0.9,
+        "authority": 0.6,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.47,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1932603",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "cub-parti-communiste-de-cuba",
+      "name": "party.cub-parti-communiste-de-cuba",
+      "wikidata": "Q371402",
+      "ideologies": ["Q1049968", "Q211930", "Q2287593", "Q6186"],
+      "ideology": {
+        "economic": -0.9,
+        "authority": 0.6,
+        "sovereignty": 0.25
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 4)",
+      "support": 0.721,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections à l'Assemblée nationale du pouvoir populaire du 26 mars 2023 (liste unique adoubée par le Parti)"
+      },
+      "leader": "cub-miguel-diaz-canel"
+    }
+  ]
+}

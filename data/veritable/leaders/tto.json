@@ -1,0 +1,114 @@
+{
+  "nation": "TTO",
+  "actors": [
+    {
+      "id": "tto-kamla-persad-bissessar",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.tto-kamla-persad-bissessar.parody",
+        "fictional": "leader.tto-kamla-persad-bissessar.fictional"
+      },
+      "born": "1952-04-22",
+      "party": "tto-congres-national-uni",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.2,
+        "sovereignty": -0.25,
+        "aggressiveness": 0.21000000000000002,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57712",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tto-christine-kangaloo",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.tto-christine-kangaloo.parody",
+        "fictional": "leader.tto-christine-kangaloo.fictional"
+      },
+      "born": "1961-12-01",
+      "party": "tto-mouvement-national-du-peuple",
+      "traits": {
+        "economic": 0.25,
+        "authority": -0.05,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.33999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q97400315",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "tto-pennelope-beckles",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.tto-pennelope-beckles.parody",
+        "fictional": "leader.tto-pennelope-beckles.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "tto-mouvement-national-du-peuple",
+      "traits": {
+        "economic": 0.25,
+        "authority": -0.05,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.33999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "tto-congres-national-uni",
+      "name": "party.tto-congres-national-uni",
+      "wikidata": "Q1024804",
+      "ideologies": ["Q1080800", "Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.2,
+        "sovereignty": -0.25
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.53,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 28 avril 2025 (pourcentages de voix estimés)"
+      },
+      "leader": "tto-kamla-persad-bissessar"
+    },
+    {
+      "id": "tto-mouvement-national-du-peuple",
+      "name": "party.tto-mouvement-national-du-peuple",
+      "wikidata": "Q3326740",
+      "ideologies": ["Q6216", "Q6235"],
+      "ideology": {
+        "economic": 0.25,
+        "authority": -0.05,
+        "sovereignty": 0.25
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.44,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 28 avril 2025 (pourcentages de voix estimés)"
+      },
+      "leader": "tto-pennelope-beckles"
+    }
+  ]
+}

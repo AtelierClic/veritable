@@ -1,0 +1,72 @@
+{
+ "nation": "COG",
+ "country": "Q971",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q4752077",
+    "label": "Anatole Collinet Makosso",
+    "born": "1965-01-01",
+    "died": null,
+    "parties": [
+     "Q1785816"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57418",
+    "label": "Denis Sassou-Nguesso",
+    "born": "1943-11-23",
+    "died": null,
+    "parties": [
+     "Q1785816"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1785816",
+   "label": "Parti congolais du travail",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q7264",
+     "label": "marxisme"
+    },
+    {
+     "qid": "Q7272",
+     "label": "socialisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57418",
+    "label": "Denis Sassou-Nguesso",
+    "born": "1943-11-23",
+    "died": null,
+    "parties": [
+     "Q1785816"
+    ]
+   }
+  },
+  {
+   "qid": "Q3550401",
+   "label": "Union panafricaine pour la démocratie sociale",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

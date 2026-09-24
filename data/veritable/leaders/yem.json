@@ -1,0 +1,52 @@
+{
+  "nation": "YEM",
+  "actors": [
+    {
+      "id": "yem-salem-saleh-ben-braik",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.yem-salem-saleh-ben-braik.parody",
+        "fictional": "leader.yem-salem-saleh-ben-braik.fictional"
+      },
+      "born": "1965-04-03",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q68837007",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "yem-rashad-al-alimi",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.yem-rashad-al-alimi.parody",
+        "fictional": "leader.yem-rashad-al-alimi.fictional"
+      },
+      "born": "1954-01-15",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.4,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q12213376",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

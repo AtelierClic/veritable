@@ -1,0 +1,29 @@
+{
+  "nation": "FSM",
+  "actors": [
+    {
+      "id": "fsm-wesley-simina",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.fsm-wesley-simina.parody",
+        "fictional": "leader.fsm-wesley-simina.fictional"
+      },
+      "born": "1961-09-10",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q7984081",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

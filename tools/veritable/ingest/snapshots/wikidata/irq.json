@@ -1,0 +1,116 @@
+{
+ "nation": "IRQ",
+ "country": "Q796",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q3700793",
+    "label": "Mohammed Chia al-Soudani",
+    "born": "1970-03-04",
+    "died": null,
+    "parties": [
+     "Q1048242"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q115579547",
+    "label": "Nizar Mohammed Saïd Amidi",
+    "born": "1968-02-08",
+    "died": null,
+    "parties": [
+     "Q677505"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1971776",
+   "label": "Coalition de l'État de droit",
+   "ideologies": [
+    {
+     "qid": "Q9585",
+     "label": "chiisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57673",
+    "label": "Nouri al-Maliki",
+    "born": "1950-06-20",
+    "died": null,
+    "parties": [
+     "Q1048242"
+    ]
+   }
+  },
+  {
+   "qid": "Q781221",
+   "label": "Parti démocratique du Kurdistan",
+   "ideologies": [
+    {
+     "qid": "Q162719",
+     "label": "néolibéralisme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    },
+    {
+     "qid": "Q7057435",
+     "label": "indépendantisme kurde"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q315927",
+    "label": "Massoud Barzani",
+    "born": "1946-08-16",
+    "died": null,
+    "parties": [
+     "Q781221"
+    ]
+   }
+  },
+  {
+   "qid": "Q677505",
+   "label": "Union patriotique du Kurdistan",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    },
+    {
+     "qid": "Q7057435",
+     "label": "indépendantisme kurde"
+    }
+   ],
+   "leader": {
+    "qid": "Q39650449",
+    "label": "Bafel Talabani",
+    "born": "1973-01-01",
+    "died": null,
+    "parties": [
+     "Q677505"
+    ]
+   }
+  }
+ ]
+}

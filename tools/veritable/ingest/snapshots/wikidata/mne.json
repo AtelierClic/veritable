@@ -1,0 +1,32 @@
+{
+ "nation": "MNE",
+ "country": "Q236",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q101225458",
+    "label": "Milojko Spajić",
+    "born": "1987-09-24",
+    "died": null,
+    "parties": [
+     "Q113453660"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q104417661",
+    "label": "Jakov Milatović",
+    "born": "1986-12-07",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

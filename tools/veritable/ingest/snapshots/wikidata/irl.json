@@ -1,0 +1,164 @@
+{
+ "nation": "IRL",
+ "country": "Q27",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q920403",
+    "label": "Micheál Martin",
+    "born": "1960-08-16",
+    "died": null,
+    "parties": [
+     "Q216517"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q5052598",
+    "label": "Catherine Connolly",
+    "born": "1955-11-05",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q216517",
+   "label": "Fianna Fáil",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q517372",
+     "label": "républicanisme irlandais"
+    }
+   ],
+   "leader": {
+    "qid": "Q920403",
+    "label": "Micheál Martin",
+    "born": "1960-08-16",
+    "died": null,
+    "parties": [
+     "Q216517"
+    ]
+   }
+  },
+  {
+   "qid": "Q5450078",
+   "label": "2001 Fine Gael leadership election",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q76382",
+   "label": "Sinn Féin",
+   "ideologies": [
+    {
+     "qid": "Q114876296",
+     "label": "populist socialism"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q517372",
+     "label": "républicanisme irlandais"
+    },
+    {
+     "qid": "Q6554056",
+     "label": "Linguistic nationalism"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q467414",
+    "label": "Mary Lou McDonald",
+    "born": "1969-05-01",
+    "died": null,
+    "parties": [
+     "Q76382"
+    ]
+   }
+  },
+  {
+   "qid": "Q20682633",
+   "label": "Sociaux-démocrates",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q921098",
+     "label": "modèle scandinave"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q61090509",
+   "label": "Aontú",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q3752036",
+     "label": "Irlande Unie"
+    },
+    {
+     "qid": "Q517372",
+     "label": "républicanisme irlandais"
+    }
+   ],
+   "leader": {
+    "qid": "Q7157787",
+    "label": "Peadar Tóibín",
+    "born": "1974-06-19",
+    "died": null,
+    "parties": [
+     "Q61090509"
+    ]
+   }
+  },
+  {
+   "qid": "Q124516371",
+   "label": "Independent Ireland",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

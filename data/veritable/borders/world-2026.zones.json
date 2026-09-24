@@ -1,0 +1,262 @@
+{
+  "scenario": "world-2026",
+  "map": "giantworldmap",
+  "width": 4108,
+  "height": 1948,
+  "waterTiles": 5666981,
+  "unzonedWater": 3067,
+  "zones": [
+    {
+      "id": "north-atlantic",
+      "name": "sea.north-atlantic",
+      "seed": [1529, 472],
+      "tiles": 120222
+    },
+    {
+      "id": "central-atlantic",
+      "name": "sea.central-atlantic",
+      "seed": [1529, 791],
+      "tiles": 176748
+    },
+    {
+      "id": "south-atlantic",
+      "name": "sea.south-atlantic",
+      "seed": [1700, 1357],
+      "tiles": 317217
+    },
+    {
+      "id": "biscay",
+      "name": "sea.biscay",
+      "seed": [1871, 467],
+      "tiles": 36715
+    },
+    {
+      "id": "channel",
+      "name": "sea.channel",
+      "seed": [1911, 413],
+      "tiles": 19285
+    },
+    {
+      "id": "north-sea",
+      "name": "sea.north-sea",
+      "seed": [1963, 343],
+      "tiles": 23575
+    },
+    {
+      "id": "baltic",
+      "name": "sea.baltic",
+      "seed": [2145, 319],
+      "tiles": 11882
+    },
+    {
+      "id": "norwegian-sea",
+      "name": "sea.norwegian-sea",
+      "seed": [1986, 225],
+      "tiles": 124678
+    },
+    {
+      "id": "barents",
+      "name": "sea.barents",
+      "seed": [2362, 154],
+      "tiles": 72320
+    },
+    {
+      "id": "arctic",
+      "name": "sea.arctic",
+      "seed": [2613, 36],
+      "tiles": 141673
+    },
+    {
+      "id": "med-west",
+      "name": "sea.med-west",
+      "seed": [1974, 543],
+      "tiles": 10604
+    },
+    {
+      "id": "med-central",
+      "name": "sea.med-central",
+      "seed": [2088, 579],
+      "tiles": 11050
+    },
+    {
+      "id": "med-east",
+      "name": "sea.med-east",
+      "seed": [2248, 602],
+      "tiles": 11237
+    },
+    {
+      "id": "adriatic",
+      "name": "sea.adriatic",
+      "seed": [2105, 496],
+      "tiles": 2688
+    },
+    {
+      "id": "aegean",
+      "name": "sea.aegean",
+      "seed": [2214, 555],
+      "tiles": 4497
+    },
+    {
+      "id": "black-sea",
+      "name": "sea.black-sea",
+      "seed": [2317, 496],
+      "tiles": 8483
+    },
+    {
+      "id": "caspian",
+      "name": "sea.caspian",
+      "seed": [2511, 508],
+      "tiles": 7761
+    },
+    {
+      "id": "red-sea",
+      "name": "sea.red-sea",
+      "seed": [2362, 767],
+      "tiles": 7147
+    },
+    {
+      "id": "persian-gulf",
+      "name": "sea.persian-gulf",
+      "seed": [2511, 685],
+      "tiles": 5243
+    },
+    {
+      "id": "arabian-sea",
+      "name": "sea.arabian-sea",
+      "seed": [2648, 826],
+      "tiles": 89398
+    },
+    {
+      "id": "bay-of-bengal",
+      "name": "sea.bay-of-bengal",
+      "seed": [2933, 838],
+      "tiles": 62785
+    },
+    {
+      "id": "indian-ocean",
+      "name": "sea.indian-ocean",
+      "seed": [2819, 1239],
+      "tiles": 364653
+    },
+    {
+      "id": "mozambique-channel",
+      "name": "sea.mozambique-channel",
+      "seed": [2397, 1216],
+      "tiles": 190127
+    },
+    {
+      "id": "gulf-of-guinea",
+      "name": "sea.gulf-of-guinea",
+      "seed": [1951, 992],
+      "tiles": 112147
+    },
+    {
+      "id": "south-china-sea",
+      "name": "sea.south-china-sea",
+      "seed": [3230, 862],
+      "tiles": 45168
+    },
+    {
+      "id": "east-china-sea",
+      "name": "sea.east-china-sea",
+      "seed": [3356, 661],
+      "tiles": 38027
+    },
+    {
+      "id": "yellow-sea",
+      "name": "sea.yellow-sea",
+      "seed": [3333, 579],
+      "tiles": 9752
+    },
+    {
+      "id": "sea-of-japan",
+      "name": "sea.sea-of-japan",
+      "seed": [3470, 531],
+      "tiles": 23547
+    },
+    {
+      "id": "sea-of-okhotsk",
+      "name": "sea.sea-of-okhotsk",
+      "seed": [3618, 378],
+      "tiles": 89737
+    },
+    {
+      "id": "bering-sea",
+      "name": "sea.bering-sea",
+      "seed": [4006, 319],
+      "tiles": 267836
+    },
+    {
+      "id": "philippine-sea",
+      "name": "sea.philippine-sea",
+      "seed": [3436, 791],
+      "tiles": 143804
+    },
+    {
+      "id": "java-sea",
+      "name": "sea.java-sea",
+      "seed": [3207, 1062],
+      "tiles": 186238
+    },
+    {
+      "id": "coral-sea",
+      "name": "sea.coral-sea",
+      "seed": [3698, 1216],
+      "tiles": 219147
+    },
+    {
+      "id": "tasman-sea",
+      "name": "sea.tasman-sea",
+      "seed": [3755, 1452],
+      "tiles": 405138
+    },
+    {
+      "id": "north-pacific",
+      "name": "sea.north-pacific",
+      "seed": [216, 591],
+      "tiles": 424571
+    },
+    {
+      "id": "south-pacific",
+      "name": "sea.south-pacific",
+      "seed": [444, 1358],
+      "tiles": 792372
+    },
+    {
+      "id": "eastern-pacific",
+      "name": "sea.eastern-pacific",
+      "seed": [844, 945],
+      "tiles": 266089
+    },
+    {
+      "id": "caribbean",
+      "name": "sea.caribbean",
+      "seed": [1072, 826],
+      "tiles": 92105
+    },
+    {
+      "id": "gulf-of-mexico",
+      "name": "sea.gulf-of-mexico",
+      "seed": [901, 709],
+      "tiles": 31871
+    },
+    {
+      "id": "hudson-bay",
+      "name": "sea.hudson-bay",
+      "seed": [958, 295],
+      "tiles": 147196
+    },
+    {
+      "id": "labrador-sea",
+      "name": "sea.labrador-sea",
+      "seed": [1301, 319],
+      "tiles": 124517
+    },
+    {
+      "id": "southern-ocean",
+      "name": "sea.southern-ocean",
+      "seed": [1929, 1711],
+      "tiles": 424664
+    }
+  ]
+}

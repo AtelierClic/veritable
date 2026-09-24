@@ -1,0 +1,48 @@
+{
+ "nation": "KGZ",
+ "country": "Q813",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q112703041",
+    "label": "Adylbek Kasymaliev",
+    "born": "1960-12-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q25597826",
+    "label": "Sadyr Japarov",
+    "born": "1968-12-06",
+    "died": null,
+    "parties": [
+     "Q104778590",
+     "Q413561"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q110094656",
+   "label": "Yntymak",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q73883858",
+    "label": "Marlen Mamataliev",
+    "born": "1981-03-24",
+    "died": null,
+    "parties": [
+     "Q24482"
+    ]
+   }
+  }
+ ]
+}

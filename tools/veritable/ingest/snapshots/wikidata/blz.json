@@ -1,0 +1,58 @@
+{
+ "nation": "BLZ",
+ "country": "Q242",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6266369",
+    "label": "Johnny Briceño",
+    "born": "1960-07-17",
+    "died": null,
+    "parties": [
+     "Q1759613"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1759613",
+   "label": "Parti uni du peuple",
+   "ideologies": [
+    {
+     "qid": "Q1080800",
+     "label": "gauche chrétienne"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1809323",
+   "label": "Parti démocratique uni",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

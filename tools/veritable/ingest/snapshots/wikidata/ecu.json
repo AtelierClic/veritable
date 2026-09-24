@@ -1,0 +1,130 @@
+{
+ "nation": "ECU",
+ "country": "Q736",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q112075625",
+    "label": "Daniel Noboa",
+    "born": "1987-11-30",
+    "died": null,
+    "parties": [
+     "Q120971997"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q112075625",
+    "label": "Daniel Noboa",
+    "born": "1987-11-30",
+    "died": null,
+    "parties": [
+     "Q120971997"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q55407092",
+   "label": "Mouvement de la révolution citoyenne",
+   "ideologies": [
+    {
+     "qid": "Q109325461",
+     "label": "Q109325461"
+    },
+    {
+     "qid": "Q1144178",
+     "label": "anti-impérialisme"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q192451",
+     "label": "État-providence"
+    },
+    {
+     "qid": "Q23808011",
+     "label": "post-neoliberalism"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    },
+    {
+     "qid": "Q912036",
+     "label": "souverainisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q9028537",
+    "label": "Marcela Aguiñaga",
+    "born": "1973-04-25",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q120971997",
+   "label": "Action démocratique nationale",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q161165",
+     "label": "népotisme"
+    },
+    {
+     "qid": "Q9058655",
+     "label": "personalismo"
+    }
+   ],
+   "leader": {
+    "qid": "Q112075625",
+    "label": "Daniel Noboa",
+    "born": "1987-11-30",
+    "died": null,
+    "parties": [
+     "Q120971997"
+    ]
+   }
+  },
+  {
+   "qid": "Q1972741",
+   "label": "Pachakutik",
+   "ideologies": [
+    {
+     "qid": "Q3772574",
+     "label": "écologisme radical"
+    },
+    {
+     "qid": "Q5602008",
+     "label": "indigénisme"
+    },
+    {
+     "qid": "Q7205561",
+     "label": "plurinationalisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

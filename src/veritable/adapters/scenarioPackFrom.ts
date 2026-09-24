@@ -1,4 +1,5 @@
 import { DataSource } from "../data/DataSource";
+import { emptyRow } from "../data/schemas/row";
 import { Scenario } from "../data/schemas/scenario";
 import { SimData } from "../sim/economy/context";
 import { ScenarioPack } from "./scenarioWorld";
@@ -50,7 +51,14 @@ export function simDataFrom(source: DataSource, scenario: Scenario): SimData {
   const seas = source.seas(scenario.map);
   return {
     goods: source.goods(),
-    row: source.row(),
+    // J6: no rest of the world in a scenario that holds the whole world.
+    row:
+      scenario.restOfWorld === false
+        ? emptyRow(
+            source.goods().map((g) => g.id),
+            scenario.id,
+          )
+        : source.row(),
     blocs: source.blocs(),
     divisions: source.divisions(),
     casusBelli: source.casusBelli(),

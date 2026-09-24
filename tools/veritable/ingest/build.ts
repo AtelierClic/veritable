@@ -194,6 +194,14 @@ export function build(scenarioId: string): void {
     const iso = p.ISO_A3 !== "-99" ? p.ISO_A3 : p.ADM0_A3;
     if (p.NAME_FR) countryNames.set(iso, p.NAME_FR);
   }
+  // Micro-states of the scenario's map (J6), from its borders meta.
+  const metaFile = path.join(
+    DATA,
+    scenario.borders.rasterized.replace(/\.bin$/, ".meta.json"),
+  );
+  const microstates: Record<string, [number, number]> = fs.existsSync(metaFile)
+    ? (JSON.parse(fs.readFileSync(metaFile, "utf8")).microstates ?? {})
+    : {};
   const i18nFile = path.join(DATA, "i18n/fr.json");
   const i18n = JSON.parse(fs.readFileSync(i18nFile, "utf8")) as Record<
     string,
@@ -769,6 +777,15 @@ export function build(scenarioId: string): void {
     };
     const rawTotal = Object.values(raw).reduce((s, w) => s + w, 0);
     const handAgenda = estimates.aiAgenda?.values[n];
+    // A micro-state (J6): no tile, a host tile on the map.
+    if (microstates[n] !== undefined) {
+      identity.territory = { kind: "microstate", hostTile: microstates[n] };
+    } else if (
+      (identity.territory as { kind: string }).kind === "microstate" &&
+      scenario.borders.microstateTiles !== undefined
+    ) {
+      identity.territory = { kind: "tiles" };
+    }
     sheets[n] = {
       ...identity,
       nuclear:

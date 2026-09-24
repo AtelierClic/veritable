@@ -1,0 +1,81 @@
+{
+ "nation": "HRV",
+ "country": "Q224",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q11685764",
+    "label": "Andrej Plenković",
+    "born": "1970-04-08",
+    "died": null,
+    "parties": [
+     "Q738439"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57687",
+    "label": "Zoran Milanović",
+    "born": "1966-10-30",
+    "died": null,
+    "parties": [
+     "Q830323"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q738439",
+   "label": "Union démocratique croate",
+   "ideologies": [
+    {
+     "qid": "Q1265120",
+     "label": "Nationalisme croate"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q388698",
+     "label": "atlantisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11685764",
+    "label": "Andrej Plenković",
+    "born": "1970-04-08",
+    "died": null,
+    "parties": [
+     "Q738439"
+    ]
+   }
+  },
+  {
+   "qid": "Q86756923",
+   "label": "Mouvement patriotique de Miroslav Škoro",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q97236508",
+    "label": "Ivan Penava",
+    "born": "1974-12-31",
+    "died": null,
+    "parties": [
+     "Q738439",
+     "Q86756923"
+    ]
+   }
+  }
+ ]
+}

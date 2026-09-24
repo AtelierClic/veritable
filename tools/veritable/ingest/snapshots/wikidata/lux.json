@@ -1,0 +1,163 @@
+{
+ "nation": "LUX",
+ "country": "Q32",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q592101",
+    "label": "Luc Frieden",
+    "born": "1963-09-16",
+    "died": null,
+    "parties": [
+     "Q1344670"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q161319",
+    "label": "Guillaume V, Grand Duc de Luxembourg",
+    "born": "1981-11-11",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1344670",
+   "label": "Parti populaire chrétien-social",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": {
+    "qid": "Q592101",
+    "label": "Luc Frieden",
+    "born": "1963-09-16",
+    "died": null,
+    "parties": [
+     "Q1344670"
+    ]
+   }
+  },
+  {
+   "qid": "Q1029792",
+   "label": "Parti démocratique",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q59497129",
+    "label": "Carole Hartmann",
+    "born": "1987-06-03",
+    "died": null,
+    "parties": [
+     "Q1029792"
+    ]
+   }
+  },
+  {
+   "qid": "Q1070311",
+   "label": "Parti ouvrier socialiste luxembourgeois",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q110158745",
+    "label": "Dan Biancalana",
+    "born": "1977-11-06",
+    "died": null,
+    "parties": [
+     "Q1070311"
+    ]
+   }
+  },
+  {
+   "qid": "Q339280",
+   "label": "Parti réformiste d'alternative démocratique",
+   "ideologies": [
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q91651508",
+    "label": "Alexandra Schoos",
+    "born": "1988-05-13",
+    "died": null,
+    "parties": [
+     "Q339280"
+    ]
+   }
+  },
+  {
+   "qid": "Q767761",
+   "label": "Les Verts",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q3079953",
+   "label": "Parti pirate",
+   "ideologies": [
+    {
+     "qid": "Q3664326",
+     "label": "parti pirate"
+    }
+   ],
+   "leader": {
+    "qid": "Q64632915",
+    "label": "Marie-Paule Dondelinger",
+    "born": "1969-01-01",
+    "died": null,
+    "parties": [
+     "Q13512576",
+     "Q3079953"
+    ]
+   }
+  },
+  {
+   "qid": "Q1270494",
+   "label": "La Gauche",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "nation": "SSD",
+ "country": "Q958",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57315",
+    "label": "Salva Kiir",
+    "born": "1951-09-13",
+    "died": null,
+    "parties": [
+     "Q459960"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57315",
+    "label": "Salva Kiir",
+    "born": "1951-09-13",
+    "died": null,
+    "parties": [
+     "Q459960"
+    ]
+   }
+  }
+ ],
+ "parties": []
+}

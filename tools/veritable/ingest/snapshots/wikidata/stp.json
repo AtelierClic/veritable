@@ -1,0 +1,63 @@
+{
+ "nation": "STP",
+ "country": "Q1039",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q131749390",
+    "label": "Américo Ramos",
+    "born": "1966-07-21",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q27982047",
+    "label": "Carlos Vila Nova",
+    "born": "1959-07-27",
+    "died": null,
+    "parties": [
+     "Q2788422"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2788422",
+   "label": "Action démocratique indépendante",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q459822",
+    "label": "Patrice Trovoada",
+    "born": "1962-03-18",
+    "died": null,
+    "parties": [
+     "Q2788422"
+    ]
+   }
+  },
+  {
+   "qid": "Q1276673",
+   "label": "Mouvement pour la libération de Sao Tomé-et-Principe - Parti social-démocrate",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

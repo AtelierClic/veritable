@@ -1,0 +1,240 @@
+{
+  "nation": "ALB",
+  "actors": [
+    {
+      "id": "alb-edi-rama",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.alb-edi-rama.parody",
+        "fictional": "leader.alb-edi-rama.fictional"
+      },
+      "born": "1964-07-04",
+      "party": "alb-parti-socialiste-d-albanie",
+      "traits": {
+        "economic": -0.475,
+        "authority": -0.175,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.225,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q316901",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "alb-bajram-begaj",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.alb-bajram-begaj.parody",
+        "fictional": "leader.alb-bajram-begaj.fictional"
+      },
+      "born": "1967-03-20",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q107422711",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "alb-tom-doshi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.alb-tom-doshi.parody",
+        "fictional": "leader.alb-tom-doshi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "alb-parti-social-democrate",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "alb-agron-shehaj",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.alb-agron-shehaj.parody",
+        "fictional": "leader.alb-agron-shehaj.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "alb-opportunity-party",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0,
+        "sovereignty": -0.267,
+        "aggressiveness": 0.24659999999999999,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "alb-sali-berisha",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.alb-sali-berisha.parody",
+        "fictional": "leader.alb-sali-berisha.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "alb-partia-demokratike-aleanca-per-shqiperine-madhes",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.3,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.4,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "alb-adriatik-lapaj",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.alb-adriatik-lapaj.parody",
+        "fictional": "leader.alb-adriatik-lapaj.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "alb-nisma-shqiperia-behet",
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "alb-parti-socialiste-d-albanie",
+      "name": "party.alb-parti-socialiste-d-albanie",
+      "wikidata": "Q642882",
+      "ideologies": ["Q11900614", "Q121254", "Q189280", "Q3781399"],
+      "ideology": {
+        "economic": -0.475,
+        "authority": -0.175,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.5327,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 11 mai 2025 (Commission électorale centrale)"
+      },
+      "leader": "alb-edi-rama"
+    },
+    {
+      "id": "alb-parti-social-democrate",
+      "name": "party.alb-parti-social-democrate",
+      "wikidata": "Q1533055",
+      "ideologies": ["Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.031,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 11 mai 2025 (Commission électorale centrale)"
+      },
+      "leader": "alb-tom-doshi"
+    },
+    {
+      "id": "alb-opportunity-party",
+      "name": "party.alb-opportunity-party",
+      "wikidata": "Q126915964",
+      "ideologies": ["Q3781399", "Q7169", "Q729119"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0,
+        "sovereignty": -0.267
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.0305,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 11 mai 2025 (Commission électorale centrale)"
+      },
+      "leader": "alb-agron-shehaj"
+    },
+    {
+      "id": "alb-partia-demokratike-aleanca-per-shqiperine-madhes",
+      "name": "party.alb-partia-demokratike-aleanca-per-shqiperine-madhes",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.3,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.3293,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 11 mai 2025 (Commission électorale centrale)"
+      },
+      "leader": "alb-sali-berisha"
+    },
+    {
+      "id": "alb-nisma-shqiperia-behet",
+      "name": "party.alb-nisma-shqiperia-behet",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.04,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 11 mai 2025 (Commission électorale centrale)"
+      },
+      "leader": "alb-adriatik-lapaj"
+    }
+  ]
+}

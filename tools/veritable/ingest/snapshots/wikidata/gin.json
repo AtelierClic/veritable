@@ -1,0 +1,32 @@
+{
+ "nation": "GIN",
+ "country": "Q1006",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q22209348",
+    "label": "Bah Oury",
+    "born": "1958-03-01",
+    "died": null,
+    "parties": [
+     "Q124254489"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q108418519",
+    "label": "Mamadi Doumbouya",
+    "born": "1984-12-05",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

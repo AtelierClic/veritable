@@ -1,0 +1,30 @@
+{
+ "nation": "SAU",
+ "country": "Q851",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q367825",
+    "label": "Salmane ben Abdelaziz Al Saoud",
+    "born": "1935-12-31",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q367825",
+    "label": "Salmane ben Abdelaziz Al Saoud",
+    "born": "1935-12-31",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

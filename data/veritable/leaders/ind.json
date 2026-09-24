@@ -1,0 +1,321 @@
+{
+  "nation": "IND",
+  "actors": [
+    {
+      "id": "ind-narendra-modi",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.ind-narendra-modi.parody",
+        "fictional": "leader.ind-narendra-modi.fictional"
+      },
+      "born": "1950-09-17",
+      "party": "ind-bharatiya-janata-party",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.45,
+        "sovereignty": 0.55,
+        "aggressiveness": 0.45,
+        "corruption": 0.3,
+        "charisma": 0.8,
+        "competence": 0.65
+      },
+      "wikidata": "Q1058",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Nationaliste hindou (Hindutva), libéral en économie mais interventionniste sur les grands projets industriels ; fermeté assumée envers le Pakistan et la Chine (agressivité au-dessus de la moyenne) ; charisme électoral exceptionnel (trois mandats consécutifs)."
+    },
+    {
+      "id": "ind-draupadi-murmu",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.ind-draupadi-murmu.parody",
+        "fictional": "leader.ind-draupadi-murmu.fictional"
+      },
+      "born": "1958-06-20",
+      "party": "ind-bharatiya-janata-party",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.15,
+        "corruption": 0.2,
+        "charisma": 0.45,
+        "competence": 0.5
+      },
+      "wikidata": "Q19901232",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Présidente largement cérémonielle dans le régime parlementaire indien ; traits modérés, proches du centre, sans agenda personnel affirmé ; agressivité faible, le pouvoir exécutif appartenant au premier ministre."
+    },
+    {
+      "id": "ind-jagat-prakash-nadda",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ind-jagat-prakash-nadda.parody",
+        "fictional": "leader.ind-jagat-prakash-nadda.fictional"
+      },
+      "born": "1960-12-02",
+      "party": "ind-bharatiya-janata-party",
+      "traits": {
+        "economic": 0.267,
+        "authority": 0.533,
+        "sovereignty": 0.567,
+        "aggressiveness": 0.52,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q16193764",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ind-mallikarjun-kharge",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ind-mallikarjun-kharge.parody",
+        "fictional": "leader.ind-mallikarjun-kharge.fictional"
+      },
+      "born": "1942-07-21",
+      "party": "ind-congres-national-indien",
+      "traits": {
+        "economic": -0.05,
+        "authority": -0.1,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.32999999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q6744197",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ind-akhilesh-yadav",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ind-akhilesh-yadav.parody",
+        "fictional": "leader.ind-akhilesh-yadav.fictional"
+      },
+      "born": "1973-07-01",
+      "party": "ind-samajwadi-party",
+      "traits": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.21999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q417657",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ind-mamata-banerjee",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ind-mamata-banerjee.parody",
+        "fictional": "leader.ind-mamata-banerjee.fictional"
+      },
+      "born": "1955-01-05",
+      "party": "ind-all-india-trinamool-congress",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.05,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.32999999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q465041",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ind-m-k-stalin",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ind-m-k-stalin.parody",
+        "fictional": "leader.ind-m-k-stalin.fictional"
+      },
+      "born": "1953-03-01",
+      "party": "ind-dravida-munnetra-kazhagam",
+      "traits": {
+        "economic": -0.433,
+        "authority": -0.067,
+        "sovereignty": 0.033,
+        "aggressiveness": 0.29319999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q983475",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "ind-nara-chandrababu-naidu",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.ind-nara-chandrababu-naidu.parody",
+        "fictional": "leader.ind-nara-chandrababu-naidu.fictional"
+      },
+      "born": "1950-04-20",
+      "party": "ind-telugu-desam-party",
+      "traits": {
+        "economic": 0.35,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.34,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q3518013",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "ind-bharatiya-janata-party",
+      "name": "party.ind-bharatiya-janata-party",
+      "wikidata": "Q10230",
+      "ideologies": [
+        "Q1307223",
+        "Q1993616",
+        "Q281347",
+        "Q4105807",
+        "Q436860",
+        "Q56209385",
+        "Q7169"
+      ],
+      "ideology": {
+        "economic": 0.267,
+        "authority": 0.533,
+        "sovereignty": 0.567
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 7)",
+      "support": 0.3656,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales à la Lok Sabha, avril-juin 2024, résultats le 4 juin 2024"
+      },
+      "leader": "ind-jagat-prakash-nadda"
+    },
+    {
+      "id": "ind-congres-national-indien",
+      "name": "party.ind-congres-national-indien",
+      "wikidata": "Q10225",
+      "ideologies": ["Q216920", "Q494792", "Q59599"],
+      "ideology": {
+        "economic": -0.05,
+        "authority": -0.1,
+        "sovereignty": 0.25
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.2119,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales à la Lok Sabha, avril-juin 2024, résultats le 4 juin 2024"
+      },
+      "leader": "ind-mallikarjun-kharge"
+    },
+    {
+      "id": "ind-samajwadi-party",
+      "name": "party.ind-samajwadi-party",
+      "wikidata": "Q1546941",
+      "ideologies": ["Q189280"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.045,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales à la Lok Sabha, avril-juin 2024, résultats le 4 juin 2024"
+      },
+      "leader": "ind-akhilesh-yadav"
+    },
+    {
+      "id": "ind-all-india-trinamool-congress",
+      "name": "party.ind-all-india-trinamool-congress",
+      "wikidata": "Q912899",
+      "ideologies": ["Q216920", "Q389647", "Q6235", "Q7272"],
+      "ideology": {
+        "economic": -0.4,
+        "authority": -0.05,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.044,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales à la Lok Sabha, avril-juin 2024, résultats le 4 juin 2024"
+      },
+      "leader": "ind-mamata-banerjee"
+    },
+    {
+      "id": "ind-dravida-munnetra-kazhagam",
+      "name": "party.ind-dravida-munnetra-kazhagam",
+      "wikidata": "Q1255973",
+      "ideologies": [
+        "Q121254",
+        "Q180490",
+        "Q189280",
+        "Q264892",
+        "Q3618563",
+        "Q56136199",
+        "Q7066"
+      ],
+      "ideology": {
+        "economic": -0.433,
+        "authority": -0.067,
+        "sovereignty": 0.033
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 7)",
+      "support": 0.025,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales à la Lok Sabha, avril-juin 2024, résultats le 4 juin 2024"
+      },
+      "leader": "ind-m-k-stalin"
+    },
+    {
+      "id": "ind-telugu-desam-party",
+      "name": "party.ind-telugu-desam-party",
+      "wikidata": "Q2279320",
+      "ideologies": ["Q180490", "Q2698984", "Q729119"],
+      "ideology": {
+        "economic": 0.35,
+        "authority": 0.1,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.022,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales à la Lok Sabha, avril-juin 2024, résultats le 4 juin 2024"
+      },
+      "leader": "ind-nara-chandrababu-naidu"
+    }
+  ]
+}

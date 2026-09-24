@@ -1,0 +1,334 @@
+{
+  "id": "ROU",
+  "name": "nation.rou.name",
+  "capital": {
+    "name": "nation.rou.capital",
+    "lon": 26.098,
+    "lat": 44.4353,
+    "source": "natural-earth v5.1.2, ne_10m_populated_places (Admin-0 capital)",
+    "asOf": "2026-01-01"
+  },
+  "regime": "semi-presidential",
+  "regimeSource": {
+    "source": "vdem-row:2025 (V-Dem v16 par OWID, CC BY-SA 4.0)",
+    "asOf": "2026-01-01",
+    "note": "démocratie (V-Dem), forme constitutionnelle. République semi-présidentielle. L'élection présidentielle de novembre-décembre 2024 a été intégralement annulée par la Cour constitutionnelle deux jours avant le second tour, au motif d'une ingérence russe alléguée (campagne coordonnée sur TikTok) ayant favorisé le candidat indépendant d'extrême droite Călin Georgescu, arrivé en tête du premier tour. Une nouvelle élection a eu lieu en mai 2025, remportée par l'indépendant pro-européen Nicușor Dan face à George Simion (AUR). Épisode qui a fragilisé la confiance démocratique sans faire basculer le régime hors du champ électoral-démocratique. Gouvernement de large coalition pro-européenne PNL-PSD-USR-UDMR conduit par Ilie Bolojan depuis juin 2025, formé pour contenir la poussée souverainiste après les législatives de décembre 2024."
+  },
+  "blocs": ["eu", "nato"],
+  "territory": {
+    "kind": "tiles"
+  },
+  "contested": [],
+  "nuclear": null,
+  "population": {
+    "value": 19020300,
+    "source": "worldbank:SP.POP.TOTL",
+    "asOf": "2025"
+  },
+  "gdp": {
+    "value": 428678000000,
+    "source": "worldbank:NY.GDP.MKTP.CD",
+    "asOf": "2025"
+  },
+  "debtToGdp": {
+    "value": 0.606,
+    "source": "imf-weo:GGXWDG_NGDP",
+    "asOf": "2025",
+    "note": "Dette brute des administrations publiques en % du PIB, FMI, Perspectives de l'économie mondiale (API DataMapper) ; la valeur 2025 est une estimation du FMI."
+  },
+  "economy": {
+    "tradeOpenness": {
+      "value": 0.762148,
+      "source": "worldbank:NE.TRD.GNFS.ZS",
+      "asOf": "2025"
+    },
+    "growthBase": {
+      "value": 0.032918,
+      "source": "worldbank:NY.GDP.MKTP.KD.ZG",
+      "asOf": "2015-2024",
+      "note": "Moyenne 2015-2024 de la croissance réelle (3.29 %/an)."
+    },
+    "goods": {
+      "oil": {
+        "production": {
+          "value": 33.343,
+          "source": "owid-energy@7e387a16:oil_production",
+          "asOf": "2024"
+        },
+        "consumption": {
+          "value": 137.637,
+          "source": "owid-energy@7e387a16:oil_consumption",
+          "asOf": "2024"
+        }
+      },
+      "gas": {
+        "production": {
+          "value": 89.836,
+          "source": "owid-energy@7e387a16:gas_production",
+          "asOf": "2024"
+        },
+        "consumption": {
+          "value": 94.533,
+          "source": "owid-energy@7e387a16:gas_consumption",
+          "asOf": "2024"
+        }
+      },
+      "coal": {
+        "production": {
+          "value": 22.286,
+          "source": "owid-energy@7e387a16:coal_production",
+          "asOf": "2024"
+        },
+        "consumption": {
+          "value": 25.341,
+          "source": "owid-energy@7e387a16:coal_consumption",
+          "asOf": "2024"
+        }
+      },
+      "electricity": {
+        "production": {
+          "value": 49.81,
+          "source": "owid-energy@7e387a16:electricity_generation",
+          "asOf": "2025"
+        },
+        "consumption": {
+          "value": 54.39,
+          "source": "owid-energy@7e387a16:electricity_demand",
+          "asOf": "2025"
+        }
+      },
+      "food": {
+        "production": {
+          "value": 20.7845,
+          "source": "worldbank:AG.PRD.CREL.MT",
+          "asOf": "2023"
+        },
+        "consumption": {
+          "value": 7.23177,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "Consommation apparente : population × production mondiale de céréales par habitant (Banque mondiale). Aucune série ouverte de consommation homogène."
+        }
+      },
+      "steel": {
+        "production": {
+          "value": 3.0413,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.06 (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 3.82519,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "consumer-goods": {
+        "production": {
+          "value": 22.8097,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.45 (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 28.689,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "pharma": {
+        "production": {
+          "value": 2.53441,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée manufacturière × 0.05 (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 3.18766,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "electronics": {
+        "production": {
+          "value": 6.32701,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après exportations de haute technologie × 0.59073 (part électronique de la valeur ajoutée manufacturière mondiale) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 7.65039,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "services": {
+        "production": {
+          "value": 264.685,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après valeur ajoutée des services (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 256.043,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part du PIB mondial (Banque mondiale), Md$."
+        }
+      },
+      "arms": {
+        "production": {
+          "value": 2.46292,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Md$ de production, d'après dépenses militaires × 0.25 (part d'équipement) (Banque mondiale)."
+        },
+        "consumption": {
+          "value": 2.46292,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale × part des dépenses militaires mondiales (Banque mondiale), Md$."
+        }
+      },
+      "critical-minerals": {
+        "production": {
+          "value": 2.27937,
+          "source": "estimate",
+          "asOf": "2026-09-24",
+          "note": "Part de la valeur mondiale des minerais critiques (hors nations estimées à la main) au prorata des exportations de minerais et métaux (Banque mondiale TX.VAL.MMTL.ZS.UN × TX.VAL.MRCH.CD.WT), Md$."
+        },
+        "consumption": {
+          "value": 2.71659,
+          "source": "derived",
+          "asOf": "2025",
+          "note": "Valeur mondiale (estimation) × part du PIB mondial (Banque mondiale), Md$."
+        }
+      }
+    },
+    "electricityFromFossil": {
+      "gas": {
+        "value": 9.32,
+        "source": "owid-energy@7e387a16:gas_electricity",
+        "asOf": "2025"
+      },
+      "coal": {
+        "value": 6.68,
+        "source": "owid-energy@7e387a16:coal_electricity",
+        "asOf": "2025"
+      },
+      "oil": {
+        "value": 0.18,
+        "source": "owid-energy@7e387a16:oil_electricity",
+        "asOf": "2025"
+      }
+    },
+    "budget": {
+      "revenuePctGdp": {
+        "value": 0.307098,
+        "source": "worldbank:GC.REV.XGRT.GD.ZS",
+        "asOf": "2024"
+      },
+      "expensePctGdp": {
+        "value": 0.373031,
+        "source": "worldbank:GC.XPN.TOTL.GD.ZS",
+        "asOf": "2022"
+      },
+      "grantsPctGdp": {
+        "value": 0,
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Dons budgétaires extérieurs. Ukraine : soutien budgétaire international d'environ 40 Md$ par an pour un PIB d'environ 190 Md$ ; sans lui le déficit de guerre (dépenses 66 % du PIB, recettes 34 %, Banque mondiale) ferait exploser la dette en deux ans. Nul pour les autres."
+      },
+      "revenueShares": {
+        "value": {
+          "income": 0.407479,
+          "corporate": 0.135826,
+          "vat": 0.422032,
+          "tariffs": 0.00485094,
+          "rents": 0.0298114
+        },
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Répartition des recettes entre impôts, faute de ventilation ouverte homogène : ordre de grandeur OCDE pour les pays développés. Droits de douane : environ 0,5 % des recettes (ressource propre de l'UE, marginale ailleurs). Rentes sur ressources : nulles, sauf pour les exportateurs d'hydrocarbures (Russie, Norvège), où elles prennent la part indiquée, prélevée sur les autres impôts. Part des rentes dans les recettes = 0,8 × rentes des ressources naturelles (Banque mondiale NY.GDP.TOTL.RT.ZS, % du PIB) / recettes (% du PIB), plafonnée à 0,75 : les recettes des exportateurs d'hydrocarbures viennent surtout des rentes."
+      },
+      "spending": {
+        "defense": {
+          "value": 0.0229815,
+          "source": "worldbank:MS.MIL.XPND.GD.ZS",
+          "asOf": "2024",
+          "note": "Source primaire SIPRI, republiée par la Banque mondiale."
+        },
+        "healthEducation": {
+          "value": 0.0760991,
+          "source": "derived",
+          "asOf": "2023",
+          "note": "Dépenses publiques de santé + d'éducation (Banque mondiale SH.XPD.GHED.GD.ZS + SE.XPD.TOTL.GD.ZS, estimations à défaut)."
+        },
+        "research": {
+          "value": 0.00180796,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "social": {
+          "value": 0.176893,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "infrastructure": {
+          "value": 0.0544285,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        },
+        "subsidies": {
+          "value": 0.0408214,
+          "source": "estimate",
+          "asOf": "2026-01-01",
+          "note": "La Banque mondiale donne la dépense totale, la défense, la santé, l'éducation et la R&D. Le reste (dépense totale moins ces postes) est réparti à parts fixes entre social, infrastructures et subventions, faute de ventilation ouverte homogène pour les dix pays. Part publique de la R&D : environ un tiers de la dépense intérieure de R&D."
+        }
+      }
+    }
+  },
+  "military": {
+    "spendingPctGdp": 2.29815,
+    "activePersonnel": 108800,
+    "airPower": 0.3089,
+    "navalPower": 0.3089,
+    "source": "estimate",
+    "asOf": "2026-09-24",
+    "note": "Effectifs d'active = 0,85 × effectifs armés de la Banque mondiale (MS.MIL.TOTL.P1, source IISS, paramilitaires compris), sinon 0,2 % de la population. Puissance aérienne = 0,05 + 0,25 × log10(1 + dépense militaire en Md$), plafonnée à 0,6 (calée sur les dix d'europe-10 : Norvège 11 Md$ → 0,31, Espagne 27 Md$ → 0,41) ; navale = aérienne, nulle pour un pays enclavé, moitié pour un petit État insulaire. Les grandes puissances ont des valeurs écrites à la main (`military.values`). Pays sans accès à la haute mer (l'Azerbaïdjan, le Kazakhstan et le Turkménistan bordent la Caspienne, sans marine de haute mer) : puissance navale nulle."
+  },
+  "startingTech": [],
+  "politics": {
+    "electionIntervalMonths": 60,
+    "lastElection": "2025-05-18",
+    "electionsSuspendedAtWarAtHome": false,
+    "source": "estimate (politics-world.json)",
+    "asOf": "2026-01-01",
+    "note": "Législatives du 1er décembre 2024 (Autoritatea Electorală Permanentă)."
+  },
+  "aiAgenda": [
+    {
+      "goal": "security",
+      "weight": 0.27273
+    },
+    {
+      "goal": "growth",
+      "weight": 0.40909
+    },
+    {
+      "goal": "regional-influence",
+      "weight": 0.18182
+    },
+    {
+      "goal": "ideology",
+      "weight": 0.13636
+    }
+  ]
+}

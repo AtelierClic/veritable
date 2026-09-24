@@ -1,0 +1,76 @@
+{
+ "nation": "KHM",
+ "country": "Q424",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q13024351",
+    "label": "Hun Manet",
+    "born": "1977-10-20",
+    "died": null,
+    "parties": [
+     "Q769308"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57319",
+    "label": "Norodom Sihamoni",
+    "born": "1953-05-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q769308",
+   "label": "Parti du peuple cambodgien",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q23808093",
+     "label": "nationalisme khmer"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57788",
+    "label": "Hun Sen",
+    "born": "1952-08-05",
+    "died": null,
+    "parties": [
+     "Q191764",
+     "Q769308"
+    ]
+   }
+  },
+  {
+   "qid": "Q117815",
+   "label": "Front uni national pour un Cambodge indépendant, neutre, pacifique et coopératif",
+   "ideologies": [
+    {
+     "qid": "Q216669",
+     "label": "monarchisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

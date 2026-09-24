@@ -58,6 +58,9 @@ export function buildBorders(
   insets: readonly Inset[],
   nations: readonly string[],
   maxOrphanDistance: number,
+  // Natural Earth unit -> nation of the scenario, when they differ (J6: a
+  // dependency to its sovereign, SDS -> SSD); the rest map to themselves.
+  attach: ReadonlyMap<string, string> = new Map(),
 ): {
   borders: Borders;
   report: BordersReport;
@@ -152,7 +155,9 @@ export function buildBorders(
     }
   }
 
-  const slot = countries.map((c) => nations.indexOf(c.id) + 1);
+  const nationOf = (c: number) =>
+    attach.get(countries[c].id) ?? countries[c].id;
+  const slot = countries.map((_, c) => nations.indexOf(nationOf(c)) + 1);
   const tiles = new Uint16Array(width * height);
   const totals = new Array(nations.length + 1).fill(0);
   for (let i = 0; i < owner.length; i++) {
@@ -164,15 +169,20 @@ export function buildBorders(
   const report: BordersReport = {
     landTiles,
     nations: nations.map((nation, n) => {
-      const c = indexOf.get(nation);
-      if (c === undefined)
+      const units = countries
+        .map((_, c) => c)
+        .filter((c) => nationOf(c) === nation);
+      if (units.length === 0) {
         throw new Error(`no Natural Earth country ${nation}`);
+      }
+      const sum = (values: number[]) =>
+        units.reduce((s, c) => s + values[c], 0);
       return {
         nation,
-        fromPolygons: fromPolygons[c],
-        fromOrphans: fromOrphans[c],
-        gainedByOverride: gained[c],
-        lostToOverride: lost[c],
+        fromPolygons: sum(fromPolygons),
+        fromOrphans: sum(fromOrphans),
+        gainedByOverride: sum(gained),
+        lostToOverride: sum(lost),
         total: totals[n + 1],
       };
     }),
@@ -241,4 +251,50 @@ function countTiles(owner: Int32Array, count: number): number[] {
   const totals = new Array(count).fill(0);
   for (const o of owner) if (o !== NONE) totals[o]++;
   return totals;
+}
+
+// Nations under `threshold` tiles become micro-states (J6): their few tiles
+// go to the nation that owns most of the tiles around them (8-neighbourhood)
+// or stay neutral, and each gets a host tile, its capital's.
+export function demoteMicrostates(
+  borders: Borders,
+  threshold: number,
+  capitals: Record<string, [number, number]>,
+): Record<string, [number, number]> {
+  const { width, height, tiles, nations } = borders;
+  const counts = new Array(nations.length + 1).fill(0);
+  for (const v of tiles) counts[v]++;
+  const micro = new Set<number>();
+  nations.forEach((_, n) => {
+    if (counts[n + 1] < threshold) micro.add(n + 1);
+  });
+  const out: Record<string, [number, number]> = {};
+  for (const index of [...micro].sort((a, b) => a - b)) {
+    const id = nations[index - 1];
+    for (let i = 0; i < tiles.length; i++) {
+      if (tiles[i] !== index) continue;
+      const x = i % width;
+      const y = (i - x) / width;
+      const around = new Map<number, number>();
+      for (let dy = -1; dy <= 1; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (dx === 0 && dy === 0) continue;
+          const nx = x + dx;
+          const ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+          const v = tiles[ny * width + nx];
+          if (v === 0 || micro.has(v)) continue;
+          around.set(v, (around.get(v) ?? 0) + 1);
+        }
+      }
+      const best = [...around].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0];
+      tiles[i] = best === undefined ? 0 : best[0];
+    }
+    const [cx, cy] = capitals[id];
+    out[id] = [
+      Math.max(0, Math.min(width - 1, Math.floor(cx))),
+      Math.max(0, Math.min(height - 1, Math.floor(cy))),
+    ];
+  }
+  return out;
 }

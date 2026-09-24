@@ -1,0 +1,47 @@
+{
+ "nation": "KIR",
+ "country": "Q710",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q23034482",
+    "label": "Taneti Maamau",
+    "born": "1960-09-16",
+    "died": null,
+    "parties": [
+     "Q23058731"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q23034482",
+    "label": "Taneti Maamau",
+    "born": "1960-09-16",
+    "died": null,
+    "parties": [
+     "Q23058731"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q23058731",
+   "label": "Tobwaan Kiribati Party",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q96373866",
+   "label": "Boutokaan Kiribati Moa Party",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

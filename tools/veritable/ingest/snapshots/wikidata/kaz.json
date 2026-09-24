@@ -1,0 +1,186 @@
+{
+ "nation": "KAZ",
+ "country": "Q232",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q124436646",
+    "label": "Oljas Bektenov",
+    "born": "1980-12-13",
+    "died": null,
+    "parties": [
+     "Q111077075"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q200881",
+    "label": "Kassym-Jomart Tokaïev",
+    "born": "1953-05-17",
+    "died": null,
+    "parties": [
+     "Q111077075",
+     "Q1195092"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q111077075",
+   "label": "Amanat",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q29587228",
+    "label": "Erlan Qoshanov",
+    "born": "1962-08-14",
+    "died": null,
+    "parties": [
+     "Q111077075"
+    ]
+   }
+  },
+  {
+   "qid": "Q4736147",
+   "label": "Parti patriotique démocrate populaire « Auyl »",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q25493939",
+    "label": "Äli Bektaev",
+    "born": "1962-04-20",
+    "died": null,
+    "parties": [
+     "Q4736147",
+     "Q79854"
+    ]
+   }
+  },
+  {
+   "qid": "Q116686278",
+   "label": "République",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1186246",
+   "label": "Ak Jol",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q17489784",
+    "label": "Azat Peruashev",
+    "born": "1967-09-08",
+    "died": null,
+    "parties": [
+     "Q1186246",
+     "Q79854"
+    ]
+   }
+  },
+  {
+   "qid": "Q2166484",
+   "label": "Parti populaire du Kazakhstan",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q210189",
+     "label": "antifascisme"
+    },
+    {
+     "qid": "Q389647",
+     "label": "anticapitalisme"
+    },
+    {
+     "qid": "Q478004",
+     "label": "anticléricalisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    },
+    {
+     "qid": "Q6241",
+     "label": "patriotisme"
+    },
+    {
+     "qid": "Q695838",
+     "label": "internationalisme institutionnel"
+    },
+    {
+     "qid": "Q7272",
+     "label": "socialisme"
+    },
+    {
+     "qid": "Q865354",
+     "label": "socialisme scientifique"
+    }
+   ],
+   "leader": {
+    "qid": "Q1046021",
+    "label": "Ermukhamet Ertysbayev",
+    "born": "1956-11-19",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "qid": "Q1569210",
+   "label": "Parti national social-démocrate",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q1967799",
+    "label": "Jarmakhan Tuyakbay",
+    "born": "1947-11-22",
+    "died": null,
+    "parties": [
+     "Q1569210",
+     "Q79854"
+    ]
+   }
+  }
+ ]
+}

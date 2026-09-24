@@ -1,0 +1,133 @@
+{
+  "nation": "IRN",
+  "actors": [
+    {
+      "id": "irn-masoud-pezeshkian",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.irn-masoud-pezeshkian.parody",
+        "fictional": "leader.irn-masoud-pezeshkian.fictional"
+      },
+      "born": "1954-09-29",
+      "party": null,
+      "traits": {
+        "economic": -0.15,
+        "authority": 0.2,
+        "sovereignty": 0.15,
+        "aggressiveness": 0.25,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5933752",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Président réformateur modéré élu en 2024, chirurgien de formation, cherche l'ouverture économique et diplomatique dans les limites fixées par le Guide suprême ; agressivité plus faible que l'establishment sécuritaire du pays."
+    },
+    {
+      "id": "irn-ali-khamenei",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.irn-ali-khamenei.parody",
+        "fictional": "leader.irn-ali-khamenei.fictional"
+      },
+      "born": "1939-04-19",
+      "party": null,
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.95,
+        "sovereignty": 0.85,
+        "aggressiveness": 0.55,
+        "corruption": 0.3,
+        "charisma": 0.45,
+        "competence": 0.55
+      },
+      "wikidata": "Q57336",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Guide suprême depuis 1989, autorité maximale dans le système théocratique iranien ; souveraineté très marquée (rejet de l'ingérence occidentale) ; agressivité par proxys régionaux plutôt que par confrontation directe ; charisme religieux plus qu'électoral."
+    },
+    {
+      "id": "irn-morteza-agha-tehrani",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.irn-morteza-agha-tehrani.parody",
+        "fictional": "leader.irn-morteza-agha-tehrani.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "irn-paydari-front",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.9,
+        "sovereignty": 0.8,
+        "aggressiveness": 0.64,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "irn-paydari-front",
+      "name": "party.irn-paydari-front",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.9,
+        "sovereignty": 0.8
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.3,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (Majlis) de mars 2024 ; estimation des courants faute de partis structurés, faible confiance"
+      },
+      "leader": "irn-morteza-agha-tehrani"
+    },
+    {
+      "id": "irn-comprehensive-coalition-of-islamic-revolution-fo",
+      "name": "party.irn-comprehensive-coalition-of-islamic-revolution-fo",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.6,
+        "sovereignty": 0.5
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.3,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (Majlis) de mars 2024 ; estimation des courants faute de partis structurés, faible confiance"
+      },
+      "leader": null
+    },
+    {
+      "id": "irn-reform-front",
+      "name": "party.irn-reform-front",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.2,
+        "authority": -0.1,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection législative (Majlis) de mars 2024 ; estimation des courants faute de partis structurés, faible confiance"
+      },
+      "leader": null
+    }
+  ]
+}

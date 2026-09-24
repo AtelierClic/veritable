@@ -1,0 +1,152 @@
+{
+  "nation": "JOR",
+  "actors": [
+    {
+      "id": "jor-jafar-hassan",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.jor-jafar-hassan.parody",
+        "fictional": "leader.jor-jafar-hassan.fictional"
+      },
+      "born": "1968-01-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q97011032",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "jor-abdallah-ii-de-jordanie",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.jor-abdallah-ii-de-jordanie.parody",
+        "fictional": "leader.jor-abdallah-ii-de-jordanie.fictional"
+      },
+      "born": "1962-01-30",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57464",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "jor-wael-al-saqqa",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.jor-wael-al-saqqa.parody",
+        "fictional": "leader.jor-wael-al-saqqa.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "jor-front-islamique-d-action",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.8,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.5800000000000001,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "jor-front-islamique-d-action",
+      "name": "party.jor-front-islamique-d-action",
+      "wikidata": "Q1674114",
+      "ideologies": ["Q189746"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.8,
+        "sovereignty": 0.6
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.283,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des députés du 10 septembre 2024, première sous la nouvelle loi électorale à listes nationales partielles"
+      },
+      "leader": "jor-wael-al-saqqa"
+    },
+    {
+      "id": "jor-parti-de-la-charte-nationale",
+      "name": "party.jor-parti-de-la-charte-nationale",
+      "wikidata": "Q130426065",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.2,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.09,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des députés du 10 septembre 2024, première sous la nouvelle loi électorale à listes nationales partielles"
+      },
+      "leader": null
+    },
+    {
+      "id": "jor-al-eradah-party",
+      "name": "party.jor-al-eradah-party",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.2,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.08,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des députés du 10 septembre 2024, première sous la nouvelle loi électorale à listes nationales partielles"
+      },
+      "leader": null
+    },
+    {
+      "id": "jor-progress-party-jordan",
+      "name": "party.jor-progress-party-jordan",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.035,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des députés du 10 septembre 2024, première sous la nouvelle loi électorale à listes nationales partielles"
+      },
+      "leader": null
+    }
+  ]
+}

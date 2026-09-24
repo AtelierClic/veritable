@@ -1,0 +1,124 @@
+{
+ "nation": "TKM",
+ "country": "Q874",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q51874548",
+    "label": "Serdar Berdimuhamedow",
+    "born": "1981-09-22",
+    "died": null,
+    "parties": [
+     "Q1152752"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q51874548",
+    "label": "Serdar Berdimuhamedow",
+    "born": "1981-09-22",
+    "died": null,
+    "parties": [
+     "Q1152752"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1152752",
+   "label": "Parti démocratique du Turkménistan",
+   "ideologies": [
+    {
+     "qid": "Q128135",
+     "label": "totalitarisme"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q478004",
+     "label": "anticléricalisme"
+    },
+    {
+     "qid": "Q6229",
+     "label": "autoritarisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4417193",
+    "label": "Ata Serdarow",
+    "born": "1964-01-01",
+    "died": null,
+    "parties": [
+     "Q1152752"
+    ]
+   }
+  },
+  {
+   "qid": "Q56305135",
+   "label": "Parti agraire du Turkménistan",
+   "ideologies": [
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q4075203",
+    "label": "Recep Bazarov",
+    "born": "1958-01-01",
+    "died": null,
+    "parties": [
+     "Q56305135"
+    ]
+   }
+  },
+  {
+   "qid": "Q13628510",
+   "label": "Parti des industriels et des entrepreneurs",
+   "ideologies": [
+    {
+     "qid": "Q202398",
+     "label": "industrialisation"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q16731898",
+    "label": "Ovezmammed Mammedov",
+    "born": null,
+    "died": null,
+    "parties": [
+     "Q13628510"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,71 @@
+{
+ "nation": "RWA",
+ "country": "Q1037",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q135454730",
+    "label": "Justin Nsengiyumva",
+    "born": "1971-01-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1231345",
+    "label": "Paul Kagame",
+    "born": "1957-10-23",
+    "died": null,
+    "parties": [
+     "Q690240"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q690240",
+   "label": "Front patriotique rwandais",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q1231345",
+    "label": "Paul Kagame",
+    "born": "1957-10-23",
+    "died": null,
+    "parties": [
+     "Q690240"
+    ]
+   }
+  },
+  {
+   "qid": "Q3366824",
+   "label": "Parti vert démocratique",
+   "ideologies": [
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

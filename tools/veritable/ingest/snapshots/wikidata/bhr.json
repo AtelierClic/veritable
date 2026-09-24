@@ -1,0 +1,69 @@
+{
+ "nation": "BHR",
+ "country": "Q398",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q58140",
+    "label": "Salman bin Hamad bin Isa Al Khalifa",
+    "born": "1969-10-21",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57352",
+    "label": "Hamed ben Issa al-Khalifa",
+    "born": "1950-01-28",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q4115954",
+   "label": "Al-Asalah",
+   "ideologies": [
+    {
+     "qid": "Q189746",
+     "label": "islamisme"
+    },
+    {
+     "qid": "Q191057",
+     "label": "salafisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q6972195",
+   "label": "National Democratic Action Society",
+   "ideologies": [
+    {
+     "qid": "Q114213",
+     "label": "nationalisme arabe"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q7272",
+     "label": "socialisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

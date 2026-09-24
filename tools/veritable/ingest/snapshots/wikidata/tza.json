@@ -1,0 +1,81 @@
+{
+ "nation": "TZA",
+ "country": "Q924",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16193885",
+    "label": "Samia Suluhu Hassan",
+    "born": "1960-01-27",
+    "died": null,
+    "parties": [
+     "Q652091"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q16193885",
+    "label": "Samia Suluhu Hassan",
+    "born": "1960-01-27",
+    "died": null,
+    "parties": [
+     "Q652091"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q652091",
+   "label": "Parti de la révolution",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q2166287",
+     "label": "Ujamaa"
+    },
+    {
+     "qid": "Q282739",
+     "label": "panafricanisme"
+    },
+    {
+     "qid": "Q590478",
+     "label": "socialisme africain"
+    }
+   ],
+   "leader": {
+    "qid": "Q57488",
+    "label": "Jakaya Kikwete",
+    "born": "1950-10-07",
+    "died": null,
+    "parties": [
+     "Q652091"
+    ]
+   }
+  },
+  {
+   "qid": "Q18161932",
+   "label": "Alliance pour le changement et la transparence",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

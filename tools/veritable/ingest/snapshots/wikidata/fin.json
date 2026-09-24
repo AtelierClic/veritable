@@ -1,0 +1,208 @@
+{
+ "nation": "FIN",
+ "country": "Q33",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6029546",
+    "label": "Petteri Orpo",
+    "born": "1969-11-03",
+    "died": null,
+    "parties": [
+     "Q304191"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q503143",
+    "label": "Alexander Stubb",
+    "born": "1968-04-01",
+    "died": null,
+    "parties": [
+     "Q304191"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q634277",
+   "label": "Parti des Finlandais",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q16836864",
+     "label": "Nationalisme finnois"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q29892910",
+    "label": "Riikka Purra",
+    "born": "1977-06-13",
+    "died": null,
+    "parties": [
+     "Q634277"
+    ]
+   }
+  },
+  {
+   "qid": "Q499029",
+   "label": "Parti social-démocrate de Finlande",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q11852155",
+    "label": "Antti Lindtman",
+    "born": "1982-08-11",
+    "died": null,
+    "parties": [
+     "Q499029"
+    ]
+   }
+  },
+  {
+   "qid": "Q506591",
+   "label": "Parti du centre",
+   "ideologies": [
+    {
+     "qid": "Q492050",
+     "label": "néo-ruralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11852109",
+    "label": "Antti Kaikkonen",
+    "born": "1974-02-14",
+    "died": null,
+    "parties": [
+     "Q506591"
+    ]
+   }
+  },
+  {
+   "qid": "Q385927",
+   "label": "Alliance de gauche",
+   "ideologies": [
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q275595",
+     "label": "écosocialisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q63348610",
+    "label": "Minja Koskela",
+    "born": "1987-01-01",
+    "died": null,
+    "parties": [
+     "Q385927"
+    ]
+   }
+  },
+  {
+   "qid": "Q196695",
+   "label": "Ligue verte",
+   "ideologies": [
+    {
+     "qid": "Q1321721",
+     "label": "libéralisme vert"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q939214",
+     "label": "libéralisme culturel"
+    }
+   ],
+   "leader": {
+    "qid": "Q29893152",
+    "label": "Sofia Virta",
+    "born": "1990-06-21",
+    "died": null,
+    "parties": [
+     "Q196695"
+    ]
+   }
+  },
+  {
+   "qid": "Q845537",
+   "label": "Parti populaire suédois de Finlande",
+   "ideologies": [
+    {
+     "qid": "Q1369260",
+     "label": "droits des minorités"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q20251257",
+    "label": "Anders Adlercreutz",
+    "born": "1970-04-26",
+    "died": null,
+    "parties": [
+     "Q845537"
+    ]
+   }
+  },
+  {
+   "qid": "Q1138982",
+   "label": "Chrétiens-démocrates",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": {
+    "qid": "Q241563",
+    "label": "Sari Essayah",
+    "born": "1967-02-21",
+    "died": null,
+    "parties": [
+     "Q1138982"
+    ]
+   }
+  }
+ ]
+}

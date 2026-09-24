@@ -1,0 +1,91 @@
+{
+  "nation": "DJI",
+  "actors": [
+    {
+      "id": "dji-abdoulkader-kamil-mohamed",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.dji-abdoulkader-kamil-mohamed.parody",
+        "fictional": "leader.dji-abdoulkader-kamil-mohamed.fictional"
+      },
+      "born": "1952-07-01",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q10522744",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "dji-ismail-omar-guelleh",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.dji-ismail-omar-guelleh.parody",
+        "fictional": "leader.dji-ismail-omar-guelleh.fictional"
+      },
+      "born": "1947-11-27",
+      "party": "dji-union-pour-la-majorite-presidentielle",
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57390",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "dji-union-pour-la-majorite-presidentielle",
+      "name": "party.dji-union-pour-la-majorite-presidentielle",
+      "wikidata": "Q1538413",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.6,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.9,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 24 février 2023 (Assemblée nationale) — date à vérifier avec précision."
+      },
+      "leader": "dji-ismail-omar-guelleh"
+    },
+    {
+      "id": "dji-union-pour-le-salut-national",
+      "name": "party.dji-union-pour-le-salut-national",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": -0.2,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 24 février 2023 (Assemblée nationale) — date à vérifier avec précision."
+      },
+      "leader": null
+    }
+  ]
+}

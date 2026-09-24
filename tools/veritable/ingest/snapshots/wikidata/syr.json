@@ -1,0 +1,20 @@
+{
+ "nation": "SYR",
+ "country": "Q858",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q7934206",
+    "label": "Ahmed el-Charaa",
+    "born": "1982-10-29",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

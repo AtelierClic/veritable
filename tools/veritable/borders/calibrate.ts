@@ -3,6 +3,7 @@ import path from "path";
 import { Feature, REPO_ROOT } from "./geodata";
 import {
   Georef,
+  hasSeam,
   PROJECTION_KINDS,
   ProjectionKind,
   toTile,
@@ -149,7 +150,7 @@ export function rasterize(
   paint: (index: number, polygonIndex: number) => void,
 ): void {
   const project = toTile(georef);
-  const world = WORLD_PROJECTIONS.includes(georef.projection);
+  const world = hasSeam(georef);
   polygons.forEach((source, polygonIndex) => {
     const polygon = world
       ? { rings: source.rings.flatMap((ring) => cutAtSeam(ring, georef.lon0)) }
@@ -346,6 +347,7 @@ export function calibrate(
   const coarse = downsample(mask, 8);
   const medium = downsample(mask, 4);
   const candidates: { georef: Georef; iou: number }[] = [];
+  const worldMap = kinds.some((k) => WORLD_PROJECTIONS.includes(k));
 
   for (const projection of kinds) {
     log(`projection ${projection}`);
@@ -418,9 +420,23 @@ export function calibrate(
     6,
     log,
   );
+  // A world map in plate carree: its centre meridian (where the seam goes)
+  // is the longitude at the middle of the map; the translation follows.
+  let georef = final.georef;
+  if (worldMap && georef.projection === "eqc") {
+    const k = georef.scale * georef.aspect * (Math.PI / 180);
+    const lon0 = georef.lon0 + (mask.width / 2 - georef.tx) / k;
+    georef = {
+      ...georef,
+      lon0,
+      tx: georef.tx + k * (lon0 - georef.lon0),
+      seam: true,
+    };
+    log(`world map in plate carree: centre meridian ${lon0.toFixed(3)}`);
+  }
   return {
-    georef: final.georef,
-    iou: overlap(land, final.georef, mask, 1),
+    georef,
+    iou: overlap(land, georef, mask, 1),
     candidates: candidates.map((c) => ({
       projection: c.georef.projection,
       iou: c.iou,

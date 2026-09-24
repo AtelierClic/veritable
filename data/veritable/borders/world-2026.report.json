@@ -1,0 +1,1579 @@
+{
+  "scenario": "world-2026",
+  "map": "giantworldmap",
+  "source": "natural-earth v5.1.2",
+  "sha256": {
+    "countries": "239eec57ac17f100a11e2536cffc56752c318b50ae765b0918ff7aab4ce8f255"
+  },
+  "maxOrphanDistanceTiles": 60,
+  "fileBytes": 163541,
+  "landTiles": 2335403,
+  "nations": [
+    {
+      "nation": "AFG",
+      "fromPolygons": 8355,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 8355
+    },
+    {
+      "nation": "ALB",
+      "fromPolygons": 369,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 369
+    },
+    {
+      "nation": "DZA",
+      "fromPolygons": 28583,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 28583
+    },
+    {
+      "nation": "AND",
+      "fromPolygons": 7,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 7
+    },
+    {
+      "nation": "AGO",
+      "fromPolygons": 13747,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 13747
+    },
+    {
+      "nation": "ATG",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "ARG",
+      "fromPolygons": 36450,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 36450
+    },
+    {
+      "nation": "ARM",
+      "fromPolygons": 426,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 426
+    },
+    {
+      "nation": "AUS",
+      "fromPolygons": 91085,
+      "fromOrphans": 27,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 91112
+    },
+    {
+      "nation": "AUT",
+      "fromPolygons": 1297,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1297
+    },
+    {
+      "nation": "AZE",
+      "fromPolygons": 1194,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1194
+    },
+    {
+      "nation": "BHS",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "BHR",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "BGD",
+      "fromPolygons": 1265,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1265
+    },
+    {
+      "nation": "BRB",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "BLR",
+      "fromPolygons": 3659,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3659
+    },
+    {
+      "nation": "BEL",
+      "fromPolygons": 520,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 520
+    },
+    {
+      "nation": "BLZ",
+      "fromPolygons": 228,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 228
+    },
+    {
+      "nation": "BEN",
+      "fromPolygons": 1269,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1269
+    },
+    {
+      "nation": "BTN",
+      "fromPolygons": 496,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 496
+    },
+    {
+      "nation": "BOL",
+      "fromPolygons": 12220,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 12220
+    },
+    {
+      "nation": "BIH",
+      "fromPolygons": 783,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 783
+    },
+    {
+      "nation": "BWA",
+      "fromPolygons": 6811,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6811
+    },
+    {
+      "nation": "BRA",
+      "fromPolygons": 91190,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 91190
+    },
+    {
+      "nation": "BRN",
+      "fromPolygons": 47,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 47
+    },
+    {
+      "nation": "BGR",
+      "fromPolygons": 1619,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1619
+    },
+    {
+      "nation": "BFA",
+      "fromPolygons": 2946,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2946
+    },
+    {
+      "nation": "BDI",
+      "fromPolygons": 236,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 236
+    },
+    {
+      "nation": "CPV",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "KHM",
+      "fromPolygons": 1905,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1905
+    },
+    {
+      "nation": "CMR",
+      "fromPolygons": 5017,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5017
+    },
+    {
+      "nation": "CAN",
+      "fromPolygons": 205387,
+      "fromOrphans": 708,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 206095
+    },
+    {
+      "nation": "CAF",
+      "fromPolygons": 6772,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6772
+    },
+    {
+      "nation": "TCD",
+      "fromPolygons": 14395,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 14395
+    },
+    {
+      "nation": "CHL",
+      "fromPolygons": 8352,
+      "fromOrphans": 30,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 8382
+    },
+    {
+      "nation": "CHN",
+      "fromPolygons": 124130,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 124130
+    },
+    {
+      "nation": "COL",
+      "fromPolygons": 11899,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 11899
+    },
+    {
+      "nation": "COM",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "COG",
+      "fromPolygons": 3684,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3684
+    },
+    {
+      "nation": "CRI",
+      "fromPolygons": 477,
+      "fromOrphans": 1,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 478
+    },
+    {
+      "nation": "CIV",
+      "fromPolygons": 3479,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3479
+    },
+    {
+      "nation": "HRV",
+      "fromPolygons": 717,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 717
+    },
+    {
+      "nation": "CUB",
+      "fromPolygons": 1022,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1022
+    },
+    {
+      "nation": "CYP",
+      "fromPolygons": 55,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 55
+    },
+    {
+      "nation": "CZE",
+      "fromPolygons": 1261,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1261
+    },
+    {
+      "nation": "PRK",
+      "fromPolygons": 1622,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1622
+    },
+    {
+      "nation": "COD",
+      "fromPolygons": 24305,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 24305
+    },
+    {
+      "nation": "DNK",
+      "fromPolygons": 86121,
+      "fromOrphans": 1273,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 87394
+    },
+    {
+      "nation": "DJI",
+      "fromPolygons": 226,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 226
+    },
+    {
+      "nation": "DMA",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "DOM",
+      "fromPolygons": 485,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 485
+    },
+    {
+      "nation": "ECU",
+      "fromPolygons": 2644,
+      "fromOrphans": 2,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2646
+    },
+    {
+      "nation": "EGY",
+      "fromPolygons": 11697,
+      "fromOrphans": 1,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 11698
+    },
+    {
+      "nation": "SLV",
+      "fromPolygons": 204,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 204
+    },
+    {
+      "nation": "GNQ",
+      "fromPolygons": 249,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 249
+    },
+    {
+      "nation": "ERI",
+      "fromPolygons": 1325,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1325
+    },
+    {
+      "nation": "EST",
+      "fromPolygons": 805,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 805
+    },
+    {
+      "nation": "SWZ",
+      "fromPolygons": 207,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 207
+    },
+    {
+      "nation": "ETH",
+      "fromPolygons": 12323,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 12323
+    },
+    {
+      "nation": "FJI",
+      "fromPolygons": 165,
+      "fromOrphans": 76,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 241
+    },
+    {
+      "nation": "FIN",
+      "fromPolygons": 6946,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6946
+    },
+    {
+      "nation": "FRA",
+      "fromPolygons": 9277,
+      "fromOrphans": 120,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9397
+    },
+    {
+      "nation": "GAB",
+      "fromPolygons": 2755,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2755
+    },
+    {
+      "nation": "GMB",
+      "fromPolygons": 86,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 86
+    },
+    {
+      "nation": "GEO",
+      "fromPolygons": 989,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 989
+    },
+    {
+      "nation": "DEU",
+      "fromPolygons": 5725,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5725
+    },
+    {
+      "nation": "GHA",
+      "fromPolygons": 2311,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2311
+    },
+    {
+      "nation": "GRC",
+      "fromPolygons": 1326,
+      "fromOrphans": 4,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1330
+    },
+    {
+      "nation": "GRD",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "GTM",
+      "fromPolygons": 1130,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1130
+    },
+    {
+      "nation": "GIN",
+      "fromPolygons": 2553,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2553
+    },
+    {
+      "nation": "GNB",
+      "fromPolygons": 289,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 289
+    },
+    {
+      "nation": "GUY",
+      "fromPolygons": 2275,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2275
+    },
+    {
+      "nation": "HTI",
+      "fromPolygons": 227,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 227
+    },
+    {
+      "nation": "HND",
+      "fromPolygons": 1215,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1215
+    },
+    {
+      "nation": "HUN",
+      "fromPolygons": 1440,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1440
+    },
+    {
+      "nation": "ISL",
+      "fromPolygons": 2186,
+      "fromOrphans": 3,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2189
+    },
+    {
+      "nation": "IND",
+      "fromPolygons": 36223,
+      "fromOrphans": 14,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 36237
+    },
+    {
+      "nation": "IDN",
+      "fromPolygons": 17478,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 17478
+    },
+    {
+      "nation": "IRN",
+      "fromPolygons": 20786,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 20786
+    },
+    {
+      "nation": "IRQ",
+      "fromPolygons": 5228,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5228
+    },
+    {
+      "nation": "IRL",
+      "fromPolygons": 1032,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1032
+    },
+    {
+      "nation": "ISR",
+      "fromPolygons": 263,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 263
+    },
+    {
+      "nation": "ITA",
+      "fromPolygons": 4073,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 4073
+    },
+    {
+      "nation": "JAM",
+      "fromPolygons": 90,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 90
+    },
+    {
+      "nation": "JPN",
+      "fromPolygons": 4277,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 4277
+    },
+    {
+      "nation": "JOR",
+      "fromPolygons": 1127,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1127
+    },
+    {
+      "nation": "KAZ",
+      "fromPolygons": 42902,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 42902
+    },
+    {
+      "nation": "KEN",
+      "fromPolygons": 6312,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6312
+    },
+    {
+      "nation": "KIR",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "KWT",
+      "fromPolygons": 193,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 193
+    },
+    {
+      "nation": "KGZ",
+      "fromPolygons": 2772,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2772
+    },
+    {
+      "nation": "LAO",
+      "fromPolygons": 2443,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2443
+    },
+    {
+      "nation": "LVA",
+      "fromPolygons": 1183,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1183
+    },
+    {
+      "nation": "LBN",
+      "fromPolygons": 117,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 117
+    },
+    {
+      "nation": "LSO",
+      "fromPolygons": 379,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 379
+    },
+    {
+      "nation": "LBR",
+      "fromPolygons": 1002,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1002
+    },
+    {
+      "nation": "LBY",
+      "fromPolygons": 19801,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 19801
+    },
+    {
+      "nation": "LIE",
+      "fromPolygons": 1,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1
+    },
+    {
+      "nation": "LTU",
+      "fromPolygons": 1229,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1229
+    },
+    {
+      "nation": "LUX",
+      "fromPolygons": 43,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 43
+    },
+    {
+      "nation": "MDG",
+      "fromPolygons": 6560,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6560
+    },
+    {
+      "nation": "MWI",
+      "fromPolygons": 992,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 992
+    },
+    {
+      "nation": "MYS",
+      "fromPolygons": 3294,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3294
+    },
+    {
+      "nation": "MDV",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "MLI",
+      "fromPolygons": 14012,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 14012
+    },
+    {
+      "nation": "MLT",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "MHL",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "MRT",
+      "fromPolygons": 11982,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 11982
+    },
+    {
+      "nation": "MUS",
+      "fromPolygons": 16,
+      "fromOrphans": 15,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 31
+    },
+    {
+      "nation": "MEX",
+      "fromPolygons": 22367,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 22367
+    },
+    {
+      "nation": "FSM",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "MCO",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "MNG",
+      "fromPolygons": 24677,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 24677
+    },
+    {
+      "nation": "MNE",
+      "fromPolygons": 182,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 182
+    },
+    {
+      "nation": "MAR",
+      "fromPolygons": 8347,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 8347
+    },
+    {
+      "nation": "MOZ",
+      "fromPolygons": 8588,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 8588
+    },
+    {
+      "nation": "MMR",
+      "fromPolygons": 6921,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6921
+    },
+    {
+      "nation": "NAM",
+      "fromPolygons": 9575,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9575
+    },
+    {
+      "nation": "NRU",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "NPL",
+      "fromPolygons": 1823,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1823
+    },
+    {
+      "nation": "NLD",
+      "fromPolygons": 486,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 486
+    },
+    {
+      "nation": "NZL",
+      "fromPolygons": 3290,
+      "fromOrphans": 14,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3304
+    },
+    {
+      "nation": "NIC",
+      "fromPolygons": 1225,
+      "fromOrphans": 5,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1230
+    },
+    {
+      "nation": "NER",
+      "fromPolygons": 13496,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 13496
+    },
+    {
+      "nation": "NGA",
+      "fromPolygons": 9618,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9618
+    },
+    {
+      "nation": "MKD",
+      "fromPolygons": 370,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 370
+    },
+    {
+      "nation": "NOR",
+      "fromPolygons": 9248,
+      "fromOrphans": 262,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9510
+    },
+    {
+      "nation": "OMN",
+      "fromPolygons": 3520,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3520
+    },
+    {
+      "nation": "PAK",
+      "fromPolygons": 10593,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 10593
+    },
+    {
+      "nation": "PLW",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "PAN",
+      "fromPolygons": 642,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 642
+    },
+    {
+      "nation": "PNG",
+      "fromPolygons": 4782,
+      "fromOrphans": 473,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5255
+    },
+    {
+      "nation": "PRY",
+      "fromPolygons": 4570,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 4570
+    },
+    {
+      "nation": "PER",
+      "fromPolygons": 13696,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 13696
+    },
+    {
+      "nation": "PHL",
+      "fromPolygons": 2206,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2206
+    },
+    {
+      "nation": "POL",
+      "fromPolygons": 5244,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5244
+    },
+    {
+      "nation": "PRT",
+      "fromPolygons": 1134,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1134
+    },
+    {
+      "nation": "QAT",
+      "fromPolygons": 104,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 104
+    },
+    {
+      "nation": "KOR",
+      "fromPolygons": 1115,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1115
+    },
+    {
+      "nation": "MDA",
+      "fromPolygons": 534,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 534
+    },
+    {
+      "nation": "ROU",
+      "fromPolygons": 3492,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3492
+    },
+    {
+      "nation": "RUS",
+      "fromPolygons": 376894,
+      "fromOrphans": 862,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 377756
+    },
+    {
+      "nation": "RWA",
+      "fromPolygons": 244,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 244
+    },
+    {
+      "nation": "KNA",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "LCA",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "VCT",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "WSM",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "SMR",
+      "fromPolygons": 2,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2
+    },
+    {
+      "nation": "STP",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "SAU",
+      "fromPolygons": 22799,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 22799
+    },
+    {
+      "nation": "SEN",
+      "fromPolygons": 2097,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2097
+    },
+    {
+      "nation": "SRB",
+      "fromPolygons": 1120,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1120
+    },
+    {
+      "nation": "SYC",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "SLE",
+      "fromPolygons": 733,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 733
+    },
+    {
+      "nation": "SGP",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "SVK",
+      "fromPolygons": 773,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 773
+    },
+    {
+      "nation": "SVN",
+      "fromPolygons": 311,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 311
+    },
+    {
+      "nation": "SLB",
+      "fromPolygons": 183,
+      "fromOrphans": 173,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 356
+    },
+    {
+      "nation": "SOM",
+      "fromPolygons": 5029,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5029
+    },
+    {
+      "nation": "ZAF",
+      "fromPolygons": 14776,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 14776
+    },
+    {
+      "nation": "SSD",
+      "fromPolygons": 6732,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6732
+    },
+    {
+      "nation": "ESP",
+      "fromPolygons": 6742,
+      "fromOrphans": 56,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6798
+    },
+    {
+      "nation": "LKA",
+      "fromPolygons": 642,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 642
+    },
+    {
+      "nation": "SDN",
+      "fromPolygons": 20779,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 20779
+    },
+    {
+      "nation": "SUR",
+      "fromPolygons": 1557,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1557
+    },
+    {
+      "nation": "SWE",
+      "fromPolygons": 9963,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9963
+    },
+    {
+      "nation": "CHE",
+      "fromPolygons": 631,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 631
+    },
+    {
+      "nation": "SYR",
+      "fromPolygons": 2368,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2368
+    },
+    {
+      "nation": "TJK",
+      "fromPolygons": 1875,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1875
+    },
+    {
+      "nation": "THA",
+      "fromPolygons": 5593,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5593
+    },
+    {
+      "nation": "TLS",
+      "fromPolygons": 123,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 123
+    },
+    {
+      "nation": "TGO",
+      "fromPolygons": 627,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 627
+    },
+    {
+      "nation": "TON",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "TTO",
+      "fromPolygons": 30,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 30
+    },
+    {
+      "nation": "TUN",
+      "fromPolygons": 1986,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 1986
+    },
+    {
+      "nation": "TUR",
+      "fromPolygons": 10331,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 10331
+    },
+    {
+      "nation": "TKM",
+      "fromPolygons": 6413,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6413
+    },
+    {
+      "nation": "TUV",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "UGA",
+      "fromPolygons": 2067,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2067
+    },
+    {
+      "nation": "UKR",
+      "fromPolygons": 9032,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9032
+    },
+    {
+      "nation": "ARE",
+      "fromPolygons": 787,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 787
+    },
+    {
+      "nation": "GBR",
+      "fromPolygons": 3828,
+      "fromOrphans": 33,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3861
+    },
+    {
+      "nation": "TZA",
+      "fromPolygons": 9547,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9547
+    },
+    {
+      "nation": "USA",
+      "fromPolygons": 139506,
+      "fromOrphans": 76,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 139582
+    },
+    {
+      "nation": "URY",
+      "fromPolygons": 2241,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 2241
+    },
+    {
+      "nation": "UZB",
+      "fromPolygons": 6235,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 6235
+    },
+    {
+      "nation": "VUT",
+      "fromPolygons": 79,
+      "fromOrphans": 129,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 208
+    },
+    {
+      "nation": "VEN",
+      "fromPolygons": 9507,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 9507
+    },
+    {
+      "nation": "VNM",
+      "fromPolygons": 3450,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 3450
+    },
+    {
+      "nation": "YEM",
+      "fromPolygons": 5019,
+      "fromOrphans": 5,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 5024
+    },
+    {
+      "nation": "ZMB",
+      "fromPolygons": 8255,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 8255
+    },
+    {
+      "nation": "ZWE",
+      "fromPolygons": 4407,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 4407
+    },
+    {
+      "nation": "VAT",
+      "fromPolygons": 0,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 0
+    },
+    {
+      "nation": "PSE",
+      "fromPolygons": 75,
+      "fromOrphans": 0,
+      "gainedByOverride": 0,
+      "lostToOverride": 0,
+      "total": 75
+    }
+  ],
+  "neutralLand": 371536,
+  "insetLand": 0,
+  "unattachedLand": 0,
+  "orphansReattached": 11611,
+  "overrides": [],
+  "regions": {}
+}

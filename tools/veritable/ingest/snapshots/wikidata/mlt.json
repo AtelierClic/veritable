@@ -1,0 +1,62 @@
+{
+ "nation": "MLT",
+ "country": "Q233",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q37860840",
+    "label": "Robert Abela",
+    "born": "1977-12-07",
+    "died": null,
+    "parties": [
+     "Q684886"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1647394",
+    "label": "Myriam Spiteri Debono",
+    "born": "1952-10-25",
+    "died": null,
+    "parties": [
+     "Q684886"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q594056",
+   "label": "Parti nationaliste",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q100266152",
+    "label": "Bernard Grech",
+    "born": "1971-06-08",
+    "died": null,
+    "parties": [
+     "Q594056"
+    ]
+   }
+  }
+ ]
+}

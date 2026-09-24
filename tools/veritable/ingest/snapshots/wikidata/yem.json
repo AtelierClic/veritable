@@ -1,0 +1,32 @@
+{
+ "nation": "YEM",
+ "country": "Q805",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q68837007",
+    "label": "Salem Saleh ben Braik",
+    "born": "1965-04-03",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12213376",
+    "label": "Rashad al-Alimi",
+    "born": "1954-01-15",
+    "died": null,
+    "parties": [
+     "Q1460677"
+    ]
+   }
+  }
+ ],
+ "parties": []
+}

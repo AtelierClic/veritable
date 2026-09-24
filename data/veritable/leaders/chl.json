@@ -1,0 +1,240 @@
+{
+  "nation": "CHL",
+  "actors": [
+    {
+      "id": "chl-gabriel-boric",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.chl-gabriel-boric.parody",
+        "fictional": "leader.chl-gabriel-boric.fictional"
+      },
+      "born": "1986-02-11",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q16297876",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "chl-jeannette-jara",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.chl-jeannette-jara.parody",
+        "fictional": "leader.chl-jeannette-jara.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "chl-unite-pour-le-chili",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.1,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.23999999999999996,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "chl-evelyn-matthei",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.chl-evelyn-matthei.parody",
+        "fictional": "leader.chl-evelyn-matthei.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "chl-changement-pour-le-chili",
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.1,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.34,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "chl-jose-antonio-kast",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.chl-jose-antonio-kast.parody",
+        "fictional": "leader.chl-jose-antonio-kast.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "chl-chile-grande-y-unido",
+      "traits": {
+        "economic": 0.6,
+        "authority": 0.5,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.52,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "chl-franco-parisi",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.chl-franco-parisi.parody",
+        "fictional": "leader.chl-franco-parisi.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "chl-party-of-the-people-chile",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.2,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.39999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "chl-jaime-mulet",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.chl-jaime-mulet.parody",
+        "fictional": "leader.chl-jaime-mulet.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "chl-federation-regionaliste-verte-sociale",
+      "traits": {
+        "economic": -0.133,
+        "authority": -0.333,
+        "sovereignty": -0.067,
+        "aggressiveness": 0.22,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "chl-unite-pour-le-chili",
+      "name": "party.chl-unite-pour-le-chili",
+      "wikidata": "Q115130534",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.1,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.3061,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 16 novembre 2025 (Chambre des députés)"
+      },
+      "leader": "chl-jeannette-jara"
+    },
+    {
+      "id": "chl-changement-pour-le-chili",
+      "name": "party.chl-changement-pour-le-chili",
+      "wikidata": "Q135898014",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.5,
+        "authority": 0.1,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.2302,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 16 novembre 2025 (Chambre des députés)"
+      },
+      "leader": "chl-evelyn-matthei"
+    },
+    {
+      "id": "chl-chile-grande-y-unido",
+      "name": "party.chl-chile-grande-y-unido",
+      "wikidata": "Q136226250",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.6,
+        "authority": 0.5,
+        "sovereignty": 0.6
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.2105,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 16 novembre 2025 (Chambre des députés)"
+      },
+      "leader": "chl-jose-antonio-kast"
+    },
+    {
+      "id": "chl-party-of-the-people-chile",
+      "name": "party.chl-party-of-the-people-chile",
+      "wikidata": "Q107012458",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.2,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1199,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 16 novembre 2025 (Chambre des députés)"
+      },
+      "leader": "chl-franco-parisi"
+    },
+    {
+      "id": "chl-federation-regionaliste-verte-sociale",
+      "name": "party.chl-federation-regionaliste-verte-sociale",
+      "wikidata": "Q28868044",
+      "ideologies": ["Q1661415", "Q188961", "Q2684060"],
+      "ideology": {
+        "economic": -0.133,
+        "authority": -0.333,
+        "sovereignty": -0.067
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "support": 0.0691,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 16 novembre 2025 (Chambre des députés)"
+      },
+      "leader": "chl-jaime-mulet"
+    }
+  ]
+}

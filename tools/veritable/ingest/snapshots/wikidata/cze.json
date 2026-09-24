@@ -1,0 +1,160 @@
+{
+ "nation": "CZE",
+ "country": "Q213",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q10819807",
+    "label": "Andrej Babiš",
+    "born": "1954-09-02",
+    "died": null,
+    "parties": [
+     "Q10728124"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q2080040",
+    "label": "Petr Pavel",
+    "born": "1961-11-01",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q10728124",
+   "label": "ANO 2011",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q10819807",
+    "label": "Andrej Babiš",
+    "born": "1954-09-02",
+    "died": null,
+    "parties": [
+     "Q10728124"
+    ]
+   }
+  },
+  {
+   "qid": "Q104527897",
+   "label": "Ensemble",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1586610",
+   "label": "Maires et Indépendants",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q22035584",
+    "label": "Vít Rakušan",
+    "born": "1978-06-16",
+    "died": null,
+    "parties": [
+     "Q1586610"
+    ]
+   }
+  },
+  {
+   "qid": "Q341085",
+   "label": "Parti pirate tchèque",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q55552687",
+    "label": "Zdeněk Hřib",
+    "born": "1981-05-21",
+    "died": null,
+    "parties": [
+     "Q341085"
+    ]
+   }
+  },
+  {
+   "qid": "Q20058756",
+   "label": "Liberté et démocratie directe",
+   "ideologies": [
+    {
+     "qid": "Q171174",
+     "label": "démocratie directe"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q30587922",
+     "label": "Nationalisme tchèque"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    }
+   ],
+   "leader": {
+    "qid": "Q2223090",
+    "label": "Tomio Okamura",
+    "born": "1972-07-04",
+    "died": null,
+    "parties": [
+     "Q20058756"
+    ]
+   }
+  },
+  {
+   "qid": "Q29789623",
+   "label": "Les Automobilistes",
+   "ideologies": [
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

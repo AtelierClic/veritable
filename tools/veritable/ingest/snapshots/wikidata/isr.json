@@ -1,0 +1,216 @@
+{
+ "nation": "ISR",
+ "country": "Q801",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q43723",
+    "label": "Benjamin Netanyahou",
+    "born": "1949-10-21",
+    "died": null,
+    "parties": [
+     "Q187009"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q983258",
+    "label": "Isaac Herzog",
+    "born": "1960-09-22",
+    "died": null,
+    "parties": [
+     "Q210703"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q187009",
+   "label": "Likoud",
+   "ideologies": [
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q592710",
+     "label": "sionisme révisionniste"
+    },
+    {
+     "qid": "Q660018",
+     "label": "national-libéralisme"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q43723",
+    "label": "Benjamin Netanyahou",
+    "born": "1949-10-21",
+    "died": null,
+    "parties": [
+     "Q187009"
+    ]
+   }
+  },
+  {
+   "qid": "Q622716",
+   "label": "Yesh Atid",
+   "ideologies": [
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q719543",
+     "label": "solution à deux États"
+    }
+   ],
+   "leader": {
+    "qid": "Q1396120",
+    "label": "Yaïr Lapid",
+    "born": "1963-11-05",
+    "died": null,
+    "parties": [
+     "Q622716"
+    ]
+   }
+  },
+  {
+   "qid": "Q2665610",
+   "label": "Tkuma",
+   "ideologies": [
+    {
+     "qid": "Q1577041",
+     "label": "sionisme religieux"
+    },
+    {
+     "qid": "Q2151311",
+     "label": "Retenue judiciaire"
+    },
+    {
+     "qid": "Q44526",
+     "label": "Grand Israël"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q18759744",
+    "label": "Bezalel Smotrich",
+    "born": "1981-02-27",
+    "died": null,
+    "parties": [
+     "Q2665610"
+    ]
+   }
+  },
+  {
+   "qid": "Q904635",
+   "label": "Shas",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2670985",
+    "label": "Aryé Dery",
+    "born": "1959-02-17",
+    "died": null,
+    "parties": [
+     "Q904635"
+    ]
+   }
+  },
+  {
+   "qid": "Q1466053",
+   "label": "Judaïsme unifié de la Torah",
+   "ideologies": [
+    {
+     "qid": "Q65352237",
+     "label": "conservatisme religieux"
+    },
+    {
+     "qid": "Q7048820",
+     "label": "Non-sionisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2386604",
+    "label": "Moshe Gafni",
+    "born": "1952-05-05",
+    "died": null,
+    "parties": [
+     "Q922070"
+    ]
+   }
+  },
+  {
+   "qid": "Q514442",
+   "label": "Israel Beytenou",
+   "ideologies": [
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q592710",
+     "label": "sionisme révisionniste"
+    },
+    {
+     "qid": "Q6190131",
+     "label": "sécularisme juif"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q58311",
+    "label": "Avigdor Liberman",
+    "born": "1958-07-05",
+    "died": null,
+    "parties": [
+     "Q514442"
+    ]
+   }
+  },
+  {
+   "qid": "Q249078",
+   "label": "liste arabe unie",
+   "ideologies": [
+    {
+     "qid": "Q114213",
+     "label": "nationalisme arabe"
+    },
+    {
+     "qid": "Q204333",
+     "label": "Arabes israéliens"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

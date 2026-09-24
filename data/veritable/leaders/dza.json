@@ -1,0 +1,236 @@
+{
+  "nation": "DZA",
+  "actors": [
+    {
+      "id": "dza-sifi-ghrieb",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.dza-sifi-ghrieb.parody",
+        "fictional": "leader.dza-sifi-ghrieb.fictional"
+      },
+      "born": "1971-01-20",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q133540883",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "dza-abdelmadjid-tebboune",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.dza-abdelmadjid-tebboune.parody",
+        "fictional": "leader.dza-abdelmadjid-tebboune.fictional"
+      },
+      "born": "1945-11-17",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q2821166",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "dza-abdelaziz-belaid",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.dza-abdelaziz-belaid.parody",
+        "fictional": "leader.dza-abdelaziz-belaid.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "dza-front-el-moustakbal",
+      "traits": {
+        "economic": 0.1,
+        "authority": 0.3,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.4,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "dza-abderrazak-makri",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.dza-abderrazak-makri.parody",
+        "fictional": "leader.dza-abderrazak-makri.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "dza-mouvement-de-la-societe-pour-la-paix-msp",
+      "traits": {
+        "economic": 0,
+        "authority": 0,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.36,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "dza-abdelkader-bengrina",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.dza-abdelkader-bengrina.parody",
+        "fictional": "leader.dza-abdelkader-bengrina.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "dza-mouvement-el-bina-el-watani",
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.39999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "dza-front-el-moustakbal",
+      "name": "party.dza-front-el-moustakbal",
+      "wikidata": "Q3088407",
+      "ideologies": ["Q4724100"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": 0.3,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.118,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %)."
+      },
+      "leader": "dza-abdelaziz-belaid"
+    },
+    {
+      "id": "dza-front-de-liberation-nationale-fln",
+      "name": "party.dza-front-de-liberation-nationale-fln",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.2,
+        "authority": 0.5,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.241,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %)."
+      },
+      "leader": null
+    },
+    {
+      "id": "dza-mouvement-de-la-societe-pour-la-paix-msp",
+      "name": "party.dza-mouvement-de-la-societe-pour-la-paix-msp",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.16,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %)."
+      },
+      "leader": "dza-abderrazak-makri"
+    },
+    {
+      "id": "dza-rassemblement-national-democratique-rnd",
+      "name": "party.dza-rassemblement-national-democratique-rnd",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.5,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.143,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %)."
+      },
+      "leader": null
+    },
+    {
+      "id": "dza-mouvement-el-bina-el-watani",
+      "name": "party.dza-mouvement-el-bina-el-watani",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.096,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %)."
+      },
+      "leader": "dza-abdelkader-bengrina"
+    },
+    {
+      "id": "dza-listes-independantes",
+      "name": "party.dza-listes-independantes",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.4,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.206,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %)."
+      },
+      "leader": null
+    }
+  ]
+}

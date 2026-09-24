@@ -1,0 +1,32 @@
+{
+ "nation": "KWT",
+ "country": "Q817",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q12219691",
+    "label": "Sabah Al-Khalid Al-Sabah",
+    "born": "1953-03-15",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q12243161",
+    "label": "Mechaal al-Ahmad al-Jaber al-Sabah",
+    "born": "1940-09-27",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

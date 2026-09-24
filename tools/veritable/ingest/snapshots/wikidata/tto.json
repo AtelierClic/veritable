@@ -1,0 +1,65 @@
+{
+ "nation": "TTO",
+ "country": "Q754",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57712",
+    "label": "Kamla Persad-Bissessar",
+    "born": "1952-04-22",
+    "died": null,
+    "parties": [
+     "Q1024804"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q97400315",
+    "label": "Christine Kangaloo",
+    "born": "1961-12-01",
+    "died": null,
+    "parties": [
+     "Q3326740"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1024804",
+   "label": "Congrès national uni",
+   "ideologies": [
+    {
+     "qid": "Q1080800",
+     "label": "gauche chrétienne"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q3326740",
+   "label": "Mouvement national du peuple",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,298 @@
+{
+  "nation": "MEX",
+  "actors": [
+    {
+      "id": "mex-claudia-sheinbaum",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.mex-claudia-sheinbaum.parody",
+        "fictional": "leader.mex-claudia-sheinbaum.fictional"
+      },
+      "born": "1962-06-24",
+      "party": "mex-mouvement-de-regeneration-nationale",
+      "traits": {
+        "economic": -0.5,
+        "authority": 0.15,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.3,
+        "corruption": 0.35,
+        "charisma": 0.55,
+        "competence": 0.6
+      },
+      "wikidata": "Q5771800",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Gauche héritière du mouvement lopézobradoriste, interventionniste en économie ; ferme face aux pressions commerciales américaines (souveraineté +0,2) sans agressivité offensive ; compétence reconnue (formation de scientifique, ex-maire de Mexico)."
+    },
+    {
+      "id": "mex-dante-delgado",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mex-dante-delgado.parody",
+        "fictional": "leader.mex-dante-delgado.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "mex-movimiento-ciudadano",
+      "traits": {
+        "economic": -0.3,
+        "authority": -0.333,
+        "sovereignty": -0.367,
+        "aggressiveness": 0.15999999999999998,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mex-karen-castrejon",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mex-karen-castrejon.parody",
+        "fictional": "leader.mex-karen-castrejon.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "mex-parti-vert-ecologiste-du-mexique",
+      "traits": {
+        "economic": -0.4,
+        "authority": -0.4,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.13999999999999996,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mex-luisa-maria-alcalde-lujan",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mex-luisa-maria-alcalde-lujan.parody",
+        "fictional": "leader.mex-luisa-maria-alcalde-lujan.fictional"
+      },
+      "born": "1987-08-24",
+      "party": "mex-mouvement-de-regeneration-nationale",
+      "traits": {
+        "economic": -0.475,
+        "authority": 0.025,
+        "sovereignty": 0.375,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q15156389",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mex-jorge-romero-herrera",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mex-jorge-romero-herrera.parody",
+        "fictional": "leader.mex-jorge-romero-herrera.fictional"
+      },
+      "born": "1979-01-03",
+      "party": "mex-parti-action-nationale",
+      "traits": {
+        "economic": 0.35,
+        "authority": -0.2,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.2,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q24770901",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mex-alejandro-moreno-cardenas",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mex-alejandro-moreno-cardenas.parody",
+        "fictional": "leader.mex-alejandro-moreno-cardenas.fictional"
+      },
+      "born": "1975-04-25",
+      "party": "mex-parti-revolutionnaire-institutionnel",
+      "traits": {
+        "economic": -0.18,
+        "authority": -0.28,
+        "sovereignty": -0.06,
+        "aggressiveness": 0.23199999999999998,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5665275",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "mex-alberto-anaya",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.mex-alberto-anaya.parody",
+        "fictional": "leader.mex-alberto-anaya.fictional"
+      },
+      "born": "1946-11-15",
+      "party": "mex-parti-du-travail",
+      "traits": {
+        "economic": -0.5,
+        "authority": 0.233,
+        "sovereignty": 0.167,
+        "aggressiveness": 0.38,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q1984540",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "mex-mouvement-de-regeneration-nationale",
+      "name": "party.mex-mouvement-de-regeneration-nationale",
+      "wikidata": "Q15717618",
+      "ideologies": [
+        "Q11900614",
+        "Q1202972",
+        "Q1203128",
+        "Q121254",
+        "Q23808011",
+        "Q555887"
+      ],
+      "ideology": {
+        "economic": -0.475,
+        "authority": 0.025,
+        "sovereignty": 0.375
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 6)",
+      "support": 0.424,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 juin 2024 (Chambre des députés)"
+      },
+      "leader": "mex-luisa-maria-alcalde-lujan"
+    },
+    {
+      "id": "mex-parti-action-nationale",
+      "name": "party.mex-parti-action-nationale",
+      "wikidata": "Q851087",
+      "ideologies": ["Q1043096", "Q201712", "Q46158"],
+      "ideology": {
+        "economic": 0.35,
+        "authority": -0.2,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.1755,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 juin 2024 (Chambre des députés)"
+      },
+      "leader": "mex-jorge-romero-herrera"
+    },
+    {
+      "id": "mex-parti-revolutionnaire-institutionnel",
+      "name": "party.mex-parti-revolutionnaire-institutionnel",
+      "wikidata": "Q682969",
+      "ideologies": [
+        "Q1194747",
+        "Q121254",
+        "Q1660379",
+        "Q189280",
+        "Q192886",
+        "Q216920",
+        "Q59599",
+        "Q6216"
+      ],
+      "ideology": {
+        "economic": -0.18,
+        "authority": -0.28,
+        "sovereignty": -0.06
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 8)",
+      "support": 0.1157,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 juin 2024 (Chambre des députés)"
+      },
+      "leader": "mex-alejandro-moreno-cardenas"
+    },
+    {
+      "id": "mex-movimiento-ciudadano",
+      "name": "party.mex-movimiento-ciudadano",
+      "wikidata": "Q10920094",
+      "ideologies": ["Q121254", "Q204886", "Q2855609", "Q8025128"],
+      "ideology": {
+        "economic": -0.3,
+        "authority": -0.333,
+        "sovereignty": -0.367
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.1134,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 juin 2024 (Chambre des députés)"
+      },
+      "leader": "mex-dante-delgado"
+    },
+    {
+      "id": "mex-parti-vert-ecologiste-du-mexique",
+      "name": "party.mex-parti-vert-ecologiste-du-mexique",
+      "wikidata": "Q383718",
+      "ideologies": ["Q1062758", "Q1661415"],
+      "ideology": {
+        "economic": -0.4,
+        "authority": -0.4,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.0872,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 juin 2024 (Chambre des députés)"
+      },
+      "leader": "mex-karen-castrejon"
+    },
+    {
+      "id": "mex-parti-du-travail",
+      "name": "party.mex-parti-du-travail",
+      "wikidata": "Q540320",
+      "ideologies": ["Q167651", "Q1757356", "Q189280", "Q3897681", "Q6186"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": 0.233,
+        "sovereignty": 0.167
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 5)",
+      "support": 0.0568,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 2 juin 2024 (Chambre des députés)"
+      },
+      "leader": "mex-alberto-anaya"
+    }
+  ]
+}

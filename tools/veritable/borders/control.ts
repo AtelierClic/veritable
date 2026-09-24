@@ -68,6 +68,9 @@ export function controlImage(
   ) => {
     const steps = Math.ceil(Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)));
     if (steps > 4 * (width + height)) return; // wrapped far off the map
+    // An edge across the seam of a world map (J6): the two ends lie on
+    // opposite borders of the map; no line between them.
+    if (Math.abs(x1 - x0) > width / 2) return;
     for (let s = 0; s <= steps; s++) {
       const t = steps === 0 ? 0 : s / steps;
       plot(

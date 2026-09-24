@@ -1,0 +1,30 @@
+{
+ "nation": "BFA",
+ "country": "Q965",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q114835874",
+    "label": "Apollinaire Joachim Kyélem de Tambèla",
+    "born": "1958-06-11",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q114341246",
+    "label": "Ibrahim Traoré",
+    "born": "1988-03-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

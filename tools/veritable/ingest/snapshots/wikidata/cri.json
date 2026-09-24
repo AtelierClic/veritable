@@ -1,0 +1,101 @@
+{
+ "nation": "CRI",
+ "country": "Q800",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q98017689",
+    "label": "Rodrigo Chaves Robles",
+    "born": "1961-06-10",
+    "died": null,
+    "parties": [
+     "Q109717771"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q98017689",
+    "label": "Rodrigo Chaves Robles",
+    "born": "1961-06-10",
+    "died": null,
+    "parties": [
+     "Q109717771"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q82591",
+   "label": "Parti de la libération nationale",
+   "ideologies": [
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q109717771",
+   "label": "Parti progrès social démocratique",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1056879",
+   "label": "Parti unité sociale-chrétienne",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q61862296",
+   "label": "Parti nouvelle république",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q42685517",
+    "label": "Fabricio Alvarado Muñoz",
+    "born": "1974-05-30",
+    "died": null,
+    "parties": [
+     "Q61862296"
+    ]
+   }
+  },
+  {
+   "qid": "Q403054",
+   "label": "Front large",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

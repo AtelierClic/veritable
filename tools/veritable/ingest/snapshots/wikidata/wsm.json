@@ -1,0 +1,61 @@
+{
+ "nation": "WSM",
+ "country": "Q683",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q5446290",
+    "label": "Naomi Mataʻafa",
+    "born": "1957-04-29",
+    "died": null,
+    "parties": [
+     "Q104853338",
+     "Q134703806"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q32014514",
+    "label": "Va'aletoa Sualauvi II",
+    "born": "1947-04-29",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q104853338",
+   "label": "Faʻatuatua i le Atua Samoa ua Tasi",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1256720",
+   "label": "Parti pour la protection des droits de l'homme",
+   "ideologies": [
+    {
+     "qid": "Q11168082",
+     "label": "conservatisme culturel"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

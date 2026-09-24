@@ -1,0 +1,74 @@
+{
+ "nation": "MWI",
+ "country": "Q1020",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q16202782",
+    "label": "Lazarus Chakwera",
+    "born": "1955-04-05",
+    "died": null,
+    "parties": [
+     "Q1037389"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q16202782",
+    "label": "Lazarus Chakwera",
+    "born": "1955-04-05",
+    "died": null,
+    "parties": [
+     "Q1037389"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1185876",
+   "label": "Parti démocrate-progressiste",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q1037389",
+   "label": "Parti du congrès du Malawi",
+   "ideologies": [
+    {
+     "qid": "Q213843",
+     "label": "ubuntu"
+    },
+    {
+     "qid": "Q3874021",
+     "label": "nationalisme africain"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q16202782",
+    "label": "Lazarus Chakwera",
+    "born": "1955-04-05",
+    "died": null,
+    "parties": [
+     "Q1037389"
+    ]
+   }
+  },
+  {
+   "qid": "Q775844",
+   "label": "Front uni démocratique",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,75 @@
+{
+ "nation": "JAM",
+ "country": "Q766",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q505200",
+    "label": "Andrew Holness",
+    "born": "1972-07-22",
+    "died": null,
+    "parties": [
+     "Q1539301"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1539301",
+   "label": "Parti travailliste de Jamaïque",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q505200",
+    "label": "Andrew Holness",
+    "born": "1972-07-22",
+    "died": null,
+    "parties": [
+     "Q1539301"
+    ]
+   }
+  },
+  {
+   "qid": "Q1162691",
+   "label": "Parti national du peuple",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q7176380",
+    "label": "Peter Phillips",
+    "born": "1949-12-28",
+    "died": null,
+    "parties": [
+     "Q1162691"
+    ]
+   }
+  }
+ ]
+}

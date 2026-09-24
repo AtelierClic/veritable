@@ -1,0 +1,122 @@
+{
+ "nation": "FJI",
+ "country": "Q712",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q981549",
+    "label": "Sitiveni Rabuka",
+    "born": "1948-09-13",
+    "died": null,
+    "parties": [
+     "Q110677493",
+     "Q7563246"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q109012733",
+    "label": "Wiliame Katonivere",
+    "born": "1964-04-20",
+    "died": null,
+    "parties": [
+     "Q110677493"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q17069868",
+   "label": "Fidji d'abord",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q57830",
+    "label": "Frank Bainimarama",
+    "born": "1954-04-27",
+    "died": null,
+    "parties": [
+     "Q17069868"
+    ]
+   }
+  },
+  {
+   "qid": "Q6972579",
+   "label": "Parti de la fédération nationale",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    },
+    {
+     "qid": "Q494792",
+     "label": "troisième voie"
+    }
+   ],
+   "leader": {
+    "qid": "Q18124383",
+    "label": "Biman Prasad",
+    "born": null,
+    "died": null,
+    "parties": [
+     "Q6972579"
+    ]
+   }
+  },
+  {
+   "qid": "Q7550539",
+   "label": "Parti libéral social-démocrate",
+   "ideologies": [
+    {
+     "qid": "Q179073",
+     "label": "protectionnisme"
+    },
+    {
+     "qid": "Q24905525",
+     "label": "nationalisme chrétien"
+    },
+    {
+     "qid": "Q522903",
+     "label": "Capitalisme rhénan"
+    },
+    {
+     "qid": "Q637251",
+     "label": "nationalisme ethnique"
+    }
+   ],
+   "leader": {
+    "qid": "Q981549",
+    "label": "Sitiveni Rabuka",
+    "born": "1948-09-13",
+    "died": null,
+    "parties": [
+     "Q110677493",
+     "Q7563246"
+    ]
+   }
+  }
+ ]
+}

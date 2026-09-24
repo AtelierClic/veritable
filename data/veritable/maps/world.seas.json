@@ -1,0 +1,258 @@
+{
+  "map": "world",
+  "note": "Germes des zones maritimes mondiales (J6, lon, lat), même partition que la carte Europe (parcours en largeur multi-source sur l'eau). Découpage à grands traits : océans en bandes, mers bordières nommées. À valider.",
+  "zones": [
+    {
+      "id": "north-atlantic",
+      "name": "sea.north-atlantic",
+      "lon": -35,
+      "lat": 45
+    },
+    {
+      "id": "central-atlantic",
+      "name": "sea.central-atlantic",
+      "lon": -35,
+      "lat": 18
+    },
+    {
+      "id": "south-atlantic",
+      "name": "sea.south-atlantic",
+      "lon": -20,
+      "lat": -30
+    },
+    {
+      "id": "biscay",
+      "name": "sea.biscay",
+      "lon": -5,
+      "lat": 45.5
+    },
+    {
+      "id": "channel",
+      "name": "sea.channel",
+      "lon": -1.5,
+      "lat": 50
+    },
+    {
+      "id": "north-sea",
+      "name": "sea.north-sea",
+      "lon": 3,
+      "lat": 56
+    },
+    {
+      "id": "baltic",
+      "name": "sea.baltic",
+      "lon": 19,
+      "lat": 58
+    },
+    {
+      "id": "norwegian-sea",
+      "name": "sea.norwegian-sea",
+      "lon": 5,
+      "lat": 66
+    },
+    {
+      "id": "barents",
+      "name": "sea.barents",
+      "lon": 38,
+      "lat": 72
+    },
+    {
+      "id": "arctic",
+      "name": "sea.arctic",
+      "lon": 60,
+      "lat": 82
+    },
+    {
+      "id": "med-west",
+      "name": "sea.med-west",
+      "lon": 4,
+      "lat": 39
+    },
+    {
+      "id": "med-central",
+      "name": "sea.med-central",
+      "lon": 14,
+      "lat": 36
+    },
+    {
+      "id": "med-east",
+      "name": "sea.med-east",
+      "lon": 28,
+      "lat": 34
+    },
+    {
+      "id": "adriatic",
+      "name": "sea.adriatic",
+      "lon": 15.5,
+      "lat": 43
+    },
+    {
+      "id": "aegean",
+      "name": "sea.aegean",
+      "lon": 25,
+      "lat": 38
+    },
+    {
+      "id": "black-sea",
+      "name": "sea.black-sea",
+      "lon": 34,
+      "lat": 43
+    },
+    {
+      "id": "caspian",
+      "name": "sea.caspian",
+      "lon": 51,
+      "lat": 42
+    },
+    {
+      "id": "red-sea",
+      "name": "sea.red-sea",
+      "lon": 38,
+      "lat": 20
+    },
+    {
+      "id": "persian-gulf",
+      "name": "sea.persian-gulf",
+      "lon": 51,
+      "lat": 27
+    },
+    {
+      "id": "arabian-sea",
+      "name": "sea.arabian-sea",
+      "lon": 63,
+      "lat": 15
+    },
+    {
+      "id": "bay-of-bengal",
+      "name": "sea.bay-of-bengal",
+      "lon": 88,
+      "lat": 14
+    },
+    {
+      "id": "indian-ocean",
+      "name": "sea.indian-ocean",
+      "lon": 78,
+      "lat": -20
+    },
+    {
+      "id": "mozambique-channel",
+      "name": "sea.mozambique-channel",
+      "lon": 41,
+      "lat": -18
+    },
+    {
+      "id": "gulf-of-guinea",
+      "name": "sea.gulf-of-guinea",
+      "lon": 2,
+      "lat": 1
+    },
+    {
+      "id": "south-china-sea",
+      "name": "sea.south-china-sea",
+      "lon": 114,
+      "lat": 12
+    },
+    {
+      "id": "east-china-sea",
+      "name": "sea.east-china-sea",
+      "lon": 125,
+      "lat": 29
+    },
+    {
+      "id": "yellow-sea",
+      "name": "sea.yellow-sea",
+      "lon": 123,
+      "lat": 36
+    },
+    {
+      "id": "sea-of-japan",
+      "name": "sea.sea-of-japan",
+      "lon": 135,
+      "lat": 40
+    },
+    {
+      "id": "sea-of-okhotsk",
+      "name": "sea.sea-of-okhotsk",
+      "lon": 148,
+      "lat": 53
+    },
+    {
+      "id": "bering-sea",
+      "name": "sea.bering-sea",
+      "lon": -178,
+      "lat": 58
+    },
+    {
+      "id": "philippine-sea",
+      "name": "sea.philippine-sea",
+      "lon": 132,
+      "lat": 18
+    },
+    {
+      "id": "java-sea",
+      "name": "sea.java-sea",
+      "lon": 112,
+      "lat": -5
+    },
+    {
+      "id": "coral-sea",
+      "name": "sea.coral-sea",
+      "lon": 155,
+      "lat": -18
+    },
+    {
+      "id": "tasman-sea",
+      "name": "sea.tasman-sea",
+      "lon": 160,
+      "lat": -38
+    },
+    {
+      "id": "north-pacific",
+      "name": "sea.north-pacific",
+      "lon": -150,
+      "lat": 35
+    },
+    {
+      "id": "south-pacific",
+      "name": "sea.south-pacific",
+      "lon": -130,
+      "lat": -30
+    },
+    {
+      "id": "eastern-pacific",
+      "name": "sea.eastern-pacific",
+      "lon": -95,
+      "lat": 5
+    },
+    {
+      "id": "caribbean",
+      "name": "sea.caribbean",
+      "lon": -75,
+      "lat": 15
+    },
+    {
+      "id": "gulf-of-mexico",
+      "name": "sea.gulf-of-mexico",
+      "lon": -90,
+      "lat": 25
+    },
+    {
+      "id": "hudson-bay",
+      "name": "sea.hudson-bay",
+      "lon": -85,
+      "lat": 60
+    },
+    {
+      "id": "labrador-sea",
+      "name": "sea.labrador-sea",
+      "lon": -55,
+      "lat": 58
+    },
+    {
+      "id": "southern-ocean",
+      "name": "sea.southern-ocean",
+      "lon": 0,
+      "lat": -60
+    }
+  ]
+}

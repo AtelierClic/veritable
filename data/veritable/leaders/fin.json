@@ -1,0 +1,373 @@
+{
+  "nation": "FIN",
+  "actors": [
+    {
+      "id": "fin-petteri-orpo",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.fin-petteri-orpo.parody",
+        "fictional": "leader.fin-petteri-orpo.fictional"
+      },
+      "born": "1969-11-03",
+      "party": "fin-kansallinen-kokoomus",
+      "traits": {
+        "economic": 0.55,
+        "authority": 0.05,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.22999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q6029546",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "fin-alexander-stubb",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.fin-alexander-stubb.parody",
+        "fictional": "leader.fin-alexander-stubb.fictional"
+      },
+      "born": "1968-04-01",
+      "party": "fin-kansallinen-kokoomus",
+      "traits": {
+        "economic": 0.55,
+        "authority": 0.05,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.22999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q503143",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "fin-riikka-purra",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fin-riikka-purra.parody",
+        "fictional": "leader.fin-riikka-purra.fictional"
+      },
+      "born": "1977-06-13",
+      "party": "fin-parti-des-finlandais",
+      "traits": {
+        "economic": 0.18,
+        "authority": 0.46,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.532,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q29892910",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "fin-antti-lindtman",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fin-antti-lindtman.parody",
+        "fictional": "leader.fin-antti-lindtman.fictional"
+      },
+      "born": "1982-08-11",
+      "party": "fin-parti-social-democrate-de-finlande",
+      "traits": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q11852155",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "fin-antti-kaikkonen",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fin-antti-kaikkonen.parody",
+        "fictional": "leader.fin-antti-kaikkonen.fictional"
+      },
+      "born": "1974-02-14",
+      "party": "fin-parti-du-centre",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0.2,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.43999999999999995,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q11852109",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "fin-minja-koskela",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fin-minja-koskela.parody",
+        "fictional": "leader.fin-minja-koskela.fictional"
+      },
+      "born": "1987-01-01",
+      "party": "fin-alliance-de-gauche",
+      "traits": {
+        "economic": -0.75,
+        "authority": -0.35,
+        "sovereignty": -0.15,
+        "aggressiveness": 0.19999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q63348610",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "fin-sofia-virta",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fin-sofia-virta.parody",
+        "fictional": "leader.fin-sofia-virta.fictional"
+      },
+      "born": "1990-06-21",
+      "party": "fin-ligue-verte",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.4,
+        "sovereignty": -0.65,
+        "aggressiveness": 0.08999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q29893152",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "fin-anders-adlercreutz",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fin-anders-adlercreutz.parody",
+        "fictional": "leader.fin-anders-adlercreutz.fictional"
+      },
+      "born": "1970-04-26",
+      "party": "fin-parti-populaire-suedois-de-finlande",
+      "traits": {
+        "economic": 0.2,
+        "authority": -0.4,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.09999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q20251257",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "fin-sari-essayah",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.fin-sari-essayah.parody",
+        "fictional": "leader.fin-sari-essayah.fictional"
+      },
+      "born": "1967-02-21",
+      "party": "fin-chretiens-democrates",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.2,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.29999999999999993,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q241563",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "fin-parti-des-finlandais",
+      "name": "party.fin-parti-des-finlandais",
+      "wikidata": "Q634277",
+      "ideologies": [
+        "Q1414298",
+        "Q16836864",
+        "Q223200",
+        "Q436860",
+        "Q555887",
+        "Q852739"
+      ],
+      "ideology": {
+        "economic": 0.18,
+        "authority": 0.46,
+        "sovereignty": 0.7
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 6)",
+      "support": 0.2006,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-riikka-purra"
+    },
+    {
+      "id": "fin-parti-social-democrate-de-finlande",
+      "name": "party.fin-parti-social-democrate-de-finlande",
+      "wikidata": "Q499029",
+      "ideologies": ["Q121254"],
+      "ideology": {
+        "economic": -0.5,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.1995,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-antti-lindtman"
+    },
+    {
+      "id": "fin-parti-du-centre",
+      "name": "party.fin-parti-du-centre",
+      "wikidata": "Q506591",
+      "ideologies": ["Q492050"],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0.2,
+        "sovereignty": 0.5
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.1129,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-antti-kaikkonen"
+    },
+    {
+      "id": "fin-alliance-de-gauche",
+      "name": "party.fin-alliance-de-gauche",
+      "wikidata": "Q385927",
+      "ideologies": ["Q189280", "Q275595"],
+      "ideology": {
+        "economic": -0.75,
+        "authority": -0.35,
+        "sovereignty": -0.15
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.0706,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-minja-koskela"
+    },
+    {
+      "id": "fin-ligue-verte",
+      "name": "party.fin-ligue-verte",
+      "wikidata": "Q196695",
+      "ideologies": ["Q1321721", "Q3781399", "Q939214"],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.4,
+        "sovereignty": -0.65
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.0704,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-sofia-virta"
+    },
+    {
+      "id": "fin-parti-populaire-suedois-de-finlande",
+      "name": "party.fin-parti-populaire-suedois-de-finlande",
+      "wikidata": "Q845537",
+      "ideologies": ["Q1369260", "Q3781399", "Q6216"],
+      "ideology": {
+        "economic": 0.2,
+        "authority": -0.4,
+        "sovereignty": -0.6
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.0431,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-anders-adlercreutz"
+    },
+    {
+      "id": "fin-chretiens-democrates",
+      "name": "party.fin-chretiens-democrates",
+      "wikidata": "Q1138982",
+      "ideologies": ["Q209158"],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.2,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.0422,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-sari-essayah"
+    },
+    {
+      "id": "fin-kansallinen-kokoomus",
+      "name": "party.fin-kansallinen-kokoomus",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.55,
+        "authority": 0.05,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.2082,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 2 avril 2023 (Eduskunta)"
+      },
+      "leader": "fin-petteri-orpo"
+    }
+  ]
+}

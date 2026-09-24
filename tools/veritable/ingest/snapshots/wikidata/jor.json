@@ -1,0 +1,48 @@
+{
+ "nation": "JOR",
+ "country": "Q810",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q97011032",
+    "label": "Jafar Hassan",
+    "born": "1968-01-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57464",
+    "label": "Abdallah II de Jordanie",
+    "born": "1962-01-30",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1674114",
+   "label": "Front islamique d'action",
+   "ideologies": [
+    {
+     "qid": "Q189746",
+     "label": "islamisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q130426065",
+   "label": "Parti de la charte nationale",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

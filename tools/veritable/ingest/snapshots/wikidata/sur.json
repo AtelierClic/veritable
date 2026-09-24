@@ -1,0 +1,73 @@
+{
+ "nation": "SUR",
+ "country": "Q730",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q440403",
+    "label": "Jennifer Simons",
+    "born": "1953-09-05",
+    "died": null,
+    "parties": [
+     "Q2420320"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q440403",
+    "label": "Jennifer Simons",
+    "born": "1953-09-05",
+    "died": null,
+    "parties": [
+     "Q2420320"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2420320",
+   "label": "parti démocratique national",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q3634106",
+   "label": "Parti général de la libération et du développement",
+   "ideologies": [],
+   "leader": null
+  },
+  {
+   "qid": "Q2564279",
+   "label": "Parti National du Surinam",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q195501",
+   "label": "Pertjajah Luhur",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

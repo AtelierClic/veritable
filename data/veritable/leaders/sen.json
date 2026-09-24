@@ -1,0 +1,221 @@
+{
+  "nation": "SEN",
+  "actors": [
+    {
+      "id": "sen-ousmane-sonko",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.sen-ousmane-sonko.parody",
+        "fictional": "leader.sen-ousmane-sonko.fictional"
+      },
+      "born": "1974-07-15",
+      "party": "sen-patriotes-africains-du-senegal-pour-le-travail-l",
+      "traits": {
+        "economic": -0.7,
+        "authority": 0.1,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.4,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Premier ministre depuis avril 2024 (Wikidata donne le président). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "sen-bassirou-diomaye-faye",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.sen-bassirou-diomaye-faye.parody",
+        "fictional": "leader.sen-bassirou-diomaye-faye.fictional"
+      },
+      "born": "1980-03-25",
+      "party": "sen-patriotes-africains-du-senegal-pour-le-travail-l",
+      "traits": {
+        "economic": -0.7,
+        "authority": 0.1,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.4,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q124382437",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "sen-macky-sall",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.sen-macky-sall.parody",
+        "fictional": "leader.sen-macky-sall.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "sen-takku-wallu-senegal",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.3,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.33999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "sen-amadou-ba",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.sen-amadou-ba.parody",
+        "fictional": "leader.sen-amadou-ba.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "sen-jamm-ak-njarin",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.1,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "sen-barthelemy-dias",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.sen-barthelemy-dias.parody",
+        "fictional": "leader.sen-barthelemy-dias.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "sen-samm-sa-kaddu",
+      "traits": {
+        "economic": -0.2,
+        "authority": -0.2,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.24,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "sen-ousmane-sonko",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.sen-ousmane-sonko.parody",
+        "fictional": "leader.sen-ousmane-sonko.fictional"
+      },
+      "born": "1974-07-15",
+      "party": "sen-patriotes-africains-du-senegal-pour-le-travail-l",
+      "traits": {
+        "economic": -0.7,
+        "authority": 0.1,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.4,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q56312650",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "sen-patriotes-africains-du-senegal-pour-le-travail-l",
+      "name": "party.sen-patriotes-africains-du-senegal-pour-le-travail-l",
+      "wikidata": "Q98347378",
+      "ideologies": ["Q11900614", "Q282739"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": 0.1,
+        "sovereignty": 0.4
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "support": 0.5497,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 17 novembre 2024, 165 sièges ; parts de voix officielles."
+      },
+      "leader": "sen-ousmane-sonko"
+    },
+    {
+      "id": "sen-takku-wallu-senegal",
+      "name": "party.sen-takku-wallu-senegal",
+      "wikidata": "Q131294669",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.15,
+        "authority": 0.3,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1467,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 17 novembre 2024, 165 sièges ; parts de voix officielles."
+      },
+      "leader": "sen-macky-sall"
+    },
+    {
+      "id": "sen-jamm-ak-njarin",
+      "name": "party.sen-jamm-ak-njarin",
+      "wikidata": "Q131290774",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.15,
+        "authority": 0.1,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0913,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 17 novembre 2024, 165 sièges ; parts de voix officielles."
+      },
+      "leader": "sen-amadou-ba"
+    },
+    {
+      "id": "sen-samm-sa-kaddu",
+      "name": "party.sen-samm-sa-kaddu",
+      "wikidata": "Q131319041",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.2,
+        "authority": -0.2,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0613,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives du 17 novembre 2024, 165 sièges ; parts de voix officielles."
+      },
+      "leader": "sen-barthelemy-dias"
+    }
+  ]
+}

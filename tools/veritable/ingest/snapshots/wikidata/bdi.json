@@ -1,0 +1,56 @@
+{
+ "nation": "BDI",
+ "country": "Q967",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q107136851",
+    "label": "Gervais Ndirakobuca",
+    "born": "1970-01-01",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q27329764",
+    "label": "Évariste Ndayishimiye",
+    "born": "1968-06-17",
+    "died": null,
+    "parties": [
+     "Q2271402"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2271402",
+   "label": "Conseil national pour la défense de la démocratie-Forces de défense de la démocratie",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q637251",
+     "label": "nationalisme ethnique"
+    }
+   ],
+   "leader": {
+    "qid": "Q27329764",
+    "label": "Évariste Ndayishimiye",
+    "born": "1968-06-17",
+    "died": null,
+    "parties": [
+     "Q2271402"
+    ]
+   }
+  }
+ ]
+}

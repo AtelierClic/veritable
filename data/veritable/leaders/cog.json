@@ -1,0 +1,110 @@
+{
+  "nation": "COG",
+  "actors": [
+    {
+      "id": "cog-anatole-collinet-makosso",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.cog-anatole-collinet-makosso.parody",
+        "fictional": "leader.cog-anatole-collinet-makosso.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "cog-parti-congolais-du-travail",
+      "traits": {
+        "economic": -0.7,
+        "authority": -0.125,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.25499999999999995,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q4752077",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "cog-denis-sassou-nguesso",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.cog-denis-sassou-nguesso.parody",
+        "fictional": "leader.cog-denis-sassou-nguesso.fictional"
+      },
+      "born": "1943-11-23",
+      "party": "cog-parti-congolais-du-travail",
+      "traits": {
+        "economic": -0.7,
+        "authority": -0.125,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.25499999999999995,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57418",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "cog-parti-congolais-du-travail",
+      "name": "party.cog-parti-congolais-du-travail",
+      "wikidata": "Q1785816",
+      "ideologies": ["Q121254", "Q189280", "Q7264", "Q7272"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.125,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "support": 0.74,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de juillet 2022 (Assemblée nationale, deux tours) ; parts de sièges faute de détail des voix par parti dans les sources consultées."
+      },
+      "leader": "cog-denis-sassou-nguesso"
+    },
+    {
+      "id": "cog-union-panafricaine-pour-la-democratie-sociale",
+      "name": "party.cog-union-panafricaine-pour-la-democratie-sociale",
+      "wikidata": "Q3550401",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.3,
+        "authority": -0.2,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.05,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de juillet 2022 (Assemblée nationale, deux tours) ; parts de sièges faute de détail des voix par parti dans les sources consultées."
+      },
+      "leader": null
+    },
+    {
+      "id": "cog-union-des-democrates-humanistes-yuki",
+      "name": "party.cog-union-des-democrates-humanistes-yuki",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.05,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de juillet 2022 (Assemblée nationale, deux tours) ; parts de sièges faute de détail des voix par parti dans les sources consultées."
+      },
+      "leader": null
+    }
+  ]
+}

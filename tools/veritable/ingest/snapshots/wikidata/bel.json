@@ -1,0 +1,225 @@
+{
+ "nation": "BEL",
+ "country": "Q31",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q336599",
+    "label": "Bart De Wever",
+    "born": "1970-12-21",
+    "died": null,
+    "parties": [
+     "Q1725837",
+     "Q28982"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q155004",
+    "label": "Philippe Ier de Belgique",
+    "born": "1960-04-15",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q28982",
+   "label": "Nieuw-Vlaamse Alliantie",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q13632420",
+     "label": "nationalisme flamand"
+    },
+    {
+     "qid": "Q194236",
+     "label": "séparatisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q336599",
+    "label": "Bart De Wever",
+    "born": "1970-12-21",
+    "died": null,
+    "parties": [
+     "Q1725837",
+     "Q28982"
+    ]
+   }
+  },
+  {
+   "qid": "Q682990",
+   "label": "Vlaams Belang",
+   "ideologies": [
+    {
+     "qid": "Q13632420",
+     "label": "nationalisme flamand"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q194236",
+     "label": "séparatisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q696116",
+     "label": "néofascisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q17300271",
+    "label": "Tom Van Grieken",
+    "born": "1986-10-07",
+    "died": null,
+    "parties": [
+     "Q682990"
+    ]
+   }
+  },
+  {
+   "qid": "Q533384",
+   "label": "Mouvement réformateur",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q18433444",
+    "label": "Georges-Louis Bouchez",
+    "born": "1986-03-23",
+    "died": null,
+    "parties": [
+     "Q533384"
+    ]
+   }
+  },
+  {
+   "qid": "Q939354",
+   "label": "Vooruit",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q65249245",
+    "label": "Conner Rousseau",
+    "born": "1992-11-13",
+    "died": null,
+    "parties": [
+     "Q939354"
+    ]
+   }
+  },
+  {
+   "qid": "Q645787",
+   "label": "Parti socialiste",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    }
+   ],
+   "leader": {
+    "qid": "Q1341556",
+    "label": "Paul Magnette",
+    "born": "1971-06-28",
+    "died": null,
+    "parties": [
+     "Q645787"
+    ]
+   }
+  },
+  {
+   "qid": "Q840814",
+   "label": "Les Engagés",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q3302670",
+    "label": "Maxime Prévot",
+    "born": "1978-04-09",
+    "died": null,
+    "parties": [
+     "Q113184801",
+     "Q840814"
+    ]
+   }
+  },
+  {
+   "qid": "Q750673",
+   "label": "Christen-Democratisch en Vlaams",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": {
+    "qid": "Q75807853",
+    "label": "Sammy Mahdi",
+    "born": "1988-09-21",
+    "died": null,
+    "parties": [
+     "Q750673"
+    ]
+   }
+  }
+ ]
+}

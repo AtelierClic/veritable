@@ -1,0 +1,79 @@
+{
+ "nation": "BHS",
+ "country": "Q778",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q7183082",
+    "label": "Philip \"Brave\" Davis",
+    "born": "1951-06-07",
+    "died": null,
+    "parties": [
+     "Q2566823"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q2566823",
+   "label": "parti libéral progressiste",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q2566343",
+   "label": "Mouvement national libre",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q16732648",
+    "label": "Hubert Minnis",
+    "born": "1954-04-16",
+    "died": null,
+    "parties": [
+     "Q2566343"
+    ]
+   }
+  }
+ ]
+}

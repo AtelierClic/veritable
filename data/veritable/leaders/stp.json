@@ -1,0 +1,137 @@
+{
+  "nation": "STP",
+  "actors": [
+    {
+      "id": "stp-americo-ramos",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.stp-americo-ramos.parody",
+        "fictional": "leader.stp-americo-ramos.fictional"
+      },
+      "born": "1966-07-21",
+      "party": "stp-action-democratique-independante",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q131749390",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "stp-carlos-vila-nova",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.stp-carlos-vila-nova.parody",
+        "fictional": "leader.stp-carlos-vila-nova.fictional"
+      },
+      "born": "1959-07-27",
+      "party": "stp-action-democratique-independante",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q27982047",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "stp-jorge-bom-jesus",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.stp-jorge-bom-jesus.parody",
+        "fictional": "leader.stp-jorge-bom-jesus.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "stp-mouvement-pour-la-liberation-de-sao-tome-et-prin",
+      "traits": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.21999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "stp-patrice-trovoada",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.stp-patrice-trovoada.parody",
+        "fictional": "leader.stp-patrice-trovoada.fictional"
+      },
+      "born": "1962-03-18",
+      "party": "stp-action-democratique-independante",
+      "traits": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.44,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q459822",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "stp-action-democratique-independante",
+      "name": "party.stp-action-democratique-independante",
+      "wikidata": "Q2788422",
+      "ideologies": ["Q7169"],
+      "ideology": {
+        "economic": 0.4,
+        "authority": 0.4,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.48,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de septembre 2022 (Assemblée nationale) ; victoire de l'ADI de Patrice Trovoada face au MLSTP-PSD sortant. Parts approximatives, non revérifiées précisément cette session."
+      },
+      "leader": "stp-patrice-trovoada"
+    },
+    {
+      "id": "stp-mouvement-pour-la-liberation-de-sao-tome-et-prin",
+      "name": "party.stp-mouvement-pour-la-liberation-de-sao-tome-et-prin",
+      "wikidata": "Q1276673",
+      "ideologies": ["Q189280"],
+      "ideology": {
+        "economic": -0.7,
+        "authority": -0.3,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.32,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de septembre 2022 (Assemblée nationale) ; victoire de l'ADI de Patrice Trovoada face au MLSTP-PSD sortant. Parts approximatives, non revérifiées précisément cette session."
+      },
+      "leader": "stp-jorge-bom-jesus"
+    }
+  ]
+}

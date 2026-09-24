@@ -1,0 +1,30 @@
+{
+ "nation": "SWZ",
+ "country": "Q1050",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q123342092",
+    "label": "Russell Dlamini",
+    "born": "1973-10-23",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57340",
+    "label": "Mswati III",
+    "born": "1968-04-19",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

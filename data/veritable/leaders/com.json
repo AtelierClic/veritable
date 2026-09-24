@@ -1,0 +1,49 @@
+{
+  "nation": "COM",
+  "actors": [
+    {
+      "id": "com-azali-assoumani",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.com-azali-assoumani.parody",
+        "fictional": "leader.com-azali-assoumani.fictional"
+      },
+      "born": "1959-01-01",
+      "party": "com-convention-pour-le-renouveau-des-comores",
+      "traits": {
+        "economic": 0,
+        "authority": 0.5,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.44000000000000006,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q515602",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "com-convention-pour-le-renouveau-des-comores",
+      "name": "party.com-convention-pour-le-renouveau-des-comores",
+      "wikidata": "Q5166253",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.5,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.8,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections législatives de l'Assemblée de l'Union du 19 janvier 2020 — dernières dont Claude Code est raisonnablement certain de la date ; une élection législative ultérieure a pu avoir lieu avant le 1er janvier 2026 et resterait à vérifier."
+      },
+      "leader": "com-azali-assoumani"
+    }
+  ]
+}

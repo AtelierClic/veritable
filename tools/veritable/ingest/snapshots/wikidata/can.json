@@ -1,0 +1,134 @@
+{
+ "nation": "CAN",
+ "country": "Q16",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q192533",
+    "label": "Mark Carney",
+    "born": "1965-03-16",
+    "died": null,
+    "parties": [
+     "Q138345"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q138345",
+   "label": "Parti libéral du Canada",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3237980",
+     "label": "libéralisme au Canada"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q192533",
+    "label": "Mark Carney",
+    "born": "1965-03-16",
+    "died": null,
+    "parties": [
+     "Q138345"
+    ]
+   }
+  },
+  {
+   "qid": "Q488523",
+   "label": "Parti conservateur du Canada",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q3386636",
+    "label": "Pierre Poilievre",
+    "born": "1979-06-03",
+    "died": null,
+    "parties": [
+     "Q488523"
+    ]
+   }
+  },
+  {
+   "qid": "Q735105",
+   "label": "Bloc québécois",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1321476",
+     "label": "mouvement souverainiste du Québec"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q3141508",
+     "label": "nationalisme québécois"
+    },
+    {
+     "qid": "Q877848",
+     "label": "républicanisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q3573412",
+    "label": "Yves-François Blanchet",
+    "born": "1965-04-16",
+    "died": null,
+    "parties": [
+     "Q735105",
+     "Q950356"
+    ]
+   }
+  },
+  {
+   "qid": "Q130765",
+   "label": "Nouveau Parti démocratique",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q3035763",
+    "label": "Don Davies",
+    "born": "1963-01-16",
+    "died": null,
+    "parties": [
+     "Q130765"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,186 @@
+{
+ "nation": "AUT",
+ "country": "Q40",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q64576653",
+    "label": "Christian Stocker",
+    "born": "1960-03-20",
+    "died": null,
+    "parties": [
+     "Q186867"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q78869",
+    "label": "Alexander Van der Bellen",
+    "born": "1944-01-18",
+    "died": null,
+    "parties": [
+     "Q193178"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q131692",
+   "label": "Parti de la liberté",
+   "ideologies": [
+    {
+     "qid": "Q1206403",
+     "label": "nationalisme allemand en Autriche"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q191442",
+     "label": "mouvement antimondialisation"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q3700346",
+     "label": "opposition à l'immigration"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q50685643",
+     "label": "pérennialisme"
+    },
+    {
+     "qid": "Q660018",
+     "label": "national-libéralisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1395041",
+    "label": "Herbert Kickl",
+    "born": "1968-10-19",
+    "died": null,
+    "parties": [
+     "Q131692"
+    ]
+   }
+  },
+  {
+   "qid": "Q186867",
+   "label": "Parti populaire autrichien",
+   "ideologies": [
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q64576653",
+    "label": "Christian Stocker",
+    "born": "1960-03-20",
+    "died": null,
+    "parties": [
+     "Q186867"
+    ]
+   }
+  },
+  {
+   "qid": "Q179111",
+   "label": "Parti social-démocrate d'Autriche",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q668662",
+     "label": "austromarxisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q20030152",
+    "label": "Andreas Babler",
+    "born": "1973-02-25",
+    "died": null,
+    "parties": [
+     "Q179111"
+    ]
+   }
+  },
+  {
+   "qid": "Q13564543",
+   "label": "NEOS - La nouvelle Autriche et le Forum libéral",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q15787318",
+    "label": "Beate Meinl-Reisinger",
+    "born": "1978-04-25",
+    "died": null,
+    "parties": [
+     "Q13564543"
+    ]
+   }
+  },
+  {
+   "qid": "Q193178",
+   "label": "Les Verts - L'Alternative verte",
+   "ideologies": [
+    {
+     "qid": "Q1377153",
+     "label": "européisme"
+    },
+    {
+     "qid": "Q1661415",
+     "label": "écologie politique"
+    },
+    {
+     "qid": "Q2855609",
+     "label": "écologisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2561778",
+    "label": "Werner Kogler",
+    "born": "1961-11-20",
+    "died": null,
+    "parties": [
+     "Q193178"
+    ]
+   }
+  }
+ ]
+}

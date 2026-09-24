@@ -1,0 +1,123 @@
+{
+ "nation": "CYP",
+ "country": "Q229",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q48905549",
+    "label": "Níkos Christodoulídis",
+    "born": "1973-12-06",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q48905549",
+    "label": "Níkos Christodoulídis",
+    "born": "1973-12-06",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q644973",
+   "label": "Rassemblement démocrate",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q47984268",
+    "label": "Anníta Dimitríou",
+    "born": "1985-10-18",
+    "died": null,
+    "parties": [
+     "Q644973"
+    ]
+   }
+  },
+  {
+   "qid": "Q212158",
+   "label": "Parti progressiste du peuple travailleur",
+   "ideologies": [
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q2748384",
+   "label": "Ethniko Laiko Metopo",
+   "ideologies": [
+    {
+     "qid": "Q2075264",
+     "label": "Metaxisme"
+    },
+    {
+     "qid": "Q223200",
+     "label": "euroscepticisme"
+    },
+    {
+     "qid": "Q28220597",
+     "label": "nationalisme chypriote grec"
+    },
+    {
+     "qid": "Q38352698",
+     "label": "ultranationalisme"
+    },
+    {
+     "qid": "Q696116",
+     "label": "néofascisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q60785287",
+   "label": "Front démocratique",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q27628449",
+     "label": "nationalisme chypriote"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

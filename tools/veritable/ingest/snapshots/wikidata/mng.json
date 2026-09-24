@@ -1,0 +1,105 @@
+{
+ "nation": "MNG",
+ "country": "Q711",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q4142905",
+    "label": "Gombojav Zandanshatar",
+    "born": "1970-03-08",
+    "died": null,
+    "parties": [
+     "Q1127178"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q27058418",
+    "label": "Ukhnaagiin Khürelsükh",
+    "born": "1968-06-14",
+    "died": null,
+    "parties": [
+     "Q1127178"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1127178",
+   "label": "Parti du peuple mongol",
+   "ideologies": [
+    {
+     "qid": "Q11900614",
+     "label": "populisme de gauche"
+    },
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q125750162",
+     "label": "conservatisme de gauche"
+    },
+    {
+     "qid": "Q189280",
+     "label": "socialisme démocratique"
+    },
+    {
+     "qid": "Q211930",
+     "label": "marxisme-léninisme"
+    },
+    {
+     "qid": "Q322294",
+     "label": "étatisme"
+    },
+    {
+     "qid": "Q6186",
+     "label": "communisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q24248226",
+    "label": "Luvsannamsrai Oyun-Erdene",
+    "born": "1980-06-29",
+    "died": null,
+    "parties": [
+     "Q1127178"
+    ]
+   }
+  },
+  {
+   "qid": "Q17028413",
+   "label": "Hun Party",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q113027310",
+    "label": "Togmidyn Dorjkhand",
+    "born": "1977-01-01",
+    "died": null,
+    "parties": [
+     "Q17028413"
+    ]
+   }
+  }
+ ]
+}

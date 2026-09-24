@@ -1,0 +1,205 @@
+{
+  "nation": "NGA",
+  "actors": [
+    {
+      "id": "nga-bola-tinubu",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.nga-bola-tinubu.parody",
+        "fictional": "leader.nga-bola-tinubu.fictional"
+      },
+      "born": "1952-03-29",
+      "party": "nga-congres-des-progressistes",
+      "traits": {
+        "economic": 0.35,
+        "authority": 0.25,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.25,
+        "corruption": 0.55,
+        "charisma": 0.55,
+        "competence": 0.45
+      },
+      "wikidata": "Q3510872",
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Libéral sur le papier (suppression des subventions au carburant), figure politique de longue date à Lagos ; accusations de corruption anciennes et récurrentes (affaires jamais tranchées) ; compétence contestée face à la crise économique et sécuritaire du pays."
+    },
+    {
+      "id": "nga-rabiu-kwankwaso",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nga-rabiu-kwankwaso.parody",
+        "fictional": "leader.nga-rabiu-kwankwaso.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "nga-new-nigeria-peoples-party",
+      "traits": {
+        "economic": -0.1,
+        "authority": 0,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.32,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nga-julius-abure",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nga-julius-abure.parody",
+        "fictional": "leader.nga-julius-abure.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "nga-labour-party",
+      "traits": {
+        "economic": -0.1,
+        "authority": -0.2,
+        "sovereignty": -0.1,
+        "aggressiveness": 0.24,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nga-adams-oshiomhole",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nga-adams-oshiomhole.parody",
+        "fictional": "leader.nga-adams-oshiomhole.fictional"
+      },
+      "born": "1953-04-04",
+      "party": "nga-congres-des-progressistes",
+      "traits": {
+        "economic": -0.16,
+        "authority": -0.02,
+        "sovereignty": -0.06,
+        "aggressiveness": 0.284,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q11282486",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "nga-uche-secondus",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.nga-uche-secondus.parody",
+        "fictional": "leader.nga-uche-secondus.fictional"
+      },
+      "born": "1955-03-22",
+      "party": "nga-parti-democratique-populaire",
+      "traits": {
+        "economic": 0.5,
+        "authority": 0.2,
+        "sovereignty": 0.05,
+        "aggressiveness": 0.35,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q19666465",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "nga-congres-des-progressistes",
+      "name": "party.nga-congres-des-progressistes",
+      "wikidata": "Q4729266",
+      "ideologies": [
+        "Q121254",
+        "Q1414298",
+        "Q180490",
+        "Q204886",
+        "Q590478",
+        "Q821102"
+      ],
+      "ideology": {
+        "economic": -0.16,
+        "authority": -0.02,
+        "sovereignty": -0.06
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 6)",
+      "support": 0.67,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 25 février 2023 (présidentielle et Assemblée nationale le même jour). Parts de sièges à la Chambre des représentants (360 sièges) utilisées en l'absence de décompte national fiable des voix par parti pour les législatives."
+      },
+      "leader": "nga-adams-oshiomhole"
+    },
+    {
+      "id": "nga-parti-democratique-populaire",
+      "name": "party.nga-parti-democratique-populaire",
+      "wikidata": "Q1551163",
+      "ideologies": ["Q1414298", "Q729119"],
+      "ideology": {
+        "economic": 0.5,
+        "authority": 0.2,
+        "sovereignty": 0.05
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.2,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 25 février 2023 (présidentielle et Assemblée nationale le même jour). Parts de sièges à la Chambre des représentants (360 sièges) utilisées en l'absence de décompte national fiable des voix par parti pour les législatives."
+      },
+      "leader": "nga-uche-secondus"
+    },
+    {
+      "id": "nga-new-nigeria-peoples-party",
+      "name": "party.nga-new-nigeria-peoples-party",
+      "wikidata": "Q113485137",
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": 0,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.042,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 25 février 2023 (présidentielle et Assemblée nationale le même jour). Parts de sièges à la Chambre des représentants (360 sièges) utilisées en l'absence de décompte national fiable des voix par parti pour les législatives."
+      },
+      "leader": "nga-rabiu-kwankwaso"
+    },
+    {
+      "id": "nga-labour-party",
+      "name": "party.nga-labour-party",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.1,
+        "authority": -0.2,
+        "sovereignty": -0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.061,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élections générales du 25 février 2023 (présidentielle et Assemblée nationale le même jour). Parts de sièges à la Chambre des représentants (360 sièges) utilisées en l'absence de décompte national fiable des voix par parti pour les législatives."
+      },
+      "leader": "nga-julius-abure"
+    }
+  ]
+}

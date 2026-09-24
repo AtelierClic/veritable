@@ -1,0 +1,67 @@
+{
+ "nation": "CMR",
+ "country": "Q1009",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q60441515",
+    "label": "Joseph Dion Ngute",
+    "born": "1954-03-12",
+    "died": null,
+    "parties": [
+     "Q953447"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q57272",
+    "label": "Paul Biya",
+    "born": "1933-02-13",
+    "died": null,
+    "parties": [
+     "Q953447"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q953447",
+   "label": "Rassemblement démocratique du peuple camerounais",
+   "ideologies": [
+    {
+     "qid": "Q1445368",
+     "label": "francophilie"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q117316405",
+   "label": "Front pour le salut national du Cameroun",
+   "ideologies": [
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q97177912",
+   "label": "Parti camerounais pour la réconciliation nationale",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,154 @@
+{
+ "nation": "LTU",
+ "country": "Q37",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q124516173",
+    "label": "Inga Ruginienė",
+    "born": "1981-05-24",
+    "died": null,
+    "parties": [
+     "Q4362"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q9268379",
+    "label": "Gitanas Nausėda",
+    "born": "1964-05-19",
+    "died": null,
+    "parties": [
+     "Q327591"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q4362",
+   "label": "Parti social-démocrate lituanien",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    }
+   ],
+   "leader": {
+    "qid": "Q1936326",
+    "label": "Mindaugas Sinkevičius",
+    "born": "1984-06-20",
+    "died": null,
+    "parties": [
+     "Q4362"
+    ]
+   }
+  },
+  {
+   "qid": "Q124472979",
+   "label": "Aube du Niémen",
+   "ideologies": [
+    {
+     "qid": "Q2684060",
+     "label": "régionalisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q794394",
+     "label": "libéralisme classique"
+    }
+   ],
+   "leader": {
+    "qid": "Q59725",
+    "label": "Remigijus Žemaitaitis",
+    "born": "1982-05-30",
+    "died": null,
+    "parties": [
+     "Q81517"
+    ]
+   }
+  },
+  {
+   "qid": "Q81556",
+   "label": "Union patriotique - Chrétiens-démocrates lituaniens",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q209158",
+     "label": "démocratie chrétienne"
+    }
+   ],
+   "leader": {
+    "qid": "Q28735068",
+    "label": "Laurynas Kasčiūnas",
+    "born": "1982-01-08",
+    "died": null,
+    "parties": [
+     "Q81556"
+    ]
+   }
+  },
+  {
+   "qid": "Q64252730",
+   "label": "Parti de la liberté",
+   "ideologies": [
+    {
+     "qid": "Q201712",
+     "label": "social-libéralisme"
+    },
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q27808316",
+    "label": "Aušrinė Armonaitė",
+    "born": "1989-05-26",
+    "died": null,
+    "parties": [
+     "Q64252730"
+    ]
+   }
+  },
+  {
+   "qid": "Q1466907",
+   "label": "Mouvement libéral de la République de Lituanie",
+   "ideologies": [
+    {
+     "qid": "Q617609",
+     "label": "libéral-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q270330",
+    "label": "Viktorija Čmilytė",
+    "born": "1983-08-06",
+    "died": null,
+    "parties": [
+     "Q1466907"
+    ]
+   }
+  }
+ ]
+}

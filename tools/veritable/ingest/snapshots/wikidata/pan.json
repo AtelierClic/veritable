@@ -1,0 +1,126 @@
+{
+ "nation": "PAN",
+ "country": "Q804",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q108454869",
+    "label": "José Raúl Mulino",
+    "born": "1959-06-13",
+    "died": null,
+    "parties": [
+     "Q106319619"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q108454869",
+    "label": "José Raúl Mulino",
+    "born": "1959-06-13",
+    "died": null,
+    "parties": [
+     "Q106319619"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q106319619",
+   "label": "Réaliser les objectifs",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q57491",
+    "label": "Ricardo Martinelli",
+    "born": "1952-03-29",
+    "died": null,
+    "parties": [
+     "Q106319619"
+    ]
+   }
+  },
+  {
+   "qid": "Q1630365",
+   "label": "Parti révolutionnaire démocratique",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q5255581",
+   "label": "Democratic Change",
+   "ideologies": [
+    {
+     "qid": "Q1043096",
+     "label": "libéral-conservatisme"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    }
+   ],
+   "leader": {
+    "qid": "Q56066098",
+    "label": "Rómulo Roux",
+    "born": "1965-01-08",
+    "died": null,
+    "parties": [
+     "Q5255581"
+    ]
+   }
+  },
+  {
+   "qid": "Q628468",
+   "label": "parti panamiste",
+   "ideologies": [
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q1134096",
+    "label": "Juan Carlos Varela",
+    "born": "1963-12-12",
+    "died": null,
+    "parties": [
+     "Q628468"
+    ]
+   }
+  },
+  {
+   "qid": "Q112828175",
+   "label": "Another Way Movement",
+   "ideologies": [],
+   "leader": {
+    "qid": "Q62022065",
+    "label": "Ricardo Lombana",
+    "born": "1973-11-26",
+    "died": null,
+    "parties": []
+   }
+  }
+ ]
+}

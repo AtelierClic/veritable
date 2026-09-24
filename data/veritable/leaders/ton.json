@@ -1,0 +1,52 @@
+{
+  "nation": "TON",
+  "actors": [
+    {
+      "id": "ton-fatafehi-fakafanua",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.ton-fatafehi-fakafanua.parody",
+        "fictional": "leader.ton-fatafehi-fakafanua.fictional"
+      },
+      "born": "1985-03-20",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q5437258",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "ton-tupou-vi-de-tonga",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.ton-tupou-vi-de-tonga.parody",
+        "fictional": "leader.ton-tupou-vi-de-tonga.fictional"
+      },
+      "born": "1959-07-12",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q208497",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": []
+}

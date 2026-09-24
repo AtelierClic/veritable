@@ -1,0 +1,30 @@
+{
+ "nation": "ARE",
+ "country": "Q878",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q57655",
+    "label": "Mohammed ben Rachid Al Maktoum",
+    "born": "1949-07-15",
+    "died": null,
+    "parties": []
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1951896",
+    "label": "Mohammed ben Zayed Al Nahyane",
+    "born": "1961-03-11",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": []
+}

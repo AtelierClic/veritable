@@ -69,6 +69,8 @@ export interface EconomyContext {
   // Weight of b among the trade partners of a: distance decay x GDP of b
   // (the rest of the world included, with its own GDP and distance).
   partnerWeight(a: string, b: string): number;
+  // The sum of a nation's partner weights, the rest of the world included.
+  partnerTotal(a: string): number;
   // Affinity of a trade pair for a good, embargoes excluded: distance decay,
   // land adjacency for electricity, bloc and agreement bonuses. 0 = no trade.
   affinity(good: Good, exporter: string, importer: string): number;
@@ -90,6 +92,10 @@ export interface EconomyContext {
   // Claims (J6): tiles of a region each nation holds, settled tiles excluded
   // (the world's WorldPort.claimHolders; empty for a context without world).
   claimHolders(region: string): ReadonlyMap<string, number>;
+  // True when a rest of the world closes the market (europe-10); without one
+  // (J6, the world), the world supply shocks hit every producer.
+  hasRow: boolean;
+  worldSupplyShock(good: string): number;
 }
 
 export function buildContext(
@@ -126,6 +132,24 @@ export function buildContext(
   const decay = new Map<string, number>();
 
   const gdpOf = new Map(nations.map((n) => [n.id, n.gdp.value]));
+  // Partner weights are static (distances, first-day GDPs): computed once a
+  // pair (J6: at 195 nations the bloc votes asked for millions a view).
+  const weights = new Map<string, number>();
+  const partnerWeight = (a: string, b: string): number => {
+    if (a === b) return 0;
+    const key = `${a}|${b}`;
+    let w = weights.get(key);
+    if (w === undefined) {
+      const gdp = b === ROW_ID ? data.row.gdp.value : gdpOf.get(b);
+      w =
+        gdp === undefined
+          ? 0
+          : Math.exp(-distanceKm(a, b) / config.economy.distanceScaleKm) * gdp;
+      weights.set(key, w);
+    }
+    return w;
+  };
+  const partnerTotals = new Map<string, number>();
   const byTemplate = new Map<string, DivisionTemplate>(
     data.divisions.map((d) => [d.id, d]),
   );
@@ -185,11 +209,17 @@ export function buildContext(
     names: (id) => data.names[id],
     nationIds: nations.map((n) => n.id),
     landNeighbours: (a, b) => neighbours.has(`${a}|${b}`),
-    partnerWeight: (a, b) => {
-      if (a === b) return 0;
-      const gdp = b === ROW_ID ? data.row.gdp.value : gdpOf.get(b);
-      if (gdp === undefined) return 0;
-      return Math.exp(-distanceKm(a, b) / config.economy.distanceScaleKm) * gdp;
+    partnerWeight,
+    partnerTotal: (a) => {
+      let total = partnerTotals.get(a);
+      if (total === undefined) {
+        total = partnerWeight(a, ROW_ID);
+        for (const n of nations) {
+          if (n.id !== a) total += partnerWeight(a, n.id);
+        }
+        partnerTotals.set(a, total);
+      }
+      return total;
     },
     sheet: (id) => {
       const sheet = sheets.get(id);
@@ -201,6 +231,8 @@ export function buildContext(
     memberships,
     pairBonus,
     claimHolders: () => new Map(),
+    hasRow: data.row.gdp.value > 0,
+    worldSupplyShock: () => 0,
     membersOf: (bloc) =>
       [...(memberships.get(bloc)?.keys() ?? [])].filter((n) => full(bloc, n)),
     blocsOf,

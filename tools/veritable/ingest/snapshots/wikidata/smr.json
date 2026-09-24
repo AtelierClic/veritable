@@ -1,0 +1,38 @@
+{
+ "nation": "SMR",
+ "country": "Q238",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q1353628",
+    "label": "Italo Righi",
+    "born": "1959-06-14",
+    "died": null,
+    "parties": [
+     "Q44282"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q39056971",
+   "label": "République du futur",
+   "ideologies": [
+    {
+     "qid": "Q3781399",
+     "label": "europhilie"
+    },
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+  "nation": "ERI",
+  "actors": [
+    {
+      "id": "eri-issayas-afewerki",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.eri-issayas-afewerki.parody",
+        "fictional": "leader.eri-issayas-afewerki.fictional"
+      },
+      "born": "1946-02-02",
+      "party": "eri-front-populaire-pour-la-democratie-et-la-justice",
+      "traits": {
+        "economic": -0.5,
+        "authority": 0.1,
+        "sovereignty": 0.25,
+        "aggressiveness": 0.37,
+        "corruption": 0.2,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57348",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    }
+  ],
+  "parties": [
+    {
+      "id": "eri-front-populaire-pour-la-democratie-et-la-justice",
+      "name": "party.eri-front-populaire-pour-la-democratie-et-la-justice",
+      "wikidata": "Q863376",
+      "ideologies": [
+        "Q1202972",
+        "Q128135",
+        "Q177266",
+        "Q216920",
+        "Q322294",
+        "Q3336986",
+        "Q478004",
+        "Q590478",
+        "Q60743224",
+        "Q7264"
+      ],
+      "ideology": {
+        "economic": -0.5,
+        "authority": 0.1,
+        "sovereignty": 0.25
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 10)",
+      "support": 1,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Aucune élection n'a jamais eu lieu depuis l'indépendance ; le FPDJ est l'unique parti légal."
+      },
+      "leader": "eri-issayas-afewerki"
+    }
+  ]
+}

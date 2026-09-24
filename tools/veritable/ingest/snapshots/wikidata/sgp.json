@@ -1,0 +1,80 @@
+{
+ "nation": "SGP",
+ "country": "Q334",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q6504758",
+    "label": "Lawrence Wong",
+    "born": "1972-12-18",
+    "died": null,
+    "parties": [
+     "Q371395"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q983752",
+    "label": "Tharman Shanmugaratnam",
+    "born": "1957-01-22",
+    "died": null,
+    "parties": [
+     "Q371395"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q371395",
+   "label": "Parti d'action populaire",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q190656",
+     "label": "multiculturalisme"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q324530",
+     "label": "communautarisme"
+    },
+    {
+     "qid": "Q59599",
+     "label": "nationalisme civique"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q5714209",
+    "label": "Heng Swee Keat",
+    "born": "1961-11-01",
+    "died": null,
+    "parties": [
+     "Q371395"
+    ]
+   }
+  },
+  {
+   "qid": "Q66120569",
+   "label": "Progress Singapore Party",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

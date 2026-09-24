@@ -1,0 +1,233 @@
+{
+ "nation": "IDN",
+ "country": "Q252",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q2107268",
+    "label": "Prabowo Subianto",
+    "born": "1951-10-17",
+    "died": null,
+    "parties": [
+     "Q4261459"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q2107268",
+    "label": "Prabowo Subianto",
+    "born": "1951-10-17",
+    "died": null,
+    "parties": [
+     "Q4261459"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1186306",
+   "label": "Parti démocratique indonésien de lutte",
+   "ideologies": [
+    {
+     "qid": "Q1202972",
+     "label": "nationalisme de gauche"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q2049221",
+     "label": "Pancasila"
+    },
+    {
+     "qid": "Q555887",
+     "label": "patriotisme économique"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q76179",
+    "label": "Megawati Soekarnoputri",
+    "born": "1947-01-23",
+    "died": null,
+    "parties": [
+     "Q1186306",
+     "Q2084109"
+    ]
+   }
+  },
+  {
+   "qid": "Q1536552",
+   "label": "Golkar",
+   "ideologies": [
+    {
+     "qid": "Q2049221",
+     "label": "Pancasila"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q12471140",
+    "label": "Airlangga Hartarto",
+    "born": "1962-10-01",
+    "died": null,
+    "parties": [
+     "Q1536552"
+    ]
+   }
+  },
+  {
+   "qid": "Q4261459",
+   "label": "Parti de la Grande Mouvement Indonésie",
+   "ideologies": [
+    {
+     "qid": "Q182121",
+     "label": "anticommunisme"
+    },
+    {
+     "qid": "Q2049221",
+     "label": "Pancasila"
+    },
+    {
+     "qid": "Q436860",
+     "label": "populisme de droite"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    },
+    {
+     "qid": "Q852739",
+     "label": "national-conservatisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q2107268",
+    "label": "Prabowo Subianto",
+    "born": "1951-10-17",
+    "died": null,
+    "parties": [
+     "Q4261459"
+    ]
+   }
+  },
+  {
+   "qid": "Q1257317",
+   "label": "Parti du réveil national",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q2049221",
+     "label": "Pancasila"
+    },
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    }
+   ],
+   "leader": {
+    "qid": "Q12499327",
+    "label": "Muhaimin Iskandar",
+    "born": "1966-09-24",
+    "died": null,
+    "parties": [
+     "Q1257317"
+    ]
+   }
+  },
+  {
+   "qid": "Q4207219",
+   "label": "Parti national démocrate",
+   "ideologies": [
+    {
+     "qid": "Q192886",
+     "label": "corporatisme"
+    },
+    {
+     "qid": "Q2049221",
+     "label": "Pancasila"
+    },
+    {
+     "qid": "Q216920",
+     "label": "sécularisme"
+    },
+    {
+     "qid": "Q6235",
+     "label": "nationalisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1511101",
+   "label": "Parti de la justice et de la prospérité",
+   "ideologies": [
+    {
+     "qid": "Q189746",
+     "label": "islamisme"
+    },
+    {
+     "qid": "Q2049221",
+     "label": "Pancasila"
+    }
+   ],
+   "leader": {
+    "qid": "Q12470972",
+    "label": "Ahmad Syaikhu",
+    "born": "1965-01-23",
+    "died": null,
+    "parties": [
+     "Q1511101"
+    ]
+   }
+  },
+  {
+   "qid": "Q2434365",
+   "label": "Parti du mandat national",
+   "ideologies": [
+    {
+     "qid": "Q2049221",
+     "label": "Pancasila"
+    },
+    {
+     "qid": "Q2641411",
+     "label": "démocratie islamique"
+    }
+   ],
+   "leader": {
+    "qid": "Q4201732",
+    "label": "Hatta Rajasa",
+    "born": "1953-09-18",
+    "died": null,
+    "parties": [
+     "Q2434365"
+    ]
+   }
+  }
+ ]
+}

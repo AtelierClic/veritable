@@ -1937,6 +1937,8 @@ export class VeritableSimImpl implements VeritableSim {
     this.sheets = new Map(sheets.map((s) => [s.id, s]));
     this.ctx = buildContext(this.deps.config, this.deps.data, sheets);
     this.ctx.claimHolders = (region) => this.deps.world.claimHolders(region);
+    this.ctx.worldSupplyShock = (good) =>
+      this.economy?.market.rowSupplyShock[good] ?? 0;
     return sheets;
   }
 

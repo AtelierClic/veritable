@@ -1,0 +1,239 @@
+{
+  "nation": "UZB",
+  "actors": [
+    {
+      "id": "uzb-abdulla-nig-matovich-oripov",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.uzb-abdulla-nig-matovich-oripov.parody",
+        "fictional": "leader.uzb-abdulla-nig-matovich-oripov.fictional"
+      },
+      "born": "1961-05-24",
+      "party": "uzb-parti-liberal-democrate-d-ouzbekistan",
+      "traits": {
+        "economic": 0.125,
+        "authority": 0.05,
+        "sovereignty": 0.113,
+        "aggressiveness": 0.3326,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q28002959",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "uzb-chavkat-mirzioiev",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.uzb-chavkat-mirzioiev.parody",
+        "fictional": "leader.uzb-chavkat-mirzioiev.fictional"
+      },
+      "born": "1957-07-24",
+      "party": "uzb-parti-liberal-democrate-d-ouzbekistan",
+      "traits": {
+        "economic": 0.125,
+        "authority": 0.05,
+        "sovereignty": 0.113,
+        "aggressiveness": 0.3326,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57808",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "uzb-aktam-haitov",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.uzb-aktam-haitov.parody",
+        "fictional": "leader.uzb-aktam-haitov.fictional"
+      },
+      "born": "1974-03-12",
+      "party": "uzb-parti-liberal-democrate-d-ouzbekistan",
+      "traits": {
+        "economic": 0.125,
+        "authority": 0.05,
+        "sovereignty": 0.113,
+        "aggressiveness": 0.3326,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q84091097",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "uzb-alisher-qodirov",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.uzb-alisher-qodirov.parody",
+        "fictional": "leader.uzb-alisher-qodirov.fictional"
+      },
+      "born": "1975-03-12",
+      "party": "uzb-parti-democrate-de-la-renaissance-nationale-d-ou",
+      "traits": {
+        "economic": 0.217,
+        "authority": 0.217,
+        "sovereignty": 0.283,
+        "aggressiveness": 0.39999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q84723065",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "uzb-q109493520",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.uzb-q109493520.parody",
+        "fictional": "leader.uzb-q109493520.fictional"
+      },
+      "born": "1959-02-27",
+      "party": "uzb-parti-social-democrate-de-la-justice",
+      "traits": {
+        "economic": -0.333,
+        "authority": -0.367,
+        "sovereignty": -0.233,
+        "aggressiveness": 0.17999999999999997,
+        "corruption": 0.25,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q109493520",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "uzb-parti-liberal-democrate-d-ouzbekistan",
+      "name": "party.uzb-parti-liberal-democrate-d-ouzbekistan",
+      "wikidata": "Q1146334",
+      "ideologies": [
+        "Q180490",
+        "Q182121",
+        "Q216920",
+        "Q322294",
+        "Q478004",
+        "Q59599",
+        "Q617609",
+        "Q6229",
+        "Q729119",
+        "Q821102"
+      ],
+      "ideology": {
+        "economic": 0.125,
+        "authority": 0.05,
+        "sovereignty": 0.113
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (8 of 10)",
+      "support": 0.43,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément"
+      },
+      "leader": "uzb-aktam-haitov"
+    },
+    {
+      "id": "uzb-parti-democrate-de-la-renaissance-nationale-d-ou",
+      "name": "party.uzb-parti-democrate-de-la-renaissance-nationale-d-ou",
+      "wikidata": "Q7076484",
+      "ideologies": [
+        "Q1144178",
+        "Q15986535",
+        "Q182121",
+        "Q216920",
+        "Q322294",
+        "Q478004",
+        "Q50685643",
+        "Q6235",
+        "Q729119",
+        "Q83834"
+      ],
+      "ideology": {
+        "economic": 0.217,
+        "authority": 0.217,
+        "sovereignty": 0.283
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (6 of 10)",
+      "support": 0.19,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément"
+      },
+      "leader": "uzb-alisher-qodirov"
+    },
+    {
+      "id": "uzb-parti-social-democrate-de-la-justice",
+      "name": "party.uzb-parti-social-democrate-de-la-justice",
+      "wikidata": "Q6317086",
+      "ideologies": ["Q121254", "Q216920", "Q695838", "Q821102"],
+      "ideology": {
+        "economic": -0.333,
+        "authority": -0.367,
+        "sovereignty": -0.233
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 4)",
+      "support": 0.14,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément"
+      },
+      "leader": "uzb-q109493520"
+    },
+    {
+      "id": "uzb-xalq-demokratik-partiyasi",
+      "name": "party.uzb-xalq-demokratik-partiyasi",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.4,
+        "authority": 0.65,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.13,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément"
+      },
+      "leader": null
+    },
+    {
+      "id": "uzb-ekologik-partiyasi",
+      "name": "party.uzb-ekologik-partiyasi",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.6,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.11,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément"
+      },
+      "leader": null
+    }
+  ]
+}

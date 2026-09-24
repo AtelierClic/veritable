@@ -1,0 +1,366 @@
+{
+  "nation": "SVK",
+  "actors": [
+    {
+      "id": "svk-robert-fico",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.svk-robert-fico.parody",
+        "fictional": "leader.svk-robert-fico.fictional"
+      },
+      "born": "1964-09-15",
+      "party": "svk-smer-slovenska-socialna-demokracia-smer-sd",
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q57606",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "svk-peter-pellegrini",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.svk-peter-pellegrini.parody",
+        "fictional": "leader.svk-peter-pellegrini.fictional"
+      },
+      "born": "1975-10-06",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q17330556",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "svk-michal-simecka",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.svk-michal-simecka.parody",
+        "fictional": "leader.svk-michal-simecka.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "svk-progresivne-slovensko-ps",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.7,
+        "aggressiveness": 0.06,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "svk-matus-sutaj-estok",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.svk-matus-sutaj-estok.parody",
+        "fictional": "leader.svk-matus-sutaj-estok.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "svk-hlas-socialna-demokracia-hlas-sd",
+      "traits": {
+        "economic": -0.05,
+        "authority": 0.15,
+        "sovereignty": 0.1,
+        "aggressiveness": 0.35,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "svk-igor-matovic",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.svk-igor-matovic.parody",
+        "fictional": "leader.svk-igor-matovic.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "svk-slovensko-ex-olano-a-priatelia",
+      "traits": {
+        "economic": 0.15,
+        "authority": 0.2,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.39999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "svk-milan-majersky",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.svk-milan-majersky.parody",
+        "fictional": "leader.svk-milan-majersky.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "svk-krestanskodemokraticke-hnutie-kdh",
+      "traits": {
+        "economic": 0.2,
+        "authority": 0.25,
+        "sovereignty": 0.05,
+        "aggressiveness": 0.36,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "svk-branislav-grohling",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.svk-branislav-grohling.parody",
+        "fictional": "leader.svk-branislav-grohling.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "svk-sloboda-a-solidarita-sas",
+      "traits": {
+        "economic": 0.55,
+        "authority": -0.2,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "svk-andrej-danko",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.svk-andrej-danko.parody",
+        "fictional": "leader.svk-andrej-danko.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "svk-slovenska-narodna-strana-sns",
+      "traits": {
+        "economic": 0,
+        "authority": 0.4,
+        "sovereignty": 0.75,
+        "aggressiveness": 0.53,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "svk-milan-uhrik",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.svk-milan-uhrik.parody",
+        "fictional": "leader.svk-milan-uhrik.fictional"
+      },
+      "born": "1984-12-21",
+      "party": "svk-republika",
+      "traits": {
+        "economic": 0.3,
+        "authority": 0.6,
+        "sovereignty": 0.7,
+        "aggressiveness": 0.5599999999999999,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q38655134",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "svk-republika",
+      "name": "party.svk-republika",
+      "wikidata": "Q1519778",
+      "ideologies": ["Q436860"],
+      "ideology": {
+        "economic": 0.3,
+        "authority": 0.6,
+        "sovereignty": 0.7
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "support": 0.0475,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-milan-uhrik"
+    },
+    {
+      "id": "svk-smer-slovenska-socialna-demokracia-smer-sd",
+      "name": "party.svk-smer-slovenska-socialna-demokracia-smer-sd",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.15,
+        "authority": 0.5,
+        "sovereignty": 0.6
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.2295,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-robert-fico"
+    },
+    {
+      "id": "svk-progresivne-slovensko-ps",
+      "name": "party.svk-progresivne-slovensko-ps",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.5,
+        "sovereignty": -0.7
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.1796,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-michal-simecka"
+    },
+    {
+      "id": "svk-hlas-socialna-demokracia-hlas-sd",
+      "name": "party.svk-hlas-socialna-demokracia-hlas-sd",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.05,
+        "authority": 0.15,
+        "sovereignty": 0.1
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.147,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-matus-sutaj-estok"
+    },
+    {
+      "id": "svk-slovensko-ex-olano-a-priatelia",
+      "name": "party.svk-slovensko-ex-olano-a-priatelia",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.15,
+        "authority": 0.2,
+        "sovereignty": 0.3
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.089,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-igor-matovic"
+    },
+    {
+      "id": "svk-krestanskodemokraticke-hnutie-kdh",
+      "name": "party.svk-krestanskodemokraticke-hnutie-kdh",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.2,
+        "authority": 0.25,
+        "sovereignty": 0.05
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0682,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-milan-majersky"
+    },
+    {
+      "id": "svk-sloboda-a-solidarita-sas",
+      "name": "party.svk-sloboda-a-solidarita-sas",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.55,
+        "authority": -0.2,
+        "sovereignty": -0.4
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0632,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-branislav-grohling"
+    },
+    {
+      "id": "svk-slovenska-narodna-strana-sns",
+      "name": "party.svk-slovenska-narodna-strana-sns",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": 0,
+        "authority": 0.4,
+        "sovereignty": 0.75
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.0563,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)"
+      },
+      "leader": "svk-andrej-danko"
+    }
+  ]
+}

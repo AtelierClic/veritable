@@ -1,0 +1,105 @@
+{
+ "nation": "NGA",
+ "country": "Q1033",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q3510872",
+    "label": "Bola Tinubu",
+    "born": "1952-03-29",
+    "died": null,
+    "parties": [
+     "Q343617",
+     "Q4729266"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q3510872",
+    "label": "Bola Tinubu",
+    "born": "1952-03-29",
+    "died": null,
+    "parties": [
+     "Q343617",
+     "Q4729266"
+    ]
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q4729266",
+   "label": "Congrès des progressistes",
+   "ideologies": [
+    {
+     "qid": "Q121254",
+     "label": "social-démocratie"
+    },
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q180490",
+     "label": "populisme"
+    },
+    {
+     "qid": "Q204886",
+     "label": "fédéralisme"
+    },
+    {
+     "qid": "Q590478",
+     "label": "socialisme africain"
+    },
+    {
+     "qid": "Q821102",
+     "label": "progressisme"
+    }
+   ],
+   "leader": {
+    "qid": "Q11282486",
+    "label": "Adams Oshiomhole",
+    "born": "1953-04-04",
+    "died": null,
+    "parties": [
+     "Q4729266"
+    ]
+   }
+  },
+  {
+   "qid": "Q1551163",
+   "label": "Parti démocratique populaire",
+   "ideologies": [
+    {
+     "qid": "Q1414298",
+     "label": "conservatisme social"
+    },
+    {
+     "qid": "Q729119",
+     "label": "libéralisme économique"
+    }
+   ],
+   "leader": {
+    "qid": "Q19666465",
+    "label": "Uche Secondus",
+    "born": "1955-03-22",
+    "died": null,
+    "parties": [
+     "Q20982216"
+    ]
+   }
+  },
+  {
+   "qid": "Q113485137",
+   "label": "New Nigeria Peoples Party",
+   "ideologies": [],
+   "leader": null
+  }
+ ]
+}

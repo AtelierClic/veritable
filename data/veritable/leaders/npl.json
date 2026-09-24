@@ -1,0 +1,305 @@
+{
+  "nation": "NPL",
+  "actors": [
+    {
+      "id": "npl-sushila-karki",
+      "role": "head-of-government",
+      "names": {
+        "parody": "leader.npl-sushila-karki.parody",
+        "fictional": "leader.npl-sushila-karki.fictional"
+      },
+      "born": "1952-06-07",
+      "party": null,
+      "traits": {
+        "economic": 0,
+        "authority": 0.2,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.38,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Première ministre par intérim depuis le 12 septembre 2025 (Wikidata : Pushpa Kamal Dahal). Estimation, à valider. Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "npl-ram-chandra-poudel",
+      "role": "head-of-state",
+      "names": {
+        "parody": "leader.npl-ram-chandra-poudel.parody",
+        "fictional": "leader.npl-ram-chandra-poudel.fictional"
+      },
+      "born": "1944-10-15",
+      "party": "npl-congres-nepalais",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.19999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q3183124",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti (aucune estimation manuelle)."
+    },
+    {
+      "id": "npl-sher-bahadur-deuba",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.npl-sher-bahadur-deuba.parody",
+        "fictional": "leader.npl-sher-bahadur-deuba.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "npl-congres-nepalais",
+      "traits": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2,
+        "aggressiveness": 0.19999999999999998,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "npl-upendra-yadav",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.npl-upendra-yadav.parody",
+        "fictional": "leader.npl-upendra-yadav.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "npl-parti-socialiste-populaire-du-nepal",
+      "traits": {
+        "economic": -0.35,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "npl-k-p-sharma-oli",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.npl-k-p-sharma-oli.parody",
+        "fictional": "leader.npl-k-p-sharma-oli.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "npl-cpn-unified-marxist-leninist",
+      "traits": {
+        "economic": -0.3,
+        "authority": 0.1,
+        "sovereignty": 0.2,
+        "aggressiveness": 0.36,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "npl-pushpa-kamal-dahal",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.npl-pushpa-kamal-dahal.parody",
+        "fictional": "leader.npl-pushpa-kamal-dahal.fictional"
+      },
+      "born": "1965-01-01",
+      "party": "npl-cpn-maoist-centre",
+      "traits": {
+        "economic": -0.5,
+        "authority": 0,
+        "sovereignty": 0,
+        "aggressiveness": 0.3,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": null,
+      "source": "estimate",
+      "asOf": "2026-01-01",
+      "note": "Dirigeant du parti d'après politics-world.json (J6) ; traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "npl-rabi-lamichhane",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.npl-rabi-lamichhane.parody",
+        "fictional": "leader.npl-rabi-lamichhane.fictional"
+      },
+      "born": "1988-09-05",
+      "party": "npl-parti-national-independant",
+      "traits": {
+        "economic": 0.1,
+        "authority": -0.1,
+        "sovereignty": 0,
+        "aggressiveness": 0.27999999999999997,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q14474324",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    },
+    {
+      "id": "npl-kamal-thapa",
+      "role": "party-leader",
+      "names": {
+        "parody": "leader.npl-kamal-thapa.parody",
+        "fictional": "leader.npl-kamal-thapa.fictional"
+      },
+      "born": "1955-08-04",
+      "party": "npl-parti-national-democratique",
+      "traits": {
+        "economic": 0.8,
+        "authority": -0.2,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.2,
+        "corruption": 0.09999999999999998,
+        "charisma": 0.5,
+        "competence": 0.5
+      },
+      "wikidata": "Q6355538",
+      "source": "derived",
+      "asOf": "2026-01-01",
+      "note": "Traits dérivés de l'idéologie du parti."
+    }
+  ],
+  "parties": [
+    {
+      "id": "npl-congres-nepalais",
+      "name": "party.npl-congres-nepalais",
+      "wikidata": "Q216660",
+      "ideologies": ["Q121254", "Q189280", "Q494792"],
+      "ideology": {
+        "economic": -0.6,
+        "authority": -0.3,
+        "sovereignty": -0.2
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "support": 0.324,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des représentants du 20 novembre 2022 (Chambre dissoute en septembre 2025 ; nouveau scrutin le 5 mars 2026)"
+      },
+      "leader": "npl-sher-bahadur-deuba"
+    },
+    {
+      "id": "npl-parti-national-independant",
+      "name": "party.npl-parti-national-independant",
+      "wikidata": "Q112895056",
+      "ideologies": [],
+      "ideology": {
+        "economic": 0.1,
+        "authority": -0.1,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.073,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des représentants du 20 novembre 2022 (Chambre dissoute en septembre 2025 ; nouveau scrutin le 5 mars 2026)"
+      },
+      "leader": "npl-rabi-lamichhane"
+    },
+    {
+      "id": "npl-parti-national-democratique",
+      "name": "party.npl-parti-national-democratique",
+      "wikidata": "Q2632719",
+      "ideologies": ["Q1307223", "Q41614", "Q729119"],
+      "ideology": {
+        "economic": 0.8,
+        "authority": -0.2,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 3)",
+      "support": 0.047,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des représentants du 20 novembre 2022 (Chambre dissoute en septembre 2025 ; nouveau scrutin le 5 mars 2026)"
+      },
+      "leader": "npl-kamal-thapa"
+    },
+    {
+      "id": "npl-parti-socialiste-populaire-du-nepal",
+      "name": "party.npl-parti-socialiste-populaire-du-nepal",
+      "wikidata": "Q92259330",
+      "ideologies": ["Q189280", "Q204886"],
+      "ideology": {
+        "economic": -0.35,
+        "authority": -0.3,
+        "sovereignty": -0.3
+      },
+      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "support": 0.045,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des représentants du 20 novembre 2022 (Chambre dissoute en septembre 2025 ; nouveau scrutin le 5 mars 2026)"
+      },
+      "leader": "npl-upendra-yadav"
+    },
+    {
+      "id": "npl-cpn-unified-marxist-leninist",
+      "name": "party.npl-cpn-unified-marxist-leninist",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.3,
+        "authority": 0.1,
+        "sovereignty": 0.2
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.284,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des représentants du 20 novembre 2022 (Chambre dissoute en septembre 2025 ; nouveau scrutin le 5 mars 2026)"
+      },
+      "leader": "npl-k-p-sharma-oli"
+    },
+    {
+      "id": "npl-cpn-maoist-centre",
+      "name": "party.npl-cpn-maoist-centre",
+      "wikidata": null,
+      "ideologies": [],
+      "ideology": {
+        "economic": -0.5,
+        "authority": 0,
+        "sovereignty": 0
+      },
+      "ideologySource": "estimate: politics-world.json (J6)",
+      "support": 0.116,
+      "supportSource": {
+        "source": "estimate",
+        "asOf": "2026-01-01",
+        "note": "Élection à la Chambre des représentants du 20 novembre 2022 (Chambre dissoute en septembre 2025 ; nouveau scrutin le 5 mars 2026)"
+      },
+      "leader": "npl-pushpa-kamal-dahal"
+    }
+  ]
+}

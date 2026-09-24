@@ -1,0 +1,55 @@
+{
+ "nation": "GRD",
+ "country": "Q769",
+ "referenceDate": "2026-01-01",
+ "fetchedAt": "2026-09-24",
+ "license": "CC0 1.0, Wikidata",
+ "heads": [
+  {
+   "role": "head-of-government",
+   "person": {
+    "qid": "Q112679881",
+    "label": "Dickon Mitchell",
+    "born": "1978-10-08",
+    "died": null,
+    "parties": [
+     "Q1254278"
+    ]
+   }
+  },
+  {
+   "role": "head-of-state",
+   "person": {
+    "qid": "Q43274",
+    "label": "Charles III",
+    "born": "1948-11-14",
+    "died": null,
+    "parties": []
+   }
+  }
+ ],
+ "parties": [
+  {
+   "qid": "Q1254278",
+   "label": "Congrès démocratique national",
+   "ideologies": [
+    {
+     "qid": "Q6216",
+     "label": "libéralisme"
+    }
+   ],
+   "leader": null
+  },
+  {
+   "qid": "Q1288287",
+   "label": "Nouveau Parti national",
+   "ideologies": [
+    {
+     "qid": "Q7169",
+     "label": "conservatisme"
+    }
+   ],
+   "leader": null
+  }
+ ]
+}
