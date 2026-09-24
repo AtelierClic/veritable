@@ -1,5 +1,4 @@
 import { FOSSIL_FUELS, Good } from "../../data/schemas/goods";
-import { ROW_ID } from "../../data/schemas/row";
 import {
   EconomyState,
   NationEconomy,
@@ -9,7 +8,7 @@ import { Rng } from "../rng";
 import { EconomyContext } from "./context";
 import { perGood } from "./init";
 import { demandAt, MarketSide, nextPrice, supplyAt, totals } from "./market";
-import { allocateFlows, Trader } from "./trade";
+import { allocateFlowsIndexed, flowBuffers } from "./trade";
 
 // What the monthly flows leave for the budget of the same month: value of the
 // imports (tariff base) and of the resource output actually sold (rents base).
@@ -93,6 +92,45 @@ export function stepPrices(ctx: EconomyContext, state: EconomyState): void {
   }
 }
 
+// Affinity of every pair for each kind of transport this month (J6c): the
+// static distance decay and land adjacency of the grid, times the bloc and
+// agreement bonuses in force. Same values as ctx.affinity, on indices.
+export function tradeAffinities(
+  ctx: EconomyContext,
+): Record<Good["transport"], Float64Array> {
+  const grid = ctx.tradeGrid();
+  const m = grid.ids.length;
+  const bonus = new Float64Array(m * m).fill(1);
+  for (const bloc of ctx.blocs) {
+    if (bloc.tradeBonus === undefined) continue;
+    const members: number[] = [];
+    grid.ids.forEach((id, k) => {
+      if (ctx.isFullMember(bloc, id)) members.push(k);
+    });
+    for (const a of members) {
+      for (const b of members) {
+        if (a !== b) bonus[a * m + b] *= bloc.tradeBonus;
+      }
+    }
+  }
+  for (const [pair, multiplier] of ctx.pairBonus) {
+    const [exporter, importer] = pair.split("|");
+    const e = grid.index.get(exporter);
+    const i = grid.index.get(importer);
+    if (e !== undefined && i !== undefined) bonus[e * m + i] *= multiplier;
+  }
+  const normal = new Float64Array(m * m);
+  const neighbours = new Float64Array(m * m);
+  const free = new Float64Array(m * m);
+  for (let k = 0; k < m * m; k++) {
+    if (Math.floor(k / m) === k % m) continue;
+    free[k] = bonus[k];
+    normal[k] = grid.decay[k] * bonus[k];
+    if (grid.neighbours[k] === 1) neighbours[k] = normal[k];
+  }
+  return { normal, "neighbors-only": neighbours, free };
+}
+
 // Once per game month: bilateral flows, coverage, shortage index, import
 // prices, price index, value of the exports really sold.
 export function stepTrade(
@@ -106,57 +144,70 @@ export function stepTrade(
   const { market } = state;
   const cfg = ctx.config.economy;
   const discount = cfg.sanctionDiscount;
-  const blocked = new Set(
-    market.embargoes.map((e) => `${e.good}|${e.from}|${e.to}`),
-  );
+  const grid = ctx.tradeGrid();
+  const ids = grid.ids;
+  const m = ids.length;
+  const rowIndex = m - 1; // the rest of the world closes the grid
+  const nationCount = ctx.nationIds.length;
+  const affinities = tradeAffinities(ctx);
+  // Embargoes by good: the pairs, and the exporters under one.
+  const blockedByGood = new Map<string, Uint8Array>();
+  const embargoedByGood = new Map<string, Uint8Array>();
+  for (const e of market.embargoes) {
+    const from = grid.index.get(e.from);
+    const to = grid.index.get(e.to);
+    if (from === undefined || to === undefined) continue;
+    let blocked = blockedByGood.get(e.good);
+    if (blocked === undefined) {
+      blocked = new Uint8Array(m * m);
+      blockedByGood.set(e.good, blocked);
+      embargoedByGood.set(e.good, new Uint8Array(m));
+    }
+    blocked[from * m + to] = 1;
+    embargoedByGood.get(e.good)![from] = 1;
+  }
   const importsValue: Record<string, number> = {};
   const rentsValue: Record<string, number> = {};
-  const exportsValue: Record<string, number> = {};
-  const maritimeValue: Record<string, number> = {};
+  const exportsValue = new Float64Array(m);
+  const maritimeValue = new Float64Array(m);
   // Price each nation paid for its basket, weighted by consumption.
-  const basket: Record<string, number> = {};
-  const basketBase: Record<string, number> = {};
-  for (const id of ctx.nationIds) {
-    importsValue[id] = 0;
-    rentsValue[id] = 0;
-    exportsValue[id] = 0;
-    maritimeValue[id] = 0;
-    basket[id] = 0;
-    basketBase[id] = 0;
-  }
+  const basket = new Float64Array(m);
+  const basketBase = new Float64Array(m);
+  const imports = new Float64Array(m);
+  const rents = new Float64Array(m);
 
+  const needed = new Float64Array(m);
+  const produced = new Float64Array(m);
+  const surplus = new Float64Array(m);
+  const deficit = new Float64Array(m);
+  const lostShare = new Float64Array(m);
+  const withheld = new Float64Array(m);
+  const buffers = flowBuffers(m);
   for (const good of ctx.goods) {
     const price = market.prices[good.id];
-    const needed = new Map<string, number>();
-    const produced = new Map<string, number>();
-    const traders: Trader[] = [];
-    const add = (id: string, supply: number, demand: number) => {
-      needed.set(id, demand);
-      produced.set(id, supply);
-      traders.push({
-        id,
-        surplus: Math.max(0, supply - demand),
-        deficit: Math.max(0, demand - supply),
-      });
-    };
-    for (const id of ctx.nationIds) {
-      const nation = state.nations[id];
-      add(
-        id,
-        supplyAt(effectiveProduction(ctx, nation, good), good, price),
-        demandAt(nation.consumption[good.id], good, price),
-      );
-    }
-    add(
-      ROW_ID,
-      rowSupply(state, good),
-      demandAt(
-        market.rowConsumption[good.id],
+    for (let k = 0; k < nationCount; k++) {
+      const nation = state.nations[ids[k]];
+      produced[k] = supplyAt(
+        effectiveProduction(ctx, nation, good),
         good,
         price,
-        cfg.rowElasticityFactor,
-      ),
+      );
+      needed[k] = demandAt(nation.consumption[good.id], good, price);
+    }
+    produced[rowIndex] = rowSupply(state, good);
+    needed[rowIndex] = demandAt(
+      market.rowConsumption[good.id],
+      good,
+      price,
+      cfg.rowElasticityFactor,
     );
+    for (let k = 0; k < m; k++) {
+      surplus[k] = Math.max(0, produced[k] - needed[k]);
+      deficit[k] = Math.max(0, needed[k] - produced[k]);
+    }
+    const affinity = affinities[good.transport];
+    const blocked = blockedByGood.get(good.id);
+    const embargoed = embargoedByGood.get(good.id);
 
     // Market an embargoed exporter loses: the share of its potential buyers
     // (by affinity and deficit) that embargo it. Only what its circumvention
@@ -166,28 +217,23 @@ export function stepTrade(
     // The circumvention index of the good builds up in proportion to the
     // market lost (a fungible good shipped by sea re-routes faster than
     // pipeline gas, goods.json), and fades once the good is free again.
-    const lostShare = new Map<string, number>();
-    const withheld = new Map<string, number>();
     const rate = good.circumvention ?? cfg.circumvention;
-    for (const exporter of traders) {
-      if (exporter.id === ROW_ID) continue;
-      const nation = state.nations[exporter.id];
+    for (let e = 0; e < nationCount; e++) {
+      const nation = state.nations[ids[e]];
       let potential = 0;
       let blockedPotential = 0;
-      for (const importer of traders) {
-        if (importer.deficit <= 0) continue;
-        const w =
-          ctx.affinity(good, exporter.id, importer.id) * importer.deficit;
-        potential += w;
-        if (blocked.has(`${good.id}|${exporter.id}|${importer.id}`)) {
-          blockedPotential += w;
+      if (blocked !== undefined) {
+        const row = e * m;
+        for (let i = 0; i < m; i++) {
+          if (deficit[i] <= 0) continue;
+          const w = affinity[row + i] * deficit[i];
+          potential += w;
+          if (blocked[row + i] === 1) blockedPotential += w;
         }
       }
       const lost =
-        exporter.surplus > 0 && potential > 0
-          ? blockedPotential / potential
-          : 0;
-      lostShare.set(exporter.id, lost);
+        surplus[e] > 0 && potential > 0 ? blockedPotential / potential : 0;
+      lostShare[e] = lost;
       const current = nation.circumvention[good.id];
       nation.circumvention[good.id] =
         lost > 0
@@ -196,47 +242,44 @@ export function stepTrade(
               Math.max(rate.initial, current) + rate.perMonth * lost,
             )
           : Math.max(0, current - rate.perMonth);
+      withheld[e] = 0;
       if (lost > 0) {
-        const kept =
-          exporter.surplus * lost * (1 - nation.circumvention[good.id]);
-        exporter.surplus -= kept;
-        withheld.set(exporter.id, kept);
+        const kept = surplus[e] * lost * (1 - nation.circumvention[good.id]);
+        surplus[e] -= kept;
+        withheld[e] = kept;
       }
     }
 
-    const flows = allocateFlows(
-      traders,
-      (exporter, importer) =>
-        blocked.has(`${good.id}|${exporter}|${importer}`)
-          ? 0
-          : ctx.affinity(good, exporter, importer),
+    const flows = allocateFlowsIndexed(
+      surplus,
+      deficit,
+      affinity,
       cfg.rationingPasses,
+      blocked,
+      buffers,
     );
     // Blockades: a share of what went by sea is lost at sea. It is neither
     // delivered nor sold, and it leaves the supply that forms the price.
     let blockaded = 0;
     if (good.transport === "normal") {
-      for (const [exporter, row] of flows.delivered) {
-        for (const [importer, volume] of row) {
-          if (ctx.landNeighbours(exporter, importer)) continue;
-          const lost = volume * (1 - maritime(exporter, importer));
+      for (let e = 0; e < m; e++) {
+        if (flows.shipped[e] <= 0) continue;
+        const row = e * m;
+        for (let i = 0; i < m; i++) {
+          const volume = flows.delivered[row + i];
+          if (volume <= 0) continue;
+          if (grid.neighbours[row + i] === 1) continue;
+          const lost = volume * (1 - maritime(ids[e], ids[i]));
           if (lost > 0) {
-            row.set(importer, volume - lost);
-            flows.received.set(importer, flows.received.get(importer)! - lost);
-            flows.shipped.set(exporter, flows.shipped.get(exporter)! - lost);
-            flows.unsold.set(
-              exporter,
-              (flows.unsold.get(exporter) ?? 0) + lost,
-            );
+            flows.delivered[row + i] = volume - lost;
+            flows.received[i] -= lost;
+            flows.shipped[e] -= lost;
+            flows.unsold[e] += lost;
             blockaded += lost;
           }
           const value = (volume - lost) * price * 1e6;
-          if (maritimeValue[exporter] !== undefined) {
-            maritimeValue[exporter] += value;
-          }
-          if (maritimeValue[importer] !== undefined) {
-            maritimeValue[importer] += value;
-          }
+          maritimeValue[e] += value;
+          maritimeValue[i] += value;
         }
       }
     }
@@ -245,11 +288,12 @@ export function stepTrade(
     // over the world price (the "pays a premium elsewhere" of DESIGN.md).
     let uncovered = 0;
     let scenarioDemand = 0;
-    for (const id of ctx.nationIds) {
-      const demand = needed.get(id)!;
-      const supply = produced.get(id)!;
-      const received = flows.received.get(id) ?? 0;
-      uncovered += Math.max(0, demand - Math.min(supply, demand) - received);
+    for (let k = 0; k < nationCount; k++) {
+      const demand = needed[k];
+      uncovered += Math.max(
+        0,
+        demand - Math.min(produced[k], demand) - flows.received[k],
+      );
       scenarioDemand += demand;
     }
     const importPrice =
@@ -262,59 +306,58 @@ export function stepTrade(
     // What an embargoed exporter could not place is dumped on the rest of the
     // world at a discount, and leaves the supply that forms the price.
     let stranded = 0;
-    for (const id of ctx.nationIds) {
-      const nation = state.nations[id];
-      const demand = needed.get(id)!;
-      const supply = produced.get(id)!;
-      const received = flows.received.get(id) ?? 0;
-      const shipped = flows.shipped.get(id) ?? 0;
-      const unsold = (flows.unsold.get(id) ?? 0) + (withheld.get(id) ?? 0);
-      const embargoed = market.embargoes.some(
-        (e) => e.good === good.id && e.from === id,
-      );
+    for (let k = 0; k < nationCount; k++) {
+      const nation = state.nations[ids[k]];
+      const demand = needed[k];
+      const supply = produced[k];
+      const received = flows.received[k];
+      const shipped = flows.shipped[k];
+      const unsold = flows.unsold[k] + withheld[k];
+      const isEmbargoed = embargoed !== undefined && embargoed[k] === 1;
       nation.imports[good.id] = received;
       nation.exports[good.id] = shipped + unsold;
       nation.coverage[good.id] =
         demand <= 1e-12
           ? 1
           : Math.min(1, (Math.min(supply, demand) + received) / demand);
-      importsValue[id] += received * importPrice * 1e6;
-      const dumped = embargoed ? unsold : 0;
+      imports[k] += received * importPrice * 1e6;
+      const dumped = isEmbargoed ? unsold : 0;
       // What is re-routed or dumped sells at the discount, which narrows as
       // the circumvention of the good builds up (new buyers, shadow fleet).
       const circumvention = nation.circumvention[good.id];
-      const rerouted =
-        discount * (lostShare.get(id) ?? 0) * (1 - circumvention);
+      const rerouted = discount * lostShare[k] * (1 - circumvention);
       const dumpDiscount = discount * (1 - circumvention);
-      exportsValue[id] +=
+      exportsValue[k] +=
         (shipped * (1 - rerouted) + dumped * (1 - dumpDiscount)) * price * 1e6;
       if (good.rent) {
-        rentsValue[id] +=
+        rents[k] +=
           (supply - dumped * dumpDiscount - shipped * rerouted) * price * 1e6;
       }
-      if (embargoed) stranded += unsold;
-      void blockaded;
+      if (isEmbargoed) stranded += unsold;
       // The imported share of the basket is paid at the import price.
       const importedShare =
         demand <= 1e-12 ? 0 : Math.min(1, received / demand);
       const paid = price + (importPrice - price) * importedShare;
-      basket[id] += nation.consumption[good.id] * paid;
-      basketBase[id] += nation.consumption[good.id] * good.basePrice;
+      basket[k] += nation.consumption[good.id] * paid;
+      basketBase[k] += nation.consumption[good.id] * good.basePrice;
     }
     market.stranded[good.id] = stranded + blockaded;
   }
 
-  for (const id of ctx.nationIds) {
+  for (let k = 0; k < nationCount; k++) {
+    const id = ids[k];
     const nation = state.nations[id];
     let shortage = 0;
     for (const good of ctx.goods) {
       shortage += good.shortageWeight * (1 - nation.coverage[good.id]);
     }
     nation.shortage = shortage;
-    nation.priceIndex = basketBase[id] > 0 ? basket[id] / basketBase[id] : 1;
+    nation.priceIndex = basketBase[k] > 0 ? basket[k] / basketBase[k] : 1;
     nation.armsShort = nation.coverage.arms < 0.999;
-    nation.exportsValue = exportsValue[id];
-    nation.maritimeTradeValue = maritimeValue[id];
+    nation.exportsValue = exportsValue[k];
+    nation.maritimeTradeValue = maritimeValue[k];
+    importsValue[id] = imports[k];
+    rentsValue[id] = rents[k];
   }
   return { importsValue, rentsValue };
 }

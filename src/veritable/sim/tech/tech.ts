@@ -54,6 +54,10 @@ export interface TechEnv {
   // Nations run by the AI: they choose their projects themselves.
   aiNations: readonly NationId[];
   date: string;
+  // Share of the nations that have each node, when a step or a view has
+  // counted it once (J6c: counting it for every node and every nation
+  // cost tens of milliseconds a month at 208 nations).
+  shares?: ReadonlyMap<string, number>;
 }
 
 // --- first day -------------------------------------------------------------
@@ -116,20 +120,75 @@ export function techNode(ctx: EconomyContext, id: string): TechNode {
   return node;
 }
 
+// Share of the simulated nations that have each node.
+export function diffusionShares(
+  env: Pick<TechEnv, "ctx" | "tech">,
+): Map<string, number> {
+  const ids = env.ctx.nationIds;
+  const counts = new Map<string, number>();
+  for (const n of ids) {
+    for (const id of env.tech.nations[n]?.done ?? []) {
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+    }
+  }
+  return new Map(
+    [...counts].map(([id, c]) => [id, ids.length === 0 ? 0 : c / ids.length]),
+  );
+}
+
 // Share of the simulated nations that have the node.
-export function diffusion(env: Pick<TechEnv, "ctx" | "tech">, id: string) {
+export function diffusion(
+  env: Pick<TechEnv, "ctx" | "tech" | "shares">,
+  id: string,
+) {
+  if (env.shares !== undefined) return env.shares.get(id) ?? 0;
   const ids = env.ctx.nationIds;
   const have = ids.filter((n) => env.tech.nations[n]?.done.includes(id));
   return ids.length === 0 ? 0 : have.length / ids.length;
 }
 
 export function effectiveCost(
-  env: Pick<TechEnv, "ctx" | "tech">,
+  env: Pick<TechEnv, "ctx" | "tech" | "shares">,
   node: TechNode,
 ): number {
   return (
     node.cost * (1 - env.ctx.config.tech.diffusion * diffusion(env, node.id))
   );
+}
+
+// What the refusals of one nation read (J6c: sets, built once for a whole
+// choice among 130 nodes).
+interface ResearcherView {
+  done: ReadonlySet<string>;
+  inProgress: ReadonlySet<string>;
+  projects: number;
+  blocs: readonly string[];
+}
+
+function researcherView(
+  ctx: EconomyContext,
+  mine: TechState["nations"][string],
+  nation: NationId,
+): ResearcherView {
+  return {
+    done: new Set(mine.done),
+    inProgress: new Set(mine.projects.map((p) => p.node)),
+    projects: mine.projects.length,
+    blocs: ctx.blocsOf(nation),
+  };
+}
+
+function refusalOf(
+  ctx: EconomyContext,
+  view: ResearcherView,
+  node: TechNode,
+): string | null {
+  if (view.done.has(node.id)) return "done";
+  if (view.inProgress.has(node.id)) return "in-progress";
+  if (view.projects >= ctx.config.tech.maxProjects) return "full";
+  if (!node.requires.every((r) => view.done.has(r))) return "requires";
+  if (node.bloc !== undefined && !view.blocs.includes(node.bloc)) return "bloc";
+  return null;
 }
 
 // Why a nation cannot start this node (null: it can).
@@ -142,13 +201,22 @@ export function researchRefusal(
   if (node === undefined) return "unknown";
   const mine = env.tech.nations[nation];
   if (mine === undefined) return "unknown";
-  if (mine.done.includes(id)) return "done";
-  if (mine.projects.some((p) => p.node === id)) return "in-progress";
-  if (mine.projects.length >= env.ctx.config.tech.maxProjects) return "full";
-  if (!node.requires.every((r) => mine.done.includes(r))) return "requires";
-  if (node.bloc !== undefined && !env.ctx.blocsOf(nation).includes(node.bloc))
-    return "bloc";
-  return null;
+  return refusalOf(env.ctx, researcherView(env.ctx, mine, nation), node);
+}
+
+// The refusal of every node for one nation (the view of the player).
+export function researchRefusals(
+  env: Pick<TechEnv, "ctx" | "tech">,
+  nation: NationId,
+): Record<string, string | null> {
+  const mine = env.tech.nations[nation];
+  if (mine === undefined) {
+    return Object.fromEntries(env.ctx.tech.map((n) => [n.id, "unknown"]));
+  }
+  const view = researcherView(env.ctx, mine, nation);
+  return Object.fromEntries(
+    env.ctx.tech.map((n) => [n.id, refusalOf(env.ctx, view, n)]),
+  );
 }
 
 // A multiplier or an added growth, scaled (config.tech.effectScale).
@@ -256,9 +324,12 @@ export function aiChoose(env: TechEnv, nation: NationId): string | null {
     }
     return w;
   };
+  const mine = env.tech.nations[nation];
+  if (mine === undefined) return null;
+  const view = researcherView(env.ctx, mine, nation);
   let best: { id: string; score: number } | null = null;
   for (const node of env.ctx.tech) {
-    if (researchRefusal(env, nation, node.id) !== null) continue;
+    if (refusalOf(env.ctx, view, node) !== null) continue;
     const score =
       (weight(node.domain) * (node.tier === 2 ? cfg.tier2Weight : 1)) /
       effectiveCost(env, node);
@@ -290,19 +361,33 @@ export function cancelResearch(env: TechEnv, nation: NationId, id: string) {
 
 // --- the monthly step --------------------------------------------------------
 
-export function stepTechMonth(env: TechEnv): TechEvent[] {
-  const { ctx, tech } = env;
-  const events: TechEvent[] = [];
-  // The AI fills its projects first.
+// The AI nations fill their free project slots (every month, and on the
+// first day of a campaign: J6c, so that the 208 first choices do not all
+// fall on the first monthly step).
+export function fillAiProjects(stepEnv: TechEnv): void {
+  const env =
+    stepEnv.shares === undefined
+      ? { ...stepEnv, shares: diffusionShares(stepEnv) }
+      : stepEnv;
   for (const nation of env.aiNations) {
-    const mine = tech.nations[nation];
+    const mine = env.tech.nations[nation];
     if (mine === undefined) continue;
-    while (mine.projects.length < ctx.config.tech.maxProjects) {
+    while (mine.projects.length < env.ctx.config.tech.maxProjects) {
       const id = aiChoose(env, nation);
       if (id === null) break;
       startResearch(env, nation, id);
     }
   }
+}
+
+export function stepTechMonth(stepEnv: TechEnv): TechEvent[] {
+  // Completions come after every nation has researched: the shares of the
+  // month hold for the whole step.
+  const env = { ...stepEnv, shares: diffusionShares(stepEnv) };
+  const { ctx, tech } = env;
+  const events: TechEvent[] = [];
+  // The AI fills its projects first.
+  fillAiProjects(env);
   const completed: { nation: NationId; node: TechNode }[] = [];
   for (const nation of ctx.nationIds) {
     const mine = tech.nations[nation];

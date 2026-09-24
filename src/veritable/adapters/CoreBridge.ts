@@ -65,6 +65,9 @@ const SILO_CANDIDATES = 200;
 // two core players and cut into segments; captures ordered by the simulation
 // conquer tiles through the core's own Player.conquer.
 
+// A game day at the default 72 game minutes per tick (config.time).
+const CONTESTED_RECOUNT_TICKS = 20;
+
 interface PendingRestore {
   nations: readonly NationId[];
   world: WorldState;
@@ -110,6 +113,17 @@ export class CoreBridge implements WorldPort {
     }
     // Landings take a beachhead around the landing tile (J3b).
     game.setVeritableLanding((player, tile) => this.beachhead(player, tile));
+    // Claimed land is counted tile by tile as owners change (J6c): a full
+    // count of the 8 million tiles of the world map after every capture
+    // cost tens of milliseconds per tick.
+    this.claims.track();
+    game.setVeritableTileOwnerListener((tile, from, to) =>
+      this.claims.ownerChanged(
+        tile,
+        from === 0 ? null : (this.bySmallID.get(from) ?? null),
+        to === 0 ? null : (this.bySmallID.get(to) ?? null),
+      ),
+    );
     for (const b of bindings) {
       this.byNation.set(b.nationId, b.player);
       this.bySmallID.set(b.player.smallID(), b.nationId);
@@ -281,6 +295,8 @@ export class CoreBridge implements WorldPort {
 
     this.pending = null;
     this.restoredAtTick = game.ticks();
+    // Claimed land counted at the load, not in the first tick that asks.
+    this.claims.prime((tile) => this.nationAt(tile));
     if (game.inSpawnPhase()) game.endSpawnPhase();
   }
 
@@ -303,10 +319,13 @@ export class CoreBridge implements WorldPort {
 
   // Read with every view (the screens poll it every second): kept until the
   // ledger changes or the month turns (fallout can take a contested tile
-  // without the ledger knowing).
+  // without the ledger knowing), and at most once per CONTESTED_RECOUNT_TICKS
+  // while fronts move (J6c: every capture changes the ledger). The view
+  // alone reads it: no decision of the simulation depends on it.
   private contestedCache: {
     version: number;
     month: number;
+    tick: number;
     counts: ReadonlyMap<NationId, number>;
   } | null = null;
 
@@ -315,11 +334,16 @@ export class CoreBridge implements WorldPort {
     const version = this.ledger.version();
     const month = this.ledger.currentMonth();
     const cache = this.contestedCache;
-    if (cache !== null && cache.version === version && cache.month === month) {
+    if (
+      cache !== null &&
+      cache.month === month &&
+      (cache.version === version ||
+        this.game.ticks() - cache.tick < CONTESTED_RECOUNT_TICKS)
+    ) {
       return cache.counts;
     }
     const counts = this.ledger.counts((tile) => this.nationAt(tile));
-    this.contestedCache = { version, month, counts };
+    this.contestedCache = { version, month, tick: this.game.ticks(), counts };
     return counts;
   }
 
@@ -783,6 +807,11 @@ export class CoreBridge implements WorldPort {
     }
   }
 
+  private readonly coasts = new Map<
+    NationId,
+    { version: number; zones: string[] }
+  >();
+
   // Coasts and ports of every nation, warships by zone. Coasts move slowly:
   // the snapshot is kept for a game week of ticks (a performance cache, not a
   // rule), and dropped by captures and transfers.
@@ -796,11 +825,20 @@ export class CoreBridge implements WorldPort {
     const ships: Record<string, Record<NationId, number>> = {};
     if (this.pending === null) {
       for (const [id, player] of this.byNation) {
-        const zones = new Set<string>();
-        player.borderTiles().forEach((tile) => {
-          if (this.game.isOceanShore(tile)) this.zonesAround(tile, zones);
-        });
-        coast[id] = [...zones].sort();
+        // J6c: the coast of a nation is read again only when its territory
+        // changed (every capture drops the snapshot; at 208 nations a full
+        // read of every border cost milliseconds each time).
+        const version = player.tileChangeVersion();
+        let cached = this.coasts.get(id);
+        if (cached === undefined || cached.version !== version) {
+          const zones = new Set<string>();
+          player.borderTiles().forEach((tile) => {
+            if (this.game.isOceanShore(tile)) this.zonesAround(tile, zones);
+          });
+          cached = { version, zones: [...zones].sort() };
+          this.coasts.set(id, cached);
+        }
+        coast[id] = [...cached.zones];
         const portZones = new Set<string>();
         for (const unit of player.units(UnitType.Port)) {
           if (unit.isActive()) this.zonesAround(unit.tile(), portZones);

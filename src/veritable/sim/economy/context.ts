@@ -47,6 +47,17 @@ export interface SimData {
 }
 
 // Everything the economic systems need besides the state.
+// The participants of the market by index (J6c): the nations of the
+// scenario in their order, then the rest of the world; the distance decay
+// and the land adjacency of every pair, static, flat M x M arrays
+// (exporter-major).
+export interface TradeGrid {
+  ids: readonly string[];
+  index: ReadonlyMap<string, number>;
+  decay: Float64Array;
+  neighbours: Uint8Array;
+}
+
 export interface EconomyContext {
   config: VeritableConfig;
   goods: Good[];
@@ -81,6 +92,8 @@ export interface EconomyContext {
   // Affinity of a trade pair for a good, embargoes excluded: distance decay,
   // land adjacency for electricity, bloc and agreement bonuses. 0 = no trade.
   affinity(good: Good, exporter: string, importer: string): number;
+  // The same pairs on indices for the monthly trade step (J6c).
+  tradeGrid(): TradeGrid;
   // Bloc suspensions in force ("bloc|nation"), synced from the political
   // state: a suspended member gets no bloc bonus and no alignment (J4).
   suspensions: Set<string>;
@@ -186,6 +199,32 @@ export function buildContext(
     }
     return out;
   };
+  let grid: TradeGrid | null = null;
+  const tradeGrid = (): TradeGrid => {
+    if (grid === null) {
+      const ids = [...nations.map((n) => n.id), ROW_ID];
+      const m = ids.length;
+      const gridDecay = new Float64Array(m * m);
+      const adjacent = new Uint8Array(m * m);
+      for (let e = 0; e < m; e++) {
+        for (let i = 0; i < m; i++) {
+          if (e === i) continue;
+          gridDecay[e * m + i] = Math.exp(
+            -distanceKm(ids[e], ids[i]) / config.economy.distanceScaleKm,
+          );
+          if (neighbours.has(`${ids[e]}|${ids[i]}`)) adjacent[e * m + i] = 1;
+        }
+      }
+      grid = {
+        ids,
+        index: new Map(ids.map((id, k) => [id, k])),
+        decay: gridDecay,
+        neighbours: adjacent,
+      };
+    }
+    return grid;
+  };
+  const blocTypes = new Map(data.blocs.map((b) => [b.id, b.type]));
   const byRegime = new Map(data.regimes.map((r) => [r.id, r]));
   const byLaw = new Map(data.laws.map((l) => [l.id, l]));
 
@@ -226,6 +265,7 @@ export function buildContext(
     names: (id) => data.names[id],
     nationIds: nations.map((n) => n.id),
     landNeighbours: (a, b) => neighbours.has(`${a}|${b}`),
+    tradeGrid,
     partnerWeight,
     partnerTotal: (a) => {
       let total = partnerTotals.get(a);
@@ -251,7 +291,7 @@ export function buildContext(
     hasRow: data.row.gdp.value > 0,
     worldSupplyShock: () => 0,
     guarantees: data.guarantees ?? [],
-    blocType: (bloc) => data.blocs.find((b) => b.id === bloc)?.type,
+    blocType: (bloc) => blocTypes.get(bloc),
     startRelation: (a, b) =>
       data.startRelations === undefined
         ? null

@@ -123,6 +123,17 @@ async function main(): Promise<void> {
   process.stdout.write(
     `${JSON.stringify({ ...summary, perfByDomain: undefined })}\n`,
   );
+  // The slowest call of each domain: what a long tick is made of.
+  process.stdout.write(
+    `${JSON.stringify(
+      Object.fromEntries(
+        Object.entries(summary.perfByDomain).map(([k, v]) => [
+          k,
+          `${Math.round(v.totalMs)} ms / ${v.calls}, max ${(v.maxMs ?? 0).toFixed(1)}`,
+        ]),
+      ),
+    )}\n`,
+  );
   if (out !== "") {
     fs.writeFileSync(
       path.join(out, `${scenarioId}-${pack.scenario.map}-${years}y.json`),

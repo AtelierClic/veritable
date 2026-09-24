@@ -59,7 +59,7 @@ import {
   termEnds,
 } from "./blocs/blocs";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
-import { dateAfter, dayIndex } from "./calendar";
+import { dateAfter, dayIndex, MINUTES_PER_GAME_DAY } from "./calendar";
 import { claimsOf } from "./diplomacy/claims";
 import {
   availableCasusBelli,
@@ -99,7 +99,6 @@ import { nationFromData, statusFromTerritory } from "./nation";
 import {
   initNaval,
   landingControl,
-  maritimeFactor,
   NavalEvent,
   setBlockade,
   stepNavalDay,
@@ -160,9 +159,11 @@ import {
 } from "./scheduler";
 import {
   cancelResearch,
+  diffusionShares,
   effectiveCost,
+  fillAiProjects,
   initTech,
-  researchRefusal,
+  researchRefusals,
   startResearch,
   stepTechMonth,
   syncTech,
@@ -354,8 +355,12 @@ export class VeritableSimImpl implements VeritableSim {
         domain: "economy",
         onDay: () => stepPrices(this.ctx, this.economy),
         onMonth: (c) => {
-          this.trade = stepTrade(this.ctx, this.economy, (e, i) =>
-            maritimeFactor(this.ctx, this.naval, e, i),
+          // stepTrade asks only for the pairs without a land border.
+          const blockade = this.naval.blockade;
+          this.trade = stepTrade(
+            this.ctx,
+            this.economy,
+            (e, i) => (1 - (blockade[e] ?? 0)) * (1 - (blockade[i] ?? 0)),
           );
           stepGrowth(
             this.ctx,
@@ -428,6 +433,7 @@ export class VeritableSimImpl implements VeritableSim {
     syncBlocs(this.ctx, this.blocs);
     this.applyScenarioSanctions(scenario);
     this.tech = initTech(this.ctx, sheets);
+    fillAiProjects(this.techEnv(scenario.startDate));
     syncTech(this.ctx, this.tech);
     this.events = initEvents();
     for (const bloc of this.blocs.blocs) {
@@ -456,6 +462,26 @@ export class VeritableSimImpl implements VeritableSim {
       structures: Object.fromEntries(this.deps.world.structureCounts()),
       constructionCost: {},
     };
+    this.warmUp();
+  }
+
+  // J6c: the first monthly step of a session runs cold (the engine compiles
+  // its code as it goes) and took twice the time of the next ones at 208
+  // nations. A dry run of its heaviest parts at load, on copies of the
+  // state and with a throwaway random generator: nothing of the campaign
+  // changes, the results are thrown away.
+  private warmUp(): void {
+    stepTrade(this.ctx, structuredClone(this.economy));
+    stepDiplomacyMonth(
+      this.ctx,
+      structuredClone(this.diplomacy),
+      structuredClone(this.economy),
+      structuredClone(this.military),
+      structuredClone(this.politics),
+      new Rng(0),
+      this.calendar.date,
+      this.aiNations(),
+    );
   }
 
   restore(snapshot: SaveFile): void {
@@ -508,6 +534,7 @@ export class VeritableSimImpl implements VeritableSim {
       tiles: state.tiles,
       contest: state.contest,
     });
+    this.warmUp();
   }
 
   // Months since the start of the campaign (the clock of the contest).
@@ -982,6 +1009,10 @@ export class VeritableSimImpl implements VeritableSim {
   read(): ReadonlyWorldView {
     this.assertInitialized();
     const player = this.playerNationId();
+    // One environment for the technology of the view, the shares of each
+    // node counted once (J6c).
+    const techEnv = player === null ? null : this.techEnv(this.calendar.date);
+    if (techEnv !== null) techEnv.shares = diffusionShares(techEnv);
     const casusBelli: Record<NationId, string[]> = {};
     if (player !== null) {
       for (const id of this.ctx.nationIds) {
@@ -1037,23 +1068,15 @@ export class VeritableSimImpl implements VeritableSim {
       blocs: this.blocViews(player),
       tech: this.tech,
       techCosts:
-        player === null
+        techEnv === null
           ? {}
           : Object.fromEntries(
-              this.ctx.tech.map((n) => [
-                n.id,
-                effectiveCost(this.techEnv(this.calendar.date), n),
-              ]),
+              this.ctx.tech.map((n) => [n.id, effectiveCost(techEnv, n)]),
             ),
       techRefusals:
-        player === null
+        techEnv === null || player === null
           ? {}
-          : Object.fromEntries(
-              this.ctx.tech.map((n) => [
-                n.id,
-                researchRefusal(this.techEnv(this.calendar.date), player, n.id),
-              ]),
-            ),
+          : researchRefusals(techEnv, player),
       events: this.events,
     };
   }
@@ -1290,7 +1313,16 @@ export class VeritableSimImpl implements VeritableSim {
       return;
     }
     const day = dayIndex(this.calendar.elapsedGameMinutes);
-    if (day !== this.geometryDay) {
+    // J6c: tick by tick, the geometry of a new day is read one tick after
+    // midnight, not in the tick that already carries the daily and monthly
+    // steps of the domains; an advance by whole days reads it at once.
+    const intoDay =
+      this.calendar.elapsedGameMinutes - day * MINUTES_PER_GAME_DAY;
+    const deferred =
+      this.geometryDay >= 0 &&
+      intoDay === 0 &&
+      gameMinutes < MINUTES_PER_GAME_DAY;
+    if (day !== this.geometryDay && !deferred) {
       this.geometry = this.deps.world.fronts(
         enemyPairs(this.diplomacy),
         this.deps.config.war.segmentTiles,
@@ -2034,6 +2066,11 @@ export class VeritableSimImpl implements VeritableSim {
     this.ctx.claimHolders = (region) => this.deps.world.claimHolders(region);
     this.ctx.worldSupplyShock = (good) =>
       this.economy?.market.rowSupplyShock[good] ?? 0;
+    // The distances of every trade pair and the partner weights, at load
+    // rather than in the first monthly step (J6c: tens of milliseconds at
+    // 208 nations).
+    this.ctx.tradeGrid();
+    for (const id of this.ctx.nationIds) this.ctx.partnerTotal(id);
     return sheets;
   }
 

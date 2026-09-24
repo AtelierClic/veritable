@@ -924,6 +924,12 @@ export interface Game extends GameMap {
     handler: ((player: Player, tile: TileRef) => void) | null,
   ): void;
   veritableLanding(player: Player, tile: TileRef): boolean;
+  // VERITABLE: told of every change of owner of a tile (small ids, 0 =
+  // nobody): the campaign counts claimed land incrementally instead of
+  // scanning the map. Refused outside a Véritable campaign.
+  setVeritableTileOwnerListener(
+    listener: ((tile: TileRef, from: number, to: number) => void) | null,
+  ): void;
   stats(): Stats;
 
   addUpdate(update: GameUpdate): void;

@@ -469,14 +469,20 @@ export function stepArmsFlows(env: AiEnv): {
   const points: Record<NationId, number> = {};
   const cost: Record<NationId, number> = {};
   const flows: AiState["armsAid"] = [];
+  // Wars do not move during the step: the enemies of each nation, once.
+  const enemiesByNation = new Map(
+    env.ctx.nationIds.map((n) => [n, enemiesOf(env.diplomacy, n)]),
+  );
+  const atWarNow = env.ctx.nationIds.filter(
+    (n) => enemiesByNation.get(n)!.length > 0,
+  );
   for (const donor of env.aiNations) {
-    if (enemiesOf(env.diplomacy, donor).length > 0) continue;
+    if ((enemiesByNation.get(donor)?.length ?? 0) > 0) continue;
     let best: NationId | null = null;
     let bestRelation = cfg.donorRelations;
-    for (const r of env.ctx.nationIds) {
+    for (const r of atWarNow) {
       if (r === donor) continue;
-      const enemies = enemiesOf(env.diplomacy, r);
-      if (enemies.length === 0) continue;
+      const enemies = enemiesByNation.get(r)!;
       if (
         !enemies.some(
           (e) => relation(env.diplomacy, donor, e) < cfg.enemyRelations,

@@ -523,6 +523,8 @@ export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
     );
   }
 
+  // J6c: lookups by set (at 208 nations, lists cost milliseconds a month).
+  const known = new Set(ctx.nationIds);
   for (const event of ctx.events) {
     const t = event.trigger;
     if (
@@ -535,9 +537,12 @@ export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
     const subjects =
       event.scope === "world"
         ? ["world"]
-        : (t.nations ?? ctx.nationIds).filter((n) => ctx.nationIds.includes(n));
+        : t.nations === undefined
+          ? ctx.nationIds
+          : t.nations.filter((n) => known.has(n));
+    const fired = new Set(events.fired[event.id] ?? []);
     for (const subject of subjects) {
-      if (once && (events.fired[event.id] ?? []).includes(subject)) continue;
+      if (once && fired.has(subject)) continue;
       if (events.cooldowns[`${event.id}|${subject}`] !== undefined) continue;
       const nation = subject === "world" ? env.player : subject;
       if (nation !== null && !t.conditions.every((c) => holds(env, nation, c)))

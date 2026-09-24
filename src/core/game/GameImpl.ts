@@ -264,6 +264,20 @@ export class GameImpl implements Game {
     return true;
   }
 
+  // VERITABLE: see Game.setVeritableTileOwnerListener.
+  private veritableTileOwner:
+    | ((tile: TileRef, from: number, to: number) => void)
+    | null = null;
+
+  setVeritableTileOwnerListener(
+    listener: ((tile: TileRef, from: number, to: number) => void) | null,
+  ): void {
+    if (!this.config().isVeritable()) {
+      throw new Error("tile listeners only exist in a Véritable campaign");
+    }
+    this.veritableTileOwner = listener;
+  }
+
   setFallout(tile: TileRef, value: boolean) {
     if (value && this.hasOwner(tile)) {
       throw Error(`cannot set fallout, tile ${tile} has owner`);
@@ -817,6 +831,12 @@ export class GameImpl implements Game {
     this.updateBorders(tile);
     this._map.setFallout(tile, false);
     this.recordTileUpdate(tile);
+    // VERITABLE: see Game.setVeritableTileOwnerListener.
+    this.veritableTileOwner?.(
+      tile,
+      previousOwner.isPlayer() ? previousOwner.smallID() : 0,
+      owner.smallID(),
+    );
   }
 
   relinquish(tile: TileRef) {
@@ -837,6 +857,8 @@ export class GameImpl implements Game {
     this._map.setOwnerID(tile, 0);
     this.updateBorders(tile);
     this.recordTileUpdate(tile);
+    // VERITABLE: see Game.setVeritableTileOwnerListener.
+    this.veritableTileOwner?.(tile, previousOwner.smallID(), 0);
   }
 
   // Reusable neighbor buffer to avoid closures/allocation in updateBorders.

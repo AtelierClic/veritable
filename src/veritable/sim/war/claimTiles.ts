@@ -33,6 +33,15 @@ export class ClaimTiles {
     key: string;
     holders: Map<NationId, Map<NationId, number>>;
   } | null = null;
+  // J6c, a world that reports every change of owner (the core bridge):
+  // counts kept up to date tile by tile, null until the first full count
+  // (and again after a load). The scenario regions each tile lies in.
+  private live: {
+    homelands: Map<NationId, Map<NationId, number>>;
+    regions: Map<string, Map<NationId, number>>;
+  } | null = null;
+  private tracking = false;
+  private tileRegions: Map<number, string[]> | null = null;
 
   constructor(
     private readonly size: number,
@@ -57,13 +66,72 @@ export class ClaimTiles {
     return this.changes;
   }
 
+  // J6c: from now on the world reports every change of owner
+  // (ownerChanged); the counts are kept up to date instead of recounted.
+  track(): void {
+    this.tracking = true;
+  }
+
+  // The full count, now rather than at the first question (a load).
+  prime(nationAt: (tile: number) => NationId | null): void {
+    if (this.tracking && this.live === null) this.countLive(nationAt);
+  }
+
+  ownerChanged(tile: number, from: NationId | null, to: NationId | null): void {
+    if (this.live === null || this.settled[tile] === 1) return;
+    this.move(tile, from, to);
+  }
+
+  private move(tile: number, from: NationId | null, to: NationId | null) {
+    if (this.live === null || this.input === null || from === to) return;
+    const first = this.input.firstDay[tile];
+    if (first !== 0) {
+      const home = this.input.nations[first - 1];
+      shift(this.live.homelands, home, from, to);
+    }
+    for (const region of this.regionsOf(tile)) {
+      shift(this.live.regions, region, from, to);
+    }
+  }
+
+  private regionsOf(tile: number): readonly string[] {
+    if (this.tileRegions === null) {
+      this.tileRegions = new Map();
+      for (const [region, tiles] of this.input?.regions ?? []) {
+        for (let i = 0; i < tiles.length; i++) {
+          const list = this.tileRegions.get(tiles[i]);
+          if (list === undefined) this.tileRegions.set(tiles[i], [region]);
+          else list.push(region);
+        }
+      }
+    }
+    return this.tileRegions.get(tile) ?? [];
+  }
+
+  private countLive(nationAt: (tile: number) => NationId | null) {
+    const regions = new Map<string, Map<NationId, number>>();
+    for (const region of this.input?.regions.keys() ?? []) {
+      regions.set(region, this.countRegion(region, nationAt));
+    }
+    this.live = { homelands: this.countHomelands(nationAt), regions };
+  }
+
   // Tiles of the region each nation holds, settled tiles excluded. `key`
-  // identifies the state of the world the counts are valid for.
+  // identifies the state of the world the counts are valid for (unused once
+  // the world reports every change of owner).
   holders(
     region: string,
     key: string,
     nationAt: (tile: number) => NationId | null,
   ): ReadonlyMap<NationId, number> {
+    if (this.tracking) {
+      if (this.live === null) this.countLive(nationAt);
+      const live = this.live!;
+      return region.startsWith(HOMELAND_PREFIX)
+        ? (live.homelands.get(region.slice(HOMELAND_PREFIX.length)) ??
+            new Map())
+        : (live.regions.get(region) ?? new Map());
+    }
     const fullKey = `${key}|${this.changes}`;
     if (region.startsWith(HOMELAND_PREFIX)) {
       if (this.homelandCache?.key !== fullKey) {
@@ -79,6 +147,15 @@ export class ClaimTiles {
     }
     const cached = this.regionCache.get(region);
     if (cached?.key === fullKey) return cached.holders;
+    const holders = this.countRegion(region, nationAt);
+    this.regionCache.set(region, { key: fullKey, holders });
+    return holders;
+  }
+
+  private countRegion(
+    region: string,
+    nationAt: (tile: number) => NationId | null,
+  ): Map<NationId, number> {
     const holders = new Map<NationId, number>();
     const tiles = this.input?.regions.get(region);
     if (tiles !== undefined) {
@@ -90,7 +167,6 @@ export class ClaimTiles {
           holders.set(holder, (holders.get(holder) ?? 0) + 1);
       }
     }
-    this.regionCache.set(region, { key: fullKey, holders });
     return holders;
   }
 
@@ -129,6 +205,8 @@ export class ClaimTiles {
     let count = 0;
     const mark = (tile: number) => {
       if (this.settled[tile] === 1) return;
+      // A settled tile leaves every count (J6c: the live ones too).
+      this.move(tile, winner, null);
       this.settled[tile] = 1;
       count++;
     };
@@ -158,6 +236,7 @@ export class ClaimTiles {
       this.settled[tile] = (tiles[tile] & TILE_SETTLED_BIT) !== 0 ? 1 : 0;
     }
     this.changes++;
+    this.live = null; // counted again at the next question
   }
 
   write(tiles: Uint16Array): void {
@@ -165,4 +244,24 @@ export class ClaimTiles {
       if (this.settled[tile] === 1) tiles[tile] |= TILE_SETTLED_BIT;
     }
   }
+}
+
+// One tile of `key` moves from one holder to another (null: nobody).
+function shift(
+  counts: Map<string, Map<NationId, number>>,
+  key: string,
+  from: NationId | null,
+  to: NationId | null,
+): void {
+  let holders = counts.get(key);
+  if (holders === undefined) {
+    holders = new Map();
+    counts.set(key, holders);
+  }
+  if (from !== null) {
+    const left = (holders.get(from) ?? 0) - 1;
+    if (left > 0) holders.set(from, left);
+    else holders.delete(from);
+  }
+  if (to !== null) holders.set(to, (holders.get(to) ?? 0) + 1);
 }

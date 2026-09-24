@@ -180,3 +180,29 @@ describe("Véritable: no win condition, no timer, no 170-minute cap, no Overtime
     );
   });
 });
+
+describe("Véritable: the tile owner listener (J6c)", () => {
+  it("hears every change of owner in a campaign, conquest and loss", async () => {
+    const { game, state, rival, home } = await twoPlayerGame(true);
+    const heard: [number, number, number][] = [];
+    game.setVeritableTileOwnerListener((tile, from, to) =>
+      heard.push([tile, from, to]),
+    );
+    rival.conquer(home[1]);
+    rival.relinquish(home[1]);
+    state.conquer(game.ref(53, 50));
+    expect(heard).toEqual([
+      [home[1], state.smallID(), rival.smallID()],
+      [home[1], rival.smallID(), 0],
+      [game.ref(53, 50), 0, state.smallID()],
+    ]);
+    game.setVeritableTileOwnerListener(null);
+    state.conquer(game.ref(54, 50));
+    expect(heard).toHaveLength(3);
+  });
+
+  it("control: refused outside a campaign", async () => {
+    const { game } = await twoPlayerGame(false);
+    expect(() => game.setVeritableTileOwnerListener(() => {})).toThrow();
+  });
+});

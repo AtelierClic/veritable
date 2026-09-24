@@ -446,12 +446,74 @@ export function liftSanctions(
 
 // --- the monthly reaction ---------------------------------------------------------------
 
+// What the affinity reads of the world (J6c): computed once for the
+// monthly step, which asks the affinity of every pair of 208 nations; read
+// directly for a single pair.
+export interface AffinityInputs {
+  blocsOf(nation: NationId): readonly string[];
+  sanctioning(by: NationId, against: NationId): boolean;
+  enemies(nation: NationId): readonly NationId[];
+}
+
+export function directAffinityInputs(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+): AffinityInputs {
+  return {
+    blocsOf: (nation) => ctx.blocsOf(nation),
+    sanctioning: (by, against) => isSanctioning(state, by, against),
+    enemies: (nation) => enemiesOf(state, nation),
+  };
+}
+
+// The same, frozen: valid while blocs, sanctions and wars stay as they are.
+export function cachedAffinityInputs(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+): AffinityInputs {
+  const blocs = new Map<NationId, readonly string[]>();
+  const enemies = new Map<NationId, readonly NationId[]>();
+  const sanctions = new Map<NationId, Set<NationId>>();
+  for (const s of state.sanctions) {
+    let targets = sanctions.get(s.by);
+    if (targets === undefined) {
+      targets = new Set();
+      sanctions.set(s.by, targets);
+    }
+    targets.add(s.against);
+  }
+  return {
+    blocsOf: (nation) => {
+      let list = blocs.get(nation);
+      if (list === undefined) {
+        list = ctx.blocsOf(nation);
+        blocs.set(nation, list);
+      }
+      return list;
+    },
+    sanctioning: (by, against) => sanctions.get(by)?.has(against) ?? false,
+    enemies: (nation) => {
+      let list = enemies.get(nation);
+      if (list === undefined) {
+        list = enemiesOf(state, nation);
+        enemies.set(nation, list);
+      }
+      return list;
+    },
+  };
+}
+
 // Allies (J6b): members of a common bloc of an ally type (a military
 // alliance, an economic union), or a guarantor and the nation it protects.
-export function allies(ctx: EconomyContext, a: NationId, b: NationId): boolean {
+export function allies(
+  ctx: EconomyContext,
+  a: NationId,
+  b: NationId,
+  blocsOf: (nation: NationId) => readonly string[] = (n) => ctx.blocsOf(n),
+): boolean {
   const types: readonly string[] = ctx.config.diplomacy.allyBlocTypes;
-  const mine = ctx.blocsOf(a);
-  for (const bloc of ctx.blocsOf(b)) {
+  const mine = blocsOf(a);
+  for (const bloc of blocsOf(b)) {
     const type = ctx.blocType(bloc);
     if (mine.includes(bloc) && type !== undefined && types.includes(type)) {
       return true;
@@ -462,6 +524,19 @@ export function allies(ctx: EconomyContext, a: NationId, b: NationId): boolean {
       (g.guarantor === a && g.protected === b) ||
       (g.guarantor === b && g.protected === a),
   );
+}
+
+// Is x at war with an ally of y (another nation than y)?
+function fightsAnAlly(
+  ctx: EconomyContext,
+  inputs: AffinityInputs,
+  x: NationId,
+  y: NationId,
+): boolean {
+  for (const z of inputs.enemies(x)) {
+    if (z !== y && allies(ctx, y, z, inputs.blocsOf)) return true;
+  }
+  return false;
 }
 
 // Where the relations of two nations settle: common blocs and the
@@ -477,6 +552,7 @@ export function affinityOf(
   // J6b: the affinity the two would have without their sanctions (the lift
   // of a sanction of policy).
   withoutSanctions = false,
+  inputs: AffinityInputs = directAffinityInputs(ctx, state),
 ): number {
   const cfg = ctx.config.diplomacy;
   const pa = politics.nations[a];
@@ -488,22 +564,21 @@ export function affinityOf(
         ideologyDistance(pa.government.ideology, pb.government.ideology) /
           MAX_IDEOLOGY_DISTANCE;
   let blocs = 0;
-  const mine = ctx.blocsOf(a);
-  for (const bloc of ctx.blocsOf(b)) {
+  const mine = inputs.blocsOf(a);
+  for (const bloc of inputs.blocsOf(b)) {
     if (!mine.includes(bloc)) continue;
     const type = ctx.blocType(bloc);
     blocs +=
       type === undefined ? cfg.affinityPerBloc : cfg.affinityByBlocType[type];
   }
   const sanctions =
-    !withoutSanctions &&
-    (isSanctioning(state, a, b) || isSanctioning(state, b, a))
+    !withoutSanctions && (inputs.sanctioning(a, b) || inputs.sanctioning(b, a))
       ? cfg.affinitySanctions
       : 0;
-  const againstAlly = (x: NationId, y: NationId) =>
-    enemiesOf(state, x).some((z) => z !== y && allies(ctx, y, z));
   const allyAtWar =
-    againstAlly(a, b) || againstAlly(b, a) ? cfg.affinityAllyAtWar : 0;
+    fightsAnAlly(ctx, inputs, a, b) || fightsAnAlly(ctx, inputs, b, a)
+      ? cfg.affinityAllyAtWar
+      : 0;
   // The bloc term is capped like the first-day relations (blocRelationCap):
   // four common blocs are not worth more than two.
   return clamp(
@@ -527,13 +602,14 @@ export function policyLiftable(
   politics: PoliticsState,
   by: NationId,
   against: NationId,
+  inputs: AffinityInputs = directAffinityInputs(ctx, state),
 ): boolean {
   const regime = politics.nations[against]?.regime;
   if (regime === undefined || regime === ctx.sheet(against).regime) {
     return false;
   }
   return (
-    affinityOf(ctx, state, politics, by, against, true) >=
+    affinityOf(ctx, state, politics, by, against, true, inputs) >=
     ctx.config.diplomacy.sanction.liftPolicyMinAffinity
   );
 }
@@ -584,15 +660,25 @@ export function stepDiplomacyMonth(
     if (!war.declaredInCampaign || war.casusBelli !== null) continue;
     for (const a of war.aggressors) unjustAggressors.add(a);
   }
+  // Blocs, sanctions and wars do not move during steps 1 and 4.
+  const inputs = cachedAffinityInputs(ctx, state);
+  const fighting = new Set<string>();
+  for (const war of state.wars) {
+    for (const x of war.aggressors) {
+      for (const y of war.defenders) {
+        fighting.add(x < y ? `${x}|${y}` : `${y}|${x}`);
+      }
+    }
+  }
   for (const a of ids) {
     for (const b of ids) {
       if (!(a < b)) continue;
-      if (atWar(state, a, b)) {
+      if (fighting.has(`${a}|${b}`)) {
         setRelation(state, a, b, cfg.warRelation);
         continue;
       }
       const r = relation(state, a, b);
-      const target = affinityOf(ctx, state, politics, a, b);
+      const target = affinityOf(ctx, state, politics, a, b, false, inputs);
       const mending = !unjustAggressors.has(a) && !unjustAggressors.has(b);
       const next =
         r > target
@@ -660,7 +746,14 @@ export function stepDiplomacyMonth(
     if (stillAggressor) continue;
     if (
       sanction.policy === true &&
-      !policyLiftable(ctx, state, politics, sanction.by, sanction.against)
+      !policyLiftable(
+        ctx,
+        state,
+        politics,
+        sanction.by,
+        sanction.against,
+        inputs,
+      )
     ) {
       continue;
     }

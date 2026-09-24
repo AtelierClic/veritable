@@ -109,7 +109,7 @@ export interface Driver {
   read(): ReadonlyWorldView;
   apply(command: PlayerCommand): void;
   advanceDay(): SimEvent[];
-  perf(): Record<string, { calls: number; totalMs: number }>;
+  perf(): Record<string, { calls: number; totalMs: number; maxMs?: number }>;
   // The save file of the campaign as it stands (fixtures of the migrations).
   snapshot(): Uint8Array;
   // The simulation itself, for the harnesses that script AI nations (J6

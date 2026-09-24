@@ -147,7 +147,7 @@ export async function coreDriver(
       ...Object.fromEntries(
         Object.entries(session.perf()).map(([k, v]) => [
           k,
-          { calls: v.calls, totalMs: v.totalMs },
+          { calls: v.calls, totalMs: v.totalMs, maxMs: v.maxMs },
         ]),
       ),
       "core:tick": { calls: coreTicks, totalMs: coreMs },
