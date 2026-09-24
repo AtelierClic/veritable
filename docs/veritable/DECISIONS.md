@@ -780,6 +780,12 @@ Guide J6 : aucun écart. Le clic sur la petite carte, qui ne passe pas dans Edge
 - Le tableau des Blocs d'europe-10 liste les douze blocs, même ceux sans aucun membre simulé.
 - Chaque rechargement d'une sauvegarde écrit dans la console « got wrong turn have turns 0, received turn 1 » (boucle de tours héritée), sans effet visible.
 
+### Vérifications
+
+- **`npm test`** : 6 952 tests passent ; les trois échecs connus hors jeu restent (`UpdateRegister` × 2, `ClanDonateDialog` × 1). Le fichier OpenFront `tests/client/MainInitialize.test.ts` échoue au délai de 20 s de son `beforeAll`, qui importe tout le client (≈ 26 s ce soir, dont 20 s de transformation des modules : `@tailwindcss/vite` qui parcourt le dépôt, et les ≈ 650 fichiers JSON des données). **Le même échec se reproduit sur le commit du J6a** (`0fcefea80`, 27,6 s), où ce test passait seul au J6a : c'est la machine, plus lente ce soir, et non le J6c. Exclure `data/`, `docs/` et `tools/` de l'analyse de Tailwind ne gagnait qu'une demi-seconde : écarté. Le test n'a pas été modifié (règle du dépôt).
+- `tsc` et `npm run lint` propres.
+- Les tests nucléaires forcés du J6a (invasion, main morte) n'ont pas été rejoués : le J6c n'a changé que le niveau 1 de la table des tirs (les cinq tirs du test d'invasion étaient au niveau 3) et europe-10 garde son échelle de carte.
+
 ### Modifications de `src/core` au J6c
 
 | Fichier                                | Modification                                                                                           | Raison                                       |
