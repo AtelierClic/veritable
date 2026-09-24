@@ -482,17 +482,29 @@ export class VeritableSimImpl implements VeritableSim {
   // state and with a throwaway random generator: nothing of the campaign
   // changes, the results are thrown away.
   private warmUp(): void {
-    stepTrade(this.ctx, structuredClone(this.economy));
-    stepDiplomacyMonth(
-      this.ctx,
-      structuredClone(this.diplomacy),
-      structuredClone(this.economy),
-      structuredClone(this.military),
-      structuredClone(this.politics),
-      new Rng(0),
-      this.calendar.date,
-      this.aiNations(),
-    );
+    // Twice: the engine compiles a function hot only after a few calls.
+    for (let pass = 0; pass < 2; pass++) {
+      const economy = structuredClone(this.economy);
+      stepTrade(this.ctx, economy);
+      stepGrowth(
+        this.ctx,
+        economy,
+        structuredClone(this.politics),
+        new Rng(0),
+        () => 0,
+        () => 0,
+      );
+      stepDiplomacyMonth(
+        this.ctx,
+        structuredClone(this.diplomacy),
+        structuredClone(this.economy),
+        structuredClone(this.military),
+        structuredClone(this.politics),
+        new Rng(0),
+        this.calendar.date,
+        this.aiNations(),
+      );
+    }
   }
 
   restore(snapshot: SaveFile): void {
