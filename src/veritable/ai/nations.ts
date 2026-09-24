@@ -447,8 +447,13 @@ function monthsBetween(from: string, to: string): number {
 // coast), home in peace; a landing when the zone is held.
 function navy(env: AiEnv, id: NationId): AiEvent[] {
   const cfg = env.ctx.config.ai.nations.navy;
-  const snapshot = env.world.naval();
   const enemies = enemiesOf(env.diplomacy, id);
+  // J6c: at peace with its fleet at home there is nothing to do, and the
+  // naval snapshot of 208 nations is not worth reading.
+  if (enemies.length === 0 && env.ai.nations[id].blockading === null) {
+    return [];
+  }
+  const snapshot = env.world.naval();
   // A fleet only sails against a weaker one: a small navy stays home.
   const fleet = (n: NationId) => env.military.nations[n]?.navalPower ?? 0;
   const coastal = enemies.filter(

@@ -67,6 +67,10 @@ const SILO_CANDIDATES = 200;
 
 // A game day at the default 72 game minutes per tick (config.time).
 const CONTESTED_RECOUNT_TICKS = 20;
+// A game month of ticks: the coast of a nation whose territory changed is
+// read again at most this often (J6c: a nation at war changes territory
+// every tick, and a full read of its border cost milliseconds each time).
+const COAST_REFRESH_TICKS = 600;
 
 interface PendingRestore {
   nations: readonly NationId[];
@@ -809,7 +813,7 @@ export class CoreBridge implements WorldPort {
 
   private readonly coasts = new Map<
     NationId,
-    { version: number; zones: string[] }
+    { version: number; tick: number; zones: string[] }
   >();
 
   // Coasts and ports of every nation, warships by zone. Coasts move slowly:
@@ -830,12 +834,16 @@ export class CoreBridge implements WorldPort {
         // read of every border cost milliseconds each time).
         const version = player.tileChangeVersion();
         let cached = this.coasts.get(id);
-        if (cached === undefined || cached.version !== version) {
+        if (
+          cached === undefined ||
+          (cached.version !== version &&
+            tick - cached.tick >= COAST_REFRESH_TICKS)
+        ) {
           const zones = new Set<string>();
           player.borderTiles().forEach((tile) => {
             if (this.game.isOceanShore(tile)) this.zonesAround(tile, zones);
           });
-          cached = { version, zones: [...zones].sort() };
+          cached = { version, tick, zones: [...zones].sort() };
           this.coasts.set(id, cached);
         }
         coast[id] = [...cached.zones];

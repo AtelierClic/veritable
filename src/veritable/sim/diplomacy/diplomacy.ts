@@ -692,31 +692,49 @@ export function stepDiplomacyMonth(
   }
   // Blocs, sanctions and wars do not move during steps 1 and 4.
   const inputs = cachedAffinityInputs(ctx, state, date);
-  const fighting = new Set<string>();
+  const fighting = new Map<NationId, Set<NationId>>();
+  const fight = (x: NationId, y: NationId) => {
+    let set = fighting.get(x);
+    if (set === undefined) {
+      set = new Set();
+      fighting.set(x, set);
+    }
+    set.add(y);
+  };
   for (const war of state.wars) {
     for (const x of war.aggressors) {
       for (const y of war.defenders) {
-        fighting.add(x < y ? `${x}|${y}` : `${y}|${x}`);
+        fight(x, y);
+        fight(y, x);
       }
     }
   }
-  for (const a of ids) {
-    for (const b of ids) {
-      if (!(a < b)) continue;
-      if (fighting.has(`${a}|${b}`)) {
-        setRelation(state, a, b, cfg.warRelation);
+  // J6c: pairs in the order they are stored (a < b), each row read once,
+  // written only when the relation moves — at 208 nations the 21,528 pairs
+  // cost tens of milliseconds a month in lookups and small allocations.
+  const sorted = [...ids].sort();
+  const warRelation = clamp(cfg.warRelation, -100, 100);
+  for (let i = 0; i < sorted.length; i++) {
+    const a = sorted[i];
+    const row = (state.relations[a] ??= {});
+    const foes = fighting.get(a);
+    const aUnjust = unjustAggressors.has(a);
+    for (let j = i + 1; j < sorted.length; j++) {
+      const b = sorted[j];
+      const r = row[b] ?? 0;
+      if (foes !== undefined && foes.has(b)) {
+        if (r !== warRelation) row[b] = warRelation;
         continue;
       }
-      const r = relation(state, a, b);
       const target = affinityOf(ctx, state, politics, a, b, false, inputs);
-      const mending = !unjustAggressors.has(a) && !unjustAggressors.has(b);
+      const mending = !aUnjust && !unjustAggressors.has(b);
       const next =
         r > target
           ? Math.max(target, r - cfg.relationDecayPerMonth)
           : mending
             ? Math.min(target, r + cfg.relationRecoveryPerMonth)
             : r;
-      setRelation(state, a, b, next);
+      if (next !== r || row[b] === undefined) row[b] = clamp(next, -100, 100);
     }
   }
 
