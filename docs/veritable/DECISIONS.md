@@ -663,6 +663,123 @@ Plan, liste « à valider » (points 17 à 27) et écarts : `docs/veritable/plan
 - Sans le cœur, le pas mensuel de l'économie coûte ≈ 400 ms à 208 nations et celui de la diplomatie ≈ 125 ms ; les embargos des régimes de l'ONU portent la liste à ≈ 7 500 entrées. Il faut étaler ou alléger ces pas pour tenir un tick maximal sous 100 ms.
 - Aucune guerre nouvelle en cinq ans sur la campagne de contrôle après la garantie américaine au Guyana : la fréquence des guerres se mesure sur les 30 campagnes mondiales (critère : médiane de 10 à 30 en 50 ans).
 
+## 2026-09-24 — J6c : échelle, écrans, campagnes mondiales, tests joués (session Claude Code, Lukas absent)
+
+Plan, liste « à valider » (points 28 à 38) et écarts : `docs/veritable/plans/J6.md`. Reprise après une coupure de courant en pleine session : 224 fichiers vérifiés (aucun vide, aucun octet nul, JSON valides), `tsc` et lint propres, travail récupéré commité tel quel.
+
+### Performance à 208 nations (J6c.1)
+
+- **Un an du monde sans le cœur : 8,3 s → 2,3 s**, résultats identiques (europe-10 au bit près, le monde à 5e-16 près). Commerce mensuel sur indices (grille statique des distances construite au chargement, affinités par mode de transport, embargos par bien, tampons de flux réutilisés) ; diplomatie mensuelle sur des entrées gelées (blocs de chaque nation, sanctions et ennemis indexés) ; diffusion de la recherche comptée une fois par pas ; ensembles plutôt que listes dans les événements.
+- **Sur le cœur : tick p99 84 → 8,8 ms, moyenne 2,6 → 0,9 ms** sur un an. Terres revendiquées comptées au fil de l'eau par un crochet du cœur (ci-dessous) au lieu d'un parcours des 8 millions de tuiles après chaque capture ; tuiles contestées indexées ; comptes de la vue recomptés au plus une fois par jour de jeu ; côte d'une nation relue seulement quand son territoire a changé ; géométrie quotidienne des fronts lue un tick après minuit ; premiers projets de recherche de l'IA choisis au chargement ; pas « à blanc » du commerce et de la diplomatie sur des copies au chargement (`warmUp`).
+- **Travail mensuel non étalé** : répartir les six domaines mensuels sur plusieurs ticks a été essayé puis retiré (25 tests supposent les effets mensuels à la frontière du jour). Pas mensuels de 55 à 77 ms, sous le budget de 100 ms, sauf les deux premiers mois d'une session (≈ 124 et 90 ms, code encore froid).
+
+### Performance sur world-2026 (J6c.4)
+
+Mesure finale (`docs/veritable/reports/J6/perf/`, cœur, graine 42, 50 ans en 4 min 42 s) :
+
+| Fenêtre d'un an | Tick p99 | Tick maximum | Ticks > 100 ms | Sauvegarde au début | Tas au début |
+| --- | --- | --- | --- | --- | --- |
+| 2026 | 5,8 ms | 113 ms | 1 (premier pas mensuel de la session) | 1,41 Mo | 66 Mo |
+| 2040 | 4,0 ms | 53 ms | 0 | 1,73 Mo | 75 Mo |
+| 2060 | 4,1 ms | 53 ms | 0 | 1,91 Mo | 76 Mo |
+| 2075 | 3,8 ms | 54 ms | 0 | 2,00 Mo | 76 Mo |
+
+Sauvegarde de 2,01 Mo au bout de 50 ans (critère : moins de 5 Mo) ; tas de 67 Mo au départ à 76 Mo à la fin (stable) ; chargement en 2,8 s. **Exception** : le premier pas mensuel d'une session (le 1er février 2026 d'une nouvelle campagne, ou le premier mois qui suit un chargement) prend 113 à 124 ms, code encore froid ; ensuite 50 à 76 ms. Le préchauffage au chargement (commerce, croissance et diplomatie sur des copies, deux fois) le ramène de 666 ms ; préchauffer aussi les blocs et les événements ferait tourner des étapes qui mettent à jour la vue partagée des adhésions : écarté.
+
+**Dans le navigateur** (navigateur intégré, build de dev, en chargeant les sauvegardes de la mesure headless, fenêtres de 12 s à ×5) : 49,9, 49,8, 50,0 et 49,6 ticks/s à partir du 1er janvier 2026, 2040, 2060 et 2075 ; 49,3, 49,4, 49,5 et 49,4 sur une fenêtre qui traverse le 1er mars (pas mensuel et sauvegarde automatique compris), une fois le premier mois passé. Critère : au moins 49.
+
+Ce qui a été corrigé pour y arriver, après le calibrage des guerres (qui avait porté le p99 de 2026 à 11,5 ms et le maximum à 275 ms) :
+- **la côte d'une nation dont le territoire a changé est relue au plus une fois par mois de jeu** (`COAST_REFRESH_TICKS`) : une nation en guerre change de territoire à chaque tick, chaque capture invalidait l'instantané naval, et la lecture complète de sa frontière coûtait plusieurs millisecondes à chaque fois ;
+- la marine de l'IA ne lit l'instantané naval que pour une nation en guerre ou en blocus ;
+- la dérive mensuelle des relations parcourt les paires dans leur ordre de stockage, lit chaque ligne une fois et n'écrit que ce qui bouge (mêmes relations, au bit près) ;
+- **sauvegarde automatique mensuelle allégée** : l'instantané du monde coûtait au worker 230 à 330 ms à chaque 1er du mois (×5 tombait à 47,9 ticks/s sur une fenêtre qui traverse un mois) ; lecture des tuiles par une boucle simple et une table des identifiants courts du cœur, et plus de copie des deux grilles de tuiles tout juste capturées (130 à 170 ms, mêmes octets).
+- **Sauvegardes headless chargeables dans le jeu** : les parties headless s'appellent `hl` suivi de la graine sur huit chiffres ; `headless-42` ne respectait pas le format des identifiants de partie du client. Toutes les campagnes headless changent de tirage : les résultats ci-dessous ont été rejoués après ce changement.
+
+### Journal et historiques (J6c.2)
+
+- **Compactage** chaque 1er janvier : les entrées de plus de `save.journalFullYears` = 10 ans de jeu sont agrégées en résumés annuels par nation et par catégorie (type `yearly-summary`, sauvegarde v6) ; les tournants d'une campagne restent un par un (guerres, paix, coups, révolutions, défauts, notes, objectifs).
+
+### Écrans à l'échelle (J6c.3)
+
+- **Région et sous-région du monde** de chaque fiche (`geography`, M49 de l'ONU par Natural Earth, sinon la nation mère d'une entité ou son revendicateur ; noms `world-region.*`).
+- **Listes de toutes les nations** avec recherche (casse et accents ignorés), filtres par région ou sous-région et par bloc, tri par nom, relations, stabilité ou PIB : Diplomatie, Opinion, Dirigeants. **Embargos de la nation choisie** dans les deux sens, à la place de la matrice de 207 × 12 cases.
+- **Choix de la nation** par une petite carte cliquable du scénario et une liste avec recherche (`NationPicker`).
+
+### Guerres du monde (J6c.5)
+
+La première série de campagnes mondiales sur le cœur donnait 1 à 3 guerres nouvelles par campagne (critère : médiane de 10 à 30), presque toutes Somalie–Somaliland et Yémen ; sans le cœur, 1 à 11, dominées par des boucles Soudan–FSR (les guerres sans front du monde statique ne prennent aucune tuile et finissent toujours « blanches » : le calibrage se fait sur le cœur). Le diagnostic, paire par paire : une cinquantaine de voisins hostiles sans casus belli, des relations hostiles de 2026 qui guérissent en deux ou trois ans, et un coût attendu qui interdit presque toute guerre. Changements, dans l'ordre où ils ont été mesurés :
+
+1. **Sanctions attendues par l'IA = la règle réelle.** Elle comptait tout partenaire partageant un bloc avec la cible, forums compris (G20, Union africaine, Ligue arabe) ; elle compte désormais la cible et les partenaires qui partagent un bloc avec elle **et** dont les relations avec l'agresseur tomberaient sous −40 (coût de la déclaration, chaque mois de guerre sans casus belli, dérive d'un allié de la cible vers une affinité plus basse).
+2. **Défiance héritée** (`diplomacy.mistrust`) : l'hostilité des relations du premier jour (fichier de relations du scénario) abaisse l'affinité de la paire de `share` (1) × la relation négative, et s'efface de moitié tous les 25 ans. Sans elle, Inde–Pakistan, les deux Corées ou Éthiopie–Érythrée redevenaient amicales en trois ans. Nulle sans fichier de relations : europe-10 inchangé.
+3. **Incidents sur les frontières tendues** : un voisin « tendu » a des relations ≤ `events.tenseNeighbourRelations` (−10, le seuil de guerre de l'IA) ; l'incident de frontière (2 % par mois, recharge 36 mois) et la violation d'espace aérien (1,2 %) tombent sur lui, jamais sur un voisin ami. Avant : 0,4 % par mois sur un voisin tiré au hasard, la France contre la Belgique autant que l'Inde contre le Pakistan.
+4. **Coût proportionné à la guerre** : épuisement et réputation attendus × min(1, 1,5 / rapport de force). Les pertes qui usent une nation baissent quand l'écart de forces grandit ; Israël contre le Liban ne coûte pas une guerre entre égaux. La Russie contre l'Ukraine reste bloquée (rapport 1,6).
+5. **Coalitions limitées aux nations capables de combattre** : une voisine terrestre du camp combattu, ou une alliée (bloc d'alliance ou d'union, garantie) de la victime principale. À 208 nations, un tir nucléaire russe faisait entrer près de 190 nations en guerre contre la Russie, Vanuatu compris. Sur europe-10, la coalition contre la France du test 2 du J3 passe de huit à six nations (l'Ukraine et la Russie n'y entrent plus).
+6. **Échelle de carte** (`data/mapScale.ts`, `mapScale.referenceGeorefScale`) : les constantes de guerre en tuiles ont été calibrées sur la carte Europe (≈ 2,7 km par tuile) ; la carte monde a des tuiles de ≈ 9,4 km. Avec f = 0,29 (rapport des échelles des deux géoréférencements) : distances × f (longueur d'un segment 200 → 58 tuiles, portée du ravitaillement 40 → 12, défense des villes 15 → 4, tête de pont 6 → 2, distance capitale–front du nucléaire 100 → 29), vitesses de conquête × f², valeur d'une tuile au score de guerre ÷ f². Sans elle, un front du monde prenait environ six fois plus de terre par jour, et Moscou restait « à moins de 100 tuiles » du front ukrainien, au niveau de menace 2, pendant toute la guerre du scénario. La carte Europe est sa propre référence : europe-10 au bit près. **Non converti** : les rayons des bombes du cœur OpenFront (constantes du cœur, en tuiles) ; sur la carte monde une bombe couvre environ douze fois plus de surface qu'en Europe (J7).
+7. **Aucun tir sous le niveau 2** : la table du J5a laissait au niveau 1 (en guerre, rien perdu) une chance sur un million par jour ; les nombreuses années de guerre entre puissances nucléaires du monde finissent par la tirer (un tir russe sur l'Ukraine au niveau 1 en 2039 dans une campagne d'essai). Niveau 1 à zéro pour toutes les doctrines.
+
+### Corrections
+
+- **Structures du premier jour facturées depuis le J5a** : le compte des structures du premier jour est pris pendant que le monde attend encore la restauration qui pose la ville de chaque capitale et les silos ; il était vide, et chaque nation payait 5 à 8 Md$ le premier mois. Négligeable pour la France ; seize petites nations (Vanuatu, Bhoutan, Ossétie du Sud…) faisaient défaut en février 2026 sur le cœur. Le premier compte d'une nation sert désormais de référence sans être facturé.
+- **Embargo et prix à 208 nations** : la règle du J2 retirait de l'offre qui forme le prix **tout** l'invendu d'un exportateur dès qu'un seul acheteur l'embarguait. L'Arabie saoudite, l'Irak, le Koweït, les Émirats et le Kazakhstan, embargués chacun par un seul petit pays, voyaient leur excédent ordinaire quitter le marché ; le prix montait, ils produisaient davantage, et le pétrole dépassait deux fois son prix de base. Seul ce que les embargos lui ferment (ce qu'il retient, et son invendu dans la part de son marché qu'ils ferment) est désormais écoulé avec la décote et retiré du prix. Sur europe-10, où le reste du monde absorbe tout, la différence est faible (test 1 du J3 : gaz à l'import +37 % la première année, PIB russe −5,5 % à deux ans).
+- **Pilote headless du cœur** : il n'avait jamais vidé les tampons de mises à jour que le `GameRunner` du jeu vide à chaque tick (tuiles, joueurs, attaques, ogives). À 208 nations le tampon des joueurs dépassait la longueur maximale d'un tableau vers trente ans de jeu (`RangeError`), et toute mesure du tas headless en était faussée. Le jeu n'était pas touché.
+
+### Campagnes mondiales (J6c.5)
+
+RÉSULTATS À COMPLÉTER.
+
+### Non-régression sur europe-10 (J6c.6)
+
+- **J3** (`docs/veritable/reports/J6/non-regression/J3/`, cœur, graine 42) : embargo UE, gaz à l'import +37 % la première année, PIB russe −5,5 % à deux ans ; France → Espagne sans casus belli, 5 sanctionneurs à six mois, coalition de six, 447 Md$ de PIB perdus contre 11 Md$ de terres prises, stabilité 0,48 contre 0,62 ; blocus britannique, commerce maritime norvégien −53 % ; débarquement italien refusé. Les quatre critères tiennent.
+- **J4** (`docs/veritable/reports/J6/non-regression/J4/`) : les cinq critères tiennent.
+- **J5** : À COMPLÉTER.
+
+### Tests joués (J6c.6)
+
+Guides rejoués dans Edge sans fenêtre (serveur de développement, build de dev), une capture par étape et les chiffres relevés : `docs/veritable/reports/J6/playtest/` (`j4-*`, `j5-*`, `j6-*` et un journal `*-log.json` par guide).
+
+#### Bogues trouvés et corrigés
+
+1. **Journal** : « gouvernement formé (fra-renaissance), dirigé par leader.fra-gabriel-attal.parody » — identifiants bruts des partis et clés des dirigeants. Nommés désormais (écran Objectifs et journal, panneau).
+2. **Technologie** : avec trois projets en cours, les nœuds d'une branche de bloc étrangère affichaient « file pleine » et jamais « réservé aux membres du bloc ». La raison durable passe désormais en premier.
+3. **Blocs** : la note « seuls les membres simulés votent et paient (carte Europe ; tous les pays au J6) » s'affichait aussi sur la carte monde, où tous les membres votent. Elle ne s'affiche plus que si le scénario ne simule pas tous les membres du bloc.
+
+#### Écarts aux guides (non corrigés, à trancher)
+
+Guide J4 (élection française d'avril 2027) :
+- **Projection** : les six partis sont serrés entre 15 et 19 % ; Les Républicains en tête (19 %), le Rassemblement national à 16 % alors qu'il a fait 33 % au dernier scrutin.
+- **Opinion lente** : TVA +8 points et social −5 : salariés 50 → 50 % à trois mois, 38 % à quinze mois (guide : 30-35 % en trois mois) ; retraités 47 % puis 41 %.
+- **TVA plafonnée à 40 %** (la cible demandée, 41,3 %, est ramenée au plafond).
+- **« Recul de l'âge de la retraite »** est hors de la fenêtre idéologique de Renaissance : le bouton « Voter » est grisé (le guide le suppose disponible).
+- **Élection volée** : fraude révélée, légitimité 80 → 55 % (guide : 50 %) ; relations avec les démocraties autour de 45-50 (−30).
+- **Élection honnête** : clientélisme sur les retraités, santé et éducation +2, TVA −2, programme de logement : retraités 57 % (guide : 65-70 %), sortant à 16,4 % (guide : 18-20 %) ; l'élection est perdue.
+- **Risque de coup** affiché 0,00 à 0,01 % par mois (formule du J5, sans période de grâce).
+
+Guide J5 :
+- **28 points de recherche par mois** au lieu d'environ 35 : la recherche publique française est à 0,8 % du PIB depuis que les intérêts ont quitté les postes de dépense (J6b).
+- **Programme technologique** adopté le 1er du mois suivant (5 voix contre 0) ; le bonus de +25 % n'a pas été relevé (mon script relevait les points trop tôt).
+- **Sanctions contre la France agresseur** : en 2027 elles viennent du G7 (présidence britannique) et de quatre nations, pas encore de la présidence polonaise de l'UE à la date du relevé.
+
+Guide J6 : aucun écart. Le clic sur la petite carte, qui ne passe pas dans Edge sans fenêtre, a été vérifié dans le navigateur intégré (l'Inde est choisie).
+
+#### Lisibilité (pour le J7, non corrigé)
+
+- Le titre gris de l'écran ouvert passe sous la barre du haut ; « En pause » se coupe sur deux lignes ; la barre change de largeur avec la date (« 2 septembre 2026 » décale les boutons).
+- Quelques secondes après le départ, la caméra héritée zoome très près de la nation du joueur (la carte devient illisible).
+- Effectifs hérités (« 1.87K ») sous les noms de nations ; barre d'unités héritée en bas ; points des villes qui s'amoncellent sur la carte monde ; Groenland étiqueté « Danemark ».
+- Les écrans couvrent le centre de la carte ; « Déclarer la guerre (Aucun (guerre d'agression)) » ; la liste des 42 zones maritimes dans la Diplomatie ; en-tête « Coût / abrogation » et colonne des coûts de la Technologie coupés sur deux lignes.
+- Le tableau des Blocs d'europe-10 liste les douze blocs, même ceux sans aucun membre simulé.
+- Chaque rechargement d'une sauvegarde écrit dans la console « got wrong turn have turns 0, received turn 1 » (boucle de tours héritée), sans effet visible.
+
+### Modifications de `src/core` au J6c
+
+| Fichier | Modification | Raison |
+| --- | --- | --- |
+| `src/core/game/Game.ts`, `GameImpl.ts` | `setVeritableTileOwnerListener(listener)`, appelé par `conquer` et `relinquish` ; refusé hors campagne | Terres revendiquées comptées au fil de l'eau |
+
+### Schémas (sauvegarde `schemaVersion: 6`)
+
+`save.ts` (type de journal `yearly-summary`), `nation.ts` (`geography`, facultatif), `event.ts` (`tense-neighbor`), `georef.ts` (nouveau), `config.ts` (`save.journalFullYears`, `mapScale`, `diplomacy.mistrust`, `events.tenseNeighbourRelations`). La migration v5 → v6 reste testée sur la vraie sauvegarde J5 (`save/fixtures/j5-europe-10.vsave`).
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.
