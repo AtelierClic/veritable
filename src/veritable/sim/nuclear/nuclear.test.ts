@@ -151,6 +151,20 @@ describe("the daily probability of a shot", () => {
     expect(world.launched).toEqual([]);
     expect(sim.read().nuclear.nations.BBB.warheads).toBe(10);
   });
+
+  it("is nil for a nation that lost all its land (no vector), even at level 3 (J6)", () => {
+    const config = quietConfig();
+    config.nuclear.base["first-use-possible"] = [0, 1, 1, 1];
+    const { sim, world, days, aggressive } = campaign(nuclearBBB, config);
+    aggressive("BBB", 0.9);
+    for (let t = 4; t < 12; t++) world.setOwner(t, "AAA");
+    days(1);
+    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    days(3);
+    expect(sim.read().nuclear.nations.BBB.threat).toBe(3);
+    expect(sim.read().nuclearRisk.BBB).toBe(0);
+    expect(world.launched).toEqual([]);
+  });
 });
 
 describe("a shot and its consequences", () => {

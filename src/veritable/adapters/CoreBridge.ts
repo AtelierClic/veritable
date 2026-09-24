@@ -45,6 +45,10 @@ import {
 } from "../sim/war/geometry";
 import { NationBinding } from "./scenarioWorld";
 
+// How many of a nation's own tiles, nearest to its capital first, a silo
+// built far from the capital tries (a search bound, not a game constant).
+const SILO_CANDIDATES = 200;
+
 // The only place where the Véritable simulation meets the OpenFront core.
 //
 // Tiles belong to nations: the core stores a 12-bit owner smallID per tile,
@@ -481,7 +485,11 @@ export class CoreBridge implements WorldPort {
   }
 
   // A silo near the capital, built at once when the nation has none (a save
-  // made before the J5, or a silo lost to the war).
+  // made before the J5, or a silo lost to the war). J6: when the land around
+  // the capital is lost too (the silo falls with it), the silo goes on the
+  // nation's own land nearest to its capital, wherever that is: an arsenal
+  // is dispersed, and the forced invasion test found that a nation that had
+  // lost its capital could never fire.
   private ensureSilo(player: Player): boolean {
     if (player.units(UnitType.MissileSilo).some((u) => u.isActive())) {
       return true;
@@ -491,6 +499,16 @@ export class CoreBridge implements WorldPort {
     if (capital === undefined) return false;
     const cx = g.x(capital);
     const cy = g.y(capital);
+    const build = (tile: number): boolean => {
+      if (g.owner(tile) !== player || !g.isLand(tile)) return false;
+      player.addGold(g.unitInfo(UnitType.MissileSilo).cost(g, player));
+      const spawn = player.canBuild(UnitType.MissileSilo, tile);
+      if (spawn === false) return false;
+      const unit = player.buildUnit(UnitType.MissileSilo, spawn, {});
+      const exec = structureExecution(g, player, unit);
+      if (exec !== null) g.addExecution(exec);
+      return true;
+    };
     for (let r = 4; r <= 40; r++) {
       for (let dy = -r; dy <= r; dy++) {
         for (let dx = -r; dx <= r; dx++) {
@@ -498,17 +516,21 @@ export class CoreBridge implements WorldPort {
           const x = cx + dx;
           const y = cy + dy;
           if (!g.isValidCoord(x, y)) continue;
-          const tile = g.ref(x, y);
-          if (g.owner(tile) !== player || !g.isLand(tile)) continue;
-          player.addGold(g.unitInfo(UnitType.MissileSilo).cost(g, player));
-          const spawn = player.canBuild(UnitType.MissileSilo, tile);
-          if (spawn === false) continue;
-          const unit = player.buildUnit(UnitType.MissileSilo, spawn, {});
-          const exec = structureExecution(g, player, unit);
-          if (exec !== null) g.addExecution(exec);
-          return true;
+          if (build(g.ref(x, y))) return true;
         }
       }
+    }
+    // Farther away: the nearest land the nation still holds, tried in order
+    // of distance (ties by tile), a bounded number of candidates.
+    const candidates = [...player.tiles()]
+      .filter((tile) => g.isLand(tile))
+      .map((tile) => ({
+        tile,
+        d: Math.max(Math.abs(g.x(tile) - cx), Math.abs(g.y(tile) - cy)),
+      }))
+      .sort((a, b) => a.d - b.d || a.tile - b.tile);
+    for (const { tile } of candidates.slice(0, SILO_CANDIDATES)) {
+      if (build(tile)) return true;
     }
     return false;
   }

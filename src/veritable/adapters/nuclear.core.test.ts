@@ -142,4 +142,43 @@ describe("nuclear weapons on the real core (Europe map)", () => {
       after.diplomacy.sanctions.filter((s) => s.against === "FRA").length,
     ).toBeGreaterThanOrEqual(8);
   }, 300_000);
+
+  it("a nation that lost its silo and the land around its capital builds one farther away and fires (J6)", async () => {
+    const { game, session, tick } = await europe("RUS");
+    tick(game.config().spawnImmunityDuration() + 22);
+    // The player's nation (Russia here) is the human.
+    const russia = game.player("human_id");
+    const ukraine = nameOf(game, "UKR");
+    for (const silo of russia.units(UnitType.MissileSilo)) silo.delete(false);
+    // Moscow and everything within 45 tiles of it passes to Ukraine.
+    const capital = russia.spawnTile()!;
+    for (const tile of [...russia.tiles()]) {
+      const d = Math.max(
+        Math.abs(game.x(tile) - game.x(capital)),
+        Math.abs(game.y(tile) - game.y(capital)),
+      );
+      if (d <= 45) ukraine.conquer(tile);
+    }
+    expect(russia.units(UnitType.MissileSilo)).toHaveLength(0);
+    tick(20);
+    session.sim.apply({
+      type: "nuclear-launch",
+      target: "UKR",
+      aim: "capital",
+      confirmed: true,
+    });
+    const silos = russia.units(UnitType.MissileSilo);
+    expect(silos).toHaveLength(1);
+    const far = Math.max(
+      Math.abs(game.x(silos[0].tile()) - game.x(capital)),
+      Math.abs(game.y(silos[0].tile()) - game.y(capital)),
+    );
+    expect(far).toBeGreaterThan(45);
+    let strike = session.sim.read().nuclear.strikes[0];
+    for (let i = 0; i < 40 && strike.status === "in-flight"; i++) {
+      tick(20);
+      strike = session.sim.read().nuclear.strikes[0];
+    }
+    expect(strike.status).toBe("detonated");
+  }, 300_000);
 });

@@ -1,0 +1,131 @@
+{
+  "test": "dead-hand",
+  "seeds": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+  ],
+  "shownProbability": 0.6999999999999997,
+  "firedShare": 0.75,
+  "withinTolerance": true,
+  "results": [
+    {
+      "seed": 1,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 2,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 3,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 4,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 5,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 6,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 7,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 8,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 9,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 10,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 11,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 12,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 13,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 14,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 15,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 16,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 17,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 18,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 19,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 20,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    }
+  ]
+}

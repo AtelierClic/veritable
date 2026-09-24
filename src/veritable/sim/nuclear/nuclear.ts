@@ -179,6 +179,15 @@ export function fireProbability(
 ): number {
   const arsenal = env.nuclear.nations[id];
   if (arsenal === undefined || arsenal.warheads <= 0) return 0;
+  // J6: a nation without land has no vector (a silo stands on its land).
+  const nation = env.nations.find((n) => n.id === id);
+  if (
+    nation === undefined ||
+    nation.status !== "active" ||
+    nation.tileCount <= 0
+  ) {
+    return 0;
+  }
   const base = env.ctx.config.nuclear.base[arsenal.doctrine][arsenal.threat];
   return Math.min(
     1,
