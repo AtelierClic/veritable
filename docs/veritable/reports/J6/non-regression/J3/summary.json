@@ -9,24 +9,24 @@
     "sanctionersAt6Months": 5,
     "warsAndJoins": [
       "FRA>ESP@2027-01-01",
-      "POL>FRA@2027-12-01",
-      "TUR>FRA@2027-12-01",
-      "DEU>FRA@2028-01-01",
-      "GBR>FRA@2028-02-01",
-      "ITA>FRA@2028-02-01",
-      "NOR>FRA@2028-02-01"
+      "DEU>FRA@2027-12-01",
+      "GBR>FRA@2027-12-01",
+      "ITA>FRA@2027-12-01",
+      "POL>FRA@2028-01-01",
+      "TUR>FRA@2028-02-01",
+      "NOR>FRA@2028-08-01"
     ],
-    "netTilesAt3Years": 939,
-    "contestedTilesAt3Years": 53273,
-    "tileValueUsd": 10584332202.192856,
-    "gdpLossUsd": 447131597661.5581,
-    "frenchGdpRatio": 0.8703549477366123,
-    "frenchStabilityAt3Years": 0.47939576166446873,
-    "controlStabilityAt3Years": 0.6206362612519333
+    "netTilesAt3Years": 8081,
+    "contestedTilesAt3Years": 55284,
+    "tileValueUsd": 91037581415.77869,
+    "gdpLossUsd": 453150903356.1787,
+    "frenchGdpRatio": 0.8686768433493444,
+    "frenchStabilityAt3Years": 0.47819229682071773,
+    "controlStabilityAt3Years": 0.6208151906973781
   },
   "blockade-gbr-nor": {
-    "norwegianBlockadeAt6Months": 0.45887868135011534,
-    "norwegianMaritimeTradeRatioAt6Months": 0.4719016996406854
+    "norwegianBlockadeAt6Months": 0.4589069142476,
+    "norwegianMaritimeTradeRatioAt6Months": 0.4720368255862987
   },
   "landing-ita-esp": {
     "landingsRefused": 1,
