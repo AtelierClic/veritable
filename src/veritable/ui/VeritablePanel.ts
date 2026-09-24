@@ -8,6 +8,7 @@ import { IndexedDbSaveStore } from "../save/IndexedDbSaveStore";
 import { SaveMeta, SaveStore } from "../save/SaveStore";
 import { peekSchemaVersion, SAVE_FILE_EXTENSION } from "../save/serialize";
 import { ReadonlyWorldView } from "../sim/VeritableSim";
+import { namedParams } from "./journalText";
 import "./NationPicker";
 import {
   newCampaignStartInfo,
@@ -321,6 +322,7 @@ export class VeritablePanel extends LitElement {
                   ? vt(`journal.category.${v}`)
                   : v;
           }
+          Object.assign(params, namedParams(view, entry.nation, entry.params));
           return html`<div>
             ${entry.date} — ${vt(`journal.${entry.kind}`, params)}
           </div>`;

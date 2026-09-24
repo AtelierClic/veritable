@@ -22,6 +22,8 @@ export class HeadlessBrowser {
   private nextId = 1;
   private readonly pending = new Map<number, Pending>();
   private readonly listeners = new Map<string, ((params: unknown) => void)[]>();
+  // Errors of the page (console errors, uncaught exceptions), for the logs.
+  readonly errors: string[] = [];
 
   private constructor(
     private readonly process: ChildProcess,
@@ -104,6 +106,27 @@ export class HeadlessBrowser {
       );
     });
     const browser = new HeadlessBrowser(child, socket, profile, width, height);
+    browser.on("Runtime.exceptionThrown", (params) => {
+      const p = params as {
+        exceptionDetails: {
+          text: string;
+          exception?: { description?: string };
+        };
+      };
+      browser.errors.push(
+        p.exceptionDetails.exception?.description ?? p.exceptionDetails.text,
+      );
+    });
+    browser.on("Runtime.consoleAPICalled", (params) => {
+      const p = params as {
+        type: string;
+        args: { value?: unknown; description?: string }[];
+      };
+      if (p.type !== "error") return;
+      browser.errors.push(
+        p.args.map((a) => String(a.value ?? a.description ?? "")).join(" "),
+      );
+    });
     await browser.send("Page.enable");
     await browser.send("Runtime.enable");
     await browser.send("Emulation.setDeviceMetricsOverride", {
@@ -121,6 +144,12 @@ export class HeadlessBrowser {
       this.pending.set(id, { resolve, reject });
       this.socket.send(JSON.stringify({ id, method, params }));
     });
+  }
+
+  on(method: string, listener: (params: unknown) => void): void {
+    const list = this.listeners.get(method) ?? [];
+    list.push(listener);
+    this.listeners.set(method, list);
   }
 
   private once(method: string, timeoutMs: number): Promise<void> {
@@ -177,6 +206,19 @@ export class HeadlessBrowser {
     fs.writeFileSync(file, Buffer.from(result.data, "base64"));
   }
 
+  // A real click of the mouse at a point of the page (CSS pixels).
+  async click(x: number, y: number): Promise<void> {
+    for (const type of ["mouseMoved", "mousePressed", "mouseReleased"]) {
+      await this.send("Input.dispatchMouseEvent", {
+        type,
+        x,
+        y,
+        button: "left",
+        clickCount: type === "mouseMoved" ? 0 : 1,
+      });
+    }
+  }
+
   // Gives a file input of the page a file from the disk.
   async setFile(selector: string, file: string): Promise<void> {
     const { root } = (await this.send("DOM.getDocument", { depth: -1 })) as {
@@ -201,8 +243,16 @@ export class HeadlessBrowser {
     }
     this.socket.close();
     this.process.kill();
-    await sleep(500);
-    fs.rmSync(this.profile, { recursive: true, force: true });
+    // Edge may hold its profile a moment after it exits.
+    for (let attempt = 0; attempt < 10; attempt++) {
+      await sleep(500);
+      try {
+        fs.rmSync(this.profile, { recursive: true, force: true });
+        return;
+      } catch {
+        // still locked
+      }
+    }
   }
 }
 

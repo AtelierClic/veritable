@@ -22,6 +22,7 @@ import type { Tally } from "../sim/blocs/blocs";
 import { relation } from "../sim/diplomacy/diplomacy";
 import { entryCategory } from "../sim/journal";
 import { BlocView, FrontView, ReadonlyWorldView } from "../sim/VeritableSim";
+import { namedParams } from "./journalText";
 import {
   filterNations,
   NationFilter,
@@ -2507,6 +2508,7 @@ export class VeritableScreens extends LitElement {
               <span class="tabular-nums text-gray-500">${j.date}</span>
               ${vt(`journal.${j.kind}`, {
                 ...j.params,
+                ...namedParams(view, j.nation, j.params),
                 nation:
                   j.nation === undefined
                     ? ""

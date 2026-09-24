@@ -1,4 +1,5 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 import { HeadlessBrowser, sleep } from "./browser";
 
@@ -60,7 +61,12 @@ window.vt = {
   },
   sim() {
     const s = this.screens();
-    return (s && s.sim) || this.panel().sim;
+    const sim = (s && s.sim) || this.panel().sim;
+    if (!sim) {
+      // The campaign was detached (the worker failed): what the page shows.
+      throw new Error("campaign detached: " + document.body.innerText.slice(0, 800));
+    }
+    return sim;
   },
   async view() { return await this.sim().read(); },
   async apply(command) { return await this.sim().apply(command); },
@@ -138,6 +144,13 @@ export interface StepLog {
 export class Playtest {
   readonly log: StepLog[] = [];
   private index = 0;
+  // Captures and log are written outside the repository while the test
+  // runs, and copied to outDir at the end: a file written under the project
+  // makes Tailwind rebuild the stylesheet, and the dev server reloads the
+  // page in the middle of the test.
+  private readonly work = fs.mkdtempSync(
+    path.join(os.tmpdir(), "veritable-playtest-"),
+  );
 
   constructor(
     readonly browser: HeadlessBrowser,
@@ -185,7 +198,7 @@ export class Playtest {
       .replace(/^-|-$/g, "")
       .slice(0, 40);
     const file = path.join(
-      this.outDir,
+      this.work,
       `${this.prefix}-${String(this.index).padStart(2, "0")}-${slug}.png`,
     );
     await this.browser.screenshot(file);
@@ -204,15 +217,31 @@ export class Playtest {
   }
 
   writeLog(): void {
-    fs.mkdirSync(this.outDir, { recursive: true });
     fs.writeFileSync(
-      path.join(this.outDir, `${this.prefix}-log.json`),
+      path.join(this.work, `${this.prefix}-log.json`),
       `${JSON.stringify(this.log, null, 2)}\n`,
     );
   }
 
   async close(): Promise<void> {
+    const errors = this.browser.errors.filter(
+      (e) => !/cosmetics|ramp\.|Refresh failed|Failed to fetch/.test(e),
+    );
+    if (errors.length > 0) {
+      this.log.push({
+        step: "errors",
+        title: "Erreurs de la page",
+        date: null,
+        capture: "",
+        notes: errors,
+      });
+    }
     this.writeLog();
     await this.browser.close();
+    fs.mkdirSync(this.outDir, { recursive: true });
+    for (const file of fs.readdirSync(this.work)) {
+      fs.copyFileSync(path.join(this.work, file), path.join(this.outDir, file));
+    }
+    fs.rmSync(this.work, { recursive: true, force: true });
   }
 }

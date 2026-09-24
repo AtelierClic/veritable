@@ -1,0 +1,169 @@
+[
+  {
+    "step": "01",
+    "title": "Mise en place : France, europe-10",
+    "date": "2026-01-01",
+    "capture": "j4-01-mise-en-place-france-europe-10.png",
+    "notes": [
+      "date 2026-01-01, jeu en pause"
+    ]
+  },
+  {
+    "step": "02",
+    "title": "1. Dirigeants",
+    "date": "2026-01-01",
+    "capture": "j4-02-1-dirigeants.png",
+    "notes": [
+      "Dirigeants Fermer Dirigeant Mastuel Microne — chef de l'État, 48 ans, Renaissance économie +0.3 · autorité -0.1 · souveraineté -0.7 agressivité 40 %corruption 15 %charisme 60 %compétence 60 % Partis Rassemblement national 33.0 % opposition — économie +0.1 · autorité +0.4 · souveraineté +0.7 dirigé par Jordan Bardoche (charisme 50 %, compétence 50 %) Renaissance 20.0 % au gouvernement — économie -0.0 · autorité -0.3 · souveraineté -0.5 dirigé par Gabriel Attelle (charisme 50 %, compétence 50 %) La France insoumise 12.0 % opposition — économie -0.6 · autorité -0.2 · souveraineté +0.2 dirigé par "
+    ]
+  },
+  {
+    "step": "03",
+    "title": "1. Politique au départ",
+    "date": "2026-01-01",
+    "capture": "j4-03-1-politique-au-depart.png",
+    "notes": [
+      "légitimité 80.0 % (guide : 80 %)",
+      "capital 30 (guide : 30)",
+      "liberté de la presse 85.0 % (guide : 85 %), contrôle des médias 0.0 %",
+      "risque de coup 0.0 % par mois (guide J4 : 0 par la période de grâce ; supprimée au J5)",
+      "prochaine élection 2027-04-24 (guide : 24 avril 2027)",
+      "gouvernement fra-renaissance",
+      "projection fra-les-republicains 19.3 %, fra-les-ecologistes-europe-ecologie-les-verts 17.6 %, fra-la-france-insoumise 16.0 %, fra-rassemblement-national 15.9 %, fra-renaissance 15.8 %, fra-parti-socialiste 15.3 %"
+    ]
+  },
+  {
+    "step": "04",
+    "title": "1. Objectifs épinglés et note",
+    "date": "2026-01-01",
+    "capture": "j4-04-1-objectifs-epingles-et-note.png",
+    "notes": [
+      "« Gagner une élection » affiché : true"
+    ]
+  },
+  {
+    "step": "05",
+    "title": "2. Perdre : trois mois après TVA +8 et social −5",
+    "date": "2026-04-01",
+    "capture": "j4-05-2-perdre-trois-mois-apres-tva-8-et-socia.png",
+    "notes": [
+      "date 2026-04-01",
+      "groupes business 53.5 %, youth 52.2 %, farmers 51.1 %, military 50.5 %, workers 50.3 %, minorities 50.1 %, religious 49.8 %, retirees 47.2 % (guide : salariés et retraités 50 % → 30-35 %)",
+      "projection fra-les-republicains 19.3 %, fra-les-ecologistes-europe-ecologie-les-verts 17.6 %, fra-la-france-insoumise 16.0 %, fra-rassemblement-national 15.9 %, fra-renaissance 15.9 %, fra-parti-socialiste 15.3 %"
+    ]
+  },
+  {
+    "step": "06",
+    "title": "2. Perdre : la loi sur les retraites",
+    "date": "2026-04-01",
+    "capture": "j4-06-2-perdre-la-loi-sur-les-retraites.png",
+    "notes": [
+      "bouton « Voter » cliqué : true, capital après 40",
+      "date 2026-04-01"
+    ]
+  },
+  {
+    "step": "07",
+    "title": "2. Perdre : un mois avant le scrutin",
+    "date": "2027-04-01",
+    "capture": "j4-07-2-perdre-un-mois-avant-le-scrutin.png",
+    "notes": [
+      "projection fra-les-republicains 19.4 %, fra-les-ecologistes-europe-ecologie-les-verts 17.8 %, fra-la-france-insoumise 16.2 %, fra-rassemblement-national 16.0 %, fra-parti-socialiste 15.5 %, fra-renaissance 15.1 %",
+      "groupes military 52.2 %, business 50.4 %, farmers 48.9 %, youth 48.5 %, religious 47.6 %, retirees 40.9 %, minorities 40.8 %, workers 38.3 %"
+    ]
+  },
+  {
+    "step": "08",
+    "title": "2. Perdre : après le scrutin",
+    "date": "2027-05-15",
+    "capture": "j4-08-2-perdre-apres-le-scrutin.png",
+    "notes": [
+      "2027-05-01 election-held {\"winner\":\"fra-les-republicains\",\"share\":\"19.5\",\"alternation\":\"true\"}",
+      "2027-05-01 government-formed {\"parties\":\"fra-les-republicains\",\"leader\":\"leader.fra-bruno-retailleau.parody\"}",
+      "gouvernement fra-renaissance → fra-les-republicains, capital 30"
+    ]
+  },
+  {
+    "step": "09",
+    "title": "2. Perdre : les dirigeants après l'alternance",
+    "date": "2027-05-15",
+    "capture": "j4-09-2-perdre-les-dirigeants-apres-l-alternan.png",
+    "notes": [
+      "Dirigeants Fermer Dirigeant Bruno Rétaillo — chef de parti, 66 ans, Les Républicains économie +0.3 · autorité +0.4 · souveraineté +0.5 agressivité 47 %corruption 10 %charisme 50 %compétence 50 % Partis Les Républicains 19.5 % au gouvernement — économie +0.3 · autorité +0.4 · souveraineté +0.5 dirigé par Bruno Rétaillo (charisme 50 %, compétence 50 %) Les Écologistes – Europe Écologie Les Verts 17.9 % opposition — économie -0.3 · autorité -0.3 · souveraineté -0.3 dirigé par Marine Tondeuse (chari"
+    ]
+  },
+  {
+    "step": "10",
+    "title": "3. Voler : fraude 20 %, propagande 2 % du PIB",
+    "date": "2027-03-01",
+    "capture": "j4-10-3-voler-fraude-20-propagande-2-du-pib.png",
+    "notes": [
+      "projection fra-renaissance 45.9 %, fra-les-republicains 12.4 %, fra-les-ecologistes-europe-ecologie-les-verts 11.3 %, fra-la-france-insoumise 10.3 %, fra-rassemblement-national 10.2 %, fra-parti-socialiste 9.8 % (guide : le sortant vers 45 %, en tête)",
+      "détection 68 % (guide : 68 %)"
+    ]
+  },
+  {
+    "step": "11",
+    "title": "3. Voler : après le scrutin",
+    "date": "2027-05-15",
+    "capture": "j4-11-3-voler-apres-le-scrutin.png",
+    "notes": [
+      "2027-05-01 fraud-detected {\"fraud\":\"20\"}",
+      "2027-05-01 election-held {\"winner\":\"fra-renaissance\",\"share\":\"45.8\",\"alternation\":\"false\"}",
+      "2027-05-01 government-formed {\"parties\":\"fra-renaissance\",\"leader\":\"leader.fra-gabriel-attal.parody\"}",
+      "légitimité 80.0 % → 55.0 % (guide : 50 % si la fraude est révélée)",
+      "risque de coup 0.0 % par mois"
+    ]
+  },
+  {
+    "step": "12",
+    "title": "3. Voler : relations avec les démocraties",
+    "date": "2027-05-15",
+    "capture": "j4-12-3-voler-relations-avec-les-democraties.png",
+    "notes": [
+      "DEU 50, GBR 44, ITA 46, ESP 50, POL 50, NOR 29"
+    ]
+  },
+  {
+    "step": "13",
+    "title": "4. Gagner : un mois avant le scrutin",
+    "date": "2027-04-01",
+    "capture": "j4-13-4-gagner-un-mois-avant-le-scrutin.png",
+    "notes": [
+      "« Programme de logement » voté par le bouton : true",
+      "groupes military 67.2 %, youth 61.9 %, retirees 56.7 %, workers 53.8 %, minorities 53.7 %, religious 52.9 %, farmers 51.1 %, business 47.0 % (guide : retraités 65-70 %)",
+      "projection fra-les-republicains 19.3 %, fra-les-ecologistes-europe-ecologie-les-verts 17.5 %, fra-renaissance 16.4 %, fra-la-france-insoumise 15.9 %, fra-rassemblement-national 15.9 %, fra-parti-socialiste 15.1 %",
+      "corruption du dirigeant 15.0 %"
+    ]
+  },
+  {
+    "step": "14",
+    "title": "4. Gagner : après le scrutin",
+    "date": "2027-05-15",
+    "capture": "j4-14-4-gagner-apres-le-scrutin.png",
+    "notes": [
+      "2027-05-01 election-held {\"winner\":\"fra-les-republicains\",\"share\":\"19.3\",\"alternation\":\"true\"}",
+      "2027-05-01 government-formed {\"parties\":\"fra-les-republicains\",\"leader\":\"leader.fra-bruno-retailleau.parody\"}",
+      "gouvernement fra-renaissance → fra-les-republicains, capital 30"
+    ]
+  },
+  {
+    "step": "15",
+    "title": "5. Ailleurs dans le monde",
+    "date": "2027-05-15",
+    "capture": "j4-15-5-ailleurs-dans-le-monde.png",
+    "notes": [
+      "Dirigeants Fermer Dirigeant Bruno Rétaillo — chef de parti, 66 ans, Les Républicains économie +0.3 · autorité +0.4 · souveraineté +0.5 agressivité 47 %corruption 10 %charisme 50 %compétence 50 % Partis Les Républicains 19.3 % au gouvernement — économie +0.3 · autorité +0.4 · souveraineté +0.5 dirigé par Bruno Rétaillo (charisme 50 %, compétence 50 %) Les Écologistes – Europe Écologie Les Verts 17.5 % opposition — économie -0.3 · autorité -0.3 · souveraineté -0.3 dirigé par Marine Tondeuse (charisme 50 %, compétence 50 %) Renaissance 16.4 % opposition — économie -0.0 · autorité -0.3 · souveraineté -0.5 dirigé par Gabriel Attelle (charisme 50 %, compétence 50 %) La France insoumise 15.9 % opposition — économie -0.6 · autorité -0.2 · souveraineté +0.2 dirigé par Manuel Bombard (charisme 50 %,"
+    ]
+  },
+  {
+    "step": "errors",
+    "title": "Erreurs de la page",
+    "date": null,
+    "capture": "",
+    "notes": [
+      "got wrong turn have turns 0, received turn 1",
+      "got wrong turn have turns 0, received turn 1"
+    ]
+  }
+]
