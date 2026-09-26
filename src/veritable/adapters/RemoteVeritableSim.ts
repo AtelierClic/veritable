@@ -1,4 +1,5 @@
 import {
+  HudView,
   PlayerCommand,
   ReadonlyWorldView,
   SimEvent,
@@ -31,6 +32,24 @@ export class RemoteVeritableSim {
 
   read(): Promise<ReadonlyWorldView> {
     return this.request({ kind: "read" }) as Promise<ReadonlyWorldView>;
+  }
+
+  // J7: the view when it changed since `since` (null otherwise), with the
+  // embargoes of the nations asked for only.
+  readIfChanged(
+    since: number | undefined,
+    embargoesOf?: string[],
+  ): Promise<ReadonlyWorldView | null> {
+    return this.request({
+      kind: "read",
+      since,
+      embargoesOf,
+    }) as Promise<ReadonlyWorldView | null>;
+  }
+
+  // J7: what the top bar and the event cards read, four times a second.
+  hud(journalSince?: number): Promise<HudView> {
+    return this.request({ kind: "hud", journalSince }) as Promise<HudView>;
   }
 
   async apply(command: PlayerCommand): Promise<void> {

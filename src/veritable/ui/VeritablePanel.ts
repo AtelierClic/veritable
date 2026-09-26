@@ -8,7 +8,7 @@ import { IndexedDbSaveStore } from "../save/IndexedDbSaveStore";
 import { SaveMeta, SaveStore } from "../save/SaveStore";
 import { peekSchemaVersion, SAVE_FILE_EXTENSION } from "../save/serialize";
 import { ReadonlyWorldView } from "../sim/VeritableSim";
-import { namedParams } from "./journalText";
+import { journalLine, viewNames } from "./journalText";
 import "./NationPicker";
 import {
   newCampaignStartInfo,
@@ -65,9 +65,13 @@ export class VeritablePanel extends LitElement {
     if (this.timer !== null) clearInterval(this.timer);
   }
 
+  // J7: only when the view changed, without the embargoes (7 500 of them
+  // at 208 nations; the panel shows none).
   private async refresh(): Promise<void> {
     try {
-      if (this.sim !== null) this.view = await this.sim.read();
+      if (this.sim === null) return;
+      const view = await this.sim.readIfChanged(this.view?.version, []);
+      if (view !== null) this.view = view;
     } catch {
       this.view = null; // worker gone: the game ended
     }
@@ -307,26 +311,14 @@ export class VeritablePanel extends LitElement {
       </div>
       <div class="mt-2 font-bold">${vt("save.panel.journal")}</div>
       <div class="max-h-24 overflow-y-auto text-gray-300">
-        ${view.journal.slice(-JOURNAL_LINES).map((entry) => {
-          const nation = view.nations.find((n) => n.id === entry.nation);
-          const summary = entry.kind === "yearly-summary";
-          const label = nation ? this.nationLabel(nation) : "";
-          const params: Record<string, string> = {
-            nation: summary && label !== "" ? ` — ${label}` : label,
-          };
-          for (const [k, v] of Object.entries(entry.params)) {
-            params[k] =
-              k === "from" || k === "to"
-                ? vt(`nation.status.${v}`)
-                : summary && k === "category"
-                  ? vt(`journal.category.${v}`)
-                  : v;
-          }
-          Object.assign(params, namedParams(view, entry.nation, entry.params));
-          return html`<div>
-            ${entry.date} — ${vt(`journal.${entry.kind}`, params)}
-          </div>`;
-        })}
+        ${view.journal
+          .slice(-JOURNAL_LINES)
+          .map(
+            (entry) =>
+              html`<div>
+                ${entry.date} — ${journalLine(viewNames(view), entry)}
+              </div>`,
+          )}
       </div>
       <div class="mt-2 flex gap-1">
         <input

@@ -68,6 +68,7 @@ import { dateAfter, dayIndex, MINUTES_PER_GAME_DAY } from "./calendar";
 import { claimsOf, wakeClaims } from "./diplomacy/claims";
 import {
   AffinityInputs,
+  allies,
   availableCasusBelli,
   cachedAffinityInputs,
   declareWar,
@@ -213,6 +214,8 @@ import {
   BlocView,
   FrontGeometry,
   FrontView,
+  HudView,
+  PendingVote,
   PlayerCommand,
   PlayerCommandSchema,
   ReadonlyWorldView,
@@ -334,6 +337,10 @@ const CEASEFIRE: PeaceTerms = {
   reparationYears: 0,
   maxDivisions: null,
 };
+
+// The most journal entries the always-visible interface receives at once
+// (J7): what a quarter of a second at x5 adds, and far more.
+const HUD_JOURNAL_MAX = 50;
 
 export class VeritableSimImpl implements VeritableSim {
   private seed = 0;
@@ -1121,7 +1128,7 @@ export class VeritableSimImpl implements VeritableSim {
       };
       nation.status = next;
       events.push(event);
-      this.journal.push({
+      this.addJournal({
         date: event.date,
         kind: "nation-status",
         nation: nation.id,
@@ -1964,6 +1971,57 @@ export class VeritableSimImpl implements VeritableSim {
     };
   }
 
+  hud(journalSince?: number): HudView {
+    this.assertInitialized();
+    const player = this.playerNationId();
+    const fresh =
+      journalSince === undefined
+        ? 0
+        : Math.min(
+            HUD_JOURNAL_MAX,
+            Math.max(0, this.journalAdded - journalSince),
+          );
+    const votes: PendingVote[] = [];
+    const neighbours: NationId[] = [];
+    const friends: NationId[] = [];
+    if (player !== null) {
+      for (const p of this.blocs.proposals) {
+        if (p.result !== "pending" || p.cast[player] !== undefined) continue;
+        if (p.by === player || p.target === player) continue;
+        if (!this.ctx.membersOf(p.bloc).includes(player)) continue;
+        votes.push({
+          id: p.id,
+          bloc: p.bloc,
+          kind: p.kind,
+          by: p.by,
+          target: p.target,
+          direction: p.direction,
+          resolveOn: p.resolveOn,
+        });
+      }
+      for (const id of this.ctx.nationIds) {
+        if (id === player) continue;
+        if (this.ctx.landNeighbours(id, player)) neighbours.push(id);
+        if (allies(this.ctx, id, player)) friends.push(id);
+      }
+    }
+    return {
+      version: this.viewVersion,
+      date: this.calendar.date,
+      speed: this.calendar.speed,
+      playerNation: player,
+      pending: this.events.pending,
+      leanings: this.eventLeanings(),
+      votes,
+      neighbours,
+      allies: friends,
+      enemies: player === null ? [] : enemiesOf(this.diplomacy, player),
+      blocs: player === null ? [] : this.ctx.blocsOf(player),
+      journalMark: this.journalAdded,
+      journal: fresh === 0 ? [] : this.journal.slice(-fresh),
+    };
+  }
+
   // The choice the government leans towards for each pending event (J7).
   private eventLeanings(): Record<number, string> {
     const out: Record<number, string> = {};
@@ -2585,7 +2643,7 @@ export class VeritableSimImpl implements VeritableSim {
     } else if (event.type !== "note") {
       this.pending.push({ ...event, date } as SimEvent);
     }
-    this.journal.push({ date, kind: event.type, nation: event.nation, params });
+    this.addJournal({ date, kind: event.type, nation: event.nation, params });
   }
 
   // What an event sets off beyond its domain (J7): a change of regime opens
@@ -2632,9 +2690,18 @@ export class VeritableSimImpl implements VeritableSim {
     }
   }
 
+  // Entries added to the journal in this session (J7): the always-visible
+  // interface asks for those it has not seen yet (the yearly compaction
+  // shortens the journal, never its tail).
+  private journalAdded = 0;
+  private addJournal(entry: JournalEntry): void {
+    this.journal.push(entry);
+    this.journalAdded += 1;
+  }
+
   private wake(nation: NationId, date: string): void {
     for (const woken of wakeClaims(this.ctx, this.diplomacy, nation)) {
-      this.journal.push({
+      this.addJournal({
         date,
         kind: "claim-weakened",
         nation,

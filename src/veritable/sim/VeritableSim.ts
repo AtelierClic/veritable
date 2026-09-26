@@ -50,6 +50,42 @@ export interface VeritableSim {
   apply(command: PlayerCommand): void;
   advance(gameMinutes: number): SimEvent[];
   read(): ReadonlyWorldView;
+  // J7: what the always-visible interface reads (top bar, event cards),
+  // cheap enough to be read four times a second; with the journal entries
+  // added since the mark `journalSince` of an earlier HUD.
+  hud(journalSince?: number): HudView;
+}
+
+// The view of the always-visible interface (J7): the date and speed, the
+// version of the full view, the player's decisions waiting (with the
+// government's leaning) and the bloc votes awaiting its voice, and who its
+// land neighbours and allies are (what makes an event pause the game).
+export interface HudView {
+  version: number;
+  date: string;
+  speed: number;
+  playerNation: NationId | null;
+  pending: EventsState["pending"];
+  leanings: Readonly<Record<number, string>>;
+  votes: readonly PendingVote[];
+  neighbours: readonly NationId[];
+  allies: readonly NationId[];
+  enemies: readonly NationId[];
+  blocs: readonly string[]; // the player's
+  // Entries added to the journal in this session, and the latest of them
+  // since the mark asked for (at most 50).
+  journalMark: number;
+  journal: readonly JournalEntry[];
+}
+
+export interface PendingVote {
+  id: number;
+  bloc: string;
+  kind: BlocProposal["kind"];
+  by: NationId;
+  target: NationId | null;
+  direction: BlocProposal["direction"];
+  resolveOn: string;
 }
 
 export const PlayerCommandSchema = z.discriminatedUnion("type", [

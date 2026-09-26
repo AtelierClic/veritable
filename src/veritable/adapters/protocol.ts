@@ -2,6 +2,7 @@ import { NationId } from "../data/schemas/common";
 import { EncodedSaveStats } from "../save/serialize";
 import {
   FrontView,
+  HudView,
   PlayerCommand,
   ReadonlyWorldView,
   SimEvent,
@@ -14,7 +15,13 @@ import type { MapOverlay } from "./CoreBridge";
 // to it through RemoteVeritableSim.
 
 export type VeritableRequest =
-  | { kind: "read" }
+  // J7: `since`: the version the client already has (null back when the
+  // view has not changed); `embargoesOf`: the embargoes of these nations
+  // only (7 500 of them at 208 nations, the costliest part to copy).
+  | { kind: "read"; since?: number; embargoesOf?: NationId[] }
+  // J7: the always-visible interface (top bar, event cards), with the
+  // journal entries added since the mark of the previous one.
+  | { kind: "hud"; journalSince?: number }
   | { kind: "apply"; command: PlayerCommand }
   | { kind: "snapshot" }
   | { kind: "perf" }
@@ -37,9 +44,11 @@ export interface SnapshotResult {
 export type VeritableResult<R extends VeritableRequest> = R extends {
   kind: "read";
 }
-  ? ReadonlyWorldView
-  : R extends { kind: "snapshot" }
-    ? SnapshotResult
-    : null;
+  ? ReadonlyWorldView | null
+  : R extends { kind: "hud" }
+    ? HudView
+    : R extends { kind: "snapshot" }
+      ? SnapshotResult
+      : null;
 
 export type VeritableEvents = SimEvent[];

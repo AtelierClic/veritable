@@ -5,7 +5,7 @@ import { loadVeritableConfig } from "../data/loadConfig";
 import { configForMap } from "../data/mapScale";
 import { VeritableConfig } from "../data/schemas/config";
 import { decodeSave, encodeSaveWithStats } from "../save/serialize";
-import { SimEvent, VeritableSim } from "../sim/VeritableSim";
+import { ReadonlyWorldView, SimEvent, VeritableSim } from "../sim/VeritableSim";
 import { VeritableSimImpl } from "../sim/VeritableSimImpl";
 import { CoreBridge } from "./CoreBridge";
 import { DomainTiming, PerformanceProbe } from "./perfProbe";
@@ -123,10 +123,34 @@ export class VeritableSession {
     return this.sim.advance(this.config.time.gameMinutesPerTick);
   }
 
+  // The full view, or null when the client already has this version; the
+  // embargoes of the nations asked for only (J7: the structured copy of the
+  // view is what costs, in the worker).
+  private read(
+    since: number | undefined,
+    embargoesOf: readonly string[] | undefined,
+  ): ReadonlyWorldView | null {
+    const view = this.sim.read();
+    if (since !== undefined && since === view.version) return null;
+    if (embargoesOf === undefined) return view;
+    const keep = new Set(embargoesOf);
+    return {
+      ...view,
+      market: {
+        ...view.market,
+        embargoes: view.market.embargoes.filter(
+          (e) => keep.has(e.from) || keep.has(e.to),
+        ),
+      },
+    };
+  }
+
   handle(request: VeritableRequest): unknown {
     switch (request.kind) {
       case "read":
-        return this.sim.read();
+        return this.read(request.since, request.embargoesOf);
+      case "hud":
+        return this.sim.hud(request.journalSince);
       case "apply":
         this.sim.apply(request.command);
         return null;

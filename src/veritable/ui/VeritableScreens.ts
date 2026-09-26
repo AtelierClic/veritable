@@ -22,7 +22,9 @@ import type { Tally } from "../sim/blocs/blocs";
 import { relation } from "../sim/diplomacy/diplomacy";
 import { entryCategory } from "../sim/journal";
 import { BlocView, FrontView, ReadonlyWorldView } from "../sim/VeritableSim";
-import { namedParams } from "./journalText";
+import { confirmAction } from "./ConfirmModal";
+import { effectLabel } from "./eventText";
+import { journalLine, measureName, regionName, viewNames } from "./journalText";
 import {
   filterNations,
   NationFilter,
@@ -58,7 +60,11 @@ export const SCREENS: ScreenId[] = [
   "events",
 ];
 
-const REFRESH_MS = 1000;
+// J7: the open screen reads the view when it changed (the simulation keeps
+// a version of it), at most four times a second, and less often when a read
+// costs the worker much (208 nations: tens of milliseconds of copy).
+const REFRESH_MS = 250;
+const READ_COST_FACTOR = 8;
 
 const pct = (v: number, digits = 1) => `${(v * 100).toFixed(digits)} %`;
 const money = (usd: number) =>
@@ -83,12 +89,6 @@ export class VeritableScreens extends LitElement {
     maxDivisions: null,
   };
   @state() private error: string | null = null;
-  // Nuclear shot of the player (J5): the first click arms it, the second
-  // fires.
-  @state() private armedShot: {
-    target: string;
-    aim: "front" | "capital";
-  } | null = null;
 
   // Lists of every nation (J6c): search, region, bloc, sort; the nation
   // picked in the diplomacy list (its embargoes).
@@ -97,6 +97,9 @@ export class VeritableScreens extends LitElement {
 
   private sim: RemoteVeritableSim | null = null;
   private timer: ReturnType<typeof setInterval> | null = null;
+  private reading = false;
+  private lastRead = 0;
+  private readCost = 0;
   private readonly goods = dataSource.goods();
   private readonly config = dataSource.config();
   private readonly templates = dataSource.divisions();
@@ -140,7 +143,9 @@ export class VeritableScreens extends LitElement {
   connectedCallback(): void {
     super.connectedCallback();
     this.timer = setInterval(() => {
-      if (this.screen !== null) void this.refresh();
+      if (this.screen === null || this.reading) return;
+      const wait = Math.max(REFRESH_MS, READ_COST_FACTOR * this.readCost);
+      if (Date.now() - this.lastRead >= wait) void this.refresh(false);
     }, REFRESH_MS);
   }
 
@@ -149,11 +154,29 @@ export class VeritableScreens extends LitElement {
     if (this.timer !== null) clearInterval(this.timer);
   }
 
-  private async refresh(): Promise<void> {
+  // The whole view again (force), or only if it changed since the one on
+  // screen; the embargoes of the player and of the nation picked only.
+  private async refresh(force = true): Promise<void> {
+    const sim = this.sim;
+    if (sim === null) return;
+    this.reading = true;
+    const started = performance.now();
     try {
-      if (this.sim !== null) this.view = await this.sim.read();
+      const player = this.view?.playerNation ?? null;
+      const embargoes = [player, this.picked].filter(
+        (id): id is string => id !== null,
+      );
+      const view = await sim.readIfChanged(
+        force ? undefined : this.view?.version,
+        player === null ? undefined : embargoes,
+      );
+      if (view !== null && this.sim === sim) this.view = view;
     } catch {
       this.view = null;
+    } finally {
+      this.readCost = performance.now() - started;
+      this.lastRead = Date.now();
+      this.reading = false;
     }
   }
 
@@ -624,16 +647,16 @@ export class VeritableScreens extends LitElement {
     );
     const powers = Object.entries(view.nuclear.nations);
     const shot = (target: string, aim: "front" | "capital") => {
-      const armed =
-        this.armedShot?.target === target && this.armedShot.aim === aim;
+      const nation = this.nationLabel(view, target);
       return html`<button
-        class="rounded px-2 ${armed ? "bg-red-600" : "bg-red-900"}"
-        @click=${() => {
-          if (!armed) {
-            this.armedShot = { target, aim };
-            return;
-          }
-          this.armedShot = null;
+        class="rounded bg-red-900 px-2"
+        @click=${async () => {
+          const ok = await confirmAction({
+            title: vt("confirm.nuclear.title"),
+            body: vt(`confirm.nuclear.body-${aim}`, { nation }),
+            confirm: vt("confirm.nuclear.fire"),
+          });
+          if (!ok) return;
           void this.command({
             type: "nuclear-launch",
             target,
@@ -642,9 +665,7 @@ export class VeritableScreens extends LitElement {
           });
         }}
       >
-        ${vt(armed ? "screen.nuclear.confirm" : `screen.nuclear.fire-${aim}`, {
-          nation: this.nationLabel(view, target),
-        })}
+        ${vt(`screen.nuclear.fire-${aim}`, { nation })}
       </button>`;
     };
     return html`
@@ -1063,12 +1084,25 @@ export class VeritableScreens extends LitElement {
                         (c) =>
                           html`<button
                             class="rounded bg-red-800 px-1"
-                            @click=${() =>
+                            @click=${async () => {
+                              const casus = vt(
+                                this.casusBelli.find((cb) => cb.id === c)
+                                  ?.name ?? c,
+                              );
+                              const ok = await confirmAction({
+                                title: vt("confirm.war.title", {
+                                  nation: this.nationLabel(view, id),
+                                }),
+                                body: vt("confirm.war.body", { casus }),
+                                confirm: vt("confirm.war.declare"),
+                              });
+                              if (!ok) return;
                               void this.command({
                                 type: "declare-war",
                                 target: id,
                                 casusBelli: c,
-                              })}
+                              });
+                            }}
                           >
                             ${vt("screen.diplomacy.declare", {
                               casus: vt(
@@ -1705,15 +1739,7 @@ export class VeritableScreens extends LitElement {
     target: string | undefined | null,
     direction: string | undefined | null,
   ): string {
-    if (kind === "budget") {
-      return vt(`bloc.measure.budget-${direction === "down" ? "down" : "up"}`);
-    }
-    return vt(`bloc.measure.${kind}`, {
-      target:
-        target === undefined || target === null || target === ""
-          ? ""
-          : this.nationLabel(view, target),
-    });
+    return measureName(viewNames(view), kind, target, direction);
   }
 
   private renderTally(view: ReadonlyWorldView, t: Tally): TemplateResult {
@@ -2222,81 +2248,12 @@ export class VeritableScreens extends LitElement {
     effect: EventEffect,
     other: string | null,
   ): string {
-    const [head, tail] = effect.target.split(".");
-    const signed = (v: number, digits = 2) =>
-      `${v >= 0 ? "+" : ""}${v.toFixed(digits)}`;
-    const who = (t: string) =>
-      t === "all"
-        ? vt("screen.events.who.all")
-        : t === "neighbors"
-          ? vt("screen.events.who.neighbors")
-          : t === "other"
-            ? other === null
-              ? ""
-              : this.nationLabel(view, other)
-            : this.nationLabel(view, t);
-    let label: string;
-    switch (head) {
-      case "budget":
-        label = vt("screen.events.effect.budget", {
-          value: signed(effect.value * 100),
-        });
-        break;
-      case "gdp":
-      case "production":
-      case "consumption":
-        label = vt(`screen.events.effect.${head}`, {
-          good: tail === undefined ? "" : vt(`good.${tail}`),
-          value: `×${effect.value.toFixed(2)}`,
-        });
-        break;
-      case "worldSupply":
-        label = vt("screen.events.effect.worldSupply", {
-          good: vt(`good.${tail}`),
-          value: signed(effect.value * 100, 0),
-        });
-        break;
-      case "growth":
-        label = vt("screen.events.effect.growth", {
-          value: signed(effect.value * 100),
-          months: effect.months ?? 12,
-        });
-        break;
-      case "group":
-        label = vt("screen.events.effect.group", {
-          group: vt(`group.${tail}`),
-          value: signed(effect.value),
-        });
-        break;
-      case "spending":
-        label = vt("screen.events.effect.spending", {
-          post: vt(`spending.${tail}`),
-          value: signed(effect.value * 100),
-        });
-        break;
-      case "relations":
-        label = vt("screen.events.effect.relations", {
-          who: who(tail),
-          value: signed(effect.value, 0),
-        });
-        break;
-      case "grievance":
-        label = vt("screen.events.effect.grievance", {
-          who: who(tail),
-          months: effect.months ?? this.config.events.grievanceMonths,
-        });
-        break;
-      case "unrest":
-        label = vt("screen.events.effect.unrest");
-        break;
-      default:
-        label = vt(`screen.events.effect.${head}`, {
-          value: signed(effect.value),
-        });
-    }
-    return effect.uncertain === true
-      ? `${label} ${vt("screen.events.uncertain")}`
-      : label;
+    return effectLabel(
+      viewNames(view),
+      effect,
+      other,
+      this.config.events.grievanceMonths,
+    );
   }
 
   private renderEvents(view: ReadonlyWorldView) {
@@ -2391,12 +2348,7 @@ export class VeritableScreens extends LitElement {
   // A claimed region (J6): a region of the scenario, or the homeland of a
   // nation ("homeland:<id>").
   private regionLabel(view: ReadonlyWorldView, region: string): string {
-    if (region.startsWith("homeland:")) {
-      return vt("region.homeland", {
-        nation: this.nationLabel(view, region.slice("homeland:".length)),
-      });
-    }
-    return vt(`region.${region}`);
+    return regionName(viewNames(view), region);
   }
 
   private renderObjectives(view: ReadonlyWorldView, p: NationPolitics) {
@@ -2519,104 +2471,7 @@ export class VeritableScreens extends LitElement {
           (j) =>
             html`<div class="text-gray-300">
               <span class="tabular-nums text-gray-500">${j.date}</span>
-              ${vt(`journal.${j.kind}`, {
-                ...j.params,
-                ...namedParams(view, j.nation, j.params),
-                nation:
-                  j.nation === undefined
-                    ? ""
-                    : j.kind === "yearly-summary"
-                      ? ` — ${this.nationLabel(view, j.nation)}`
-                      : this.nationLabel(view, j.nation),
-                ...(j.kind !== "yearly-summary"
-                  ? {}
-                  : { category: vt(`journal.category.${j.params.category}`) }),
-                ...(j.params.law === undefined
-                  ? {}
-                  : { law: vt(`law.${j.params.law}.name`) }),
-                ...(j.params.objective === undefined
-                  ? {}
-                  : { objective: vt(`objective.${j.params.objective}.name`) }),
-                ...(j.params.alternation === undefined
-                  ? {}
-                  : { alternation: vt(`alternation.${j.params.alternation}`) }),
-                ...(j.params.reason === undefined
-                  ? {}
-                  : { reason: vt(`law.reason.${j.params.reason}`) }),
-                ...(j.params.aim === undefined
-                  ? {}
-                  : { aim: vt(`screen.nuclear.aim-${j.params.aim}`) }),
-                ...(j.params.target === undefined
-                  ? {}
-                  : { target: this.nationLabel(view, j.params.target) }),
-                ...(j.params.by === undefined
-                  ? {}
-                  : { by: this.nationLabel(view, j.params.by) }),
-                ...(j.params.to === undefined
-                  ? {}
-                  : { to: this.nationLabel(view, j.params.to) }),
-                ...(j.params.against === undefined
-                  ? {}
-                  : { against: this.nationLabel(view, j.params.against) }),
-                ...(j.params.bloc === undefined
-                  ? {}
-                  : { bloc: vt(`bloc.${j.params.bloc}.name`) }),
-                ...(j.params.region === undefined
-                  ? {}
-                  : { region: this.regionLabel(view, j.params.region) }),
-                ...(j.params.kind === undefined
-                  ? {}
-                  : {
-                      kind: this.measureLabel(
-                        view,
-                        j.params.kind,
-                        j.params.target,
-                        j.params.direction,
-                      ),
-                    }),
-                ...(j.params.result === undefined
-                  ? {}
-                  : { result: vt(`bloc.result.${j.params.result}`) }),
-                ...(j.params.why === undefined
-                  ? {}
-                  : { why: vt(`bloc.why.${j.params.why}`) }),
-                ...(j.params.node === undefined
-                  ? {}
-                  : { node: vt(`tech.${j.params.node}.name`) }),
-                ...(j.params.event === undefined
-                  ? {}
-                  : {
-                      event: vt(`event.${j.params.event}.title`, {
-                        nation:
-                          j.nation === undefined
-                            ? ""
-                            : this.nationLabel(view, j.nation),
-                        other:
-                          j.params.other === undefined || j.params.other === ""
-                            ? ""
-                            : this.nationLabel(view, j.params.other),
-                        good:
-                          j.params.good === undefined || j.params.good === ""
-                            ? ""
-                            : vt(`good.${j.params.good}`),
-                      }),
-                      choice:
-                        j.params.choice === undefined || j.params.choice === ""
-                          ? vt("screen.events.no-choice")
-                          : vt(`event.${j.params.event}.${j.params.choice}`, {
-                              other:
-                                j.params.other === undefined ||
-                                j.params.other === ""
-                                  ? ""
-                                  : this.nationLabel(view, j.params.other),
-                              good:
-                                j.params.good === undefined ||
-                                j.params.good === ""
-                                  ? ""
-                                  : vt(`good.${j.params.good}`),
-                            }),
-                    }),
-              })}
+              ${journalLine(viewNames(view), j)}
             </div>`,
         )}
       </div>
