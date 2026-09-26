@@ -62,16 +62,20 @@ function campaign(
   return { sim, internals, days, config };
 }
 
-describe("the staggered review of the nation AI", () => {
-  it("every nation nobody plays comes up about once a month in peace, once a week at war; the player never", () => {
+describe("the rolling queue of the nations (J7; the staggered review of the J5)", () => {
+  it("every nation nobody plays comes up about once a month in peace, once a week at war; the player's every day", () => {
     const { sim, internals, days } = campaign();
     days(40);
-    const ai = sim.read().ai;
-    expect(ai.nations.AAA.nextReview).toBe("2026-01-01"); // never reviewed
+    const schedule = sim.read().schedule.nations;
+    const DAYS = 24 * 60;
+    // The player's nation: every day.
+    expect(schedule.AAA.next - schedule.AAA.last).toBe(DAYS);
     for (const id of ["BBB", "CCC", "DDD"]) {
-      // Reviewed: the next review is a month after the last one.
-      expect(ai.nations[id].nextReview > "2026-02-01").toBe(true);
+      // Updated at least once; the next update a month after the last one
+      // (DDD shares no bloc and no border with the player).
+      expect(schedule[id].last).toBeGreaterThan(0);
     }
+    expect(schedule.DDD.next - schedule.DDD.last).toBe(30 * DAYS);
     // War between BBB and CCC: their period shortens to a week.
     internals.diplomacy.wars.push({
       id: "war-x",
@@ -80,6 +84,7 @@ describe("the staggered review of the nation AI", () => {
       casusBelli: null,
       since: sim.read().date,
       declaredInCampaign: true,
+      ledgerOn: "2027-01-01",
       score: { BBB: 0, CCC: 0 },
       retreatMonths: { BBB: 0, CCC: 0 },
       tilesTaken: { BBB: 0, CCC: 0 },
@@ -87,10 +92,8 @@ describe("the staggered review of the nation AI", () => {
       offers: [],
     } as unknown as DiplomacyState["wars"][number]);
     days(40);
-    const next = sim.read().ai.nations.BBB.nextReview;
-    const today = sim.read().date;
-    const gap = (Date.parse(next) - Date.parse(today)) / (24 * 3600 * 1000);
-    expect(gap).toBeLessThanOrEqual(7);
+    const bbb = sim.read().schedule.nations.BBB;
+    expect(bbb.next - bbb.last).toBeLessThanOrEqual(7 * DAYS);
   });
 });
 
@@ -345,8 +348,9 @@ describe("a claim weakened by failed wars (J6c)", () => {
     claim.weight = 0.25;
     const weak = appraiseWar(internals.aiEnv("2026-01-01"), "BBB", "CCC")!;
     expect(weak.gain / full.gain).toBeCloseTo(0.25, 10);
-    // Given up after its third failure: no casus belli left, no war on it.
+    // Asleep after its third failure (J7): no casus belli left, no war on it.
     claim.failures = quietConfig().diplomacy.claims.abandonAfterFailures;
+    claim.dormant = true;
     internals.politics.nations.BBB.leader.traits.aggressiveness = 0.5;
     expect(appraiseWar(internals.aiEnv("2026-01-01"), "BBB", "CCC")).toBeNull();
   });
@@ -368,6 +372,8 @@ describe("arms flows", () => {
       expect.objectContaining({ from: "DDD", to: "AAA" }),
     );
     expect(view.journal.map((j) => j.kind)).toContain("arms-aid-started");
-    expect(relation(internals.diplomacy, "DDD", "AAA")).toBeGreaterThan(40);
+    // (Its war without casus belli erodes the relations of the aggressor day
+    // after day, J7: the friend is cooling.)
+    expect(relation(internals.diplomacy, "DDD", "AAA")).toBeGreaterThan(30);
   });
 });

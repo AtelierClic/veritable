@@ -109,8 +109,24 @@ export function v2ToV3(
     },
     politics: { ...save.politics, nations: politicsNations },
     diplomacy: v3Diplomacy(initDiplomacy(ctx, scenario)),
-    military: initMilitary(ctx, sheets),
+    // Today's builder, cut to the v3 shape: the men lost of the month (the
+    // v7 counts them since the last update and the arms received).
+    military: v3Military(initMilitary(ctx, sheets)),
     naval: initNaval(),
+  };
+}
+
+function v3Military(
+  m: ReturnType<typeof initMilitary>,
+): SaveFileV3["military"] {
+  return {
+    nations: Object.fromEntries(
+      Object.entries(m.nations).map(([id, n]) => {
+        const { lossesPending, armsReceived, ...rest } = n;
+        void armsReceived;
+        return [id, { ...rest, lossesLastMonth: lossesPending }];
+      }),
+    ),
   };
 }
 

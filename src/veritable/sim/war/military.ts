@@ -13,6 +13,7 @@ import {
   Posture,
 } from "../../data/schemas/war";
 import { EconomyContext } from "../economy/context";
+import { relaxed } from "../time";
 
 // Divisions, manpower, arms, training, exhaustion (J3a). The fronts that use
 // them are in fronts.ts; nothing here touches a tile.
@@ -88,7 +89,8 @@ function initNation(ctx: EconomyContext, data: NationData): NationMilitary {
     exhaustion: 0,
     training: cfg.training.base,
     losses: 0,
-    lossesLastMonth: 0,
+    lossesPending: 0,
+    armsReceived: 0,
     airPower: data.military.airPower,
     navalPower: data.military.navalPower,
   };
@@ -214,8 +216,10 @@ export function setConscription(
   );
 }
 
-// --- monthly upkeep ------------------------------------------------------------------
+// --- upkeep ------------------------------------------------------------------------
 
+// J7: at each update of the nation, its monthly rates over the months since
+// the last one (a month until the J6).
 export function stepMilitaryMonth(
   ctx: EconomyContext,
   nation: NationMilitary,
@@ -225,18 +229,21 @@ export function stepMilitaryMonth(
   atWar: boolean,
   // Laws in force (J4): compulsory service widens the pool.
   manpowerMultiplier = 1,
-  // Arms received from abroad this month, index points (J5); negative: what
-  // a donor sent beyond its exports.
+  // Arms received from abroad, index points (J5); negative: what a donor
+  // sent beyond its exports. J7: added to what the nation received since
+  // its last update (armsReceived), spent now.
   armsAid = 0,
+  months = 1,
+  // Population in play (J7: the economy's), the sheet's by default.
+  population = data.population.value,
 ): void {
   const cfg = ctx.config.war;
-  const population = data.population.value;
 
   // Manpower: the pool refills, then reinforces the divisions.
   const ceiling =
     manpowerCeiling(ctx, population, nation.conscription) * manpowerMultiplier;
   nation.manpower = clamp(
-    nation.manpower + cfg.manpowerRenewalPerMonth * ceiling,
+    nation.manpower + cfg.manpowerRenewalPerMonth * ceiling * months,
     0,
     Math.max(0, ceiling - menInDivisions(nation)),
   );
@@ -248,7 +255,10 @@ export function stepMilitaryMonth(
     nation.manpower -= men;
   }
 
-  // Arms: a share of what the nation has this month re-equips the divisions.
+  // Arms: a share of what the nation has over the period re-equips the
+  // divisions.
+  const received = nation.armsReceived + armsAid;
+  nation.armsReceived = 0;
   const available =
     (Math.max(
       0,
@@ -257,8 +267,9 @@ export function stepMilitaryMonth(
         economy.exports.arms,
     ) /
       12) *
-      cfg.armsToDivisionsShare +
-    armsAid;
+      cfg.armsToDivisionsShare *
+      months +
+    received;
   let deficit = 0;
   for (const division of nation.divisions) {
     deficit +=
@@ -284,8 +295,9 @@ export function stepMilitaryMonth(
     cfg.training.min,
     cfg.training.max,
   );
+  const converge = relaxed(0.1, months);
   for (const division of nation.divisions) {
-    division.training += (nation.training - division.training) * 0.1;
+    division.training += (nation.training - division.training) * converge;
   }
 
   // Air and naval power of the sheet, scaled by the arms coverage.
@@ -296,16 +308,16 @@ export function stepMilitaryMonth(
   nation.navalPower =
     data.military.navalPower * economy.coverage.arms * (tech?.naval ?? 1);
 
-  // Exhaustion: up with the losses of the month and every month at war,
+  // Exhaustion: up with the losses of the period and every month at war,
   // down in peace. Losses also hit the youth and the workers.
   const e = cfg.exhaustion;
-  const lossShare = nation.lossesLastMonth / population;
+  const lossShare = nation.lossesPending / population;
   nation.exhaustion = clamp(
     atWar
       ? nation.exhaustion +
-          e.perMonthAtWar +
+          e.perMonthAtWar * months +
           e.perLossShareOfPopulation * lossShare
-      : nation.exhaustion - e.recoveryPerMonthAtPeace,
+      : nation.exhaustion - e.recoveryPerMonthAtPeace * months,
     0,
     1,
   );
@@ -321,5 +333,5 @@ export function stepMilitaryMonth(
       1,
     );
   }
-  nation.lossesLastMonth = 0;
+  nation.lossesPending = 0;
 }

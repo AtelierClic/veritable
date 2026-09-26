@@ -173,7 +173,9 @@ describe("fronts and resolution", () => {
   it("a war without orders is static: fronts exist, nobody moves, nobody dies", () => {
     const { sim, ticks, tiles } = twoNations();
     sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
-    ticks(25);
+    // J7: the defender's AI decides within the day (its update comes
+    // forward); until then nobody has orders.
+    ticks(19);
     const view = sim.read();
     expect(view.fronts).toHaveLength(1);
     expect(view.fronts[0].id).toBe("AAA|BBB");
@@ -214,8 +216,11 @@ describe("fronts and resolution", () => {
   });
 
   it("terrain and structures multiply the defence: mountains and a fortified line hold better", () => {
-    const plain = twoNations({ personnel: { AAA: 200_000, BBB: 100_000 } });
-    const rough = twoNations({ personnel: { AAA: 200_000, BBB: 100_000 } });
+    // J7: the defender mobilises from the first day of the war (weekly
+    // updates at war), no longer on the 1st of the month: a stronger
+    // attacker than at the J6.
+    const plain = twoNations({ personnel: { AAA: 260_000, BBB: 100_000 } });
+    const rough = twoNations({ personnel: { AAA: 260_000, BBB: 100_000 } });
     for (let y = 0; y < 40; y++) {
       rough.world.setTerrain(y * 60 + 30, "mountain");
     }
@@ -248,7 +253,10 @@ describe("fronts and resolution", () => {
       personnel: { AAA: 30_000, BBB: 140_000 },
     });
     sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
-    days(32); // the AI orders on the month
+    // J7: the nation attacked decides within the day (its update comes
+    // forward), no longer on the 1st of the month.
+    days(2);
+    expect(sim.read().schedule.nations.BBB.last).toBeGreaterThan(0);
     const bbb = sim.read().military.nations.BBB;
     expect(bbb.divisions.every((d) => d.front === "AAA|BBB")).toBe(true);
     expect(bbb.divisions.some((d) => d.posture === "attack")).toBe(true);

@@ -3,9 +3,9 @@ import { INTEREST_GROUPS, IsoDateSchema, NationIdSchema } from "./common";
 import { GOOD_IDS } from "./goods";
 
 // Shape of data/veritable/events/scripted/<id>.json and
-// events/templates/<id>.json (J5). One trigger engine (sim/events): once a
-// month, for each nation the event may concern, the conditions are read and
-// the monthly probability drawn. The player answers in a pop-up (at most two
+// events/templates/<id>.json (J5). One trigger engine (sim/events): every
+// day (J7; once a month until the J6), for each nation the event may
+// concern, the probability of the day is drawn and the conditions read. The player answers in a pop-up (at most two
 // a month), the AI chooses by its agenda. An event names functions (a
 // minister, the head of government, the army), never a real person, and
 // blames no crime or scandal on a real leader.
@@ -74,6 +74,9 @@ export type EventCondition = z.infer<typeof EventConditionSchema>;
 //   relations.<ISO3>     add  with that nation
 //   grievance.other, grievance.<ISO3>   set  a casus belli ("grievance")
 //                             against that nation for `months` months
+//   law.<id>             set  enacts that law, capital aside (J7); the
+//                             government sets such a choice aside when the
+//                             law is outside its window
 // On the world (scope "world", or any event):
 //   worldSupply.<good>   add  supply shock of the rest of the world (-0.1 =
 //                             a tenth of its supply, fading month by month)
@@ -101,6 +104,8 @@ export const EventEffectSchema = z.object({
     z.enum(goods("consumption") as [string, ...string[]]),
     z.enum(goods("worldSupply") as [string, ...string[]]),
     z.string().regex(/^(relations|grievance)\.[A-Z]{3}$/),
+    // J7: enact a law of the catalogue (the government's window applies).
+    z.string().regex(/^law\.[a-z0-9-]+$/),
   ]),
   op: z.enum(["add", "mul", "set"]),
   value: z.number(),

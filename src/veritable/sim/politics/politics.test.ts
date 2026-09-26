@@ -11,6 +11,7 @@ import {
   testScenario,
 } from "../testing/nations";
 import { testBloc, testLeaders, testSimData } from "../testing/simData";
+import { DAYS_PER_MONTH } from "../time";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { holdElection, projectShares } from "./elections";
@@ -278,7 +279,13 @@ describe("laws, capital and sliders", () => {
     sim.apply({ type: "set-tax", tax: "vat", rate: before + 0.06 });
     expect(e.taxes.vat).toBe(before);
     months(1);
-    expect(e.taxes.vat).toBeCloseTo(before + 0.01, 9);
+    // J7: the player's nation is updated every day; after 31 days its last
+    // update covers 30.5 days: 1 - (5/6)^(30.5 / 30.4375) of the gap.
+    const covered = 30.5 / DAYS_PER_MONTH;
+    expect(e.taxes.vat).toBeCloseTo(
+      before + 0.06 * (1 - Math.pow(5 / 6, covered)),
+      9,
+    );
     months(12);
     expect(e.taxes.vat).toBeGreaterThan(before + 0.05);
   });
@@ -334,8 +341,13 @@ describe("coups, revolutions and the AI", () => {
     //                     x (1 + 0) = 0.24 a month
     p.regime = "failed-state";
     p.regimeSince = "2020-01-01";
+    // J7: the soldiers stay angry and the state illegitimate month after
+    // month (the daily update of the player's nation brings them back
+    // towards their targets): about 0.14 a month.
     let coup = false;
     for (let m = 0; m < 36 && !coup; m++) {
+      p.legitimacy = 0;
+      p.groups!.military = 0;
       for (let d = 0; d < 31; d++) sim.advance(DAY);
       coup = sim.read().politics.AAA.coups > 0;
     }
@@ -428,7 +440,9 @@ describe("coups, revolutions and the AI", () => {
     }
     const after = sim.read().politics.AAA;
     expect(after.revolutions).toBeGreaterThanOrEqual(1);
-    expect(after.legitimacy).toBe(0.5);
+    // 0.5 at the revolution, then +0.01 a month, day after day (J7).
+    expect(after.legitimacy).toBeGreaterThanOrEqual(0.5);
+    expect(after.legitimacy).toBeLessThan(0.52);
     expect(sim.read().journal.map((j) => j.kind)).toContain("revolution");
     expect(after.nextElection).not.toBeNull();
   });

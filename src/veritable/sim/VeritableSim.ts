@@ -31,6 +31,7 @@ import {
   PeaceTermsSchema,
   PinnedObjective,
   SaveFile,
+  ScheduleState,
   SPEEDS,
   TechState,
   WorldState,
@@ -392,6 +393,11 @@ export interface ReadonlyWorldView {
   readonly techRefusals: Readonly<Record<string, string | null>>;
   // Events (J5): the player's pop-ups waiting, the history.
   readonly events: Readonly<EventsState>;
+  // J7: the rolling queue (when each nation was last updated and will be
+  // next), and the version of the view: it moves whenever something the
+  // player sees has changed (the interface reads the view again then).
+  readonly schedule: Readonly<ScheduleState>;
+  readonly version: number;
 }
 
 // A bloc as the screen sees it. Members: the simulated nations only, and

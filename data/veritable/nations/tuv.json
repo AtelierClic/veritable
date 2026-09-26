@@ -32,6 +32,12 @@
     "source": "worldbank:SP.POP.TOTL",
     "asOf": "2025"
   },
+  "populationGrowth": {
+    "value": -0.0143044,
+    "source": "derived",
+    "asOf": "2015-2025",
+    "note": "Croissance annuelle composée de la population, 2015-2025 (Banque mondiale, SP.POP.TOTL)."
+  },
   "gdp": {
     "value": 57345400,
     "source": "worldbank:NY.GDP.MKTP.CD",

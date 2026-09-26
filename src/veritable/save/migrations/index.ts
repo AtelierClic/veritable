@@ -4,13 +4,14 @@ import { NationData } from "../../data/schemas/nation";
 import {
   SAVE_SCHEMA_VERSION,
   SaveFile,
-  SaveHeaderV6Schema,
+  SaveHeaderV7Schema,
 } from "../../data/schemas/save";
 import { SaveFileV1, SaveHeaderV1Schema } from "../../data/schemas/saveV1";
 import { SaveFileV2, SaveHeaderV2Schema } from "../../data/schemas/saveV2";
 import { SaveFileV3, SaveHeaderV3Schema } from "../../data/schemas/saveV3";
 import { SaveFileV4, SaveHeaderV4Schema } from "../../data/schemas/saveV4";
 import { SaveFileV5, SaveHeaderV5Schema } from "../../data/schemas/saveV5";
+import { SaveFileV6, SaveHeaderV6Schema } from "../../data/schemas/saveV6";
 import { Scenario } from "../../data/schemas/scenario";
 import { SimData } from "../../sim/economy/context";
 import { v1ToV2 } from "./v1-to-v2";
@@ -18,6 +19,7 @@ import { v2ToV3 } from "./v2-to-v3";
 import { v3ToV4 } from "./v3-to-v4";
 import { v4ToV5 } from "./v4-to-v5";
 import { v5ToV6 } from "./v5-to-v6";
+import { v6ToV7 } from "./v6-to-v7";
 
 // A save as read from disk, before migration: the header decoded with the
 // frozen schema of ITS version, plus the raw tile grid.
@@ -63,6 +65,7 @@ export const HEADER_CODECS: Record<number, HeaderCodec> = {
   4: SaveHeaderV4Schema,
   5: SaveHeaderV5Schema,
   6: SaveHeaderV6Schema,
+  7: SaveHeaderV7Schema,
 };
 
 export class MigrationError extends Error {}
@@ -115,6 +118,15 @@ export const MIGRATIONS: Migration[] = [
     migrate(save, context) {
       return v5ToV6(
         save as unknown as SaveFileV5,
+        context,
+      ) as unknown as VersionedSave;
+    },
+  },
+  {
+    from: 6,
+    migrate(save, context) {
+      return v6ToV7(
+        save as unknown as SaveFileV6,
         context,
       ) as unknown as VersionedSave;
     },

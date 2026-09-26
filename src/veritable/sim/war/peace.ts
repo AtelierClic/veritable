@@ -164,6 +164,7 @@ export function completeAnnexation(
       claimant: nation,
       weight: 1,
       failures: 0,
+      dormant: false,
     });
   }
   void war;

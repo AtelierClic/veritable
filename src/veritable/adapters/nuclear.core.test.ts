@@ -131,9 +131,13 @@ describe("nuclear weapons on the real core (Europe map)", () => {
     expect(strike.hits.ESP).toBeGreaterThan(0);
     const after = session.sim.read();
     const lost = strike.hits.ESP / tiles;
-    expect(after.nations.find((n) => n.id === "ESP")!.tileCount).toBeLessThan(
-      tiles,
-    );
+    // Spain fights back from its first update, within a day of the
+    // declaration (J7), and takes French land, contested: the land it held
+    // on the first day is what it lost to the warhead.
+    const held = (view: typeof after) =>
+      view.nations.find((n) => n.id === "ESP")!.tileCount -
+      (view.contested.ESP ?? 0);
+    expect(held(after)).toBeLessThan(tiles);
     expect(after.economies.ESP.gdp).toBeLessThan(gdp * (1 - 0.8 * lost));
     expect(after.nuclear.fallout.ESP).toBeLessThan(1);
     // Everyone turned against France.

@@ -1,5 +1,4 @@
 import { NationId } from "../data/schemas/common";
-import { NationData } from "../data/schemas/nation";
 import {
   DiplomacyState,
   MilitaryState,
@@ -51,7 +50,8 @@ export function stepWarAi(
   ctx: EconomyContext,
   diplomacy: DiplomacyState,
   military: MilitaryState,
-  data: NationData,
+  // The population in play (J7: the economy's, which moves).
+  population: number,
   geometry: readonly FrontGeometry[],
   id: NationId,
 ): AiWarOrders {
@@ -60,7 +60,6 @@ export function stepWarAi(
   const orders: AiWarOrders = { ceasefireTo: [] };
   if (me === undefined) return orders;
   const enemies = enemiesOf(diplomacy, id);
-  const population = data.population.value;
 
   if (enemies.length === 0) {
     if (me.conscription !== "peace") {
@@ -77,7 +76,7 @@ export function stepWarAi(
   const losing = diplomacy.wars.some((war) => {
     const side = warSide(war, id);
     if (side === null) return false;
-    const lostShare = lostTilesShare(war, id, data);
+    const lostShare = lostTilesShare(war, id);
     return (
       (war.retreatMonths[id] ?? 0) >= cfg.ai.retreatMonthsForTotal ||
       lostShare > cfg.ai.totalConscriptionWhenLosingShare
@@ -148,8 +147,7 @@ export function stepWarAi(
 
 // Share of the nation's tiles it lost in this war (net), relative to what it
 // holds now plus what it lost.
-function lostTilesShare(war: War, id: NationId, data: NationData): number {
-  void data;
+function lostTilesShare(war: War, id: NationId): number {
   let lost = 0;
   const enemies = war.aggressors.includes(id) ? war.defenders : war.aggressors;
   for (const e of enemies) lost += war.tilesTaken[e] ?? 0;

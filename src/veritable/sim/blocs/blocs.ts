@@ -20,19 +20,19 @@ import {
 import {
   addRelation,
   DiplomacyEvent,
-  directAffinityInputs,
   imposeSanctions,
   isSanctioning,
   joinWar,
   liftSanctions,
-  policyLiftable,
   relation,
   warSide,
 } from "../diplomacy/diplomacy";
 import { EconomyContext } from "../economy/context";
+import { populationOf } from "../economy/population";
 import { ideologyDistance, MAX_IDEOLOGY_DISTANCE } from "../politics/ideology";
 import { addMonths } from "../politics/state";
 import { Rng } from "../rng";
+import { addDays, chanceOver } from "../time";
 import { militaryPower } from "../war/military";
 
 // Blocs, layers 2 and 3 (J5). A bloc is an actor: its members (every
@@ -43,9 +43,11 @@ import { militaryPower } from "../war/military";
 // measures its leader proposes, at most one a month, voted by the members
 // under the decision rule of their domain.
 //
-// Once a game month (blocs clock), in this order: the leaders, the proposals
-// due, the accession processes, the exits, collective defence, the budget,
-// the applications and the proposals of the AI leaders.
+// J7, no bloc waits for the 1st of the month but for what is calendar by
+// nature: the 1st, the leaders (presidencies) and the budget; every day, the
+// proposals due, the exits, collective defence; on its session day (one day
+// of the month of its own), the accession processes and the measure of its
+// AI leader; at each update of an AI nation, its applications.
 
 export const MEASURE_DOMAIN: Record<BlocMeasure, BlocDomain> = {
   sanctions: "sanctions",
@@ -212,10 +214,6 @@ function monthsBetween(from: string, to: string): number {
   return (ty - fy) * 12 + (tm - fm);
 }
 
-function firstOfNextMonth(date: string): string {
-  return addMonths(`${date.slice(0, 7)}-01`, 1);
-}
-
 // The leader a bloc has this month. Rotating: the order of the data among
 // the simulated members (europe-10: a compressed rotation, an artifact),
 // new members at the end, terms counted from the rotation epoch. Hegemon:
@@ -373,7 +371,7 @@ function passes(
         memberShare: 0.5,
         populationShare: 0.5,
       };
-      const pop = (n: NationId) => env.sheets.get(n)?.population.value ?? 0;
+      const pop = (n: NationId) => populationOf(env.economy, env.sheets, n);
       const total = ids.reduce((s, n) => s + pop(n), 0);
       const yesPop = yes.reduce((s, n) => s + pop(n), 0);
       return (
@@ -537,7 +535,9 @@ function newProposal(env: BlocEnv, m: Measure): BlocProposal {
     target: m.target,
     direction: m.kind === "budget" ? m.direction : null,
     date: env.date,
-    resolveOn: firstOfNextMonth(env.date),
+    // J7: the player has voteDays to vote (the 1st of next month until the
+    // J6).
+    resolveOn: addDays(env.date, env.ctx.config.blocs.voteDays),
     cast: {},
     result: "pending",
     votes: {},
@@ -560,8 +560,7 @@ function proposalEvent(p: BlocProposal): BlocEngineEvent {
 }
 
 // The leader puts a measure to the vote. When the player votes, it resolves
-// on the 1st of next month (the player has the month to vote); among AI
-// members only, at once.
+// voteDays later; among AI members only, at once.
 export function propose(env: BlocEnv, m: Measure): BlocStepEvent[] {
   const refusal = measureRefusal(env, m);
   if (refusal !== null) throw new Error(`bloc-propose: ${refusal}`);
@@ -858,13 +857,14 @@ function resolve(env: BlocEnv, p: BlocProposal): BlocStepEvent[] {
   return events;
 }
 
-// --- the monthly step ----------------------------------------------------------
+// --- the steps (J7) ------------------------------------------------------------
 
-export function stepBlocsMonth(env: BlocEnv): BlocStepEvent[] {
+// The 1st of the month (calendar by nature): the leaders — a new presidency
+// or hegemon is journaled — the budget of each bloc (the net transfer of
+// each nation, per month, paid by its next updates), and the housekeeping.
+export function stepBlocsCalendar(env: BlocEnv): BlocStepEvent[] {
   const { ctx, state, date } = env;
   const events: BlocStepEvent[] = [];
-
-  // 1. Leaders: a new presidency or hegemon is journaled.
   for (const bloc of state.blocs) {
     const leader = computeLeader(env, bloc.id, date);
     const before = leaderOf(state, bloc.id);
@@ -877,39 +877,30 @@ export function stepBlocsMonth(env: BlocEnv): BlocStepEvent[] {
       });
     }
   }
+  budgetFlows(env);
+  const oldest = addMonths(date, -ctx.config.blocs.historyMonths);
+  state.proposals = state.proposals.filter(
+    (p) => p.result === "pending" || p.date >= oldest,
+  );
+  for (const bloc of state.blocs) {
+    bloc.programs = bloc.programs.filter((p) => date < p.until);
+  }
+  syncBlocs(ctx, state);
+  return events;
+}
 
-  // 2. Proposals due.
+// Every day: the proposals due, the exits that take effect (out of the
+// bloc, a GDP level cost), collective defence (a new war, a call that
+// expired).
+export function stepBlocsDay(env: BlocEnv): BlocStepEvent[] {
+  const { ctx, state, date } = env;
+  const events: BlocStepEvent[] = [];
   for (const p of state.proposals) {
     if (p.result === "pending" && date >= p.resolveOn) {
       events.push(...resolve(env, p));
     }
   }
-
-  // 3. Accession processes: the annual vote and the final one are put to the
-  //    members by the leader (they do not count as its measure of the month);
-  //    failing criteria freeze the process.
-  for (const bloc of state.blocs) {
-    const leader = leaderOf(state, bloc.id);
-    for (const process of [...bloc.accessions]) {
-      if (date < process.nextVote && date < process.completeOn) continue;
-      if (!accessionCriteria(env, bloc.id, process.nation).ok) {
-        events.push(freeze(env, bloc, process.nation, "criteria"));
-        continue;
-      }
-      const m: Measure = {
-        bloc: bloc.id,
-        by: leader ?? process.nation,
-        kind: "accession",
-        target: process.nation,
-        direction: null,
-      };
-      // One vote a year: the next date moves when the vote passes (enact).
-      if (leader === null || hasPending(env, m)) continue;
-      events.push(...submit(env, m));
-    }
-  }
-
-  // 4. Exits that take effect: out of the bloc, a GDP level cost.
+  let left = false;
   for (const bloc of state.blocs) {
     const data = blocData(ctx, bloc.id);
     for (const exit of [...bloc.exits]) {
@@ -923,29 +914,66 @@ export function stepBlocsMonth(env: BlocEnv): BlocStepEvent[] {
         nation: exit.nation,
         params: { bloc: bloc.id },
       });
+      left = true;
     }
   }
-  syncBlocs(ctx, state);
-
-  // 5. Collective defence.
+  if (left) syncBlocs(ctx, state);
   events.push(...collectiveDefense(env));
+  return events;
+}
 
-  // 6. The budget of each bloc, paid by the next national budgets.
-  budgetFlows(env);
-
-  // 7. Applications of the AI nations, 8. measures of the AI leaders.
-  events.push(...aiApplications(env));
-  for (const bloc of state.blocs) events.push(...aiProposal(env, bloc.id));
-
-  // 9. Housekeeping: resolved proposals kept for a while, ended programmes.
-  const oldest = addMonths(date, -ctx.config.blocs.historyMonths);
-  state.proposals = state.proposals.filter(
-    (p) => p.result === "pending" || p.date >= oldest,
-  );
-  for (const bloc of state.blocs) {
-    bloc.programs = bloc.programs.filter((p) => date < p.until);
+// The session day of a bloc: a day of the month of its own (1 to 28, from
+// its id), so that the blocs do not all meet on the same day.
+export function sessionDay(id: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < id.length; i++) {
+    h ^= id.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
   }
-  syncBlocs(ctx, state);
+  return 1 + (h % 28);
+}
+
+// The session of a bloc: the accession processes (the annual vote and the
+// final one, put by the leader; failing criteria freeze the process), then
+// the measure of the month of its AI leader.
+export function stepBlocSession(env: BlocEnv, id: string): BlocStepEvent[] {
+  const { state } = env;
+  const events: BlocStepEvent[] = [];
+  const bloc = blocState(state, id);
+  const leader = leaderOf(state, id);
+  for (const process of [...bloc.accessions]) {
+    if (env.date < process.nextVote && env.date < process.completeOn) continue;
+    if (!accessionCriteria(env, id, process.nation).ok) {
+      events.push(freeze(env, bloc, process.nation, "criteria"));
+      continue;
+    }
+    const m: Measure = {
+      bloc: id,
+      by: leader ?? process.nation,
+      kind: "accession",
+      target: process.nation,
+      direction: null,
+    };
+    // One vote a year: the next date moves when the vote passes (enact).
+    if (leader === null || hasPending(env, m)) continue;
+    events.push(...submit(env, m));
+  }
+  events.push(...aiProposal(env, id));
+  syncBlocs(env.ctx, state);
+  return events;
+}
+
+// Every bloc on one day (the tests; the order of the monthly step of the
+// J5 and the J6).
+export function stepBlocsMonth(env: BlocEnv): BlocStepEvent[] {
+  const events: BlocStepEvent[] = [...stepBlocsCalendar(env)];
+  events.push(...stepBlocsDay(env));
+  for (const nation of env.aiNations) {
+    events.push(...aiApplicationsOf(env, nation, 1));
+  }
+  for (const bloc of env.state.blocs) {
+    events.push(...stepBlocSession(env, bloc.id));
+  }
   return events;
 }
 
@@ -1102,7 +1130,7 @@ function budgetFlows(env: BlocEnv): void {
   const { ctx, state } = env;
   state.net = {};
   const gdp = (n: NationId) => env.economy.nations[n]?.gdp ?? 0;
-  const pop = (n: NationId) => env.sheets.get(n)?.population.value ?? 0;
+  const pop = (n: NationId) => populationOf(env.economy, env.sheets, n);
   for (const bloc of state.blocs) {
     bloc.contributions = {};
     bloc.received = {};
@@ -1195,33 +1223,36 @@ function budgetFlows(env: BlocEnv): void {
 
 // An AI nation applies to a bloc open to applications when it meets the
 // criteria, its relations with the members are well above the minimum and
-// its government is not sovereignist; a small chance each month.
-function aiApplications(env: BlocEnv): BlocEngineEvent[] {
+// its government is not sovereignist; a small chance each month (J7: over
+// the months since its last update).
+export function aiApplicationsOf(
+  env: BlocEnv,
+  nation: NationId,
+  months: number,
+): BlocEngineEvent[] {
   const { ctx, state } = env;
   const cfg = ctx.config.blocs.ai;
   const events: BlocEngineEvent[] = [];
-  for (const nation of env.aiNations) {
-    const sovereignty =
-      env.politics.nations[nation]?.government.ideology.sovereignty ?? 0;
-    if (sovereignty >= cfg.applySovereigntyBelow) continue;
-    for (const bloc of state.blocs) {
-      const data = blocData(ctx, bloc.id);
-      if (!openToApplications(data)) continue;
-      if (simulatedMembers(ctx, bloc.id).length === 0) continue;
-      const status = memberStatus(bloc, nation);
-      if (status === "full" || status === "suspended" || status === "candidate")
-        continue;
-      if (bloc.applications.some((a) => a.nation === nation)) continue;
-      const criteria = accessionCriteria(env, bloc.id, nation);
-      if (!criteria.ok) continue;
-      if (
-        criteria.meanRelations <
-        (data.accession.minRelations ?? 0) + cfg.applyRelationMargin
-      )
-        continue;
-      if (!env.rng.chance(cfg.applyProbability)) continue;
-      events.push(...applyForMembership(env, nation, bloc.id));
-    }
+  const sovereignty =
+    env.politics.nations[nation]?.government.ideology.sovereignty ?? 0;
+  if (sovereignty >= cfg.applySovereigntyBelow) return events;
+  for (const bloc of state.blocs) {
+    const data = blocData(ctx, bloc.id);
+    if (!openToApplications(data)) continue;
+    if (simulatedMembers(ctx, bloc.id).length === 0) continue;
+    const status = memberStatus(bloc, nation);
+    if (status === "full" || status === "suspended" || status === "candidate")
+      continue;
+    if (bloc.applications.some((a) => a.nation === nation)) continue;
+    const criteria = accessionCriteria(env, bloc.id, nation);
+    if (!criteria.ok) continue;
+    if (
+      criteria.meanRelations <
+      (data.accession.minRelations ?? 0) + cfg.applyRelationMargin
+    )
+      continue;
+    if (!env.rng.chance(chanceOver(cfg.applyProbability, months))) continue;
+    events.push(...applyForMembership(env, nation, bloc.id));
   }
   return events;
 }
@@ -1280,31 +1311,15 @@ function aiProposal(env: BlocEnv, id: string): BlocStepEvent[] {
     }
   }
   // Lifts: never while the target wages a war of aggression, the wars of
-  // the scenario included (J6b); a sanction of policy once the leader's
-  // government has grown close to the target's.
+  // the scenario included (J6b); J7 (way (c) of the answer of Lukas to the
+  // J6): a sanction of policy as any other, once the leader's relations
+  // with the target are back above liftAboveRelations — the members' vote
+  // decides.
   const waging = new Set(env.diplomacy.wars.flatMap((w) => w.aggressors));
-  const membersAll = ctx.membersOf(id);
   for (const target of bloc.sanctions) {
     if (aggressors.has(target) || waging.has(target)) continue;
     if (relation(env.diplomacy, leader, target) < cfg.liftAboveRelations)
       continue;
-    const policy = env.diplomacy.sanctions.some(
-      (s) =>
-        s.against === target && s.policy === true && membersAll.includes(s.by),
-    );
-    if (
-      policy &&
-      !policyLiftable(
-        ctx,
-        env.diplomacy,
-        env.politics,
-        leader,
-        target,
-        directAffinityInputs(ctx, env.diplomacy, env.date),
-      )
-    ) {
-      continue;
-    }
     const done = attempt("lift", target);
     if (done !== null) return done;
   }

@@ -6,11 +6,13 @@ import {
   NationPolitics,
   PoliticsState,
 } from "../../data/schemas/save";
+import { DAYS_PER_MONTH } from "../time";
 import { EconomyContext } from "./context";
-import { MonthlyTrade } from "./engine";
+import { tradeBasesOf } from "./engine";
 import { taxBase } from "./init";
 
-// Monthly budget of one nation.
+// Budget of one nation, per month (J7: an update covers the months since
+// the last one, its flows are the monthly rates times their length).
 //
 //   revenue     = sum over taxes of rate x base / 12     (+ foreign grants)
 //   expenditure = GDP / 12 x sum of post shares          (+ interest)
@@ -29,10 +31,17 @@ export type BudgetEvent =
   | { type: "austerity-started" | "austerity-ended"; nation: NationId }
   | { type: "sovereign-default"; nation: NationId };
 
+// The trailing deficit (J7: the balances of the last twelve calendar
+// months over the time they cover), in share of GDP per year.
 export function deficitToGdp(nation: NationEconomy): number {
-  if (nation.balances.length === 0) return 0;
-  const sum = nation.balances.reduce((a, b) => a + b, 0);
-  return (-sum * (12 / nation.balances.length)) / nation.gdp;
+  let sum = 0;
+  let days = 0;
+  for (const b of nation.balances) {
+    sum += b.value;
+    days += b.days;
+  }
+  if (days <= 0) return 0;
+  return (-sum * (365.25 / days)) / nation.gdp;
 }
 
 // Highest share a spending post may take right now.
@@ -152,25 +161,40 @@ export function settleStartBudget(
   }
 }
 
+// What an update of the budget covers (J7): its date, the calendar month it
+// ends in (months since the start date), its length in game months, and
+// the calendar months it crossed (the counters of months in a row).
+export interface BudgetPeriod {
+  date: string;
+  month: number;
+  months: number;
+  monthsCrossed: number;
+}
+
+// One month from a date: the shape of the monthly budget of the J2 to the
+// J6 (tests).
+export function monthPeriod(date: string, month = 0): BudgetPeriod {
+  return { date, month, months: 1, monthsCrossed: 1 };
+}
+
 export function stepBudget(
   ctx: EconomyContext,
   id: NationId,
   nation: NationEconomy,
   politics: NationPolitics,
-  trade: MonthlyTrade,
-  date: string,
-  // Net transfer received this month (reparations, J3a; the cost of the
-  // political levers, J4), US$.
-  transfer = 0,
+  period: BudgetPeriod,
+  // Net transfers received per month (reparations, J3a; the cost of the
+  // political levers, J4; bloc budgets, J5), US$ per month.
+  transferPerMonth = 0,
+  // One-off amounts of the period (structures built, arms sent), US$.
+  lump = 0,
   // Corruption leak on the programmes: they cost x (1 + leak) (J4).
   leak = 0,
 ): BudgetEvent[] {
   const events: BudgetEvent[] = [];
   const cfg = ctx.config.budget;
-  const bases = {
-    importsValue: trade.importsValue[id],
-    rentsValue: trade.rentsValue[id],
-  };
+  const { months, date } = period;
+  const bases = tradeBasesOf(ctx, nation);
 
   if (nation.austerity) {
     for (const post of SPENDING_POSTS) {
@@ -181,7 +205,8 @@ export function stepBudget(
     }
   }
 
-  let revenue = (nation.grantsPctGdp * nation.gdp) / 12 + transfer;
+  // Rates per month.
+  let revenue = (nation.grantsPctGdp * nation.gdp) / 12 + transferPerMonth;
   for (const tax of TAX_IDS) {
     revenue += (nation.taxes[tax] * taxBase(ctx, tax, nation.gdp, bases)) / 12;
   }
@@ -207,17 +232,26 @@ export function stepBudget(
     }
   }
 
-  const balance = revenue - programs - interest;
-  const before = debtToGdp;
+  const balance = (revenue - programs - interest) * months + lump;
   nation.debt -= balance;
   nation.revenue = revenue;
   nation.expenditure = programs + interest;
   nation.interest = interest;
-  nation.balances.push(balance);
-  if (nation.balances.length > 12) nation.balances.shift();
+  addBalance(nation, period.month, balance, months * DAYS_PER_MONTH);
 
+  // Months in a row the debt rose, at the turn of each month: the debt in
+  // money, not its ratio to GDP (a month of deficit, as from the J2 to the
+  // J6: the J6 compared the ratios before and after the budget of the month,
+  // at the same GDP). The ratio falls with growth under a small deficit,
+  // and a rule on the ratio let the French debt climb back after 2045.
   const after = nation.debt / nation.gdp;
-  nation.debtRisingMonths = after > before ? nation.debtRisingMonths + 1 : 0;
+  if (period.monthsCrossed > 0) {
+    nation.debtRisingMonths =
+      nation.debt > nation.debtMark
+        ? nation.debtRisingMonths + period.monthsCrossed
+        : 0;
+    nation.debtMark = nation.debt;
+  }
 
   // No second default while one is in progress (J6b).
   if (
@@ -229,6 +263,7 @@ export function stepBudget(
     nation.noDeficitUntil = addYears(date, cfg.default.noDeficitYears);
     nation.defaults += 1;
     nation.debtRisingMonths = 0;
+    nation.debtMark = nation.debt;
     politics.opinion = Math.max(
       0,
       politics.opinion - cfg.default.satisfactionHit,
@@ -263,3 +298,28 @@ export function stepBudget(
   }
   return events;
 }
+
+// The balance of a period goes to the bucket of its calendar month; the
+// last twelve months are kept.
+function addBalance(
+  nation: NationEconomy,
+  month: number,
+  value: number,
+  days: number,
+): void {
+  const last = nation.balances[nation.balances.length - 1];
+  if (last !== undefined && last.month === month) {
+    last.value += value;
+    last.days += days;
+  } else {
+    nation.balances.push({ month, value, days });
+  }
+  while (
+    nation.balances.length > 0 &&
+    nation.balances[0].month <= month - BALANCE_MONTHS
+  ) {
+    nation.balances.shift();
+  }
+}
+
+const BALANCE_MONTHS = 12;

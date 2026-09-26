@@ -142,13 +142,15 @@ describe("technology: research", () => {
     // AAA (AI) chose the node the first month; R&D 3 % = 30 points a month.
     expect(view.tech.nations.AAA.projects.map((p) => p.node)).toEqual(["grid"]);
     expect(view.tech.nations.AAA.pointsLastMonth).toBeCloseTo(30, 0);
-    months(13);
+    months(14);
     const after = sim.read();
     expect(after.tech.nations.AAA.done).toEqual(["grid"]);
     const done = after.journal.find((j) => j.kind === "tech-completed");
     expect(done?.params.node).toBe("grid");
-    // 400 points at 30 a month from February 2026: the 14th month.
-    expect(done?.date).toBe("2027-03-01");
+    // 400 points at 30 a month: 13.3 months of research, completed at the
+    // first update of AAA after that (J7: a month apart, the first one
+    // half-way through January).
+    expect(done!.date >= "2027-02-01" && done!.date <= "2027-03-31").toBe(true);
     const growth = after.economies.AAA.production.electricity / before;
     expect(growth).toBeGreaterThan(1.09);
     const internals = sim as unknown as Internals;

@@ -102,6 +102,8 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
   return {
     gdp,
     debt: data.debtToGdp.value * gdp,
+    population: data.population.value,
+    monthMark: 0,
     growthBase: sheet.growthBase.value,
     growthAnnual: sheet.growthBase.value,
     production,
@@ -121,6 +123,14 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     exportShareReference: exportsValue / gdp,
     shortage: 0,
     priceIndex: 1,
+    // The first turn of the goods (the campaign's first day) fills them.
+    exportValue: perGood((g) => exports[g] * ctx.good(g).basePrice * 1e6),
+    importValue: perGood((g) => imports[g] * ctx.good(g).basePrice * 1e6),
+    rentValue: perGood((g) =>
+      ctx.good(g).rent ? production[g] * ctx.good(g).basePrice * 1e6 : 0,
+    ),
+    maritimeValue: perGood(() => 0),
+    paidPrice: perGood((g) => ctx.good(g).basePrice),
     taxes,
     taxes0: { ...taxes },
     spending,
@@ -134,6 +144,7 @@ function initNation(ctx: EconomyContext, data: NationData): NationEconomy {
     interestSpread: 0, // settled with the stability (settleStartBudget)
     balances: [],
     debtRisingMonths: 0,
+    debtMark: data.debtToGdp.value * gdp,
     austerity: false,
     noDeficitUntil: null,
     defaults: 0,

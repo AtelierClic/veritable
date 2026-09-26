@@ -37,6 +37,12 @@
     "source": "worldbank:SP.POP.TOTL",
     "asOf": "2024"
   },
+  "populationGrowth": {
+    "value": 0,
+    "source": "estimate",
+    "asOf": "2026-09-24",
+    "note": "Série de population trop courte : population stable au départ."
+  },
   "gdp": {
     "value": 1300000000,
     "source": "worldbank:NY.GDP.MKTP.CD",

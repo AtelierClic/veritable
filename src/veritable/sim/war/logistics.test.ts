@@ -51,22 +51,27 @@ function campaign(structures: number, infrastructure: number) {
     sim.apply({ type: "set-posture", division: d.id, posture: "attack" });
   }
   sim.advance(DAY);
-  return sim.read().fronts[0].segments[0].sides.AAA;
+  const view = sim.read();
+  // J7: the strikes of the enemy air force start with the war (they waited
+  // for the 1st of the month until the J6) and take their share of the
+  // capacity.
+  const struck = 1 - view.economies.AAA.strikeDamage;
+  return { ...view.fronts[0].segments[0].sides.AAA, struck };
 }
 
 describe("logistics", () => {
   it("a bare segment supports the base capacity: twenty divisions fight at a fraction", () => {
     const side = campaign(0, 0);
     expect(side.divisions).toBe(21); // 300 000 men in the starting mix
-    // capacity = 2 + 0 + 50 x 0 = 2 divisions
-    expect(side.supply).toBeCloseTo(2 / 21, 6);
+    // capacity = 2 + 0 + 50 x 0 = 2 divisions (less the strikes)
+    expect(side.supply).toBeCloseTo((2 * side.struck) / 21, 6);
   });
 
   it("cities nearby and infrastructure spending raise the capacity", () => {
     const bare = campaign(0, 0);
     const served = campaign(3, 0.04);
-    // capacity = 2 + 2 x 3 + 50 x 0.04 = 10 divisions
-    expect(served.supply).toBeCloseTo(10 / 21, 6);
+    // capacity = 2 + 2 x 3 + 50 x 0.04 = 10 divisions (less the strikes)
+    expect(served.supply).toBeCloseTo((10 * served.struck) / 21, 6);
     expect(served.force).toBeGreaterThan(bare.force * 4);
   });
 

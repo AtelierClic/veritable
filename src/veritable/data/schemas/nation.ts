@@ -163,6 +163,10 @@ export const NationDataSchema = z.object({
     })
     .optional(),
   population: SourcedNumberSchema,
+  // J7: trend of the population at the start, per year (World Bank,
+  // SP.POP.TOTL: the compound growth of 2015-2024); it converges to the
+  // long-run rate of the config. Absent (a test sheet): 0 at the start.
+  populationGrowth: SourcedNumberSchema.optional(),
   gdp: SourcedNumberSchema, // current US$
   debtToGdp: SourcedNumberSchema,
   economy: NationEconomySchema,

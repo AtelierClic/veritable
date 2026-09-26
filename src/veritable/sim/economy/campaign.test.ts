@@ -12,6 +12,7 @@ import {
   testScenario,
 } from "../testing/nations";
 import { testBloc, testGoods, testRow, testSimData } from "../testing/simData";
+import { DAYS_PER_MONTH } from "../time";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { buildContext } from "./context";
@@ -77,8 +78,15 @@ describe("budget", () => {
       2,
     );
     expect(e.interest).toBeGreaterThan(0);
+    // J7: one bucket for January, the balances of the daily updates of the
+    // player's nation over the 30.5 days they covered.
     expect(e.balances).toHaveLength(1);
-    expect(e.balances[0]).toBeCloseTo(e.revenue - e.expenditure, 0);
+    expect(e.balances[0].month).toBe(0);
+    expect(e.balances[0].days).toBeCloseTo(30.5, 6);
+    expect(
+      e.balances[0].value /
+        ((e.revenue - e.expenditure) * (30.5 / DAYS_PER_MONTH)),
+    ).toBeCloseTo(1, 2);
   });
 
   it("the interest rate rises with debt above 60 % of GDP", () => {
@@ -128,9 +136,9 @@ describe("budget", () => {
     // From then on nobody lends: spending is cut down to revenue.
     months(3);
     const after = sim.read().economies.AAA;
-    expect(after.balances[after.balances.length - 1]).toBeGreaterThanOrEqual(
-      -1,
-    );
+    expect(
+      after.balances[after.balances.length - 1].value,
+    ).toBeGreaterThanOrEqual(-1);
     expect(sim.read().journal.map((j) => j.kind)).toContain(
       "sovereign-default",
     );
@@ -279,7 +287,11 @@ describe("shortages", () => {
   });
 
   it("a shortage slows growth, lowers stability, and pushes the price up", () => {
-    const { sim, months } = campaign(hungry);
+    // The opinion of an AI nation takes random shocks: none here, the gap
+    // of stability is small.
+    const config = quietConfig();
+    config.politics.aiShock.sd = 0;
+    const { sim, months } = campaign({ ...hungry, config });
     months(12);
     const view = sim.read();
     expect(view.economies.AAA.gdp).toBeLessThan(view.economies.BBB.gdp);
@@ -409,7 +421,7 @@ describe("blocs and AI", () => {
     expect(b.spending.social).toBeLessThan(b.spending0.social);
     expect(b.spending.infrastructure).toBe(b.spending0.infrastructure);
     expect(b.taxes.vat).toBeGreaterThan(b.taxes0.vat);
-    const deficit = -b.balances.reduce((x, y) => x + y, 0) / b.gdp;
+    const deficit = -b.balances.reduce((x, y) => x + y.value, 0) / b.gdp;
     expect(deficit).toBeLessThan(0.04);
     // The player's nation is left to the player...
     expect(view.economies.AAA.spending).toEqual(view.economies.AAA.spending0);
@@ -529,16 +541,17 @@ describe("J3 corrections of the J2", () => {
     }
     cut.months(1);
     let a = cut.sim.read().economies.AAA;
-    // The first month jumps to the initial index of each good; steel, never
-    // embargoed, stays at 0.
-    expect(a.circumvention.oil).toBeCloseTo(0.3 + 0.1, 6);
-    expect(a.circumvention.gas).toBeCloseTo(0.05 + 0.01, 6);
+    // The first turn of a good jumps to its initial index; then it builds up
+    // by its monthly rate over the weeks between its turns (J7: the goods
+    // take turns, a turn a week each). Steel, never embargoed, stays at 0.
+    expect(a.circumvention.oil).toBeCloseTo(0.3 + 0.1, 1);
+    expect(a.circumvention.gas).toBeCloseTo(0.05 + 0.01, 2);
     expect(a.circumvention.steel).toBe(0);
     cut.months(11);
     a = cut.sim.read().economies.AAA;
     // Capped at the ceiling of the good.
     expect(a.circumvention.oil).toBe(0.8);
-    expect(a.circumvention.gas).toBeCloseTo(0.05 + 12 * 0.01, 6);
+    expect(a.circumvention.gas).toBeCloseTo(0.05 + 12 * 0.01, 2);
     // An exporter embargoed on oil alone keeps more of its export value
     // than one embargoed on gas alone (same volumes lost): the discount on
     // what is dumped narrows with the circumvention of the good.
@@ -579,8 +592,9 @@ describe("J3 corrections of the J2", () => {
     }
     cut.months(3);
     a = cut.sim.read().economies.AAA;
-    expect(a.circumvention.oil).toBeCloseTo(0.8 - 0.3, 6);
-    expect(a.circumvention.gas).toBeCloseTo(0.17 - 0.03, 6);
+    // Three months of fading, turn by turn (a week of fading a turn).
+    expect(a.circumvention.oil).toBeCloseTo(0.8 - 0.3, 1);
+    expect(a.circumvention.gas).toBeCloseTo(0.17 - 0.03, 2);
   });
 
   it("the rest of the world brings its price response on line with a lag, not instantly", () => {

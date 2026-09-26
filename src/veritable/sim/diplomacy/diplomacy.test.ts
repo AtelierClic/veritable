@@ -11,6 +11,7 @@ import {
   testScenario,
 } from "../testing/nations";
 import { testBloc, testSimData } from "../testing/simData";
+import { DAYS_PER_MONTH } from "../time";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { relation, setRelation } from "./diplomacy";
@@ -81,6 +82,10 @@ function campaign(setup: Setup) {
   return { sim, events, months, sheets };
 }
 
+// Months of drift of the player's pairs after `days` days from the start: its
+// daily updates fall at noon, the last one half a day before the end (J7).
+const covered = (days: number) => (days - 0.5) / DAYS_PER_MONTH;
+
 // AAA plays; it shares two blocs with BBB, one with CCC; DDD is alone.
 // Equal armies: nobody weighs more than a quarter of the world.
 const world: Setup = {
@@ -102,8 +107,13 @@ describe("relations", () => {
     expect(relation(d, "BBB", "AAA")).toBe(60); // symmetric
     months(12);
     // Same governments everywhere (test data): affinity = 40 x common blocs
-    // + 20. AAA-CCC (one bloc): 60, reached from 30 at +2 a month.
-    expect(relation(sim.read().diplomacy, "AAA", "CCC")).toBe(54);
+    // + 20. AAA-CCC (one bloc): 60, reached from 30 at +2 a month (J7: the
+    // player's pairs drift at its daily updates, the last one half a day
+    // before the end of the 372 days).
+    expect(relation(sim.read().diplomacy, "AAA", "CCC")).toBeCloseTo(
+      30 + 2 * covered(372),
+      6,
+    );
     // AAA-BBB (two blocs): min(60, 80) + 20 = 80, from 60.
     expect(relation(sim.read().diplomacy, "AAA", "BBB")).toBe(80);
     // AAA-DDD (no bloc): 20, from 0.
@@ -133,10 +143,14 @@ describe("relations", () => {
     expect(relation(d, "CCC", "DDD")).toBe(-100);
     months(3);
     // No cost for a war of the scenario: only the drift to the affinity.
-    expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBe(6);
-    expect(sim.read().diplomacy.sanctions).toEqual([
-      { by: "CCC", against: "DDD", since: "2026-02-01" },
-    ]);
+    expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBeCloseTo(
+      2 * covered(93),
+      6,
+    );
+    // Its victim sanctions it at its first update (J7: a day of January).
+    expect(
+      sim.read().diplomacy.sanctions.map((s) => `${s.by}>${s.against}`),
+    ).toEqual(["CCC>DDD"]);
   });
 });
 
@@ -203,9 +217,15 @@ describe("declaring war", () => {
     d = sim.read().diplomacy;
     // No monthly cost with a casus belli: only the drift towards the
     // affinity (+2 a month when below it, -0.5 when above).
-    expect(relation(d, "AAA", "CCC")).toBeCloseTo(30 - 6.25 + 4, 6);
-    expect(relation(d, "AAA", "DDD")).toBeCloseTo(-6.25 + 4, 6);
-    expect(relation(d, "BBB", "CCC")).toBe(34);
+    expect(relation(d, "AAA", "CCC")).toBeCloseTo(
+      30 - 6.25 + 2 * covered(62),
+      6,
+    );
+    expect(relation(d, "AAA", "DDD")).toBeCloseTo(-6.25 + 2 * covered(62), 6);
+    // A pair of two AI nations drifts at most once a month, at the updates
+    // of the first of the two (J7).
+    expect(relation(d, "BBB", "CCC")).toBeGreaterThan(32);
+    expect(relation(d, "BBB", "CCC")).toBeLessThanOrEqual(34.1);
     // Peace: the enemies start healing from -100 by two a month.
     const war = d.wars[0];
     sim.apply({
@@ -224,7 +244,7 @@ describe("declaring war", () => {
     // affinity of 20).
     months(3);
     expect(relation(sim.read().diplomacy, "AAA", "DDD")).toBeCloseTo(
-      -6.25 + 10,
+      -6.25 + 2 * covered(155),
       6,
     );
   });

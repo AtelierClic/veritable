@@ -9,7 +9,9 @@ import {
 import { Scenario } from "../../data/schemas/scenario";
 import { EconomyContext } from "../economy/context";
 import { ideologyDistance, MAX_IDEOLOGY_DISTANCE } from "../politics/ideology";
+import { addMonths } from "../politics/state";
 import { Rng } from "../rng";
+import { addDays as addDaysIso, chanceOver, DAYS_PER_MONTH } from "../time";
 import { militaryPower } from "../war/military";
 import {
   claimsAgainst,
@@ -33,7 +35,8 @@ import {
 // the war. Defenders and coalition members pay nothing. Wars the scenario
 // starts with are already priced in: no monthly cost.
 //
-// Reaction of an AI nation, once a month: it sanctions an aggressor (every
+// Reaction of an AI nation, at each of its updates (J7; once a month until
+// the J6): it sanctions an aggressor (every
 // good but the exempt ones, both ways) when its relations with it are under
 // the threshold and either it shares a bloc with the victim or the aggressor
 // weighs more than a share of the total power; the full members of a bloc
@@ -178,6 +181,7 @@ export function initDiplomacy(
       null,
       war.since,
       false,
+      scenario.startDate,
     );
     started.claims = scenarioWarClaims(scenario, aggressors, defenders);
     state.wars.push(started);
@@ -196,8 +200,14 @@ function newWar(
   casusBelli: string | null,
   since: string,
   declaredInCampaign: boolean,
+  // The first day the campaign sees the war (its start for a war declared
+  // in the campaign, the start date for a war of the scenario).
+  seen: string = since,
 ): War {
   const all = [...aggressors, ...defenders];
+  // J7: a war keeps its own months, counted from its start.
+  let ledgerOn = addMonths(since, 1);
+  while (ledgerOn <= seen) ledgerOn = addMonths(ledgerOn, 1);
   return {
     id,
     aggressors,
@@ -205,6 +215,7 @@ function newWar(
     casusBelli,
     since,
     declaredInCampaign,
+    ledgerOn,
     score: Object.fromEntries(all.map((n) => [n, 0])),
     retreatMonths: Object.fromEntries(all.map((n) => [n, 0])),
     tilesTaken: Object.fromEntries(all.map((n) => [n, 0])),
@@ -321,8 +332,9 @@ function chargeAggressor(
   military: MilitaryState,
   war: War,
   aggressor: NationId,
+  months = 1,
 ): void {
-  const cost = monthlyCost(ctx, military, war, aggressor);
+  const cost = monthlyCost(ctx, military, war, aggressor) * months;
   for (const other of ctx.nationIds) {
     if (other === aggressor) continue;
     if (war.defenders.includes(other)) continue; // already at warRelation
@@ -621,29 +633,6 @@ export function affinityOf(
   );
 }
 
-// J6b: a sanction of policy (the first day's) may be lifted once the regime
-// of the target is no longer the one it had that day (revolution, coup,
-// transition) and the two would be close without the sanction: the
-// ideological proxy alone sees the governments of the United States and of
-// Iran as close (both high on authority and sovereignty).
-export function policyLiftable(
-  ctx: EconomyContext,
-  state: DiplomacyState,
-  politics: PoliticsState,
-  by: NationId,
-  against: NationId,
-  inputs: AffinityInputs = directAffinityInputs(ctx, state),
-): boolean {
-  const regime = politics.nations[against]?.regime;
-  if (regime === undefined || regime === ctx.sheet(against).regime) {
-    return false;
-  }
-  return (
-    affinityOf(ctx, state, politics, by, against, true, inputs) >=
-    ctx.config.diplomacy.sanction.liftPolicyMinAffinity
-  );
-}
-
 // Relations of a nation with every democracy move by `delta` (media
 // control, detected fraud, coup).
 export function hitDemocracyRelations(
@@ -662,171 +651,329 @@ export function hitDemocracyRelations(
   }
 }
 
-export function stepDiplomacyMonth(
+// --- the reaction, nation by nation (J7) ------------------------------------------------
+//
+// Until the J6 every nation reacted on the 1st of the month, in one step for
+// the whole world. J7: each nation reacts at its own update of the rolling
+// queue, over the months since its last one: the relations it owns drift,
+// an aggressor without casus belli pays its months of war, an AI nation
+// imposes and lifts its sanctions and answers the coalition calls, and its
+// war memory fades. stepDiplomacyMonth runs the whole world for one month
+// (the tests, the warm-up).
+
+export interface DiplomacyStepEnv {
+  ctx: EconomyContext;
+  state: DiplomacyState;
+  economy: EconomyState;
+  military: MilitaryState;
+  politics: PoliticsState;
+  rng: Rng;
+  date: string;
+  // Nations run by the AI (everyone but the player, or everyone in autopilot).
+  aiNations: readonly NationId[];
+  // The player's nation: it owns all its pairs (null in autopilot).
+  player: NationId | null;
+  // Sanctions a bloc holds: the member does not lift them alone (J5).
+  blocHeld: (by: NationId, against: NationId) => boolean;
+  // What the affinity reads of the world, frozen for the step (blocs,
+  // sanctions and wars do not move while the relations drift).
+  inputs?: AffinityInputs;
+  // Military power of every nation for the step, and their sum.
+  power?: Map<NationId, number>;
+}
+
+export type LiftReason =
+  | "relations"
+  | "regime"
+  | "friendly"
+  | "vote"
+  | "player"
+  | "peace";
+
+// The partners whose pair with `id` drifts at the updates of `id`, cached
+// (the player of a campaign never changes).
+const ownedCache = new WeakMap<
+  readonly NationId[],
+  { player: NationId | null; owned: Map<NationId, NationId[]> }
+>();
+function ownedPartners(
+  ctx: EconomyContext,
+  id: NationId,
+  player: NationId | null,
+): readonly NationId[] {
+  let cache = ownedCache.get(ctx.nationIds);
+  if (cache === undefined || cache.player !== player) {
+    cache = { player, owned: new Map() };
+    ownedCache.set(ctx.nationIds, cache);
+  }
+  let owned = cache.owned.get(id);
+  if (owned === undefined) {
+    owned = ctx.nationIds.filter(
+      (other) => other !== id && pairOwner(id, other, player) === id,
+    );
+    cache.owned.set(id, owned);
+  }
+  return owned;
+}
+
+// The nation whose update makes a pair drift (J7): the player for its own
+// pairs, otherwise the first of the two in the order of the ids.
+export function pairOwner(
+  a: NationId,
+  b: NationId,
+  player: NationId | null,
+): NationId {
+  if (player !== null && (a === player || b === player)) return player;
+  return a < b ? a : b;
+}
+
+function powerOf(env: DiplomacyStepEnv): Map<NationId, number> {
+  env.power ??= new Map(
+    env.ctx.nationIds.map((n) => [n, militaryPower(env.ctx, env.military, n)]),
+  );
+  return env.power;
+}
+
+function inputsOf(env: DiplomacyStepEnv): AffinityInputs {
+  env.inputs ??= cachedAffinityInputs(env.ctx, env.state, env.date);
+  return env.inputs;
+}
+
+// Aggressors of a war declared without casus belli in the campaign: they
+// mend no relation while it lasts.
+function unjustAggressors(state: DiplomacyState): Set<NationId> {
+  const out = new Set<NationId>();
+  for (const war of state.wars) {
+    if (!war.declaredInCampaign || war.casusBelli !== null) continue;
+    for (const a of war.aggressors) out.add(a);
+  }
+  return out;
+}
+
+// 0. War memory fades (J6): halves every halfLifeYears.
+export function decayWarMemoryOf(
   ctx: EconomyContext,
   state: DiplomacyState,
-  economy: EconomyState,
-  military: MilitaryState,
-  politics: PoliticsState,
-  rng: Rng,
-  date: string,
-  // Nations run by the AI (everyone but the player, or everyone in autopilot).
-  aiNations: readonly NationId[],
-  // Sanctions a bloc holds: the member does not lift them alone (J5).
-  blocHeld: (by: NationId, against: NationId) => boolean = () => false,
-): DiplomacyEvent[] {
+  id: NationId,
+  months: number,
+): void {
+  const memory = state.warMemory[id];
+  if (memory === undefined) return;
+  const halfLife = ctx.config.ai.nations.war.memory.halfLifeYears;
+  const next = memory * Math.pow(0.5, months / (12 * halfLife));
+  if (next < MEMORY_FLOOR) delete state.warMemory[id];
+  else state.warMemory[id] = next;
+}
+
+// 1. The relations the nation owns drift towards their affinity over
+//    `months`; belligerents stay at warRelation. An aggressor without casus
+//    belli mends nothing while its war lasts: its relations only erode.
+export function driftRelationsOf(
+  env: DiplomacyStepEnv,
+  id: NationId,
+  months: number,
+): void {
+  const { ctx, state } = env;
   const cfg = ctx.config.diplomacy;
-  const events: DiplomacyEvent[] = [];
-  const ids = ctx.nationIds;
-
-  // 0. War memory fades (J6): halves every halfLifeYears.
-  decayWarMemory(ctx, state);
-
-  // 1. Relations drift towards their affinity; belligerents stay at
-  //    warRelation. An aggressor without casus belli mends nothing while its
-  //    war lasts: its relations only erode.
-  const unjustAggressors = new Set<NationId>();
-  for (const war of state.wars) {
-    if (!war.declaredInCampaign || war.casusBelli !== null) continue;
-    for (const a of war.aggressors) unjustAggressors.add(a);
-  }
-  // Blocs, sanctions and wars do not move during steps 1 and 4.
-  const inputs = cachedAffinityInputs(ctx, state, date);
-  const fighting = new Map<NationId, Set<NationId>>();
-  const fight = (x: NationId, y: NationId) => {
-    let set = fighting.get(x);
-    if (set === undefined) {
-      set = new Set();
-      fighting.set(x, set);
-    }
-    set.add(y);
-  };
-  for (const war of state.wars) {
-    for (const x of war.aggressors) {
-      for (const y of war.defenders) {
-        fight(x, y);
-        fight(y, x);
-      }
-    }
-  }
-  // J6c: pairs in the order they are stored (a < b), each row read once,
-  // written only when the relation moves — at 208 nations the 21,528 pairs
-  // cost tens of milliseconds a month in lookups and small allocations.
-  const sorted = [...ids].sort();
+  const inputs = inputsOf(env);
+  const unjust = unjustAggressors(state);
+  const foes = new Set(enemiesOf(state, id));
   const warRelation = clamp(cfg.warRelation, -100, 100);
-  for (let i = 0; i < sorted.length; i++) {
-    const a = sorted[i];
-    const row = (state.relations[a] ??= {});
-    const foes = fighting.get(a);
-    const aUnjust = unjustAggressors.has(a);
-    for (let j = i + 1; j < sorted.length; j++) {
-      const b = sorted[j];
-      const r = row[b] ?? 0;
-      if (foes !== undefined && foes.has(b)) {
-        if (r !== warRelation) row[b] = warRelation;
-        continue;
-      }
-      const target = affinityOf(ctx, state, politics, a, b, false, inputs);
-      const mending = !aUnjust && !unjustAggressors.has(b);
-      const next =
-        r > target
-          ? Math.max(target, r - cfg.relationDecayPerMonth)
-          : mending
-            ? Math.min(target, r + cfg.relationRecoveryPerMonth)
-            : r;
-      if (next !== r || row[b] === undefined) row[b] = clamp(next, -100, 100);
-    }
-  }
-
-  // 2. A war of aggression without casus belli keeps costing relations.
-  for (const war of state.wars) {
-    if (!war.declaredInCampaign || war.casusBelli !== null) continue;
-    for (const aggressor of war.aggressors) {
-      chargeAggressor(ctx, state, military, war, aggressor);
-    }
-  }
-
-  // 3. Sanctions of the AI nations against aggressors. The alignment of the
-  //    blocs (layer 1, J3) is now a vote of their members (sim/blocs, J5).
-  const power = new Map(ids.map((n) => [n, militaryPower(ctx, military, n)]));
-  const totalPower = [...power.values()].reduce((a, b) => a + b, 0);
-  const wantsToSanction = (by: NationId, aggressor: NationId, war: War) => {
-    if (relation(state, by, aggressor) >= cfg.sanction.relationsBelow)
-      return false;
-    // A nation the aggressor is fighting always sanctions it.
-    if (warSide(war, by) === "defenders") return true;
-    const bloc = war.defenders.some(
-      (d) => d !== by && ctx.commonBlocs(by, d) > 0,
-    );
-    const heavy =
-      totalPower > 0 &&
-      power.get(aggressor)! / totalPower > cfg.sanction.aggressorPowerShare;
-    return bloc || heavy;
-  };
-  for (const war of state.wars) {
-    for (const aggressor of war.aggressors) {
-      const sanctioners = new Set<NationId>();
-      for (const by of aiNations) {
-        if (by === aggressor || warSide(war, by) === "aggressors") continue;
-        if (
-          isSanctioning(state, by, aggressor) ||
-          wantsToSanction(by, aggressor, war)
-        ) {
-          sanctioners.add(by);
-        }
-      }
-      for (const by of sanctioners) {
-        const event = imposeSanctions(ctx, state, economy, by, aggressor, date);
-        if (event !== null) events.push(event);
-      }
-    }
-  }
-
-  // 4. Sanctions are lifted once the sanctioned nation is no longer an
-  //    aggressor anywhere and relations have healed; a sanction of policy
-  //    (J6b) once the two governments have also grown close.
-  for (const sanction of [...state.sanctions]) {
-    if (!aiNations.includes(sanction.by)) continue;
-    if (blocHeld(sanction.by, sanction.against)) continue;
-    const stillAggressor = state.wars.some((w) =>
-      w.aggressors.includes(sanction.against),
-    );
-    if (stillAggressor) continue;
-    if (
-      sanction.policy === true &&
-      !policyLiftable(
-        ctx,
-        state,
-        politics,
-        sanction.by,
-        sanction.against,
-        inputs,
-      )
-    ) {
+  const decay = cfg.relationDecayPerMonth * months;
+  const recovery = cfg.relationRecoveryPerMonth * months;
+  const idUnjust = unjust.has(id);
+  const ownRow = (state.relations[id] ??= {});
+  for (const other of ownedPartners(ctx, id, env.player)) {
+    const first = id < other;
+    const a = first ? id : other;
+    const b = first ? other : id;
+    const row = first ? ownRow : (state.relations[a] ??= {});
+    const r = row[b] ?? 0;
+    if (foes.has(other)) {
+      if (r !== warRelation) row[b] = warRelation;
       continue;
     }
-    if (
-      relation(state, sanction.by, sanction.against) >=
-      cfg.sanction.liftAboveRelations
-    ) {
-      const event = liftSanctions(
+    const target = affinityOf(ctx, state, env.politics, a, b, false, inputs);
+    const mending = !idUnjust && !unjust.has(other);
+    const next =
+      r > target
+        ? Math.max(target, r - decay)
+        : mending
+          ? Math.min(target, r + recovery)
+          : r;
+    if (next !== r || row[b] === undefined) row[b] = clamp(next, -100, 100);
+  }
+}
+
+// 2. A war of aggression without casus belli keeps costing relations: the
+//    aggressor pays its months of war at its own updates.
+export function chargeUnjustAggressorOf(
+  env: DiplomacyStepEnv,
+  id: NationId,
+  months: number,
+): void {
+  for (const war of env.state.wars) {
+    if (!war.declaredInCampaign || war.casusBelli !== null) continue;
+    if (!war.aggressors.includes(id)) continue;
+    chargeAggressor(env.ctx, env.state, env.military, war, id, months);
+  }
+}
+
+// 3. Sanctions an AI nation imposes on the aggressors it resents: always on
+//    one it fights, otherwise when it shares a bloc with a victim or the
+//    aggressor weighs more than a share of the total power. The sanction
+//    remembers the war it answers (J7).
+export function imposeSanctionsOf(
+  env: DiplomacyStepEnv,
+  id: NationId,
+): DiplomacyEvent[] {
+  const { ctx, state } = env;
+  const cfg = ctx.config.diplomacy;
+  const events: DiplomacyEvent[] = [];
+  const power = powerOf(env);
+  let totalPower = 0;
+  for (const p of power.values()) totalPower += p;
+  for (const war of state.wars) {
+    if (warSide(war, id) === "aggressors") continue;
+    for (const aggressor of war.aggressors) {
+      if (aggressor === id || isSanctioning(state, id, aggressor)) continue;
+      if (relation(state, id, aggressor) >= cfg.sanction.relationsBelow)
+        continue;
+      const fought = warSide(war, id) === "defenders";
+      const bloc = war.defenders.some(
+        (d) => d !== id && ctx.commonBlocs(id, d) > 0,
+      );
+      const heavy =
+        totalPower > 0 &&
+        (power.get(aggressor) ?? 0) / totalPower >
+          cfg.sanction.aggressorPowerShare;
+      if (!fought && !bloc && !heavy) continue;
+      const event = imposeSanctions(
         ctx,
         state,
-        economy,
-        sanction.by,
-        sanction.against,
+        env.economy,
+        id,
+        aggressor,
+        env.date,
       );
-      if (event !== null) events.push(event);
+      if (event === null) continue;
+      const record = state.sanctions.find(
+        (s) => s.by === id && s.against === aggressor,
+      );
+      if (record !== undefined) record.war = war.id;
+      events.push(event);
     }
   }
+  return events;
+}
 
-  // 5. Coalitions against an aggressor without casus belli that outweighs its
-  //    victim. The victim is the nation attacked (the first defender of a war
-  //    declared in the campaign), not the coalition that joined it: a
-  //    coalition member does not keep the others out.
-  //    J5: against a nation that fired a nuclear weapon, whatever its side,
-  //    its power or its casus belli.
+// 4. The sanctions an AI nation lifts (J7, answer 2 of Lukas to the J6):
+//    never while the target wages a war of aggression, nor one the bloc
+//    holds (its vote lifts it); otherwise
+//    (a) after a change of regime of the target, at the review the issuer
+//        holds within the six months that follow: lifted with a
+//        probability (reviewLiftProbability);
+//    (b) once its relation with the target has stayed >= 0 for
+//        friendlyMonths and the war the sanction answered is over;
+//    and a sanction imposed in the campaign as soon as the relations have
+//    healed above liftAboveRelations (J3).
+export function liftSanctionsOf(
+  env: DiplomacyStepEnv,
+  id: NationId,
+): { event: DiplomacyEvent; reason: LiftReason }[] {
+  const { ctx, state } = env;
+  const cfg = ctx.config.diplomacy.sanction;
+  const out: { event: DiplomacyEvent; reason: LiftReason }[] = [];
+  const waging = new Set(state.wars.flatMap((w) => w.aggressors));
+  for (const sanction of state.sanctions.filter((s) => s.by === id)) {
+    const r = relation(state, id, sanction.against);
+    // (b) runs its clock whatever happens to the rest.
+    if (r >= 0) sanction.friendlySince ??= env.date;
+    else delete sanction.friendlySince;
+    if (env.blocHeld(id, sanction.against)) continue;
+    if (waging.has(sanction.against)) continue;
+    let reason: LiftReason | null = null;
+    if (sanction.reviewBy !== undefined && env.date >= sanction.reviewBy) {
+      delete sanction.reviewBy;
+      if (env.rng.next() < cfg.reviewLiftProbability) reason = "regime";
+    }
+    const warOver =
+      sanction.war === undefined ||
+      !state.wars.some((w) => w.id === sanction.war);
+    if (
+      reason === null &&
+      sanction.friendlySince !== undefined &&
+      warOver &&
+      monthsSinceDate(sanction.friendlySince, env.date) >= cfg.friendlyMonths
+    ) {
+      reason = "friendly";
+    }
+    if (
+      reason === null &&
+      sanction.policy !== true &&
+      r >= cfg.liftAboveRelations
+    ) {
+      reason = "relations";
+    }
+    if (reason === null) continue;
+    const event = liftSanctions(ctx, state, env.economy, id, sanction.against);
+    if (event !== null) out.push({ event, reason });
+  }
+  return out;
+}
+
+// After a change of regime of `nation`, every issuer of a sanction against
+// it holds a review within reviewMonths (J7, way (a)): its date is drawn.
+export function scheduleSanctionReviews(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  rng: Rng,
+  nation: NationId,
+  date: string,
+): void {
+  const days = Math.round(
+    ctx.config.diplomacy.sanction.reviewMonths * DAYS_PER_MONTH,
+  );
+  for (const s of state.sanctions) {
+    if (s.against !== nation) continue;
+    s.reviewBy = addDaysIso(date, rng.nextInt(1, days + 1));
+  }
+}
+
+// The player lifts one of its sanctions (J7): its allies that keep theirs
+// against the same target resent it.
+export function playerLiftCost(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  player: NationId,
+  against: NationId,
+): void {
+  const cost = ctx.config.diplomacy.sanction.playerLiftAllyRelations;
+  for (const s of state.sanctions) {
+    if (s.against !== against || s.by === player) continue;
+    if (!allies(ctx, player, s.by)) continue;
+    addRelation(state, player, s.by, -cost);
+  }
+}
+
+// 5. Coalitions against an aggressor without casus belli that outweighs its
+//    victim (the nation attacked, not the coalition that joined it), and
+//    J5: against a nuclear shooter, whatever its side, power or casus
+//    belli. An AI nation able to fight (a land neighbour of the side it
+//    would fight, or an ally of the principal of the side it would join:
+//    J6c) and hostile enough is called; it answers within windowMonths with
+//    a monthly probability, over the months since its last update.
+export function answerCoalitionsOf(
+  env: DiplomacyStepEnv,
+  id: NationId,
+  months: number,
+): DiplomacyEvent[] {
+  const { ctx, state } = env;
+  const cfg = ctx.config.diplomacy;
+  const events: DiplomacyEvent[] = [];
+  const power = powerOf(env);
   for (const war of state.wars) {
+    if (warSide(war, id) !== null) continue;
     const pariahSide = war.aggressors.some((n) => state.pariahs.includes(n))
       ? "aggressors"
       : war.defenders.some((n) => state.pariahs.includes(n))
@@ -838,7 +985,7 @@ export function stepDiplomacyMonth(
     } else {
       if (war.casusBelli !== null || !war.declaredInCampaign) continue;
       const aggressorPower = war.aggressors.reduce(
-        (s, n) => s + power.get(n)!,
+        (s, n) => s + (power.get(n) ?? 0),
         0,
       );
       const victimPower = power.get(war.defenders[0]) ?? 0;
@@ -846,59 +993,125 @@ export function stepDiplomacyMonth(
       against = "aggressors";
     }
     const side = against === "aggressors" ? "defenders" : "aggressors";
-    // J6c: only a nation able to fight joins — a land neighbour of the side
-    // it would fight, or an ally of the principal of the side it would join
-    // (a common bloc of an ally type, a guarantee). At 208 nations every
-    // nation at odds with a pariah joined its war, Vanuatu included.
     const principal = war[side][0];
-    for (const nation of aiNations) {
-      if (warSide(war, nation) !== null) continue;
-      const hostile = war[against].some(
-        (a) => relation(state, nation, a) < cfg.coalition.relationsBelow,
-      );
-      if (!hostile) continue;
-      const able =
-        war[against].some((a) => ctx.landNeighbours(nation, a)) ||
-        (principal !== undefined && allies(ctx, nation, principal));
-      if (!able) continue;
-      if (
-        !state.coalitionCalls.some(
-          (c) => c.war === war.id && c.nation === nation,
-        )
-      ) {
-        state.coalitionCalls.push({
-          war: war.id,
-          nation,
-          monthsLeft: cfg.coalition.windowMonths,
-          side,
-        });
-      }
+    const hostile = war[against].some(
+      (a) => relation(state, id, a) < cfg.coalition.relationsBelow,
+    );
+    if (!hostile) continue;
+    const able =
+      war[against].some((a) => ctx.landNeighbours(id, a)) ||
+      (principal !== undefined && allies(ctx, id, principal));
+    if (!able) continue;
+    if (
+      !state.coalitionCalls.some((c) => c.war === war.id && c.nation === id)
+    ) {
+      state.coalitionCalls.push({
+        war: war.id,
+        nation: id,
+        until: addMonths(env.date, cfg.coalition.windowMonths),
+        side,
+      });
     }
   }
-  for (const call of [...state.coalitionCalls]) {
+  for (const call of state.coalitionCalls.filter((c) => c.nation === id)) {
     const war = state.wars.find((w) => w.id === call.war);
     const remove = () =>
       state.coalitionCalls.splice(state.coalitionCalls.indexOf(call), 1);
-    if (war === undefined || warSide(war, call.nation) !== null) {
+    if (war === undefined || warSide(war, id) !== null) {
       remove();
       continue;
     }
-    if (rng.next() < cfg.coalition.monthlyProbability) {
-      joinWar(ctx, state, war, call.nation, call.side);
+    if (env.date >= call.until) {
+      remove();
+      continue;
+    }
+    if (env.rng.next() < chanceOver(cfg.coalition.monthlyProbability, months)) {
+      joinWar(ctx, state, war, id, call.side);
       events.push({
         type: "war-joined",
-        nation: call.nation,
+        nation: id,
         war: war.id,
         against:
           call.side === "defenders" ? war.aggressors[0] : war.defenders[0],
       });
       remove();
-      continue;
     }
-    call.monthsLeft -= 1;
-    if (call.monthsLeft <= 0) remove();
   }
   return events;
+}
+
+// What an update of one nation does in diplomacy, in that order. The
+// relations it owns drift over `driftMonths` (the caller drifts them at
+// most once a month, 0: not this time).
+export function stepDiplomacyNation(
+  env: DiplomacyStepEnv,
+  id: NationId,
+  months: number,
+  driftMonths: number = months,
+): { events: DiplomacyEvent[]; lifts: LiftReason[] } {
+  decayWarMemoryOf(env.ctx, env.state, id, months);
+  if (driftMonths > 0) driftRelationsOf(env, id, driftMonths);
+  chargeUnjustAggressorOf(env, id, months);
+  const events: DiplomacyEvent[] = [];
+  const lifts: LiftReason[] = [];
+  if (env.aiNations.includes(id)) {
+    events.push(...imposeSanctionsOf(env, id));
+    for (const lift of liftSanctionsOf(env, id)) {
+      events.push(lift.event);
+      lifts.push(lift.reason);
+    }
+    events.push(...answerCoalitionsOf(env, id, months));
+  }
+  return { events, lifts };
+}
+
+// The whole world for `months` (one month: the step of the J3 to the J6,
+// phase by phase — the tests and the warm-up).
+export function stepDiplomacyMonth(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  economy: EconomyState,
+  military: MilitaryState,
+  politics: PoliticsState,
+  rng: Rng,
+  date: string,
+  aiNations: readonly NationId[],
+  blocHeld: (by: NationId, against: NationId) => boolean = () => false,
+  player: NationId | null = null,
+  months = 1,
+): DiplomacyEvent[] {
+  const env: DiplomacyStepEnv = {
+    ctx,
+    state,
+    economy,
+    military,
+    politics,
+    rng,
+    date,
+    aiNations,
+    player,
+    blocHeld,
+  };
+  const ids = [...ctx.nationIds].sort();
+  for (const id of ids) decayWarMemoryOf(ctx, state, id, months);
+  for (const id of ids) driftRelationsOf(env, id, months);
+  for (const id of ids) chargeUnjustAggressorOf(env, id, months);
+  const events: DiplomacyEvent[] = [];
+  for (const id of aiNations) events.push(...imposeSanctionsOf(env, id));
+  for (const id of aiNations) {
+    for (const lift of liftSanctionsOf(env, id)) events.push(lift.event);
+  }
+  for (const id of aiNations) {
+    events.push(...answerCoalitionsOf(env, id, months));
+  }
+  return events;
+}
+
+// Whole calendar months between two ISO dates (day of the month counted).
+function monthsSinceDate(from: string, to: string): number {
+  const [fy, fm, fd] = from.split("-").map(Number);
+  const [ty, tm, td] = to.split("-").map(Number);
+  return (ty - fy) * 12 + (tm - fm) - (td < fd ? 1 : 0);
 }
 
 // --- war memory (J6) -------------------------------------------------------------

@@ -466,11 +466,15 @@ describe("budget", () => {
     const structural = pool * 0.5;
     const refund = (share: number) => (pool - structural) * share;
     const cShare = s.contributions.CCC / pool;
-    expect(s.received.CCC).toBeCloseTo(
-      (structural * 55) / 60 + refund(cShare),
-      -6,
+    // (J7: the nations grow at their own updates; their GDP per head on the
+    // 1st is that of the first day within a few thousandths.)
+    expect(
+      s.received.CCC / ((structural * 55) / 60 + refund(cShare)),
+    ).toBeCloseTo(1, 2);
+    expect(s.received.BBB / refund(s.contributions.BBB / pool)).toBeCloseTo(
+      1,
+      2,
     );
-    expect(s.received.BBB).toBeCloseTo(refund(s.contributions.BBB / pool), -6);
     expect(s.received.CCC - s.contributions.CCC).toBeGreaterThan(0);
     expect(s.received.BBB - s.contributions.BBB).toBeLessThan(0);
     // The transfer reaches the budget of the next month: CCC borrows less

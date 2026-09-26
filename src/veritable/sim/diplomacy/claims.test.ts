@@ -98,6 +98,7 @@ function unit() {
     casusBelli: "contested-territory",
     since: "2026-01-01",
     declaredInCampaign: true,
+    ledgerOn: "2026-02-01",
     score: { AAA: 0, BBB: 0 },
     retreatMonths: { AAA: 0, BBB: 0 },
     tilesTaken: { AAA: 0, BBB: 0 },

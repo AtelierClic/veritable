@@ -274,7 +274,7 @@ export function syncTech(ctx: EconomyContext, tech: TechState): void {
   }
 }
 
-// Points of the month.
+// Points per month.
 export function researchPoints(env: TechEnv, nation: NationId): number {
   const cfg = env.ctx.config.tech;
   const economy = env.economy.nations[nation];
@@ -382,19 +382,85 @@ export function fillAiProjects(stepEnv: TechEnv): void {
   }
 }
 
+// The research of one nation over `months` (J7: at its update in the rolling
+// queue; once a month for every nation until the J6): an AI nation fills
+// its free slots, the points of the period go to its projects, and a
+// project completes once it has its points and its minimum months.
+export function stepTechNation(
+  stepEnv: TechEnv,
+  nation: NationId,
+  months: number,
+  ai: boolean,
+): TechEvent[] {
+  const env =
+    stepEnv.shares === undefined
+      ? { ...stepEnv, shares: diffusionShares(stepEnv) }
+      : stepEnv;
+  const { ctx, tech } = env;
+  const mine = tech.nations[nation];
+  if (mine === undefined) return [];
+  if (ai) {
+    while (mine.projects.length < ctx.config.tech.maxProjects) {
+      const id = aiChoose(env, nation);
+      if (id === null) break;
+      startResearch(env, nation, id);
+    }
+  }
+  // A branch project stops when the nation leaves the bloc.
+  mine.projects = mine.projects.filter((p) => {
+    const node = techNode(ctx, p.node);
+    return node.bloc === undefined || ctx.blocsOf(nation).includes(node.bloc);
+  });
+  const perMonth = researchPoints(env, nation);
+  mine.pointsLastMonth = perMonth;
+  if (mine.projects.length === 0) {
+    // The modifiers in force: a branch only while it is in the bloc.
+    ctx.techModifiers.set(nation, modifiersOf(ctx, tech, nation));
+    return [];
+  }
+  const share = (perMonth * months) / mine.projects.length;
+  const completed: TechNode[] = [];
+  for (const project of mine.projects) {
+    project.points += share;
+    const node = techNode(ctx, project.node);
+    if (
+      project.points >= effectiveCost(env, node) &&
+      monthsBetween(project.since, env.date) >= node.monthsMin
+    ) {
+      completed.push(node);
+    }
+  }
+  const events: TechEvent[] = [];
+  for (const node of completed) {
+    mine.projects = mine.projects.filter((p) => p.node !== node.id);
+    const first = !ctx.nationIds.some((n) =>
+      tech.nations[n]?.done.includes(node.id),
+    );
+    mine.done.push(node.id);
+    applyCapacities(env, nation, node);
+    events.push({
+      type: "tech-completed",
+      nation,
+      params: { node: node.id, first: String(first) },
+    });
+  }
+  // The modifiers in force: its nodes, a branch only while it is in the bloc.
+  ctx.techModifiers.set(nation, modifiersOf(ctx, tech, nation));
+  return events;
+}
+
+// Every nation for one month (the tests; the step of the J5 and the J6).
+// Completions come after every nation has researched: the shares of the
+// month hold for the whole step.
 export function stepTechMonth(stepEnv: TechEnv): TechEvent[] {
-  // Completions come after every nation has researched: the shares of the
-  // month hold for the whole step.
   const env = { ...stepEnv, shares: diffusionShares(stepEnv) };
   const { ctx, tech } = env;
   const events: TechEvent[] = [];
-  // The AI fills its projects first.
   fillAiProjects(env);
   const completed: { nation: NationId; node: TechNode }[] = [];
   for (const nation of ctx.nationIds) {
     const mine = tech.nations[nation];
     if (mine === undefined) continue;
-    // A branch project stops when the nation leaves the bloc.
     mine.projects = mine.projects.filter((p) => {
       const node = techNode(ctx, p.node);
       return node.bloc === undefined || ctx.blocsOf(nation).includes(node.bloc);
@@ -414,8 +480,6 @@ export function stepTechMonth(stepEnv: TechEnv): TechEvent[] {
       }
     }
   }
-  // Completions after every nation has researched: the diffusion discount
-  // of the month is the same for all.
   for (const { nation, node } of completed) {
     const mine = tech.nations[nation];
     mine.projects = mine.projects.filter((p) => p.node !== node.id);

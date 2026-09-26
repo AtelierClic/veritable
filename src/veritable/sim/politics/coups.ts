@@ -7,13 +7,17 @@ import {
 } from "../../data/schemas/save";
 import { EconomyContext } from "../economy/context";
 import { Rng } from "../rng";
+import { chanceOver } from "../time";
 import { formGovernment, groupSatisfaction } from "./elections";
 import { clamp01 } from "./ideology";
 import { changeRegime, lawModifiers, scheduleRepeals } from "./laws";
 import { generateActor, nameOf } from "./leaders";
 import { addMonths } from "./state";
 
-// Coups and revolutions (J4), once a month.
+// Coups and revolutions (J4), at each update of the nation (J7; once a
+// month until the J6): the monthly probabilities hold over the months
+// elapsed, the months of low stability are counted at the turn of each
+// calendar month.
 //
 // Coup (J5 formula): p = coupBase x 4 x (1 - s_military)^2
 //         x (1 + 2 x (1 - stability)) x (1 - legitimacy) x (1 + exhaustion),
@@ -77,6 +81,7 @@ export function stepCoups(
   politics: NationPolitics,
   military: NationMilitary | undefined,
   date: string,
+  months = 1,
 ): CoupOutcome {
   const cfg = ctx.config.politics.coups;
   const out: CoupOutcome = {
@@ -96,7 +101,7 @@ export function stepCoups(
     politics.coupRisk = 0;
     return out;
   }
-  if (rng.next() >= politics.coupRisk) return out;
+  if (rng.next() >= chanceOver(politics.coupRisk, months)) return out;
   if (rng.next() < cfg.failureShare) {
     out.events.push({ type: "coup-attempted", nation });
     politics.stability = clamp01(politics.stability - cfg.failedStabilityHit);
@@ -176,14 +181,18 @@ export function stepRevolution(
   economy: NationEconomy,
   sheet: NationData | undefined,
   date: string,
+  months = 1,
+  monthsCrossed = 1,
 ): CoupEvent[] {
   const cfg = ctx.config.politics.revolution;
-  politics.lowStabilityMonths =
-    politics.stability < cfg.stabilityBelow
-      ? politics.lowStabilityMonths + 1
-      : 0;
+  if (monthsCrossed > 0) {
+    politics.lowStabilityMonths =
+      politics.stability < cfg.stabilityBelow
+        ? politics.lowStabilityMonths + monthsCrossed
+        : 0;
+  }
   if (!revolutionDue(ctx, politics, economy)) return [];
-  if (rng.next() >= cfg.monthlyProbability) return [];
+  if (rng.next() >= chanceOver(cfg.monthlyProbability, months)) return [];
 
   const events: CoupEvent[] = [];
   const from = politics.regime;
@@ -260,13 +269,15 @@ export function stepJuntaTransition(
   nation: NationId,
   politics: NationPolitics,
   date: string,
+  months = 1,
 ): CoupEvent[] {
   const cfg = ctx.config.politics.coups;
   if (politics.regime !== "junta") return [];
   if (monthsSince(politics.regimeSince, date) < cfg.juntaTransitionMonths) {
     return [];
   }
-  if (rng.next() >= cfg.juntaTransitionMonthlyProbability) return [];
+  if (rng.next() >= chanceOver(cfg.juntaTransitionMonthlyProbability, months))
+    return [];
   const before = politics.regimeBefore;
   const to =
     before !== null && before !== "junta" && ctx.regime(before).democratic

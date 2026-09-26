@@ -1,10 +1,6 @@
-import {
-  Claim,
-  SaveFileV6,
-  TILE_NATION_MASK,
-  TILE_SETTLED_BIT,
-} from "../../data/schemas/save";
+import { TILE_NATION_MASK, TILE_SETTLED_BIT } from "../../data/schemas/save";
 import { SaveFileV5 } from "../../data/schemas/saveV5";
+import { ClaimV6 as Claim, SaveFileV6 } from "../../data/schemas/saveV6";
 import { initClaims, scenarioWarClaims } from "../../sim/diplomacy/claims";
 import { homelandRegion } from "../../sim/war/claimTiles";
 import { CONTEST_CEDED_BIT } from "../../sim/war/contest";

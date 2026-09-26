@@ -12,8 +12,10 @@ import { homelandRegion } from "../war/claimTiles";
 //
 // A claim carries a weight (1 at first) that scales the motive of a war on
 // it; every config.diplomacy.claims.failuresPerHalving white or lost wars on
-// the claim halve it, and after abandonAfterFailures of them it is given up
-// (J6c).
+// the claim halve it, and after abandonAfterFailures of them it sleeps (J7;
+// given up at the J6c): no casus belli, no weight, until a change of regime
+// of the claimant or a sovereignist leader (sovereignty above
+// claims.wakeSovereigntyAbove) coming to power wakes it.
 
 export function initClaims(scenario: Scenario): Claim[] {
   return scenario.contested.flatMap((r) =>
@@ -22,6 +24,7 @@ export function initClaims(scenario: Scenario): Claim[] {
       claimant,
       weight: 1,
       failures: 0,
+      dormant: false,
     })),
   );
 }
@@ -32,7 +35,13 @@ export function claimsOf(state: DiplomacyState, nation: NationId): Claim[] {
   const listed = state.claims.filter((c) => c.claimant === nation);
   const home = homelandRegion(nation);
   if (!listed.some((c) => c.region === home)) {
-    listed.push({ region: home, claimant: nation, weight: 1, failures: 0 });
+    listed.push({
+      region: home,
+      claimant: nation,
+      weight: 1,
+      failures: 0,
+      dormant: false,
+    });
   }
   return listed;
 }
@@ -44,11 +53,10 @@ export function claimsAgainst(
   claimant: NationId,
   target: NationId,
 ): Claim[] {
-  const { minTiles, abandonAfterFailures } = ctx.config.diplomacy.claims;
+  const { minTiles } = ctx.config.diplomacy.claims;
   return claimsOf(state, claimant).filter(
     (c) =>
-      c.failures < abandonAfterFailures &&
-      (ctx.claimHolders(c.region).get(target) ?? 0) >= minTiles,
+      !c.dormant && (ctx.claimHolders(c.region).get(target) ?? 0) >= minTiles,
   );
 }
 
@@ -104,7 +112,7 @@ function claimRecord(
     (c) => c.region === region && c.claimant === claimant,
   );
   if (claim === undefined) {
-    claim = { region, claimant, weight: 1, failures: 0 };
+    claim = { region, claimant, weight: 1, failures: 0, dormant: false };
     state.claims.push(claim);
   }
   return claim;
@@ -142,9 +150,10 @@ export function recordWarOutcome(
       claim.failures += 1;
       // J6c: a claim pressed in vain abandonAfterFailures times is given up
       // (Syria on the north-east across a nine-tile gap of the Euphrates,
-      // every six years for fifty years).
+      // every six years for fifty years). J7: it sleeps.
       if (claim.failures >= abandonAfterFailures) {
-        if (claim.weight > 0) {
+        if (!claim.dormant) {
+          claim.dormant = true;
           claim.weight = 0;
           out.push({ claimant: aggressor, region, weight: 0 });
         }
@@ -169,4 +178,25 @@ export function claimWeight(
     (max, c) => Math.max(max, c.weight),
     0,
   );
+}
+
+// J7: the sleeping claims of a nation wake (a change of its regime, or a
+// sovereignist leader in power): one failure short of sleeping again, with
+// the weight its failures leave it.
+export function wakeClaims(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  nation: NationId,
+): ClaimOutcome[] {
+  const { failuresPerHalving: every, abandonAfterFailures } =
+    ctx.config.diplomacy.claims;
+  const out: ClaimOutcome[] = [];
+  for (const claim of state.claims) {
+    if (claim.claimant !== nation || !claim.dormant) continue;
+    claim.dormant = false;
+    claim.failures = abandonAfterFailures - 1;
+    claim.weight = Math.pow(0.5, Math.floor(claim.failures / every));
+    out.push({ claimant: nation, region: claim.region, weight: claim.weight });
+  }
+  return out;
 }

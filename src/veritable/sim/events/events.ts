@@ -20,17 +20,22 @@ import {
 import { addRelation, enemiesOf, relation } from "../diplomacy/diplomacy";
 import { deficitToGdp } from "../economy/budget";
 import { EconomyContext } from "../economy/context";
+import { windowDistance } from "../politics/ideology";
+import { enactLaw } from "../politics/laws";
 import { addMonths } from "../politics/state";
 import { Rng } from "../rng";
+import { addDays, chanceOver, daysInMonth } from "../time";
 
 // Events (J5): one trigger engine for the scripted events of 2026-2030 and
-// the procedural templates. Once a game month, for every event and every
-// nation it may concern: the date window, the once / cooldown rule, the
-// conditions on the state, then the monthly probability. A world event
-// happens once in the world. The player answers in a pop-up (at most
-// `maxPopupsPerMonth` a month; the others wait for the next month); an
-// unanswered pop-up is decided by the government after `answerMonths`. The
-// AI chooses by its agenda. Effects: data/schemas/event.ts.
+// the procedural templates. J7: every game day (until the J6, once a month
+// on the 1st), for every event and every nation it may concern: the date
+// window, the once / cooldown rule, the probability of the day (the
+// monthly one spread over the days of the month), then the conditions on
+// the state. A world event happens once in the world. The player answers a
+// card (at most `maxPopupsPerMonth` decisions a month; the others wait for
+// the next month); unanswered after `answerDays`, its government decides
+// (governmentChoice). The AI chooses by its agenda and its ideology.
+// Effects: data/schemas/event.ts.
 
 export interface EventsEnv {
   ctx: EconomyContext;
@@ -48,6 +53,12 @@ export interface EventsEnv {
   // are pop-ups.
   player: NationId | null;
   date: string;
+  // Seed of the campaign: the tie-break of a government, the day of a sure
+  // event (J7).
+  seed: number;
+  // The nations and their index, cached by the caller (J7).
+  known?: ReadonlySet<NationId>;
+  nationIndex?: ReadonlyMap<NationId, number>;
 }
 
 export type EventsEvent =
@@ -133,7 +144,7 @@ export function conditionValue(
       return start > 0 ? Math.max(0, 1 - now / start) : 0;
     }
     case "gdpPerCapita":
-      return e.gdp / (env.sheets.get(nation)?.population.value ?? 1);
+      return e.gdp / Math.max(1, e.population);
     case "regime":
       return p.regime;
     case "bloc":
@@ -328,6 +339,17 @@ export function applyEffects(
           addRelation(env.diplomacy, nation, n, effect.value);
         break;
       }
+      case "law": {
+        // J7: an event may enact a law, capital aside (the regime, its
+        // domains and the window of the government still decide).
+        const law = ctx.laws.find((l) => l.id === tail);
+        if (law === undefined) break;
+        const capital = p.capital;
+        p.capital += law.capitalCost;
+        enactLaw(ctx, nation, p, e, law, env.date);
+        p.capital = Math.min(capital, p.capital);
+        break;
+      }
       case "grievance": {
         const against = tail === "other" ? other : tail;
         if (
@@ -358,20 +380,71 @@ function agenda(env: EventsEnv, nation: NationId, goal: string): number {
   return list.find((g) => g.goal === goal)?.weight ?? 0;
 }
 
+// What a government brings to an event choice (J7): its ideology and the
+// aggressiveness of the leader in play.
+export interface ChoiceTraits {
+  economic: number;
+  authority: number;
+  sovereignty: number;
+  aggressiveness: number;
+}
+
+// The traits a government decides with: the ideology of the party of the
+// head of government (the leading party of the government), or, without a
+// party (a junta, a monarch), the traits of the leader in play.
+export function governmentTraits(
+  env: EventsEnv,
+  nation: NationId,
+): ChoiceTraits {
+  const p = env.politics.nations[nation];
+  if (p === undefined) {
+    return { economic: 0, authority: 0, sovereignty: 0, aggressiveness: 0.5 };
+  }
+  const lead = p.parties.find((x) => x.id === p.government.parties[0]);
+  const ideology = lead?.ideology ?? p.leader.traits;
+  return {
+    economic: ideology.economic,
+    authority: ideology.authority,
+    sovereignty: ideology.sovereignty,
+    aggressiveness: p.leader.traits.aggressiveness,
+  };
+}
+
+// The party a government decides for, or null (no party).
+export function governmentParty(
+  env: EventsEnv,
+  nation: NationId,
+): string | null {
+  const p = env.politics.nations[nation];
+  if (p === undefined) return null;
+  const lead = p.government.parties[0];
+  return lead !== undefined && p.parties.some((x) => x.id === lead)
+    ? lead
+    : null;
+}
+
 // What a choice is worth to a government: stability first, then money and
 // growth (growth goal), relations (influence), arms (security); an
-// aggressive leader likes a grievance. Uncertain effects count half.
+// aggressive leader likes a grievance. Uncertain effects count half. J7: the
+// ideology of the government shades the weights — the right values money,
+// the left the groups, a sovereignist cares less for relations abroad and
+// more for a grievance, an authoritarian more for defence and less about
+// unrest.
 export function choiceScore(
   env: EventsEnv,
   nation: NationId,
   effects: readonly EventEffect[],
+  traits: ChoiceTraits = governmentTraits(env, nation),
 ): number {
   const w = env.ctx.config.events.ai;
+  const shade = env.ctx.config.events.ideology;
   const growth = 0.5 + agenda(env, nation, "growth");
   const security = 0.5 + agenda(env, nation, "security");
   const influence = 0.5 + agenda(env, nation, "regional-influence");
-  const aggressiveness =
-    env.politics.nations[nation]?.leader.traits.aggressiveness ?? 0.5;
+  const money = 1 + shade.economic * traits.economic;
+  const groups = 1 - shade.economic * traits.economic;
+  const abroad = 1 - shade.sovereignty * traits.sovereignty;
+  const force = 1 + shade.authority * traits.authority;
   let score = 0;
   for (const effect of effects) {
     const [head] = effect.target.split(".");
@@ -387,13 +460,18 @@ export function choiceScore(
         s = -w.stability * effect.value;
         break;
       case "budget":
-        s = w.budget * effect.value * growth;
+        s = w.budget * effect.value * growth * money;
         break;
       case "gdp":
-        s = w.budget * (effect.value - 1) * growth;
+        s = w.budget * (effect.value - 1) * growth * money;
         break;
       case "growth":
-        s = w.budget * effect.value * ((effect.months ?? 12) / 12) * growth;
+        s =
+          w.budget *
+          effect.value *
+          ((effect.months ?? 12) / 12) *
+          growth *
+          money;
         break;
       case "production":
         s = w.capacity * (effect.value - 1) * growth;
@@ -402,22 +480,27 @@ export function choiceScore(
         s = -w.capacity * (effect.value - 1) * growth;
         break;
       case "relations":
-        s = w.relations * effect.value * influence;
+        s = w.relations * effect.value * influence * abroad;
         break;
       case "grievance":
-        s = w.grievance * (aggressiveness - 0.5) * security;
+        s =
+          w.grievance *
+          (traits.aggressiveness -
+            0.5 +
+            shade.sovereignty * traits.sovereignty) *
+          security;
         break;
       case "spending":
         s =
           effect.target === "spending.defense"
-            ? w.military * effect.value * (security - 0.75)
+            ? w.military * effect.value * (security - 0.75) * force
             : w.budget * effect.value * 0.5;
         break;
       case "unrest":
-        s = -w.unrest;
+        s = -w.unrest * (2 - force);
         break;
       case "group":
-        s = w.group * effect.value;
+        s = w.group * effect.value * groups;
         break;
       case "capital":
         s = (w.group * effect.value) / 100;
@@ -428,17 +511,76 @@ export function choiceScore(
   return score;
 }
 
-// The best choice for the government; sometimes another one (governments
-// err).
+// The laws a choice would enact outside the window of the government's
+// ideology (J7): the government sets such a choice aside.
+function outsideWindow(
+  env: EventsEnv,
+  nation: NationId,
+  effects: readonly EventEffect[],
+): number {
+  const p = env.politics.nations[nation];
+  if (p === undefined) return 0;
+  let distance = 0;
+  for (const effect of effects) {
+    if (!effect.target.startsWith("law.")) continue;
+    const law = env.ctx.laws.find((l) => l.id === effect.target.slice(4));
+    if (law === undefined) continue;
+    distance += windowDistance(law.window, p.government.ideology);
+  }
+  return distance;
+}
+
+// A number from the seed of the campaign, an instance and a choice: the
+// tie-break of the government.
+function tieBreak(env: EventsEnv, instance: number, choice: string): number {
+  let h = (2166136261 ^ env.seed) >>> 0;
+  const key = `${instance}|${choice}`;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h;
+}
+
+// The choice of a government for an event (J7): the best for its traits
+// among the choices that enact no law outside its window (when none is
+// left, the closest to it), ties broken by the seed. The player's
+// government takes it when the player has not chosen in time, and the card
+// shows it from the start ("the government leans towards").
+export function governmentChoice(
+  env: EventsEnv,
+  nation: NationId,
+  event: VeritableEvent,
+  instance: number,
+): string {
+  const traits = governmentTraits(env, nation);
+  const scored = event.choices.map((c) => ({
+    id: c.id,
+    outside: outsideWindow(env, nation, c.effects),
+    score: choiceScore(env, nation, c.effects, traits),
+  }));
+  const closest = Math.min(...scored.map((c) => c.outside));
+  const allowed = scored.filter((c) => c.outside === closest);
+  allowed.sort(
+    (a, b) =>
+      b.score - a.score ||
+      tieBreak(env, instance, a.id) - tieBreak(env, instance, b.id),
+  );
+  return allowed[0].id;
+}
+
+// The choice of an AI nation: its government's, and sometimes another one
+// (governments err).
 export function aiChoice(
   env: EventsEnv,
   nation: NationId,
   event: VeritableEvent,
 ): string {
+  const traits = governmentTraits(env, nation);
   let best = event.choices[0];
-  let bestScore = choiceScore(env, nation, best.effects);
+  let bestScore = choiceScore(env, nation, best.effects, traits);
   for (const choice of event.choices.slice(1)) {
-    const score = choiceScore(env, nation, choice.effects);
+    const score = choiceScore(env, nation, choice.effects, traits);
     if (score > bestScore) {
       best = choice;
       bestScore = score;
@@ -454,10 +596,15 @@ export function aiChoice(
   return best.id;
 }
 
+// Who took a choice (J7, the journal): the player, its government when the
+// player did not choose in time, an AI nation.
+export type ChosenBy = "player" | "government" | "ai" | "none";
+
 function resolve(
   env: EventsEnv,
   instance: EventInstance,
   choiceId: string,
+  by: ChosenBy,
 ): EventsEvent {
   const event = eventData(env.ctx, instance.event);
   const choice =
@@ -466,6 +613,8 @@ function resolve(
   const history = env.events.history;
   history.push({ ...instance, choice: choice.id });
   if (history.length > env.ctx.config.events.historyKept) history.shift();
+  const party =
+    by === "government" ? governmentParty(env, instance.nation) : null;
   return {
     type: "event-occurred",
     nation: instance.nation,
@@ -474,6 +623,9 @@ function resolve(
       choice: choice.id,
       other: instance.other ?? "",
       good: instance.good ?? "",
+      by,
+      party: party ?? "",
+      instance: String(instance.id),
     },
   };
 }
@@ -493,21 +645,22 @@ export function chooseEvent(
   }
   const { deadline, ...instance } = pending;
   void deadline;
-  return [resolve(env, instance, choice)];
+  return [resolve(env, instance, choice, "player")];
 }
 
-// --- the monthly step --------------------------------------------------------
+// --- the daily steps (J7) ------------------------------------------------------
 
-export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
+// Once a game day: expired effects and grievances, cooldowns over, and the
+// pop-ups the player left unanswered past their deadline, which its
+// government decides.
+export function stepEventsHousekeeping(env: EventsEnv): EventsEvent[] {
   const { ctx, events, date } = env;
-  const cfg = ctx.config.events;
   const out: EventsEvent[] = [];
   const month = date.slice(0, 7);
   if (events.popupMonth !== month) {
     events.popupMonth = month;
     events.popups = 0;
   }
-  // Expired effects and grievances.
   events.growth = events.growth.filter((m) => date < m.until);
   env.diplomacy.grievances = env.diplomacy.grievances.filter(
     (g) => date < g.until,
@@ -515,23 +668,86 @@ export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
   for (const [key, until] of Object.entries(events.cooldowns)) {
     if (date >= until) delete events.cooldowns[key];
   }
-  // Pop-ups nobody answered: the government decides.
   for (const pending of [...events.pending]) {
     if (date < pending.deadline) continue;
     events.pending.splice(events.pending.indexOf(pending), 1);
     const { deadline, ...instance } = pending;
     void deadline;
+    const event = eventData(ctx, instance.event);
     out.push(
       resolve(
         env,
         instance,
-        aiChoice(env, instance.nation, eventData(ctx, instance.event)),
+        governmentChoice(env, instance.nation, event, instance.id),
+        "government",
       ),
     );
   }
+  return out;
+}
 
-  // J6c: lookups by set (at 208 nations, lists cost milliseconds a month).
-  const known = new Set(ctx.nationIds);
+// The day of the month a sure event (probability 1 a month) falls on: drawn
+// from the seed, the event and the subject (J7: "a scripted event dated to
+// the month falls on a day drawn with the seed").
+function seededDay(env: EventsEnv, event: string, subject: string): number {
+  let h = (2166136261 ^ env.seed) >>> 0;
+  const key = `${event}|${subject}|${env.date.slice(0, 7)}`;
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return 1 + (h % daysInMonth(env.date));
+}
+
+// Number of successes among n draws of probability p (by inversion: p is
+// small, a success is rare).
+function binomial(n: number, p: number, rng: Rng): number {
+  if (n <= 0 || p <= 0) return 0;
+  if (p >= 1) return n;
+  const q = 1 - p;
+  let pk = Math.pow(q, n);
+  let cumulative = pk;
+  const u = rng.next();
+  let k = 0;
+  while (u > cumulative && k < n) {
+    pk *= ((n - k) / (k + 1)) * (p / q);
+    k++;
+    cumulative += pk;
+  }
+  return k;
+}
+
+// `k` distinct items of a list drawn at random, in the order of the list.
+function drawDistinct<T>(items: readonly T[], k: number, rng: Rng): T[] {
+  if (k >= items.length) return [...items];
+  const picked = new Set<number>();
+  while (picked.size < k) picked.add(rng.nextInt(0, items.length));
+  return [...picked].sort((a, b) => a - b).map((i) => items[i]);
+}
+
+// The draws of the day for the subjects of one slot: the draws of a day are
+// spread over the ticks of the day, subject k drawing at the slot k % slots
+// (the world's at slot 0). Probability of a day = 1 - (1 - p_month)^(1 /
+// days of the month): the mean frequency of the J5. `months` > 0 draws for
+// that many months instead (the monthly step of the tests). J7: one draw of
+// the number of subjects hit among those of the slot (binomial), then who
+// they are — the law of a draw per subject, at a draw per event.
+export function stepEventsDraws(
+  env: EventsEnv,
+  slot = 0,
+  slots = 1,
+  months = 1 / daysInMonth(env.date),
+): EventsEvent[] {
+  const { ctx, events, date } = env;
+  const cfg = ctx.config.events;
+  const out: EventsEvent[] = [];
+  const known = env.known ?? new Set(ctx.nationIds);
+  const index = env.nationIndex ?? new Map(ctx.nationIds.map((n, i) => [n, i]));
+  const daily = months < 1;
+  const day = Number(date.slice(8, 10));
+  const inSlot = (subject: string) =>
+    (subject === "world" ? 0 : (index.get(subject) ?? 0)) % slots === slot;
+  const everyone = ctx.nationIds.filter(inSlot);
   for (const event of ctx.events) {
     const t = event.trigger;
     if (
@@ -541,15 +757,27 @@ export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
       continue;
     const once = t.once ?? event.kind === "scripted";
     const cooldown = t.cooldownMonths ?? (once ? 0 : cfg.defaultCooldownMonths);
+    const sure = t.monthlyProbability >= 1;
+    const p = sure ? 1 : chanceOver(t.monthlyProbability, months);
     const subjects =
       event.scope === "world"
-        ? ["world"]
+        ? slot === 0
+          ? ["world"]
+          : []
         : t.nations === undefined
-          ? ctx.nationIds
-          : t.nations.filter((n) => known.has(n));
-    const fired = new Set(events.fired[event.id] ?? []);
-    for (const subject of subjects) {
-      if (once && fired.has(subject)) continue;
+          ? everyone
+          : t.nations.filter((n) => known.has(n) && inSlot(n));
+    if (subjects.length === 0) continue;
+    // The draw first, the conditions after (the same odds, far fewer
+    // conditions read at 208 nations and a draw a day).
+    const hit = sure
+      ? subjects.filter(
+          (subject) => !daily || seededDay(env, event.id, subject) === day,
+        )
+      : drawDistinct(subjects, binomial(subjects.length, p, env.rng), env.rng);
+    const fired = events.fired[event.id];
+    for (const subject of hit) {
+      if (once && fired !== undefined && fired.includes(subject)) continue;
       if (events.cooldowns[`${event.id}|${subject}`] !== undefined) continue;
       const nation = subject === "world" ? env.player : subject;
       if (nation !== null && !t.conditions.every((c) => holds(env, nation, c)))
@@ -558,7 +786,6 @@ export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
       const popup =
         nation !== null && nation === env.player && event.choices.length > 0;
       if (popup && events.popups >= cfg.maxPopupsPerMonth) continue;
-      if (!env.rng.chance(t.monthlyProbability)) continue;
       const other =
         event.params?.other === undefined || nation === null
           ? null
@@ -599,7 +826,15 @@ export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
         out.push({
           type: "event-occurred",
           nation: ctx.nationIds[0],
-          params: { event: event.id, choice: "", other: "", good: good ?? "" },
+          params: {
+            event: event.id,
+            choice: "",
+            other: "",
+            good: good ?? "",
+            by: "none",
+            party: "",
+            instance: "",
+          },
         });
         continue;
       }
@@ -615,14 +850,20 @@ export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
         events.popups += 1;
         const pending = {
           ...instance,
-          deadline: addMonths(date, cfg.answerMonths),
+          deadline: addDays(date, cfg.answerDays),
         };
         events.pending.push(pending);
         out.push({ type: "event-popup", nation, instance });
       } else {
-        out.push(resolve(env, instance, aiChoice(env, nation, event)));
+        out.push(resolve(env, instance, aiChoice(env, nation, event), "ai"));
       }
     }
   }
   return out;
+}
+
+// A month at once (the tests; the rhythm of the J5 and the J6): the
+// housekeeping, then one draw of the monthly probability for every subject.
+export function stepEventsMonth(env: EventsEnv): EventsEvent[] {
+  return [...stepEventsHousekeeping(env), ...stepEventsDraws(env, 0, 1, 1)];
 }

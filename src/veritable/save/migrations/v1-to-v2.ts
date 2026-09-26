@@ -39,5 +39,7 @@ export function v1ToV2(
       new Rng(save.seed),
       save.calendar.date,
     ),
-  } as SaveFileV2;
+    // The builders are today's: the later migrations bring their shapes
+    // back to their versions.
+  } as unknown as SaveFileV2;
 }

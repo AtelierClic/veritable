@@ -33,13 +33,14 @@ interface VeritableSim {
 | Domaine | Fréquence | Module |
 | --- | --- | --- |
 | Militaire, tuiles, fronts | tick OpenFront | `sim/war/` |
-| Économie, prix, commerce | 1 / jour de jeu | `sim/economy/` |
-| Événements, diplomatie, réaction internationale | 1 / jour de jeu | `sim/events/`, `sim/diplomacy/` |
-| Opinion, stabilité, groupes | 1 / semaine de jeu | `sim/politics/` |
-| Élections, lois, budget, blocs | 1 / mois de jeu | `sim/politics/`, `sim/blocs/` |
-| Sauvegarde auto | 1 / mois de jeu | `save/` |
+| Mise à jour d'une nation : croissance, population, budget, dette, opinion, stabilité, politique, recherche, armée, diplomatie de la nation, IA | **file tournante** (`sim/schedule.ts`) : chaque jour pour le joueur, au moins chaque semaine pour les nations en interaction avec lui ou ayant un enjeu, chaque mois pour les autres ; au plus `maxUpdatesPerTick` par tick | `sim/economy/`, `sim/politics/`, `sim/diplomacy/`, `sim/tech/`, `ai/` |
+| Commerce | **file des biens** : un bien par tour, les douze en `tradeCycleDays` jours | `sim/economy/` |
+| Prix mondiaux, reste du monde, marine, nucléaire, contestation, livres de guerre | 1 / jour de jeu | `sim/economy/`, `sim/naval/`, `sim/nuclear/`, `sim/war/` |
+| Événements | tirage quotidien, réparti sur les ticks du jour | `sim/events/` |
+| Votes et propositions des blocs | jour de séance de chaque bloc | `sim/blocs/` |
+| Présidences, budgets des blocs, règle budgétaire de l'UE, sauvegarde auto | 1er du mois (calendaire) | `sim/blocs/`, `save/` |
 
-Le calendrier démarre au 1er janvier 2026. À vitesse ×1 : 1 minute réelle = 1 mois de jeu. Un `Scheduler` central déclenche chaque domaine ; aucun système ne lit l'horloge murale.
+Le calendrier démarre au 1er janvier 2026. À vitesse ×1 : 1 minute réelle = 1 mois de jeu. Un `Scheduler` central déclenche les horloges quotidiennes et calendaires ; la file des nations et celle des biens sont indexées sur le numéro du tick. **Chaque mise à jour intègre le temps écoulé depuis la précédente** (`sim/time.ts`) : les taux restent exprimés par mois et se composent exactement, les durées (« douze mois de suite ») se comptent en mois de calendrier traversés ; avancer tick par tick ou d'un seul appel donne le même état. Aucun système ne lit l'horloge murale.
 
 ## Sauvegarde
 

@@ -15,20 +15,22 @@ import {
   WorldStateSchema,
 } from "./saveV1";
 
-// Save file, CURRENT version: schemaVersion 6 (J6: war memory, losses and
-// claims of each war, dynamic claims with their weight, tiles settled by
-// treaty in the tile block).
+// Save file, CURRENT version: schemaVersion 7 (J7: the rolling queue of the
+// nations and the time elapsed since their last update, population, the
+// trade of each good, balances by calendar month, the monthly ledger of each
+// war, sanctions that can be lifted, dormant claims, the base of the
+// parties).
 //
 // zbin has no version byte and no field tags: the schema IS the format. Once
 // a save of this version exists in the wild, any change of shape means a new
-// version: freeze this file as saveV6.ts, write the new one here, and add
-// migrations/v6-to-v7.ts (ARCHITECTURE.md, invariant 2).
+// version: freeze this file as saveV7.ts, write the new one here, and add
+// migrations/v7-to-v8.ts (ARCHITECTURE.md, invariant 2).
 //
 // Pieces imported from saveV1.ts are unchanged since then; the frozen files
-// (saveV1.ts to saveV5.ts) are never edited: a piece that must change is
+// (saveV1.ts to saveV6.ts) are never edited: a piece that must change is
 // redefined here.
 
-export const SAVE_SCHEMA_VERSION = 6;
+export const SAVE_SCHEMA_VERSION = 7;
 
 export * from "./saveV1";
 
@@ -41,7 +43,7 @@ export const TILE_CONTESTED_BIT = 1 << 12;
 // more, whoever holds it (sim/diplomacy/claims.ts).
 export const TILE_SETTLED_BIT = 1 << 14;
 
-export const JOURNAL_KINDS_V6 = [
+export const JOURNAL_KINDS_V7 = [
   "campaign-started",
   "nation-status",
   "unrest-started",
@@ -110,13 +112,13 @@ export const JOURNAL_KINDS_V6 = [
   // save.journalFullYears, by nation and category.
   "yearly-summary",
 ] as const;
-export const JournalEntryV6Schema = z.object({
+export const JournalEntryV7Schema = z.object({
   date: IsoDateSchema,
-  kind: z.enum(JOURNAL_KINDS_V6),
+  kind: z.enum(JOURNAL_KINDS_V7),
   nation: NationIdSchema.optional(),
   params: z.record(z.string(), z.string()),
 });
-export type JournalEntryV6 = z.infer<typeof JournalEntryV6Schema>;
+export type JournalEntryV7 = z.infer<typeof JournalEntryV7Schema>;
 
 // Quantities keyed by good, tax, spending post or interest group. Key order
 // is part of the bytes: records are always built in the order of the ids.
@@ -129,8 +131,14 @@ const amounts = z.record(z.string(), zb.float());
 export const NationEconomySchema = z.object({
   gdp: zb.float(),
   debt: zb.float(),
+  // J7: population in play (the sheet's on the first day, growing on its
+  // trend; war and fallout take theirs), and the calendar month (months
+  // since the start date) of the last update of the nation: the counters of
+  // "N months in a row" move by the months crossed, whatever the cadence.
+  population: zb.float(),
+  monthMark: zb.uint(),
   growthBase: zb.float(), // per year
-  growthAnnual: zb.float(), // last month, annualised
+  growthAnnual: zb.float(), // annualised, smoothed over about a month (J7)
   production: amounts, // capacity
   consumption: amounts, // demand at the base price
   fossilShare: amounts, // share of electricity made from gas / coal / oil
@@ -144,6 +152,16 @@ export const NationEconomySchema = z.object({
   exportShareReference: zb.float(),
   shortage: zb.float(), // weighted lack of coverage, 0..1
   priceIndex: zb.float(), // consumer basket, 1 = base prices
+  // J7: the trade of each good, as the rotation of the goods last computed
+  // it (US$ per year): value of the exports sold, of the imports (tariff
+  // base), of the resource output sold (rents base), of the trade that went
+  // by sea, and the price paid for the good (import premium included). The
+  // aggregates above are sums over the goods.
+  exportValue: amounts,
+  importValue: amounts,
+  rentValue: amounts,
+  maritimeValue: amounts,
+  paidPrice: amounts,
   taxes: amounts, // in effect
   taxes0: amounts,
   spending: amounts, // shares of GDP, in effect
@@ -154,7 +172,9 @@ export const NationEconomySchema = z.object({
   spendingTargets: amounts,
   grantsPctGdp: zb.float(),
   investmentReference: zb.float(), // infrastructure + research on day one
-  revenue: zb.float(), // last month, US$
+  // Monthly rates at the last update, US$ per month (J7: an update covers
+  // the time since the previous one, a day to a month).
+  revenue: zb.float(),
   expenditure: zb.float(),
   interest: zb.float(),
   interestRate: zb.float(),
@@ -162,8 +182,17 @@ export const NationEconomySchema = z.object({
   // inflation) and the formula of the J2 at the debt and stability of that
   // day, kept for the whole campaign (0: the formula alone).
   interestSpread: zb.float(),
-  balances: z.array(zb.float()), // last 12 monthly balances, US$
+  // Balance of each calendar month (month = months since the start date),
+  // the last twelve, the last one partial: `days` of it covered so far
+  // (J7). The trailing deficit is their sum over the time they cover.
+  balances: z.array(
+    z.object({ month: zb.uint(), value: zb.float(), days: zb.float() }),
+  ),
+  // Calendar months in a row the debt rose (in money: a deficit over the
+  // month, the meaning of the J2 to the J6), sampled at the turn of each
+  // month of the nation against the debt of the previous turn (US$).
   debtRisingMonths: zb.uint(),
+  debtMark: zb.float(),
   austerity: z.boolean(),
   noDeficitUntil: IsoDateSchema.nullable(),
   defaults: zb.uint(),
@@ -219,6 +248,9 @@ export const PartyStateSchema = z.object({
   name: NationNameSchema,
   ideology: IdeologyWireSchema,
   support: zb.float(), // share at the last election
+  // J7: the attachment of the voters to the party, fitted on the first day
+  // so that the projection of that day gives the last election's shares.
+  base: zb.float(),
   leader: ActorStateSchema,
 });
 export type PartyState = z.infer<typeof PartyStateSchema>;
@@ -372,7 +404,9 @@ export const WarSchema = z.object({
   // False for a war the scenario starts with: the world has priced it in.
   declaredInCampaign: z.boolean(),
   // Per belligerent: war score, months in a row spent losing tiles, tiles
-  // taken since the start, net tiles gained this month (reset monthly).
+  // taken since the start, net tiles gained this war month (J7: a war keeps
+  // its own months, counted from its start; `ledgerOn` is the next turn).
+  ledgerOn: IsoDateSchema,
   score: z.record(z.string(), zb.float()),
   retreatMonths: z.record(z.string(), zb.uint()),
   tilesTaken: z.record(z.string(), zb.uint()),
@@ -395,6 +429,10 @@ export const ClaimSchema = z.object({
   claimant: NationIdSchema,
   weight: zb.float(),
   failures: zb.uint(),
+  // J7: a claim pressed in vain three times sleeps (no casus belli, no
+  // weight) until a sovereignist leader or a change of regime of the
+  // claimant wakes it.
+  dormant: z.boolean(),
 });
 export type Claim = z.infer<typeof ClaimSchema>;
 
@@ -408,6 +446,13 @@ export const SanctionSchema = z.object({
   // (diplomacy.sanction.liftPolicyMinAffinity). Absent: a sanction imposed
   // in the campaign, lifted by the rule of the J3.
   policy: z.boolean().optional(),
+  // J7, the ways a sanction falls: the war it answers (it stands while that
+  // war lasts); the date by which the issuer reviews it after a change of
+  // regime of the target; since when the relation of the issuer with the
+  // target has stayed >= 0.
+  war: z.string().optional(),
+  reviewBy: IsoDateSchema.optional(),
+  friendlySince: IsoDateSchema.optional(),
 });
 export type Sanction = z.infer<typeof SanctionSchema>;
 
@@ -423,7 +468,7 @@ export const DiplomacyStateSchema = z.object({
     z.object({
       war: z.string(),
       nation: NationIdSchema,
-      monthsLeft: zb.uint(),
+      until: IsoDateSchema, // J7: a date rather than months left
       side: z.enum(["aggressors", "defenders"]),
     }),
   ),
@@ -495,7 +540,10 @@ export const NationMilitarySchema = z.object({
   exhaustion: zb.float(), // 0..1
   training: zb.float(), // of new divisions
   losses: zb.float(), // men, cumulative
-  lossesLastMonth: zb.float(),
+  // J7: men lost since the last update of the nation (exhaustion), and arms
+  // received from abroad since then (index points).
+  lossesPending: zb.float(),
+  armsReceived: zb.float(),
   // Air and naval power of the sheet, scaled by the arms coverage in play.
   airPower: zb.float(),
   navalPower: zb.float(),
@@ -559,7 +607,6 @@ export type NuclearState = z.infer<typeof NuclearStateSchema>;
 // --- the AI of the nations (J5) ---------------------------------------------------
 
 export const NationAiSchema = z.object({
-  nextReview: IsoDateSchema,
   defenseGoal: zb.float(), // share of GDP it aims at
   lastWar: IsoDateSchema.nullable(), // last war it declared
   lastLanding: IsoDateSchema.nullable(),
@@ -568,10 +615,8 @@ export const NationAiSchema = z.object({
 export type NationAi = z.infer<typeof NationAiSchema>;
 
 export const AiStateSchema = z.object({
-  // Index of the next nation of the staggered review.
-  cursor: zb.uint(),
   nations: z.record(z.string(), NationAiSchema),
-  // Arms sent this month: index points of the good "arms".
+  // Arms each donor sends: index points of the good "arms" per month.
   armsAid: z.array(
     z.object({ from: NationIdSchema, to: NationIdSchema, points: zb.float() }),
   ),
@@ -751,8 +796,23 @@ export const TerritoryStateSchema = z.object({
 });
 export type TerritoryState = z.infer<typeof TerritoryStateSchema>;
 
-export const SaveHeaderV6Schema = zb.object({
-  schemaVersion: z.literal(6),
+// --- the rolling queue of the nations (J7) ------------------------------------
+
+// Every nation is updated on its own cadence (the player's every day, the
+// nations dealing with it at least every week, the others every week to
+// every month): `last` and `next` are elapsed game minutes; `drift` the
+// last time the relations it owns drifted (at most once a month but for
+// the player's, every day).
+export const ScheduleStateSchema = z.object({
+  nations: z.record(
+    z.string(),
+    z.object({ last: zb.uint(), next: zb.uint(), drift: zb.uint() }),
+  ),
+});
+export type ScheduleState = z.infer<typeof ScheduleStateSchema>;
+
+export const SaveHeaderV7Schema = zb.object({
+  schemaVersion: z.literal(7),
   seed: zb.uint(),
   rngState: z.tuple([zb.uint(), zb.uint(), zb.uint(), zb.uint()]),
   calendar: CalendarSchema,
@@ -769,20 +829,21 @@ export const SaveHeaderV6Schema = zb.object({
   ai: AiStateSchema,
   tech: TechStateSchema,
   events: EventsStateSchema,
-  journal: z.array(JournalEntryV6Schema),
+  schedule: ScheduleStateSchema,
+  journal: z.array(JournalEntryV7Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),
 });
-export type SaveHeaderV6 = z.infer<typeof SaveHeaderV6Schema>;
+export type SaveHeaderV7 = z.infer<typeof SaveHeaderV7Schema>;
 // The tile grid, and since v5 the contest of each tile (a second block of
 // the .vsave container).
-export type SaveFileV6 = SaveHeaderV6 & {
+export type SaveFileV7 = SaveHeaderV7 & {
   tiles: Uint16Array;
   contest: Uint16Array;
 };
 
 // Current version aliases: the rest of the code only uses these.
-export const SaveHeaderSchema = SaveHeaderV6Schema;
-export type SaveFile = SaveFileV6;
-export type JournalEntry = JournalEntryV6;
-export const JOURNAL_KINDS = JOURNAL_KINDS_V6;
+export const SaveHeaderSchema = SaveHeaderV7Schema;
+export type SaveFile = SaveFileV7;
+export type JournalEntry = JournalEntryV7;
+export const JOURNAL_KINDS = JOURNAL_KINDS_V7;

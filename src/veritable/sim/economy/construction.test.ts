@@ -9,7 +9,9 @@ import { VeritableSimImpl } from "../VeritableSimImpl";
 const DAY = 1440;
 
 // J5: the legacy gold is no resource in a campaign; what a nation builds on
-// the map is paid by its national budget the month after.
+// the map is paid by its national budget the month after. J7: at the first
+// update of the nation in the new month (for the player's, the 1st at noon):
+// a "month" of these tests runs to the 2nd.
 describe("structures built on the map are paid by the national budget", () => {
   function setup() {
     const config = structuredClone(loadVeritableConfig());
@@ -31,7 +33,7 @@ describe("structures built on the map are paid by the national budget", () => {
     });
     sim.init(testScenario(ids), 3);
     const month = () => {
-      for (let d = 0; d < 31; d++) sim.advance(DAY);
+      for (let d = 0; d < 32; d++) sim.advance(DAY);
     };
     return { sim, world, config, month };
   }

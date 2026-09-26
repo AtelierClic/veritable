@@ -29,14 +29,19 @@ function quietConfig(): VeritableConfig {
   // No coups or deaths to muddle the draws.
   config.politics.coups.militaryScale = 0;
   config.politics.leaders.deathBase = 0;
+  // J7: the AI of a nation at war gives its orders within the day; these
+  // tests are about the nuclear rules, the fronts do not move.
+  config.war.v0 = 0;
   return config;
 }
 
 // A 4 x 4 world: AAA (the player) holds the first row, BBB the two middle
-// rows, CCC the last one; capitals at tiles 1, 5 and 13.
+// rows, CCC the last one; capitals at tiles 1, 5 and 13. `apart`: the second
+// row is nobody's (no front between AAA and BBB), BBB's capital at 9.
 function campaign(
   options: Record<string, TestNationOptions>,
   config: VeritableConfig = quietConfig(),
+  apart = false,
 ) {
   const ids = ["AAA", "BBB", "CCC"];
   const sheets = new Map<string, NationData>(
@@ -44,10 +49,13 @@ function campaign(
   );
   const world = new MemoryWorld(4, 4);
   for (let t = 0; t < 16; t++) {
-    world.setOwner(t, t < 4 ? "AAA" : t < 12 ? "BBB" : "CCC");
+    world.setOwner(
+      t,
+      t < 4 ? "AAA" : apart && t < 8 ? null : t < 12 ? "BBB" : "CCC",
+    );
   }
   world.capitals.set("AAA", 1);
-  world.capitals.set("BBB", 5);
+  world.capitals.set("BBB", apart ? 9 : 5);
   world.capitals.set("CCC", 13);
   world.nukeRadius = 0;
   const sim = new VeritableSimImpl({
@@ -169,9 +177,10 @@ describe("the daily probability of a shot", () => {
 });
 
 describe("a shot and its consequences", () => {
+  // AAA and BBB apart: no front, the first shot goes at the capital.
   function atWar(config = quietConfig()) {
     config.nuclear.base["first-use-possible"] = [0, 1, 1, 1];
-    const c = campaign(nuclearBBB, config);
+    const c = campaign(nuclearBBB, config, true);
     c.aggressive("BBB", 0.9);
     c.sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
     return c;
@@ -228,8 +237,12 @@ describe("a shot and its consequences", () => {
       status: "detonated",
       hits: { AAA: 1 },
     });
-    expect(after.economies.AAA.gdp).toBeCloseTo(gdp * factor, 0);
-    expect(after.economies.AAA.production.steel).toBeCloseTo(steel * factor, 6);
+    // (A day of growth of the player's nation between the two readings.)
+    expect(after.economies.AAA.gdp / (gdp * factor)).toBeCloseTo(1, 3);
+    expect(after.economies.AAA.production.steel / (steel * factor)).toBeCloseTo(
+      1,
+      3,
+    );
     expect(after.nuclear.fallout.AAA).toBeCloseTo(factor, 12);
     expect(world.ownerOf(1)).toBeNull();
     expect(after.journal.map((j) => j.kind)).toContain("nuclear-detonation");

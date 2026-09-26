@@ -65,6 +65,7 @@ export function initNationPolitics(
       name: { kind: "key", key: party.name },
       ideology: { ...party.ideology },
       support: party.support,
+      base: 1, // fitted once the parties are known (fitPartyBases)
       leader,
     });
   }
@@ -77,6 +78,7 @@ export function initNationPolitics(
       name: { kind: "key", key: "party.generic" },
       ideology,
       support: 1,
+      base: 1,
       leader: generateActor(
         ctx,
         rng,

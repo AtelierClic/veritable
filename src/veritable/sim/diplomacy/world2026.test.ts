@@ -12,6 +12,7 @@ import { Scenario } from "../../data/schemas/scenario";
 import { defenseGuarantors } from "../blocs/blocs";
 import { EconomyContext, SimData } from "../economy/context";
 import { internalConflictMalus } from "../politics/politics";
+import { Rng } from "../rng";
 import { MemoryWorld } from "../testing/MemoryWorld";
 import { testNation, testScenario } from "../testing/nations";
 import { testBloc, testSimData } from "../testing/simData";
@@ -23,6 +24,7 @@ import {
   imposeSanctions,
   isSanctioning,
   relation,
+  scheduleSanctionReviews,
   setRelation,
 } from "./diplomacy";
 
@@ -67,6 +69,7 @@ const BLOCS: Bloc[] = [
 function campaign(
   scenarioExtra: Partial<Scenario> = {},
   data: Partial<SimData> = {},
+  config: VeritableConfig = quietConfig(),
 ) {
   const ids = ["AAA", "BBB", "CCC", "DDD"];
   const sheets = new Map<string, NationData>(
@@ -74,7 +77,7 @@ function campaign(
   );
   const scenario = { ...testScenario(ids), ...scenarioExtra };
   const sim = new VeritableSimImpl({
-    config: quietConfig(),
+    config,
     world: new MemoryWorld(4, 4),
     data: {
       ...testSimData(ids, { blocs: BLOCS }),
@@ -94,7 +97,12 @@ function campaign(
   const days = (n: number) => {
     for (let d = 0; d < n; d++) sim.advance(DAY);
   };
-  return { sim, internals, days };
+  const journalLifts = () =>
+    sim
+      .read()
+      .journal.filter((j) => j.kind === "sanctions-lifted")
+      .map((j) => j.params);
+  return { sim, internals: { ...internals, journalLifts }, days };
 }
 
 describe("relations of the first day (J6b)", () => {
@@ -318,11 +326,11 @@ describe("sanctions of the first day: every form (J6b)", () => {
   });
 });
 
-describe("the lift of the sanctions of the first day (J6b)", () => {
+describe("the lift of the sanctions (J7, the answer of Lukas to the J6)", () => {
   const FAR = { economic: 1, authority: -1, sovereignty: -1 };
   const OTHER_END = { economic: -1, authority: 1, sovereignty: 1 };
 
-  it("a sanction of policy outlasts healed relations and close governments until the regime of the target changes", () => {
+  it("(b) the issuer lifts a sanction once its relation with the target has stayed >= 0 for 24 months", () => {
     const { internals, days } = campaign({
       sanctions: [
         { by: "CCC", against: "DDD", since: "2012-01-01", source: "test" },
@@ -330,22 +338,61 @@ describe("the lift of the sanctions of the first day (J6b)", () => {
     });
     const { diplomacy, politics } = internals;
     expect(diplomacy.sanctions.find((s) => s.by === "CCC")!.policy).toBe(true);
-    const month = () => {
-      setRelation(diplomacy, "CCC", "DDD", 0); // healed, above the threshold
-      days(31);
-    };
+    // Hostile governments, relations below 0: nothing moves.
     politics.nations.CCC.government.ideology = { ...FAR };
     politics.nations.DDD.government.ideology = { ...OTHER_END };
+    setRelation(diplomacy, "CCC", "DDD", -20);
+    days(31 * 6);
+    expect(isSanctioning(diplomacy, "CCC", "DDD")).toBe(true);
+    // Healed relations, kept >= 0 month after month (the sanction itself
+    // pulls the affinity down): the clock of the 24 months starts at the
+    // next update of CCC.
+    const month = () => {
+      setRelation(diplomacy, "CCC", "DDD", 10);
+      days(31);
+    };
+    for (let m = 0; m < 22; m++) month();
+    expect(isSanctioning(diplomacy, "CCC", "DDD")).toBe(true);
     for (let m = 0; m < 4; m++) month();
-    expect(isSanctioning(diplomacy, "CCC", "DDD")).toBe(true);
-    // Close governments, the same regime as on the first day: kept.
-    politics.nations.DDD.government.ideology = { ...FAR };
-    for (let m = 0; m < 3; m++) month();
-    expect(isSanctioning(diplomacy, "CCC", "DDD")).toBe(true);
-    // A new regime in DDD: lifted at the next monthly step.
-    politics.nations.DDD.regime = "presidential";
-    month();
     expect(isSanctioning(diplomacy, "CCC", "DDD")).toBe(false);
+    expect(
+      internals
+        .journalLifts()
+        .some((p) => p.by === "CCC" && p.reason === "friendly"),
+    ).toBe(true);
+  });
+
+  it("(a) after a change of regime of the target, the issuer reviews its sanction within six months and lifts it with a probability", () => {
+    const run = (probability: number) => {
+      const config = quietConfig();
+      config.diplomacy.sanction.reviewLiftProbability = probability;
+      const { internals, days } = campaign(
+        {
+          sanctions: [
+            { by: "CCC", against: "DDD", since: "2012-01-01", source: "test" },
+          ],
+        },
+        {},
+        config,
+      );
+      const { diplomacy, politics } = internals;
+      politics.nations.CCC.government.ideology = { ...FAR };
+      politics.nations.DDD.government.ideology = { ...OTHER_END };
+      setRelation(diplomacy, "CCC", "DDD", -30);
+      scheduleSanctionReviews(
+        internals.ctx,
+        diplomacy,
+        new Rng(3),
+        "DDD",
+        "2026-01-01",
+      );
+      const review = diplomacy.sanctions[0].reviewBy!;
+      expect(review > "2026-01-01" && review <= "2026-07-01").toBe(true);
+      days(31 * 8);
+      return isSanctioning(diplomacy, "CCC", "DDD");
+    };
+    expect(run(1)).toBe(false);
+    expect(run(0)).toBe(true);
   });
 
   it("a sanction against the aggressor of a war of the first day holds while the war lasts", () => {
@@ -373,7 +420,7 @@ describe("the lift of the sanctions of the first day (J6b)", () => {
     expect(isSanctioning(diplomacy, "CCC", "DDD")).toBe(true);
   });
 
-  it("a bloc lifts its sanctions of policy only after a change of regime, never during a war of aggression", () => {
+  it("(c) a bloc lifts its sanctions of policy by the vote of its members once relations have healed, never during a war of aggression", () => {
     const union = testBloc({
       id: "union",
       type: "economic-union",
@@ -417,9 +464,10 @@ describe("the lift of the sanctions of the first day (J6b)", () => {
       }
       return internals.blocs.blocs.find((b) => b.id === "union")!.sanctions;
     };
-    // The governments of the test nations are identical: after a change of
-    // regime in DDD the leader proposes the lift, and it passes.
-    expect(run(false, false)).toEqual(["DDD"]);
+    // The governments of the test nations are identical: relations healed,
+    // the leader proposes the lift and it passes, a change of regime or
+    // not (J7); never while DDD wages a war of aggression.
+    expect(run(false, false)).toEqual([]);
     expect(run(false, true)).toEqual([]);
     expect(run(true, true)).toEqual(["DDD"]);
   });

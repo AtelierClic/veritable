@@ -2,10 +2,10 @@ import { stepFiscalRule } from "../ai/fiscal";
 import {
   AiEnv,
   AiEvent,
-  dueThisTick,
+  armsFlowOf,
+  hasStakes,
   initAi,
   review,
-  stepArmsFlows,
 } from "../ai/nations";
 import { stepWarAi } from "../ai/war";
 import { NationId } from "../data/schemas/common";
@@ -30,14 +30,16 @@ import {
   PoliticsState,
   SAVE_SCHEMA_VERSION,
   SaveFile,
+  ScheduleState,
   TechState,
   TerritoryState,
   War,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
-import { airMultiplier, stepAirMonth } from "./air/air";
+import { airMultiplier, airSuperiority } from "./air/air";
 import {
   accessionCriteria,
+  aiApplicationsOf,
   applyForMembership,
   blocData,
   BlocEngineEvent,
@@ -53,24 +55,35 @@ import {
   memberStatus,
   openToApplications,
   propose,
-  stepBlocsMonth,
+  sessionDay,
+  stepBlocsCalendar,
+  stepBlocsDay,
+  stepBlocSession,
   syncBlocs,
   tally,
   termEnds,
 } from "./blocs/blocs";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
 import { dateAfter, dayIndex, MINUTES_PER_GAME_DAY } from "./calendar";
-import { claimsOf } from "./diplomacy/claims";
+import { claimsOf, wakeClaims } from "./diplomacy/claims";
 import {
+  AffinityInputs,
   availableCasusBelli,
+  cachedAffinityInputs,
   declareWar,
   DiplomacyEvent,
+  DiplomacyStepEnv,
   enemiesOf,
   hitDemocracyRelations,
   imposeSanctions,
   initDiplomacy,
+  LiftReason,
   liftSanctions,
+  playerLiftCost,
+  relation,
+  scheduleSanctionReviews,
   stepDiplomacyMonth,
+  stepDiplomacyNation,
   warSide,
 } from "./diplomacy/diplomacy";
 import {
@@ -81,19 +94,25 @@ import {
 } from "./economy/budget";
 import { buildContext, EconomyContext, SimData } from "./economy/context";
 import {
-  MonthlyTrade,
-  stepGrowth,
+  growNation,
+  refreshTradeAggregates,
   stepPrices,
   stepTrade,
+  stepTradeGood,
+  stepWorld,
+  TradeAffinities,
+  tradeAffinities,
 } from "./economy/engine";
 import { initEconomy, initPolitics } from "./economy/init";
+import { populationFactor, populationOf } from "./economy/population";
 import {
   chooseEvent,
   eventGrowth,
   EventsEnv,
   EventsEvent,
   initEvents,
-  stepEventsMonth,
+  stepEventsDraws,
+  stepEventsHousekeeping,
 } from "./events/events";
 import { compactJournal } from "./journal";
 import { nationFromData, statusFromTerritory } from "./nation";
@@ -152,6 +171,13 @@ import {
 } from "./politics/politics";
 import { Rng } from "./rng";
 import {
+  cadenceDays,
+  dueNations,
+  hasten,
+  initSchedule,
+  reschedule,
+} from "./schedule";
+import {
   ClockContext,
   DomainSystem,
   NULL_PROBE,
@@ -166,11 +192,20 @@ import {
   initTech,
   researchRefusals,
   startResearch,
-  stepTechMonth,
+  stepTechNation,
   syncTech,
   TechEnv,
   TechEvent,
 } from "./tech/tech";
+import {
+  calendarMonth,
+  DAYS_PER_MONTH,
+  daysBetweenDates,
+  MINUTES_PER_MONTH,
+  MINUTES_PER_YEAR,
+  walkSd,
+  WEEKS_PER_MONTH,
+} from "./time";
 import {
   BlocView,
   FrontGeometry,
@@ -188,12 +223,13 @@ import {
   Multipliers,
   releaseIdleDivisions,
   resolveTick,
-  stepWarMonth,
+  stepWarLedgers,
 } from "./war/fronts";
 import {
   assignDivision,
   disbandDivision,
   initMilitary,
+  militaryPower,
   raiseDivision,
   setConscription,
   setPosture,
@@ -319,21 +355,26 @@ export class VeritableSimImpl implements VeritableSim {
   private blocs!: BlocsState;
   private tech!: TechState;
   private events!: EventsState;
-  // Arms flows of the month, for the military step and the budget.
-  private armsAid: {
-    points: Record<NationId, number>;
-    cost: Record<NationId, number>;
-  } = {
-    points: {},
-    cost: {},
-  };
+  // J7: the rolling queue of the nations (sim/schedule.ts).
+  private schedule!: ScheduleState;
+  // J7: the version of the view is derived from the saved state (the day,
+  // the journal): what the player sees moves with them; the interface reads
+  // the view again when it changes, at most four times a second, and after
+  // each of its own commands.
+  private get viewVersion(): number {
+    return (
+      dayIndex(this.calendar.elapsedGameMinutes) * 100_000 +
+      (this.journal.length % 100_000)
+    );
+  }
+  // The nations of the campaign and their index (the draws of the events).
+  private knownNations: ReadonlySet<NationId> = new Set();
+  private nationIndex: ReadonlyMap<NationId, number> = new Map();
   private scenario!: Scenario;
   private ctx!: EconomyContext;
   private sheets = new Map<NationId, NationData>();
   private initialized = false;
 
-  // Left by the monthly flows for the budget of the same month.
-  private trade: MonthlyTrade | null = null;
   private pending: SimEvent[] = [];
   private readonly scheduler: Scheduler;
 
@@ -349,48 +390,40 @@ export class VeritableSimImpl implements VeritableSim {
     this.scheduler = new Scheduler(this.systems(), deps.perf);
   }
 
-  // The domains, plugged on the central scheduler.
+  // The day and month clocks of the central scheduler (J7: nothing waits
+  // for the 1st but what is calendar by nature). The nations, the goods,
+  // the draws of the events and the fronts run tick by tick (tickWork).
   private systems(): DomainSystem[] {
     return [
       {
         domain: "economy",
-        onDay: () => stepPrices(this.ctx, this.economy),
-        onMonth: (c) => {
-          // stepTrade asks only for the pairs without a land border.
-          const blockade = this.naval.blockade;
-          this.trade = stepTrade(
+        onDay: () => {
+          stepPrices(this.ctx, this.economy);
+          stepWorld(
             this.ctx,
-            this.economy,
-            (e, i) => (1 - (blockade[e] ?? 0)) * (1 - (blockade[i] ?? 0)),
-          );
-          stepGrowth(
-            this.ctx,
-            this.economy,
-            this.politics,
+            this.economy.market,
             this.rng,
-            (id) => this.lostTradeShare(id),
-            (id) =>
-              (this.ctx.techModifiers.get(id)?.growth ?? 0) +
-              eventGrowth(this.events, id),
+            1 / DAYS_PER_MONTH,
           );
-          this.techMonth(c);
         },
       },
-      { domain: "events", onMonth: (c) => this.eventsMonth(c) },
       {
         domain: "diplomacy",
-        onDay: () => this.navalDay(),
-        onMonth: (c) => this.diplomacyMonth(c),
+        onDay: (c) => this.diplomacyDay(c),
       },
       {
-        domain: "politics",
-        onWeek: (c) => this.politicsWeek(c),
-        onMonth: (c) => {
-          this.politicsMonth(c);
-          this.budgetMonth(c);
+        domain: "blocs",
+        onDay: (c) => this.blocsDay(c),
+        onMonth: (c) => this.blocsCalendar(c),
+      },
+      {
+        domain: "events",
+        onDay: (c) => {
+          for (const event of stepEventsHousekeeping(this.eventsEnv(c.date))) {
+            this.recordEvent(c.date, event);
+          }
         },
       },
-      { domain: "blocs", onMonth: (c) => this.blocsMonth(c) },
       {
         domain: "save",
         // J6c: every 1 January, the journal older than journalFullYears
@@ -439,7 +472,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.military = initMilitary(this.ctx, sheets);
     this.naval = initNaval();
     this.nuclear = initNuclear(sheets);
-    this.ai = initAi(scenario.nations, scenario.startDate);
+    this.ai = initAi(scenario.nations);
     this.blocs = initBlocs(this.ctx);
     syncBlocs(this.ctx, this.blocs);
     this.applyScenarioSanctions(scenario);
@@ -459,7 +492,6 @@ export class VeritableSimImpl implements VeritableSim {
       { date: this.calendar.date, kind: "campaign-started", params: {} },
     ];
     this.metrics = { [METRIC_ADVANCE_CALLS]: 0 };
-    this.trade = null;
     this.invalidateFronts();
     this.initialized = true;
     this.deps.world.setMonth(0);
@@ -471,39 +503,97 @@ export class VeritableSimImpl implements VeritableSim {
         this.nations.map((n) => [n.id, n.tileCount]),
       ),
       structures: Object.fromEntries(this.deps.world.structureCounts()),
-      constructionCost: {},
+      constructionCost: Object.fromEntries(this.nations.map((n) => [n.id, 0])),
     };
+    // J7: every good takes its first turn on the first day, and the rolling
+    // queue of the nations starts.
+    const blockade = this.naval.blockade;
+    stepTrade(
+      this.ctx,
+      this.economy,
+      (e, i) => (1 - (blockade[e] ?? 0)) * (1 - (blockade[i] ?? 0)),
+      0,
+    );
+    this.schedule = initSchedule(
+      this.ctx.nationIds,
+      0,
+      (id) => this.cadence(id),
+      this.deps.config.time.gameMinutesPerTick,
+      this.politics.autopilot ? null : this.playerNationId(),
+    );
     this.warmUp();
   }
 
-  // J6c: the first monthly step of a session runs cold (the engine compiles
-  // its code as it goes) and took twice the time of the next ones at 208
-  // nations. A dry run of its heaviest parts at load, on copies of the
-  // state and with a throwaway random generator: nothing of the campaign
-  // changes, the results are thrown away.
+  // J6c: the first monthly step of a session ran cold (the engine compiles
+  // its code as it goes). J7: no step carries the world any more, but the
+  // first calls of each domain still do; a dry run of them at load (the
+  // loading screen), on copies of the state and with a throwaway random
+  // generator: nothing of the campaign changes, the results are thrown
+  // away. Twice: the engine compiles a function hot only after a few calls.
   private warmUp(): void {
-    // Twice: the engine compiles a function hot only after a few calls.
+    const date = this.calendar.date;
     for (let pass = 0; pass < 2; pass++) {
+      const rng = new Rng(pass + 1);
       const economy = structuredClone(this.economy);
-      stepTrade(this.ctx, economy);
-      stepGrowth(
-        this.ctx,
-        economy,
-        structuredClone(this.politics),
-        new Rng(0),
-        () => 0,
-        () => 0,
-      );
+      const politics = structuredClone(this.politics);
+      const diplomacy = structuredClone(this.diplomacy);
+      const military = structuredClone(this.military);
+      const events = structuredClone(this.events);
+      stepTrade(this.ctx, economy, () => 1, 0);
+      for (const id of this.ctx.nationIds) {
+        growNation(this.ctx, economy, id, false, rng, 0.25);
+        stepSliders(this.ctx, economy.nations[id], 0.25);
+        stepBudget(this.ctx, id, economy.nations[id], politics.nations[id], {
+          date,
+          month: 0,
+          months: 0.25,
+          monthsCrossed: 0,
+        });
+        stepPolitics(
+          this.ctx,
+          id,
+          this.sheets.get(id),
+          economy.nations[id],
+          politics.nations[id],
+          0,
+          0,
+          {},
+          0,
+          1,
+        );
+      }
       stepDiplomacyMonth(
         this.ctx,
-        structuredClone(this.diplomacy),
-        structuredClone(this.economy),
-        structuredClone(this.military),
-        structuredClone(this.politics),
-        new Rng(0),
-        this.calendar.date,
+        diplomacy,
+        economy,
+        military,
+        politics,
+        rng,
+        date,
         this.aiNations(),
+        () => false,
+        this.politics.autopilot ? null : this.playerNationId(),
+        0.25,
       );
+      const env: EventsEnv = {
+        ...this.eventsEnv(date),
+        rng,
+        events,
+        economy,
+        politics,
+        diplomacy,
+        military,
+        player: null,
+      };
+      const slots = Math.max(
+        1,
+        Math.round(
+          MINUTES_PER_GAME_DAY / this.deps.config.time.gameMinutesPerTick,
+        ),
+      );
+      for (let slot = 0; slot < slots; slot++) {
+        stepEventsDraws(env, slot, slots);
+      }
     }
   }
 
@@ -546,7 +636,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.tech = state.tech;
     syncTech(this.ctx, this.tech);
     this.events = state.events;
-    this.trade = null;
+    this.schedule = state.schedule;
     this.syncSuspensions();
     this.invalidateFronts();
     this.initialized = true;
@@ -589,6 +679,7 @@ export class VeritableSimImpl implements VeritableSim {
       ai: this.ai,
       tech: this.tech,
       events: this.events,
+      schedule: this.schedule,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -668,7 +759,11 @@ export class VeritableSimImpl implements VeritableSim {
               me,
               cmd.against,
             );
-        if (event !== null) this.record(date, event);
+        // J7: its allies that keep theirs resent a lift.
+        if (!cmd.active && event !== null) {
+          playerLiftCost(this.ctx, this.diplomacy, me, cmd.against);
+        }
+        if (event !== null) this.record(date, event, undefined, "player");
         return;
       }
       case "declare-war": {
@@ -734,7 +829,7 @@ export class VeritableSimImpl implements VeritableSim {
         setConscription(
           this.ctx,
           this.military.nations[me],
-          this.sheets.get(me)!.population.value,
+          populationOf(this.economy, this.sheets, me),
           level,
         );
         return;
@@ -979,33 +1074,32 @@ export class VeritableSimImpl implements VeritableSim {
     this.assertInitialized();
     if (!(gameMinutes >= 0)) throw new Error("advance: negative duration");
     const events: SimEvent[] = [];
-
-    const before = this.calendar.elapsedGameMinutes;
-    this.calendar.elapsedGameMinutes += gameMinutes;
-    this.calendar.date = dateAfter(
-      this.calendar.startDate,
-      this.calendar.elapsedGameMinutes,
-    );
-    this.deps.world.setMonth(this.currentMonth());
-    // Domain systems push what happened into `pending` while the clocks run;
-    // events of the commands applied since the last advance are already there.
-    for (const tick of this.scheduler.run(
-      this.calendar.startDate,
-      before,
-      this.calendar.elapsedGameMinutes,
-    )) {
-      events.push({ type: "day-started", date: tick.context.date });
-      if (tick.monthStarted) {
-        events.push({ type: "month-started", date: tick.context.date });
+    const tick = this.deps.config.time.gameMinutesPerTick;
+    const from = this.calendar.elapsedGameMinutes;
+    const to = from + gameMinutes;
+    // J7: the work of the simulation is indexed on the core ticks it
+    // crosses: advancing tick by tick or in one call gives the same state.
+    for (let t = Math.floor(from / tick) + 1; t <= Math.floor(to / tick); t++) {
+      const before = this.calendar.elapsedGameMinutes;
+      const now = t * tick;
+      this.calendar.elapsedGameMinutes = now;
+      this.calendar.date = dateAfter(this.calendar.startDate, now);
+      this.deps.world.setMonth(this.currentMonth());
+      for (const day of this.scheduler.run(
+        this.calendar.startDate,
+        before,
+        now,
+      )) {
+        events.push({ type: "day-started", date: day.context.date });
+        if (day.monthStarted) {
+          events.push({ type: "month-started", date: day.context.date });
+        }
       }
+      this.tickWork(t, now);
     }
-    (this.deps.perf ?? NULL_PROBE).measure("war", "tick", () =>
-      this.resolveFronts(gameMinutes),
-    );
-    // The nation AI: a tenth of the nations come up every tick (J5).
-    (this.deps.perf ?? NULL_PROBE).measure("diplomacy", "tick", () =>
-      this.aiTick(this.calendar.date),
-    );
+    this.calendar.elapsedGameMinutes = to;
+    this.calendar.date = dateAfter(this.calendar.startDate, to);
+    this.deps.world.setMonth(this.currentMonth());
     events.push(...this.pending);
     this.pending = [];
     this.metrics[METRIC_ADVANCE_CALLS] =
@@ -1032,6 +1126,761 @@ export class VeritableSimImpl implements VeritableSim {
       });
     }
     return events;
+  }
+
+  // --- the tick (J7) ------------------------------------------------------------
+
+  // Everything but the day and month clocks, at the tick `t` (elapsed
+  // `now`): the draws of the events of this slot of the day, the session of
+  // the blocs that meet today, the turn of a good, the nations due, and
+  // the fronts.
+  private tickWork(t: number, now: number): void {
+    const probe = this.deps.perf ?? NULL_PROBE;
+    const tick = this.deps.config.time.gameMinutesPerTick;
+    const slots = Math.max(1, Math.round(MINUTES_PER_GAME_DAY / tick));
+    const slot = Math.round((now % MINUTES_PER_GAME_DAY) / tick) % slots;
+    const date = this.calendar.date;
+    probe.measure("events", "tick", () => {
+      const env = this.eventsEnv(date);
+      for (const event of stepEventsDraws(env, slot, slots)) {
+        this.recordEvent(date, event);
+      }
+    });
+    // The blocs meet at the middle of their session day.
+    if (slot === Math.floor(slots / 2)) {
+      const day = Number(date.slice(8, 10));
+      for (const bloc of this.blocs.blocs) {
+        if (sessionDay(bloc.id) !== day) continue;
+        probe.measure("blocs", "tick", () => this.blocSession(bloc.id, date));
+      }
+    }
+    probe.measure("trade", "tick", () => this.tradeTurn(t));
+    probe.measure("nations", "tick", () => {
+      for (const id of dueNations(
+        this.schedule,
+        this.ctx.nationIds,
+        now,
+        this.deps.config.schedule.maxUpdatesPerTick,
+      )) {
+        this.updateNation(id, now);
+      }
+    });
+    probe.measure("war", "tick", () => this.resolveFronts(tick));
+  }
+
+  // The goods take turns (J7): the twelve over tradeCycleDays, one at a
+  // time, each with the months since its last turn (the length of a cycle).
+  private tradeTurn(t: number): void {
+    const cfg = this.deps.config;
+    const cycle = Math.max(
+      1,
+      Math.round(
+        (cfg.schedule.tradeCycleDays * MINUTES_PER_GAME_DAY) /
+          cfg.time.gameMinutesPerTick,
+      ),
+    );
+    const goods = this.ctx.goods.length;
+    const turn = Math.floor((t * goods) / cycle);
+    if (turn === Math.floor(((t - 1) * goods) / cycle)) return;
+    const good = this.ctx.goods[turn % goods];
+    const months = (cycle * cfg.time.gameMinutesPerTick) / MINUTES_PER_MONTH;
+    const blockade = this.naval.blockade;
+    stepTradeGood(
+      this.ctx,
+      this.economy,
+      good,
+      (e, i) => (1 - (blockade[e] ?? 0)) * (1 - (blockade[i] ?? 0)),
+      months,
+      this.affinities(),
+    );
+    refreshTradeAggregates(this.ctx, this.economy);
+  }
+
+  // The affinities of the trade pairs, computed again only when what they
+  // read changed: the full members of the blocs, the suspensions, the
+  // trade agreements.
+  private affinityCache: { key: string; value: TradeAffinities } | null = null;
+  private affinities(): TradeAffinities {
+    const parts: string[] = [];
+    for (const bloc of this.ctx.blocs) {
+      if (bloc.tradeBonus === undefined) continue;
+      parts.push(bloc.id, ...this.ctx.membersOf(bloc.id));
+    }
+    parts.push("|", ...this.ctx.pairBonus.keys());
+    const key = parts.join(",");
+    if (this.affinityCache === null || this.affinityCache.key !== key) {
+      this.affinityCache = { key, value: tradeAffinities(this.ctx) };
+    }
+    return this.affinityCache.value;
+  }
+
+  // --- the rolling queue of the nations (J7) ----------------------------------
+
+  // The cadence of a nation at the moment (sim/schedule.ts).
+  private cadence(id: NationId): number {
+    const player = this.politics.autopilot ? null : this.playerNationId();
+    return cadenceDays(this.deps.config, id, {
+      player,
+      stakes: (n) => this.nationHasStakes(n),
+      interacts: (n) => player !== null && this.dealsWith(n, player),
+    });
+  }
+
+  // A war, a crisis, a dispute with the player, an election soon.
+  private nationHasStakes(id: NationId): boolean {
+    if (hasStakes(this.aiEnv(this.calendar.date), id)) return true;
+    const next = this.politics.nations[id]?.nextElection ?? null;
+    if (next === null) return false;
+    return (
+      daysBetweenDates(this.calendar.date, next) <=
+      this.deps.config.schedule.electionSoonDays
+    );
+  }
+
+  // A land neighbour of the player, at war with it, or in a bloc with it.
+  private dealsWith(id: NationId, player: NationId): boolean {
+    if (this.ctx.landNeighbours(id, player)) return true;
+    if (this.ctx.commonBlocs(id, player) > 0) return true;
+    return enemiesOf(this.diplomacy, player).includes(id);
+  }
+
+  // One update of a nation: everything that happened to it since the last
+  // one, the months elapsed integrated by each domain, in this order: its
+  // arms sent abroad, the military, the strikes it suffers, growth and
+  // population, the sliders, the budget and the AI fiscal rule, research,
+  // opinion and stability, the political engine, the player's objectives,
+  // its diplomacy, its applications to blocs, the review of its AI and its
+  // war orders.
+  private updateNation(id: NationId, now: number): void {
+    const clock = this.schedule.nations[id];
+    const minutes = Math.max(0, now - clock.last);
+    const months = minutes / MINUTES_PER_MONTH;
+    const days = minutes / MINUTES_PER_GAME_DAY;
+    const date = this.calendar.date;
+    const economy = this.economy.nations[id];
+    const politics = this.politics.nations[id];
+    const sheet = this.sheets.get(id)!;
+    const player = this.playerNationId();
+    const isAi = id !== player || this.politics.autopilot;
+    const month = calendarMonth(this.calendar.startDate, date);
+    const crossed = Math.max(0, month - economy.monthMark);
+    economy.monthMark = month;
+    const atWar = enemiesOf(this.diplomacy, id).length > 0;
+    const modifiers = lawModifiers(this.ctx, politics);
+
+    // Arms sent abroad (a donor at peace), paid at once.
+    let lump = 0;
+    if (isAi) {
+      const flow = armsFlowOf(this.aiEnv(date), id, months);
+      lump -= flow.cost;
+      for (const event of flow.events) this.record(date, event);
+    }
+
+    // The military: pool, arms, training, exhaustion.
+    stepMilitaryMonth(
+      this.ctx,
+      this.military.nations[id],
+      sheet,
+      economy,
+      politics,
+      atWar,
+      (1 + modifiers.manpowerBonus) * (this.nuclear.fallout[id] ?? 1),
+      0,
+      months,
+      economy.population,
+    );
+    // The strikes of the strongest enemy in the air, decaying.
+    this.airStrikesOn(id, months);
+
+    // Growth and population.
+    growNation(
+      this.ctx,
+      this.economy,
+      id,
+      politics.unrest,
+      this.rng,
+      months,
+      this.lostTradeShare(id),
+      (this.ctx.techModifiers.get(id)?.growth ?? 0) +
+        eventGrowth(this.events, id),
+      populationFactor(
+        this.deps.config,
+        sheet.populationGrowth?.value,
+        clock.last / MINUTES_PER_YEAR,
+        now / MINUTES_PER_YEAR,
+      ),
+    );
+    stepSliders(this.ctx, economy, months);
+
+    // The budget: transfers per month, the one-offs of the period; the
+    // structures built on the map are paid the month after (J5), at the
+    // first update of the nation in the new month.
+    if (crossed > 0) lump -= this.constructionOf(id);
+    if (!atWar) {
+      economy.grantsPctGdp *= Math.pow(
+        1 - this.deps.config.budget.grantsPeaceDecayPerMonth,
+        months,
+      );
+    }
+    const levers = isAi ? 0 : this.leverCostPerMonth(id, months);
+    const corruption = clamp01(politics.corruption + modifiers.corruption);
+    for (const event of stepBudget(
+      this.ctx,
+      id,
+      economy,
+      politics,
+      { date, month, months, monthsCrossed: crossed },
+      this.transferPerMonth(id) - levers,
+      lump,
+      this.deps.config.politics.corruptionLeakScale * corruption,
+    )) {
+      this.record(date, event);
+    }
+    if (isAi) {
+      stepFiscalRule(
+        this.ctx,
+        economy,
+        { defense: this.ai.nations[id]?.defenseGoal, atWar },
+        months,
+      );
+    }
+
+    // Research.
+    for (const event of stepTechNation(
+      this.updateTechEnv(date),
+      id,
+      months,
+      isAi,
+    )) {
+      if (id === player || event.params.first === "true") {
+        this.record(date, event);
+      }
+    }
+
+    // Opinion, stability, then the political engine.
+    const conflicts = this.deps.data.internalConflicts ?? [];
+    const years = now / (MINUTES_PER_GAME_DAY * 365.25);
+    for (const event of stepPolitics(
+      this.ctx,
+      id,
+      sheet,
+      economy,
+      politics,
+      this.military.nations[id]?.exhaustion ?? 0,
+      this.lostTradeShare(id, true),
+      modifiers.groups,
+      internalConflictMalus(this.ctx, conflicts, id, years),
+      months * WEEKS_PER_MONTH,
+    )) {
+      this.record(date, event);
+    }
+    this.politicsOf(id, date, months, crossed, isAi);
+    if (id === player && !this.politics.autopilot) {
+      for (const event of stepObjectivesMonth(
+        this.ctx,
+        id,
+        this.politics,
+        this.objectiveWorld(id),
+        crossed,
+      )) {
+        this.record(date, event);
+      }
+    }
+
+    // Diplomacy: the relations it owns, sanctions, coalitions, memory.
+    const before = this.diplomacy.wars.length;
+    const joined = this.diplomacy.wars.reduce(
+      (s, w) => s + w.aggressors.length + w.defenders.length,
+      0,
+    );
+    // The relations it owns drift at most once a month (every day for the
+    // player's: they are on its screens).
+    const sinceDrift = (now - clock.drift) / MINUTES_PER_MONTH;
+    const drift = id === player || sinceDrift >= 1 ? sinceDrift : 0;
+    if (drift > 0) clock.drift = now;
+    const aggressor = this.diplomacy.wars.some((w) =>
+      w.aggressors.includes(id),
+    );
+    const standing = aggressor
+      ? this.ctx.nationIds.map((p) => relation(this.diplomacy, id, p))
+      : null;
+    const step = stepDiplomacyNation(
+      this.diplomacyEnv(date),
+      id,
+      months,
+      drift,
+    );
+    // An aggressor whose relations fall through the threshold of sanctions:
+    // the nations concerned weigh their sanctions at the next tick, as they
+    // did in the same monthly step until the J6, rather than at their next
+    // weekly or monthly update.
+    if (standing !== null) {
+      const below = this.deps.config.diplomacy.sanction.relationsBelow;
+      this.ctx.nationIds.forEach((p, k) => {
+        if (p === id || standing[k] < below) return;
+        if (relation(this.diplomacy, id, p) >= below) return;
+        hasten(
+          this.schedule,
+          p,
+          now,
+          0,
+          this.deps.config.time.gameMinutesPerTick,
+        );
+      });
+    }
+    for (const event of step.events) {
+      const lift = event.type === "sanctions-lifted";
+      this.record(
+        date,
+        event,
+        undefined,
+        lift ? step.lifts.shift() : undefined,
+      );
+    }
+    if (isAi) {
+      for (const event of aiApplicationsOf(this.blocEnv(date), id, months)) {
+        this.record(date, event);
+      }
+    }
+
+    // The AI: defence, war, navy; its war orders and ceasefires.
+    if (isAi) {
+      const env = this.aiEnv(date);
+      for (const event of review(env, id, days)) this.record(date, event);
+      const orders = stepWarAi(
+        this.ctx,
+        this.diplomacy,
+        this.military,
+        economy.population,
+        this.geometry,
+        id,
+      );
+      for (const to of orders.ceasefireTo) {
+        const war = this.diplomacy.wars.find(
+          (w) => warSide(w, id) !== null && warSide(w, to) !== null,
+        );
+        if (war === undefined) continue;
+        if (war.offers.some((o) => o.from === id && o.to === to)) continue;
+        this.offerPeace(war, id, to, CEASEFIRE, date);
+      }
+    }
+    const after = this.diplomacy.wars.reduce(
+      (s, w) => s + w.aggressors.length + w.defenders.length,
+      0,
+    );
+    if (this.diplomacy.wars.length !== before || after !== joined) {
+      this.invalidateFronts();
+    }
+
+    reschedule(
+      this.schedule,
+      id,
+      now,
+      this.cadence(id),
+      this.deps.config.time.gameMinutesPerTick,
+    );
+  }
+
+  // The political engine of one nation over `months` (J4; once a month
+  // until the J6): capital, legitimacy, repeals due, the player's levers,
+  // elections due, the leader's age, the end of a junta, coups,
+  // revolutions, the opinion shocks of an AI nation.
+  private politicsOf(
+    id: NationId,
+    date: string,
+    months: number,
+    crossed: number,
+    isAi: boolean,
+  ): void {
+    const cfg = this.deps.config.politics;
+    const politics = this.politics.nations[id];
+    const economy = this.economy.nations[id];
+    const sheet = this.sheets.get(id);
+    const regime = this.ctx.regime(politics.regime);
+    const modifiers = lawModifiers(this.ctx, politics);
+
+    politics.capital = Math.min(
+      cfg.capital.max,
+      politics.capital +
+        cfg.capital.regenBase *
+          (0.5 + politics.leader.traits.charisma) *
+          (0.5 + politics.opinion) *
+          months,
+    );
+    const legitimacyBase = clamp01(
+      regime.legitimacyBase + modifiers.legitimacyBase,
+    );
+    politics.legitimacy = clamp01(
+      politics.legitimacy +
+        Math.sign(legitimacyBase - politics.legitimacy) *
+          Math.min(
+            cfg.legitimacy.recoveryPerMonth * months,
+            Math.abs(legitimacyBase - politics.legitimacy),
+          ),
+    );
+    for (const event of stepLawsMonth(this.ctx, id, politics, date)) {
+      this.record(date, event);
+    }
+    // Clientelism pleases its group and feeds corruption, month by month.
+    if (
+      !isAi &&
+      politics.levers.clientelism !== null &&
+      politics.groups !== null
+    ) {
+      const group = politics.levers.clientelism;
+      politics.groups[group] = clamp01(
+        politics.groups[group] + cfg.elections.clientelismSatisfaction * months,
+      );
+      politics.corruption = clamp01(
+        politics.corruption + cfg.elections.clientelismCorruption * months,
+      );
+    }
+
+    // Elections, when due and not suspended by a war at home.
+    if (politics.nextElection !== null && date >= politics.nextElection) {
+      const suspended =
+        (sheet?.politics.electionsSuspendedAtWarAtHome ?? false) &&
+        this.hasFrontAtHome(id);
+      if (suspended) {
+        if (!politics.electionsSuspended) {
+          politics.electionsSuspended = true;
+          this.record(date, {
+            type: "elections-suspended",
+            nation: id,
+            until: "war",
+          });
+        }
+      } else {
+        politics.electionsSuspended = false;
+        const outcome = holdElection(
+          this.ctx,
+          this.rng,
+          id,
+          politics,
+          sheet,
+          date,
+        );
+        for (const event of outcome.events) this.record(date, event);
+        hitDemocracyRelations(
+          this.ctx,
+          this.diplomacy,
+          this.politics,
+          id,
+          outcome.democracyRelations,
+        );
+        this.reinstateIfDemocratic(id);
+      }
+    }
+
+    for (const event of stepLeaderAgeing(
+      this.ctx,
+      this.rng,
+      id,
+      politics,
+      date,
+      months,
+    )) {
+      this.record(date, event);
+    }
+    for (const event of stepJuntaTransition(
+      this.ctx,
+      this.rng,
+      id,
+      politics,
+      date,
+      months,
+    )) {
+      this.record(date, event);
+    }
+    const coup = stepCoups(
+      this.ctx,
+      this.rng,
+      id,
+      politics,
+      this.military.nations[id],
+      date,
+      months,
+    );
+    for (const event of coup.events) this.record(date, event);
+    if (coup.suspendFromBlocs) {
+      hitDemocracyRelations(
+        this.ctx,
+        this.diplomacy,
+        this.politics,
+        id,
+        coup.democracyRelations,
+      );
+      for (const bloc of this.ctx.blocs) {
+        if (
+          bloc.suspendsOnCoup === true &&
+          this.ctx.isFullMember(bloc, id) &&
+          !politics.suspendedFrom.includes(bloc.id)
+        ) {
+          politics.suspendedFrom.push(bloc.id);
+          this.record(date, {
+            type: "bloc-suspended",
+            nation: id,
+            bloc: bloc.id,
+          });
+        }
+      }
+      this.syncSuspensions();
+    }
+    for (const event of stepRevolution(
+      this.ctx,
+      this.rng,
+      id,
+      politics,
+      economy,
+      sheet,
+      date,
+      months,
+      crossed,
+    )) {
+      this.record(date, event);
+    }
+    this.reinstateIfDemocratic(id);
+
+    // AI nations: random shocks in proportion to the fragility of the
+    // regime, so that they know unrest too (per sqrt(month)).
+    if (politics.groups === null) {
+      const sd =
+        cfg.aiShock.sd *
+        (1 - politics.legitimacy) *
+        (1 + cfg.aiShock.coupScale * regime.coupBase);
+      politics.opinion = clamp01(
+        politics.opinion + walkSd(sd, months) * this.rng.nextGaussian(),
+      );
+    }
+  }
+
+  // What the player's levers cost per month: propaganda (share of GDP) and
+  // clientelism (J4).
+  private leverCostPerMonth(id: NationId, months: number): number {
+    void months;
+    const cfg = this.deps.config.politics.elections;
+    const politics = this.politics.nations[id];
+    const economy = this.economy.nations[id];
+    let cost = (politics.levers.propagandaPctGdp * economy.gdp) / 12;
+    if (politics.levers.clientelism !== null) {
+      cost += (cfg.clientelismCostPctGdp * economy.gdp) / 12;
+    }
+    return cost;
+  }
+
+  // Transfers per month into the budget of a nation: reparations it pays
+  // or receives (a share of the payer's GDP), the net of its blocs' budgets
+  // of the month.
+  private transferPerMonth(id: NationId): number {
+    let net = 0;
+    for (const r of this.diplomacy.reparations) {
+      if (r.from !== id && r.to !== id) continue;
+      const payer = this.economy.nations[r.from];
+      if (payer === undefined) continue;
+      const amount = (r.pctGdp * payer.gdp) / 12;
+      if (r.from === id) net -= amount;
+      if (r.to === id) net += amount;
+    }
+    if (this.economy.nations[id] !== undefined) {
+      net += this.blocs.net[id] ?? 0;
+    }
+    return net;
+  }
+
+  // Strikes from the air (J3b): the damage of the strongest enemy in the
+  // air, the old damage decaying month by month.
+  private airStrikesOn(id: NationId, months: number): void {
+    const cfg = this.deps.config.air;
+    const nation = this.economy.nations[id];
+    let worst = 0;
+    for (const enemy of enemiesOf(this.diplomacy, id)) {
+      worst = Math.max(worst, airSuperiority(this.military, enemy, id));
+    }
+    const decayed =
+      nation.strikeDamage * Math.pow(cfg.strikeDecayPerMonth, months);
+    nation.strikeDamage = Math.min(
+      1,
+      Math.max(decayed, worst > 0 ? cfg.strikeShare * worst : 0),
+    );
+  }
+
+  // The world of the diplomacy step of an update.
+  private diplomacyEnv(date: string): DiplomacyStepEnv {
+    return {
+      ctx: this.ctx,
+      state: this.diplomacy,
+      economy: this.economy,
+      military: this.military,
+      politics: this.politics,
+      rng: this.rng,
+      date,
+      aiNations: this.aiNations(),
+      player: this.politics.autopilot ? null : this.playerNationId(),
+      blocHeld: (by, against) =>
+        blocSanction(this.ctx, this.blocs, by, against),
+      ...this.dailyDiplomacy(date),
+    };
+  }
+
+  // What the diplomacy of the updates of a day reads of the world, frozen
+  // for the day (J7): the affinity inputs (blocs, sanctions, wars) and the
+  // military power of every nation — at 208 nations they cost more than
+  // the rest of an update.
+  private diplomacyCache: {
+    day: number;
+    inputs: AffinityInputs;
+    power: Map<NationId, number>;
+  } | null = null;
+  private dailyDiplomacy(date: string): {
+    inputs: AffinityInputs;
+    power: Map<NationId, number>;
+  } {
+    const day = dayIndex(this.calendar.elapsedGameMinutes);
+    let cache = this.diplomacyCache;
+    if (cache === null || cache.day !== day) {
+      cache = {
+        day,
+        inputs: cachedAffinityInputs(this.ctx, this.diplomacy, date),
+        power: new Map(
+          this.ctx.nationIds.map((n) => [
+            n,
+            militaryPower(this.ctx, this.military, n),
+          ]),
+        ),
+      };
+      this.diplomacyCache = cache;
+    }
+    return { inputs: cache.inputs, power: cache.power };
+  }
+
+  // --- the daily and monthly clocks ------------------------------------------------
+
+  private diplomacyDay(clock: ClockContext): void {
+    this.navalDay();
+    // Contests old enough end (J5): 5 years after a cession, 10 after the
+    // last capture. J7: every day.
+    const contest = this.deps.config.war.contest;
+    this.deps.world.settleContested(contest.warMonths, contest.cessionMonths);
+    // Each war closes its month on its own anniversary (J7).
+    stepWarLedgers(this.diplomacy, clock.date);
+    // Reparations over.
+    this.diplomacy.reparations = this.diplomacy.reparations.filter(
+      (r) => clock.date < r.until,
+    );
+  }
+
+  private blocsDay(clock: ClockContext): void {
+    let joined = false;
+    for (const event of stepBlocsDay(this.blocEnv(clock.date))) {
+      this.record(clock.date, event);
+      if (event.type === "war-joined") joined = true;
+    }
+    if (joined) this.invalidateFronts();
+  }
+
+  private blocSession(id: string, date: string): void {
+    let joined = false;
+    for (const event of stepBlocSession(this.blocEnv(date), id)) {
+      this.record(date, event);
+      if (event.type === "war-joined") joined = true;
+    }
+    if (joined) this.invalidateFronts();
+  }
+
+  // The 1st of the month: presidencies, the budgets of the blocs, the
+  // fiscal rule of the EU (calendar by nature).
+  private blocsCalendar(clock: ClockContext): void {
+    for (const event of stepBlocsCalendar(this.blocEnv(clock.date))) {
+      this.record(clock.date, event);
+    }
+    for (const id of this.ctx.nationIds) {
+      const events = stepFiscalRules(
+        this.ctx.blocs,
+        (bloc, nation) => this.ctx.isFullMember(bloc, nation),
+        id,
+        this.economy.nations[id],
+        this.politics.nations[id],
+      );
+      for (const event of events) this.record(clock.date, event);
+    }
+  }
+
+  // An event of the events engine: a pop-up for the client, a line in the
+  // journal for the events of the player, of the world, and the scripted
+  // ones of the AI nations.
+  private recordEvent(date: string, event: EventsEvent): void {
+    const player = this.politics.autopilot ? null : this.playerNationId();
+    if (event.type === "event-popup") {
+      const data = this.ctx.events.find((e) => e.id === event.instance.event);
+      this.pending.push({
+        type: "event-popup",
+        date,
+        nation: event.nation,
+        id: event.instance.id,
+        event: event.instance.event,
+        pause: data?.pause ?? true,
+      });
+      return;
+    }
+    const data = this.ctx.events.find((e) => e.id === event.params.event);
+    if (
+      event.nation === player ||
+      data?.scope === "world" ||
+      (data?.kind === "scripted" && data.journal)
+    ) {
+      this.record(date, event);
+    }
+    // An event that touched a nation: its next update comes soon.
+    if (event.nation !== player) {
+      hasten(
+        this.schedule,
+        event.nation,
+        this.calendar.elapsedGameMinutes,
+        this.deps.config.schedule.stakesDays,
+        this.deps.config.time.gameMinutesPerTick,
+      );
+    }
+  }
+
+  // Structures built since the last count of a nation, at their cost: the
+  // legacy gold is no resource in a campaign, the national budget pays
+  // (J5). J6c: a nation never counted pays nothing — its first count is the
+  // reference. J7: counted at the first update of the nation in a month.
+  private constructionOf(id: NationId): number {
+    const prices = this.deps.config.budget.structureCostUsd;
+    const count = this.structureCount(id);
+    const before = this.territory.structures[id];
+    let cost = 0;
+    if (before !== undefined) {
+      for (const [type, n] of Object.entries(count)) {
+        cost += Math.max(0, n - (before[type] ?? 0)) * (prices[type] ?? 0);
+      }
+    }
+    this.territory.structures[id] = count;
+    this.territory.constructionCost[id] = cost;
+    return cost;
+  }
+
+  // The structures of a nation on the map, counted at most once a game day
+  // for the whole world (the count reads every unit of the core).
+  private structureCache: {
+    day: number;
+    counts: ReadonlyMap<NationId, Record<string, number>>;
+  } | null = null;
+  private structureCount(id: NationId): Record<string, number> {
+    const day = dayIndex(this.calendar.elapsedGameMinutes);
+    let cache = this.structureCache;
+    if (cache === null || cache.day !== day) {
+      cache = { day, counts: this.deps.world.structureCounts() };
+      this.structureCache = cache;
+    }
+    // Key order is part of the bytes of a save: sorted, whatever the order
+    // the core lists its units in.
+    return Object.fromEntries(
+      Object.entries(cache.counts.get(id) ?? {}).sort(([a], [b]) =>
+        a < b ? -1 : a > b ? 1 : 0,
+      ),
+    );
   }
 
   read(): ReadonlyWorldView {
@@ -1106,6 +1955,8 @@ export class VeritableSimImpl implements VeritableSim {
           ? {}
           : researchRefusals(techEnv, player),
       events: this.events,
+      schedule: this.schedule,
+      version: this.viewVersion,
     };
   }
 
@@ -1121,15 +1972,22 @@ export class VeritableSimImpl implements VeritableSim {
     };
   }
 
-  // Research of the month (J5), after growth.
-  private techMonth(clock: ClockContext): void {
-    const player = this.playerNationId();
-    for (const event of stepTechMonth(this.techEnv(clock.date))) {
-      // The journal keeps the player's nodes and the firsts of the world.
-      if (event.nation === player || event.params.first === "true") {
-        this.record(clock.date, event);
-      }
+  // The research environment of an update, the diffusion shares counted
+  // once a game day (J7).
+  private sharesCache: {
+    day: number;
+    shares: ReadonlyMap<string, number>;
+  } | null = null;
+  private updateTechEnv(date: string): TechEnv {
+    const env = this.techEnv(date);
+    const day = dayIndex(this.calendar.elapsedGameMinutes);
+    let cache = this.sharesCache;
+    if (cache === null || cache.day !== day) {
+      cache = { day, shares: diffusionShares(env) };
+      this.sharesCache = cache;
     }
+    env.shares = cache.shares;
+    return env;
   }
 
   private eventsEnv(date: string): EventsEnv {
@@ -1147,36 +2005,10 @@ export class VeritableSimImpl implements VeritableSim {
       sheets: this.sheets,
       player: this.politics.autopilot ? null : this.playerNationId(),
       date,
+      seed: this.seed,
+      known: this.knownNations,
+      nationIndex: this.nationIndex,
     };
-  }
-
-  // Events of the month (J5). The player's pop-ups reach the client (it
-  // pauses on those that ask it); the journal keeps the events of the
-  // player, of the world, and the scripted ones of the AI nations.
-  private eventsMonth(clock: ClockContext): void {
-    const env = this.eventsEnv(clock.date);
-    for (const event of stepEventsMonth(env)) {
-      if (event.type === "event-popup") {
-        const data = this.ctx.events.find((e) => e.id === event.instance.event);
-        this.pending.push({
-          type: "event-popup",
-          date: clock.date,
-          nation: event.nation,
-          id: event.instance.id,
-          event: event.instance.event,
-          pause: data?.pause ?? true,
-        });
-        continue;
-      }
-      const data = this.ctx.events.find((e) => e.id === event.params.event);
-      if (
-        event.nation === env.player ||
-        data?.scope === "world" ||
-        (data?.kind === "scripted" && data.journal)
-      ) {
-        this.record(clock.date, event);
-      }
-    }
   }
 
   // The blocs as the screen sees them (J5).
@@ -1271,8 +2103,27 @@ export class VeritableSimImpl implements VeritableSim {
   };
 
   // Share of the trade partners of a nation that sanction it or fight it
-  // (or, with `sanctionsOnly`, that sanction it).
+  // (or, with `sanctionsOnly`, that sanction it). J7: once a game day per
+  // nation (an update reads it twice, and it weighs every partner).
+  private lostShareCache: { day: number; values: Map<string, number> } | null =
+    null;
   private lostTradeShare(id: NationId, sanctionsOnly = false): number {
+    const day = dayIndex(this.calendar.elapsedGameMinutes);
+    let cache = this.lostShareCache;
+    if (cache === null || cache.day !== day) {
+      cache = { day, values: new Map() };
+      this.lostShareCache = cache;
+    }
+    const key = sanctionsOnly ? `${id}|s` : id;
+    let value = cache.values.get(key);
+    if (value === undefined) {
+      value = this.computeLostTradeShare(id, sanctionsOnly);
+      cache.values.set(key, value);
+    }
+    return value;
+  }
+
+  private computeLostTradeShare(id: NationId, sanctionsOnly: boolean): number {
     const lost = new Set<NationId>(
       sanctionsOnly ? [] : enemiesOf(this.diplomacy, id),
     );
@@ -1456,217 +2307,6 @@ export class VeritableSimImpl implements VeritableSim {
     }
   }
 
-  private politicsWeek(clock: ClockContext): void {
-    const conflicts = this.deps.data.internalConflicts ?? [];
-    const years = clock.day / 365.25;
-    for (const id of this.ctx.nationIds) {
-      const events = stepPolitics(
-        this.ctx,
-        id,
-        this.sheets.get(id),
-        this.economy.nations[id],
-        this.politics.nations[id],
-        this.military.nations[id]?.exhaustion ?? 0,
-        this.lostTradeShare(id, true),
-        lawModifiers(this.ctx, this.politics.nations[id]).groups,
-        internalConflictMalus(this.ctx, conflicts, id, years),
-      );
-      for (const event of events) this.record(clock.date, event);
-    }
-  }
-
-  // --- the political engine (J4), once a month before the budget ------------
-
-  // Cost of the levers this month, taken from the budget (US$).
-  private leverCosts: Record<NationId, number> = {};
-
-  private politicsMonth(clock: ClockContext): void {
-    const cfg = this.deps.config.politics;
-    const player = this.playerNationId();
-    const date = clock.date;
-    this.leverCosts = {};
-    for (const id of this.ctx.nationIds) {
-      const politics = this.politics.nations[id];
-      const economy = this.economy.nations[id];
-      const sheet = this.sheets.get(id);
-      const regime = this.ctx.regime(politics.regime);
-      const modifiers = lawModifiers(this.ctx, politics);
-      const isAi = id !== player || this.politics.autopilot;
-
-      // Sliders move towards their targets.
-      stepSliders(this.ctx, economy);
-
-      // Political capital and legitimacy.
-      politics.capital = Math.min(
-        cfg.capital.max,
-        politics.capital +
-          cfg.capital.regenBase *
-            (0.5 + politics.leader.traits.charisma) *
-            (0.5 + politics.opinion),
-      );
-      const legitimacyBase = clamp01(
-        regime.legitimacyBase + modifiers.legitimacyBase,
-      );
-      politics.legitimacy = clamp01(
-        politics.legitimacy +
-          Math.sign(legitimacyBase - politics.legitimacy) *
-            Math.min(
-              cfg.legitimacy.recoveryPerMonth,
-              Math.abs(legitimacyBase - politics.legitimacy),
-            ),
-      );
-
-      // Laws: announced repeals fall due.
-      for (const event of stepLawsMonth(this.ctx, id, politics, date)) {
-        this.record(date, event);
-      }
-
-      // Levers of the player: propaganda and clientelism cost money every
-      // month; clientelism pleases its group and feeds corruption.
-      if (!isAi) {
-        let cost = (politics.levers.propagandaPctGdp * economy.gdp) / 12;
-        if (politics.levers.clientelism !== null && politics.groups !== null) {
-          const group = politics.levers.clientelism;
-          politics.groups[group] = clamp01(
-            politics.groups[group] + cfg.elections.clientelismSatisfaction,
-          );
-          politics.corruption = clamp01(
-            politics.corruption + cfg.elections.clientelismCorruption,
-          );
-          cost += (cfg.elections.clientelismCostPctGdp * economy.gdp) / 12;
-        }
-        this.leverCosts[id] = cost;
-      }
-
-      // Elections, when due and not suspended by a war at home.
-      if (politics.nextElection !== null && date >= politics.nextElection) {
-        const suspended =
-          (sheet?.politics.electionsSuspendedAtWarAtHome ?? false) &&
-          this.hasFrontAtHome(id);
-        if (suspended) {
-          if (!politics.electionsSuspended) {
-            politics.electionsSuspended = true;
-            this.record(date, {
-              type: "elections-suspended",
-              nation: id,
-              until: "war",
-            });
-          }
-        } else {
-          politics.electionsSuspended = false;
-          const outcome = holdElection(
-            this.ctx,
-            this.rng,
-            id,
-            politics,
-            sheet,
-            date,
-          );
-          for (const event of outcome.events) this.record(date, event);
-          hitDemocracyRelations(
-            this.ctx,
-            this.diplomacy,
-            this.politics,
-            id,
-            outcome.democracyRelations,
-          );
-          this.reinstateIfDemocratic(id);
-        }
-      }
-
-      // The leader ages; the regime names a successor.
-      for (const event of stepLeaderAgeing(
-        this.ctx,
-        this.rng,
-        id,
-        politics,
-        date,
-      )) {
-        this.record(date, event);
-      }
-
-      // A junta hands power back, coups, revolutions.
-      for (const event of stepJuntaTransition(
-        this.ctx,
-        this.rng,
-        id,
-        politics,
-        date,
-      )) {
-        this.record(date, event);
-      }
-      const coup = stepCoups(
-        this.ctx,
-        this.rng,
-        id,
-        politics,
-        this.military.nations[id],
-        date,
-      );
-      for (const event of coup.events) this.record(date, event);
-      if (coup.suspendFromBlocs) {
-        hitDemocracyRelations(
-          this.ctx,
-          this.diplomacy,
-          this.politics,
-          id,
-          coup.democracyRelations,
-        );
-        for (const bloc of this.ctx.blocs) {
-          if (
-            bloc.suspendsOnCoup === true &&
-            this.ctx.isFullMember(bloc, id) &&
-            !politics.suspendedFrom.includes(bloc.id)
-          ) {
-            politics.suspendedFrom.push(bloc.id);
-            this.record(date, {
-              type: "bloc-suspended",
-              nation: id,
-              bloc: bloc.id,
-            });
-          }
-        }
-        this.syncSuspensions();
-      }
-      for (const event of stepRevolution(
-        this.ctx,
-        this.rng,
-        id,
-        politics,
-        economy,
-        sheet,
-        date,
-      )) {
-        this.record(date, event);
-      }
-      this.reinstateIfDemocratic(id);
-
-      // AI nations: random shocks in proportion to the fragility of the
-      // regime, so that they know unrest too.
-      if (politics.groups === null) {
-        const sd =
-          cfg.aiShock.sd *
-          (1 - politics.legitimacy) *
-          (1 + cfg.aiShock.coupScale * regime.coupBase);
-        politics.opinion = clamp01(
-          politics.opinion + sd * this.rng.nextGaussian(),
-        );
-      }
-    }
-
-    // The player's objectives.
-    if (player !== null) {
-      for (const event of stepObjectivesMonth(
-        this.ctx,
-        player,
-        this.politics,
-        this.objectiveWorld(player),
-      )) {
-        this.record(date, event);
-      }
-    }
-  }
-
   // A front on the nation's own territory (any front it is part of).
   private hasFrontAtHome(id: NationId): boolean {
     return this.geometry.some((g) => g.a === id || g.b === id);
@@ -1710,176 +2350,6 @@ export class VeritableSimImpl implements VeritableSim {
         return (cy - y) * 12 + (cm - m);
       },
     };
-  }
-
-  private budgetMonth(clock: ClockContext): void {
-    const trade = this.trade;
-    if (trade === null) return; // the monthly flows always run first
-    const player = this.playerNationId();
-    // Reparations: a share of the payer's GDP, every month until the date.
-    const transfers: Record<NationId, number> = {};
-    this.diplomacy.reparations = this.diplomacy.reparations.filter(
-      (r) => clock.date < r.until,
-    );
-    for (const r of this.diplomacy.reparations) {
-      const payer = this.economy.nations[r.from];
-      if (payer === undefined) continue;
-      const amount = (r.pctGdp * payer.gdp) / 12;
-      transfers[r.from] = (transfers[r.from] ?? 0) - amount;
-      transfers[r.to] = (transfers[r.to] ?? 0) + amount;
-    }
-    // Arms sent abroad are paid by the donor's budget (J5).
-    for (const [id, cost] of Object.entries(this.armsAid.cost)) {
-      transfers[id] = (transfers[id] ?? 0) - cost;
-    }
-    // What was built on the map since last month (J5).
-    for (const [id, cost] of Object.entries(this.constructionMonth())) {
-      transfers[id] = (transfers[id] ?? 0) - cost;
-    }
-    // Bloc budgets of last month: contributions and transfers (J5).
-    for (const [id, net] of Object.entries(this.blocs.net)) {
-      if (this.economy.nations[id] !== undefined) {
-        transfers[id] = (transfers[id] ?? 0) + net;
-      }
-    }
-    for (const id of this.ctx.nationIds) {
-      const economy = this.economy.nations[id];
-      const politics = this.politics.nations[id];
-      // War aid fades at peace (J5).
-      if (enemiesOf(this.diplomacy, id).length === 0) {
-        economy.grantsPctGdp *=
-          1 - this.deps.config.budget.grantsPeaceDecayPerMonth;
-      }
-      const corruption = clamp01(
-        politics.corruption + lawModifiers(this.ctx, politics).corruption,
-      );
-      const events = stepBudget(
-        this.ctx,
-        id,
-        economy,
-        politics,
-        trade,
-        clock.date,
-        (transfers[id] ?? 0) - (this.leverCosts[id] ?? 0),
-        this.deps.config.politics.corruptionLeakScale * corruption,
-      );
-      for (const event of events) this.record(clock.date, event);
-      if (id !== player || this.politics.autopilot) {
-        stepFiscalRule(this.ctx, economy, {
-          defense: this.ai.nations[id]?.defenseGoal,
-          atWar: enemiesOf(this.diplomacy, id).length > 0,
-        });
-      }
-    }
-  }
-
-  // Structures built since the last count, at their cost: the legacy gold is
-  // no resource in a campaign, the national budget pays (J5). J6c: a nation
-  // never counted pays nothing — its first count is the reference. The
-  // count of the first day is taken while the world still waits for the
-  // restore that places the capital's city and the silos, so it is empty;
-  // every nation paid them in its first month (8 Md$: ruin for Vanuatu).
-  private constructionMonth(): Record<NationId, number> {
-    const prices = this.deps.config.budget.structureCostUsd;
-    const counts = this.deps.world.structureCounts();
-    const costs: Record<NationId, number> = {};
-    for (const [id, count] of counts) {
-      const before = this.territory.structures[id];
-      if (before === undefined) {
-        costs[id] = 0;
-        continue;
-      }
-      let cost = 0;
-      for (const [type, n] of Object.entries(count)) {
-        cost += Math.max(0, n - (before[type] ?? 0)) * (prices[type] ?? 0);
-      }
-      costs[id] = cost;
-    }
-    this.territory.structures = Object.fromEntries(counts);
-    this.territory.constructionCost = costs;
-    return costs;
-  }
-
-  private blocsMonth(clock: ClockContext): void {
-    for (const id of this.ctx.nationIds) {
-      const events = stepFiscalRules(
-        this.ctx.blocs,
-        (bloc, nation) => this.ctx.isFullMember(bloc, nation),
-        id,
-        this.economy.nations[id],
-        this.politics.nations[id],
-      );
-      for (const event of events) this.record(clock.date, event);
-    }
-    // Layers 2 and 3 (J5): leaders, votes, budgets, accessions, exits,
-    // collective defence.
-    let joined = false;
-    for (const event of stepBlocsMonth(this.blocEnv(clock.date))) {
-      this.record(clock.date, event);
-      if (event.type === "war-joined") joined = true;
-    }
-    if (joined) this.invalidateFronts();
-  }
-
-  private diplomacyMonth(clock: ClockContext): void {
-    // Contests old enough end (J5): 5 years after a cession, 10 after the
-    // last capture.
-    const contest = this.deps.config.war.contest;
-    this.deps.world.settleContested(contest.warMonths, contest.cessionMonths);
-    // Arms sent to belligerents this month (J5).
-    const flows = stepArmsFlows(this.aiEnv(clock.date));
-    this.armsAid = { points: flows.points, cost: flows.cost };
-    for (const event of flows.events) this.record(clock.date, event);
-    for (const id of this.ctx.nationIds) {
-      stepMilitaryMonth(
-        this.ctx,
-        this.military.nations[id],
-        this.sheets.get(id)!,
-        this.economy.nations[id],
-        this.politics.nations[id],
-        enemiesOf(this.diplomacy, id).length > 0,
-        (1 + lawModifiers(this.ctx, this.politics.nations[id]).manpowerBonus) *
-          (this.nuclear.fallout[id] ?? 1),
-        this.armsAid.points[id] ?? 0,
-      );
-    }
-    const before = this.diplomacy.wars.length;
-    const events = stepDiplomacyMonth(
-      this.ctx,
-      this.diplomacy,
-      this.economy,
-      this.military,
-      this.politics,
-      this.rng,
-      clock.date,
-      this.aiNations(),
-      (by, against) => blocSanction(this.ctx, this.blocs, by, against),
-    );
-    for (const event of events) this.record(clock.date, event);
-    if (events.some((e) => e.type === "war-joined")) this.invalidateFronts();
-    stepWarMonth(this.diplomacy);
-    stepAirMonth(this.ctx, this.diplomacy, this.military, this.economy);
-
-    // The war AI of the nations nobody plays: orders, then peace offers.
-    for (const id of this.aiNations()) {
-      const orders = stepWarAi(
-        this.ctx,
-        this.diplomacy,
-        this.military,
-        this.sheets.get(id)!,
-        this.geometry,
-        id,
-      );
-      for (const to of orders.ceasefireTo) {
-        const war = this.diplomacy.wars.find(
-          (w) => warSide(w, id) !== null && warSide(w, to) !== null,
-        );
-        if (war === undefined) continue;
-        if (war.offers.some((o) => o.from === id && o.to === to)) continue;
-        this.offerPeace(war, id, to, CEASEFIRE, clock.date);
-      }
-    }
-    if (this.diplomacy.wars.length !== before) this.invalidateFronts();
   }
 
   // An offer from `from` to `to`: an AI recipient answers at once, the player
@@ -1939,7 +2409,16 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   // An event of a domain: returned by advance(), and written in the journal.
-  private record(date: string, event: DomainEvent, terms?: string): void {
+  // J7: the way a sanction fell (`reason`), and what a change of regime or
+  // of leader sets off (the review of the sanctions against the nation, its
+  // sleeping claims woken).
+  private record(
+    date: string,
+    event: DomainEvent,
+    terms?: string,
+    reason?: LiftReason,
+  ): void {
+    this.afterEvent(date, event);
     let params: Record<string, string> = {};
     switch (event.type) {
       case "bloc-reprimand":
@@ -1960,8 +2439,10 @@ export class VeritableSimImpl implements VeritableSim {
         params = { war: event.war, against: event.against };
         break;
       case "sanctions-imposed":
-      case "sanctions-lifted":
         params = { by: event.by };
+        break;
+      case "sanctions-lifted":
+        params = { by: event.by, reason: reason ?? "relations" };
         break;
       case "peace-offered":
       case "peace-refused":
@@ -2087,6 +2568,65 @@ export class VeritableSimImpl implements VeritableSim {
     this.journal.push({ date, kind: event.type, nation: event.nation, params });
   }
 
+  // What an event sets off beyond its domain (J7): a change of regime opens
+  // the review of the sanctions against the nation (way (a) of the answer
+  // of Lukas to the J6) and wakes its sleeping claims, as does a
+  // sovereignist leader coming to power.
+  private afterEvent(date: string, event: DomainEvent): void {
+    const nation = event.nation;
+    // A nation drawn into a war decides within the day (its orders, its
+    // mobilisation, its sanctions), not at its next calm update.
+    if (event.type === "war-declared" || event.type === "war-joined") {
+      const war = this.diplomacy.wars.find((w) => w.id === event.war);
+      for (const id of war === undefined
+        ? [nation]
+        : [...war.aggressors, ...war.defenders]) {
+        hasten(
+          this.schedule,
+          id,
+          this.calendar.elapsedGameMinutes,
+          1,
+          this.deps.config.time.gameMinutesPerTick,
+        );
+      }
+    }
+    if (event.type === "regime-changed") {
+      scheduleSanctionReviews(this.ctx, this.diplomacy, this.rng, nation, date);
+      this.wake(nation, date);
+      return;
+    }
+    if (
+      event.type === "government-formed" ||
+      event.type === "leader-succeeded" ||
+      event.type === "coup-succeeded" ||
+      event.type === "revolution"
+    ) {
+      const leader = this.politics.nations[nation]?.leader;
+      if (
+        leader !== undefined &&
+        leader.traits.sovereignty >
+          this.deps.config.diplomacy.claims.wakeSovereigntyAbove
+      ) {
+        this.wake(nation, date);
+      }
+    }
+  }
+
+  private wake(nation: NationId, date: string): void {
+    for (const woken of wakeClaims(this.ctx, this.diplomacy, nation)) {
+      this.journal.push({
+        date,
+        kind: "claim-weakened",
+        nation,
+        params: {
+          region: woken.region,
+          weight: woken.weight.toFixed(2),
+          woken: "true",
+        },
+      });
+    }
+  }
+
   // --- helpers ------------------------------------------------------------------
 
   private loadSheets(ids: readonly NationId[], origin: string): NationData[] {
@@ -2099,6 +2639,8 @@ export class VeritableSimImpl implements VeritableSim {
     });
     this.sheets = new Map(sheets.map((s) => [s.id, s]));
     this.ctx = buildContext(this.deps.config, this.deps.data, sheets);
+    this.knownNations = new Set(this.ctx.nationIds);
+    this.nationIndex = new Map(this.ctx.nationIds.map((n, i) => [n, i]));
     this.ctx.claimHolders = (region) => this.deps.world.claimHolders(region);
     this.ctx.worldSupplyShock = (good) =>
       this.economy?.market.rowSupplyShock[good] ?? 0;
@@ -2142,21 +2684,6 @@ export class VeritableSimImpl implements VeritableSim {
       player: this.playerNationId(),
       date,
     };
-  }
-
-  // The staggered review of the nation AI (J5).
-  private aiTick(date: string): void {
-    const env = this.aiEnv(date);
-    let changed = false;
-    for (const id of dueThisTick(env)) {
-      for (const event of review(env, id)) {
-        this.record(date, event);
-        if (event.type === "war-declared" || event.type === "ai-landing") {
-          changed = true;
-        }
-      }
-    }
-    if (changed) this.invalidateFronts();
   }
 
   private nuclearEnv(date: string): NuclearEnv {

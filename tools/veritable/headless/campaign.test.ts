@@ -197,13 +197,18 @@ describe("cutting a gas supplier shows in the curves", () => {
     );
     // The importers suffered too, then adapted.
     expect(at("2027-03-01", cut).gasCoverage.DEU).toBeLessThan(0.8);
-    // Mean over a year: a single day depends on the supply shock drawn.
-    const later = cut.series.filter(
-      (row) => row.date >= "2029-01-01" && row.date < "2030-01-01",
-    );
-    expect(
-      later.reduce((sum, row) => sum + row.gasCoverage.DEU, 0) / later.length,
-    ).toBeGreaterThan(0.95);
+    // Mean over a year, against the control: a single day depends on the
+    // supply shock drawn for the world (J7: the control itself falls to 0.93
+    // in the autumn of 2029, the AR(1) shock now moves every day).
+    const year2029 = (r: typeof control) => {
+      const rows = r.series.filter(
+        (row) => row.date >= "2029-01-01" && row.date < "2030-01-01",
+      );
+      return (
+        rows.reduce((sum, row) => sum + row.gasCoverage.DEU, 0) / rows.length
+      );
+    };
+    expect(year2029(cut)).toBeGreaterThan(year2029(control) - 0.05);
   }, 60_000);
 
   it("rejects an unknown shock", () => {
@@ -229,7 +234,11 @@ describe("outputs", () => {
     expect(header).toContain("gas_coverage_DEU");
     expect(lines[1].split(",")).toHaveLength(header.length);
     expect(Object.keys(result.cpuMsByDomain)).toContain("economy:day");
-    expect(result.cpuMsByDomain["economy:month"].calls).toBe(24);
+    // J7: the nations and the goods at every tick, 20 a day; only what is
+    // calendar by nature on the 1st of the month.
+    expect(result.cpuMsByDomain["nations:tick"].calls).toBe(20 * 730);
+    expect(result.cpuMsByDomain["trade:tick"].calls).toBe(20 * 730);
+    expect(result.cpuMsByDomain["blocs:month"].calls).toBe(24);
   }, 60_000);
 });
 

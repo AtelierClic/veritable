@@ -4,6 +4,7 @@ import { Ideology, RegimeData } from "../../data/schemas/politics";
 import { ActorState, NationPolitics } from "../../data/schemas/save";
 import { EconomyContext } from "../economy/context";
 import { Rng } from "../rng";
+import { chanceOver } from "../time";
 import { clamp01, clampAxis } from "./ideology";
 
 // Leaders (J4): actors from the data, generated successors, ageing.
@@ -111,17 +112,19 @@ export type LeaderEvent =
   | { type: "leader-died"; nation: NationId; leader: string }
   | { type: "leader-succeeded"; nation: NationId; leader: string };
 
-// Monthly: the leader may die of old age; the regime names a successor.
+// The leader may die of old age; the regime names a successor. J7: the
+// monthly probability over the months since the last update.
 export function stepLeaderAgeing(
   ctx: EconomyContext,
   rng: Rng,
   nation: NationId,
   politics: NationPolitics,
   date: string,
+  months = 1,
 ): LeaderEvent[] {
   const age = ageAt(politics.leader.born, date);
   const yearly = yearlyDeathProbability(ctx.config.politics.leaders, age);
-  if (rng.next() >= Math.min(1, yearly / 12)) return [];
+  if (rng.next() >= chanceOver(Math.min(1, yearly / 12), months)) return [];
   const dead = politics.leader;
   const events: LeaderEvent[] = [
     { type: "leader-died", nation, leader: nameOf(dead) },

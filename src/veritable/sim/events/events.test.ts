@@ -4,6 +4,7 @@ import { EventSchema, VeritableEvent } from "../../data/schemas/event";
 import { NationData } from "../../data/schemas/nation";
 import { decodeSave, encodeSave } from "../../save/serialize";
 import { availableCasusBelli } from "../diplomacy/diplomacy";
+import { addMonths } from "../politics/state";
 import { MemoryWorld } from "../testing/MemoryWorld";
 import { testNation, testScenario } from "../testing/nations";
 import { testSimData } from "../testing/simData";
@@ -106,7 +107,9 @@ describe("events", () => {
     expect(history.map((h) => h.nation).sort()).toEqual(["BBB", "CCC"]);
     // The AI pays rather than face unrest.
     expect(history.every((h) => h.choice === "pay")).toBe(true);
-    expect(history.every((h) => h.date === "2026-03-01")).toBe(true);
+    // J7: a sure event (probability 1 a month) falls on a day of its first
+    // month drawn with the seed, no longer on the 1st.
+    expect(history.every((h) => h.date.startsWith("2026-03-"))).toBe(true);
     expect(sim.read().economies.BBB.debt).toBeGreaterThan(debt0);
     expect(
       sim.read().journal.filter((j) => j.kind === "event-occurred").length,
@@ -130,18 +133,33 @@ describe("events", () => {
     const popups = events.filter((e) => e.type === "event-popup");
     expect(popups.length).toBe(2);
     expect(popups.every((e) => e.type === "event-popup" && e.pause)).toBe(true);
-    const pending = sim.read().events.pending;
-    expect(pending.map((p) => p.event)).toEqual(["one", "two"]);
+    // J7: each falls on a day of the month drawn with the seed; the first
+    // two of the month are shown, the third waits.
+    const pending = [...sim.read().events.pending];
+    expect(pending).toHaveLength(2);
+    const third = ["one", "two", "three"].find(
+      (id) => !pending.some((p) => p.event === id),
+    )!;
     const opinion = sim.read().politics.AAA.opinion;
     sim.apply({ type: "event-choose", id: pending[0].id, choice: "ignore" });
     expect(sim.read().politics.AAA.opinion).toBeLessThan(opinion - 0.2);
-    // The third one comes next month; the unanswered second is decided.
+    // The third one comes next month; the unanswered second is decided by
+    // the government after 30 days (it pays rather than face unrest).
     months(1);
     const history = sim
       .read()
       .events.history.map((h) => `${h.event}:${h.choice}`);
-    expect(history).toEqual(["one:ignore", "two:pay"]);
-    expect(sim.read().events.pending.map((p) => p.event)).toEqual(["three"]);
+    expect(history).toEqual([
+      `${pending[0].event}:ignore`,
+      `${pending[1].event}:pay`,
+    ]);
+    expect(sim.read().events.pending.map((p) => p.event)).toEqual([third]);
+    expect(
+      sim
+        .read()
+        .journal.filter((j) => j.kind === "event-occurred")
+        .map((j) => j.params.by),
+    ).toEqual(["player", "government"]);
   });
 
   it("a template draws a neighbour and gives a grievance: a casus belli until it expires", () => {
@@ -174,8 +192,12 @@ describe("events", () => {
     });
     months(1);
     const read = () => sim.read();
+    // Six months from the day it fell on (a day of January drawn with the
+    // seed, J7).
+    const fell = read().events.history[0].date;
+    expect(fell.startsWith("2026-01-")).toBe(true);
     expect(read().diplomacy.grievances).toEqual([
-      { by: "AAA", against: "BBB", until: "2026-08-01" },
+      { by: "AAA", against: "BBB", until: addMonths(fell, 6) },
     ]);
     const internals = sim as unknown as {
       ctx: Parameters<typeof availableCasusBelli>[0];
@@ -234,8 +256,9 @@ describe("events", () => {
     };
     internals.diplomacy.relations.AAA.CCC = -50;
     hostile.months(1);
+    const fell = hostile.sim.read().events.history[0].date;
     expect(hostile.sim.read().diplomacy.grievances).toEqual([
-      { by: "AAA", against: "CCC", until: "2026-08-01" },
+      { by: "AAA", against: "CCC", until: addMonths(fell, 6) },
     ]);
     // No tense border: the incident does not happen.
     const calm = campaign({

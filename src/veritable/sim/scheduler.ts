@@ -6,21 +6,29 @@ import {
 } from "./calendar";
 
 // The central scheduler: the only thing that turns elapsed game time into
-// domain clocks (ARCHITECTURE.md, "Horloges"). No system reads a clock itself.
+// the day and month clocks (ARCHITECTURE.md, "Horloges"). No system reads a
+// clock itself. J7: nothing waits for the 1st of the month but what is
+// calendar by nature; the heavy work of each nation runs on the rolling
+// queue of the nations (schedule.ts), tick by tick, and the goods of the
+// market take turns — the simulation drives both from the core tick.
 //
-//   military, tiles, fronts            OpenFront tick   (not scheduled here)
-//   economy (prices)                   1 / game day
-//   economy (flows, GDP, capacities)   1 / game month
-//   events, diplomacy                  1 / game day
-//   politics (opinion, stability)      1 / game week
-//   politics (elections, laws, budget) 1 / game month
-//   diplomacy (reaction, military)     1 / game month
-//   blocs                              1 / game month
-//   save (autosave)                    1 / game month
+//   military, tiles, fronts            OpenFront tick   (VeritableSimImpl)
+//   nations (economy, budget, opinion,
+//   politics, military, research,
+//   diplomacy, AI)                     rolling queue    (schedule.ts)
+//   trade (flows of each good)         a good at a time (VeritableSimImpl)
+//   events (draws)                     spread over the ticks of the day
+//   economy (prices, rest of world)    1 / game day
+//   diplomacy (navy, nuclear, wars'
+//   ledgers, contest)                  1 / game day
+//   blocs (votes due, exits, defence)  1 / game day; sessions on their day
+//   events (deadlines, cooldowns)      1 / game day
+//   blocs (presidencies, budget, EU
+//   fiscal rule)                       1 / game month (the 1st)
+//   save (autosave, journal)           1 / game month (the 1st)
 //
 // It keeps no state: everything derives from elapsedGameMinutes, which is
-// saved. A week is seven days counted from the start date; a month starts on
-// the 1st of a calendar month.
+// saved. A month starts on the 1st of a calendar month.
 
 export const DOMAINS = [
   "economy",
@@ -29,9 +37,12 @@ export const DOMAINS = [
   "politics",
   "blocs",
   "save",
-  // The fronts: resolved at every core tick, outside the scheduler (they
-  // only appear here to be timed by the probe).
+  // Driven by the simulation at every core tick, outside the scheduler
+  // (they only appear here to be timed by the probe): the fronts, the
+  // rolling queue of the nations (J7), the turns of the goods (J7).
   "war",
+  "nations",
+  "trade",
 ] as const;
 export type Domain = (typeof DOMAINS)[number];
 
@@ -61,13 +72,13 @@ export const NULL_PROBE: PerfProbe = {
   measure: (_domain, _clock, run) => run(),
 };
 
-// Which domains tick on which clock, in execution order.
+// Which domains tick on which clock, in execution order. J7: no weekly
+// clock any more (opinion and stability are in the rolling queue).
 const CLOCKS: Record<ClockKind, readonly Domain[]> = {
-  day: ["economy", "events", "diplomacy"],
-  week: ["politics"],
-  // Events (J5) run once a month too, after the blocs.
-  month: ["economy", "politics", "diplomacy", "blocs", "events", "save"],
-  tick: [], // the fronts run outside the scheduler
+  day: ["economy", "diplomacy", "blocs", "events"],
+  week: [],
+  month: ["blocs", "save"],
+  tick: [], // run by the simulation itself
 };
 
 export interface SchedulerTick {

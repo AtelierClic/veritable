@@ -4,6 +4,7 @@ import { SPENDING_POSTS, TAX_IDS } from "../../data/schemas/nation";
 import { NationEconomy, NationPolitics } from "../../data/schemas/save";
 import { ConscriptionLevel } from "../../data/schemas/war";
 import { EconomyContext } from "../economy/context";
+import { relaxed } from "../time";
 import { clamp01, insideWindow } from "./ideology";
 import { addMonths } from "./state";
 
@@ -321,14 +322,20 @@ export function stepLawsMonth(
 }
 
 // Sliders with a progressive effect: the values in effect move towards their
-// targets, closing (1 / rampMonths) of the gap every month.
-export function stepSliders(ctx: EconomyContext, economy: NationEconomy): void {
-  const ramp = ctx.config.politics.laws.rampMonths;
+// targets, closing (1 / rampMonths) of the gap every month (J7: compounded
+// over the months since the last update).
+export function stepSliders(
+  ctx: EconomyContext,
+  economy: NationEconomy,
+  months = 1,
+): void {
+  const share = relaxed(1 / ctx.config.politics.laws.rampMonths, months);
   for (const tax of TAX_IDS) {
-    economy.taxes[tax] += (economy.taxTargets[tax] - economy.taxes[tax]) / ramp;
+    economy.taxes[tax] +=
+      (economy.taxTargets[tax] - economy.taxes[tax]) * share;
   }
   for (const post of SPENDING_POSTS) {
     economy.spending[post] +=
-      (economy.spendingTargets[post] - economy.spending[post]) / ramp;
+      (economy.spendingTargets[post] - economy.spending[post]) * share;
   }
 }

@@ -7,6 +7,7 @@ import {
 } from "../../data/schemas/save";
 import { enemiesOf, warOf } from "../diplomacy/diplomacy";
 import { EconomyContext } from "../economy/context";
+import { addMonths } from "../politics/state";
 import { Rng } from "../rng";
 import {
   FrontGeometry,
@@ -340,7 +341,7 @@ function applyLosses(
   }
   const nation = military.nations[side.nation];
   nation.losses += lost;
-  nation.lossesLastMonth += lost;
+  nation.lossesPending += lost;
   // J6: the losses of this war, the war memory of the nation at its end.
   war.losses[side.nation] = (war.losses[side.nation] ?? 0) + lost;
   war.score[side.nation] =
@@ -349,15 +350,30 @@ function applyLosses(
     (war.score[enemy.nation] ?? 0) + lost * cfg.warScore.lossValue;
 }
 
-// Once a month: who is retreating (net tiles lost this month), counters reset.
+// The month of a war: who is retreating (net tiles lost this war month),
+// counters reset.
+function closeWarMonth(war: War): void {
+  for (const nation of [...war.aggressors, ...war.defenders]) {
+    const net = war.monthlyTiles[nation] ?? 0;
+    war.retreatMonths[nation] =
+      net < 0 ? (war.retreatMonths[nation] ?? 0) + 1 : 0;
+    war.monthlyTiles[nation] = 0;
+  }
+}
+
+// Every war at once (the tests; the shape of the J3 to the J6).
 export function stepWarMonth(diplomacy: DiplomacyState): void {
+  for (const war of diplomacy.wars) closeWarMonth(war);
+}
+
+// J7, every game day: a war closes its month on the anniversary of its
+// start (its own ledger), not on the 1st for every war at once.
+export function stepWarLedgers(diplomacy: DiplomacyState, date: string): void {
   for (const war of diplomacy.wars) {
-    for (const nation of [...war.aggressors, ...war.defenders]) {
-      const net = war.monthlyTiles[nation] ?? 0;
-      war.retreatMonths[nation] =
-        net < 0 ? (war.retreatMonths[nation] ?? 0) + 1 : 0;
-      war.monthlyTiles[nation] = 0;
-    }
+    if (date < war.ledgerOn) continue;
+    closeWarMonth(war);
+    war.ledgerOn = addMonths(war.ledgerOn, 1);
+    while (war.ledgerOn <= date) war.ledgerOn = addMonths(war.ledgerOn, 1);
   }
 }
 

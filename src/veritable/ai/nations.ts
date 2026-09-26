@@ -14,7 +14,6 @@ import {
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
 import { defenseGuarantors } from "../sim/blocs/blocs";
-import { dateOfDay } from "../sim/calendar";
 import { claimWeight } from "../sim/diplomacy/claims";
 import {
   allies,
@@ -29,6 +28,7 @@ import {
 import { EconomyContext } from "../sim/economy/context";
 import { landingControl, setBlockade } from "../sim/naval/naval";
 import { Rng } from "../sim/rng";
+import { chanceOver, relaxed } from "../sim/time";
 import { WorldPort } from "../sim/VeritableSim";
 import { militaryPower } from "../sim/war/military";
 
@@ -36,10 +36,12 @@ import { militaryPower } from "../sim/war/military";
 //
 // Asymmetric by design: a regime, a stability, the traits of the leader in
 // place and an agenda of the sheet (security, growth, regional influence,
-// ideology), no interest groups. Decisions are staggered: every core tick a
-// tenth of the nations come up, and a nation decides when its period has
-// passed, a month without stakes, a week at war, in crisis or facing the
-// player. It sets its defence effort by the threat, may declare a war (only
+// ideology), no interest groups. J7: a nation decides at each of its updates
+// in the rolling queue of the simulation (sim/schedule.ts), a week to a
+// month apart; the odds and ramps of a review keep their J5 value per time,
+// a review standing for reviewDaysStakes days with stakes (war, crisis, a
+// dealing with the player) and reviewDaysCalm without. It sets its defence
+// effort by the threat, may declare a war (only
 // with a casus belli or a very aggressive leader, twice the power of the
 // target, a land border, an expected gain above the expected cost, never
 // against a nuclear power unless nuclear itself), blockades the enemies it
@@ -79,17 +81,12 @@ export interface AiEnv {
   date: string;
 }
 
-const addDays = (date: string, days: number) => dateOfDay(date, days);
-
-export function initAi(ids: readonly NationId[], date: string): AiState {
+export function initAi(ids: readonly NationId[]): AiState {
   return {
-    cursor: 0,
     nations: Object.fromEntries(
-      ids.map((id, i) => [
+      ids.map((id) => [
         id,
         {
-          // Spread the first reviews over the first month.
-          nextReview: addDays(date, i % 30),
           defenseGoal: 0,
           lastWar: null,
           lastLanding: null,
@@ -134,35 +131,23 @@ export function hasStakes(env: AiEnv, id: NationId): boolean {
   );
 }
 
-// --- the staggered cycle ---------------------------------------------------------------
+// --- the review ---------------------------------------------------------------------
 
-// The nations that come up this tick: about a tenth of them, round-robin.
-export function dueThisTick(env: AiEnv): NationId[] {
-  const ids = env.ctx.nationIds;
-  if (ids.length === 0) return [];
+// How many reviews of the J5 an update covering `days` stands for: the odds
+// per review and the ramps keep their value per time (J7).
+export function reviewsIn(env: AiEnv, id: NationId, days: number): number {
   const cfg = env.ctx.config.ai.nations;
-  const count = Math.max(1, Math.round(cfg.reviewShare * ids.length));
-  const due: NationId[] = [];
-  for (let i = 0; i < count; i++) {
-    const id = ids[(env.ai.cursor + i) % ids.length];
-    if (!env.aiNations.includes(id)) continue;
-    const state = env.ai.nations[id];
-    if (state !== undefined && state.nextReview <= env.date) due.push(id);
-  }
-  env.ai.cursor = (env.ai.cursor + count) % ids.length;
-  return due;
+  const period = hasStakes(env, id) ? cfg.reviewDaysStakes : cfg.reviewDaysCalm;
+  return Math.max(0, days) / period;
 }
 
-export function review(env: AiEnv, id: NationId): AiEvent[] {
-  const cfg = env.ctx.config.ai.nations;
-  const state = env.ai.nations[id];
-  state.nextReview = addDays(
-    env.date,
-    hasStakes(env, id) ? cfg.reviewDaysStakes : cfg.reviewDaysCalm,
-  );
+// The review of a nation at its update, covering `days` of game time (one
+// review of its period by default).
+export function review(env: AiEnv, id: NationId, days?: number): AiEvent[] {
+  const reviews = days === undefined ? 1 : reviewsIn(env, id, days);
   const events: AiEvent[] = [];
-  setDefenseGoal(env, id);
-  const war = considerWar(env, id);
+  setDefenseGoal(env, id, reviews);
+  const war = considerWar(env, id, reviews);
   if (war !== null) events.push(war);
   events.push(...navy(env, id));
   return events;
@@ -172,7 +157,7 @@ export function review(env: AiEnv, id: NationId): AiEvent[] {
 
 // Defence effort by the threat: at war, facing a stronger hostile neighbour,
 // weighted by the security agenda; the fiscal rule follows the goal.
-function setDefenseGoal(env: AiEnv, id: NationId): void {
+function setDefenseGoal(env: AiEnv, id: NationId, reviews = 1): void {
   const cfg = env.ctx.config.ai.nations.defense;
   const economy = env.economy.nations[id];
   if (economy === undefined) return;
@@ -199,7 +184,8 @@ function setDefenseGoal(env: AiEnv, id: NationId): void {
   // nation already spends more (Ukraine), the fiscal rule decides.
   const target = economy.spendingTargets.defense;
   if (boost > 0 && goal > target) {
-    economy.spendingTargets.defense += (goal - target) * cfg.rampPerReview;
+    economy.spendingTargets.defense +=
+      (goal - target) * relaxed(cfg.rampPerReview, reviews);
   }
 }
 
@@ -397,7 +383,11 @@ export function appraiseWar(
   };
 }
 
-function considerWar(env: AiEnv, id: NationId): DiplomacyEvent | null {
+function considerWar(
+  env: AiEnv,
+  id: NationId,
+  reviews = 1,
+): DiplomacyEvent | null {
   const cfg = env.ctx.config.ai.nations.war;
   if (enemiesOf(env.diplomacy, id).length > 0) return null;
   const state = env.ai.nations[id];
@@ -419,7 +409,10 @@ function considerWar(env: AiEnv, id: NationId): DiplomacyEvent | null {
   // Even a war that pays is not declared on a whim.
   if (
     env.rng.next() >=
-    cfg.declareProbability * (0.5 + aggressiveness(env, id))
+    chanceOver(
+      cfg.declareProbability * (0.5 + aggressiveness(env, id)),
+      reviews,
+    )
   )
     return null;
   const best = options[0];
@@ -500,34 +493,27 @@ function navy(env: AiEnv, id: NationId): AiEvent[] {
 
 // --- arms flows -----------------------------------------------------------------------------
 
-// Once a month: a nation at peace sends a share of its arms, taken first from
-// its exports, to the belligerent it likes most (relations above the mark)
-// fighting an enemy it dislikes (below the mark). Returns the index points
-// each nation gets (negative: what a donor takes from its own stock beyond
-// its exports) and the budget cost of each donor.
-export function stepArmsFlows(env: AiEnv): {
-  events: AiEvent[];
-  points: Record<NationId, number>;
-  cost: Record<NationId, number>;
-} {
+// A nation at peace sends a share of its monthly arms, taken first from its
+// exports, to the belligerent it likes most (relations above the mark)
+// fighting an enemy it dislikes (below the mark). J7: each donor at its
+// update, over the months since the last one; the receiver gets the points
+// at its next update (armsReceived), the donor pays at once.
+export function armsFlowOf(
+  env: AiEnv,
+  donor: NationId,
+  months: number,
+): { events: AiEvent[]; cost: number } {
   const cfg = env.ctx.config.ai.nations.armsAid;
-  const points: Record<NationId, number> = {};
-  const cost: Record<NationId, number> = {};
-  const flows: AiState["armsAid"] = [];
-  // Wars do not move during the step: the enemies of each nation, once.
-  const enemiesByNation = new Map(
-    env.ctx.nationIds.map((n) => [n, enemiesOf(env.diplomacy, n)]),
-  );
-  const atWarNow = env.ctx.nationIds.filter(
-    (n) => enemiesByNation.get(n)!.length > 0,
-  );
-  for (const donor of env.aiNations) {
-    if ((enemiesByNation.get(donor)?.length ?? 0) > 0) continue;
+  const before = env.ai.armsAid.find((f) => f.from === donor);
+  let flow: AiState["armsAid"][number] | null = null;
+  let cost = 0;
+  if (enemiesOf(env.diplomacy, donor).length === 0) {
     let best: NationId | null = null;
     let bestRelation = cfg.donorRelations;
-    for (const r of atWarNow) {
+    for (const r of env.ctx.nationIds) {
       if (r === donor) continue;
-      const enemies = enemiesByNation.get(r)!;
+      const enemies = enemiesOf(env.diplomacy, r);
+      if (enemies.length === 0) continue;
       if (
         !enemies.some(
           (e) => relation(env.diplomacy, donor, e) < cfg.enemyRelations,
@@ -541,33 +527,33 @@ export function stepArmsFlows(env: AiEnv): {
         bestRelation = rel;
       }
     }
-    if (best === null) continue;
     const economy = env.economy.nations[donor];
-    if (economy === undefined) continue;
-    const monthly = (economy.production.arms * economy.coverage.arms) / 12;
-    const sent = cfg.share * monthly;
-    if (sent <= 0) continue;
-    const fromExports = Math.min(sent, economy.exports.arms / 12);
-    points[best] = (points[best] ?? 0) + sent;
-    points[donor] = (points[donor] ?? 0) - (sent - fromExports);
-    cost[donor] =
-      (cost[donor] ?? 0) + sent * env.ctx.good("arms").basePrice * 1e6;
-    flows.push({ from: donor, to: best, points: sent });
+    if (best !== null && economy !== undefined) {
+      const monthly = (economy.production.arms * economy.coverage.arms) / 12;
+      const perMonth = cfg.share * monthly;
+      if (perMonth > 0) {
+        const sent = perMonth * months;
+        const fromExports = Math.min(
+          sent,
+          (economy.exports.arms / 12) * months,
+        );
+        const receiver = env.military.nations[best];
+        if (receiver !== undefined) receiver.armsReceived += sent;
+        const own = env.military.nations[donor];
+        if (own !== undefined) own.armsReceived -= sent - fromExports;
+        cost = sent * env.ctx.good("arms").basePrice * 1e6;
+        flow = { from: donor, to: best, points: perMonth };
+      }
+    }
   }
   const events: AiEvent[] = [];
-  const key = (f: { from: string; to: string }) => `${f.from}>${f.to}`;
-  const before = new Set(env.ai.armsAid.map(key));
-  const after = new Set(flows.map(key));
-  for (const f of flows) {
-    if (!before.has(key(f))) {
-      events.push({ type: "arms-aid-started", nation: f.from, to: f.to });
-    }
+  env.ai.armsAid = env.ai.armsAid.filter((f) => f.from !== donor);
+  if (flow !== null) env.ai.armsAid.push(flow);
+  if (before !== undefined && (flow === null || flow.to !== before.to)) {
+    events.push({ type: "arms-aid-ended", nation: donor, to: before.to });
   }
-  for (const f of env.ai.armsAid) {
-    if (!after.has(key(f))) {
-      events.push({ type: "arms-aid-ended", nation: f.from, to: f.to });
-    }
+  if (flow !== null && (before === undefined || before.to !== flow.to)) {
+    events.push({ type: "arms-aid-started", nation: donor, to: flow.to });
   }
-  env.ai.armsAid = flows;
-  return { events, points, cost };
+  return { events, cost };
 }

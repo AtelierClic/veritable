@@ -57,6 +57,11 @@ const EconomyConfigSchema = z.object({
     delta: z.number().min(0), // x (exports / GDP - reference share)
     capacityInvestment: z.number().min(0),
     noiseMonthlySd: z.number().min(0),
+    // J7: time constant, in months, of the growth that opinion, the events
+    // and the screens read: the rate of each update smoothed over about a
+    // month, the same whether the nation is updated every day or once a
+    // month (the rate of one day carries the turns of the goods).
+    indicatorMonths: z.number().positive(),
   }),
   rowSupplyNoise: z.object({
     monthlySd: z.number().min(0),
@@ -64,6 +69,12 @@ const EconomyConfigSchema = z.object({
   }),
   // Share of industrial production lost per point of missing electricity.
   electricityShortageOnIndustry: share,
+  // J7: the population trend of a sheet converges to longRunGrowth (per
+  // year) with a half-life of halfLifeYears (sim/economy/population.ts).
+  population: z.object({
+    longRunGrowth: z.number(),
+    halfLifeYears: z.number().positive(),
+  }),
 });
 
 const BudgetConfigSchema = z.object({
@@ -292,12 +303,20 @@ const DiplomacyConfigSchema = z.object({
     exemptGoods: z.array(GoodIdSchema),
     // Share of a bloc's full members that drags the others along (layer 1).
     blocAlignShare: share,
-    // Sanctions are lifted once the war is over and relations are back here.
+    // A sanction imposed in the campaign is lifted once the war is over and
+    // relations are back here (J3).
     liftAboveRelations: z.number(),
-    // J6b: a sanction of policy also needs a change of the target's regime
-    // since the first day and this affinity between the two, the sanctions
-    // themselves left out (time alone cannot lift it).
-    liftPolicyMinAffinity: z.number(),
+    // J7 (Lukas, answer 2 to the J6), the ways a sanction falls besides:
+    // (a) after a change of regime of the target, the issuer reviews it
+    // within reviewMonths and lifts it with reviewLiftProbability; (b) the
+    // issuer lifts it once its relation with the target has stayed >= 0
+    // for friendlyMonths and the war it answered is over; (c) the vote of
+    // the issuing bloc (sim/blocs). The player lifts its own at will: each
+    // ally that keeps its sanction loses playerLiftAllyRelations with it.
+    reviewMonths: z.number().int().min(1),
+    reviewLiftProbability: share,
+    friendlyMonths: z.number().int().min(1),
+    playerLiftAllyRelations: z.number().min(0),
   }),
   coalition: z.object({
     relationsBelow: z.number(),
@@ -309,11 +328,15 @@ const DiplomacyConfigSchema = z.object({
   // the target to hold at least `minTiles` unsettled tiles of the claim;
   // every `failuresPerHalving` white or lost wars on a claim halve its
   // weight; J6c: after `abandonAfterFailures` of them the claim is given up
+  // (J7: it sleeps)
   // (weight 0, no casus belli).
   claims: z.object({
     minTiles: z.number().int().min(1),
     failuresPerHalving: z.number().int().min(1),
     abandonAfterFailures: z.number().int().min(1),
+    // J7: a sleeping claim wakes when the claimant changes regime or a
+    // leader above this sovereignty comes to power.
+    wakeSovereigntyAbove: z.number(),
   }),
 });
 
@@ -486,6 +509,8 @@ const BlocsConfigSchema = z.object({
   programMonths: z.number().int().min(1),
   agreementTradeBonus: z.number().min(1),
   historyMonths: z.number().int().min(1), // resolved proposals kept
+  // J7: days the player has to vote on a proposal of its bloc.
+  voteDays: z.number().int().min(1),
   // A hegemon keeps the lead while its power is within this share of the
   // largest (no monthly flip-flop between near equals).
   hegemonMargin: share,
@@ -551,7 +576,8 @@ const TechConfigSchema = z.object({
 // with these weights (by kind of effect).
 const EventsConfigSchema = z.object({
   maxPopupsPerMonth: z.number().int().min(0),
-  answerMonths: z.number().int().min(1),
+  // J7: game days the player has to choose before the government decides.
+  answerDays: z.number().int().min(1),
   defaultCooldownMonths: z.number().int().min(0),
   uncertainProbability: share,
   // Unrest brings stability this far under the unrest threshold.
@@ -563,6 +589,15 @@ const EventsConfigSchema = z.object({
   // this value; the incidents of a tense border are drawn among them.
   tenseNeighbourRelations: z.number(),
   historyKept: z.number().int().min(1),
+  // J7: how the ideology of a government shades its weights (choiceScore):
+  // money x (1 + economic x e), groups x (1 - economic x e), relations
+  // abroad x (1 - sovereignty x s), a grievance + sovereignty x s, defence
+  // x (1 + authority x a), unrest x (1 - authority x a).
+  ideology: z.object({
+    economic: share,
+    authority: share,
+    sovereignty: share,
+  }),
   ai: z.object({
     stability: z.number(),
     budget: z.number(),
@@ -588,6 +623,24 @@ export const VeritableConfigSchema = z.object({
   // value of a tile) are calibrated on the Europe map; a map of another
   // scale converts them (data/mapScale.ts). Its tiles per radian.
   mapScale: z.object({ referenceGeorefScale: z.number().positive() }),
+  // J7: the rolling queue of the nations (sim/schedule.ts). Every nation is
+  // updated on its own cadence, the time elapsed since its last update
+  // integrated: the player's nation every playerDays, the nations dealing
+  // with it (land neighbours, enemies, members of a common bloc) at least
+  // every interactionDays, the others every stakesDays when they have
+  // stakes (war, crisis, a dispute with the player, an election within
+  // electionSoonDays), otherwise every calmDays. At most maxUpdatesPerTick
+  // updates a core tick, the rest waits for the next one. The goods of the
+  // market are computed one at a time, the twelve in tradeCycleDays.
+  schedule: z.object({
+    playerDays: z.number().int().min(1),
+    interactionDays: z.number().int().min(1),
+    stakesDays: z.number().int().min(1),
+    calmDays: z.number().int().min(1),
+    electionSoonDays: z.number().int().min(0),
+    maxUpdatesPerTick: z.number().int().min(1),
+    tradeCycleDays: z.number().int().min(1),
+  }),
   save: z.object({
     // Monthly automatic saves kept; older ones are rotated out.
     autosaveSlots: z.number().int().min(1),
@@ -610,7 +663,10 @@ export const VeritableConfigSchema = z.object({
   ai: z.object({
     // The AI of the nations (J5, ai/nations.ts).
     nations: z.object({
-      reviewShare: share, // nations reviewed per core tick
+      // J7: the nation AI decides at each update of the nation (the rolling
+      // queue); its draws per review keep the odds of the J5 by time: a
+      // review stands for reviewDaysStakes days with stakes, reviewDaysCalm
+      // without.
       reviewDaysCalm: z.number().int().min(1),
       reviewDaysStakes: z.number().int().min(1),
       crisisStability: share,

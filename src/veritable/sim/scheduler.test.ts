@@ -52,27 +52,22 @@ describe("Scheduler", () => {
     new Scheduler(systems).run(START, 0, DAY);
     expect(calls).toEqual([
       "2026-01-02 day economy",
-      "2026-01-02 day events",
       "2026-01-02 day diplomacy",
+      "2026-01-02 day blocs",
+      "2026-01-02 day events",
     ]);
   });
 
-  it("politics ticks weekly; economy, politics, diplomacy, blocs, events and save tick monthly", () => {
+  // J7: no weekly clock (opinion and stability are in the rolling queue of
+  // the nations); the 1st of the month carries only what is calendar by
+  // nature: the presidencies and budgets of the blocs, the save.
+  it("nothing ticks weekly; only the blocs and the save tick on the 1st of the month", () => {
     const { calls, systems } = recorder();
     const ticks = new Scheduler(systems).run(START, 0, DAY * 31);
     expect(ticks).toHaveLength(31);
-    expect(calls.filter((c) => c.includes(" week "))).toEqual([
-      "2026-01-08 week politics",
-      "2026-01-15 week politics",
-      "2026-01-22 week politics",
-      "2026-01-29 week politics",
-    ]);
+    expect(calls.filter((c) => c.includes(" week "))).toEqual([]);
     expect(calls.filter((c) => c.includes(" month "))).toEqual([
-      "2026-02-01 month economy",
-      "2026-02-01 month politics",
-      "2026-02-01 month diplomacy",
       "2026-02-01 month blocs",
-      "2026-02-01 month events",
       "2026-02-01 month save",
     ]);
     expect(
@@ -94,12 +89,12 @@ describe("Scheduler", () => {
     expect(sliced.calls).toEqual(whole.calls);
   });
 
-  it("five years of play: 1 826 days, 60 months, 260 weeks", () => {
+  it("five years of play: 1 826 days, 60 months", () => {
     const { calls, systems } = recorder();
-    new Scheduler(systems).run(START, 0, DAY * 1826);
+    const ticks = new Scheduler(systems).run(START, 0, DAY * 1826);
     expect(calls.filter((c) => c.endsWith("day economy"))).toHaveLength(1826);
     expect(calls.filter((c) => c.endsWith("month save"))).toHaveLength(60);
-    expect(calls.filter((c) => c.endsWith("week politics"))).toHaveLength(260);
+    expect(ticks.filter((t) => t.weekStarted)).toHaveLength(260);
   });
 
   it("times every domain through the probe", () => {
@@ -116,14 +111,10 @@ describe("Scheduler", () => {
     new Scheduler(undefined, probe).run(START, 0, DAY * 31);
     expect(Object.fromEntries(seen)).toEqual({
       "economy/day": 31,
-      "events/day": 31,
       "diplomacy/day": 31,
-      "politics/week": 4,
-      "economy/month": 1,
-      "politics/month": 1,
-      "diplomacy/month": 1,
+      "blocs/day": 31,
+      "events/day": 31,
       "blocs/month": 1,
-      "events/month": 1,
       "save/month": 1,
     });
   });

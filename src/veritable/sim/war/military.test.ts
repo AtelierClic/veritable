@@ -4,6 +4,7 @@ import { NationData } from "../../data/schemas/nation";
 import { MemoryWorld } from "../testing/MemoryWorld";
 import { testNation, testScenario } from "../testing/nations";
 import { testSimData } from "../testing/simData";
+import { DAYS_PER_MONTH } from "../time";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 
 const DAY = 1440;
@@ -81,11 +82,15 @@ describe("divisions and manpower", () => {
     expect(() =>
       sim.apply({ type: "raise-division", template: "mechanized" }),
     ).toThrow(/manpower/);
-    // A higher conscription level raises the ceiling; the pool refills monthly.
+    // A higher conscription level raises the ceiling; the pool refills by
+    // 5 % of it a month (J7: at each daily update of the player's nation,
+    // by the days elapsed — its last update of the 31 days falls on the
+    // 30th and a half).
     sim.apply({ type: "set-conscription", level: "total" });
     expect(sim.read().military.nations.AAA.manpower).toBe(11_000);
     months(1);
-    expect(sim.read().military.nations.AAA.manpower).toBe(11_000 + 20_000);
+    const refilled = 11_000 + 20_000 * (30.5 / DAYS_PER_MONTH);
+    expect(sim.read().military.nations.AAA.manpower).toBeCloseTo(refilled, 6);
     sim.apply({ type: "raise-division", template: "mechanized" });
     m = sim.read().military.nations.AAA;
     sim.apply({
@@ -99,7 +104,7 @@ describe("divisions and manpower", () => {
       "armored",
       "armored",
     ]);
-    expect(m.manpower).toBe(31_000);
+    expect(m.manpower).toBeCloseTo(refilled, 6);
   });
 
   it("orders: assignment to a front or segment, posture", () => {

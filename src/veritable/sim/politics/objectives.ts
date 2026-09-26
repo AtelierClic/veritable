@@ -10,9 +10,11 @@ import {
 import { Scenario } from "../../data/schemas/scenario";
 import { EconomyContext } from "../economy/context";
 
-// Objectives (J4): a catalogue of conditions evaluated once a month on the
-// world; up to five pinned; completion is journaled, rewarded with political
-// capital and legitimacy, and never undone.
+// Objectives (J4): a catalogue of conditions evaluated on the world (J7: at
+// each update of the player's nation, every day; the conditions of
+// duration count the calendar months in a row, sampled at the turn of each
+// month); up to five pinned; completion is journaled, rewarded with
+// political capital and legitimacy, and never undone.
 
 export const MAX_PINNED_OBJECTIVES = 5;
 
@@ -62,6 +64,8 @@ export function objectiveProgress(
   pinned: PinnedObjective,
   nation: NationId,
   world: ObjectiveWorld,
+  // Calendar months turned since the last evaluation (J7).
+  monthsCrossed = 1,
 ): number {
   const c = objective.condition;
   const clamp = (v: number) => Math.max(0, Math.min(1, v));
@@ -84,7 +88,8 @@ export function objectiveProgress(
           : world.economy.shortage <= c.value;
       const months = c.years * 12;
       const held = Math.round(pinned.progress * months);
-      return ok ? clamp((held + 1) / months) : 0;
+      if (monthsCrossed === 0) return pinned.progress;
+      return ok ? clamp((held + monthsCrossed) / months) : 0;
     }
     // J6: the claims of the nation (its homeland aside) with their holders
     // read on the map; done when it holds one of them entirely.
@@ -108,7 +113,8 @@ export function objectiveProgress(
       );
       const months = c.years * 12;
       const held = Math.round(pinned.progress * months);
-      return atWar ? 0 : clamp((held + 1) / months);
+      if (monthsCrossed === 0) return pinned.progress;
+      return atWar ? 0 : clamp((held + monthsCrossed) / months);
     }
     case "debt-below": {
       const debt = world.economy.debt / world.economy.gdp;
@@ -139,13 +145,20 @@ export function stepObjectivesMonth(
   nation: NationId,
   state: PoliticsState,
   world: ObjectiveWorld,
+  monthsCrossed = 1,
 ): ObjectiveEvent[] {
   const events: ObjectiveEvent[] = [];
   for (const pinned of state.player.objectives) {
     if (pinned.done) continue;
     const objective = ctx.objectives.find((o) => o.id === pinned.id);
     if (objective === undefined) continue;
-    pinned.progress = objectiveProgress(objective, pinned, nation, world);
+    pinned.progress = objectiveProgress(
+      objective,
+      pinned,
+      nation,
+      world,
+      monthsCrossed,
+    );
     if (pinned.progress >= 1 - 1e-9) {
       pinned.progress = 1;
       pinned.done = true;

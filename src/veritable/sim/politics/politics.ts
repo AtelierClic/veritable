@@ -3,8 +3,10 @@ import { NationData } from "../../data/schemas/nation";
 import { NationEconomy, NationPolitics } from "../../data/schemas/save";
 import { EconomyContext } from "../economy/context";
 import { debtHealthOf } from "../economy/init";
+import { relaxed } from "../time";
 
-// Political core, once per game week.
+// Political core, at each update of the nation (J7; once a game week until
+// the J6): the convergence per week is compounded over the weeks elapsed.
 //
 // Player's nation: eight interest groups. Satisfaction s_k in [0, 1] converges
 // at `convergencePerWeek` towards
@@ -105,8 +107,11 @@ export function stepPolitics(
   // Stability lost to internal conflicts of the scenario (J6b,
   // internalConflictMalus).
   conflictMalus = 0,
+  // Game weeks since the last update (J7).
+  weeks = 1,
 ): PoliticsEvent[] {
   const cfg = ctx.config.politics;
+  const converge = relaxed(cfg.convergencePerWeek, weeks);
   // Bloc reprimand in force, or fading out (blocs/fiscalRule.ts); a war and
   // the sanctions weigh on every group and on the AI proxy alike.
   const malus =
@@ -125,7 +130,7 @@ export function stepPolitics(
       }
       const s = politics.groups[group];
       politics.groups[group] = clamp(
-        s + cfg.convergencePerWeek * (clamp(target, 0, 1) - s),
+        s + converge * (clamp(target, 0, 1) - s),
         0,
         1,
       );
@@ -147,7 +152,7 @@ export function stepPolitics(
       0,
       1,
     );
-    politics.opinion += cfg.convergencePerWeek * (target - politics.opinion);
+    politics.opinion += converge * (target - politics.opinion);
   }
 
   // Food weighs more than its share in the shortage index: hunger is unrest.

@@ -1,4 +1,3 @@
-import { initAi } from "../../ai/nations";
 import { NationId } from "../../data/schemas/common";
 import { TILE_CONTESTED_BIT, TILE_NATION_MASK } from "../../data/schemas/save";
 import { SaveFileV4 } from "../../data/schemas/saveV4";
@@ -6,7 +5,13 @@ import {
   BlocsStateV5 as BlocsState,
   SaveFileV5,
 } from "../../data/schemas/saveV5";
-import { computeLeader, initBlocs, syncBlocs } from "../../sim/blocs/blocs";
+import {
+  BlocEnv,
+  computeLeader,
+  initBlocs,
+  syncBlocs,
+} from "../../sim/blocs/blocs";
+import { dateOfDay } from "../../sim/calendar";
 import { buildContext } from "../../sim/economy/context";
 import { initEvents } from "../../sim/events/events";
 import { initNuclear } from "../../sim/nuclear/nuclear";
@@ -88,12 +93,35 @@ export function v4ToV5(
     },
     territory: { initialTiles, structures, constructionCost: {} },
     nuclear: initNuclear(sheets),
-    ai: initAi(
+    ai: v5Ai(
       save.nations.map((n) => n.id),
       save.calendar.date,
     ),
     contest,
-  } as SaveFileV5;
+    // Today's builders: the later migrations bring their shapes back to
+    // their versions.
+  } as unknown as SaveFileV5;
+}
+
+// The AI state of the v5 (J5): a staggered review, the first ones spread
+// over the first month.
+function v5Ai(ids: readonly NationId[], date: string): SaveFileV5["ai"] {
+  return {
+    cursor: 0,
+    nations: Object.fromEntries(
+      ids.map((id, i) => [
+        id,
+        {
+          nextReview: dateOfDay(date, i % 30),
+          defenseGoal: 0,
+          lastWar: null,
+          lastLanding: null,
+          blockading: null,
+        },
+      ]),
+    ),
+    armsAid: [],
+  };
 }
 
 function migrateBlocs(
@@ -127,7 +155,7 @@ function migrateBlocs(
         {
           ctx,
           state: blocs,
-          military: save.military,
+          military: save.military as unknown as BlocEnv["military"],
           // The economy of today's shape (the leader reads the GDP only).
           economy: {
             ...save.economy,
@@ -137,7 +165,7 @@ function migrateBlocs(
                 { ...e, interestSpread: 0 },
               ]),
             ),
-          },
+          } as unknown as BlocEnv["economy"],
         },
         bloc.id,
         save.calendar.date,

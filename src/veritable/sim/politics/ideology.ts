@@ -45,5 +45,17 @@ export function insideWindow(window: LawWindow, ideology: Ideology): boolean {
   );
 }
 
+// How far an ideology stands outside a window (0 inside): the sum over the
+// axes of the distance to the nearest bound (J7, the choice of a
+// government that finds no option inside its window).
+export function windowDistance(window: LawWindow, ideology: Ideology): number {
+  let d = 0;
+  for (const axis of IDEOLOGY_AXES) {
+    const [lo, hi] = window[axis];
+    d += Math.max(0, lo - ideology[axis], ideology[axis] - hi);
+  }
+  return d;
+}
+
 export const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 export const clampAxis = (v: number) => Math.max(-1, Math.min(1, v));

@@ -33,6 +33,12 @@
     "asOf": "2026-09-24",
     "note": "Population absente de la Banque mondiale : Vatican environ 800 habitants."
   },
+  "populationGrowth": {
+    "value": 0,
+    "source": "estimate",
+    "asOf": "2026-09-24",
+    "note": "Série de population trop courte : population stable au départ."
+  },
   "gdp": {
     "value": 300000000,
     "source": "estimate",

@@ -157,18 +157,21 @@ Point juridique : l'AGPL-3.0 s'applique aussi à la **distribution de binaires**
 
 La campagne démarre le 1er janvier 2026 et suit le calendrier réel (mois de 28 à 31 jours, années bissextiles). À vitesse ×1, un jour de jeu dure exactement deux secondes réelles : un mois dure donc de 56 à 62 secondes, une année ≈ 12,2 minutes (730 s), et dix heures de jeu couvrent un peu plus de quarante-neuf ans. « Une minute réelle = un mois de jeu » est l'approximation qui se retient, pas la règle : la règle est le jour de deux secondes. Vitesses : pause, ×1, ×2, ×5.
 
-Tout ne tourne pas au même rythme. Chaque domaine a son horloge, et c'est ce qui permet une économie détaillée sur 195 nations sans étrangler le tick militaire.
+Tout ne tourne pas au même rythme, mais rien n'attend le 1er du mois, sauf ce qui est calendaire par nature (J7). Chaque nation a sa mise à jour, qui fait d'un coup tout ce qui la concerne (économie, budget, dette, opinion, stabilité, politique, recherche, diplomatie, IA) en intégrant le temps écoulé depuis la précédente ; les mises à jour sont réparties tick par tick, si bien qu'aucun tick ne porte le monde entier et que les chiffres bougent en continu.
 
 | Domaine | Fréquence | À ×1 |
 | --- | --- | --- |
 | Militaire, tuiles, fronts | Tick d'OpenFront | continu |
-| Économie (production, commerce, prix) | Une fois par jour de jeu | toutes les 2 s |
-| Événements, diplomatie, réaction internationale | Une fois par jour de jeu | toutes les 2 s |
-| Opinion, stabilité, groupes d'intérêt | Une fois par semaine de jeu | toutes les 14 s |
-| Élections, lois, budget, blocs | Une fois par mois de jeu | toutes les 60 s |
-| Sauvegarde automatique | Une fois par mois de jeu | toutes les 60 s |
+| Nation du joueur (économie, budget, dette, opinion, stabilité, politique, recherche) | Chaque jour de jeu | toutes les 2 s |
+| Nations en interaction avec le joueur (voisines, en guerre, bloc commun) ou ayant un enjeu (guerre, crise, litige, scrutin proche) | Au moins chaque semaine de jeu | toutes les 14 s |
+| Autres nations | Chaque mois de jeu, dates étalées | toutes les 60 s, une à la fois |
+| Commerce (flux, couverture, pénuries) | Un bien à la fois, les douze en une semaine | continu |
+| Prix mondiaux, marine, nucléaire, contestation des tuiles | Chaque jour de jeu | toutes les 2 s |
+| Événements | Tirage quotidien | toutes les 2 s |
+| Votes des blocs | Jour de séance propre à chaque bloc | une fois par mois et par bloc |
+| Présidences et budgets des blocs, règle budgétaire de l'UE, sauvegarde automatique | Le 1er du mois (calendaire) | toutes les 60 s |
 
-Une loi adoptée prend effet au mois suivant ; un curseur agit progressivement sur plusieurs mois. Le joueur voit toujours la date, la vitesse et le prochain rendez-vous (élection, échéance de dette, vote de bloc) dans la barre supérieure.
+Une loi adoptée prend effet à la mise à jour suivante de la nation ; un curseur agit progressivement sur plusieurs mois. Le joueur voit toujours la date, la vitesse et le prochain rendez-vous (élection, échéance de dette, vote de bloc) dans la barre supérieure.
 
 ## Économie et commerce
 

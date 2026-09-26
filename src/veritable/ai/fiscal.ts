@@ -28,12 +28,15 @@ export interface FiscalGoals {
   atWar?: boolean;
 }
 
+// J7: the rule acts at each update of the nation, its monthly steps
+// compounded over the months since the last one.
 export function stepFiscalRule(
   ctx: EconomyContext,
   nation: NationEconomy,
   goals: FiscalGoals = {},
+  months = 1,
 ): void {
-  adjustTargets(ctx, nation, goals);
+  adjustTargets(ctx, nation, goals, months);
   for (const post of SPENDING_POSTS) {
     nation.spending[post] = nation.spendingTargets[post];
   }
@@ -46,10 +49,15 @@ function adjustTargets(
   ctx: EconomyContext,
   nation: NationEconomy,
   goals: FiscalGoals,
+  months: number,
 ): void {
   const rule = ctx.config.ai.fiscal;
   const deficit = deficitToGdp(nation);
   const step = rule.adjustPerMonth;
+  const cut = Math.pow(1 - step, months);
+  const raise = Math.pow(1 + step, months);
+  const relax = Math.pow(1 + step / 2, months);
+  const ease = Math.pow(1 - step / 2, months);
   const debtToGdp = nation.debt / nation.gdp;
   const debtDrifting =
     debtToGdp > rule.prudentDebtToGdp &&
@@ -59,13 +67,13 @@ function adjustTargets(
     for (const post of SPENDING_POSTS) {
       if (rule.sparedPosts.includes(post)) continue;
       if (post === "defense" && goals.atWar === true) continue;
-      nation.spendingTargets[post] *= 1 - step;
+      nation.spendingTargets[post] *= cut;
     }
     if (deficit > 2 * rule.maxDeficitToGdp) {
       for (const tax of ["income", "vat"] as const) {
         nation.taxTargets[tax] = Math.min(
           ctx.config.budget.maxTaxRate[tax],
-          nation.taxTargets[tax] * (1 + step),
+          nation.taxTargets[tax] * raise,
         );
       }
     }
@@ -86,13 +94,13 @@ function adjustTargets(
       nation.spendingTargets[post] = Math.min(
         reference,
         spendingCeiling(ctx, nation, post),
-        nation.spendingTargets[post] * (1 + step / 2),
+        nation.spendingTargets[post] * relax,
       );
     }
     for (const tax of ["income", "vat"] as const) {
       nation.taxTargets[tax] = Math.max(
         nation.taxes0[tax],
-        nation.taxTargets[tax] * (1 - step / 2),
+        nation.taxTargets[tax] * ease,
       );
     }
   }

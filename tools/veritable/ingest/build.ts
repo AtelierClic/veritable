@@ -61,6 +61,9 @@ const FOSSIL_ELECTRICITY = {
 // recent year (1 644 Mt in 2024 against 3 124 Mt in 2023): every cereal figure
 // is read at the last complete year.
 const CEREALS_LAST_COMPLETE_YEAR = 2023;
+// J7: the first year of the population trend of the sheets (the growth
+// trend of GDP is read over 2015-2024 too).
+const POPULATION_TREND_FROM = 2015;
 // Year of the IMF figures: the last year before the campaign starts.
 const DEBT_YEAR = 2025;
 
@@ -432,6 +435,30 @@ export function build(scenarioId: string): void {
   const population = (n: string): Sourced =>
     wbSourced("population", n) ??
     ruled(rules.population.values[n] ?? 1e5, rules.population.note);
+  // J7: the population trend of the sheet, its compound annual growth from
+  // POPULATION_TREND_FROM to the last year of the series; the simulation
+  // lets it converge to the long-run rate of config.json (demographic
+  // transition). A de facto entity carved out of a nation has its parent's.
+  const populationGrowth = (n: string): Sourced => {
+    const end = wb.population.latest(n);
+    const start = wb.population.latest(n, POPULATION_TREND_FROM);
+    if (
+      end === null ||
+      start === null ||
+      end.year <= start.year ||
+      start.value <= 0
+    ) {
+      return ruled(
+        0,
+        "Série de population trop courte : population stable au départ.",
+      );
+    }
+    return derived(
+      Math.pow(end.value / start.value, 1 / (end.year - start.year)) - 1,
+      `Croissance annuelle composée de la population, ${start.year}-${end.year} (Banque mondiale, SP.POP.TOTL).`,
+      `${start.year}-${end.year}`,
+    );
+  };
   const gdp = Object.fromEntries(
     nations.map((n) => [
       n,
@@ -1054,6 +1081,7 @@ export function build(scenarioId: string): void {
               note: estimates.nuclear.justification,
             },
       population: pop,
+      populationGrowth: populationGrowth(n),
       gdp: gdp[n],
       debtToGdp: debt,
       economy: {
