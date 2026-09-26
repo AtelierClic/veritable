@@ -137,6 +137,7 @@ import {
   stepNuclearDay,
 } from "./nuclear/nuclear";
 import {
+  coupBaseOf,
   CoupEvent,
   stepCoups,
   stepJuntaTransition,
@@ -1647,7 +1648,7 @@ export class VeritableSimImpl implements VeritableSim {
       const sd =
         cfg.aiShock.sd *
         (1 - politics.legitimacy) *
-        (1 + cfg.aiShock.coupScale * regime.coupBase);
+        (1 + cfg.aiShock.coupScale * coupBaseOf(this.ctx, id, politics));
       politics.opinion = clamp01(
         politics.opinion + walkSd(sd, months) * this.rng.nextGaussian(),
       );

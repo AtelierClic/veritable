@@ -274,7 +274,7 @@
         "since": "1990-01-01",
         "source": "estimate",
         "asOf": "2026-01-01",
-        "note": "Arriérés extérieurs depuis le début des années 1990 ; le processus PPTE (point de décision de 2021) est interrompu depuis le coup d'État d'octobre 2021 et la guerre de 2023. Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation et le FMI, de mémoire : à valider. Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
+        "note": "Arriérés extérieurs depuis le début des années 1990 ; le processus PPTE (point de décision de 2021) est interrompu depuis le coup d'État d'octobre 2021 et la guerre de 2023. Source : FMI, communiqué 21/199 du 29 juin 2021 (point de décision PPTE, https://www.imf.org/en/News/Articles/2021/06/29/pr21199-sudan-to-receive-debt-relief-under-the-hipc-initiative) ; Dabanga, « Paris Club suspends Sudan debt relief due to coup » (https://www.dabangasudan.org/en/all-news/article/paris-club-suspends-sudan-debt-relief-due-to-coup). Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation, le FMI et la presse financière ; chaque note porte sa source (J7). Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
       },
       "revenueShares": {
         "value": {

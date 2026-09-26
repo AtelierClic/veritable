@@ -32,6 +32,13 @@
     "asOf": "2026-01-01",
     "note": "Inventaires totaux d'ogives en janvier 2025 : SIPRI Yearbook 2025, chapitre « World nuclear forces » (https://www.sipri.org/yearbook/2025/06), recoupé avec la FAS, « Status of World Nuclear Forces 2025 » ; valeurs isolées attribuées (les conditions du SIPRI et de la FAS ne permettent pas de redistribuer leurs tableaux). Doctrines fixées par la consigne du J6 : États-Unis, Russie, Pakistan emploi en premier possible (Nuclear Posture Review 2022 ; Fondements de la politique d'État en matière de dissuasion nucléaire, révision de 2024 ; dissuasion « à spectre complet ») ; Chine et Inde non-emploi en premier (déclarations officielles, doctrine indienne de 2003) ; Israël non déclarée (opacité) ; Corée du Nord imprévisible (loi de 2022 sur la politique des forces nucléaires) ; France et Royaume-Uni inchangées. La Russie passe de 5 500 (J2, de mémoire) à 5 459 (SIPRI)."
   },
+  "coupHistory": {
+    "attemptSince1990": true,
+    "attempts": "1995, 1999",
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "J7 (réponse de Lukas au J6, point 4) : pour chaque nation classée autoritaire électorale au 1er janvier 2026, y a-t-il eu depuis 1990 une tentative de coup, réussie ou déjouée, contre l'exécutif national, au sens de Powell et Thyne (tentative illégale et ouverte de l'armée ou d'élites de l'appareil d'État pour renverser l'exécutif en place ; ni complot découvert avant d'agir, ni insurrection venue de l'extérieur de l'État, ni coup d'État de l'exécutif contre les autres pouvoirs) ? Liste établie à la main, de mémoire : la page du jeu de données de Powell et Thyne (jonathanmpowell.com/coups, version du 29 août 2026) n'affiche aucune licence, seulement une demande de citation, et le jeu de données n'est pas importé. Les cas douteux sont comptés comme des tentatives (le risque de coup reste celui du régime) et listés « à valider »."
+  },
   "population": {
     "value": 255220000,
     "source": "worldbank:SP.POP.TOTL",

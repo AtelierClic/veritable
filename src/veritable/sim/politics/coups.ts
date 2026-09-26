@@ -51,17 +51,39 @@ export interface CoupOutcome {
   suspendFromBlocs: boolean;
 }
 
+// The coup base of a nation (J7, answer of Lukas to the J6): its regime's;
+// an electoral autocracy of the first day without a coup attempt since 1990
+// has that of politics.coups.noAttemptRegime while its regime of the first
+// day lasts — its V-Dem class says how it holds elections, not that its
+// army takes power (India, Indonesia, Mexico...).
+export function coupBaseOf(
+  ctx: EconomyContext,
+  nation: NationId,
+  politics: NationPolitics,
+): number {
+  const base = ctx.regime(politics.regime).coupBase;
+  if (politics.regimeBefore !== null) return base;
+  const sheet = ctx.sheet(nation);
+  if (
+    sheet.regime !== politics.regime ||
+    sheet.coupHistory?.attemptSince1990 !== false
+  ) {
+    return base;
+  }
+  return ctx.regime(ctx.config.politics.coups.noAttemptRegime).coupBase;
+}
+
 export function coupProbability(
   ctx: EconomyContext,
+  nation: NationId,
   politics: NationPolitics,
   military: NationMilitary | undefined,
   date: string,
 ): number {
   const cfg = ctx.config.politics.coups;
-  const regime = ctx.regime(politics.regime);
   const satisfaction = groupSatisfaction(politics);
   let p =
-    regime.coupBase *
+    coupBaseOf(ctx, nation, politics) *
     cfg.militaryScale *
     Math.pow(1 - satisfaction.military, cfg.militaryExponent) *
     (1 + cfg.stabilityWeight * (1 - politics.stability)) *
@@ -89,7 +111,7 @@ export function stepCoups(
     democracyRelations: 0,
     suspendFromBlocs: false,
   };
-  politics.coupRisk = coupProbability(ctx, politics, military, date);
+  politics.coupRisk = coupProbability(ctx, nation, politics, military, date);
   if (politics.fraudCoupUntil !== null && date >= politics.fraudCoupUntil) {
     politics.fraudCoupUntil = null;
   }

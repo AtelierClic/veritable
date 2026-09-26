@@ -26,6 +26,13 @@
     "asOf": "2026-01-01"
   },
   "nuclear": null,
+  "coupHistory": {
+    "attemptSince1990": true,
+    "attempts": "1992, 2002, 2019",
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "J7 (réponse de Lukas au J6, point 4) : pour chaque nation classée autoritaire électorale au 1er janvier 2026, y a-t-il eu depuis 1990 une tentative de coup, réussie ou déjouée, contre l'exécutif national, au sens de Powell et Thyne (tentative illégale et ouverte de l'armée ou d'élites de l'appareil d'État pour renverser l'exécutif en place ; ni complot découvert avant d'agir, ni insurrection venue de l'extérieur de l'État, ni coup d'État de l'exécutif contre les autres pouvoirs) ? Liste établie à la main, de mémoire : la page du jeu de données de Powell et Thyne (jonathanmpowell.com/coups, version du 29 août 2026) n'affiche aucune licence, seulement une demande de citation, et le jeu de données n'est pas importé. Les cas douteux sont comptés comme des tentatives (le risque de coup reste celui du régime) et listés « à valider »."
+  },
   "population": {
     "value": 28516900,
     "source": "worldbank:SP.POP.TOTL",
@@ -273,7 +280,7 @@
         "since": "2017-11-13",
         "source": "estimate",
         "asOf": "2026-01-01",
-        "note": "Défaut sur les obligations souveraines et celles de PDVSA constaté en novembre 2017, sans restructuration depuis. Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation et le FMI, de mémoire : à valider. Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
+        "note": "Défaut sur les obligations souveraines et celles de PDVSA constaté en novembre 2017, sans restructuration depuis. Source : Reuters, « S&P declares Venezuela in selective default after missed payments », 14 novembre 2017 (https://www.business-standard.com/amp/article/reuters/s-p-declares-venezuela-in-selective-default-after-missed-payments-117111400951_1.html) ; CSIS, « The Venezuelan External Public Debt Crisis » (https://www.csis.org/analysis/venezuelan-external-public-debt-crisis-everything-everywhere-all-once). Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation, le FMI et la presse financière ; chaque note porte sa source (J7). Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
       },
       "revenueShares": {
         "value": {

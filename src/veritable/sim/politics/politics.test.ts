@@ -14,6 +14,7 @@ import { testBloc, testLeaders, testSimData } from "../testing/simData";
 import { DAYS_PER_MONTH } from "../time";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
+import { coupBaseOf } from "./coups";
 import { holdElection, projectShares } from "./elections";
 import { affinity, insideWindow } from "./ideology";
 import { ageAt, yearlyDeathProbability } from "./leaders";
@@ -308,6 +309,35 @@ describe("laws, capital and sliders", () => {
 });
 
 describe("coups, revolutions and the AI", () => {
+  it("an electoral autocracy without a coup attempt since 1990 has the coup base of a parliamentary democracy while its regime of the first day lasts (J7)", () => {
+    const { sim, sheets } = campaign({
+      nations: {
+        AAA: {},
+        BBB: { regime: "electoral-authoritarian" },
+        CCC: { regime: "electoral-authoritarian" },
+      },
+    });
+    const history = (attemptSince1990: boolean) => ({
+      attemptSince1990,
+      source: "estimate",
+      asOf: "2026-01-01",
+    });
+    sheets.get("BBB")!.coupHistory = history(false);
+    sheets.get("CCC")!.coupHistory = history(true);
+    const ctx = quietCtx(sim);
+    const base = (id: string) => coupBaseOf(ctx, id, live(sim, id));
+    const of = (regime: Parameters<typeof ctx.regime>[0]) =>
+      ctx.regime(regime).coupBase;
+    expect(base("BBB")).toBe(of("parliamentary"));
+    expect(base("CCC")).toBe(of("electoral-authoritarian"));
+    expect(base("AAA")).toBe(of("parliamentary"));
+    // A regime born in the campaign carries its own risk.
+    const bbb = live(sim, "BBB");
+    bbb.regimeBefore = "electoral-authoritarian";
+    bbb.regime = "junta";
+    expect(base("BBB")).toBe(of("junta"));
+  });
+
   it("a low-legitimacy, unstable state with angry soldiers falls to a coup, keeps its player, and is suspended by its bloc", () => {
     const config = quietConfig();
     config.politics.coups.failureShare = 0;

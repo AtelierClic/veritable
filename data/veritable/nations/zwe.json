@@ -26,6 +26,13 @@
     "asOf": "2026-01-01"
   },
   "nuclear": null,
+  "coupHistory": {
+    "attemptSince1990": true,
+    "attempts": "2017",
+    "source": "estimate",
+    "asOf": "2026-01-01",
+    "note": "J7 (réponse de Lukas au J6, point 4) : pour chaque nation classée autoritaire électorale au 1er janvier 2026, y a-t-il eu depuis 1990 une tentative de coup, réussie ou déjouée, contre l'exécutif national, au sens de Powell et Thyne (tentative illégale et ouverte de l'armée ou d'élites de l'appareil d'État pour renverser l'exécutif en place ; ni complot découvert avant d'agir, ni insurrection venue de l'extérieur de l'État, ni coup d'État de l'exécutif contre les autres pouvoirs) ? Liste établie à la main, de mémoire : la page du jeu de données de Powell et Thyne (jonathanmpowell.com/coups, version du 29 août 2026) n'affiche aucune licence, seulement une demande de citation, et le jeu de données n'est pas importé. Les cas douteux sont comptés comme des tentatives (le risque de coup reste celui du régime) et listés « à valider »."
+  },
   "population": {
     "value": 16950800,
     "source": "worldbank:SP.POP.TOTL",
@@ -274,7 +281,7 @@
         "since": "2000-01-01",
         "source": "estimate",
         "asOf": "2026-01-01",
-        "note": "Arriérés envers les créanciers bilatéraux et multilatéraux depuis 2000. Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation et le FMI, de mémoire : à valider. Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
+        "note": "Arriérés envers les créanciers bilatéraux et multilatéraux depuis 2000. Source : Banque mondiale et FMI, analyse conjointe de viabilité de la dette du Zimbabwe (https://documents1.worldbank.org/curated/en/099041526133038881/pdf/BOSIB-a1190f91-b885-42c9-80cf-1e1e9eab6217.pdf) ; Center for Global Development, « Zimbabwe's Path to Arrears Clearance and Debt Relief » (https://www.cgdev.org/sites/default/files/1423217_file_Moss_Leo_Zimbabwe_Debt_Dynamics.pdf). Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation, le FMI et la presse financière ; chaque note porte sa source (J7). Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
       },
       "revenueShares": {
         "value": {

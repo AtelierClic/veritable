@@ -3093,40 +3093,107 @@
     }
   },
   "defaultsInProgress": {
-    "justification": "Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation et le FMI, de mémoire : à valider. Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025).",
+    "justification": "Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation, le FMI et la presse financière ; chaque note porte sa source (J7). Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025).",
     "values": {
       "VEN": {
         "since": "2017-11-13",
-        "note": "Défaut sur les obligations souveraines et celles de PDVSA constaté en novembre 2017, sans restructuration depuis."
+        "note": "Défaut sur les obligations souveraines et celles de PDVSA constaté en novembre 2017, sans restructuration depuis. Source : Reuters, « S&P declares Venezuela in selective default after missed payments », 14 novembre 2017 (https://www.business-standard.com/amp/article/reuters/s-p-declares-venezuela-in-selective-default-after-missed-payments-117111400951_1.html) ; CSIS, « The Venezuelan External Public Debt Crisis » (https://www.csis.org/analysis/venezuelan-external-public-debt-crisis-everything-everywhere-all-once)."
       },
       "LBN": {
         "since": "2020-03-09",
-        "note": "Euro-obligation du 9 mars 2020 non remboursée, sans restructuration depuis."
+        "note": "Euro-obligation du 9 mars 2020 non remboursée, sans restructuration depuis. Source : Al Jazeera, « Lebanon will default on its debt for the first time ever », 7 mars 2020 (https://www.aljazeera.com/economy/2020/3/7/lebanon-will-default-on-its-debt-for-the-first-time-ever) ; Executive Magazine, « Eurobonds default: a one-year anniversary » (https://www.executive-magazine.com/economics-policy/eurobonds-cross-default-a-one-year-anniversary)."
       },
       "SDN": {
         "since": "1990-01-01",
-        "note": "Arriérés extérieurs depuis le début des années 1990 ; le processus PPTE (point de décision de 2021) est interrompu depuis le coup d'État d'octobre 2021 et la guerre de 2023."
+        "note": "Arriérés extérieurs depuis le début des années 1990 ; le processus PPTE (point de décision de 2021) est interrompu depuis le coup d'État d'octobre 2021 et la guerre de 2023. Source : FMI, communiqué 21/199 du 29 juin 2021 (point de décision PPTE, https://www.imf.org/en/News/Articles/2021/06/29/pr21199-sudan-to-receive-debt-relief-under-the-hipc-initiative) ; Dabanga, « Paris Club suspends Sudan debt relief due to coup » (https://www.dabangasudan.org/en/all-news/article/paris-club-suspends-sudan-debt-relief-due-to-coup)."
       },
       "ERI": {
         "since": "2019-01-01",
-        "note": "Arriérés extérieurs, surendettement constaté par le FMI ; date approximative."
+        "note": "Arriérés extérieurs, surendettement constaté par le FMI ; date approximative. Source : FMI, communiqué 19/179 du 22 mai 2019, consultation au titre de l'article IV (« debt distress », accumulation d'arriérés, https://www.imf.org/en/News/Articles/2019/05/22/pr19179-eritrea-imf-staff-completes-2019-article-iv-mission) ; Amnesty International, juin 2024 (https://www.amnesty.org/en/latest/education/2024/06/debt-relief-and-prudent-financial-management-key-to-adequate-education-financing-in-eritrea/)."
       },
       "ETH": {
         "since": "2023-12-26",
-        "note": "Coupon de l'euro-obligation de décembre 2023 non payé, restructuration dans le cadre commun du G20 en cours."
+        "note": "Coupon de l'euro-obligation de décembre 2023 non payé, restructuration dans le cadre commun du G20 en cours. Source : Bloomberg, « Ethiopia Fails to Pay Coupon, Becoming Latest African Defaulter », 25 décembre 2023 (https://www.bloomberg.com/news/articles/2023-12-25/ethiopia-fails-to-pay-coupon-becoming-latest-african-defaulter)."
       },
       "ZWE": {
         "since": "2000-01-01",
-        "note": "Arriérés envers les créanciers bilatéraux et multilatéraux depuis 2000."
+        "note": "Arriérés envers les créanciers bilatéraux et multilatéraux depuis 2000. Source : Banque mondiale et FMI, analyse conjointe de viabilité de la dette du Zimbabwe (https://documents1.worldbank.org/curated/en/099041526133038881/pdf/BOSIB-a1190f91-b885-42c9-80cf-1e1e9eab6217.pdf) ; Center for Global Development, « Zimbabwe's Path to Arrears Clearance and Debt Relief » (https://www.cgdev.org/sites/default/files/1423217_file_Moss_Leo_Zimbabwe_Debt_Dynamics.pdf)."
       },
       "CUB": {
         "since": "1986-01-01",
-        "note": "Dette commerciale en défaut depuis 1986 ; arriérés envers le Club de Paris depuis 2019."
+        "note": "Dette commerciale en défaut depuis 1986 ; arriérés envers le Club de Paris depuis 2019. Source : The Caribbean Council, « Cuba defaults on Paris Club debt » (https://www.caribbean-council.org/cuba-defaults-on-paris-club-debt-says-it-will-meet-its-commitments/) ; Club de Paris, historique (https://clubdeparis.org/en/history)."
       },
       "PRK": {
         "since": "1987-01-01",
-        "note": "Prêts bancaires occidentaux en défaut depuis 1987."
+        "note": "Prêts bancaires occidentaux en défaut depuis 1987. Source : TIME, « Pulling The Plug: North Korea goes into default » (https://time.com/archive/6710231/pulling-the-plug-north-korea-goes-into-default/) ; PIIE, « Debt follies » (https://www.piie.com/blogs/north-korea-witness-transformation/debt-follies)."
       }
+    }
+  },
+  "coupHistory": {
+    "justification": "J7 (réponse de Lukas au J6, point 4) : pour chaque nation classée autoritaire électorale au 1er janvier 2026, y a-t-il eu depuis 1990 une tentative de coup, réussie ou déjouée, contre l'exécutif national, au sens de Powell et Thyne (tentative illégale et ouverte de l'armée ou d'élites de l'appareil d'État pour renverser l'exécutif en place ; ni complot découvert avant d'agir, ni insurrection venue de l'extérieur de l'État, ni coup d'État de l'exécutif contre les autres pouvoirs) ? Liste établie à la main, de mémoire : la page du jeu de données de Powell et Thyne (jonathanmpowell.com/coups, version du 29 août 2026) n'affiche aucune licence, seulement une demande de citation, et le jeu de données n'est pas importé. Les cas douteux sont comptés comme des tentatives (le risque de coup reste celui du régime) et listés « à valider ».",
+    "noAttemptSince1990": [
+      "AGO",
+      "BHR",
+      "BIH",
+      "BLR",
+      "CMR",
+      "HUN",
+      "IDN",
+      "IND",
+      "LBN",
+      "MAR",
+      "MEX",
+      "MOZ",
+      "NIC",
+      "PMR",
+      "SGP",
+      "SLV",
+      "SOS",
+      "SRB",
+      "SYR",
+      "TUN",
+      "TZA",
+      "UGA",
+      "UZB"
+    ],
+    "attempts": {
+      "ALB": "1998 (septembre, douteux)",
+      "AZE": "1993, 1994, 1995",
+      "BDI": "1993, 1996, 2015",
+      "BEN": "2025 (décembre)",
+      "BGD": "1996, 2007, 2011",
+      "CIV": "1999, 2000, 2001, 2002",
+      "COD": "2004, 2011, 2024",
+      "COG": "1997 (guerre civile, douteux)",
+      "COM": "1995, 1999, 2000, 2013",
+      "DJI": "2000",
+      "DZA": "1992, 2019",
+      "EGY": "2011, 2013",
+      "ETH": "2019 (juin, contre le gouvernement régional amhara, douteux)",
+      "GAB": "2019, 2023",
+      "GEO": "1991-1992, 1998, 2009",
+      "GNQ": "2009, 2017",
+      "IRQ": "années 1990 (tentatives contre Saddam Hussein)",
+      "JOR": "2021 (affaire du prince Hamzah, douteux)",
+      "KAZ": "2022 (janvier, douteux)",
+      "KGZ": "2010, 2020 (renversements, douteux)",
+      "KHM": "1994, 1997",
+      "MRT": "2003, 2005, 2008",
+      "PAK": "1995, 1999",
+      "PHL": "1990, 2003, 2007",
+      "PNG": "1997, 2012",
+      "PSE": "2007 (prise de Gaza par le Hamas, douteux)",
+      "RUS": "1991, 1993, 2023",
+      "RWA": "1994 (douteux)",
+      "SLE": "1992, 1996, 1997, 2023",
+      "TCD": "1991, 1992, 2004, 2006, 2021",
+      "TGO": "2005",
+      "THA": "1991, 2006, 2014",
+      "TJK": "1998, 2015",
+      "TUR": "2016",
+      "VEN": "1992, 2002, 2019",
+      "ZMB": "1990, 1997",
+      "ZWE": "2017"
     }
   }
 }

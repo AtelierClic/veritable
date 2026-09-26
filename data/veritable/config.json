@@ -292,6 +292,7 @@
       "failedStabilityHit": 0.1,
       "failedMilitaryHit": 0.1,
       "consolidationMonths": 12,
+      "noAttemptRegime": "parliamentary",
       "juntaTransitionMonths": 48,
       "juntaTransitionMonthlyProbability": 0.05
     },

@@ -276,7 +276,7 @@
         "since": "2019-01-01",
         "source": "estimate",
         "asOf": "2026-01-01",
-        "note": "Arriérés extérieurs, surendettement constaté par le FMI ; date approximative. Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation et le FMI, de mémoire : à valider. Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
+        "note": "Arriérés extérieurs, surendettement constaté par le FMI ; date approximative. Source : FMI, communiqué 19/179 du 22 mai 2019, consultation au titre de l'article IV (« debt distress », accumulation d'arriérés, https://www.imf.org/en/News/Articles/2019/05/22/pr19179-eritrea-imf-staff-completes-2019-article-iv-mission) ; Amnesty International, juin 2024 (https://www.amnesty.org/en/latest/education/2024/06/debt-relief-and-prudent-financial-management-key-to-adequate-education-financing-in-eritrea/). Nations en défaut ou en arriérés sur leur dette extérieure au 1er janvier 2026, d'après les agences de notation, le FMI et la presse financière ; chaque note porte sa source (J7). Exclues : la Russie et la Biélorussie (défauts techniques de 2022 dus aux sanctions, l'État emprunte sur son marché intérieur), le Ghana, la Zambie et le Sri Lanka (restructurations achevées en 2024-2025), la Syrie (arriérés envers la Banque mondiale apurés en mai 2025)."
       },
       "revenueShares": {
         "value": {

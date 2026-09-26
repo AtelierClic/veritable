@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { INTEREST_GROUPS, IsoDateSchema, NUCLEAR_DOCTRINES } from "./common";
+import {
+  INTEREST_GROUPS,
+  IsoDateSchema,
+  NUCLEAR_DOCTRINES,
+  RegimeSchema,
+} from "./common";
 import { GoodIdSchema } from "./goods";
 import { SPENDING_POSTS, TAX_IDS } from "./nation";
 import { GroupIdeologiesSchema } from "./politics";
@@ -229,6 +234,10 @@ const PoliticsConfigSchema = z.object({
     consolidationMonths: z.number().int().min(0),
     juntaTransitionMonths: z.number().int().min(0),
     juntaTransitionMonthlyProbability: share,
+    // J7: an electoral autocracy of the first day without a coup attempt
+    // since 1990 (its sheet's coupHistory) has the coup base of this regime
+    // while its regime of the first day lasts.
+    noAttemptRegime: RegimeSchema,
   }),
   revolution: z.object({
     angryGroups: z.number().int().min(1),

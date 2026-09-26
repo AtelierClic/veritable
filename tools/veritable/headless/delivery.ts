@@ -238,7 +238,12 @@ export function aggregate(campaigns: Campaign[]) {
     shotsInAtMost5pct: campaignsWithShots.length <= 0.05 * n,
     neverBelowLevel2: shots.every((s) => s.threat >= 2),
     noThreeWayExchange: threeWay.length === 0,
-    warsMedian1to4: median(wars) >= 1 && median(wars) <= 4,
+    // J7 (answer of Lukas to the J6): the J5 range, "a median of 1 to 4
+    // new wars", measured the rules of the J5, changed on purpose at the J6
+    // (the Russia-Ukraine loop). It is replaced by the range measured on
+    // the final code of the J6 (100 campaigns: median 0, at most 1, 85
+    // campaigns without a new war), a notch of margin on the maximum.
+    warsMedianAtMost1Max2: median(wars) <= 1 && Math.max(0, ...wars) <= 2,
     warsMax10: Math.max(0, ...wars) <= 10,
     under30pctWithoutCasusBelli:
       allWars.length === 0 || withoutCasus / allWars.length < 0.3,

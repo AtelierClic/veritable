@@ -141,6 +141,20 @@ export const NationDataSchema = z.object({
   geography: GeographySchema.optional(),
   regime: RegimeSchema,
   regimeSource: ProvenanceSchema,
+  // J7: for an electoral autocracy of the first day, whether its executive
+  // faced a coup attempt, successful or foiled, since 1990 (in the sense of
+  // Powell and Thyne; established by hand, estimates.json → coupHistory).
+  // Without one, its coup base is that of politics.coups.noAttemptRegime
+  // while its regime of the first day lasts.
+  coupHistory: z
+    .object({
+      attemptSince1990: z.boolean(),
+      attempts: z.string().optional(),
+      source: z.string().min(1),
+      asOf: z.string().min(1),
+      note: z.string().optional(),
+    })
+    .optional(),
   blocs: z.array(z.string()),
   nuclear: z
     .object({

@@ -119,6 +119,13 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 - [ ] Electron : empaquetage, sauvegardes dans le dossier utilisateur, build Windows
 - [ ] Page itch.io ou GitHub Releases ; mentions AGPL et © OpenFront and Contributors ; sources publiées
 - [ ] Gouvernement en exil ; dissolution ; baroud d'honneur
-- [ ] Événements procéduraux élargis ; palier 2 des biens et de l'arbre
+- [ ] Événements procéduraux élargis (le palier 2 de l'arbre existe depuis le J5c ; celui des biens passe après la 1.0)
 - [ ] Reconstruction post-nucléaire
 - [ ] Polissage UI ; documentation de modding
+
+## Après 1.0
+
+Reporté par Lukas le 2026-09-26 (réponse au rapport du J6) : le moteur accepte ces ajouts sans code, et les faire maintenant obligerait à tout recalibrer juste avant la sortie.
+
+- [ ] Palier 2 des biens (~40 biens) : `goods.json`, fiches et ingestion
+- [ ] Commerce brut (échanges intra-industriels), à la place des flux nets du J2

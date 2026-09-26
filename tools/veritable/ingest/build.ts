@@ -435,6 +435,25 @@ export function build(scenarioId: string): void {
   const population = (n: string): Sourced =>
     wbSourced("population", n) ??
     ruled(rules.population.values[n] ?? 1e5, rules.population.note);
+  // J7: the coup history of an electoral autocracy since 1990 (Lukas,
+  // answer to the J6): established by hand in the estimates.
+  const coupHistory = (n: string) => {
+    const h = estimates.coupHistory;
+    const quiet = (h.noAttemptSince1990 as string[]).includes(n);
+    const attempts = (h.attempts as Record<string, string>)[n];
+    if (!quiet && attempts === undefined) {
+      throw new Error(
+        `estimates.json → coupHistory: ${n}, an electoral autocracy, is in neither list`,
+      );
+    }
+    return {
+      attemptSince1990: !quiet,
+      ...(attempts === undefined ? {} : { attempts }),
+      source: "estimate",
+      asOf: estimates.asOf,
+      note: h.justification as string,
+    };
+  };
   // J7: the population trend of the sheet, its compound annual growth from
   // POPULATION_TREND_FROM to the last year of the series; the simulation
   // lets it converge to the long-run rate of config.json (demographic
@@ -1080,6 +1099,9 @@ export function build(scenarioId: string): void {
               asOf: estimates.asOf,
               note: estimates.nuclear.justification,
             },
+      ...(regime === "electoral-authoritarian"
+        ? { coupHistory: coupHistory(n) }
+        : {}),
       population: pop,
       populationGrowth: populationGrowth(n),
       gdp: gdp[n],
