@@ -164,6 +164,8 @@ export class VeritableSession {
         return this.sim.queryJournal(request.query);
       case "tile":
         return this.bridge.tileInfo(request.tile);
+      case "war-preview":
+        return this.sim.warPreview(request.target, request.casusBelli);
       case "apply":
         this.sim.apply(request.command);
         return null;

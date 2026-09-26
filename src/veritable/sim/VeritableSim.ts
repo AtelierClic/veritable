@@ -60,6 +60,25 @@ export interface VeritableSim {
   hud(journalSince?: number): HudView;
   // J7: the journal, filtered, most recent first (the journal screen).
   queryJournal(query: JournalQuery): JournalPage;
+  // J7b: what a declaration of war of the player would bring down, weighed
+  // as the AI weighs its own (the action menu of the map).
+  warPreview(target: NationId, casusBelli: string): WarPreview;
+}
+
+export interface WarPreview {
+  target: NationId;
+  casusBelli: string;
+  // Share of the player's trade partners (trade weights) expected to
+  // sanction it, and who.
+  sanctionsShare: number;
+  sanctioners: NationId[];
+  // Nations bound to defend the target (blocs of collective defence,
+  // guarantees), with the chance they honour it.
+  coalition: { nation: NationId; probability: number }[];
+  // Relations lost with every nation at the declaration; every month of
+  // the war too without casus belli.
+  relationsCost: number;
+  monthlyRelationsCost: number;
 }
 
 // Whose entries the journal screen shows (J7): all, the player's nation,
@@ -210,6 +229,21 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
   // A landing on the coast of an enemy: refused unless the zone of the
   // landing tile is controlled.
   z.object({ type: z.literal("landing"), target: NationIdSchema }),
+  // J7b (the action menu of the map, and the screens): an air strike on an
+  // enemy, at most once every air.cooldownDays; the whole fleet to a sea
+  // zone (null: home); the tile a segment of a front breaks through towards
+  // (null: none).
+  z.object({ type: z.literal("air-strike"), target: NationIdSchema }),
+  z.object({
+    type: z.literal("set-fleet"),
+    zone: z.string().min(1).nullable(),
+  }),
+  z.object({
+    type: z.literal("set-objective"),
+    front: z.string().min(1),
+    segment: z.number().int().nonnegative(),
+    tile: z.number().int().nonnegative().nullable(),
+  }),
   // The political engine (J4). Laws of data/veritable/laws/; the electoral
   // levers of the player; objectives of data/veritable/politics/
   // objectives.json; free-text notes.
@@ -332,6 +366,15 @@ export type SimEvent =
       nation: NationId;
       target: NationId;
     }
+  // J7b: an air strike the player ordered (damage added to the target).
+  | {
+      type: "air-strike";
+      date: string;
+      nation: NationId;
+      target: NationId;
+      war: string;
+      damage: number;
+    }
   // The political engine (J4); the parameters are those of the journal.
   | {
       type:
@@ -423,6 +466,8 @@ export interface SegmentSide {
   equipment: number; // 0..1, mean of the engaged divisions
   training: number; // mean of the engaged divisions
   supply: number; // factor
+  // Divisions it supplies in full here (J7b; Infinity without logistics).
+  capacity: number;
   air: number; // factor
   terrain: number; // factor on its defence
   structures: number; // factor on its defence (defence posts, cities)
@@ -459,6 +504,9 @@ export interface ReadonlyWorldView {
   readonly constructionCost: Readonly<Record<NationId, number>>;
   // Casus belli the player could invoke against each other nation.
   readonly casusBelli: Readonly<Record<NationId, readonly string[]>>;
+  // J7b: the nations the player sanctions through a bloc — only a vote of
+  // the bloc lifts these.
+  readonly blocHeldSanctions: readonly NationId[];
   // The political engine (J4): projected shares of the player's next
   // election (levers applied, no draw), the pinned objectives and notes.
   readonly electionProjection: Readonly<Record<string, number>> | null;
@@ -595,13 +643,15 @@ export interface WorldPort {
   ): FrontGeometry[];
   // Takes up to `tiles` tiles of `loser` for `winner` along a segment of the
   // last computed geometry of the front; returns how many were taken. Taken
-  // tiles are tagged contested.
+  // tiles are tagged contested. `toward` (J7b): a breakthrough takes the
+  // tiles nearest that tile first.
   advance(
     front: string,
     segment: number,
     winner: NationId,
     loser: NationId,
     tiles: number,
+    toward?: number | null,
   ): number;
   // Annexation: every tile of `from` goes to `to`, tagged contested.
   transferAll(from: NationId, to: NationId): number;

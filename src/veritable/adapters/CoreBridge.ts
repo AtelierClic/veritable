@@ -664,6 +664,7 @@ export class CoreBridge implements WorldPort {
     return {
       width,
       height: this.game.height(),
+      segmentTiles: this.segmentTiles,
       fronts,
       contestedVersion: version,
       contested: version === contestedVersion ? null : this.ledger.tiles(),
@@ -685,10 +686,14 @@ export class CoreBridge implements WorldPort {
     };
   }
 
+  // Length of a segment of the last geometry (J7b, the overlay).
+  private segmentTiles = 0;
+
   fronts(
     pairs: readonly [NationId, NationId][],
     segmentTiles: number,
   ): FrontGeometry[] {
+    this.segmentTiles = segmentTiles;
     if (this.pending !== null) return [];
     const out: FrontGeometry[] = [];
     const config = this.game.config();
@@ -826,6 +831,7 @@ export class CoreBridge implements WorldPort {
     winner: NationId,
     loser: NationId,
     tiles: number,
+    toward: number | null = null,
   ): number {
     if (this.pending !== null) return 0;
     const segments = this.segments.get(front);
@@ -833,10 +839,18 @@ export class CoreBridge implements WorldPort {
     if (segments === undefined || segments[segment] === undefined) return 0;
     if (player === undefined || !this.byNation.has(loser)) return 0;
     const g = this.grid([winner, loser]);
-    const taken = captureAlong(g, segments[segment], 1, 2, tiles, (tile) => {
-      player.conquer(tile);
-      this.ledger.mark(tile);
-    });
+    const taken = captureAlong(
+      g,
+      segments[segment],
+      1,
+      2,
+      tiles,
+      (tile) => {
+        player.conquer(tile);
+        this.ledger.mark(tile);
+      },
+      toward,
+    );
     if (taken.length > 0) this.sea = null;
     return taken.length;
   }
@@ -1031,6 +1045,9 @@ function terrainOf(type: TerrainType): Terrain {
 export interface MapOverlay {
   width: number;
   height: number;
+  // Length of a segment in tiles on this map (J7b: how near a front a click
+  // of the action menu must be).
+  segmentTiles: number;
   fronts: {
     id: string;
     segments: { index: number; points: number[]; mid: [number, number] }[];

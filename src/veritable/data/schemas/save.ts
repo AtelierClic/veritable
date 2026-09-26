@@ -62,6 +62,8 @@ export const JOURNAL_KINDS_V7 = [
   "annexation",
   "landing-refused",
   "landing",
+  // J7b: an air strike the player ordered.
+  "air-strike",
   // The political engine (J4).
   "election-held",
   "government-formed",
@@ -554,6 +556,11 @@ export const NationMilitarySchema = z.object({
   // Air and naval power of the sheet, scaled by the arms coverage in play.
   airPower: zb.float(),
   navalPower: zb.float(),
+  // J7b: the tile a segment of its fronts breaks through towards
+  // ("<front>#<segment>" -> tile), and the day of its last air strike on
+  // each enemy (the player's orders).
+  objectives: z.record(z.string(), zb.uint()),
+  airStrikes: z.record(z.string(), IsoDateSchema),
 });
 export type NationMilitary = z.infer<typeof NationMilitarySchema>;
 

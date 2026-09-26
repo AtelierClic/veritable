@@ -21,7 +21,9 @@ export type JournalCategory = (typeof JOURNAL_CATEGORIES)[number];
 export function journalCategory(kind: string): JournalCategory {
   if (kind === "note") return "notes";
   if (kind === "objective-completed") return "objectives";
-  if (/^(war|peace|annexation|landing|nuclear|dead-hand)/.test(kind)) {
+  if (
+    /^(war|peace|annexation|landing|air-strike|nuclear|dead-hand)/.test(kind)
+  ) {
     return "war";
   }
   if (/^(sanctions|claim)/.test(kind)) return "diplomacy";

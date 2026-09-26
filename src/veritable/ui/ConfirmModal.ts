@@ -70,7 +70,7 @@ export class ConfirmModal extends LitElement {
         aria-modal="true"
       >
         <div class="mb-1 text-base font-bold text-red-200">${r.title}</div>
-        <div class="mb-3 text-gray-300">${r.body}</div>
+        <div class="mb-3 whitespace-pre-line text-gray-300">${r.body}</div>
         <div class="flex justify-end gap-2">
           <button
             class="rounded bg-gray-700 px-3 py-1"

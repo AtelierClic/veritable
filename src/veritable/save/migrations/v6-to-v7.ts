@@ -41,7 +41,8 @@ import { MigrationContext, MigrationError } from "./index";
 //     the J4 to the J6);
 //   - the AI keeps its goals, not its review dates (the queue replaces
 //     them); no war weighed yet (its intent comes with its next review);
-//     its war orders due at its first update;
+//     its war orders due at its first update; no objective of a
+//     breakthrough, no air strike ordered yet (J7b);
 //   - intelligence: no snapshot yet, the restore takes them from the
 //     values of the save (the player's relations from its date on).
 
@@ -128,6 +129,8 @@ export function v6ToV7(
       ...rest,
       lossesPending: old.lossesPending ?? old.lossesLastMonth ?? 0,
       armsReceived: old.armsReceived ?? 0,
+      objectives: {},
+      airStrikes: {},
     } as NationMilitary;
   }
 

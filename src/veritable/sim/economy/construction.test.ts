@@ -72,13 +72,28 @@ describe("structures built on the map are paid by the national budget", () => {
     (
       sim as unknown as { territory: { structures: object } }
     ).territory.structures = {};
-    world.built.set("AAA", { City: 1, MissileSilo: 1 });
+    world.built.set("AAA", { City: 1, "Missile Silo": 1 });
     month();
     expect(sim.read().constructionCost).toEqual({ AAA: 0, BBB: 0 });
     // From then on, what is built is paid.
-    world.built.set("AAA", { City: 2, MissileSilo: 1 });
+    world.built.set("AAA", { City: 2, "Missile Silo": 1 });
     month();
     expect(sim.read().constructionCost.AAA).toBeGreaterThan(0);
+  });
+
+  it("charges defence posts and SAM launchers (J7b)", () => {
+    // The counts are keyed by the unit types of the core, spaces included
+    // (adapters/structurePrices.test.ts): keyed without their spaces, the
+    // prices of the J5a never charged these.
+    const { sim, world, config, month } = setup();
+    const prices = config.budget.structureCostUsd;
+    world.built.set("AAA", { City: 1, "Defense Post": 2 });
+    month();
+    world.built.set("AAA", { City: 1, "Defense Post": 3, "SAM Launcher": 1 });
+    month();
+    expect(sim.read().constructionCost.AAA).toBe(
+      prices["Defense Post"] + prices["SAM Launcher"],
+    );
   });
 
   it("the counts survive a save", () => {

@@ -5,6 +5,7 @@ import {
   PlayerCommand,
   ReadonlyWorldView,
   SimEvent,
+  WarPreview,
 } from "../sim/VeritableSim";
 import { DomainTiming } from "./perfProbe";
 import {
@@ -67,6 +68,15 @@ export class RemoteVeritableSim {
   // J7b: what lies under a point of the map.
   tileInfo(tile: number): Promise<TileInfo> {
     return this.request({ kind: "tile", tile }) as Promise<TileInfo>;
+  }
+
+  // J7b: what a declaration of war would bring down (the action menu).
+  warPreview(target: string, casusBelli: string): Promise<WarPreview> {
+    return this.request({
+      kind: "war-preview",
+      target,
+      casusBelli,
+    }) as Promise<WarPreview>;
   }
 
   async apply(command: PlayerCommand): Promise<void> {

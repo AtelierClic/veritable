@@ -407,17 +407,26 @@ export class MemoryWorld implements WorldPort {
     winner: NationId,
     loser: NationId,
     tiles: number,
+    toward: number | null = null,
   ): number {
     const segments = this.segments.get(front);
     if (segments === undefined || segments[segment] === undefined) return 0;
     const nations = [winner, loser];
     const g = this.grid(nations);
-    const taken = captureAlong(g, segments[segment], 1, 2, tiles, (tile) => {
-      this.owners[tile] = winner;
-      this.ownerChanges++;
-      this.ledger.mark(tile);
-      this.fallout[tile] = false;
-    });
+    const taken = captureAlong(
+      g,
+      segments[segment],
+      1,
+      2,
+      tiles,
+      (tile) => {
+        this.owners[tile] = winner;
+        this.ownerChanges++;
+        this.ledger.mark(tile);
+        this.fallout[tile] = false;
+      },
+      toward,
+    );
     return taken.length;
   }
 

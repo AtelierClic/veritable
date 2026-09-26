@@ -37,6 +37,9 @@ export interface Multipliers {
   // Per nation: supply factor of its `divisions` engaged on a segment
   // (logistics, J3b) and air factor against a given enemy (air, J3b).
   supply(nation: NationId, segment: SegmentGeometry, divisions: number): number;
+  // Divisions the nation supplies in full on the segment (J7b: the action
+  // menu sends no more).
+  capacity?(nation: NationId, segment: SegmentGeometry): number;
   air(nation: NationId, enemy: NationId): number;
   // Land force of its technology (J5).
   technology?(nation: NationId): number;
@@ -77,6 +80,7 @@ interface SideState {
   attacking: boolean;
   breakthrough: boolean;
   supply: number;
+  capacity: number;
   air: number;
 }
 
@@ -181,12 +185,19 @@ export function resolveTick(
         const whole = Math.floor(v);
         const tiles = whole + (rng.next() < v - whole ? 1 : 0);
         if (tiles > 0) {
+          // J7b: a breakthrough goes towards the objective of its segment.
+          const toward = mover.breakthrough
+            ? (military.nations[mover.nation]?.objectives[
+                `${front.id}#${segment.index}`
+              ] ?? null)
+            : null;
           const taken = world.advance(
             front.id,
             segment.index,
             mover.nation,
             other.nation,
             tiles,
+            toward,
           );
           if (taken > 0) {
             movedTo = mover.nation;
@@ -265,6 +276,7 @@ function sideState(
     attacking,
     breakthrough,
     supply,
+    capacity: multipliers.capacity?.(nation, segment) ?? Infinity,
     air,
   };
 }
@@ -293,6 +305,7 @@ function sideView(
     equipment: divisions > 0 ? equipment / divisions : 0,
     training: divisions > 0 ? training / divisions : 0,
     supply: s.supply,
+    capacity: s.capacity,
     air: s.air,
     terrain,
     structures,

@@ -29,7 +29,7 @@ import { EconomyContext } from "../sim/economy/context";
 import { landingControl, setBlockade } from "../sim/naval/naval";
 import { Rng } from "../sim/rng";
 import { chanceOver, relaxed } from "../sim/time";
-import { WorldPort } from "../sim/VeritableSim";
+import { WarPreview, WorldPort } from "../sim/VeritableSim";
 import { militaryPower } from "../sim/war/military";
 
 // The AI of the nations nobody plays (J5).
@@ -261,6 +261,18 @@ function expectedSanctions(
   target: NationId,
   casusBelli: string,
 ): number {
+  return sanctionOutlook(env, id, target, casusBelli).share;
+}
+
+// The same, with the nations expected to sanction (J7b: the preview of a
+// declaration of the player).
+function sanctionOutlook(
+  env: AiEnv,
+  id: NationId,
+  target: NationId,
+  casusBelli: string,
+): { share: number; nations: NationId[] } {
+  const nations: NationId[] = [];
   const cfg = env.ctx.config;
   const months = 12 * cfg.ai.nations.war.expectedWarYears;
   const perCharge = declarationRelationsCost(
@@ -282,6 +294,7 @@ function expectedSanctions(
     total += w;
     if (other === target) {
       hostile += w;
+      nations.push(other);
       continue;
     }
     if (env.ctx.commonBlocs(other, target) === 0) continue;
@@ -289,9 +302,43 @@ function expectedSanctions(
       relation(env.diplomacy, other, id) -
       fall -
       (allies(env.ctx, other, target) ? drift : 0);
-    if (after < cfg.diplomacy.sanction.relationsBelow) hostile += w;
+    if (after < cfg.diplomacy.sanction.relationsBelow) {
+      hostile += w;
+      nations.push(other);
+    }
   }
-  return total > 0 ? hostile / total : 0;
+  return { share: total > 0 ? hostile / total : 0, nations };
+}
+
+// J7b: what a declaration of war of `id` on `target` with this casus belli
+// would bring down, weighed as the AI weighs its own (the preview of the
+// action menu of the map): the partners expected to sanction and their
+// share of its trade, the nations bound to defend the target and their
+// chance, the relations lost with every nation at the declaration and, for
+// a war without casus belli, every month.
+export function previewWar(
+  env: AiEnv,
+  id: NationId,
+  target: NationId,
+  casusBelli: string,
+): WarPreview {
+  const outlook = sanctionOutlook(env, id, target, casusBelli);
+  const cost = declarationRelationsCost(env.ctx, env.military, id, casusBelli);
+  return {
+    target,
+    casusBelli,
+    sanctionsShare: outlook.share,
+    sanctioners: outlook.nations,
+    coalition: defenseGuarantors(
+      env.ctx,
+      env.blocs,
+      env.politics,
+      target,
+      id,
+    ).sort((a, b) => b.probability - a.probability),
+    relationsCost: cost,
+    monthlyRelationsCost: casusBelli === "none" ? cost : 0,
+  };
 }
 
 // What a war of `id` on `target` would bring and cost; null when the rules

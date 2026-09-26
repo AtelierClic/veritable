@@ -93,6 +93,8 @@ function initNation(ctx: EconomyContext, data: NationData): NationMilitary {
     armsReceived: 0,
     airPower: data.military.airPower,
     navalPower: data.military.navalPower,
+    objectives: {},
+    airStrikes: {},
   };
 }
 

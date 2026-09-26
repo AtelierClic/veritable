@@ -5,9 +5,10 @@ import {
   armsFlowOf,
   hasStakes,
   initAi,
+  previewWar,
   review,
 } from "../ai/nations";
-import { stepWarAi } from "../ai/war";
+import { deployOnFronts, stepWarAi } from "../ai/war";
 import { NationId } from "../data/schemas/common";
 import { VeritableConfig } from "../data/schemas/config";
 import { NationData } from "../data/schemas/nation";
@@ -37,7 +38,7 @@ import {
   War,
 } from "../data/schemas/save";
 import { Scenario } from "../data/schemas/scenario";
-import { airMultiplier, airSuperiority } from "./air/air";
+import { airMultiplier, airSuperiority, orderAirStrike } from "./air/air";
 import {
   accessionCriteria,
   aiApplicationsOf,
@@ -88,6 +89,7 @@ import {
   scheduleSanctionReviews,
   stepDiplomacyMonth,
   stepDiplomacyNation,
+  warOf,
   warSide,
 } from "./diplomacy/diplomacy";
 import {
@@ -139,6 +141,7 @@ import {
   landingControl,
   NavalEvent,
   setBlockade,
+  setFleetZone,
   stepNavalDay,
 } from "./naval/naval";
 import {
@@ -241,8 +244,10 @@ import {
   PlayerCommand,
   PlayerCommandSchema,
   ReadonlyWorldView,
+  SegmentGeometry,
   SimEvent,
   VeritableSim,
+  WarPreview,
   WorldPort,
 } from "./VeritableSim";
 import { monthIndex } from "./war/contest";
@@ -299,6 +304,13 @@ type DomainEvent =
   | DiplomacyEvent
   | PeaceEvent
   | NavalEvent
+  | {
+      type: "air-strike";
+      nation: NationId;
+      target: NationId;
+      war: string;
+      damage: number;
+    }
   | ElectionEvent
   | LawEvent
   | CoupEvent
@@ -931,6 +943,39 @@ export class VeritableSimImpl implements VeritableSim {
         this.navalDay();
         return;
       }
+      case "air-strike": {
+        const me = this.requirePlayer();
+        const war = warOf(this.diplomacy, me, cmd.target);
+        if (war === undefined) throw new Error(`${cmd.target} is not an enemy`);
+        const damage = orderAirStrike(
+          this.ctx,
+          this.military,
+          this.economy,
+          me,
+          cmd.target,
+          date,
+        );
+        this.record(date, {
+          type: "air-strike",
+          nation: me,
+          target: cmd.target,
+          war: war.id,
+          damage,
+        });
+        return;
+      }
+      case "set-fleet":
+        setFleetZone(this.ctx, this.naval, this.requirePlayer(), cmd.zone);
+        this.navalDay();
+        return;
+      case "set-objective": {
+        const objectives =
+          this.military.nations[this.requirePlayer()].objectives;
+        const key = `${cmd.front}#${cmd.segment}`;
+        if (cmd.tile === null) delete objectives[key];
+        else objectives[key] = cmd.tile;
+        return;
+      }
       case "landing": {
         const me = this.requirePlayer();
         if (!enemiesOf(this.diplomacy, me).includes(cmd.target)) {
@@ -1504,11 +1549,13 @@ export class VeritableSimImpl implements VeritableSim {
     }
 
     // The AI: defence, war, navy; its war orders and ceasefires.
-    let ordersWait = false;
+    let ordersWait: boolean;
     if (isAi) {
       const env = this.aiEnv(date);
       for (const event of review(env, id, days)) this.record(date, event);
       ordersWait = this.warOrders(id, now, date, economy.population);
+    } else {
+      ordersWait = this.firstDeployment(id, now, date);
     }
     const after = this.diplomacy.wars.reduce(
       (s, w) => s + w.aggressors.length + w.defenders.length,
@@ -1530,6 +1577,27 @@ export class VeritableSimImpl implements VeritableSim {
       const tick = this.deps.config.time.gameMinutesPerTick;
       hasten(this.schedule, id, now, tick / MINUTES_PER_GAME_DAY, tick);
     }
+  }
+
+  // J7b: the player's nation at war on the first day of the campaign (a
+  // war of the scenario) finds its army on its fronts, deployed as the AI
+  // deploys its own, defending, once the fronts are known; its reserve
+  // stood behind the lines until then and the enemy walked in. Once only
+  // (its lastOrders marks it). True when it waits for the fronts.
+  private firstDeployment(id: NationId, now: number, date: string): boolean {
+    const ai = this.ai.nations[id];
+    if (
+      ai === undefined ||
+      ai.lastOrders !== null ||
+      date !== this.scenario.startDate ||
+      enemiesOf(this.diplomacy, id).length === 0
+    ) {
+      return false;
+    }
+    if (this.geometryDay !== dayIndex(now)) return true;
+    ai.lastOrders = date;
+    deployOnFronts(this.ctx, this.diplomacy, this.military, this.geometry, id);
+    return false;
   }
 
   // The war orders of an AI nation (J7): its divisions on the segments of
@@ -2154,6 +2222,13 @@ export class VeritableSimImpl implements VeritableSim {
       initialTiles: this.territory.initialTiles,
       constructionCost: this.territory.constructionCost,
       casusBelli,
+      blocHeldSanctions:
+        player === null
+          ? []
+          : this.ctx.nationIds.filter(
+              (id) =>
+                id !== player && blocSanction(this.ctx, this.blocs, player, id),
+            ),
       electionProjection: projection,
       electionRunoff:
         player === null || projection === null
@@ -2311,6 +2386,15 @@ export class VeritableSimImpl implements VeritableSim {
       rules: this.deps.config.intel as IntelRules,
       levels,
     };
+  }
+
+  warPreview(target: NationId, casusBelli: string): WarPreview {
+    this.assertInitialized();
+    const me = this.requirePlayer();
+    if (!this.ctx.nationIds.includes(target) || target === me) {
+      throw new Error(`war-preview: no war on ${target}`);
+    }
+    return previewWar(this.aiEnv(this.calendar.date), me, target, casusBelli);
   }
 
   queryJournal(query: JournalQuery): JournalPage {
@@ -2517,19 +2601,27 @@ export class VeritableSimImpl implements VeritableSim {
   // Logistics and air, read by the resolution of the fronts.
   private readonly multipliers: Multipliers = {
     supply: (nation, segment, divisions) => {
-      const cfg = this.deps.config.logistics;
-      const economy = this.economy.nations[nation];
-      const capacity =
-        (cfg.base +
-          cfg.perStructure * (segment.supply[nation] ?? 0) +
-          cfg.infrastructureScale * (economy?.spending.infrastructure ?? 0)) *
-        (1 - (economy?.strikeDamage ?? 0));
+      const capacity = this.supplyCapacity(nation, segment);
       return divisions <= 0 ? 1 : Math.min(1, capacity / divisions);
     },
+    capacity: (nation, segment) => this.supplyCapacity(nation, segment),
     air: (nation, enemy) =>
       airMultiplier(this.ctx, this.military, nation, enemy),
     technology: (nation) => this.ctx.techModifiers.get(nation)?.land ?? 1,
   };
+
+  // Divisions a nation supplies in full on a segment (J3b): the base, the
+  // ports and cities in range, its infrastructure, less the strikes.
+  private supplyCapacity(nation: NationId, segment: SegmentGeometry): number {
+    const cfg = this.deps.config.logistics;
+    const economy = this.economy.nations[nation];
+    return (
+      (cfg.base +
+        cfg.perStructure * (segment.supply[nation] ?? 0) +
+        cfg.infrastructureScale * (economy?.spending.infrastructure ?? 0)) *
+      (1 - (economy?.strikeDamage ?? 0))
+    );
+  }
 
   // Share of the trade partners of a nation that sanction it or fight it
   // (or, with `sanctionsOnly`, that sanction it). J7: once a game day per
@@ -2737,8 +2829,14 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   // A front on the nation's own territory (any front it is part of).
+  // J7b: or at war with a land neighbour — at the first tick of a campaign
+  // the fronts of the day are not computed yet, and Ukraine, whose updates
+  // come first, held the election its war suspends.
   private hasFrontAtHome(id: NationId): boolean {
-    return this.geometry.some((g) => g.a === id || g.b === id);
+    return (
+      this.geometry.some((g) => g.a === id || g.b === id) ||
+      enemiesOf(this.diplomacy, id).some((e) => this.ctx.landNeighbours(id, e))
+    );
   }
 
   // A suspended member that is a democracy again gets back in.
@@ -2895,6 +2993,13 @@ export class VeritableSimImpl implements VeritableSim {
       case "landing":
       case "landing-refused":
         params = { target: event.target };
+        break;
+      case "air-strike":
+        params = {
+          target: event.target,
+          war: event.war,
+          damage: (event.damage * 100).toFixed(1),
+        };
         break;
       case "election-held":
         params = {
@@ -3084,6 +3189,7 @@ export class VeritableSimImpl implements VeritableSim {
       case "landing":
       case "landing-refused":
       case "ai-landing":
+      case "air-strike":
         return world.capitalTile(event.target);
       default:
         return null;

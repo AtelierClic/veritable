@@ -6,6 +6,7 @@ import {
 } from "../../data/schemas/save";
 import { enemiesOf } from "../diplomacy/diplomacy";
 import { EconomyContext } from "../economy/context";
+import { addDays, daysBetweenDates } from "../time";
 
 // Air (J3b). Between two belligerents a = air_a / (air_a + air_b), from the
 // air power of the sheets scaled by the arms coverage (military.ts). On the
@@ -54,4 +55,44 @@ export function stepAirMonth(
       Math.max(decayed, worst > 0 ? cfg.strikeShare * worst : 0),
     );
   }
+}
+
+// J7b: an air strike ordered on an enemy (the action menu of the map, the
+// Fronts screen) adds targetedShare x a to its damage at once; at most once
+// every cooldownDays on the same enemy.
+
+// The first day the nation may strike the enemy again (null: any day).
+export function nextAirStrike(
+  ctx: EconomyContext,
+  military: MilitaryState,
+  by: NationId,
+  target: NationId,
+): string | null {
+  const last = military.nations[by]?.airStrikes[target];
+  return last === undefined ? null : addDays(last, ctx.config.air.cooldownDays);
+}
+
+// Returns the damage added.
+export function orderAirStrike(
+  ctx: EconomyContext,
+  military: MilitaryState,
+  economy: EconomyState,
+  by: NationId,
+  target: NationId,
+  date: string,
+): number {
+  const next = nextAirStrike(ctx, military, by, target);
+  if (next !== null && daysBetweenDates(date, next) > 0) {
+    throw new Error(`air-strike: next strike on ${target} on ${next}`);
+  }
+  const nation = economy.nations[target];
+  if (nation === undefined) throw new Error(`air-strike: unknown ${target}`);
+  const before = nation.strikeDamage;
+  nation.strikeDamage = Math.min(
+    1,
+    before +
+      ctx.config.air.targetedShare * airSuperiority(military, by, target),
+  );
+  military.nations[by].airStrikes[target] = date;
+  return nation.strikeDamage - before;
 }

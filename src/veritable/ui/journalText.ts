@@ -217,6 +217,11 @@ export function journalLine(names: Names, j: JournalEntry): string {
   if (j.kind === "election-held") {
     params.round = p.round === "2" ? vt("journal.round-2") : "";
   }
+  if (j.kind === "air-strike" && p.damage !== undefined) {
+    params.damage = Number(p.damage).toLocaleString("fr-FR", {
+      maximumFractionDigits: 1,
+    });
+  }
   if (p.law !== undefined) params.law = vt(`law.${p.law}.name`);
   if (p.objective !== undefined) {
     params.objective = vt(`objective.${p.objective}.name`);

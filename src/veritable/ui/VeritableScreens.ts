@@ -32,7 +32,7 @@ import {
   ReadonlyWorldView,
 } from "../sim/VeritableSim";
 import { campaignController } from "./CampaignController";
-import { confirmAction } from "./ConfirmModal";
+import { declareWarConfirmed, nuclearLaunchConfirmed } from "./confirmations";
 import { effectLabel } from "./eventText";
 import { longDate } from "./format";
 import {
@@ -40,6 +40,7 @@ import {
   nuclearPowers,
   own,
   publicPolitics,
+  RATIO_CAP,
   seen,
   shown,
   sideSeen,
@@ -55,6 +56,7 @@ import {
   regionOptions,
   renderNationFilter,
 } from "./nationFilter";
+import { airStrikeBlock } from "./orders";
 
 export type ScreenId =
   | "economy"
@@ -108,7 +110,7 @@ function ratioText(
   if (own === null || theirs === undefined) return "—";
   const ratio = (a: number, b: number) =>
     b > 0 ? a / b : a > 0 ? Infinity : 1;
-  const text = (r: number) => (r === Infinity ? "∞" : r.toFixed(2));
+  const text = (r: number) => (r >= RATIO_CAP ? `${RATIO_CAP}+` : r.toFixed(2));
   if (theirs.kind === "exact") return text(ratio(own, theirs.value));
   if (theirs.kind === "range") {
     return `${text(ratio(own, theirs.high))} – ${text(ratio(own, theirs.low))}`;
@@ -240,6 +242,25 @@ export class VeritableScreens extends LitElement {
       this.error = error instanceof Error ? error.message : String(error);
     }
     await this.refresh();
+  }
+
+  // J7b: the preview of what the war would bring down, then the
+  // confirmation (the same as from the action menu of the map).
+  private async declareWar(
+    view: ReadonlyWorldView,
+    target: string,
+    casusBelli: string,
+  ): Promise<void> {
+    const sim = this.sim;
+    if (sim === null) return;
+    try {
+      this.error = null;
+      await declareWarConfirmed(sim, viewNames(view), target, casusBelli, (c) =>
+        this.command(c),
+      );
+    } catch (error) {
+      this.error = error instanceof Error ? error.message : String(error);
+    }
   }
 
   private nationLabel(view: ReadonlyWorldView, id: string): string {
@@ -629,6 +650,55 @@ export class VeritableScreens extends LitElement {
     `;
   }
 
+  // J7b: an air strike on an enemy, at most once every air.cooldownDays.
+  private airStrikeButton(
+    view: ReadonlyWorldView,
+    enemy: string,
+  ): TemplateResult {
+    const block = airStrikeBlock(view, this.config.air.cooldownDays, enemy);
+    return html`<button
+      class="rounded px-2 ${block === null
+        ? "bg-gray-700"
+        : "cursor-not-allowed bg-gray-800 opacity-50"}"
+      title=${block ?? vt("menu.air-strike-hint-short")}
+      ?disabled=${block !== null}
+      @click=${() => void this.command({ type: "air-strike", target: enemy })}
+    >
+      ${vt("screen.war.air-strike", { nation: this.nationLabel(view, enemy) })}
+    </button>`;
+  }
+
+  // J7b: the point a segment breaks through towards (the action menu of
+  // the map sets it): the camera to it, or removed.
+  private objectiveCell(
+    view: ReadonlyWorldView,
+    front: FrontView,
+    segment: number,
+  ): TemplateResult {
+    const tile = own(view)?.military?.objectives[`${front.id}#${segment}`];
+    if (tile === undefined) return html`—`;
+    return html`<button
+        class="rounded bg-gray-700 px-1"
+        title=${vt("screen.war.objective-show")}
+        @click=${() => campaignController().focus(tile)}
+      >
+        ${vt("screen.war.objective")}
+      </button>
+      <button
+        class="rounded bg-gray-700 px-1"
+        title=${vt("screen.war.objective-clear")}
+        @click=${() =>
+          void this.command({
+            type: "set-objective",
+            front: front.id,
+            segment,
+            tile: null,
+          })}
+      >
+        ✕
+      </button>`;
+  }
+
   private frontLabel(view: ReadonlyWorldView, front: FrontView): string {
     const me = view.playerNation;
     const other = front.a === me ? front.b : front.a;
@@ -744,20 +814,10 @@ export class VeritableScreens extends LitElement {
       const nation = this.nationLabel(view, target);
       return html`<button
         class="rounded bg-red-900 px-2"
-        @click=${async () => {
-          const ok = await confirmAction({
-            title: vt("confirm.nuclear.title"),
-            body: vt(`confirm.nuclear.body-${aim}`, { nation }),
-            confirm: vt("confirm.nuclear.fire"),
-          });
-          if (!ok) return;
-          void this.command({
-            type: "nuclear-launch",
-            target,
-            aim,
-            confirmed: true,
-          });
-        }}
+        @click=${() =>
+          void nuclearLaunchConfirmed(viewNames(view), target, aim, (c) =>
+            this.command(c),
+          )}
       >
         ${vt(`screen.nuclear.fire-${aim}`, { nation })}
       </button>`;
@@ -970,6 +1030,9 @@ export class VeritableScreens extends LitElement {
               </button>`,
           )}
         </div>
+        <div class="flex flex-wrap items-center gap-1">
+          ${enemies.map((enemy) => this.airStrikeButton(view, enemy))}
+        </div>
         ${this.peaceTerms.kind === "annexation"
           ? enemies
               .filter((enemy) =>
@@ -1013,6 +1076,7 @@ export class VeritableScreens extends LitElement {
               <th>${vt("screen.war.ratio")}</th>
               <th>${vt("screen.war.supply")}</th>
               <th>${vt("screen.war.moved")}</th>
+              <th>${vt("screen.war.objective-col")}</th>
             </tr>
           </thead>
           <tbody>
@@ -1055,6 +1119,7 @@ export class VeritableScreens extends LitElement {
                     ? "—"
                     : this.nationLabel(view, s.movedTo)}
                 </td>
+                <td>${this.objectiveCell(view, front, s.index)}</td>
               </tr>`;
             })}
           </tbody>
@@ -1201,25 +1266,7 @@ export class VeritableScreens extends LitElement {
                         (c) =>
                           html`<button
                             class="rounded bg-red-800 px-1"
-                            @click=${async () => {
-                              const casus = vt(
-                                this.casusBelli.find((cb) => cb.id === c)
-                                  ?.name ?? c,
-                              );
-                              const ok = await confirmAction({
-                                title: vt("confirm.war.title", {
-                                  nation: this.nationLabel(view, id),
-                                }),
-                                body: vt("confirm.war.body", { casus }),
-                                confirm: vt("confirm.war.declare"),
-                              });
-                              if (!ok) return;
-                              void this.command({
-                                type: "declare-war",
-                                target: id,
-                                casusBelli: c,
-                              });
-                            }}
+                            @click=${() => void this.declareWar(view, id, c)}
                           >
                             ${vt("screen.diplomacy.declare", {
                               casus: vt(
@@ -1248,9 +1295,45 @@ export class VeritableScreens extends LitElement {
           <b>${pct(view.naval.blockade[me] ?? 0, 0)}</b></span
         >
       </div>
-      ${this.renderEmbargoes(view, me, picked)}
+      ${this.renderFleet(view, me)} ${this.renderEmbargoes(view, me, picked)}
       <div class="mt-1 text-gray-400">${vt("screen.diplomacy.note")}</div>
     `;
+  }
+
+  // J7b: where the fleet goes — its coasts (spread over the zones of its
+  // coasts and ports), one sea zone, or the coasts of an enemy (blockade).
+  private renderFleet(view: ReadonlyWorldView, me: string): TemplateResult {
+    const deployment = view.naval.deployments[me];
+    const zones = Object.keys(deployment ?? {});
+    const current = zones.length === 1 ? zones[0] : "";
+    const seas = Object.keys(view.naval.control).sort((a, b) =>
+      vt(`sea.${a}`).localeCompare(vt(`sea.${b}`), "fr"),
+    );
+    return html`<div class="mt-1">
+      ${vt("screen.diplomacy.fleet")} :
+      <select
+        class="bg-gray-800"
+        @change=${(e: Event) => {
+          const v = (e.target as HTMLSelectElement).value;
+          void this.command({ type: "set-fleet", zone: v === "" ? null : v });
+        }}
+      >
+        <option value="" ?selected=${deployment === undefined}>
+          ${vt("screen.diplomacy.fleet-home")}
+        </option>
+        ${zones.length > 1
+          ? html`<option value="-" selected disabled>
+              ${vt("screen.diplomacy.fleet-blockade")}
+            </option>`
+          : nothing}
+        ${seas.map(
+          (z) =>
+            html`<option value=${z} ?selected=${z === current}>
+              ${vt(`sea.${z}`)}
+            </option>`,
+        )}
+      </select>
+    </div>`;
   }
 
   // The embargoes of one pair, both ways (J6c: a matrix of 207 nations by

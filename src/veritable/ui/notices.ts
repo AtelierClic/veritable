@@ -113,6 +113,9 @@ export function classify(entry: JournalEntry, ctx: Context): Notice {
     case "ai-landing":
     case "landing-refused":
       return p.target === player ? notice("info") : notice("log");
+    // J7b: the player's own order, done.
+    case "air-strike":
+      return me ? notice("info") : notice("log");
     case "arms-aid-started":
     case "arms-aid-ended":
       return p.to === player ? notice("info") : notice("log");

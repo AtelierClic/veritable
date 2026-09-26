@@ -28,6 +28,8 @@ export type VeritableRequest =
   | { kind: "journal"; query: JournalQuery }
   // J7b: what lies under a point of the map (the card, the action menu).
   | { kind: "tile"; tile: number }
+  // J7b: what a declaration of war of the player would bring down.
+  | { kind: "war-preview"; target: NationId; casusBelli: string }
   | { kind: "apply"; command: PlayerCommand }
   | { kind: "snapshot" }
   | { kind: "perf" }

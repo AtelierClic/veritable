@@ -140,6 +140,19 @@ export function shown(p: Perceived, format: (v: number) => string): string {
   return vt("intel.unknown");
 }
 
+// A force ratio (J7b): beyond RATIO_CAP it only says that much — against a
+// segment nobody defends, the ratio is the attacker's force over nothing.
+export const RATIO_CAP = 100;
+const RATIO_NUMBER = new Intl.NumberFormat("fr-FR", {
+  maximumFractionDigits: 1,
+});
+export function ratioShown(p: Perceived): string {
+  const format = (v: number) =>
+    v >= RATIO_CAP ? `${RATIO_CAP}+` : RATIO_NUMBER.format(v);
+  if (p.kind === "range" && p.low >= RATIO_CAP) return format(p.low);
+  return shown(p, format);
+}
+
 // How old a figure is: nothing when it is today's, "au 1er avril 2031"
 // else.
 export function dataAge(p: Perceived, today: string): string {
@@ -219,6 +232,15 @@ export function sideSeen(
   nation: NationId,
 ): SideSeen | null {
   return sideSeenWith(intelSource(view), view.playerNation, segment, nation);
+}
+
+// The player's own side of a segment, exact (J7b: the action menu).
+export function ownSide(
+  view: ReadonlyWorldView,
+  segment: { sides: Record<NationId, SegmentSide> },
+): SegmentSide | null {
+  const me = view.playerNation;
+  return me === null ? null : (segment.sides[me] ?? null);
 }
 
 // A figure of another nation seen in contact (the losses of a war).

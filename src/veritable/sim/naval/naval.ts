@@ -138,6 +138,24 @@ export function setBlockade(
   );
 }
 
+// J7b: the whole fleet of a nation in one sea zone (the action menu of the
+// map, the Diplomacy screen), or back home (null).
+export function setFleetZone(
+  ctx: EconomyContext,
+  naval: NavalState,
+  by: NationId,
+  zone: string | null,
+): void {
+  if (zone === null) {
+    delete naval.deployments[by];
+    return;
+  }
+  if (!ctx.seas.some((z) => z.id === zone)) {
+    throw new Error(`fleet: unknown sea zone ${zone}`);
+  }
+  naval.deployments[by] = { [zone]: 1 };
+}
+
 export function controlOf(
   naval: NavalState,
   zone: string,

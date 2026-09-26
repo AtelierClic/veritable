@@ -62,6 +62,7 @@ export interface MapMarker {
 export class CampaignController {
   private unsubscribe: (() => void) | null = null;
   private sim: RemoteVeritableSim | null = null;
+  private player: string | null = null;
   private eventBus: EventBus | null = null;
   private paused = false;
   private speed: Speed = 1;
@@ -120,6 +121,7 @@ export class CampaignController {
 
     const view = await sim.read();
     if (this.sim !== sim) return; // detached meanwhile
+    this.player = view.playerNation;
     const nation = view.nations.find((n) => n.id === view.playerNation);
     const label =
       nation === undefined
@@ -151,6 +153,11 @@ export class CampaignController {
   // The simulation of the running campaign, null outside a campaign.
   remote(): RemoteVeritableSim | null {
     return this.sim;
+  }
+
+  // The nation the player plays (J7b), null outside a campaign.
+  playerNation(): string | null {
+    return this.sim === null ? null : this.player;
   }
 
   detach(): void {

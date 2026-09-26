@@ -323,6 +323,19 @@ export function createRenderer(
   if (campaign) hideLegacyPanels();
   const legacy = <T extends Controller>(layer: T): T[] =>
     campaign ? [] : [layer];
+  const campaignControllers = (): Controller[] => {
+    const fronts = new FrontOverlayController(eventBus, transformHandler);
+    return [
+      fronts,
+      new MapInteractionController(
+        eventBus,
+        transformHandler,
+        game,
+        fronts,
+        uiState,
+      ),
+    ];
+  };
 
   const layers: Controller[] = [
     new WarshipSelectionController(game, eventBus, transformHandler, view),
@@ -344,13 +357,9 @@ export function createRenderer(
     ...(mapLayerController ? [mapLayerController] : []),
     // VERITABLE: the fronts of a campaign drawn on the map (lines, force
     // ratios, contested tiles, factors of a segment on click); J7b: the map
-    // as an interface (the card of a nation on a right click).
-    ...(isCampaign(game)
-      ? [
-          new FrontOverlayController(eventBus, transformHandler),
-          new MapInteractionController(eventBus, transformHandler, game),
-        ]
-      : []),
+    // as an interface (the card of a nation on a right click, the action
+    // menu on a left click).
+    ...(campaign ? campaignControllers() : []),
     eventsDisplay,
     actionableEvents,
     attacksDisplay,

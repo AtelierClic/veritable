@@ -1,6 +1,5 @@
 import { html, render } from "lit";
 import { Controller } from "../../client/Controller";
-import { MouseUpEvent } from "../../client/InputHandler";
 import { TransformHandler } from "../../client/TransformHandler";
 import { EventBus } from "../../core/EventBus";
 import { Cell } from "../../core/game/Game";
@@ -9,11 +8,13 @@ import { MapOverlayResult } from "../adapters/protocol";
 import { vt } from "../data/i18n";
 import { loadVeritableConfig } from "../data/loadConfig";
 import { NationId } from "../data/schemas/common";
+import type { Perceived } from "../sim/intel/intel";
 import { FrontView, SegmentView } from "../sim/VeritableSim";
 import { campaignController, MapMarker } from "./CampaignController";
 import {
   attackRatioSeen,
   contactSource,
+  ratioShown,
   shown,
   SideSeen,
   sideSeenWith,
@@ -42,6 +43,11 @@ const COLORS = {
   bAdvances: "rgba(192, 132, 252, 0.9)",
   quiet: "rgba(235, 235, 235, 0.95)",
 };
+
+// A ratio known exactly (the player's own attack).
+function exactRatio(value: number): Perceived {
+  return { kind: "exact", value, asOf: "", level: 3 };
+}
 
 const NUMBER = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 });
 const INTEGER = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
@@ -141,7 +147,6 @@ export class FrontOverlayController implements Controller {
     if (overlay?.parentElement) overlay.after(canvas);
     else document.body.appendChild(canvas);
     this.canvas = canvas;
-    this.eventBus.on(MouseUpEvent, (e) => this.onClick(e.x, e.y));
     window.addEventListener("resize", () => (this.dirty = true));
     const frame = () => {
       if (this.canvas === null || !this.canvas.isConnected) return;
@@ -311,10 +316,7 @@ export class FrontOverlayController implements Controller {
             y: line.mid[1],
             text: vt("map.front.ratio", {
               nation: segment.attacker,
-              ratio:
-                seenRatio === null
-                  ? NUMBER.format(segment.attackRatio)
-                  : shown(seenRatio, (v) => NUMBER.format(v)),
+              ratio: ratioShown(seenRatio ?? exactRatio(segment.attackRatio)),
             }),
             color: style.color,
           });
@@ -389,15 +391,35 @@ export class FrontOverlayController implements Controller {
     return best?.m ?? null;
   }
 
-  private onClick(x: number, y: number): void {
-    // A marker first (J7): the journal on its event.
+  // The last fronts drawn (J7b: the action menu finds the segment of a
+  // point with them).
+  overlayData(): MapOverlay | null {
+    return this.data?.overlay ?? null;
+  }
+
+  // A left click on the map (J7b, MapInteraction): a marker opens its entry
+  // of the journal (the click goes no further: true); a click near a front
+  // shows the factors of its segment, and the action menu opens too.
+  handleClick(x: number, y: number): boolean {
     const hit = this.markerAt(x, y);
     if (hit !== null) {
       campaignController().openMarker(hit);
+      return true;
+    }
+    this.selectSegment(x, y);
+    return false;
+  }
+
+  private selectSegment(x: number, y: number): void {
+    const data = this.data;
+    if (data === null || data.fronts.length === 0) {
+      if (this.selected !== null) {
+        this.selected = null;
+        this.dirty = true;
+        this.renderPanel();
+      }
       return;
     }
-    const data = this.data;
-    if (data === null || data.fronts.length === 0) return;
     const p = this.transform.screenToWorldCoordinatesFloat(x, y);
     const reach = Math.max(2, 14 / this.transform.scale);
     let best: { front: string; segment: number; d: number } | null = null;
@@ -506,10 +528,7 @@ export class FrontOverlayController implements Controller {
         ? vt("map.front.quiet")
         : `${vt("map.front.attack", {
             nation: nationName(segment.attacker),
-            ratio:
-              seenRatio === null
-                ? NUMBER.format(segment.attackRatio)
-                : shown(seenRatio, (v) => NUMBER.format(v)),
+            ratio: ratioShown(seenRatio ?? exactRatio(segment.attackRatio)),
             threshold: NUMBER.format(this.threshold),
           })} ${vt(
             segment.attackRatio > this.threshold

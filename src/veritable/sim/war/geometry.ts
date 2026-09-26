@@ -151,6 +151,8 @@ export function segmentFront(
 // Takes up to `n` tiles of `loser` along the segment for `winner`: the tiles
 // with the most winner neighbours first, then the neighbours of what was
 // taken. Returns the tiles taken, in order.
+// `toward` (J7b, a breakthrough towards a point): the tile taken first is
+// the one nearest that tile, then the one with the most winner neighbours.
 export function captureAlong(
   g: GridAccess,
   segment: readonly number[],
@@ -158,8 +160,17 @@ export function captureAlong(
   loser: number,
   n: number,
   conquer: (tile: number) => void,
+  toward: number | null = null,
 ): number[] {
   const buf = [0, 0, 0, 0];
+  const tx = toward === null ? 0 : toward % g.width;
+  const ty = toward === null ? 0 : Math.floor(toward / g.width);
+  const distance = (tile: number): number => {
+    if (toward === null) return 0;
+    const dx = (tile % g.width) - tx;
+    const dy = Math.floor(tile / g.width) - ty;
+    return dx * dx + dy * dy;
+  };
   const candidates = new Set<number>();
   const consider = (tile: number) => {
     if (g.ownerAt(tile) === loser) candidates.add(tile);
@@ -173,6 +184,7 @@ export function captureAlong(
   while (taken.length < n && candidates.size > 0) {
     let best = -1;
     let bestScore = -1;
+    let bestDistance = Infinity;
     for (const tile of candidates) {
       if (g.ownerAt(tile) !== loser) {
         candidates.delete(tile);
@@ -182,9 +194,15 @@ export function captureAlong(
       let score = 0;
       for (let i = 0; i < k; i++) if (g.ownerAt(buf[i]) === winner) score++;
       if (score === 0) continue;
-      if (score > bestScore || (score === bestScore && tile < best)) {
+      const d = distance(tile);
+      if (
+        d < bestDistance ||
+        (d === bestDistance &&
+          (score > bestScore || (score === bestScore && tile < best)))
+      ) {
         best = tile;
         bestScore = score;
+        bestDistance = d;
       }
     }
     if (best < 0) break;

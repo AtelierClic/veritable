@@ -454,6 +454,10 @@ const AirConfigSchema = z.object({
   // strikeShare x a; the damage decays by this factor every month.
   strikeShare: share,
   strikeDecayPerMonth: share,
+  // J7b: an air strike the player orders on an enemy adds targetedShare x a
+  // to its damage, at most once every cooldownDays on the same enemy.
+  targetedShare: share,
+  cooldownDays: z.number().int().min(1),
 });
 
 const LogisticsConfigSchema = z.object({

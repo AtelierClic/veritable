@@ -114,9 +114,9 @@
     "structureCostUsd": {
       "City": 5000000000,
       "Port": 2000000000,
-      "DefensePost": 500000000,
-      "SAMLauncher": 1000000000,
-      "MissileSilo": 3000000000,
+      "Defense Post": 500000000,
+      "SAM Launcher": 1000000000,
+      "Missile Silo": 3000000000,
       "Warship": 1500000000
     },
     "grantsPeaceDecayPerMonth": 0.05
@@ -469,7 +469,9 @@
   "air": {
     "segmentWeight": 0.5,
     "strikeShare": 0.1,
-    "strikeDecayPerMonth": 0.5
+    "strikeDecayPerMonth": 0.5,
+    "targetedShare": 0.05,
+    "cooldownDays": 30
   },
   "logistics": {
     "base": 2,

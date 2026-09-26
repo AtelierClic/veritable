@@ -145,6 +145,30 @@ export function stepWarAi(
   return orders;
 }
 
+// J7b: the army of the player's nation at war on the first day stands on
+// its fronts — its government's first orders, before the player takes
+// over: every division over the segments of its fronts by the threat, as
+// the AI deploys its own, defending. Without a front, nothing.
+export function deployOnFronts(
+  ctx: EconomyContext,
+  diplomacy: DiplomacyState,
+  military: MilitaryState,
+  geometry: readonly FrontGeometry[],
+  id: NationId,
+): void {
+  const me = military.nations[id];
+  if (me === undefined) return;
+  const enemies = enemiesOf(diplomacy, id);
+  const fronts = geometry.filter(
+    (f) =>
+      (f.a === id && enemies.includes(f.b)) ||
+      (f.b === id && enemies.includes(f.a)),
+  );
+  if (fronts.length === 0) return;
+  deploy(ctx, military, me, id, fronts);
+  for (const d of me.divisions) d.posture = "defend";
+}
+
 // Share of the nation's tiles it lost in this war (net), relative to what it
 // holds now plus what it lost.
 function lostTilesShare(war: War, id: NationId): number {
