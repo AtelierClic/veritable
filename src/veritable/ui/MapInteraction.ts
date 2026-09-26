@@ -197,7 +197,30 @@ export class MapInteractionController implements Controller {
     );
   }
 
+  // J7c: after a last stand the player's nation is not the core's human
+  // player any more: the worker builds for it.
+  private handedOver(): boolean {
+    const config = this.game.config().gameConfig();
+    const nation = campaignController().playerNation();
+    return nation !== null && nation !== config.veritablePlayerNation;
+  }
+
   private async buildables(tile: number | null): Promise<Buildable[]> {
+    if (tile !== null && this.handedOver()) {
+      const remote = campaignController().remote();
+      if (remote === null) return [];
+      const config = this.game.config();
+      const types = MENU_STRUCTURES.filter((t) => !config.isUnitDisabled(t));
+      const options = await remote.buildOptions(tile, [...types]);
+      return types.map((type) => ({
+        type,
+        canBuild:
+          options.find((o) => o.type === type)?.canBuild === true
+            ? tile
+            : false,
+        canUpgrade: false,
+      }));
+    }
     const me = this.game.myPlayer();
     if (me === null || tile === null) return [];
     const units = await me.buildables(tile, [...MENU_STRUCTURES]);
@@ -216,6 +239,12 @@ export class MapInteractionController implements Controller {
 
   // The orders of the core, as its build menu gives them.
   private build(b: Buildable, tile: number | null): void {
+    if (this.handedOver()) {
+      if (b.canBuild !== false && tile !== null) {
+        void campaignController().remote()?.build(b.type, tile);
+      }
+      return;
+    }
     if (b.canUpgrade !== false) {
       this.eventBus.emit(
         new SendUpgradeStructureIntentEvent(b.canUpgrade, b.type),

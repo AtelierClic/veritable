@@ -66,6 +66,9 @@ const KEPT: ReadonlySet<string> = new Set([
   "bloc-joined",
   "bloc-left",
   "yearly-summary",
+  // J7c.
+  "exile-returned",
+  "last-stand",
 ]);
 
 // The nations an entry concerns (J7): its nation and those its parameters

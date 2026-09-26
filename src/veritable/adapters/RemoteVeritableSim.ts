@@ -71,6 +71,20 @@ export class RemoteVeritableSim {
     return this.request({ kind: "tile", tile }) as Promise<TileInfo>;
   }
 
+  // J7c: builds of the player's nation after a last stand.
+  buildOptions(
+    tile: number,
+    units: string[],
+  ): Promise<{ type: string; canBuild: boolean }[]> {
+    return this.request({ kind: "build-options", tile, units }) as Promise<
+      { type: string; canBuild: boolean }[]
+    >;
+  }
+
+  build(unit: string, tile: number): Promise<boolean> {
+    return this.request({ kind: "build", unit, tile }) as Promise<boolean>;
+  }
+
   // J7b: what the modes of the map colour the nations by.
   mapColors(): Promise<MapColorsResult> {
     return this.request({ kind: "map-colors" }) as Promise<MapColorsResult>;

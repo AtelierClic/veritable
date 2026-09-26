@@ -327,6 +327,8 @@ Perdre son territoire ne termine pas la partie : perdre son État non plus. Troi
 
 Les nations IA suivent exactement les mêmes trois états — un pays annexé n'est jamais simplement effacé de la carte.
 
+**Valeurs (J7c).** La reconnaissance R est la part du PIB mondial des nations qui reconnaissent le gouvernement en exil ; elle s'érode de 0,02 × (1 − S) par mois, plus vite si les blocs dont il était membre reconnaissent l'annexion. Le soutien S est la part du PIB mondial des nations à relation 40 ou plus avec lui et 0 ou moins avec l'annexeur. L'exil survit tant que R + S ≥ 0,6 ; il est dissous après douze mois consécutifs sous ce seuil, ou dès que des nations pesant plus de la moitié du PIB mondial reconnaissent l'annexion. La résistance coûte à l'occupant une part de sa stabilité proportionnelle aux gens de l'exil qu'il tient. Retour : la terre qu'une nation amie (40 ou plus), en guerre contre l'annexeur, lui reprend est rendue à la paix ; un occupant qui s'effondre rend la terre ; une négociation aboutit quand la résistance pèse et que l'occupant est faible ou sanctionné. Baroud d'honneur : une nation de moins de dix millions d'habitants, vivante, autre que l'annexeur.
+
 ## Événements
 
 Un événement est un pop-up daté avec un titre, un texte, deux à quatre choix, et pour chaque choix des effets sur les chiffres (budget, opinion par groupe, relations, prix, stabilité). Scriptés et procéduraux partagent le même format de données et le même moteur de déclenchement.

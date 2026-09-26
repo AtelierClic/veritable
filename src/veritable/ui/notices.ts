@@ -61,6 +61,10 @@ const OWN_NATION_INFO = new Set([
   "bloc-accession-frozen",
   "claims-settled",
   "claim-weakened",
+  // J7c.
+  "exile-returned",
+  "exile-negotiation",
+  "last-stand",
 ]);
 
 export function classify(entry: JournalEntry, ctx: Context): Notice {

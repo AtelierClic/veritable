@@ -261,6 +261,36 @@ export class MemoryWorld implements WorldPort {
     );
   }
 
+  homelandHeld(nation: NationId): {
+    tiles: ReadonlyMap<NationId, number>;
+    people: ReadonlyMap<NationId, number>;
+  } {
+    const tiles = new Map<NationId, number>();
+    const people = new Map<NationId, number>();
+    for (const tile of this.claims.homeland(nation)) {
+      const owner = this.owners[tile];
+      if (owner === null) continue;
+      tiles.set(owner, (tiles.get(owner) ?? 0) + 1);
+      const p = this.people.peopleAt(tile);
+      if (p > 0) people.set(owner, (people.get(owner) ?? 0) + p);
+    }
+    return { tiles, people };
+  }
+
+  returnHomeland(nation: NationId, from: NationId): number {
+    if (nation === from) return 0;
+    let moved = 0;
+    this.ownerChanges++;
+    for (const tile of this.claims.homeland(nation)) {
+      if (this.owners[tile] !== from) continue;
+      this.claims.unsettle(tile, from);
+      this.ledger.clear(tile);
+      this.changeOwner(tile, nation);
+      moved++;
+    }
+    return moved;
+  }
+
   contaminationAt(tile: number): number {
     return this.contamination.levelAt(tile);
   }

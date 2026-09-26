@@ -20,6 +20,7 @@ import {
   ContaminationEntry,
   DiplomacyState,
   EventsState,
+  ExileSection,
   IntelState,
   JournalEntry,
   Market,
@@ -251,6 +252,10 @@ export const PlayerCommandSchema = z.discriminatedUnion("type", [
   // zone (null: home); the tile a segment of a front breaks through towards
   // (null: none).
   z.object({ type: z.literal("air-strike"), target: NationIdSchema }),
+  // J7c: the player's government in exile asks its annexer for its land;
+  // the player's dissolved nation hands over to a small one (last stand).
+  z.object({ type: z.literal("exile-negotiate") }),
+  z.object({ type: z.literal("last-stand"), nation: NationIdSchema }),
   z.object({
     type: z.literal("set-fleet"),
     zone: z.string().min(1).nullable(),
@@ -435,7 +440,11 @@ export type SimEvent =
         | "bloc-article5-refused"
         // Technology and events (J5).
         | "tech-completed"
-        | "event-occurred";
+        | "event-occurred"
+        // Exile (J7c).
+        | "exile-returned"
+        | "exile-negotiation"
+        | "last-stand";
       date: string;
       nation: NationId;
       params: Record<string, string>;
@@ -555,6 +564,12 @@ export interface ReadonlyWorldView {
   readonly intel: Readonly<IntelView>;
   readonly power: Readonly<Record<NationId, number>>;
   readonly coupRisk: Readonly<Record<NationId, number>>;
+  // J7c: the governments in exile and the dissolved nations; the
+  // stability each occupant loses to their resistance; the nations the
+  // player's dissolved nation may hand over to.
+  readonly exile: Readonly<ExileSection>;
+  readonly resistance: Readonly<Record<NationId, number>>;
+  readonly lastStandChoices: readonly NationId[];
   readonly version: number;
 }
 
@@ -721,6 +736,15 @@ export interface WorldPort {
   contaminatedShares(): ReadonlyMap<NationId, number>;
   // The owner of a tile (null: nobody).
   ownerOf(tile: number): NationId | null;
+  // J7c (sim/exile/exile.ts): who holds the first-day land of a nation,
+  // settled or not, in tiles and in people (units of the population grid;
+  // empty without a grid), and its return: the tiles of it `from` holds go
+  // back to it (no longer settled nor contested); returns how many.
+  homelandHeld(nation: NationId): {
+    tiles: ReadonlyMap<NationId, number>;
+    people: ReadonlyMap<NationId, number>;
+  };
+  returnHomeland(nation: NationId, from: NationId): number;
   // Does the nation still hold its capital?
   capitalHeld(nation: NationId): boolean;
   // Places of the journal (J7): the tile of the capital of a nation (null

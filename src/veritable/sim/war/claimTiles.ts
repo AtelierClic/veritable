@@ -42,6 +42,8 @@ export class ClaimTiles {
   } | null = null;
   private tracking = false;
   private tileRegions: Map<number, string[]> | null = null;
+  // J7c: the first-day land of each nation asked for (an exile's homeland).
+  private homelands = new Map<NationId, Uint32Array>();
 
   constructor(
     private readonly size: number,
@@ -60,6 +62,33 @@ export class ClaimTiles {
 
   isSettled(tile: number): boolean {
     return this.settled[tile] === 1;
+  }
+
+  // J7c: the first-day land of a nation, settled or not — who holds an
+  // exile's homeland, what a return gives back to it.
+  homeland(nation: NationId): Uint32Array {
+    const known = this.homelands.get(nation);
+    if (known !== undefined) return known;
+    const out: number[] = [];
+    const index = (this.input?.nations.indexOf(nation) ?? -1) + 1;
+    if (this.input !== null && index > 0) {
+      const { firstDay } = this.input;
+      for (let tile = 0; tile < this.size; tile++) {
+        if (firstDay[tile] === index) out.push(tile);
+      }
+    }
+    const tiles = Uint32Array.from(out);
+    this.homelands.set(nation, tiles);
+    return tiles;
+  }
+
+  // J7c: a tile given back to its first-day nation is no longer settled;
+  // it counts again, under `holder` until its owner changes.
+  unsettle(tile: number, holder: NationId | null): void {
+    if (this.settled[tile] !== 1) return;
+    this.settled[tile] = 0;
+    this.changes++;
+    this.move(tile, null, holder);
   }
 
   version(): number {

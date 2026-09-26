@@ -4,6 +4,7 @@ import { GoToPositionEvent } from "../../client/TransformHandler";
 import { GameView } from "../../client/view/GameView";
 import { EventBus } from "../../core/EventBus";
 import { dataSource } from "../data/catalog";
+import { campaignController } from "./CampaignController";
 
 // The camera of a campaign (J7b): once the campaign has started it goes to
 // the capital of the player at the scale of a region, then moves only on
@@ -40,7 +41,9 @@ export class CampaignCameraController implements Controller {
   private toCapital(): void {
     const config = this.game.config().gameConfig();
     const id = config.veritableScenario;
-    const nation = config.veritablePlayerNation;
+    // J7c: the player's nation of now (a last stand changes it).
+    const nation =
+      campaignController().playerNation() ?? config.veritablePlayerNation;
     if (id === undefined || nation === undefined) return;
     const scenario = dataSource.scenario(id);
     const capital = dataSource

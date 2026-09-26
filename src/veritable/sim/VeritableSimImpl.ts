@@ -9,7 +9,7 @@ import {
   review,
 } from "../ai/nations";
 import { deployOnFronts, stepWarAi } from "../ai/war";
-import { NationId } from "../data/schemas/common";
+import { INTEREST_GROUPS, NationId } from "../data/schemas/common";
 import { VeritableConfig } from "../data/schemas/config";
 import { NationData } from "../data/schemas/nation";
 import { ROW_ID } from "../data/schemas/row";
@@ -21,6 +21,8 @@ import {
   DiplomacyState,
   EconomyState,
   EventsState,
+  ExileSection,
+  ExileState,
   IntelState,
   JournalEntry,
   MilitaryState,
@@ -122,6 +124,14 @@ import {
   stepEventsDraws,
   stepEventsHousekeeping,
 } from "./events/events";
+import {
+  acceptsReturn,
+  ExileEnv,
+  ExileEvent,
+  openExile,
+  resistanceMalus,
+  stepExile,
+} from "./exile/exile";
 import {
   IntelLevels,
   intelLevels,
@@ -323,6 +333,7 @@ type DomainEvent =
   | BlocEngineEvent
   | TechEvent
   | Extract<EventsEvent, { type: "event-occurred" }>
+  | ExileEvent
   | { type: "note"; nation: NationId; text: string };
 
 // Events of the political engine: they reach the client with their journal
@@ -365,6 +376,9 @@ const POLITICAL_EVENTS = new Set<string>([
   "bloc-article5-refused",
   "tech-completed",
   "event-occurred",
+  "exile-returned",
+  "exile-negotiation",
+  "last-stand",
 ]);
 
 const CEASEFIRE: PeaceTerms = {
@@ -405,6 +419,8 @@ export class VeritableSimImpl implements VeritableSim {
   private schedule!: ScheduleState;
   // Intelligence (J7): snapshots of the indicators, relations of the player.
   private intel!: IntelState;
+  // J7c: the governments in exile and the dissolved nations.
+  private exile!: ExileSection;
   // J7: the version of the view is derived from the saved state (the day,
   // the journal): what the player sees moves with them; the interface reads
   // the view again when it changes, at most four times a second, and after
@@ -590,6 +606,7 @@ export class VeritableSimImpl implements VeritableSim {
       }
     }
     this.intel = emptyIntel();
+    this.exile = { nations: {}, lastStands: [] };
     this.ensureIntelState();
     this.warmUp();
   }
@@ -708,6 +725,7 @@ export class VeritableSimImpl implements VeritableSim {
     this.events = state.events;
     this.schedule = state.schedule;
     this.intel = state.intel;
+    this.exile = state.exile;
     this.syncSuspensions();
     this.invalidateFronts();
     this.initialized = true;
@@ -755,6 +773,7 @@ export class VeritableSimImpl implements VeritableSim {
       events: this.events,
       schedule: this.schedule,
       intel: this.intel,
+      exile: this.exile,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -1083,6 +1102,23 @@ export class VeritableSimImpl implements VeritableSim {
         this.requirePlayer();
         unpinObjective(this.politics, cmd.objective);
         return;
+      case "exile-negotiate": {
+        const me = this.requirePlayer();
+        const state = this.exile.nations[me];
+        if (this.statusOf(me) !== "exiled" || state === undefined) {
+          throw new Error("exile-negotiate: the nation is not in exile");
+        }
+        this.negotiate(me, state, date, true);
+        return;
+      }
+      case "last-stand": {
+        const me = this.requirePlayer();
+        if (!this.lastStandChoices().includes(cmd.nation)) {
+          throw new Error(`last-stand: ${cmd.nation} is not a choice`);
+        }
+        this.lastStand(me, cmd.nation, date);
+        return;
+      }
       case "nuclear-launch": {
         const me = this.requirePlayer();
         if (!enemiesOf(this.diplomacy, me).includes(cmd.target)) {
@@ -1238,8 +1274,297 @@ export class VeritableSimImpl implements VeritableSim {
         nation: nation.id,
         params: { from: event.from, to: event.to },
       });
+      // J7c: into exile, or back from it.
+      if (next === "exiled") {
+        this.exile.nations[nation.id] = openExile(
+          this.exileEnv(event.date),
+          nation.id,
+          this.occupantOf(nation.id),
+        );
+      } else if (next === "active") {
+        delete this.exile.nations[nation.id];
+      }
     }
     return events;
+  }
+
+  // --- exile (J7c, sim/exile/exile.ts) -------------------------------------------
+
+  private statusOf(id: NationId): string {
+    return this.nations.find((n) => n.id === id)?.status ?? "active";
+  }
+
+  private exileEnv(date: string): ExileEnv {
+    return {
+      rules: this.deps.config.exile,
+      diplomacy: this.diplomacy,
+      economy: this.economy,
+      nations: this.nations,
+      blocsOf: (nation) =>
+        this.blocs.blocs
+          .filter((b) =>
+            b.members.some((m) => m.nation === nation && m.status === "full"),
+          )
+          .map((b) => b.id),
+      membersOf: (bloc) =>
+        this.blocs.blocs
+          .find((b) => b.id === bloc)
+          ?.members.filter((m) => m.status === "full")
+          .map((m) => m.nation) ?? [],
+      date,
+    };
+  }
+
+  // The nation that holds most of the first-day land of `id` (people, else
+  // tiles); null when nobody does.
+  private occupantOf(id: NationId): NationId | null {
+    const held = this.deps.world.homelandHeld(id);
+    const counts = held.people.size > 0 ? held.people : held.tiles;
+    let best: NationId | null = null;
+    let most = 0;
+    for (const [n, c] of [...counts].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
+      if (n === id || c <= most) continue;
+      best = n;
+      most = c;
+    }
+    return best;
+  }
+
+  // The stability each occupant loses to the resistance of the governments
+  // in exile whose land it holds (J7c), from the world as it is now.
+  private resistanceMap(): Map<NationId, number> {
+    const out = new Map<NationId, number>();
+    const exiles = Object.entries(this.exile.nations).filter(
+      ([, e]) => e.dissolvedAt === null,
+    );
+    if (exiles.length === 0) return out;
+    const world = this.deps.world;
+    const known = world.peopleKnown();
+    const holdings = known ? world.peopleHoldings() : world.tileCounts();
+    const occupied = new Map<NationId, number>();
+    for (const [id] of exiles) {
+      const held = world.homelandHeld(id);
+      for (const [n, c] of known ? held.people : held.tiles) {
+        if (n === id) continue;
+        occupied.set(n, (occupied.get(n) ?? 0) + c);
+      }
+    }
+    for (const [n, c] of occupied) {
+      const m = resistanceMalus(
+        this.deps.config.exile,
+        c,
+        holdings.get(n) ?? 0,
+      );
+      if (m > 0) out.set(n, m);
+    }
+    return out;
+  }
+
+  // `months` of a government in exile: its recognition, its support, its
+  // dissolution; the collapse of its occupant; an AI exile tries to
+  // negotiate its return now and then.
+  private exileOf(
+    id: NationId,
+    months: number,
+    date: string,
+    isAi: boolean,
+  ): void {
+    let state = this.exile.nations[id];
+    if (state === undefined) {
+      // An exile of a save of before the J7c: opened at its first update.
+      state = openExile(this.exileEnv(date), id, this.occupantOf(id));
+      this.exile.nations[id] = state;
+    }
+    // The occupant may have changed hands itself.
+    const occupant = this.occupantOf(id);
+    if (occupant !== null) state.annexer = occupant;
+    // Its occupant collapses: the land goes back.
+    const rules = this.deps.config.exile;
+    if (
+      state.annexer !== null &&
+      (this.politics.nations[state.annexer]?.stability ?? 1) <
+        rules.collapseStability
+    ) {
+      if (this.giveBack(id, state.annexer, "collapse", date) > 0) return;
+    }
+    if (
+      isAi &&
+      state.annexer !== null &&
+      state.annexer !== this.playerNationId() &&
+      (state.lastNegotiation === null ||
+        monthIndex(state.lastNegotiation, date) >=
+          rules.negotiation.cooldownMonths) &&
+      this.rng.chance(
+        Math.min(1, rules.negotiation.monthlyProbability * months),
+      )
+    ) {
+      if (this.negotiate(id, state, date, false)) return;
+    }
+    const outcome = stepExile(this.exileEnv(date), id, state, months);
+    if (outcome.kind === "dissolved") this.dissolve(id, outcome.reason, date);
+  }
+
+  // A negotiated return: the annexer gives the land back when the
+  // resistance weighs on it and it is weak or sanctioned. True when it did.
+  private negotiate(
+    id: NationId,
+    state: ExileState,
+    date: string,
+    byPlayer: boolean,
+  ): boolean {
+    state.lastNegotiation = date;
+    const annexer = state.annexer;
+    if (annexer === null || annexer === this.playerNationId()) {
+      if (byPlayer) throw new Error("exile-negotiate: no annexer to ask");
+      return false;
+    }
+    const accepts = acceptsReturn(
+      this.deps.config.exile,
+      this.resistanceMap().get(annexer) ?? 0,
+      this.politics.nations[annexer]?.stability ?? 1,
+      this.lostTradeShare(annexer, true),
+    );
+    if (!accepts) {
+      if (byPlayer) {
+        this.record(date, {
+          type: "exile-negotiation",
+          nation: id,
+          by: annexer,
+        });
+      }
+      return false;
+    }
+    return this.giveBack(id, annexer, "negotiation", date) > 0;
+  }
+
+  // The first-day land of `id` that `from` holds goes back to it.
+  private giveBack(
+    id: NationId,
+    from: NationId,
+    way: "liberation" | "collapse" | "negotiation",
+    date: string,
+  ): number {
+    const tiles = this.deps.world.returnHomeland(id, from);
+    if (tiles <= 0) return 0;
+    this.invalidateFronts();
+    this.applyOccupation();
+    this.record(date, {
+      type: "exile-returned",
+      nation: id,
+      way,
+      by: from,
+      tiles,
+    });
+    return tiles;
+  }
+
+  // At a peace: the land of a government in exile that a nation of the
+  // other side took from its annexer goes back to it, if that nation is
+  // its friend.
+  private liberate(war: War, date: string): void {
+    const rules = this.deps.config.exile;
+    for (const [id, state] of Object.entries(this.exile.nations)) {
+      if (state.dissolvedAt !== null || state.annexer === null) continue;
+      const liberators = war.aggressors.includes(state.annexer)
+        ? war.defenders
+        : war.defenders.includes(state.annexer)
+          ? war.aggressors
+          : [];
+      for (const n of liberators) {
+        if (
+          n === id ||
+          relation(this.diplomacy, n, id) < rules.liberatorRelation
+        )
+          continue;
+        const tiles = this.deps.world.returnHomeland(id, n);
+        if (tiles <= 0) continue;
+        this.invalidateFronts();
+        this.applyOccupation();
+        this.record(date, {
+          type: "exile-returned",
+          nation: id,
+          way: "liberation",
+          by: n,
+          tiles,
+        });
+      }
+    }
+  }
+
+  // Dissolution: the state is no more. It leaves its blocs, its wars and its
+  // sanctions; the record of its exile stays (dissolvedAt).
+  private dissolve(
+    id: NationId,
+    reason: "recognized" | "threshold",
+    date: string,
+  ): void {
+    const nation = this.nations.find((n) => n.id === id);
+    if (nation === undefined || nation.status === "dissolved") return;
+    const from = nation.status;
+    nation.status = "dissolved";
+    const state = this.exile.nations[id];
+    if (state !== undefined) state.dissolvedAt = date;
+    for (const bloc of this.blocs.blocs) {
+      bloc.members = bloc.members.filter((m) => m.nation !== id);
+    }
+    syncBlocs(this.ctx, this.blocs);
+    this.diplomacy.sanctions = this.diplomacy.sanctions.filter(
+      (s) => s.by !== id && s.against !== id,
+    );
+    for (const war of this.diplomacy.wars) {
+      war.aggressors = war.aggressors.filter((n) => n !== id);
+      war.defenders = war.defenders.filter((n) => n !== id);
+    }
+    this.diplomacy.wars = this.diplomacy.wars.filter(
+      (w) => w.aggressors.length > 0 && w.defenders.length > 0,
+    );
+    this.invalidateFronts();
+    this.pending.push({
+      type: "nation-status-changed",
+      date,
+      nation: id,
+      from,
+      to: "dissolved",
+    });
+    this.addJournal({
+      date,
+      kind: "nation-status",
+      nation: id,
+      params: { from, to: "dissolved", reason },
+    });
+  }
+
+  // The nations the player's dissolved nation may hand over to: alive,
+  // fewer than lastStandMaxPopulation people, not the annexer.
+  private lastStandChoices(): NationId[] {
+    const me = this.playerNationId();
+    if (me === null || this.statusOf(me) !== "dissolved") return [];
+    const annexer = this.exile.nations[me]?.annexer ?? null;
+    const max = this.deps.config.exile.lastStandMaxPopulation;
+    return this.nations
+      .filter(
+        (n) =>
+          n.id !== me &&
+          n.id !== annexer &&
+          n.status === "active" &&
+          (this.economy.nations[n.id]?.population ?? Infinity) < max,
+      )
+      .map((n) => n.id);
+  }
+
+  // The last stand: the player goes on with a small nation of the same
+  // world, the journal intact.
+  private lastStand(from: NationId, to: NationId, date: string): void {
+    const old = this.nations.find((n) => n.id === from)!;
+    const next = this.nations.find((n) => n.id === to)!;
+    old.isPlayer = false;
+    next.isPlayer = true;
+    const politics = this.politics.nations[to];
+    politics.groups ??= Object.fromEntries(
+      INTEREST_GROUPS.map((g) => [g, politics.opinion]),
+    ) as NonNullable<typeof politics.groups>;
+    this.exile.lastStands.push({ date, from, to });
+    this.record(date, { type: "last-stand", nation: to, from });
   }
 
   // --- the tick (J7) ------------------------------------------------------------
@@ -1447,6 +1772,17 @@ export class VeritableSimImpl implements VeritableSim {
   // its diplomacy, its applications to blocs, the review of its AI and its
   // war orders.
   private updateNation(id: NationId, now: number): void {
+    // J7c: a dissolved state has nothing left to update.
+    if (this.statusOf(id) === "dissolved") {
+      reschedule(
+        this.schedule,
+        id,
+        now,
+        this.deps.config.schedule.calmDays,
+        this.deps.config.time.gameMinutesPerTick,
+      );
+      return;
+    }
     const clock = this.schedule.nations[id];
     const minutes = Math.max(0, now - clock.last);
     const months = minutes / MINUTES_PER_MONTH;
@@ -1488,6 +1824,8 @@ export class VeritableSimImpl implements VeritableSim {
     this.airStrikesOn(id, months);
     // J7c: its contaminated land.
     this.contaminationOn(id);
+    // J7c: a government in exile.
+    if (this.statusOf(id) === "exiled") this.exileOf(id, months, date, isAi);
 
     // Growth and population.
     growNation(
@@ -1566,7 +1904,8 @@ export class VeritableSimImpl implements VeritableSim {
       this.military.nations[id]?.exhaustion ?? 0,
       this.lostTradeShare(id, true),
       modifiers.groups,
-      internalConflictMalus(this.ctx, conflicts, id, years),
+      internalConflictMalus(this.ctx, conflicts, id, years) +
+        (this.resistanceMap().get(id) ?? 0),
       months * WEEKS_PER_MONTH,
     )) {
       this.record(date, event);
@@ -2372,6 +2711,9 @@ export class VeritableSimImpl implements VeritableSim {
       intel: this.intelView(player),
       power: this.intelWorld().power,
       coupRisk: this.intelWorld().coupRisk,
+      exile: this.exile,
+      resistance: Object.fromEntries(this.resistanceMap()),
+      lastStandChoices: this.lastStandChoices(),
       version: this.viewVersion,
     };
   }
@@ -3076,6 +3418,9 @@ export class VeritableSimImpl implements VeritableSim {
       defer,
     );
     for (const event of events) this.record(date, event, offer.terms.kind);
+    // J7c: the land of a government in exile its friends took back from its
+    // annexer goes back to it.
+    this.liberate(war, date);
     // Divisions facing a former enemy go home.
     releaseIdleDivisions(this.diplomacy, this.military, this.geometry);
     this.invalidateFronts();
@@ -3201,6 +3546,15 @@ export class VeritableSimImpl implements VeritableSim {
           aim: event.aim,
           threat: String(event.threat),
         };
+        break;
+      case "exile-returned":
+        params = { way: event.way, by: event.by, tiles: String(event.tiles) };
+        break;
+      case "exile-negotiation":
+        params = { by: event.by };
+        break;
+      case "last-stand":
+        params = { from: event.from };
         break;
       case "nuclear-detonation":
         params = {
@@ -3344,6 +3698,9 @@ export class VeritableSimImpl implements VeritableSim {
       // J7c: ground zero.
       case "nuclear-detonation":
         return event.tile ?? world.capitalTile(event.nation);
+      case "exile-returned":
+      case "last-stand":
+        return world.capitalTile(event.nation);
       default:
         return null;
     }

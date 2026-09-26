@@ -543,6 +543,26 @@
       "shareCap": 0.95
     }
   },
+  "exile": {
+    "erosionPerMonth": 0.02,
+    "blocAcceleration": 1,
+    "supportRelation": 40,
+    "supportAnnexerMax": 0,
+    "survivalThreshold": 0.6,
+    "dissolutionMonths": 12,
+    "annexationRecognized": 0.5,
+    "resistance": { "weight": 0.5, "cap": 0.2 },
+    "liberatorRelation": 40,
+    "collapseStability": 0.15,
+    "negotiation": {
+      "resistanceMin": 0.02,
+      "stabilityMax": 0.45,
+      "sanctionedMin": 0.3,
+      "monthlyProbability": 0.05,
+      "cooldownMonths": 12
+    },
+    "lastStandMaxPopulation": 10000000
+  },
   "blocs": {
     "rotationEpoch": "2026-01-01",
     "vote": {

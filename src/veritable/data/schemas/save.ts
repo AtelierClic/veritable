@@ -115,6 +115,10 @@ export const JOURNAL_KINDS_V7 = [
   "yearly-summary",
   // J7: a month of a war in which the line moved (its battles).
   "war-month",
+  // J7c: a government in exile gets its land back; the player's last stand.
+  "exile-returned",
+  "exile-negotiation",
+  "last-stand",
 ] as const;
 export const JournalEntryV7Schema = z.object({
   date: IsoDateSchema,
@@ -640,6 +644,41 @@ export const NuclearStateSchema = z.object({
 });
 export type NuclearState = z.infer<typeof NuclearStateSchema>;
 
+// --- governments in exile (J7c, sim/exile/exile.ts) --------------------------------
+
+export const ExileStateSchema = z.object({
+  since: IsoDateSchema,
+  // Who took its land (the nation that held most of its homeland when it
+  // lost its last tile).
+  annexer: NationIdSchema.nullable(),
+  // Nations that recognize the government in exile, sorted.
+  recognizers: z.array(NationIdSchema),
+  // Shares of the world's GDP: that recognizes it (R), that supports it
+  // (S), that recognizes the annexation.
+  recognition: zb.float(),
+  support: zb.float(),
+  annexation: zb.float(),
+  // Erosion of R not yet turned into withdrawals of recognition.
+  erosion: zb.float(),
+  // Months in a row with R + S under the threshold.
+  belowMonths: zb.float(),
+  // Its last attempt at a negotiated return.
+  lastNegotiation: IsoDateSchema.nullable(),
+  // When it was dissolved (null: in exile).
+  dissolvedAt: IsoDateSchema.nullable(),
+});
+export type ExileState = z.infer<typeof ExileStateSchema>;
+
+export const ExileSectionSchema = z.object({
+  // The governments in exile, and the dissolved ones (dissolvedAt).
+  nations: z.record(z.string(), ExileStateSchema),
+  // The player's last stands: from a dissolved nation to a small one.
+  lastStands: z.array(
+    z.object({ date: IsoDateSchema, from: NationIdSchema, to: NationIdSchema }),
+  ),
+});
+export type ExileSection = z.infer<typeof ExileSectionSchema>;
+
 // --- the AI of the nations (J5) ---------------------------------------------------
 
 export const NationAiSchema = z.object({
@@ -906,6 +945,7 @@ export const SaveHeaderV7Schema = zb.object({
   events: EventsStateSchema,
   schedule: ScheduleStateSchema,
   intel: IntelStateSchema,
+  exile: ExileSectionSchema,
   journal: z.array(JournalEntryV7Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),

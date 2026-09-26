@@ -1,4 +1,5 @@
 import { CityExecution } from "../../core/execution/CityExecution";
+import { ConstructionExecution } from "../../core/execution/ConstructionExecution";
 import { DefensePostExecution } from "../../core/execution/DefensePostExecution";
 import { FactoryExecution } from "../../core/execution/FactoryExecution";
 import { MissileSiloExecution } from "../../core/execution/MissileSiloExecution";
@@ -623,6 +624,69 @@ export class CoreBridge implements WorldPort {
       (t) => (known ? this.people.peopleAt(t) : 1),
       (n) => (known ? (holdings.get(n) ?? 0) : (counts?.get(n) ?? 0)),
     );
+  }
+
+  // J7c: what the core player of `nation` may build on a tile, and its
+  // build (a last stand: the player's nation is not the human's any more).
+  buildOptions(
+    nation: NationId | null,
+    tile: number,
+    units: readonly string[],
+  ): { type: string; canBuild: boolean }[] {
+    const player = nation === null ? undefined : this.byNation.get(nation);
+    return units.map((type) => ({
+      type,
+      canBuild:
+        player !== undefined &&
+        this.pending === null &&
+        player.canBuild(type as UnitType, tile) !== false,
+    }));
+  }
+
+  build(nation: NationId | null, unit: string, tile: number): boolean {
+    const player = nation === null ? undefined : this.byNation.get(nation);
+    if (player === undefined || this.pending !== null) return false;
+    if (player.canBuild(unit as UnitType, tile) === false) return false;
+    this.game.addExecution(
+      new ConstructionExecution(player, unit as UnitType, tile),
+    );
+    return true;
+  }
+
+  homelandHeld(nation: NationId): {
+    tiles: ReadonlyMap<NationId, number>;
+    people: ReadonlyMap<NationId, number>;
+  } {
+    const tiles = new Map<NationId, number>();
+    const people = new Map<NationId, number>();
+    if (this.pending !== null) return { tiles, people };
+    for (const tile of this.claims.homeland(nation)) {
+      const owner = this.ownerOf(tile);
+      if (owner === null) continue;
+      tiles.set(owner, (tiles.get(owner) ?? 0) + 1);
+      const p = this.people.peopleAt(tile);
+      if (p > 0) people.set(owner, (people.get(owner) ?? 0) + p);
+    }
+    return { tiles, people };
+  }
+
+  returnHomeland(nation: NationId, from: NationId): number {
+    if (this.pending !== null) return 0;
+    const home = this.byNation.get(nation);
+    if (home === undefined || nation === from) return 0;
+    let moved = 0;
+    for (const tile of this.claims.homeland(nation)) {
+      if (this.ownerOf(tile) !== from) continue;
+      this.claims.unsettle(tile, from);
+      home.conquer(tile);
+      this.ledger.clear(tile);
+      moved++;
+    }
+    if (moved > 0) {
+      this.segments.clear();
+      this.sea = null;
+    }
+    return moved;
   }
 
   ownerOf(tile: number): NationId | null {

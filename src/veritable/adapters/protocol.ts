@@ -29,6 +29,11 @@ export type VeritableRequest =
   | { kind: "journal"; query: JournalQuery }
   // J7b: what lies under a point of the map (the card, the action menu).
   | { kind: "tile"; tile: number }
+  // J7c: after a last stand the player's nation is no longer the one of the
+  // core's human player: what it may build on a tile, and a build, done by
+  // the worker for the core player of the nation.
+  | { kind: "build-options"; tile: number; units: string[] }
+  | { kind: "build"; unit: string; tile: number }
   // J7b: what a declaration of war of the player would bring down.
   | { kind: "war-preview"; target: NationId; casusBelli: string }
   // J7b: what the modes of the map colour the nations by.

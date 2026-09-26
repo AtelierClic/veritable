@@ -244,6 +244,23 @@ export class BordersWorld implements WorldPort {
     return this.nationAt(tile);
   }
 
+  // Nothing moves here: a homeland stays with its first-day nation.
+  homelandHeld(nation: NationId): {
+    tiles: ReadonlyMap<NationId, number>;
+    people: ReadonlyMap<NationId, number>;
+  } {
+    const tiles = new Map<NationId, number>();
+    for (const tile of this.claims.homeland(nation)) {
+      const owner = this.nationAt(tile);
+      if (owner !== null) tiles.set(owner, (tiles.get(owner) ?? 0) + 1);
+    }
+    return { tiles, people: new Map() };
+  }
+
+  returnHomeland(): number {
+    return 0;
+  }
+
   capitalHeld(): boolean {
     return true;
   }

@@ -566,6 +566,43 @@ const NuclearConfigSchema = z.object({
   }),
 });
 
+// Collapse, exile and last stand (J7c, sim/exile/exile.ts). Recognition R
+// erodes by erosionPerMonth x (1 - support S) a month, x (1 +
+// blocAcceleration x share of its former blocs that recognize the
+// annexation); a supporter is at supportRelation or more with the exile and
+// at most supportAnnexerMax with the annexer; the exile lives while R + S >=
+// survivalThreshold, is dissolved after dissolutionMonths under it or when
+// more than annexationRecognized of the world's GDP recognizes the
+// annexation. Resistance: an occupant loses weight x (people of the exiles
+// it holds / its own) of stability, at most cap. A nation at
+// liberatorRelation or more with the exile gives back at the peace the land
+// of it it took from the annexer; an annexer whose stability falls under
+// collapseStability gives it back; negotiation: accepted when the
+// resistance weighs resistanceMin or more and the annexer is at most
+// stabilityMax stable or sanctioned by sanctionedMin of its partners (an AI
+// exile tries with monthlyProbability, every cooldownMonths at most). A
+// last stand: a nation of fewer than lastStandMaxPopulation people.
+const ExileConfigSchema = z.object({
+  erosionPerMonth: share,
+  blocAcceleration: z.number().min(0),
+  supportRelation: z.number(),
+  supportAnnexerMax: z.number(),
+  survivalThreshold: share,
+  dissolutionMonths: z.number().positive(),
+  annexationRecognized: share,
+  resistance: z.object({ weight: z.number().min(0), cap: share }),
+  liberatorRelation: z.number(),
+  collapseStability: share,
+  negotiation: z.object({
+    resistanceMin: share,
+    stabilityMax: share,
+    sanctionedMin: share,
+    monthlyProbability: share,
+    cooldownMonths: z.number().min(0),
+  }),
+  lastStandMaxPopulation: z.number().positive(),
+});
+
 // Blocs, layers 2 and 3 (J5, sim/blocs/blocs.ts). A member votes yes when
 //   U = relations x (relation with the target) + ideology x (alignment of
 //       the governments) - tradePerPctGdp x (trade at stake, % of GDP)
@@ -765,6 +802,7 @@ export const VeritableConfigSchema = z.object({
   air: AirConfigSchema,
   logistics: LogisticsConfigSchema,
   nuclear: NuclearConfigSchema,
+  exile: ExileConfigSchema,
   blocs: BlocsConfigSchema,
   tech: TechConfigSchema,
   events: EventsConfigSchema,

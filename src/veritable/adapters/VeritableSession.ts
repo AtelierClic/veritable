@@ -168,6 +168,18 @@ export class VeritableSession {
         return this.sim.queryJournal(request.query);
       case "tile":
         return this.bridge.tileInfo(request.tile);
+      case "build-options":
+        return this.bridge.buildOptions(
+          this.sim.read().playerNation,
+          request.tile,
+          request.units,
+        );
+      case "build":
+        return this.bridge.build(
+          this.sim.read().playerNation,
+          request.unit,
+          request.tile,
+        );
       case "war-preview":
         return this.sim.warPreview(request.target, request.casusBelli);
       case "map-colors":

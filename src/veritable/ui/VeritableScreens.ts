@@ -3,6 +3,7 @@ import { customElement, state } from "lit/decorators.js";
 import { RemoteVeritableSim } from "../adapters/RemoteVeritableSim";
 import { dataSource } from "../data/catalog";
 import { vt } from "../data/i18n";
+import { loadVeritableConfig } from "../data/loadConfig";
 import { INTEREST_GROUPS } from "../data/schemas/common";
 import { EventEffect } from "../data/schemas/event";
 import { Law } from "../data/schemas/laws";
@@ -72,7 +73,8 @@ export type ScreenId =
   | "journal"
   | "blocs"
   | "tech"
-  | "events";
+  | "events"
+  | "exile";
 export const SCREENS: ScreenId[] = [
   "economy",
   "budget",
@@ -87,6 +89,7 @@ export const SCREENS: ScreenId[] = [
   "blocs",
   "tech",
   "events",
+  "exile",
 ];
 
 // J7: the open screen reads the view when it changed (the simulation keeps
@@ -2000,6 +2003,8 @@ export class VeritableScreens extends LitElement {
 
   @state() private selectedBloc: string | null = null;
   @state() private armedExit: string | null = null;
+  // J7c: the nation of a last stand, armed by a first click.
+  @state() private armedLastStand: string | null = null;
 
   private measureLabel(
     view: ReadonlyWorldView,
@@ -2525,6 +2530,187 @@ export class VeritableScreens extends LitElement {
       other,
       this.config.events.grievanceMonths,
     );
+  }
+
+  // --- exile (J7c) ----------------------------------------------------------------
+
+  // The governments in exile of the world, the player's own (recognition,
+  // support, resistance, the ways back), and, once its state is dissolved,
+  // the small nations of its last stand.
+  private renderExile(view: ReadonlyWorldView) {
+    const rules = loadVeritableConfig().exile;
+    const me = view.playerNation;
+    const mine = me === null ? undefined : view.exile.nations[me];
+    const pct0 = (v: number) => `${Math.round(v * 100)} %`;
+    const status =
+      me === null ? "active" : view.nations.find((n) => n.id === me)?.status;
+    const rows = Object.entries(view.exile.nations).sort((a, b) =>
+      a[1].since < b[1].since ? 1 : -1,
+    );
+    return html`
+      ${status === "dissolved"
+        ? html`<div class="mb-2 rounded border border-red-600 p-1">
+            <div class="text-sm font-bold">${vt("screen.exile.dissolved")}</div>
+            <div>
+              ${vt("screen.exile.last-stand-text", {
+                max: (rules.lastStandMaxPopulation / 1e6).toLocaleString(
+                  "fr-FR",
+                ),
+              })}
+            </div>
+            ${view.lastStandChoices.length === 0
+              ? html`<div class="text-gray-400">
+                  ${vt("screen.exile.no-choice")}
+                </div>`
+              : html`<div class="mt-1 flex flex-wrap gap-1">
+                  ${view.lastStandChoices.map(
+                    (id) =>
+                      html`<button
+                        class="rounded bg-gray-700 px-1"
+                        @click=${() => {
+                          if (this.armedLastStand === id) {
+                            this.armedLastStand = null;
+                            void this.command({
+                              type: "last-stand",
+                              nation: id,
+                            });
+                          } else {
+                            this.armedLastStand = id;
+                          }
+                        }}
+                      >
+                        ${this.armedLastStand === id
+                          ? vt("screen.exile.last-stand-confirm", {
+                              nation: this.nationLabel(view, id),
+                            })
+                          : this.nationLabel(view, id)}
+                      </button>`,
+                  )}
+                </div>`}
+          </div>`
+        : nothing}
+      ${mine !== undefined && mine.dissolvedAt === null
+        ? html`<div class="mb-2 rounded border border-yellow-700 p-1">
+            <div class="text-sm font-bold">
+              ${vt("screen.exile.mine", { since: longDate(mine.since) })}
+            </div>
+            <div>
+              ${vt("screen.exile.annexer", {
+                annexer:
+                  mine.annexer === null
+                    ? "—"
+                    : this.nationLabel(view, mine.annexer),
+              })}
+            </div>
+            <div>
+              ${vt("screen.exile.measures", {
+                recognition: pct0(mine.recognition),
+                support: pct0(mine.support),
+                sum: pct0(mine.recognition + mine.support),
+                threshold: pct0(rules.survivalThreshold),
+                annexation: pct0(mine.annexation),
+                limit: pct0(rules.annexationRecognized),
+              })}
+            </div>
+            <div
+              class="${mine.belowMonths > 0 ? "text-red-400" : "text-gray-400"}"
+            >
+              ${vt("screen.exile.below", {
+                months: Math.floor(mine.belowMonths),
+                max: rules.dissolutionMonths,
+              })}
+            </div>
+            <div>
+              ${vt("screen.exile.resistance", {
+                malus: pct0(
+                  mine.annexer === null
+                    ? 0
+                    : (view.resistance[mine.annexer] ?? 0),
+                ),
+              })}
+            </div>
+            <div class="mt-1 font-bold">${vt("screen.exile.ways")}</div>
+            <div>
+              ${vt("screen.exile.way-liberation", {
+                relation: rules.liberatorRelation,
+              })}
+            </div>
+            <div>
+              ${vt("screen.exile.way-collapse", {
+                stability: pct0(rules.collapseStability),
+              })}
+            </div>
+            <div>
+              ${vt("screen.exile.way-negotiation", {
+                resistance: pct0(rules.negotiation.resistanceMin),
+                stability: pct0(rules.negotiation.stabilityMax),
+                sanctioned: pct0(rules.negotiation.sanctionedMin),
+              })}
+            </div>
+            <button
+              class="mt-1 rounded bg-gray-700 px-1"
+              ?disabled=${mine.annexer === null}
+              @click=${() => void this.command({ type: "exile-negotiate" })}
+            >
+              ${vt("screen.exile.negotiate")}
+            </button>
+            ${mine.lastNegotiation === null
+              ? nothing
+              : html`<span class="text-gray-400">
+                  ${vt("screen.exile.last-negotiation", {
+                    date: longDate(mine.lastNegotiation),
+                  })}
+                </span>`}
+          </div>`
+        : nothing}
+      <div class="font-bold">${vt("screen.exile.world")}</div>
+      ${rows.length === 0
+        ? html`<div class="text-gray-400">${vt("screen.exile.none")}</div>`
+        : html`<table class="w-full">
+            <tr class="text-left text-gray-400">
+              <th>${vt("screen.exile.col-nation")}</th>
+              <th>${vt("screen.exile.col-since")}</th>
+              <th>${vt("screen.exile.col-annexer")}</th>
+              <th class="whitespace-nowrap">
+                ${vt("screen.exile.col-recognition")}
+              </th>
+              <th class="whitespace-nowrap">
+                ${vt("screen.exile.col-support")}
+              </th>
+              <th>${vt("screen.exile.col-status")}</th>
+            </tr>
+            ${rows.map(
+              ([id, e]) =>
+                html`<tr>
+                  <td>${this.nationLabel(view, id)}</td>
+                  <td>${longDate(e.since)}</td>
+                  <td>
+                    ${e.annexer === null
+                      ? "—"
+                      : this.nationLabel(view, e.annexer)}
+                  </td>
+                  <td>${pct0(e.recognition)}</td>
+                  <td>${pct0(e.support)}</td>
+                  <td>
+                    ${e.dissolvedAt === null
+                      ? vt("nation.status.exiled")
+                      : vt("screen.exile.dissolved-on", {
+                          date: longDate(e.dissolvedAt),
+                        })}
+                  </td>
+                </tr>`,
+            )}
+          </table>`}
+      <div class="mt-1 text-gray-400">
+        ${vt("screen.exile.rules", {
+          erosion: pct0(rules.erosionPerMonth),
+          relation: rules.supportRelation,
+          threshold: pct0(rules.survivalThreshold),
+          months: rules.dissolutionMonths,
+          annexation: pct0(rules.annexationRecognized),
+        })}
+      </div>
+    `;
   }
 
   private renderEvents(view: ReadonlyWorldView) {
@@ -3057,9 +3243,11 @@ export class VeritableScreens extends LitElement {
                               ? this.renderTech(view)
                               : screen === "events"
                                 ? this.renderEvents(view)
-                                : screen === "journal"
-                                  ? this.renderJournal(view)
-                                  : this.renderObjectives(view, politics)}
+                                : screen === "exile"
+                                  ? this.renderExile(view)
+                                  : screen === "journal"
+                                    ? this.renderJournal(view)
+                                    : this.renderObjectives(view, politics)}
       </div>
     `;
   }

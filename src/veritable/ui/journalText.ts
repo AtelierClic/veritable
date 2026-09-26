@@ -227,6 +227,16 @@ export function journalLine(names: Names, j: JournalEntry): string {
   if (j.kind === "election-held") {
     params.round = p.round === "2" ? vt("journal.round-2") : "";
   }
+  // J7c: the ways back from exile, the nation a last stand leaves.
+  if (j.kind === "exile-returned" && p.way !== undefined) {
+    params.way = vt(`journal.exile-way.${p.way}`);
+  }
+  if (j.kind === "last-stand" && p.from !== undefined) {
+    params.from = names.nation(p.from);
+  }
+  if (j.kind === "nation-status" && p.reason !== undefined) {
+    params.reason = vt(`journal.dissolution.${p.reason}`);
+  }
   if (j.kind === "air-strike" && p.damage !== undefined) {
     params.damage = Number(p.damage).toLocaleString("fr-FR", {
       maximumFractionDigits: 1,

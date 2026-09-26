@@ -253,5 +253,8 @@ export function v6ToV7(
     ai,
     schedule,
     intel: emptyIntel(),
+    // J7c: the governments in exile of the save are opened at their next
+    // update (sim/exile/exile.ts).
+    exile: { nations: {}, lastStands: [] },
   } as SaveFile;
 }
