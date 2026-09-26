@@ -51,6 +51,7 @@ export async function loadScenarioPackFrom(
     regions: regions?.regions ?? new Map(),
     data: simDataFrom(source, scenario),
     georefScale: source.georef(meta.map).scale,
+    georef: source.georef(meta.map),
     population,
     cities: source.cities(scenario),
   };

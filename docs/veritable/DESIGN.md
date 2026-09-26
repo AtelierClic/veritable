@@ -278,15 +278,15 @@ Paix négociée (l'IA accepte selon le score de guerre, son épuisement et les t
 
 ## Nucléaire
 
-L'arme reste employable, avec conséquences. Le nucléaire d'OpenFront est tactique — ogives à paliers, interception SAM, retombées sur les tuiles — et il est conservé tel quel ; Véritable y ajoute la couche stratégique qui manque à une campagne : la doctrine.
+L'arme reste employable, avec conséquences. Du nucléaire d'OpenFront, Véritable garde les vecteurs — silos, ogives, interception SAM — et y ajoute la couche stratégique qui manque à une campagne : la doctrine. Ses effets sur les tuiles ne sont pas gardés (J7c) : un tir ne change jamais le propriétaire ni la nature d'une tuile.
 
 **Doctrines.** Chaque puissance nucléaire porte une doctrine dans ses données : première frappe possible, non-usage en premier, non déclarée, imprévisible. La doctrine, les traits du dirigeant et la situation (territoire envahi, capitale menacée, régime en chute) donnent une probabilité de tir que l'IA évalue chaque jour de jeu. C'est ce qui rend le nucléaire rare et terrifiant plutôt qu'absent ou omniprésent.
 
 **Main morte.** Quand une puissance nucléaire est annexée, le vainqueur prend possession du territoire, des silos et du droit d'en user. Mais au moment de la dissolution, l'État vaincu peut, selon sa doctrine et son dirigeant, lancer une dernière frappe sur la capitale de l'envahisseur. L'interception SAM s'applique. La probabilité est visible au joueur avant l'assaut final : il sait ce qu'il risque.
 
-**Conséquences.** Tout tir déclenche la réaction internationale à son niveau maximal, quel que soit le motif. Les retombées altèrent le terrain et la production des tuiles touchées pour des années de jeu.
+**Conséquences.** Tout tir déclenche la réaction internationale à son niveau maximal, quel que soit le motif. Une ogive tue selon la population des tuiles qu'elle touche — la moitié des gens en moyenne dans son rayon de destruction, davantage au centre, 2 % dans sa zone contaminée ; rayons en kilomètres, convertis par l'échelle de la carte à la latitude de la cible — et contamine la terre, de 0 à 1. Une tuile contaminée produit d'autant moins, ne se repeuple pas tant que sa contamination dépasse 0,3 et use les divisions qui y combattent. Les morts comptent dans les pertes, l'opinion et la stabilité. (J7c ; remplace les retombées qui vidaient les tuiles de leur propriétaire.)
 
-**Reconstruction.** Conséquence directe du bac à sable infini : le monde continue après un échange nucléaire. Les tuiles touchées se réhabilitent lentement, à un rythme lié aux dépenses d'infrastructure et à l'aide extérieure. S'il ne se relève jamais, la campagne se termine de fait sans jamais s'arrêter.
+**Reconstruction.** Conséquence directe du bac à sable infini : le monde continue après un échange nucléaire. Les tuiles touchées se réhabilitent lentement, à un rythme lié aux dépenses d'infrastructure et à l'aide extérieure : la contamination diminue de moitié en six ans, jusqu'à deux fois plus vite quand les deux sont au plus haut. Une zone frappée se reprend comme n'importe quel territoire, par le front, en payant l'attrition. S'il ne se relève jamais, la campagne se termine de fait sans jamais s'arrêter.
 
 ## Blocs supranationaux
 

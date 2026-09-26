@@ -38,12 +38,20 @@ export type VeritableRequest =
   | { kind: "perf" }
   // The fronts on the map (J5): geometry of the segments, their last
   // resolution, the contested tiles when they changed since the version.
-  | { kind: "map-overlay"; contestedVersion: number };
+  | {
+      kind: "map-overlay";
+      contestedVersion: number;
+      // J7c: the version of the contamination the page has.
+      contaminationVersion?: number;
+    };
 
 export interface MapOverlayResult {
   overlay: MapOverlay;
   fronts: FrontView[];
   player: NationId | null;
+  // J7c: the bursts whose ground zero is still contaminated (an icon at
+  // every zoom: a burst covers a few tiles of the world map).
+  bursts: { x: number; y: number; weapon: string; date: string }[];
   // J7b: what the player's intelligence needs to show the forces of the
   // fronts (perceive): the seed, the date, its levels on the nations at
   // war, the rules.

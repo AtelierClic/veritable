@@ -95,10 +95,14 @@ export class RemoteVeritableSim {
   }
 
   // The fronts on the map (J5).
-  mapOverlay(contestedVersion: number): Promise<MapOverlayResult> {
+  mapOverlay(
+    contestedVersion: number,
+    contaminationVersion = -1,
+  ): Promise<MapOverlayResult> {
     return this.request({
       kind: "map-overlay",
       contestedVersion,
+      contaminationVersion,
     }) as Promise<MapOverlayResult>;
   }
 

@@ -108,8 +108,6 @@ describe("nuclear weapons on the real core (Europe map)", () => {
       target: "ESP",
       casusBelli: "none",
     });
-    const before = session.sim.read();
-    const tiles = before.nations.find((n) => n.id === "ESP")!.tileCount;
     session.sim.apply({
       type: "nuclear-launch",
       target: "ESP",
@@ -125,21 +123,18 @@ describe("nuclear weapons on the real core (Europe map)", () => {
       strike = session.sim.read().nuclear.strikes[0];
     }
     expect(strike.status).toBe("detonated");
-    // TestConfig of OpenFront: warheads of radius 1 (a real game: 80 to 100
-    // tiles for a hydrogen bomb).
+    // J7c: the burst changes no tile — Madrid is still Spanish. The dead
+    // (Madrid and around it, on the population grid of the Europe map) come
+    // off Spain, the land around ground zero is contaminated.
+    const ground = strike.tile!;
+    expect(game.owner(ground)).toBe(nameOf(game, "ESP"));
+    expect(strike.deaths.ESP).toBeGreaterThan(3e5);
+    expect(strike.deaths.ESP).toBeLessThan(3e6);
     expect(strike.hits.ESP).toBeGreaterThan(0);
     const after = session.sim.read();
-    const lost = strike.hits.ESP / tiles;
-    // Spain fights back from its first update, within a day of the
-    // declaration (J7), and takes French land, contested: the land it held
-    // on the first day is what it lost to the warhead.
-    const held = (view: typeof after) =>
-      view.nations.find((n) => n.id === "ESP")!.tileCount -
-      (view.contested.ESP ?? 0);
-    expect(held(after)).toBeLessThan(tiles);
-    // J7b: the GDP of Spain also moves with the land it takes and loses at
-    // the front; the factor of the fallout is what the warhead did to it.
-    expect(after.nuclear.fallout.ESP).toBeLessThan(1 - 0.8 * lost);
+    expect(
+      after.nuclear.contamination.find((c) => c.tile === ground)?.level,
+    ).toBeGreaterThan(0.99);
     // Everyone turned against France.
     expect(after.diplomacy.pariahs).toEqual(["FRA"]);
     expect(

@@ -118,6 +118,10 @@ export class FrontOverlayController implements Controller {
   private hatch: HTMLCanvasElement | null = null;
   private data: MapOverlayResult | null = null;
   private contestedVersion = -1;
+  // J7c: the contaminated land, hatched in yellow (its own canvas).
+  private radiation: HTMLCanvasElement | null = null;
+  private radiationTiles = 0;
+  private contaminationVersion = -1;
   private inFlight = false;
   private dirty = true;
   private lastCamera = "";
@@ -173,7 +177,7 @@ export class FrontOverlayController implements Controller {
     if (this.inFlight) return;
     this.inFlight = true;
     sim
-      .mapOverlay(this.contestedVersion)
+      .mapOverlay(this.contestedVersion, this.contaminationVersion)
       .then((result) => this.receive(result))
       .catch((error) => console.warn("Véritable front overlay failed", error))
       .finally(() => (this.inFlight = false));
@@ -183,6 +187,10 @@ export class FrontOverlayController implements Controller {
     if (result.overlay.contested !== null) {
       this.updateHatch(result.overlay);
       this.contestedVersion = result.overlay.contestedVersion;
+    }
+    if (result.overlay.contamination !== null) {
+      this.updateRadiation(result.overlay);
+      this.contaminationVersion = result.overlay.contaminationVersion;
     }
     this.data = result;
     this.dirty = true;
@@ -246,6 +254,86 @@ export class FrontOverlayController implements Controller {
     }
   }
 
+  // J7c: the contaminated tiles, hatched in yellow and black, the stripes
+  // the other way from the contested ones, the stronger the more
+  // contaminated. Few tiles: the image is painted again whole.
+  private updateRadiation(overlay: MapOverlay): void {
+    const data = overlay.contamination;
+    if (data === null) return;
+    const { width, height } = overlay;
+    if (
+      this.radiation === null ||
+      this.radiation.width !== width ||
+      this.radiation.height !== height
+    ) {
+      this.radiation = document.createElement("canvas");
+      this.radiation.width = width;
+      this.radiation.height = height;
+    }
+    const ctx = this.radiation.getContext("2d");
+    if (ctx === null) return;
+    ctx.clearRect(0, 0, width, height);
+    this.radiationTiles = data.tiles.length;
+    if (data.tiles.length === 0) return;
+    let x0 = width;
+    let y0 = height;
+    let x1 = -1;
+    let y1 = -1;
+    for (const tile of data.tiles) {
+      const x = tile % width;
+      const y = (tile - x) / width;
+      x0 = Math.min(x0, x);
+      y0 = Math.min(y0, y);
+      x1 = Math.max(x1, x);
+      y1 = Math.max(y1, y);
+    }
+    const image = ctx.createImageData(x1 - x0 + 1, y1 - y0 + 1);
+    const px = image.data;
+    data.tiles.forEach((tile, i) => {
+      const x = tile % width;
+      const y = (tile - x) / width;
+      const level = data.levels[i] / 255;
+      const stripe = (x - y + 4096) % 3 === 0;
+      const at = ((y - y0) * image.width + (x - x0)) * 4;
+      px[at] = stripe ? 30 : 250;
+      px[at + 1] = stripe ? 30 : 204;
+      px[at + 2] = stripe ? 10 : 21;
+      px[at + 3] = Math.round((stripe ? 90 : 60) + 140 * level);
+    });
+    ctx.putImageData(image, x0, y0);
+  }
+
+  // J7c: an icon on each burst still contaminated, the same size at every
+  // zoom.
+  private drawBursts(
+    ctx: CanvasRenderingContext2D,
+    dpr: number,
+    origin: { x: number; y: number },
+  ): void {
+    const bursts = this.data?.bursts ?? [];
+    if (bursts.length === 0) return;
+    const s = this.transform.scale;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.font = "bold 13px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    for (const b of bursts) {
+      const x = origin.x + (b.x + 0.5) * s;
+      const y = origin.y + (b.y + 0.5) * s;
+      ctx.beginPath();
+      ctx.arc(x, y, 9, 0, Math.PI * 2);
+      ctx.fillStyle = "#facc15";
+      ctx.globalAlpha = 0.95;
+      ctx.fill();
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = "#111827";
+      ctx.stroke();
+      ctx.fillStyle = "#111827";
+      ctx.fillText("\u2622", x, y + 0.5);
+    }
+    ctx.globalAlpha = 1;
+  }
+
   private draw(): void {
     const canvas = this.canvas!;
     const dpr = window.devicePixelRatio || 1;
@@ -278,6 +366,10 @@ export class FrontOverlayController implements Controller {
     if (this.hatch !== null && this.hatchTiles.length > 0) {
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(this.hatch, 0, 0);
+    }
+    if (this.radiation !== null && this.radiationTiles > 0) {
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(this.radiation, 0, 0);
     }
     const geometry = new Map(data.overlay.fronts.map((f) => [f.id, f]));
     ctx.lineCap = "round";
@@ -330,6 +422,7 @@ export class FrontOverlayController implements Controller {
     }
     ctx.setLineDash([]);
     // Labels in screen space, only when segments are far enough apart.
+    this.drawBursts(ctx, dpr, origin);
     if (s < 0.35) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.font = "600 11px system-ui, sans-serif";

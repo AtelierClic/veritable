@@ -718,6 +718,8 @@ export class VeritableSimImpl implements VeritableSim {
       tiles: state.tiles,
       contest: state.contest,
     });
+    // J7c: the contamination of the land (the dead off its people).
+    this.deps.world.setContamination(this.nuclear.contamination);
     this.ensureIntelState();
     this.warmUp();
   }
@@ -1484,6 +1486,8 @@ export class VeritableSimImpl implements VeritableSim {
     );
     // The strikes of the strongest enemy in the air, decaying.
     this.airStrikesOn(id, months);
+    // J7c: its contaminated land.
+    this.contaminationOn(id);
 
     // Growth and population.
     growNation(
@@ -1940,6 +1944,26 @@ export class VeritableSimImpl implements VeritableSim {
       net += this.blocs.net[id] ?? 0;
     }
     return net;
+  }
+
+  // The contamination of a nation's land (J7c): its production and GDP
+  // follow 1 - the people-weighted contaminated share of its land, down as
+  // a burst spreads it, up as it heals.
+  private contaminationOn(id: NationId): void {
+    const economy = this.economy.nations[id];
+    const cap = this.deps.config.nuclear.contamination.shareCap;
+    const share = Math.min(
+      cap,
+      this.deps.world.contaminatedShares().get(id) ?? 0,
+    );
+    const before = Math.min(cap, economy.contamination);
+    if (share === before) return;
+    const factor = (1 - share) / (1 - before);
+    economy.gdp *= factor;
+    for (const good of Object.keys(economy.production)) {
+      economy.production[good] *= factor;
+    }
+    economy.contamination = share;
   }
 
   // Strikes from the air (J3b): the damage of the strongest enemy in the
@@ -3179,7 +3203,11 @@ export class VeritableSimImpl implements VeritableSim {
         };
         break;
       case "nuclear-detonation":
-        params = { by: event.by, tiles: String(event.tiles) };
+        params = {
+          by: event.by,
+          tiles: String(event.tiles),
+          deaths: String(Math.round(event.deaths)),
+        };
         break;
       case "nuclear-intercepted":
         params = { by: event.by };
@@ -3313,6 +3341,9 @@ export class VeritableSimImpl implements VeritableSim {
       case "ai-landing":
       case "air-strike":
         return world.capitalTile(event.target);
+      // J7c: ground zero.
+      case "nuclear-detonation":
+        return event.tile ?? world.capitalTile(event.nation);
       default:
         return null;
     }
@@ -3442,6 +3473,7 @@ export class VeritableSimImpl implements VeritableSim {
       fronts: this.frontViews,
       aiNations: this.aiNations(),
       date,
+      blocNet: (id) => this.blocs.net[id] ?? 0,
     };
   }
 

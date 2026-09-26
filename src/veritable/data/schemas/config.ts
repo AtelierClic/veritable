@@ -493,6 +493,12 @@ const LogisticsConfigSchema = z.object({
   range: z.number().int().positive(), // tiles
 });
 
+const NuclearWeaponSchema = z.object({
+  yieldKt: z.number().positive(),
+  destructionKm: z.number().positive(),
+  contaminationKm: z.number().positive(),
+});
+
 // Nuclear weapons (J5). Threat level of a nuclear nation: 0 at peace, 1 at
 // war, 2 when an enemy took land from it in a war going on or its capital is
 // within `capitalFrontTiles` of a front, 3 when it lost more than
@@ -517,8 +523,47 @@ const NuclearConfigSchema = z.object({
   // After any shot: relations of everyone with the shooter at most this.
   relationsCap: z.number().min(-100).max(0),
   // Production, GDP and population of a nation hit x (1 - falloutLoss x share
-  // of its tiles hit).
+  // of its tiles hit). J7c: the shots of older saves only.
   falloutLoss: share,
+  // J7c (sim/nuclear/blast.ts): the radii of each weapon in km, converted to
+  // tiles by the size of a tile at the latitude of the target.
+  weapons: z.object({
+    atom: NuclearWeaponSchema,
+    hydrogen: NuclearWeaponSchema,
+    mirv: NuclearWeaponSchema,
+  }),
+  // Deaths: in the disc of destruction centerLethality x (1 - (d / r)²),
+  // contaminatedLethality beyond it; a tile of more than urbanDensityKm2
+  // people a km² has them around its town at coreDensityKm2.
+  blast: z.object({
+    rings: z.number().int().positive(),
+    centerLethality: share,
+    contaminatedLethality: share,
+    contaminationEdge: share,
+    urbanDensityKm2: z.number().positive(),
+    coreDensityKm2: z.number().positive(),
+  }),
+  // J7c (sim/nuclear/contamination.ts): healing, repopulation, attrition of
+  // the divisions that fight on contaminated land, and what the dead weigh.
+  contamination: z.object({
+    halfLifeYears: z.number().positive(),
+    maxSpeedup: z.number().min(1),
+    infrastructurePointsForMax: z.number().positive(),
+    aidPctGdpForMax: z.number().positive(),
+    repopulationMax: share,
+    repopulationHalfLifeYears: z.number().positive(),
+    minLevel: share,
+    // A tile counts as hit above this contamination.
+    hitLevel: share,
+    // Share of the men of a segment lost a day at contamination 1.
+    attritionPerDay: share,
+    // Opinion shock of the nation hit: -deathOpinion x its dead share,
+    // at most deathOpinionCap.
+    deathOpinion: z.number().min(0),
+    deathOpinionCap: share,
+    // Its production and GDP follow at most this contaminated share.
+    shareCap: share,
+  }),
 });
 
 // Blocs, layers 2 and 3 (J5, sim/blocs/blocs.ts). A member votes yes when

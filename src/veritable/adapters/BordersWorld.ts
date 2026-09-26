@@ -3,6 +3,7 @@ import { NationId } from "../data/schemas/common";
 import { TILE_NATION_MASK, WorldState } from "../data/schemas/save";
 import { Zones } from "../data/zonesFile";
 import {
+  BlastSite,
   FrontGeometry,
   NavalSnapshot,
   NukeOutcome,
@@ -225,6 +226,22 @@ export class BordersWorld implements WorldPort {
 
   nukeOutcomes(): NukeOutcome[] {
     return [];
+  }
+
+  // Nothing bursts here (J7c): no land around a burst, nothing
+  // contaminated.
+  blastTiles(): BlastSite[] {
+    return [];
+  }
+
+  setContamination(): void {}
+
+  contaminatedShares(): ReadonlyMap<NationId, number> {
+    return new Map();
+  }
+
+  ownerOf(tile: number): NationId | null {
+    return this.nationAt(tile);
   }
 
   capitalHeld(): boolean {

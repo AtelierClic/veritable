@@ -2,7 +2,7 @@ import { Game } from "../../core/game/Game";
 import { simpleHash } from "../../core/Util";
 import { bordersTileCounts } from "../data/bordersFile";
 import { loadVeritableConfig } from "../data/loadConfig";
-import { configForMap } from "../data/mapScale";
+import { configForMap, tileSizeKm } from "../data/mapScale";
 import { VeritableConfig } from "../data/schemas/config";
 import { decodeSave, encodeSaveWithStats } from "../save/serialize";
 import { ReadonlyWorldView, SimEvent, VeritableSim } from "../sim/VeritableSim";
@@ -76,6 +76,8 @@ export class VeritableSession {
         nations: pack.borders.nations,
       },
       peopleInput(pack),
+      config.nuclear,
+      pack.georef === undefined ? undefined : tileSizeKm(pack.georef),
     );
 
     const probe = new PerformanceProbe();
@@ -181,7 +183,10 @@ export class VeritableSession {
       case "perf":
         return this.perf();
       case "map-overlay":
-        return this.mapOverlay(request.contestedVersion);
+        return this.mapOverlay(
+          request.contestedVersion,
+          request.contaminationVersion,
+        );
     }
   }
 
@@ -191,16 +196,38 @@ export class VeritableSession {
     return { bytes, stats, gameDate: save.calendar.date };
   }
 
-  mapOverlay(contestedVersion: number): MapOverlayResult {
+  mapOverlay(
+    contestedVersion: number,
+    contaminationVersion = -1,
+  ): MapOverlayResult {
     const view = this.sim.read();
     const atWar = new Set(view.fronts.flatMap((f) => [f.a, f.b]));
+    const width = this.bridge.mapWidth();
+    const level = new Map(
+      view.nuclear.contamination.map((c) => [c.tile, c.level]),
+    );
+    const hit = this.config.nuclear.contamination.hitLevel;
     return {
       overlay: this.bridge.overlay(
         this.config.war.overlayStep,
         contestedVersion,
+        contaminationVersion,
       ),
       fronts: [...view.fronts],
       player: view.playerNation,
+      bursts: view.nuclear.strikes
+        .filter(
+          (s) =>
+            s.status === "detonated" &&
+            s.tile !== null &&
+            (level.get(s.tile) ?? 0) >= hit,
+        )
+        .map((s) => ({
+          x: s.tile! % width,
+          y: Math.floor(s.tile! / width),
+          weapon: s.weapon,
+          date: s.date,
+        })),
       intel: {
         seed: view.seed,
         date: view.date,

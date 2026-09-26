@@ -210,6 +210,9 @@ export const NationEconomySchema = z.object({
   // (J3b), decaying; value of the trade that went by sea last month (US$ per
   // year), what a blockade bites into.
   strikeDamage: zb.float(),
+  // J7c: the people-weighted contamination of its land when last updated
+  // (its production and GDP follow 1 - this share).
+  contamination: zb.float(),
   maritimeTradeValue: zb.float(),
   // Circumvention index of an embargoed exporter, 0..1, per good (J3a
   // sanctions; per good since the J4: fungible goods shipped by sea re-route
@@ -607,8 +610,21 @@ export const NuclearStrikeSchema = z.object({
   // while it flew (warheads in flight are not saved).
   status: z.enum(["in-flight", "detonated", "intercepted", "failed", "lost"]),
   hits: z.record(z.string(), zb.uint()), // tiles hit, by nation
+  // J7c: where it burst (a tile; null before it burst or when it did not)
+  // and the people it killed, by nation.
+  tile: zb.uint().nullable(),
+  deaths: z.record(z.string(), zb.float()),
 });
 export type NuclearStrike = z.infer<typeof NuclearStrikeSchema>;
+
+// J7c: the contamination of a tile (sim/nuclear/contamination.ts), 0..1,
+// and the share of its people a burst killed (they come back as it heals).
+export const ContaminationEntrySchema = z.object({
+  tile: zb.uint(),
+  level: zb.float(),
+  dead: zb.float(),
+});
+export type ContaminationEntry = z.infer<typeof ContaminationEntrySchema>;
 
 export const NuclearStateSchema = z.object({
   // Nuclear powers only.
@@ -616,8 +632,11 @@ export const NuclearStateSchema = z.object({
   strikes: z.array(NuclearStrikeSchema),
   nextStrikeId: zb.uint(),
   // What fallout left of each nation hit: production, GDP and population
-  // factor (1 = untouched), no reconstruction before the J7.
+  // factor (1 = untouched), no reconstruction before the J7. J7c: kept for
+  // the shots of older saves; a burst now contaminates the land.
   fallout: z.record(z.string(), zb.float()),
+  // J7c: the contaminated tiles, sorted by tile.
+  contamination: z.array(ContaminationEntrySchema),
 });
 export type NuclearState = z.infer<typeof NuclearStateSchema>;
 

@@ -264,6 +264,29 @@ export class GameImpl implements Game {
     return true;
   }
 
+  // VERITABLE: see Game.setVeritableDetonation.
+  private veritableDetonationHandler:
+    | ((type: UnitType, tile: TileRef, by: Player) => number)
+    | null = null;
+
+  setVeritableDetonation(
+    handler: ((type: UnitType, tile: TileRef, by: Player) => number) | null,
+  ): void {
+    if (!this.config().isVeritable()) {
+      throw new Error("campaign bursts only exist in a Véritable campaign");
+    }
+    this.veritableDetonationHandler = handler;
+  }
+
+  veritableDetonation(
+    type: UnitType,
+    tile: TileRef,
+    by: Player,
+  ): number | null {
+    if (this.veritableDetonationHandler === null) return null;
+    return this.veritableDetonationHandler(type, tile, by);
+  }
+
   // VERITABLE: see Game.setVeritableTileOwnerListener.
   private veritableTileOwner:
     | ((tile: TileRef, from: number, to: number) => void)

@@ -17,6 +17,7 @@ import {
   BlocProposal,
   BlocState,
   BlocVoteSchema,
+  ContaminationEntry,
   DiplomacyState,
   EventsState,
   IntelState,
@@ -42,6 +43,7 @@ import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import type { AccessionCriteria, MeasureOption, Tally } from "./blocs/blocs";
 import type { AffinityTerms } from "./diplomacy/diplomacy";
 import type { IntelLevels, IntelRules } from "./intel/intel";
+import type { BlastTile } from "./nuclear/blast";
 import type { Runoff } from "./politics/elections";
 import type { Occupations } from "./war/people";
 
@@ -627,6 +629,8 @@ export interface SegmentGeometry {
   defense: Record<NationId, number>;
   // Ports and cities of each side near the segment (logistics, J3b).
   supply: Record<NationId, number>;
+  // J7c: the mean contamination of its tiles (the divisions there wear).
+  contamination?: number;
 }
 
 // The sea as the world sees it today (J3b): zones each nation touches from
@@ -700,9 +704,23 @@ export interface WorldPort {
     aim: NukeAim,
     weapon: "atom" | "hydrogen",
   ): boolean;
-  // Launches resolved since the last call: tiles hit by nation, or
+  // Launches resolved since the last call: where the warhead burst, or
   // intercepted, or never launched.
   nukeOutcomes(): NukeOutcome[];
+  // J7c (sim/nuclear/blast.ts): the land tiles within `radiusKm` of `tile`,
+  // their owner, their centre from it in km, their area and their people
+  // (units of the population grid, the dead of earlier bursts off; 0
+  // without a grid).
+  blastTiles(tile: number, radiusKm: number): BlastSite[];
+  // J7c: the contamination the simulation keeps (sim/nuclear/
+  // contamination.ts). The world takes the dead off its tiles, gives the
+  // contamination of each segment of a front and shows it on the map.
+  setContamination(entries: readonly ContaminationEntry[]): void;
+  // J7c: the contamination of each nation's land, weighted by its people
+  // (by its tiles without a population grid).
+  contaminatedShares(): ReadonlyMap<NationId, number>;
+  // The owner of a tile (null: nobody).
+  ownerOf(tile: number): NationId | null;
   // Does the nation still hold its capital?
   capitalHeld(nation: NationId): boolean;
   // Places of the journal (J7): the tile of the capital of a nation (null
@@ -745,7 +763,13 @@ export type NukeAim =
 export interface NukeOutcome {
   id: number;
   status: "detonated" | "intercepted" | "failed";
-  hits: Record<NationId, number>;
+  // J7c: the tile it burst on (detonated only).
+  tile: number | null;
+}
+
+// A tile around a burst (J7c).
+export interface BlastSite extends BlastTile {
+  owner: NationId | null;
 }
 
 export { NationIdSchema };

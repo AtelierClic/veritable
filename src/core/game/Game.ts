@@ -924,6 +924,15 @@ export interface Game extends GameMap {
     handler: ((player: Player, tile: TileRef) => void) | null,
   ): void;
   veritableLanding(player: Player, tile: TileRef): boolean;
+  // VERITABLE: a warhead that bursts in a campaign changes neither the owner
+  // nor the nature of a tile (J7c): the handler records the burst for the
+  // campaign and returns the radius, in tiles, within which the units are
+  // destroyed. Refused outside a Véritable campaign; null without a
+  // handler (the legacy burst).
+  setVeritableDetonation(
+    handler: ((type: UnitType, tile: TileRef, by: Player) => number) | null,
+  ): void;
+  veritableDetonation(type: UnitType, tile: TileRef, by: Player): number | null;
   // VERITABLE: told of every change of owner of a tile (small ids, 0 =
   // nobody): the campaign counts claimed land incrementally instead of
   // scanning the map. Refused outside a Véritable campaign.

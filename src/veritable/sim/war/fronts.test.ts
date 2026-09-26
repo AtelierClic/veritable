@@ -1,6 +1,7 @@
 import { loadVeritableConfig } from "../../data/loadConfig";
 import { VeritableConfig } from "../../data/schemas/config";
 import { NationData } from "../../data/schemas/nation";
+import { NuclearState } from "../../data/schemas/save";
 import { encodeSave } from "../../save/serialize";
 import { MemoryWorld } from "../testing/MemoryWorld";
 import { testNation, testScenario } from "../testing/nations";
@@ -285,6 +286,52 @@ describe("fronts and resolution", () => {
     expect(view.diplomacy.wars[0].retreatMonths.BBB).toBeGreaterThanOrEqual(1);
     expect(view.diplomacy.wars[0].retreatMonths.AAA).toBe(0);
     expect(view.politics.AAA.groups!.youth).toBeLessThan(youthBefore);
+  });
+});
+
+describe("contaminated land (J7c)", () => {
+  it("wears the divisions that fight on it, on both sides, without scoring", () => {
+    const c = twoNations();
+    const { sim, world, days, ticks, config } = c;
+    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    ticks(1);
+    sendAll(sim, "defend");
+    days(3);
+    const men = () =>
+      sim
+        .read()
+        .military.nations.AAA.divisions.reduce((sum, d) => sum + d.men, 0);
+    // Nobody attacks: nobody dies.
+    expect(sim.read().military.nations.AAA.losses).toBe(0);
+    const before = men();
+    // The two columns of the front, contaminated to 1.
+    const entries = [];
+    for (let y = 0; y < 40; y++) {
+      for (const x of [29, 30])
+        entries.push({ tile: y * 60 + x, level: 1, dead: 0 });
+    }
+    entries.sort((a, b) => a.tile - b.tile);
+    (sim as unknown as { nuclear: NuclearState }).nuclear.contamination =
+      entries;
+    world.setContamination(entries);
+    days(10);
+    const view = sim.read();
+    // About attritionPerDay a day of the men engaged (the land heals a
+    // little meanwhile; the divisions are refilled from the pool, so the
+    // losses are read, not the men).
+    const lost = view.military.nations.AAA.losses;
+    expect(lost / before).toBeGreaterThan(
+      0.8 * 10 * config.nuclear.contamination.attritionPerDay,
+    );
+    expect(lost / before).toBeLessThan(
+      10 * config.nuclear.contamination.attritionPerDay,
+    );
+    expect(men()).toBeLessThan(before);
+    expect(view.military.nations.BBB.losses).toBeGreaterThan(0);
+    const war = view.diplomacy.wars[0];
+    expect(war.losses.AAA).toBeCloseTo(lost, 6);
+    expect(war.score.AAA ?? 0).toBe(0);
+    expect(war.score.BBB ?? 0).toBe(0);
   });
 });
 

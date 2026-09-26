@@ -42,6 +42,7 @@ import {
   publicPolitics,
   RATIO_CAP,
   seen,
+  seenContact,
   shown,
   sideSeen,
   unrestSeen,
@@ -911,6 +912,19 @@ export class VeritableScreens extends LitElement {
                     target: this.nationLabel(view, s.target),
                     status: vt(`screen.nuclear.status-${s.status}`),
                   })}
+                  ${s.status === "detonated" && (s.deaths[s.target] ?? 0) > 0 // intel: public (the toll, perceived below)
+                    ? vt("screen.nuclear.strike-deaths", {
+                        deaths: shown(
+                          seenContact(
+                            view,
+                            s.target,
+                            "contactLosses",
+                            s.deaths[s.target] ?? 0, // intel: public
+                          ),
+                          (v) => Math.round(v).toLocaleString("fr-FR"),
+                        ),
+                      })
+                    : nothing}
                 </div>`,
             )}
           </div>`

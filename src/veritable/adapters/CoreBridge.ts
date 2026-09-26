@@ -16,9 +16,11 @@ import {
   Unit,
   UnitType,
 } from "../../core/game/Game";
+import { TileKm } from "../data/mapScale";
 import { NationId } from "../data/schemas/common";
 import { VeritableConfig } from "../data/schemas/config";
 import {
+  ContaminationEntry,
   CorePlayerState,
   TILE_CONTESTED_BIT,
   TILE_FALLOUT_BIT,
@@ -26,7 +28,9 @@ import {
   WorldState,
 } from "../data/schemas/save";
 import { Zones } from "../data/zonesFile";
+import { ContaminationTiles } from "../sim/nuclear/contamination";
 import {
+  BlastSite,
   FrontGeometry,
   NavalSnapshot,
   NukeAim,
@@ -97,13 +101,15 @@ export class CoreBridge implements WorldPort {
   private readonly people: PeopleTiles;
   // Segment tiles of the last computed geometry, by front id.
   private readonly segments = new Map<string, number[][]>();
-  // Warheads launched (J5): their execution, and who owned each tile within
-  // their blast radius at the launch (fallout tiles excluded), to count the
-  // tiles each nation lost once the warhead has landed.
+  // Warheads launched (J5): their execution, the tile they aim at, who
+  // fired them, and (J7c) the tile they burst on, told by the core.
   private readonly launches = new Map<
     number,
-    { exec: NukeExecution; before: Map<number, NationId> }
+    { exec: NukeExecution; tile: number; by: Player; burst: number | null }
   >();
+  // J7c: the contamination of the simulation (the dead off the people of
+  // the tiles, the mean of the segments of the fronts, the map).
+  private readonly contamination = new ContaminationTiles();
 
   constructor(
     private readonly game: Game,
@@ -116,6 +122,9 @@ export class CoreBridge implements WorldPort {
     private readonly logistics?: VeritableConfig["logistics"],
     claims: ClaimTilesInput | null = null,
     people: PeopleInput | null = null,
+    // J7c: the radii of a burst (km) and the size of a tile (km) by row.
+    private readonly nuclear?: VeritableConfig["nuclear"],
+    private readonly tileKm?: (row: number) => TileKm,
   ) {
     this.coreStart = canonicalJson(coreStart);
     this.ledger = new ContestLedger(game.width() * game.height());
@@ -135,7 +144,12 @@ export class CoreBridge implements WorldPort {
       const b = to === 0 ? null : (this.bySmallID.get(to) ?? null);
       this.claims.ownerChanged(tile, a, b);
       this.people.ownerChanged(tile, a, b);
+      this.contamination.ownerChanged(tile);
     });
+    // J7c: a burst changes no tile; the campaign counts it.
+    game.setVeritableDetonation((type, tile, by) =>
+      this.detonation(type, tile, by),
+    );
     for (const b of bindings) {
       this.byNation.set(b.nationId, b.player);
       this.bySmallID.set(b.player.smallID(), b.nationId);
@@ -517,29 +531,9 @@ export class CoreBridge implements WorldPort {
     const g = this.game;
     // The warhead is the Véritable arsenal's, not bought with legacy gold.
     player.addGold(g.unitInfo(type).cost(g, player));
-    const before = new Map<number, NationId>();
-    const radius = g.config().nukeMagnitudes(type).outer;
-    const x0 = g.x(dst);
-    const y0 = g.y(dst);
-    for (
-      let y = Math.max(0, y0 - radius);
-      y <= Math.min(g.height() - 1, y0 + radius);
-      y++
-    ) {
-      for (
-        let x = Math.max(0, x0 - radius);
-        x <= Math.min(g.width() - 1, x0 + radius);
-        x++
-      ) {
-        const tile = g.ref(x, y);
-        if (!g.hasOwner(tile) || g.hasFallout(tile)) continue;
-        const owner = this.bySmallID.get(g.ownerID(tile));
-        if (owner !== undefined) before.set(tile, owner);
-      }
-    }
     const exec = new NukeExecution(type, player, dst);
     g.addExecution(exec);
-    this.launches.set(id, { exec, before });
+    this.launches.set(id, { exec, tile: dst, by: player, burst: null });
     return true;
   }
 
@@ -549,17 +543,92 @@ export class CoreBridge implements WorldPort {
       if (launch.exec.isActive()) continue;
       this.launches.delete(id);
       if (launch.exec.getNuke() === null) {
-        out.push({ id, status: "failed", hits: {} });
+        out.push({ id, status: "failed", tile: null });
         continue;
       }
-      const hits: Record<NationId, number> = {};
-      for (const [tile, owner] of launch.before) {
-        if (this.game.hasFallout(tile)) hits[owner] = (hits[owner] ?? 0) + 1;
-      }
-      const landed = Object.keys(hits).length > 0;
-      out.push({ id, status: landed ? "detonated" : "intercepted", hits });
+      out.push(
+        launch.burst !== null
+          ? { id, status: "detonated", tile: launch.burst }
+          : { id, status: "intercepted", tile: null },
+      );
     }
     return out;
+  }
+
+  // J7c: the core tells of a burst of a campaign; the launch it ends records
+  // its tile, and the core destroys the units within the radius of
+  // destruction of the weapon, in tiles at the latitude of the burst.
+  private detonation(type: UnitType, tile: number, by: Player): number {
+    for (const launch of this.launches.values()) {
+      if (launch.burst !== null || launch.by !== by) continue;
+      if (launch.tile !== tile) continue;
+      launch.burst = tile;
+      break;
+    }
+    const weapon =
+      type === UnitType.AtomBomb
+        ? "atom"
+        : type === UnitType.HydrogenBomb
+          ? "hydrogen"
+          : "mirv";
+    const km = this.nuclear?.weapons[weapon].destructionKm ?? 0;
+    const size = this.tileKm?.(this.game.y(tile)) ?? { x: 1, y: 1 };
+    return km / Math.max(0.001, Math.min(size.x, size.y));
+  }
+
+  blastTiles(tile: number, radiusKm: number): BlastSite[] {
+    const g = this.game;
+    const out: BlastSite[] = [];
+    const cx = g.x(tile);
+    const cy = g.y(tile);
+    const size = (row: number) => this.tileKm?.(row) ?? { x: 1, y: 1 };
+    const rows = Math.ceil(radiusKm / size(cy).y) + 1;
+    for (
+      let y = Math.max(0, cy - rows);
+      y <= Math.min(g.height() - 1, cy + rows);
+      y++
+    ) {
+      const km = size(y);
+      const cols = Math.ceil(radiusKm / km.x) + 1;
+      for (
+        let x = Math.max(0, cx - cols);
+        x <= Math.min(g.width() - 1, cx + cols);
+        x++
+      ) {
+        const t = g.ref(x, y);
+        if (!g.isLand(t)) continue;
+        out.push({
+          tile: t,
+          owner: this.ownerOf(t),
+          dxKm: (x - cx) * km.x,
+          dyKm: (y - cy) * km.y,
+          areaKm2: km.x * km.y,
+          people: this.people.peopleAt(t),
+        });
+      }
+    }
+    return out;
+  }
+
+  setContamination(entries: readonly ContaminationEntry[]): void {
+    this.contamination.set(entries, this.people, (t) => this.ownerOf(t));
+  }
+
+  contaminatedShares(): ReadonlyMap<NationId, number> {
+    const known = this.people.known();
+    const holdings = this.people.holdings();
+    const counts = known ? null : this.tileCounts();
+    return this.contamination.sharesOf(
+      (t) => this.ownerOf(t),
+      (t) => (known ? this.people.peopleAt(t) : 1),
+      (n) => (known ? (holdings.get(n) ?? 0) : (counts?.get(n) ?? 0)),
+    );
+  }
+
+  ownerOf(tile: number): NationId | null {
+    if (this.pending !== null) return null;
+    const small = this.game.ownerID(tile);
+    return small === 0 ? null : (this.bySmallID.get(small) ?? null);
   }
 
   // The tile a warhead aims at: the middle of the enemy's side of a front
@@ -664,7 +733,11 @@ export class CoreBridge implements WorldPort {
   // tiles along the line (the tiles of both sides alternate: a centre is
   // smoother than the tiles), and the contested tiles, sent again only when
   // they changed since `contestedVersion`.
-  overlay(step: number, contestedVersion: number): MapOverlay {
+  overlay(
+    step: number,
+    contestedVersion: number,
+    contaminationVersion = -1,
+  ): MapOverlay {
     const fronts: MapOverlay["fronts"] = [];
     const width = this.game.width();
     for (const [id, segments] of this.segments) {
@@ -699,6 +772,11 @@ export class CoreBridge implements WorldPort {
       fronts,
       contestedVersion: version,
       contested: version === contestedVersion ? null : this.ledger.tiles(),
+      contaminationVersion: this.contamination.version,
+      contamination:
+        this.contamination.version === contaminationVersion
+          ? null
+          : this.contamination.packed(),
     };
   }
 
@@ -812,6 +890,7 @@ export class CoreBridge implements WorldPort {
             terrain: s.terrain,
             defense,
             supply,
+            contamination: this.contamination.meanOf(s.tiles),
           };
         }),
       });
@@ -1092,6 +1171,10 @@ export interface MapOverlay {
   contestedVersion: number;
   // Tile indices under contest; null when unchanged since the version asked.
   contested: Uint32Array | null;
+  // J7c: the contaminated tiles and their level (0..255); null when
+  // unchanged since the version asked.
+  contaminationVersion: number;
+  contamination: { tiles: Uint32Array; levels: Uint8Array } | null;
 }
 
 // Plain JSON value with object keys sorted: the same GameStartInfo always

@@ -217,6 +217,12 @@ export function resolveTick(
         applyLosses(ctx, military, war, a, b);
         applyLosses(ctx, military, war, b, a);
       }
+      // J7c: contaminated land wears the divisions that fight on it.
+      const contamination = segment.contamination ?? 0;
+      if (contamination > 0) {
+        applyAttrition(ctx, military, war, a, contamination);
+        applyAttrition(ctx, military, war, b, contamination);
+      }
       const attacker = rA > 0 && rA >= rB ? a.nation : rB > 0 ? b.nation : null;
       return {
         index: segment.index,
@@ -372,6 +378,36 @@ function applyLosses(
     (war.score[side.nation] ?? 0) - lost * cfg.warScore.lossValue;
   war.score[enemy.nation] =
     (war.score[enemy.nation] ?? 0) + lost * cfg.warScore.lossValue;
+}
+
+// J7c: the divisions of `side` engaged on a contaminated segment lose
+// attritionPerDay x contamination of their men a day (a tick's share), in
+// the losses of the nation and of its war, not in the war score.
+function applyAttrition(
+  ctx: EconomyContext,
+  military: MilitaryState,
+  war: War,
+  side: SideState,
+  contamination: number,
+): void {
+  const perTick =
+    (ctx.config.nuclear.contamination.attritionPerDay *
+      contamination *
+      ctx.config.time.gameMinutesPerTick) /
+    (24 * 60);
+  if (perTick <= 0) return;
+  let lost = 0;
+  for (const { division, share } of side.engaged) {
+    const men = division.men * share * perTick;
+    if (men <= 0) continue;
+    division.men -= men;
+    lost += men;
+  }
+  if (lost <= 0) return;
+  const nation = military.nations[side.nation];
+  nation.losses += lost;
+  nation.lossesPending += lost;
+  war.losses[side.nation] = (war.losses[side.nation] ?? 0) + lost;
 }
 
 // The month of a war: who is retreating (net tiles lost this war month),

@@ -57,7 +57,6 @@ function campaign(
   world.capitals.set("AAA", 1);
   world.capitals.set("BBB", apart ? 9 : 5);
   world.capitals.set("CCC", 13);
-  world.nukeRadius = 0;
   const sim = new VeritableSimImpl({
     config,
     world,
@@ -222,30 +221,61 @@ describe("a shot and its consequences", () => {
     expect(view.journal.map((j) => j.kind)).toContain("nuclear-launch");
   });
 
-  it("a warhead that lands: the nation hit loses production, GDP and population in proportion to its tiles hit", () => {
+  it("a warhead that bursts (J7c): the land keeps its owner; the dead come off the nation hit, its land is contaminated and heals", () => {
     const { sim, world, days, config } = atWar();
+    // Tiles of 10 km; a million people in the capital of AAA, half a
+    // million in each of its other tiles.
+    world.tileKm = 10;
+    const people = new Float32Array(16);
+    for (let t = 0; t < 4; t++) people[t] = t === 1 ? 1e6 : 5e5;
+    for (let t = 8; t < 16; t++) people[t] = 5e5;
+    world.setPeople({ people, cities: [] });
     days(1);
-    const before = sim.read().economies.AAA;
-    const gdp = before.gdp;
-    const steel = before.production.steel;
-    world.nukeRadius = 0; // the capital tile only: 1 of AAA's 4 tiles
-    // Stop further shots: the arsenal is empty after this one.
-    days(1);
-    const factor = 1 - config.nuclear.falloutLoss * (1 / 4);
+    // One warhead only: BBB's arsenal is emptied after its first launch.
+    sim.read().nuclear.nations.BBB.warheads = 0;
+    // (The view shares the live state: a copy.)
+    const before = structuredClone(sim.read().economies.AAA);
+    const held = world.peopleHoldings().get("AAA")!;
+    // The burst on the next day; its contamination in the nation's update
+    // of the day after.
+    days(2);
     const after = sim.read();
-    expect(after.nuclear.strikes[0]).toMatchObject({
-      status: "detonated",
-      hits: { AAA: 1 },
-    });
-    // (A day of growth of the player's nation between the two readings.)
-    expect(after.economies.AAA.gdp / (gdp * factor)).toBeCloseTo(1, 3);
-    expect(after.economies.AAA.production.steel / (steel * factor)).toBeCloseTo(
-      1,
+    const strike = after.nuclear.strikes[0];
+    expect(strike).toMatchObject({ status: "detonated", tile: 1 });
+    // The owner of the land never changes.
+    for (let t = 0; t < 4; t++) expect(world.ownerOf(t)).toBe("AAA");
+    // Ground zero is contaminated to 1, the next tiles less.
+    expect(world.contaminationAt(1)).toBeGreaterThan(0.99);
+    expect(world.contaminationAt(0)).toBeLessThan(world.contaminationAt(1));
+    expect(world.contaminationAt(0)).toBeGreaterThan(0);
+    // The dead: their share of the people AAA held, off its population.
+    const dead = held - world.peopleHoldings().get("AAA")!;
+    const share = dead / held;
+    // Two thirds of the capital's million (its people within 5.6 km of
+    // ground zero, 1 - (d / 7 km)² of them), a few in the next tiles.
+    expect(share).toBeGreaterThan(0.25);
+    expect(share).toBeLessThan(0.35);
+    expect(strike.deaths.AAA / before.population).toBeCloseTo(share, 6);
+    // (Two days of growth of the player's nation between the readings.)
+    expect(after.economies.AAA.population / before.population).toBeCloseTo(
+      1 - share,
       3,
     );
-    expect(after.nuclear.fallout.AAA).toBeCloseTo(factor, 12);
-    expect(world.ownerOf(1)).toBeNull();
+    // GDP: the dead, then the contaminated share of the land left.
+    const contaminated = after.economies.AAA.contamination;
+    expect(contaminated).toBeGreaterThan(0.3);
+    expect(
+      after.economies.AAA.gdp / (before.gdp * (1 - share) * (1 - contaminated)),
+    ).toBeCloseTo(1, 2);
     expect(after.journal.map((j) => j.kind)).toContain("nuclear-detonation");
+    // A year later the land has healed by 2^(-1/6) (no spending, no aid).
+    const level = world.contaminationAt(1);
+    days(365);
+    expect(world.contaminationAt(1) / level).toBeCloseTo(
+      Math.pow(0.5, 1 / config.nuclear.contamination.halfLifeYears),
+      2,
+    );
+    expect(sim.read().economies.AAA.contamination).toBeLessThan(contaminated);
   });
 
   it("an intercepted warhead changes nothing on the ground; one that cannot leave is still in the arsenal", () => {

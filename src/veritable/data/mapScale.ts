@@ -34,3 +34,31 @@ export function configForMap(
   );
   return scaled;
 }
+
+// J7c: the size of a tile of a map in km, row by row. The georeferencing is
+// equirectangular (tools/veritable/borders/projections.ts): `scale` tiles a
+// radian of latitude, `scale x aspect` a radian of longitude, the row `ty`
+// at the latitude `lat0` (its small rotation is ignored).
+export interface TileKm {
+  x: number;
+  y: number;
+}
+
+const EARTH_KM = 6371;
+
+export function tileSizeKm(georef: {
+  scale: number;
+  aspect?: unknown;
+  lat0?: unknown;
+  ty?: unknown;
+}): (row: number) => TileKm {
+  const aspect = typeof georef.aspect === "number" ? georef.aspect : 1;
+  const lat0 = typeof georef.lat0 === "number" ? georef.lat0 : 0;
+  const ty = typeof georef.ty === "number" ? georef.ty : 0;
+  const y = EARTH_KM / georef.scale;
+  return (row) => {
+    const lat = lat0 + ((ty - row) / georef.scale) * (180 / Math.PI);
+    const cos = Math.max(0.01, Math.cos((lat * Math.PI) / 180));
+    return { x: (y / aspect) * cos, y };
+  };
+}

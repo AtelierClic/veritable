@@ -13,6 +13,7 @@ import { BordersMeta } from "../data/DataSource";
 import { vt } from "../data/i18n";
 import { peopleOf, PopulationGrid } from "../data/populationFile";
 import { CityData } from "../data/schemas/cities";
+import { Georef } from "../data/schemas/georef";
 import { NationId } from "../data/schemas/common";
 import { NationData } from "../data/schemas/nation";
 import { WorldState } from "../data/schemas/save";
@@ -37,6 +38,9 @@ export interface ScenarioPack {
   // Tiles per radian of the map (its georeferencing, J6c): the size of a
   // tile, for the war constants calibrated on the Europe map.
   georefScale?: number;
+  // J7c: the georeferencing itself (the size of a tile at each latitude,
+  // for the radii of a nuclear burst in km).
+  georef?: Georef;
   // J7b: the people of every tile (none without a grid) and the cities of
   // the scenario (its capitals and three largest cities per nation).
   population?: PopulationGrid | null;

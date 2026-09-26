@@ -1,4 +1,4 @@
-import { NationId } from "../../data/schemas/common";
+import { INTEREST_GROUPS, NationId } from "../../data/schemas/common";
 import { NationData } from "../../data/schemas/nation";
 import {
   DiplomacyState,
@@ -23,6 +23,13 @@ import { Rng } from "../rng";
 import { FrontView, NukeAim, NukeOutcome, WorldPort } from "../VeritableSim";
 import { frontId } from "../war/fronts";
 import { militaryPower } from "../war/military";
+import { blastHits } from "./blast";
+import {
+  addBurst,
+  deathsByNation,
+  healContamination,
+  healingSpeedup,
+} from "./contamination";
 
 // Nuclear weapons (J5).
 //
@@ -37,10 +44,18 @@ import { militaryPower } from "../war/military";
 // military concentration of the front, the next ones at cities, capital
 // first. Any shot: relations of everyone with the shooter at most -80,
 // sanctions by every nation nobody plays, a coalition may form against the
-// shooter whatever its power. A warhead that lands destroys a share of the
-// production, GDP and population of the nation hit (fallout), with no
-// reconstruction before the J7. At the annexation of a nuclear nation, its
+// shooter whatever its power. At the annexation of a nuclear nation, its
 // dead hand may strike the capital of the annexer.
+//
+// J7c: a warhead that bursts never changes the owner or the nature of a
+// tile. It kills people and contaminates the land around it (blast.ts,
+// contamination.ts): the dead come off the population, the production, the
+// GDP and the opinion of the nation that held them, count in the losses of
+// its war and wear it out; a contaminated tile produces less, keeps its
+// people away, wears the divisions that fight on it, and heals, faster with
+// infrastructure spending and aid. (The J5 fallout — tiles emptied, a share
+// of production and GDP lost for good — stays for the shots of older
+// saves.)
 
 export type NuclearEvent =
   | DiplomacyEvent
@@ -56,6 +71,9 @@ export type NuclearEvent =
       nation: NationId;
       by: NationId;
       tiles: number;
+      // J7c: the people it killed, all nations together, and where it burst.
+      deaths: number;
+      tile: number | null;
     }
   | { type: "nuclear-intercepted"; nation: NationId; by: NationId }
   | { type: "dead-hand"; nation: NationId; target: NationId };
@@ -76,6 +94,8 @@ export interface NuclearEnv {
   // Nations whose decisions are the AI's (the player's only in autopilot).
   aiNations: readonly NationId[];
   date: string;
+  // J7c: the net a nation's blocs pay it a month (aid to its healing).
+  blocNet?: (id: NationId) => number;
 }
 
 export function initNuclear(sheets: readonly NationData[]): NuclearState {
@@ -89,7 +109,13 @@ export function initNuclear(sheets: readonly NationData[]): NuclearState {
       shots: 0,
     };
   }
-  return { nations, strikes: [], nextStrikeId: 1, fallout: {} };
+  return {
+    nations,
+    strikes: [],
+    nextStrikeId: 1,
+    fallout: {},
+    contamination: [],
+  };
 }
 
 function leaderAggressiveness(politics: PoliticsState, id: NationId): number {
@@ -266,6 +292,8 @@ export function launch(
     weapon,
     status: "in-flight",
     hits: {},
+    tile: null,
+    deaths: {},
   });
   const cfg = env.ctx.config.nuclear;
   for (const other of env.ctx.nationIds) {
@@ -300,13 +328,12 @@ export function launch(
   return events;
 }
 
-// What a warhead that landed leaves: production, GDP and population of each
-// nation hit x (1 - loss x share of its tiles hit).
+// What a warhead that burst leaves (J7c): the people it killed and the land
+// it contaminated; the owner of the land never changes.
 function applyOutcome(env: NuclearEnv, outcome: NukeOutcome): NuclearEvent[] {
   const strike = env.nuclear.strikes.find((s) => s.id === outcome.id);
   if (strike === undefined || strike.status !== "in-flight") return [];
   strike.status = outcome.status;
-  strike.hits = { ...outcome.hits };
   if (outcome.status === "failed") {
     // It never left its silo: the warhead is still in the arsenal.
     const arsenal = env.nuclear.nations[strike.by];
@@ -316,37 +343,157 @@ function applyOutcome(env: NuclearEnv, outcome: NukeOutcome): NuclearEvent[] {
     }
     return [];
   }
-  if (outcome.status === "intercepted") {
+  if (outcome.status === "intercepted" || outcome.tile === null) {
+    strike.status = "intercepted";
     return [
       { type: "nuclear-intercepted", nation: strike.target, by: strike.by },
     ];
   }
-  const loss = env.ctx.config.nuclear.falloutLoss;
-  // Tiles now (the hit ones are gone) + the hit ones = the land before.
-  const counts = env.world.tileCounts();
-  let total = 0;
-  for (const [id, hits] of Object.entries(outcome.hits)) {
-    if (hits <= 0) continue;
-    total += hits;
-    const before = (counts.get(id) ?? 0) + hits;
-    const factor = 1 - loss * Math.min(1, hits / Math.max(1, before));
-    env.nuclear.fallout[id] = (env.nuclear.fallout[id] ?? 1) * factor;
-    const economy = env.economy.nations[id];
-    if (economy === undefined) continue;
-    economy.gdp *= factor;
-    for (const good of Object.keys(economy.production)) {
-      economy.production[good] *= factor;
-      economy.consumption[good] *= factor;
-    }
-  }
+  strike.tile = outcome.tile;
+  const { tiles, deaths } = burst(env, strike, outcome.tile);
   return [
     {
       type: "nuclear-detonation",
       nation: strike.target,
       by: strike.by,
-      tiles: total,
+      tiles,
+      deaths,
+      tile: outcome.tile,
     },
   ];
+}
+
+// The burst of a strike on `tile`: deaths and contamination tile by tile,
+// then what the dead cost each nation that held them.
+function burst(
+  env: NuclearEnv,
+  strike: NuclearStrike,
+  tile: number,
+): { tiles: number; deaths: number } {
+  const cfg = env.ctx.config.nuclear;
+  const weapon = cfg.weapons[strike.weapon];
+  const sites = env.world.blastTiles(tile, weapon.contaminationKm);
+  const hits = blastHits(sites, weapon, cfg.blast);
+  const site = new Map(sites.map((s) => [s.tile, s]));
+  const ownerOf = (t: number) => site.get(t)?.owner ?? null;
+  // The people each nation holds before its dead come off.
+  const holdings = new Map(env.world.peopleHoldings());
+  const dead = deathsByNation(hits, ownerOf);
+  env.nuclear.contamination = addBurst(
+    env.nuclear.contamination,
+    hits.map((h) => {
+      const people = site.get(h.tile)?.people ?? 0;
+      return { ...h, deathShare: people > 0 ? h.deaths / people : 0 };
+    }),
+  );
+  env.world.setContamination(env.nuclear.contamination);
+  let tiles = 0;
+  for (const h of hits) {
+    if (h.contamination < cfg.contamination.hitLevel) continue;
+    tiles++;
+    const owner = ownerOf(h.tile);
+    if (owner !== null) strike.hits[owner] = (strike.hits[owner] ?? 0) + 1;
+  }
+  let total = 0;
+  for (const [id, grid] of [...dead].sort((a, b) => (a[0] < b[0] ? -1 : 1))) {
+    const held = holdings.get(id) ?? 0;
+    const economy = env.economy.nations[id];
+    if (held <= 0 || economy === undefined) continue;
+    const share = Math.min(1, grid / held);
+    const people = economy.population * share;
+    strike.deaths[id] = (strike.deaths[id] ?? 0) + people;
+    total += people;
+    applyDeaths(env, strike, id, share, people);
+  }
+  return { tiles, deaths: total };
+}
+
+// The dead of a nation: its population, production, consumption and GDP lose
+// their share; its opinion, its war (losses) and its exhaustion take them.
+function applyDeaths(
+  env: NuclearEnv,
+  strike: NuclearStrike,
+  id: NationId,
+  share: number,
+  people: number,
+): void {
+  const cfg = env.ctx.config;
+  const economy = env.economy.nations[id];
+  economy.population = Math.max(0, economy.population - people);
+  economy.gdp *= 1 - share;
+  for (const good of Object.keys(economy.production)) {
+    economy.production[good] *= 1 - share;
+    economy.consumption[good] *= 1 - share;
+  }
+  const shock = Math.min(
+    cfg.nuclear.contamination.deathOpinionCap,
+    cfg.nuclear.contamination.deathOpinion * share,
+  );
+  const politics = env.politics.nations[id];
+  if (politics !== undefined && shock > 0) {
+    if (politics.groups !== null) {
+      for (const g of INTEREST_GROUPS) {
+        politics.groups[g] = Math.max(0, politics.groups[g] - shock);
+      }
+    }
+    politics.opinion = Math.max(0, politics.opinion - shock);
+  }
+  const military = env.military.nations[id];
+  if (military !== undefined) {
+    military.exhaustion = Math.min(
+      1,
+      military.exhaustion + cfg.war.exhaustion.perLossShareOfPopulation * share,
+    );
+  }
+  const war = env.diplomacy.wars.find(
+    (w) =>
+      (w.aggressors.includes(id) && w.defenders.includes(strike.by)) ||
+      (w.defenders.includes(id) && w.aggressors.includes(strike.by)),
+  );
+  if (war !== undefined) war.losses[id] = (war.losses[id] ?? 0) + people;
+}
+
+// A day of healing of the contaminated land: each tile by the speed-up of
+// the nation that holds it (its infrastructure spending above its first
+// day's, the aid it gets: grants and the net of its blocs).
+function healDay(env: NuclearEnv): void {
+  const cfg = env.ctx.config.nuclear.contamination;
+  if (env.nuclear.contamination.length === 0) return;
+  const speedups = new Map<NationId, number>();
+  const speedupOf = (tile: number): number => {
+    const owner = env.world.ownerOf(tile);
+    if (owner === null) return 1;
+    let v = speedups.get(owner);
+    if (v === undefined) {
+      const e = env.economy.nations[owner];
+      v =
+        e === undefined
+          ? 1
+          : healingSpeedup(
+              cfg,
+              (e.spending.infrastructure - e.spending0.infrastructure) * 100,
+              aidPctGdp(env, owner),
+            );
+      speedups.set(owner, v);
+    }
+    return v;
+  };
+  env.nuclear.contamination = healContamination(
+    env.nuclear.contamination,
+    1,
+    cfg,
+    speedupOf,
+  );
+  env.world.setContamination(env.nuclear.contamination);
+}
+
+// Aid a nation gets, in % of its GDP: its grants, and the net its blocs pay
+// it (a month of it, a year's worth).
+function aidPctGdp(env: NuclearEnv, id: NationId): number {
+  const e = env.economy.nations[id];
+  if (e === undefined || e.gdp <= 0) return 0;
+  const blocs = Math.max(0, env.blocNet?.(id) ?? 0);
+  return e.grantsPctGdp * 100 + ((blocs * 12) / e.gdp) * 100;
 }
 
 // Once a day: outcomes of the warheads in flight, threat levels, and the
@@ -356,6 +503,7 @@ export function stepNuclearDay(env: NuclearEnv): NuclearEvent[] {
   for (const outcome of env.world.nukeOutcomes()) {
     events.push(...applyOutcome(env, outcome));
   }
+  healDay(env);
   for (const [id, arsenal] of Object.entries(env.nuclear.nations)) {
     arsenal.threat = threatLevel(env, id);
   }

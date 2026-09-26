@@ -1,11 +1,14 @@
 import { NationId } from "../../data/schemas/common";
 import {
+  ContaminationEntry,
   TILE_CONTESTED_BIT,
   TILE_FALLOUT_BIT,
   TILE_NATION_MASK,
   WorldState,
 } from "../../data/schemas/save";
+import { ContaminationTiles } from "../nuclear/contamination";
 import {
+  BlastSite,
   FrontGeometry,
   NavalSnapshot,
   NukeAim,
@@ -36,6 +39,9 @@ export class MemoryWorld implements WorldPort {
   private claims: ClaimTiles;
   // J7b: off unless a test gives the people of the tiles (setPeople).
   private people: PeopleTiles;
+  // J7c: the contamination of the simulation, and the size of a tile (km).
+  private contamination = new ContaminationTiles();
+  tileKm = 1;
   private urban = { threshold: Infinity, defense: 1 };
   private terrain: Terrain[];
   private structures = new Map<number, number>(); // tile -> defence multiplier
@@ -88,6 +94,7 @@ export class MemoryWorld implements WorldPort {
     this.owners[tile] = to;
     this.ownerChanges++;
     this.people.ownerChanged(tile, from, to);
+    this.contamination.ownerChanged(tile);
   }
 
   // Claims (J6): the regions the test declares, and the owners of the
@@ -157,13 +164,13 @@ export class MemoryWorld implements WorldPort {
 
   // Nuclear weapons (J5), as the tests declare them: capitals (tile index),
   // distance of a capital to its fronts, warheads that cannot leave, the
-  // number of the next ones intercepted, and the radius a warhead burns
-  // around its aim (the capital of the target, or its first tile).
+  // number of the next ones intercepted. A warhead bursts on its aim (the
+  // capital of the target, or its first tile); J7c: the land keeps its
+  // owner.
   readonly capitals = new Map<NationId, number>();
   readonly frontDistances = new Map<NationId, number>();
   nukesBlocked = false;
   interceptNext = 0;
-  nukeRadius = 1;
   readonly launched: {
     id: number;
     by: NationId;
@@ -187,48 +194,75 @@ export class MemoryWorld implements WorldPort {
     return true;
   }
 
-  // Resolved at the next call: the tiles within the radius of the aim burn
-  // (owner lost, fallout).
+  // Resolved at the next call: the warhead bursts on its aim.
   nukeOutcomes(): NukeOutcome[] {
     const out: NukeOutcome[] = [];
     for (const launch of this.inFlight) {
       if (this.interceptNext > 0) {
         this.interceptNext -= 1;
-        out.push({ id: launch.id, status: "intercepted", hits: {} });
+        out.push({ id: launch.id, status: "intercepted", tile: null });
         continue;
       }
       const aim =
         this.capitals.get(launch.target) ??
         this.owners.findIndex((o) => o === launch.target);
-      const hits: Record<NationId, number> = {};
-      if (aim >= 0) {
-        const ax = aim % this.width;
-        const ay = Math.floor(aim / this.width);
-        const r = this.nukeRadius;
-        for (
-          let y = Math.max(0, ay - r);
-          y <= Math.min(this.height - 1, ay + r);
-          y++
-        ) {
-          for (
-            let x = Math.max(0, ax - r);
-            x <= Math.min(this.width - 1, ax + r);
-            x++
-          ) {
-            const tile = y * this.width + x;
-            const owner = this.owners[tile];
-            if (owner === null) continue;
-            hits[owner] = (hits[owner] ?? 0) + 1;
-            this.changeOwner(tile, null);
-            this.fallout[tile] = true;
-            this.ledger.clear(tile);
-          }
-        }
-      }
-      out.push({ id: launch.id, status: "detonated", hits });
+      out.push({
+        id: launch.id,
+        status: "detonated",
+        tile: aim >= 0 ? aim : null,
+      });
     }
     this.inFlight = [];
     return out;
+  }
+
+  // J7c: square tiles of `tileKm`.
+  blastTiles(tile: number, radiusKm: number): BlastSite[] {
+    const out: BlastSite[] = [];
+    const cx = tile % this.width;
+    const cy = Math.floor(tile / this.width);
+    const r = Math.ceil(radiusKm / this.tileKm) + 1;
+    for (
+      let y = Math.max(0, cy - r);
+      y <= Math.min(this.height - 1, cy + r);
+      y++
+    ) {
+      for (
+        let x = Math.max(0, cx - r);
+        x <= Math.min(this.width - 1, cx + r);
+        x++
+      ) {
+        const t = y * this.width + x;
+        out.push({
+          tile: t,
+          owner: this.owners[t],
+          dxKm: (x - cx) * this.tileKm,
+          dyKm: (y - cy) * this.tileKm,
+          areaKm2: this.tileKm * this.tileKm,
+          people: this.people.peopleAt(t),
+        });
+      }
+    }
+    return out;
+  }
+
+  setContamination(entries: readonly ContaminationEntry[]): void {
+    this.contamination.set(entries, this.people, (t) => this.owners[t]);
+  }
+
+  contaminatedShares(): ReadonlyMap<NationId, number> {
+    const known = this.people.known();
+    const holdings = this.people.holdings();
+    const counts = known ? null : this.tileCounts();
+    return this.contamination.sharesOf(
+      (t) => this.owners[t],
+      (t) => (known ? this.people.peopleAt(t) : 1),
+      (n) => (known ? (holdings.get(n) ?? 0) : (counts?.get(n) ?? 0)),
+    );
+  }
+
+  contaminationAt(tile: number): number {
+    return this.contamination.levelAt(tile);
   }
 
   capitalHeld(nation: NationId): boolean {
@@ -439,6 +473,7 @@ export class MemoryWorld implements WorldPort {
             terrain: s.terrain,
             defense,
             supply,
+            contamination: this.contamination.meanOf(s.tiles),
           };
         }),
       });

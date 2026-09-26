@@ -44,6 +44,9 @@ export class PeopleTiles {
   private moves = new Map<string, PeopleMove>();
   private cityMoves: CityMove[] = [];
   private readonly cityTiles = new Map<number, boolean>();
+  // J7c: the share of the people of a tile a nuclear burst killed (the
+  // contamination the simulation keeps); they come back as the land heals.
+  private dead = new Map<number, number>();
 
   constructor(
     size: number,
@@ -62,8 +65,33 @@ export class PeopleTiles {
     return this.input !== null;
   }
 
+  // The people of a tile now: the grid's, the dead of bursts off.
   peopleAt(tile: number): number {
-    return this.input?.people[tile] ?? 0;
+    const p = this.input?.people[tile] ?? 0;
+    if (p <= 0) return 0;
+    const dead = this.dead.get(tile);
+    return dead === undefined ? p : p * (1 - dead);
+  }
+
+  // J7c: the dead shares of the tiles (the contamination of the
+  // simulation); `ownerOf` gives the nation whose count they come off.
+  setDead(
+    shares: ReadonlyMap<number, number>,
+    ownerOf: (tile: number) => NationId | null,
+  ): void {
+    const before = this.dead;
+    this.dead = new Map(shares);
+    if (this.live === null || this.input === null) return;
+    const tiles = new Set([...before.keys(), ...shares.keys()]);
+    for (const tile of tiles) {
+      const p = this.input.people[tile];
+      if (p <= 0) continue;
+      const change = (shares.get(tile) ?? 0) - (before.get(tile) ?? 0);
+      if (change === 0) continue;
+      const owner = ownerOf(tile);
+      if (owner === null) continue;
+      this.live.set(owner, (this.live.get(owner) ?? 0) - p * change);
+    }
   }
 
   // A load or the first day is no occupation: counts and moves forgotten,
@@ -79,8 +107,8 @@ export class PeopleTiles {
     const live = new Map<NationId, number>();
     const people = this.input.people;
     for (let tile = 0; tile < people.length; tile++) {
-      const p = people[tile];
-      if (p <= 0) continue;
+      if (people[tile] <= 0) continue;
+      const p = this.peopleAt(tile);
       const owner = nationAt(tile);
       if (owner === null) continue;
       live.set(owner, (live.get(owner) ?? 0) + p);
@@ -94,7 +122,7 @@ export class PeopleTiles {
     if (capital !== undefined && from !== null && to !== null) {
       this.cityMoves.push({ tile, from, to, capital });
     }
-    const p = this.input!.people[tile];
+    const p = this.peopleAt(tile);
     if (p <= 0) return;
     if (from !== null) this.live.set(from, (this.live.get(from) ?? 0) - p);
     if (to !== null) this.live.set(to, (this.live.get(to) ?? 0) + p);

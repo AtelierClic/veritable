@@ -9,6 +9,7 @@ import {
 import { SaveFileV6 } from "../../data/schemas/saveV6";
 import { populationFactor } from "../../sim/economy/population";
 import { emptyIntel } from "../../sim/intel/state";
+import { repairFallout } from "../../sim/nuclear/fallout";
 import { addMonths } from "../../sim/politics/state";
 import { initSchedule } from "../../sim/schedule";
 import { calendarMonth, DAYS_PER_MONTH } from "../../sim/time";
@@ -46,7 +47,13 @@ import { MigrationContext, MigrationError } from "./index";
 //   - a war: the land each belligerent took is worth what its tiles scored
 //     (J7b: the score of the land by its people from then on);
 //   - intelligence: no snapshot yet, the restore takes them from the
-//     values of the save (the player's relations from its date on).
+//     values of the save (the player's relations from its date on);
+//   - J7c: a shot never changes the owner of a tile. The land a burst
+//     released (no owner, fallout) comes back to its owner of before and is
+//     contaminated as the strike left it, healed since
+//     (sim/nuclear/fallout.ts); no contamination elsewhere, no dead counted
+//     (the J5 fallout already took its share of the nations hit); a strike
+//     keeps no tile nor deaths.
 
 export function v6ToV7(
   save: SaveFileV6,
@@ -115,6 +122,7 @@ export function v6ToV7(
       paidPrice: old.paidPrice ?? perGood((g) => prices[g]),
       balances: merged,
       debtMark: e.debt,
+      contamination: old.contamination ?? 0,
     };
   }
 
@@ -210,9 +218,34 @@ export function v6ToV7(
     player,
   );
 
+  const released = repairFallout({
+    tiles: (save as unknown as { tiles: Uint16Array }).tiles,
+    width: save.tilesInfo.width,
+    height: save.tilesInfo.height,
+    nations: ids,
+    strikes: save.nuclear.strikes.map((s) => ({
+      ...s,
+      tile: null,
+      deaths: {},
+    })),
+    date,
+    halfLifeYears: context.config.nuclear.contamination.halfLifeYears,
+  });
+  const nuclear = {
+    ...save.nuclear,
+    strikes: save.nuclear.strikes.map((s) => ({
+      ...s,
+      tile: (s as { tile?: number | null }).tile ?? null,
+      deaths: (s as { deaths?: Record<NationId, number> }).deaths ?? {},
+    })),
+    contamination: released?.entries ?? [],
+  };
+
   return {
     ...save,
+    ...(released !== null ? { tiles: released.tiles } : {}),
     schemaVersion: 7,
+    nuclear,
     economy: { market: save.economy.market, nations: economy },
     military: { nations: military },
     diplomacy: { ...save.diplomacy, wars, claims, coalitionCalls },

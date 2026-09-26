@@ -510,7 +510,38 @@
       "unpredictable": 0.8
     },
     "relationsCap": -80,
-    "falloutLoss": 0.9
+    "falloutLoss": 0.9,
+    "weapons": {
+      "atom": { "yieldKt": 100, "destructionKm": 3, "contaminationKm": 15 },
+      "hydrogen": {
+        "yieldKt": 1000,
+        "destructionKm": 7,
+        "contaminationKm": 35
+      },
+      "mirv": { "yieldKt": 300, "destructionKm": 5, "contaminationKm": 25 }
+    },
+    "blast": {
+      "rings": 12,
+      "centerLethality": 1,
+      "contaminatedLethality": 0.02,
+      "contaminationEdge": 0.1,
+      "urbanDensityKm2": 1500,
+      "coreDensityKm2": 10000
+    },
+    "contamination": {
+      "halfLifeYears": 6,
+      "maxSpeedup": 2,
+      "infrastructurePointsForMax": 2,
+      "aidPctGdpForMax": 2,
+      "repopulationMax": 0.3,
+      "repopulationHalfLifeYears": 5,
+      "minLevel": 0.01,
+      "hitLevel": 0.05,
+      "attritionPerDay": 0.003,
+      "deathOpinion": 3,
+      "deathOpinionCap": 0.3,
+      "shareCap": 0.95
+    }
   },
   "blocs": {
     "rotationEpoch": "2026-01-01",

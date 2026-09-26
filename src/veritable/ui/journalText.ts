@@ -214,6 +214,16 @@ export function journalLine(names: Names, j: JournalEntry): string {
       params.lossesAgainst = names.losses(p.against, Number(p.lossesAgainst));
     }
   }
+  // J7c: the dead of a burst, as the player knows them (like the losses of
+  // a war).
+  if (
+    j.kind === "nuclear-detonation" &&
+    j.nation !== undefined &&
+    p.deaths !== undefined &&
+    /^\d+$/.test(p.deaths)
+  ) {
+    params.deaths = names.losses(j.nation, Number(p.deaths));
+  }
   if (j.kind === "election-held") {
     params.round = p.round === "2" ? vt("journal.round-2") : "";
   }

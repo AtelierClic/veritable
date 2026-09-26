@@ -372,6 +372,19 @@ export class NukeExecution implements Execution {
       throw new Error("Not initialized");
     }
 
+    // VERITABLE: in a campaign a burst changes neither the owner nor the
+    // nature of a tile (J7c): the campaign counts the dead and contaminates
+    // the land; the units within its radius of destruction (in tiles, from
+    // km at the latitude of the target) are destroyed as OpenFront destroys
+    // them.
+    const campaignRadius =
+      this.mg.veritableDetonation?.(this.nukeType, this.dst, this.player) ??
+      null;
+    if (campaignRadius !== null) {
+      this.detonateInCampaign(campaignRadius);
+      return;
+    }
+
     const mg = this.mg;
     const config = mg.config();
 
@@ -495,6 +508,55 @@ export class NukeExecution implements Execution {
     this.mg
       .stats()
       .bombLand(this.player, this.target(), this.nuke.type() as NukeType);
+  }
+
+  // VERITABLE: the burst of a campaign (see detonate).
+  private detonateInCampaign(radius: number): void {
+    const mg = this.mg;
+    const nuke = this.nuke!;
+    const r2 = radius * radius;
+    const cx = mg.x(this.dst);
+    const cy = mg.y(this.dst);
+    const reach = Math.ceil(radius);
+    // The flash of the burst on the map (no tile changes hands).
+    for (
+      let y = Math.max(0, cy - reach);
+      y <= Math.min(mg.height() - 1, cy + reach);
+      y++
+    ) {
+      for (
+        let x = Math.max(0, cx - reach);
+        x <= Math.min(mg.width() - 1, cx + reach);
+        x++
+      ) {
+        const dx = x - cx;
+        const dy = y - cy;
+        if (dx * dx + dy * dy <= r2) mg.queueNukeImpact(mg.ref(x, y));
+      }
+    }
+    for (const unit of mg.units()) {
+      const type = unit.type();
+      if (
+        type === UnitType.AtomBomb ||
+        type === UnitType.HydrogenBomb ||
+        type === UnitType.MIRVWarhead ||
+        type === UnitType.MIRV ||
+        type === UnitType.SAMMissile
+      ) {
+        continue;
+      }
+      if (mg.euclideanDistSquared(this.dst, unit.tile()) <= r2) {
+        const friendly = this.player.isFriendly(unit.owner(), true);
+        unit.delete(true, friendly ? undefined : this.player);
+      }
+    }
+    this.redrawBuildings(radius + SPRITE_RADIUS);
+    this.active = false;
+    nuke.setReachedTarget();
+    nuke.delete(false);
+    this.mg
+      .stats()
+      .bombLand(this.player, this.target(), nuke.type() as NukeType);
   }
 
   private redrawBuildings(range: number) {
