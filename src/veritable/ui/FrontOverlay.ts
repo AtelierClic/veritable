@@ -10,7 +10,7 @@ import { vt } from "../data/i18n";
 import { loadVeritableConfig } from "../data/loadConfig";
 import { NationId } from "../data/schemas/common";
 import { FrontView, SegmentSide, SegmentView } from "../sim/VeritableSim";
-import { campaignController } from "./CampaignController";
+import { campaignController, MapMarker } from "./CampaignController";
 
 // The fronts on the map (J5), for the campaign only: the line of every
 // segment, coloured by who advances and how wide the margin is, the force
@@ -91,6 +91,14 @@ function distanceToSegment(
       : Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / length2));
   return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
 }
+
+const MARKER_PERIOD_MS = 1400;
+const MARKER_RADIUS = 5;
+const MARKER_COLORS: Record<MapMarker["level"], string> = {
+  critical: "#ef4444",
+  info: "#f59e0b",
+  major: "#a855f7",
+};
 
 export class FrontOverlayController implements Controller {
   private canvas: HTMLCanvasElement | null = null;
@@ -231,7 +239,11 @@ export class FrontOverlayController implements Controller {
     const t = this.transform;
     const origin = t.worldToScreenCoordinates(new Cell(0, 0));
     const camera = `${w}x${h}:${t.scale}:${origin.x}:${origin.y}`;
-    if (!this.dirty && camera === this.lastCamera) return;
+    // J7: markers pulse, the canvas is drawn every frame while there are.
+    const markers = campaignController().markers();
+    if (!this.dirty && camera === this.lastCamera && markers.length === 0) {
+      return;
+    }
     this.dirty = false;
     this.lastCamera = camera;
     if (canvas.width !== w || canvas.height !== h) {
@@ -242,6 +254,7 @@ export class FrontOverlayController implements Controller {
     if (ctx === null) return;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, w, h);
+    this.drawMarkers(ctx, dpr, origin, markers);
     const data = this.data;
     if (data === null) return;
     const s = t.scale;
@@ -316,7 +329,60 @@ export class FrontOverlayController implements Controller {
     }
   }
 
+  // Pulsing rings at the places of the latest events (J7): red what
+  // concerns the player critically, amber its news, violet the major events
+  // of the world.
+  private drawMarkers(
+    ctx: CanvasRenderingContext2D,
+    dpr: number,
+    origin: { x: number; y: number },
+    markers: readonly MapMarker[],
+  ): void {
+    if (markers.length === 0) return;
+    const s = this.transform.scale;
+    const phase = (performance.now() % MARKER_PERIOD_MS) / MARKER_PERIOD_MS;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    for (const m of markers) {
+      const x = origin.x + (m.x + 0.5) * s;
+      const y = origin.y + (m.y + 0.5) * s;
+      const color = MARKER_COLORS[m.level];
+      ctx.beginPath();
+      ctx.arc(x, y, MARKER_RADIUS, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.9;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(x, y, MARKER_RADIUS + 10 * phase, 0, Math.PI * 2);
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 1 - phase;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // The marker under a click of the screen, if any.
+  private markerAt(x: number, y: number): MapMarker | null {
+    const t = this.transform;
+    const origin = t.worldToScreenCoordinates(new Cell(0, 0));
+    const reach = MARKER_RADIUS + 6;
+    let best: { m: MapMarker; d: number } | null = null;
+    for (const m of campaignController().markers()) {
+      const mx = origin.x + (m.x + 0.5) * t.scale;
+      const my = origin.y + (m.y + 0.5) * t.scale;
+      const d = Math.hypot(mx - x, my - y);
+      if (d <= reach && (best === null || d < best.d)) best = { m, d };
+    }
+    return best?.m ?? null;
+  }
+
   private onClick(x: number, y: number): void {
+    // A marker first (J7): the journal on its event.
+    const hit = this.markerAt(x, y);
+    if (hit !== null) {
+      campaignController().openMarker(hit);
+      return;
+    }
     const data = this.data;
     if (data === null || data.fronts.length === 0) return;
     const p = this.transform.screenToWorldCoordinatesFloat(x, y);

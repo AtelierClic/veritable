@@ -1,5 +1,7 @@
 import {
   HudView,
+  JournalPage,
+  JournalQuery,
   PlayerCommand,
   ReadonlyWorldView,
   SimEvent,
@@ -50,6 +52,11 @@ export class RemoteVeritableSim {
   // J7: what the top bar and the event cards read, four times a second.
   hud(journalSince?: number): Promise<HudView> {
     return this.request({ kind: "hud", journalSince }) as Promise<HudView>;
+  }
+
+  // J7: the journal, filtered (the journal screen).
+  queryJournal(query: JournalQuery): Promise<JournalPage> {
+    return this.request({ kind: "journal", query }) as Promise<JournalPage>;
   }
 
   async apply(command: PlayerCommand): Promise<void> {

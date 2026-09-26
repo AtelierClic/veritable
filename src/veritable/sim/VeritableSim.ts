@@ -54,6 +54,35 @@ export interface VeritableSim {
   // cheap enough to be read four times a second; with the journal entries
   // added since the mark `journalSince` of an earlier HUD.
   hud(journalSince?: number): HudView;
+  // J7: the journal, filtered, most recent first (the journal screen).
+  queryJournal(query: JournalQuery): JournalPage;
+}
+
+// Whose entries the journal screen shows (J7): all, the player's nation,
+// its allies, its land neighbours, a region of the world, a bloc.
+export type JournalScope =
+  | { kind: "all" }
+  | { kind: "mine" }
+  | { kind: "allies" }
+  | { kind: "neighbours" }
+  | { kind: "region"; region: string }
+  | { kind: "bloc"; bloc: string };
+
+export interface JournalQuery {
+  scope: JournalScope;
+  // Only the entries that concern one of these nations (a search).
+  nations?: readonly NationId[];
+  category?: string;
+  from?: string; // ISO dates, inclusive
+  to?: string;
+  link?: string; // one thread ("war:<id>")
+  offset?: number;
+  limit: number;
+}
+
+export interface JournalPage {
+  entries: readonly JournalEntry[];
+  total: number;
 }
 
 // The view of the always-visible interface (J7): the date and speed, the
@@ -72,6 +101,9 @@ export interface HudView {
   allies: readonly NationId[];
   enemies: readonly NationId[];
   blocs: readonly string[]; // the player's
+  // Width of the map in tiles: the place of an entry (a tile index) to its
+  // column and row.
+  mapWidth: number;
   // Entries added to the journal in this session, and the latest of them
   // since the mark asked for (at most 50).
   journalMark: number;
@@ -572,6 +604,14 @@ export interface WorldPort {
   nukeOutcomes(): NukeOutcome[];
   // Does the nation still hold its capital?
   capitalHeld(nation: NationId): boolean;
+  // Places of the journal (J7): the tile of the capital of a nation (null
+  // when the world does not know it), and a tile of `b` on its border with
+  // `a` on the way from the capital of `a` to that of `b` (the capital of
+  // `b` when the way crosses no common border).
+  capitalTile(nation: NationId): number | null;
+  borderTile(a: NationId, b: NationId): number | null;
+  // Width of the map in tiles (a tile index to its column and row).
+  mapWidth(): number;
   // Tiles from the capital of the nation to the nearest front it fights on
   // (last computed geometry); null without a front.
   capitalFrontDistance(nation: NationId): number | null;

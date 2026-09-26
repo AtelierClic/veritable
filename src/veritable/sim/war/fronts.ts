@@ -366,15 +366,28 @@ export function stepWarMonth(diplomacy: DiplomacyState): void {
   for (const war of diplomacy.wars) closeWarMonth(war);
 }
 
+// A month of a war that closed (J7, the journal): the net tiles each
+// belligerent gained in it.
+export interface WarMonth {
+  war: War;
+  tiles: Record<NationId, number>;
+}
+
 // J7, every game day: a war closes its month on the anniversary of its
 // start (its own ledger), not on the 1st for every war at once.
-export function stepWarLedgers(diplomacy: DiplomacyState, date: string): void {
+export function stepWarLedgers(
+  diplomacy: DiplomacyState,
+  date: string,
+): WarMonth[] {
+  const closed: WarMonth[] = [];
   for (const war of diplomacy.wars) {
     if (date < war.ledgerOn) continue;
+    closed.push({ war, tiles: { ...war.monthlyTiles } });
     closeWarMonth(war);
     war.ledgerOn = addMonths(war.ledgerOn, 1);
     while (war.ledgerOn <= date) war.ledgerOn = addMonths(war.ledgerOn, 1);
   }
+  return closed;
 }
 
 // Divisions of nations that are no longer at war go back to the reserve;

@@ -18,6 +18,9 @@ import {
   unclaimableMask,
 } from "./scenarioWorld";
 
+// The latest journal entries the view carries to the client (J7).
+const JOURNAL_IN_VIEW = 200;
+
 export interface SessionOptions {
   // Whatever recreates this exact core game (OpenFront GameStartInfo).
   coreStart: { gameID: string; config: { veritablePlayerNation?: string } };
@@ -130,8 +133,14 @@ export class VeritableSession {
     since: number | undefined,
     embargoesOf: readonly string[] | undefined,
   ): ReadonlyWorldView | null {
-    const view = this.sim.read();
-    if (since !== undefined && since === view.version) return null;
+    const full = this.sim.read();
+    if (since !== undefined && since === full.version) return null;
+    // The journal screen asks for its entries (J7): the view carries the
+    // latest only.
+    const view = {
+      ...full,
+      journal: full.journal.slice(-JOURNAL_IN_VIEW),
+    };
     if (embargoesOf === undefined) return view;
     const keep = new Set(embargoesOf);
     return {
@@ -151,6 +160,8 @@ export class VeritableSession {
         return this.read(request.since, request.embargoesOf);
       case "hud":
         return this.sim.hud(request.journalSince);
+      case "journal":
+        return this.sim.queryJournal(request.query);
       case "apply":
         this.sim.apply(request.command);
         return null;

@@ -111,12 +111,19 @@ export const JOURNAL_KINDS_V7 = [
   // Compaction (J6c): the entries of a year older than
   // save.journalFullYears, by nation and category.
   "yearly-summary",
+  // J7: a month of a war in which the line moved (its battles).
+  "war-month",
 ] as const;
 export const JournalEntryV7Schema = z.object({
   date: IsoDateSchema,
   kind: z.enum(JOURNAL_KINDS_V7),
   nation: NationIdSchema.optional(),
   params: z.record(z.string(), z.string()),
+  // J7: where it happened (a tile of the map: the camera goes there, a
+  // marker shows it), and the thread it belongs to ("war:<id>": the
+  // declaration, the months of the war, the peace).
+  tile: zb.uint().optional(),
+  link: z.string().optional(),
 });
 export type JournalEntryV7 = z.infer<typeof JournalEntryV7Schema>;
 

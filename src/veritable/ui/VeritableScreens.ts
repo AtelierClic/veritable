@@ -11,6 +11,7 @@ import { Ideology } from "../data/schemas/politics";
 import {
   ActorState,
   Division,
+  JournalEntry,
   NationEconomy,
   NationPolitics,
   PeaceTerms,
@@ -20,15 +21,26 @@ import { TECH_DOMAINS, TechEffect } from "../data/schemas/tech";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import type { Tally } from "../sim/blocs/blocs";
 import { relation } from "../sim/diplomacy/diplomacy";
-import { entryCategory } from "../sim/journal";
-import { BlocView, FrontView, ReadonlyWorldView } from "../sim/VeritableSim";
+import { entryCategory, JOURNAL_CATEGORIES } from "../sim/journal";
+import {
+  BlocView,
+  FrontView,
+  JournalPage,
+  JournalQuery,
+  JournalScope,
+  ReadonlyWorldView,
+} from "../sim/VeritableSim";
+import { campaignController } from "./CampaignController";
 import { confirmAction } from "./ConfirmModal";
 import { effectLabel } from "./eventText";
+import { longDate } from "./format";
 import { journalLine, measureName, regionName, viewNames } from "./journalText";
 import {
   filterNations,
+  fold,
   NationFilter,
   NO_FILTER,
+  regionOptions,
   renderNationFilter,
 } from "./nationFilter";
 
@@ -42,6 +54,7 @@ export type ScreenId =
   | "election"
   | "leaders"
   | "objectives"
+  | "journal"
   | "blocs"
   | "tech"
   | "events";
@@ -55,6 +68,7 @@ export const SCREENS: ScreenId[] = [
   "election",
   "leaders",
   "objectives",
+  "journal",
   "blocs",
   "tech",
   "events",
@@ -64,6 +78,8 @@ export const SCREENS: ScreenId[] = [
 // a version of it), at most four times a second, and less often when a read
 // costs the worker much (208 nations: tens of milliseconds of copy).
 const REFRESH_MS = 250;
+// Entries of the journal screen shown at first, and added by "more".
+const JOURNAL_PAGE = 60;
 const READ_COST_FACTOR = 8;
 
 const pct = (v: number, digits = 1) => `${(v * 100).toFixed(digits)} %`;
@@ -2342,8 +2358,280 @@ export class VeritableScreens extends LitElement {
 
   // --- objectives and journal (J4) ----------------------------------------------------
 
-  @state() private journalFilter = "";
   @state() private noteDraft = "";
+
+  // --- the journal (J7) -----------------------------------------------------------
+
+  // The filters of the journal screen: scope (all, mine, allies,
+  // neighbours, "r:<region>", "s:<subregion>", "b:<bloc>"), category,
+  // years, a nation searched by name, a thread; the page read from the
+  // simulation.
+  @state() private journalScope = "all";
+  @state() private journalCategory = "";
+  @state() private journalFrom = "";
+  @state() private journalTo = "";
+  @state() private journalSearch = "";
+  @state() private journalLink: string | null = null;
+  @state() private journalShown = JOURNAL_PAGE;
+  @state() private journalPage: JournalPage | null = null;
+  private journalAsked = "";
+
+  // Opens the journal on one nation, or one thread (a marker of the map).
+  openJournal(filter: { nation?: string; link?: string }): void {
+    this.journalScope = "all";
+    this.journalCategory = "";
+    this.journalFrom = "";
+    this.journalTo = "";
+    this.journalShown = JOURNAL_PAGE;
+    this.journalLink = filter.link ?? null;
+    this.journalSearch =
+      filter.nation === undefined || this.view === null
+        ? ""
+        : this.nationLabel(this.view, filter.nation);
+    this.journalAsked = "";
+    this.show("journal");
+  }
+
+  private journalQuery(view: ReadonlyWorldView): JournalQuery {
+    const scope: JournalScope =
+      this.journalScope === "mine"
+        ? { kind: "mine" }
+        : this.journalScope === "allies"
+          ? { kind: "allies" }
+          : this.journalScope === "neighbours"
+            ? { kind: "neighbours" }
+            : this.journalScope.startsWith("b:")
+              ? { kind: "bloc", bloc: this.journalScope.slice(2) }
+              : /^[rs]:/.test(this.journalScope)
+                ? { kind: "region", region: this.journalScope.slice(2) }
+                : { kind: "all" };
+    const search = fold(this.journalSearch.trim());
+    const nations =
+      search === ""
+        ? undefined
+        : view.nations
+            .filter((n) => fold(this.nationLabel(view, n.id)).includes(search))
+            .map((n) => n.id);
+    return {
+      scope,
+      ...(nations === undefined ? {} : { nations }),
+      ...(this.journalCategory === ""
+        ? {}
+        : { category: this.journalCategory }),
+      ...(/^\d{4}$/.test(this.journalFrom)
+        ? { from: `${this.journalFrom}-01-01` }
+        : {}),
+      ...(/^\d{4}$/.test(this.journalTo)
+        ? { to: `${this.journalTo}-12-31` }
+        : {}),
+      ...(this.journalLink === null ? {} : { link: this.journalLink }),
+      limit: this.journalShown,
+    };
+  }
+
+  // Reads the page of the journal when the filters or the view changed.
+  private async loadJournal(view: ReadonlyWorldView): Promise<void> {
+    const sim = this.sim;
+    if (sim === null) return;
+    const query = this.journalQuery(view);
+    const key = `${view.version}|${JSON.stringify(query)}`;
+    if (key === this.journalAsked) return;
+    this.journalAsked = key;
+    try {
+      this.journalPage = await sim.queryJournal(query);
+    } catch {
+      this.journalPage = null;
+    }
+  }
+
+  // The place of an entry: the camera goes there; the nation opens in the
+  // diplomacy screen (its sheet at the J7b).
+  private goToEntry(entry: JournalEntry): void {
+    if (entry.tile !== undefined) campaignController().focus(entry.tile);
+    if (
+      entry.nation !== undefined &&
+      entry.nation !== this.view?.playerNation
+    ) {
+      this.picked = entry.nation;
+      this.show("diplomacy");
+    }
+  }
+
+  // The effects of the choice of an event, in figures (J7).
+  private entryEffects(
+    view: ReadonlyWorldView,
+    j: JournalEntry,
+  ): TemplateResult | typeof nothing {
+    if (j.params.event === undefined || j.params.choice === undefined) {
+      return nothing;
+    }
+    const event = this.eventCatalogue.find((e) => e.id === j.params.event);
+    const choice = event?.choices.find((c) => c.id === j.params.choice);
+    if (choice === undefined || choice.effects.length === 0) return nothing;
+    const other =
+      j.params.other === undefined || j.params.other === ""
+        ? null
+        : j.params.other;
+    return html`<span class="block text-gray-500"
+      >${choice.effects
+        .map((e) => this.eventEffectLabel(view, e, other))
+        .join(", ")}</span
+    >`;
+  }
+
+  private renderJournal(view: ReadonlyWorldView): TemplateResult {
+    void this.loadJournal(view);
+    const page = this.journalPage;
+    const names = viewNames(view);
+    const scopes: { value: string; label: string }[] = [
+      { value: "all", label: vt("screen.journal.scope.all") },
+      { value: "mine", label: vt("screen.journal.scope.mine") },
+      { value: "allies", label: vt("screen.journal.scope.allies") },
+      { value: "neighbours", label: vt("screen.journal.scope.neighbours") },
+      ...regionOptions(view.nations.map((n) => n.id)),
+      ...view.blocs.map((b) => ({
+        value: `b:${b.id}`,
+        label: vt(`bloc.${b.id}.name`),
+      })),
+    ];
+    const set = (patch: () => void) => {
+      patch();
+      this.journalShown = JOURNAL_PAGE;
+    };
+    return html`
+      <div class="mb-1 flex flex-wrap items-center gap-2">
+        <select
+          class="bg-gray-800"
+          @change=${(e: Event) =>
+            set(
+              () => (this.journalScope = (e.target as HTMLSelectElement).value),
+            )}
+        >
+          ${scopes.map(
+            (o) =>
+              html`<option
+                value=${o.value}
+                ?selected=${this.journalScope === o.value}
+              >
+                ${o.label}
+              </option>`,
+          )}
+        </select>
+        <select
+          class="bg-gray-800"
+          @change=${(e: Event) =>
+            set(
+              () =>
+                (this.journalCategory = (e.target as HTMLSelectElement).value),
+            )}
+        >
+          <option value="" ?selected=${this.journalCategory === ""}>
+            ${vt("screen.journal.all-categories")}
+          </option>
+          ${JOURNAL_CATEGORIES.map(
+            (c) =>
+              html`<option value=${c} ?selected=${this.journalCategory === c}>
+                ${vt(`journal.category.${c}`)}
+              </option>`,
+          )}
+        </select>
+        <input
+          class="w-40 bg-gray-800 px-1"
+          .value=${this.journalSearch}
+          placeholder=${vt("screen.journal.search")}
+          @keydown=${(e: Event) => e.stopPropagation()}
+          @input=${(e: Event) =>
+            set(
+              () => (this.journalSearch = (e.target as HTMLInputElement).value),
+            )}
+        />
+        <span>${vt("screen.journal.from")}</span>
+        <input
+          class="w-14 bg-gray-800 px-1"
+          .value=${this.journalFrom}
+          placeholder="2026"
+          @keydown=${(e: Event) => e.stopPropagation()}
+          @input=${(e: Event) =>
+            set(
+              () => (this.journalFrom = (e.target as HTMLInputElement).value),
+            )}
+        />
+        <span>${vt("screen.journal.to")}</span>
+        <input
+          class="w-14 bg-gray-800 px-1"
+          .value=${this.journalTo}
+          placeholder=${view.date.slice(0, 4)}
+          @keydown=${(e: Event) => e.stopPropagation()}
+          @input=${(e: Event) =>
+            set(() => (this.journalTo = (e.target as HTMLInputElement).value))}
+        />
+        ${this.journalLink === null
+          ? nothing
+          : html`<button
+              class="rounded bg-yellow-700 px-2"
+              @click=${() => set(() => (this.journalLink = null))}
+            >
+              ${vt("screen.journal.thread-clear")}
+            </button>`}
+        <span class="text-gray-400"
+          >${page === null
+            ? ""
+            : vt("screen.journal.count", {
+                shown: String(page.entries.length),
+                total: String(page.total),
+              })}</span
+        >
+      </div>
+      <div class="max-h-[60vh] overflow-y-auto">
+        ${page === null
+          ? html`<div class="text-gray-400">${vt("screen.loading")}</div>`
+          : page.entries.length === 0
+            ? html`<div class="text-gray-400">
+                ${vt("screen.journal.empty")}
+              </div>`
+            : page.entries.map(
+                (j) =>
+                  html`<div class="flex items-start gap-2 text-gray-300">
+                    <span class="w-28 shrink-0 tabular-nums text-gray-500"
+                      >${longDate(j.date)}</span
+                    >
+                    <span class="w-20 shrink-0 text-gray-500"
+                      >${vt(`journal.category.${entryCategory(j)}`)}</span
+                    >
+                    <span
+                      class="flex-1 ${j.tile === undefined &&
+                      j.nation === undefined
+                        ? ""
+                        : "cursor-pointer hover:text-white"}"
+                      title=${vt("screen.journal.go")}
+                      @click=${() => this.goToEntry(j)}
+                      >${journalLine(names, j)}${this.entryEffects(
+                        view,
+                        j,
+                      )}</span
+                    >
+                    ${j.link === undefined || this.journalLink === j.link
+                      ? nothing
+                      : html`<button
+                          class="shrink-0 rounded bg-gray-700 px-1"
+                          @click=${() =>
+                            set(() => (this.journalLink = j.link ?? null))}
+                        >
+                          ${vt("screen.journal.thread")}
+                        </button>`}
+                  </div>`,
+              )}
+        ${page !== null && page.total > page.entries.length
+          ? html`<button
+              class="mt-1 rounded bg-gray-700 px-2"
+              @click=${() => (this.journalShown += JOURNAL_PAGE)}
+            >
+              ${vt("screen.journal.more")}
+            </button>`
+          : nothing}
+      </div>
+    `;
+  }
 
   // A claimed region (J6): a region of the scenario, or the homeland of a
   // nation ("homeland:<id>").
@@ -2354,23 +2642,6 @@ export class VeritableScreens extends LitElement {
   private renderObjectives(view: ReadonlyWorldView, p: NationPolitics) {
     const pinned = view.objectives;
     const active = pinned.filter((o) => !o.done).length;
-    const categories = [
-      "",
-      "politics",
-      "economy",
-      "war",
-      "diplomacy",
-      "objectives",
-      "notes",
-      "other",
-    ];
-    const entries = [...view.journal]
-      .reverse()
-      .filter(
-        (j) =>
-          this.journalFilter === "" || entryCategory(j) === this.journalFilter,
-      )
-      .slice(0, 60);
     void p;
     return html`
       <div class="font-bold">
@@ -2449,32 +2720,6 @@ export class VeritableScreens extends LitElement {
           ${vt("screen.objectives.add-note")}
         </button>
       </div>
-      <div class="mt-1 flex items-center gap-2">
-        <span class="font-bold">${vt("screen.objectives.journal")}</span>
-        <select
-          class="bg-gray-800"
-          @change=${(ev: Event) =>
-            (this.journalFilter = (ev.target as HTMLSelectElement).value)}
-        >
-          ${categories.map(
-            (c) =>
-              html`<option value=${c} ?selected=${this.journalFilter === c}>
-                ${c === ""
-                  ? vt("screen.objectives.all")
-                  : vt(`journal.category.${c}`)}
-              </option>`,
-          )}
-        </select>
-      </div>
-      <div class="max-h-64 overflow-y-auto">
-        ${entries.map(
-          (j) =>
-            html`<div class="text-gray-300">
-              <span class="tabular-nums text-gray-500">${j.date}</span>
-              ${journalLine(viewNames(view), j)}
-            </div>`,
-        )}
-      </div>
     `;
   }
 
@@ -2484,10 +2729,15 @@ export class VeritableScreens extends LitElement {
     const player = view?.playerNation ?? null;
     const economy = player === null ? undefined : view!.economies[player];
     const politics = player === null ? undefined : view!.politics[player];
+    // Under the top bar, whatever its height (it wraps on narrow screens).
+    const bar = document
+      .querySelector("veritable-topbar > div")
+      ?.getBoundingClientRect();
+    const top = bar === undefined ? 40 : Math.round(bar.bottom + 4);
     return html`
       <div
-        class="fixed top-10 left-1/2 z-[10000] max-h-[80vh] w-[52rem] max-w-[96vw] -translate-x-1/2 overflow-y-auto rounded border border-gray-500 bg-gray-900/95 p-2 text-xs text-white"
-        style="pointer-events:auto"
+        class="fixed left-1/2 z-[10000] max-h-[80vh] w-[52rem] max-w-[96vw] -translate-x-1/2 overflow-y-auto rounded border border-gray-500 bg-gray-900/95 p-2 text-xs text-white"
+        style="pointer-events:auto; top:${top}px"
       >
         <div class="mb-1 flex items-center justify-between">
           <span class="text-sm font-bold">${vt(`screen.${screen}.title`)}</span>
@@ -2536,7 +2786,9 @@ export class VeritableScreens extends LitElement {
                               ? this.renderTech(view)
                               : screen === "events"
                                 ? this.renderEvents(view)
-                                : this.renderObjectives(view, politics)}
+                                : screen === "journal"
+                                  ? this.renderJournal(view)
+                                  : this.renderObjectives(view, politics)}
       </div>
     `;
   }

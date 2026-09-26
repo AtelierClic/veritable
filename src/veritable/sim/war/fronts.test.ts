@@ -7,6 +7,7 @@ import { testNation, testScenario } from "../testing/nations";
 import { testSimData } from "../testing/simData";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
+import { stepWarLedgers } from "./fronts";
 import { captureAlong, frontTiles, segmentFront } from "./geometry";
 
 const TICK = 72;
@@ -444,6 +445,36 @@ describe("peace", () => {
     expect(again.length).toBeGreaterThan(0);
     sim.apply({ type: "answer-peace", offer: again[0].id, accept: true });
     expect(sim.read().diplomacy.wars).toEqual([]);
+  });
+});
+
+describe("the months of a war (J7)", () => {
+  it("a war closes its month on its anniversary and gives the tiles each side gained in it", () => {
+    const war = {
+      id: "w",
+      aggressors: ["AAA"],
+      defenders: ["BBB"],
+      casusBelli: null,
+      since: "2026-01-10",
+      declaredInCampaign: true,
+      ledgerOn: "2026-02-10",
+      score: {},
+      retreatMonths: {},
+      tilesTaken: {},
+      monthlyTiles: { AAA: 40, BBB: -40 },
+      offers: [],
+      losses: { AAA: 1000, BBB: 2500 },
+      claims: [],
+    };
+    const diplomacy = { wars: [war] } as unknown as Parameters<
+      typeof stepWarLedgers
+    >[0];
+    expect(stepWarLedgers(diplomacy, "2026-02-09")).toEqual([]);
+    const [month] = stepWarLedgers(diplomacy, "2026-02-10");
+    expect(month.tiles).toEqual({ AAA: 40, BBB: -40 });
+    expect(war.monthlyTiles).toEqual({ AAA: 0, BBB: 0 });
+    expect(war.retreatMonths).toEqual({ AAA: 0, BBB: 1 });
+    expect(war.ledgerOn).toBe("2026-03-10");
   });
 });
 

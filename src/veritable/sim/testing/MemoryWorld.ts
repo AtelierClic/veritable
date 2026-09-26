@@ -13,6 +13,7 @@ import {
   TileGrid,
   WorldPort,
 } from "../VeritableSim";
+import { borderAlong } from "../war/borderWalk";
 import { ClaimTiles, ClaimTilesInput } from "../war/claimTiles";
 import { ContestLedger } from "../war/contest";
 import {
@@ -201,6 +202,25 @@ export class MemoryWorld implements WorldPort {
 
   capitalFrontDistance(nation: NationId): number | null {
     return this.frontDistances.get(nation) ?? null;
+  }
+
+  mapWidth(): number {
+    return this.width;
+  }
+
+  // The capital the test declares, else the first tile of the nation.
+  capitalTile(nation: NationId): number | null {
+    const declared = this.capitals.get(nation);
+    if (declared !== undefined) return declared;
+    const first = this.owners.indexOf(nation);
+    return first < 0 ? null : first;
+  }
+
+  borderTile(a: NationId, b: NationId): number | null {
+    const from = this.capitalTile(a);
+    const to = this.capitalTile(b);
+    if (from === null || to === null) return to;
+    return borderAlong(this.width, from, to, (t) => this.owners[t], a, b);
   }
 
   structureCounts(): ReadonlyMap<NationId, Record<string, number>> {

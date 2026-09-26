@@ -1,19 +1,24 @@
 import { ReplaySpeedChangeEvent } from "../../client/InputHandler";
+import { GoToPositionEvent } from "../../client/TransformHandler";
 import { PauseGameIntentEvent } from "../../client/Transport";
 import { ReplaySpeedMultiplier } from "../../client/utilities/ReplaySpeedMultiplier";
 import { EventBus } from "../../core/EventBus";
 import { RemoteVeritableSim } from "../adapters/RemoteVeritableSim";
 import { vt } from "../data/i18n";
 import { loadVeritableConfig } from "../data/loadConfig";
+import { JournalEntry } from "../data/schemas/save";
 import { autosaveMeta, writeAutosave } from "../save/autosave";
 import { IndexedDbSaveStore } from "../save/IndexedDbSaveStore";
 import { SaveStore } from "../save/SaveStore";
 import { peekSchemaVersion } from "../save/serialize";
+import { keptForEver } from "../sim/journal";
+import { addDays } from "../sim/time";
 import { HudView } from "../sim/VeritableSim";
 import { eventCards } from "./EventCards";
 import {
   classify,
   loadPauseSettings,
+  NoticeLevel,
   PauseCategory,
   PauseSettings,
   savePauseSettings,
@@ -38,6 +43,20 @@ import { Speed, veritableTopBar } from "./VeritableTopBar";
 // at the speed it had; Space during the countdown keeps the pause), at most
 // once every 20 real seconds; the rest is a card, or the journal.
 const HUD_MS = 250;
+// Game days a marker stays on the map (J7): news of the player's nation,
+// then what is critical or major.
+const MARKER_DAYS_INFO = 15;
+const MARKER_DAYS_MAJOR = 30;
+
+// A localised event on the map (J7): animated, clickable, for 15 to 30 game
+// days.
+export interface MapMarker {
+  entry: JournalEntry;
+  x: number;
+  y: number;
+  level: "critical" | "info" | "major";
+  until: string; // game date it goes at
+}
 
 export class CampaignController {
   private unsubscribe: (() => void) | null = null;
@@ -53,6 +72,9 @@ export class CampaignController {
   private lastAutoPause: number | null = null;
   private countdown: ReturnType<typeof setInterval> | null = null;
   private resumeSpeed: Speed | null = null;
+  private mapWidth = 0;
+  private gameDate = "";
+  private markerList: MapMarker[] = [];
 
   constructor(private readonly store: SaveStore = new IndexedDbSaveStore()) {}
 
@@ -138,6 +160,7 @@ export class CampaignController {
     this.paused = false;
     this.journalMark = undefined;
     this.seenDecisions.clear();
+    this.markerList = [];
     this.lastAutoPause = null;
     veritablePanel().detach();
     veritableScreens().detach();
@@ -194,10 +217,41 @@ export class CampaignController {
     }
   }
 
+  // The markers on the map now, and the game date they are read at.
+  markers(): readonly MapMarker[] {
+    return this.markerList;
+  }
+
+  date(): string {
+    return this.gameDate;
+  }
+
+  // The camera to a tile of the map (an entry of the journal, a marker).
+  focus(tile: number): void {
+    if (this.eventBus === null || this.mapWidth <= 0) return;
+    const x = tile % this.mapWidth;
+    const y = Math.floor(tile / this.mapWidth);
+    this.eventBus.emit(new GoToPositionEvent(x, y));
+  }
+
+  // A click on a marker: the journal on its thread, or its nation.
+  openMarker(marker: MapMarker): void {
+    const screens = veritableScreens();
+    screens.openJournal(
+      marker.entry.link !== undefined
+        ? { link: marker.entry.link }
+        : { nation: marker.entry.nation },
+    );
+    veritableTopBar().setActiveScreen(screens.current());
+  }
+
   private receive(hud: HudView): void {
     const cards = eventCards();
     const first = this.journalMark === undefined;
     this.journalMark = hud.journalMark;
+    this.mapWidth = hud.mapWidth;
+    this.gameDate = hud.date;
+    this.markerList = this.markerList.filter((m) => m.until >= hud.date);
     veritableTopBar().setDate(hud.date);
     cards.setHud(hud);
     for (const p of hud.pending) {
@@ -208,12 +262,35 @@ export class CampaignController {
     if (first) return;
     for (const entry of hud.journal) {
       const notice = classify(entry, hud);
+      this.mark(entry, notice.level);
       // A vote has its own card (from the HUD), with its buttons.
       if (notice.category !== "vote") cards.push(notice);
       if (notice.level === "critical" && notice.category !== null) {
         this.autoPause(notice.category);
       }
     }
+  }
+
+  // A marker for an entry with a place that concerns the player or is a
+  // major event of the world.
+  private mark(entry: JournalEntry, level: NoticeLevel): void {
+    if (entry.tile === undefined || this.mapWidth <= 0) return;
+    const major = keptForEver(entry, null) && entry.kind !== "note";
+    if (level === "log" && !major) return;
+    const kind = level === "log" ? "major" : level;
+    this.markerList = [
+      ...this.markerList,
+      {
+        entry,
+        x: entry.tile % this.mapWidth,
+        y: Math.floor(entry.tile / this.mapWidth),
+        level: kind,
+        until: addDays(
+          entry.date,
+          kind === "info" ? MARKER_DAYS_INFO : MARKER_DAYS_MAJOR,
+        ),
+      },
+    ];
   }
 
   private autoPause(category: PauseCategory): void {

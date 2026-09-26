@@ -220,4 +220,17 @@ export class BordersWorld implements WorldPort {
   capitalFrontDistance(): number | null {
     return null;
   }
+
+  // No capitals without the core: the journal has no places headless.
+  capitalTile(): number | null {
+    return null;
+  }
+
+  mapWidth(): number {
+    return this.width;
+  }
+
+  borderTile(): number | null {
+    return null;
+  }
 }

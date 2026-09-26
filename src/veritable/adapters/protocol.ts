@@ -3,6 +3,7 @@ import { EncodedSaveStats } from "../save/serialize";
 import {
   FrontView,
   HudView,
+  JournalQuery,
   PlayerCommand,
   ReadonlyWorldView,
   SimEvent,
@@ -22,6 +23,8 @@ export type VeritableRequest =
   // J7: the always-visible interface (top bar, event cards), with the
   // journal entries added since the mark of the previous one.
   | { kind: "hud"; journalSince?: number }
+  // J7: the journal screen, filtered.
+  | { kind: "journal"; query: JournalQuery }
   | { kind: "apply"; command: PlayerCommand }
   | { kind: "snapshot" }
   | { kind: "perf" }

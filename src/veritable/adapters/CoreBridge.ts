@@ -34,6 +34,7 @@ import {
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
+import { borderAlong } from "../sim/war/borderWalk";
 import { ClaimTiles, ClaimTilesInput } from "../sim/war/claimTiles";
 import { ContestLedger } from "../sim/war/contest";
 import {
@@ -400,6 +401,35 @@ export class CoreBridge implements WorldPort {
     const capital = player?.spawnTile();
     if (player === undefined || capital === undefined) return true;
     return this.game.owner(capital) === player;
+  }
+
+  capitalTile(nation: NationId): number | null {
+    return this.byNation.get(nation)?.spawnTile() ?? null;
+  }
+
+  mapWidth(): number {
+    return this.game.width();
+  }
+
+  borderTile(a: NationId, b: NationId): number | null {
+    const to = this.capitalTile(b);
+    const from = this.capitalTile(a);
+    if (to === null || from === null) return to;
+    const g = this.game;
+    const players = new Map<Player, NationId>(
+      [...this.byNation].map(([id, p]) => [p, id]),
+    );
+    return borderAlong(
+      g.width(),
+      from,
+      to,
+      (tile) => {
+        const owner = g.owner(tile);
+        return owner.isPlayer() ? (players.get(owner as Player) ?? null) : null;
+      },
+      a,
+      b,
+    );
   }
 
   capitalFrontDistance(nation: NationId): number | null {

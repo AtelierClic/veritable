@@ -28,7 +28,10 @@ export const NO_FILTER: NationFilter = {
 
 // Case and accents ignored.
 export function fold(text: string): string {
-  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
 }
 
 const geographyCache = new Map<
@@ -101,7 +104,7 @@ export function filterNations(
 }
 
 // The regions and subregions present in a list, for the filter.
-function regionOptions(
+export function regionOptions(
   ids: readonly string[],
 ): { value: string; label: string }[] {
   const regions = new Map<string, Set<string>>();

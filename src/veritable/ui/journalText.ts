@@ -141,6 +141,10 @@ export function regionName(names: Names, region: string): string {
   return vt(`region.${region}`);
 }
 
+// Counts shown with their thousands (J7: the months of a war).
+const GROUPED = ["tiles", "losses", "lossesAgainst"] as const;
+const INTEGER = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 });
+
 // One line of the journal, without its date.
 export function journalLine(names: Names, j: JournalEntry): string {
   const p = j.params;
@@ -167,6 +171,11 @@ export function journalLine(names: Names, j: JournalEntry): string {
     if (p.to !== undefined) params.to = vt(`regime.${p.to}`);
   } else if (p.to !== undefined) {
     params.to = nationOr(p.to);
+  }
+  for (const key of GROUPED) {
+    const v = p[key];
+    if (v !== undefined && /^\d+$/.test(v))
+      params[key] = INTEGER.format(Number(v));
   }
   if (p.law !== undefined) params.law = vt(`law.${p.law}.name`);
   if (p.objective !== undefined) {

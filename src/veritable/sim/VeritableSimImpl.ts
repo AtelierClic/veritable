@@ -117,7 +117,7 @@ import {
   stepEventsDraws,
   stepEventsHousekeeping,
 } from "./events/events";
-import { compactJournal } from "./journal";
+import { compactJournal, entryCategory, entryNations } from "./journal";
 import { nationFromData, statusFromTerritory } from "./nation";
 import {
   initNaval,
@@ -215,6 +215,9 @@ import {
   FrontGeometry,
   FrontView,
   HudView,
+  JournalPage,
+  JournalQuery,
+  JournalScope,
   PendingVote,
   PlayerCommand,
   PlayerCommandSchema,
@@ -230,6 +233,7 @@ import {
   releaseIdleDivisions,
   resolveTick,
   stepWarLedgers,
+  WarMonth,
 } from "./war/fronts";
 import {
   assignDivision,
@@ -442,7 +446,11 @@ export class VeritableSimImpl implements VeritableSim {
           if (!c.date.endsWith("-01-01")) return;
           const years = this.deps.config.save.journalFullYears;
           const before = `${Number(c.date.slice(0, 4)) - years}-01-01`;
-          this.journal = compactJournal(this.journal, before);
+          this.journal = compactJournal(
+            this.journal,
+            before,
+            this.politics.autopilot ? null : this.playerNationId(),
+          );
         },
       },
     ];
@@ -1771,8 +1779,11 @@ export class VeritableSimImpl implements VeritableSim {
     // last capture. J7: every day.
     const contest = this.deps.config.war.contest;
     this.deps.world.settleContested(contest.warMonths, contest.cessionMonths);
-    // Each war closes its month on its own anniversary (J7).
-    stepWarLedgers(this.diplomacy, clock.date);
+    // Each war closes its month on its own anniversary (J7); a month in
+    // which the line moved goes to the journal, on the thread of its war.
+    for (const month of stepWarLedgers(this.diplomacy, clock.date)) {
+      this.recordWarMonth(clock.date, month);
+    }
     // Reparations over.
     this.diplomacy.reparations = this.diplomacy.reparations.filter(
       (r) => clock.date < r.until,
@@ -2017,9 +2028,70 @@ export class VeritableSimImpl implements VeritableSim {
       allies: friends,
       enemies: player === null ? [] : enemiesOf(this.diplomacy, player),
       blocs: player === null ? [] : this.ctx.blocsOf(player),
+      mapWidth: this.deps.world.mapWidth(),
       journalMark: this.journalAdded,
       journal: fresh === 0 ? [] : this.journal.slice(-fresh),
     };
+  }
+
+  queryJournal(query: JournalQuery): JournalPage {
+    this.assertInitialized();
+    const scope = this.scopeNations(query.scope);
+    const wanted =
+      query.nations === undefined ? null : new Set<string>(query.nations);
+    const offset = query.offset ?? 0;
+    const entries: JournalEntry[] = [];
+    let total = 0;
+    // The journal is in date order: from the end, until `from`.
+    for (let i = this.journal.length - 1; i >= 0; i--) {
+      const e = this.journal[i];
+      if (query.from !== undefined && e.date < query.from) break;
+      if (query.to !== undefined && e.date > query.to) continue;
+      if (query.link !== undefined && e.link !== query.link) continue;
+      if (query.category !== undefined && entryCategory(e) !== query.category)
+        continue;
+      if (scope !== null || wanted !== null) {
+        const nations = entryNations(e);
+        if (scope !== null && !nations.some((n) => scope.has(n))) continue;
+        if (wanted !== null && !nations.some((n) => wanted.has(n))) continue;
+      }
+      if (total >= offset && entries.length < query.limit) entries.push(e);
+      total++;
+    }
+    return { entries, total };
+  }
+
+  // The nations of a scope of the journal; null: all of them.
+  private scopeNations(scope: JournalScope): ReadonlySet<string> | null {
+    const player = this.playerNationId();
+    const ids = this.ctx.nationIds;
+    switch (scope.kind) {
+      case "all":
+        return null;
+      case "mine":
+        return new Set(player === null ? [] : [player]);
+      case "allies":
+        return new Set(
+          player === null
+            ? []
+            : ids.filter((id) => id !== player && allies(this.ctx, id, player)),
+        );
+      case "neighbours":
+        return new Set(
+          player === null
+            ? []
+            : ids.filter((id) => this.ctx.landNeighbours(id, player)),
+        );
+      case "region":
+        return new Set(
+          ids.filter((id) => {
+            const g = this.sheets.get(id)?.geography;
+            return g?.region === scope.region || g?.subregion === scope.region;
+          }),
+        );
+      case "bloc":
+        return new Set(this.ctx.membersOf(scope.bloc));
+    }
   }
 
   // The choice the government leans towards for each pending event (J7).
@@ -2643,7 +2715,17 @@ export class VeritableSimImpl implements VeritableSim {
     } else if (event.type !== "note") {
       this.pending.push({ ...event, date } as SimEvent);
     }
-    this.addJournal({ date, kind: event.type, nation: event.nation, params });
+    const place = this.placeOf(event);
+    this.addJournal({
+      date,
+      kind: event.type,
+      nation: event.nation,
+      params,
+      ...(place === null ? {} : { tile: place }),
+      ...(params.war === undefined || params.war === ""
+        ? {}
+        : { link: `war:${params.war}` }),
+    });
   }
 
   // What an event sets off beyond its domain (J7): a change of regime opens
@@ -2692,11 +2774,71 @@ export class VeritableSimImpl implements VeritableSim {
 
   // Entries added to the journal in this session (J7): the always-visible
   // interface asks for those it has not seen yet (the yearly compaction
-  // shortens the journal, never its tail).
+  // shortens the journal, never its tail). Every entry gets a place: the
+  // one given, else the capital of its nation.
   private journalAdded = 0;
   private addJournal(entry: JournalEntry): void {
+    if (entry.tile === undefined && entry.nation !== undefined) {
+      const tile = this.deps.world.capitalTile(entry.nation);
+      if (tile !== null) entry.tile = tile;
+    }
     this.journal.push(entry);
     this.journalAdded += 1;
+  }
+
+  // Where an event happened (J7): a declaration of war on the border of the
+  // two nations, a strike or a landing at its target; else (null) the
+  // capital of the nation.
+  private placeOf(event: DomainEvent): number | null {
+    const world = this.deps.world;
+    switch (event.type) {
+      case "war-declared":
+        return world.borderTile(event.nation, event.target);
+      case "war-joined":
+        return world.borderTile(event.nation, event.against);
+      case "nuclear-launch":
+      case "dead-hand":
+      case "landing":
+      case "landing-refused":
+      case "ai-landing":
+        return world.capitalTile(event.target);
+      default:
+        return null;
+    }
+  }
+
+  // A month of a war in which the line moved (J7): who gained, how many
+  // tiles, and the men each side lost since the war began.
+  private recordWarMonth(date: string, month: WarMonth): void {
+    const { war, tiles } = month;
+    const sum = (side: readonly NationId[]) =>
+      side.reduce((s, id) => s + (tiles[id] ?? 0), 0);
+    const aggressors = sum(war.aggressors);
+    const defenders = sum(war.defenders);
+    if (Math.round(aggressors) === 0 && Math.round(defenders) === 0) return;
+    const gainers = aggressors >= defenders ? war.aggressors : war.defenders;
+    const losers = gainers === war.aggressors ? war.defenders : war.aggressors;
+    const losses = (side: readonly NationId[]) =>
+      Math.round(side.reduce((s, id) => s + (war.losses[id] ?? 0), 0));
+    this.addJournal({
+      date,
+      kind: "war-month",
+      nation: gainers[0],
+      params: {
+        war: war.id,
+        against: losers[0],
+        tiles: String(Math.round(Math.abs(aggressors - defenders) / 2)),
+        losses: String(losses(gainers)),
+        lossesAgainst: String(losses(losers)),
+      },
+      ...(this.borderPlace(gainers[0], losers[0]) ?? {}),
+      link: `war:${war.id}`,
+    });
+  }
+
+  private borderPlace(a: NationId, b: NationId): { tile: number } | null {
+    const tile = this.deps.world.borderTile(a, b);
+    return tile === null ? null : { tile };
   }
 
   private wake(nation: NationId, date: string): void {

@@ -122,13 +122,15 @@ export class VeritableTopBar extends LitElement {
     if (!this.visible) return nothing;
     return html`
       <div
-        class="fixed top-1 left-1/2 z-[10000] flex -translate-x-1/2 items-center gap-3 rounded border border-gray-500 bg-gray-900/90 px-3 py-1 text-sm text-white"
+        class="fixed top-1 left-1/2 z-[10000] flex max-w-[98vw] -translate-x-1/2 flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded border border-gray-500 bg-gray-900/90 px-3 py-1 text-sm text-white"
         style="pointer-events:auto"
       >
         <span class="font-bold text-yellow-300"
           >${vt("topbar.nation", { nation: this.nation })}</span
         >
-        <span class="tabular-nums">${longDate(this.date)}</span>
+        <span class="w-32 text-center whitespace-nowrap tabular-nums"
+          >${longDate(this.date)}</span
+        >
         <span class="flex gap-1">
           ${SPEEDS.map(
             (speed) => html`
@@ -148,18 +150,23 @@ export class VeritableTopBar extends LitElement {
             `,
           )}
         </span>
-        ${this.countdown !== null
-          ? html`<span class="text-yellow-200"
-              >${vt("topbar.resume-in", { seconds: this.countdown })}</span
-            >`
-          : this.speed === 0
-            ? html`<span class="text-gray-300">${vt("topbar.paused")}</span>`
-            : nothing}
-        <span class="flex gap-1">
+        <span
+          class="w-28 whitespace-nowrap text-xs ${this.countdown !== null
+            ? "text-yellow-200"
+            : "text-gray-300"}"
+          title=${this.countdown !== null ? vt("topbar.space-keeps") : ""}
+          >${this.countdown !== null
+            ? vt("topbar.resume-in", { seconds: this.countdown })
+            : this.speed === 0
+              ? vt("topbar.paused")
+              : ""}</span
+        >
+        <span class="flex flex-wrap justify-center gap-1">
           ${this.screens.map(
             (screen) => html`
               <button
-                class="rounded px-2 ${screen === this.activeScreen
+                class="rounded px-1.5 text-xs whitespace-nowrap ${screen ===
+                this.activeScreen
                   ? "bg-yellow-600"
                   : "bg-gray-700"}"
                 @click=${() => this.onScreen(screen)}
