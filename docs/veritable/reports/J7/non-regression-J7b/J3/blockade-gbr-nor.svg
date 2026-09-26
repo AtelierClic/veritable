@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="424" font-family="sans-serif" font-size="11">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="12" y="18" font-size="14" font-weight="bold">Véritable J3 — blocus de la Norvège par le Royaume-Uni, janvier 2027</text>
+<text x="12" y="34" fill="#555">gris : témoin · rouge : scénario · même graine</text>
+<text x="56" y="62" font-weight="bold">Commerce maritime de la Norvège (Md$/an)</text>
+<rect x="56" y="74" width="492" height="134" fill="none" stroke="#ccc"/>
+<text x="52" y="78" text-anchor="end">82</text>
+<text x="52" y="212" text-anchor="end">33</text>
+<text x="56" y="226" text-anchor="middle" fill="#555">2026</text>
+<text x="302" y="226" text-anchor="middle" fill="#555">2027</text>
+<text x="548" y="226" text-anchor="middle" fill="#555">2028</text>
+<path d="M56.0,79.5L76.5,83.8L97.0,82.5L117.5,81.4L138.0,80.8L158.5,80.3L179.0,80.0L199.5,79.5L220.0,79.2L240.5,78.9L261.0,78.7L281.5,78.2L302.0,78.0L322.5,77.7L343.0,77.5L363.5,77.4L384.0,77.0L404.5,76.9L425.0,76.7L445.5,76.4L466.0,76.0L486.5,75.5L507.0,75.0L527.5,74.6L548.0,74.0" fill="none" stroke="#888" stroke-width="1.5"/>
+<path d="M56.0,79.5L76.5,83.8L97.0,82.5L117.5,81.4L138.0,80.8L158.5,80.3L179.0,80.0L199.5,79.5L220.0,79.2L240.5,78.9L261.0,78.7L281.5,78.2L302.0,78.0L322.5,190.1L343.0,190.8L363.5,191.6L384.0,192.6L404.5,192.4L425.0,192.9L445.5,193.9L466.0,194.0L486.5,194.6L507.0,196.9L527.5,207.4L548.0,208.0" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+<text x="616" y="62" font-weight="bold">Blocus subi par la Norvège</text>
+<rect x="616" y="74" width="492" height="134" fill="none" stroke="#ccc"/>
+<text x="612" y="78" text-anchor="end">46 %</text>
+<text x="612" y="212" text-anchor="end">0 %</text>
+<text x="616" y="226" text-anchor="middle" fill="#555">2026</text>
+<text x="862" y="226" text-anchor="middle" fill="#555">2027</text>
+<text x="1108" y="226" text-anchor="middle" fill="#555">2028</text>
+<path d="M616.0,208.0L636.5,208.0L657.0,208.0L677.5,208.0L698.0,208.0L718.5,208.0L739.0,208.0L759.5,208.0L780.0,208.0L800.5,208.0L821.0,208.0L841.5,208.0L862.0,208.0L882.5,208.0L903.0,208.0L923.5,208.0L944.0,208.0L964.5,208.0L985.0,208.0L1005.5,208.0L1026.0,208.0L1046.5,208.0L1067.0,208.0L1087.5,208.0L1108.0,208.0" fill="none" stroke="#888" stroke-width="1.5"/>
+<path d="M616.0,208.0L636.5,208.0L657.0,208.0L677.5,208.0L698.0,208.0L718.5,208.0L739.0,208.0L759.5,208.0L780.0,208.0L800.5,208.0L821.0,208.0L841.5,208.0L862.0,208.0L882.5,74.8L903.0,74.7L923.5,74.3L944.0,74.2L964.5,74.1L985.0,74.0L1005.5,74.2L1026.0,74.0L1046.5,74.1L1067.0,74.5L1087.5,75.3L1108.0,74.6" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+<text x="56" y="252" font-weight="bold">Indice de pénurie, Norvège</text>
+<rect x="56" y="264" width="492" height="134" fill="none" stroke="#ccc"/>
+<text x="52" y="268" text-anchor="end">0.059</text>
+<text x="52" y="402" text-anchor="end">0.003</text>
+<text x="56" y="416" text-anchor="middle" fill="#555">2026</text>
+<text x="302" y="416" text-anchor="middle" fill="#555">2027</text>
+<text x="548" y="416" text-anchor="middle" fill="#555">2028</text>
+<path d="M56.0,398.0L76.5,374.8L97.0,378.7L117.5,380.9L138.0,381.7L158.5,382.6L179.0,382.9L199.5,383.2L220.0,383.4L240.5,383.8L261.0,383.7L281.5,383.8L302.0,384.1L322.5,384.3L343.0,384.5L363.5,384.7L384.0,384.6L404.5,385.0L425.0,385.2L445.5,385.6L466.0,385.9L486.5,387.3L507.0,387.1L527.5,386.8L548.0,387.7" fill="none" stroke="#888" stroke-width="1.5"/>
+<path d="M56.0,398.0L76.5,374.8L97.0,378.7L117.5,380.9L138.0,381.7L158.5,382.6L179.0,382.9L199.5,383.2L220.0,383.4L240.5,383.8L261.0,383.7L281.5,383.8L302.0,384.1L322.5,283.1L343.0,287.5L363.5,288.2L384.0,287.7L404.5,264.0L425.0,279.5L445.5,278.6L466.0,280.5L486.5,281.8L507.0,280.3L527.5,269.5L548.0,284.2" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+<text x="616" y="252" font-weight="bold">PIB de la Norvège (Md$)</text>
+<rect x="616" y="264" width="492" height="134" fill="none" stroke="#ccc"/>
+<text x="612" y="268" text-anchor="end">542</text>
+<text x="612" y="402" text-anchor="end">475</text>
+<text x="616" y="416" text-anchor="middle" fill="#555">2026</text>
+<text x="862" y="416" text-anchor="middle" fill="#555">2027</text>
+<text x="1108" y="416" text-anchor="middle" fill="#555">2028</text>
+<path d="M616.0,285.6L636.5,285.0L657.0,284.5L677.5,283.9L698.0,283.2L718.5,282.5L739.0,281.8L759.5,280.9L780.0,280.2L800.5,279.2L821.0,278.4L841.5,277.6L862.0,276.6L882.5,275.8L903.0,274.9L923.5,273.8L944.0,272.9L964.5,272.0L985.0,270.8L1005.5,269.9L1026.0,268.9L1046.5,267.6L1067.0,266.6L1087.5,265.5L1108.0,264.0" fill="none" stroke="#888" stroke-width="1.5"/>
+<path d="M616.0,285.6L636.5,285.0L657.0,284.5L677.5,283.9L698.0,283.2L718.5,282.5L739.0,281.8L759.5,280.9L780.0,280.2L800.5,279.2L821.0,278.4L841.5,277.6L862.0,276.6L882.5,293.9L903.0,307.6L923.5,319.3L944.0,329.7L964.5,341.4L985.0,350.1L1005.5,360.0L1026.0,367.6L1046.5,374.9L1067.0,383.4L1087.5,391.0L1108.0,398.0" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+</svg>

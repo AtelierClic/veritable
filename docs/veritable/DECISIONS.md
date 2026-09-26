@@ -975,6 +975,15 @@ La liste du J6c, point par point :
 - **« got wrong turn have turns 0, received turn 1 »** : ne se reproduit plus sur le code du J7b (deux rechargements, depuis le menu et en jeu) ; rien n'a été changé pour lui.
 - **Reste pour le J7d** : la vidéo publicitaire du réseau d'OpenFront qui s'affiche parfois en bas à gauche (hors du DOM de la page ; sans objet dans l'application Electron), les erreurs de console des services d'OpenFront (jeton, statistiques).
 
+### Non-régression rapide et performance (J7b.6)
+
+- **europe-10, code du J7b.5** (`docs/veritable/reports/J7/non-regression-J7b/`) :
+  - **J3** : les quatre critères tiennent. Embargo de l'UE : gaz à l'import +34 % la première année, PIB russe −5,4 % à deux ans. France → Espagne sans casus belli : 7 sanctionneurs à six mois, coalition de six ; à trois ans, PIB français à 0,66 fois celui du témoin, stabilité 0,40 contre 0,62, et aucune population gagnée (la coalition prend plus de gens à la France que la France n'en prend à l'Espagne). Blocus britannique : commerce maritime norvégien −52 %. Débarquement italien refusé ;
+  - **J4** : les cinq critères tiennent (alternances dans sept nations) ;
+  - **J5** (100 campagnes de 50 ans sur le cœur) : **les quinze critères tiennent**. Aucun tir nucléaire ; guerres nouvelles : médiane 0, au plus 1 (19, toutes russes, sur un grief) ; 82 % de campagnes calmes quinze ans après le cessez-le-feu ; crise à dix ans dans toutes les campagnes (76 au J7a) ; junte à dix ans : Russie 4, Turquie 1 ; 275 défauts, aucun dans une nation stable ; prix entre 0,87 et 1,48.
+  - **27 révolutions, toutes ukrainiennes** et presque toutes en 2028-2029 (une seule au J7a). L'Ukraine, dont la Russie prend les deux tiers depuis le J6, perd ses gens et sa production avec sa terre depuis le J7b.3.
+- **Performance** (`docs/veritable/reports/J7/perf-J7b/`, cœur, carte du monde, campagne neuve à froid, un an) : tick p99 6,5 ms, maximum 65 ms (au premier jour), aucun tick au-dessus de 100 ms ; sauvegarde de 1,74 Mo au départ ; tas de 74 à 82 Mo. **La mesure du navigateur à ×5, villes et mode de carte actifs, passe au J7c.5** : le panneau intégré était masqué, ses minuteries bridées rendaient la mesure sans valeur.
+
 ### Modifications de `src/core` et du client hérité au J7b
 
 Toutes commentées `// VERITABLE:`, en campagne seulement sauf mention.

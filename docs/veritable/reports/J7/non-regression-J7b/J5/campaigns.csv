@@ -1,0 +1,101 @@
+seed,new_wars,wars_without_casus_belli,wars,nuclear_shots,shots,revolutions,crisis_by_10_years,rus_regime_10y,tur_regime_10y,coups,unrest_starts,defaults,price_low,price_high,tier1_gbr,tier1_deu,tier1_fra,events_journaled,bloc_decisions,wall_s
+1,1,0,RUS>UKR@2033-02:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-06 UKR@2033-01-23 UKR@2038-02-03 UKR@2043-02-12 UKR@2048-02-24 UKR@2053-02-26,0.935,1.259,2035-12-01,2038-10-01,2038-07-01,50,37,59
+2,0,0,,0,,UKR@2029-06-28,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2027-12-09 UKR@2033-01-06,0.911,1.202,2036-01-01,2038-07-01,2038-02-01,55,63,47
+3,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-13 UKR@2033-02-07,0.904,1.220,2035-12-01,2038-09-01,2040-05-01,58,63,50
+4,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-20 UKR@2033-01-27,0.914,1.187,2035-12-01,2038-07-01,2038-09-01,57,48,51
+5,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-27 UKR@2033-01-28,0.908,1.231,2036-01-01,2038-10-01,2038-12-01,58,75,48
+6,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,UKR@2028-01-27 UKR@2033-02-08,0.905,1.253,2035-12-01,2038-07-01,2038-03-01,62,43,49
+7,0,0,,0,,UKR@2029-07-05,1,electoral-authoritarian,electoral-authoritarian,1,1,UKR@2028-01-06 UKR@2033-01-26,0.917,1.269,2035-12-01,2038-08-01,2038-05-01,59,29,47
+8,1,0,RUS>UKR@2043-11:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-27 UKR@2033-02-03 UKR@2044-04-15 UKR@2049-04-23,0.906,1.146,2036-01-01,2038-09-01,2039-03-01,47,62,57
+9,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-20 UKR@2033-02-02,0.919,1.190,2035-12-01,2038-09-01,2038-07-01,64,69,49
+10,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,2,4,UKR@2028-01-27 UKR@2033-02-12,0.938,1.156,2036-01-01,2038-09-01,2038-06-01,48,53,48
+11,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,UKR@2028-01-27 UKR@2033-02-19,0.910,1.209,2036-02-01,2040-01-01,2039-01-01,55,72,44
+12,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,UKR@2028-01-27 UKR@2033-01-31,0.905,1.483,2036-01-01,2038-10-01,2040-04-01,56,72,44
+13,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2027-12-30 UKR@2033-01-28,0.935,1.170,2035-12-01,2038-08-01,2038-07-01,51,34,44
+14,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-27 UKR@2033-01-27,0.917,1.241,2035-12-01,2038-11-01,2038-05-01,56,72,46
+15,0,0,,0,,,1,junta,electoral-authoritarian,2,4,UKR@2028-01-13 UKR@2033-02-09,0.913,1.288,2035-11-01,2039-11-01,2038-04-01,58,73,46
+16,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2027-12-23 UKR@2033-01-01,0.907,1.224,2036-01-01,2038-09-01,2038-03-01,56,41,42
+17,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,UKR@2028-01-06 UKR@2033-02-03,0.923,1.239,2036-02-01,2038-09-01,2039-01-01,54,61,44
+18,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2027-12-16 UKR@2033-01-09,0.904,1.160,2036-01-01,2039-09-01,2040-04-01,56,59,43
+19,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-13 UKR@2033-01-25,0.932,1.197,2036-02-01,2038-10-01,2038-05-01,52,36,44
+20,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2027-12-09 UKR@2033-01-07,0.898,1.232,2036-02-01,2038-09-01,2038-04-01,57,48,44
+21,0,0,,0,,UKR@2029-10-04,1,parliamentary,electoral-authoritarian,1,2,UKR@2028-01-13 UKR@2033-01-29,0.931,1.279,2036-02-01,2038-08-01,2038-05-01,44,52,44
+22,1,0,RUS>UKR@2030-10:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2027-12-16 UKR@2032-12-18 UKR@2038-01-12 UKR@2043-02-03 UKR@2048-02-14 UKR@2053-03-13 UKR@2058-03-13 UKR@2063-03-30,0.924,1.177,2035-12-01,2038-10-01,2039-01-01,55,50,49
+23,1,0,RUS>UKR@2035-03:grievance,0,,UKR@2029-03-15,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-20 UKR@2033-02-09 UKR@2038-02-14 UKR@2043-03-07 UKR@2048-03-26 UKR@2053-04-19,0.936,1.263,2035-12-01,2038-09-01,2038-06-01,54,40,53
+24,0,0,,0,,UKR@2029-05-10,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-13,0.907,1.248,2035-11-01,2038-08-01,2038-07-01,60,35,41
+25,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,6,UKR@2027-12-30 UKR@2033-01-21,0.933,1.341,2035-12-01,2038-09-01,2038-10-01,47,57,43
+26,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-20 UKR@2033-02-09,0.942,1.180,2035-11-01,2038-08-01,2038-07-01,56,39,47
+27,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,2,4,UKR@2028-01-20 UKR@2033-02-10 UKR@2038-02-23,0.889,1.210,2036-01-01,2038-11-01,2038-05-01,53,62,47
+28,1,0,RUS>UKR@2033-01:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-20 UKR@2033-01-22 UKR@2038-02-19 UKR@2043-03-07 UKR@2048-03-11 UKR@2053-03-18,0.944,1.244,2036-01-01,2038-09-01,2038-06-01,52,31,54
+29,1,0,RUS>UKR@2031-08:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,UKR@2028-01-06 UKR@2033-01-09 UKR@2038-02-04 UKR@2043-02-17 UKR@2048-03-04 UKR@2053-03-09 UKR@2058-03-11,0.947,1.216,2035-12-01,2038-09-01,2038-04-01,54,38,55
+30,0,0,,0,,UKR@2029-05-10,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-06 UKR@2033-01-12,0.916,1.215,2036-01-01,2038-09-01,2038-05-01,57,37,46
+31,0,0,,0,,UKR@2029-10-04,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-20 UKR@2033-02-06,0.946,1.250,2035-12-01,2038-10-01,2037-08-01,62,69,46
+32,0,0,,0,,UKR@2029-06-28,1,parliamentary,electoral-authoritarian,1,2,UKR@2028-01-13 UKR@2033-02-09,0.915,1.284,2036-01-01,2040-01-01,2038-05-01,50,74,46
+33,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,UKR@2028-01-13 UKR@2033-02-05 UKR@2038-02-06,0.916,1.233,2036-01-01,2041-04-01,2040-04-01,53,78,48
+34,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,5,UKR@2028-01-13 UKR@2033-01-16,0.901,1.322,2036-02-01,2038-08-01,2038-08-01,47,40,45
+35,0,0,,0,,UKR@2027-08-12,1,electoral-authoritarian,electoral-authoritarian,2,6,UKR@2027-11-11 UKR@2032-12-01,0.925,1.214,2035-12-01,2039-12-01,2038-09-01,46,62,46
+36,1,0,RUS>UKR@2030-12:grievance,0,,UKR@2032-03-24,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2027-12-09 UKR@2032-12-15 UKR@2037-12-19 UKR@2043-01-10 UKR@2048-01-25 UKR@2053-02-04 UKR@2058-02-10,0.903,1.205,2036-01-01,2038-09-01,2039-04-01,62,70,50
+37,1,0,RUS>UKR@2033-09:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-27 UKR@2033-02-06 UKR@2038-02-13 UKR@2043-02-19 UKR@2048-02-19,0.924,1.175,2035-12-01,2040-11-01,2040-01-01,47,72,52
+38,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,2,UKR@2028-01-13 UKR@2033-01-14,0.919,1.222,2036-01-01,2039-11-01,2038-04-01,47,70,45
+39,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2027-12-23 UKR@2032-12-31,0.935,1.191,2035-11-01,2038-11-01,2037-09-01,44,54,45
+40,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,UKR@2027-12-30 UKR@2033-01-04,0.917,1.311,2036-01-01,2038-09-01,2039-02-01,58,65,45
+41,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,4,UKR@2028-01-13 UKR@2033-02-06,0.928,1.203,2036-01-01,2039-10-01,2040-01-01,58,78,45
+42,1,0,RUS>UKR@2031-03:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,1,4,UKR@2028-01-20 UKR@2033-01-25 UKR@2038-02-13 UKR@2043-02-24 UKR@2048-02-26 UKR@2053-03-14,0.890,1.345,2035-12-01,2038-08-01,2038-07-01,50,44,50
+43,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-06 UKR@2033-01-14,0.886,1.207,2035-12-01,2038-07-01,2037-11-01,58,37,43
+44,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-20 UKR@2033-02-12,0.904,1.125,2035-11-01,2038-08-01,2038-05-01,51,43,42
+45,0,0,,0,,UKR@2029-06-07,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-27 UKR@2033-02-08,0.914,1.209,2035-12-01,2038-07-01,2038-07-01,48,66,44
+46,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,4,2,UKR@2027-12-30 UKR@2033-01-11,0.944,1.286,2035-12-01,2038-09-01,2038-09-01,56,33,45
+47,1,0,RUS>UKR@2034-01:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-06 UKR@2033-01-31 UKR@2038-02-02 UKR@2043-02-13 UKR@2048-02-23,0.934,1.270,2035-12-01,2038-09-01,2038-09-01,52,61,52
+48,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2027-12-30 UKR@2033-01-27,0.926,1.216,2036-01-01,2038-09-01,2038-08-01,54,39,44
+49,0,0,,0,,,1,electoral-authoritarian,parliamentary,1,3,UKR@2028-01-27 UKR@2033-02-18,0.923,1.184,2035-12-01,2038-11-01,2038-08-01,62,57,44
+50,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,UKR@2028-01-20 UKR@2033-02-02,0.873,1.263,2035-12-01,2038-11-01,2037-12-01,51,38,42
+51,0,0,,0,,UKR@2029-08-02,1,electoral-authoritarian,electoral-authoritarian,3,11,UKR@2028-01-06 UKR@2033-01-26,0.909,1.330,2035-12-01,2038-09-01,2038-03-01,59,43,46
+52,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2027-12-16 UKR@2033-01-13,0.894,1.242,2035-12-01,2039-10-01,2038-03-01,58,72,43
+53,1,0,RUS>UKR@2031-04:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,2,4,UKR@2028-01-20 UKR@2033-01-21 UKR@2038-02-13 UKR@2043-03-08 UKR@2048-03-25 UKR@2053-04-15 UKR@2058-04-17,0.894,1.209,2036-01-01,2038-08-01,2040-04-01,48,70,53
+54,0,0,,0,,UKR@2028-10-05,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-06 UKR@2033-01-10,0.902,1.188,2036-01-01,2038-08-01,2038-08-01,51,67,43
+55,0,0,,0,,UKR@2029-02-15,1,electoral-authoritarian,parliamentary,1,3,UKR@2028-01-06 UKR@2033-01-08,0.929,1.114,2035-12-01,2038-07-01,2038-04-01,47,44,45
+56,0,0,,0,,UKR@2029-01-11,1,electoral-authoritarian,electoral-authoritarian,1,5,UKR@2028-01-13 UKR@2033-01-13,0.928,1.199,2035-12-01,2041-04-01,2038-01-01,57,71,44
+57,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,UKR@2027-12-30 UKR@2033-01-17,0.881,1.218,2036-01-01,2038-09-01,2038-03-01,59,44,45
+58,0,0,,0,,UKR@2029-09-13,1,electoral-authoritarian,electoral-authoritarian,1,2,UKR@2028-01-27 UKR@2033-02-15,0.915,1.387,2036-01-01,2041-01-01,2038-03-01,58,78,48
+59,0,0,,0,,UKR@2029-06-21,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-20 UKR@2033-02-18,0.938,1.188,2035-12-01,2038-10-01,2039-06-01,54,69,45
+60,1,0,RUS>UKR@2038-08:grievance,0,,UKR@2039-12-05,1,electoral-authoritarian,electoral-authoritarian,0,9,UKR@2028-01-13 UKR@2033-02-01 UKR@2038-09-06 UKR@2043-09-13 UKR@2048-09-25,0.935,1.292,2036-01-01,2038-09-01,2038-05-01,54,37,54
+61,0,0,,0,,,1,junta,electoral-authoritarian,1,4,UKR@2028-01-20 UKR@2033-02-04,0.934,1.159,2035-12-01,2038-08-01,2038-10-01,49,38,45
+62,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,2,UKR@2028-01-20 UKR@2033-02-12,0.902,1.289,2035-12-01,2038-07-01,2038-10-01,56,56,45
+63,1,0,RUS>UKR@2034-12:grievance,0,,UKR@2028-11-02,1,junta,electoral-authoritarian,1,6,UKR@2028-01-13 UKR@2033-02-06 UKR@2038-02-08 UKR@2043-02-22 UKR@2048-03-01,0.927,1.196,2035-12-01,2038-09-01,2038-05-01,66,34,52
+64,0,0,,0,,,1,electoral-authoritarian,junta,2,4,UKR@2028-01-20 UKR@2033-02-02,0.946,1.224,2035-12-01,2038-09-01,2039-05-01,50,77,46
+65,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-02-03 UKR@2033-02-04,0.935,1.184,2035-12-01,2038-09-01,2038-04-01,57,37,49
+66,0,0,,0,,UKR@2029-06-14,1,parliamentary,electoral-authoritarian,1,3,UKR@2028-01-20 UKR@2033-02-16,0.929,1.297,2036-01-01,2038-10-01,2038-05-01,58,72,44
+67,0,0,,0,,UKR@2029-06-28,1,electoral-authoritarian,electoral-authoritarian,0,1,UKR@2027-12-16 UKR@2032-12-27,0.918,1.172,2035-12-01,2038-09-01,2038-09-01,47,53,43
+68,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2027-12-30 UKR@2033-01-21,0.913,1.236,2035-12-01,2038-07-01,2040-03-01,54,66,45
+69,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2027-12-02 UKR@2032-12-03,0.906,1.189,2036-01-01,2038-10-01,2040-02-01,48,61,45
+70,0,0,,0,,UKR@2028-10-12,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2027-12-02 UKR@2032-12-28,0.912,1.179,2036-02-01,2039-12-01,2039-01-01,51,67,43
+71,0,0,,0,,UKR@2029-07-12,1,electoral-authoritarian,electoral-authoritarian,1,3,UKR@2028-01-13 UKR@2033-02-08 UKR@2038-02-12,0.926,1.214,2036-01-01,2039-12-01,2039-12-01,58,75,48
+72,1,0,RUS>UKR@2035-06:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,1,4,UKR@2028-01-13 UKR@2035-08-12 UKR@2040-09-03 UKR@2045-09-11 UKR@2050-09-14,0.904,1.183,2036-01-01,2039-07-01,2038-11-01,55,69,54
+73,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-06 UKR@2033-01-09,0.902,1.188,2035-11-01,2038-12-01,2037-11-01,59,46,43
+74,0,0,,0,,,1,electoral-authoritarian,parliamentary,1,4,UKR@2028-01-06 UKR@2033-01-25,0.897,1.206,2035-12-01,2039-10-01,2040-03-01,51,76,49
+75,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,6,UKR@2028-02-03 UKR@2033-02-28,0.924,1.167,2036-02-01,2038-10-01,2038-05-01,52,40,48
+76,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,3,UKR@2028-01-13 UKR@2033-02-09,0.928,1.196,2036-02-01,2039-09-01,2038-12-01,59,73,42
+77,1,0,RUS>UKR@2030-10:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-20 UKR@2033-01-22 UKR@2038-01-30 UKR@2043-02-08 UKR@2048-02-11 UKR@2053-03-06 UKR@2058-03-21,0.934,1.171,2035-11-01,2038-09-01,2038-08-01,59,75,49
+78,0,0,,0,,UKR@2028-11-02,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-13 UKR@2033-01-17,0.920,1.264,2036-01-01,2038-09-01,2039-03-01,49,62,42
+79,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-02-03 UKR@2033-02-26 UKR@2038-03-13,0.892,1.413,2036-01-01,2038-10-01,2039-02-01,61,68,46
+80,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-06 UKR@2033-01-06,0.909,1.167,2036-02-01,2038-10-01,2038-02-01,58,70,44
+81,1,0,RUS>UKR@2041-03:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-06 UKR@2033-01-21 UKR@2041-05-13 UKR@2046-05-18 UKR@2051-06-14,0.925,1.176,2036-01-01,2038-09-01,2038-08-01,64,32,51
+82,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-27 UKR@2033-02-16,0.922,1.250,2036-01-01,2041-02-01,2039-02-01,53,73,43
+83,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,1,UKR@2028-01-27 UKR@2033-02-11,0.903,1.164,2036-02-01,2038-09-01,2039-01-01,48,74,42
+84,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2028-01-27 UKR@2033-02-09,0.925,1.296,2036-01-01,2038-10-01,2038-10-01,64,65,42
+85,0,0,,0,,,1,parliamentary,electoral-authoritarian,1,3,UKR@2028-01-13 UKR@2033-01-17,0.897,1.228,2036-01-01,2038-09-01,2038-06-01,50,37,44
+86,0,0,,0,,UKR@2029-04-19,1,electoral-authoritarian,electoral-authoritarian,0,1,UKR@2027-12-23 UKR@2032-12-30,0.894,1.179,2035-12-01,2038-08-01,2038-09-01,48,55,46
+87,0,0,,0,,UKR@2028-08-17,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-13 UKR@2033-01-25,0.936,1.229,2036-02-01,2039-08-01,2040-04-01,58,76,48
+88,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-27 UKR@2033-02-06,0.926,1.186,2035-12-01,2038-08-01,2038-08-01,54,77,48
+89,1,0,RUS>UKR@2032-10:grievance,0,,,1,junta,electoral-authoritarian,1,3,UKR@2028-01-06 UKR@2033-01-08 UKR@2038-01-21 UKR@2043-01-26 UKR@2048-01-27 UKR@2053-01-31,0.929,1.216,2036-01-01,2038-09-01,2038-07-01,49,35,56
+90,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,UKR@2028-01-27 UKR@2033-02-06,0.944,1.196,2036-02-01,2038-08-01,2038-02-01,55,65,47
+91,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,1,1,UKR@2027-12-16,0.918,1.197,2036-02-01,2038-07-01,2039-03-01,48,75,41
+92,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2027-12-16 UKR@2032-12-30 UKR@2038-01-20,0.895,1.085,2036-01-01,2038-08-01,2037-09-01,51,38,46
+93,1,0,RUS>UKR@2033-06:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,0,5,UKR@2028-01-13 UKR@2033-01-26 UKR@2038-02-20 UKR@2043-03-05 UKR@2048-04-03 UKR@2053-04-07,0.939,1.321,2036-01-01,2038-10-01,2038-05-01,62,37,55
+94,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-27 UKR@2033-01-29,0.905,1.203,2035-11-01,2038-08-01,2038-06-01,59,32,44
+95,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2028-01-20 UKR@2033-02-07,0.925,1.240,2036-02-01,2038-09-01,2039-03-01,46,69,44
+96,0,0,,0,,UKR@2028-12-21,1,electoral-authoritarian,electoral-authoritarian,0,3,UKR@2027-12-30 UKR@2033-01-26,0.895,1.199,2035-11-01,2038-08-01,2038-04-01,60,62,48
+97,1,0,RUS>UKR@2045-03:grievance,0,,,1,electoral-authoritarian,electoral-authoritarian,1,6,UKR@2028-01-20 UKR@2033-02-11 UKR@2045-09-18 UKR@2050-10-14,0.934,1.206,2035-11-01,2038-08-01,2038-02-01,49,38,52
+98,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,4,UKR@2028-01-27 UKR@2033-01-28,0.915,1.189,2036-01-01,2040-01-01,2039-03-01,51,67,39
+99,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,0,2,UKR@2027-12-23 UKR@2032-12-26,0.927,1.252,2035-12-01,2038-10-01,2037-08-01,52,43,47
+100,0,0,,0,,,1,electoral-authoritarian,electoral-authoritarian,3,1,UKR@2028-01-27 UKR@2033-01-28,0.918,1.179,2035-12-01,2038-09-01,2038-07-01,51,39,46
