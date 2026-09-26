@@ -420,6 +420,9 @@ export const WarSchema = z.object({
   retreatMonths: z.record(z.string(), zb.uint()),
   tilesTaken: z.record(z.string(), zb.uint()),
   monthlyTiles: z.record(z.string(), zb.float()),
+  // J7b: the part of the score each belligerent owes to the land it took
+  // (the people it holds, the capitals and cities; a cession costs it).
+  landValue: z.record(z.string(), zb.float()),
   offers: z.array(PeaceOfferSchema),
   // J6: men each belligerent lost in this war (its war memory at the end),
   // and the claims of the aggressors it was declared on (a white or lost

@@ -1,5 +1,6 @@
 import { EventBus } from "../../core/EventBus";
 import { UserSettings } from "../../core/game/UserSettings";
+import { CityLayerController } from "../../veritable/ui/CityLayer";
 import { FrontOverlayController } from "../../veritable/ui/FrontOverlay";
 import { MapInteractionController } from "../../veritable/ui/MapInteraction";
 import { Controller } from "../Controller";
@@ -327,6 +328,7 @@ export function createRenderer(
     const fronts = new FrontOverlayController(eventBus, transformHandler);
     return [
       fronts,
+      new CityLayerController(transformHandler, game),
       new MapInteractionController(
         eventBus,
         transformHandler,
@@ -358,7 +360,7 @@ export function createRenderer(
     // VERITABLE: the fronts of a campaign drawn on the map (lines, force
     // ratios, contested tiles, factors of a segment on click); J7b: the map
     // as an interface (the card of a nation on a right click, the action
-    // menu on a left click).
+    // menu on a left click, the cities).
     ...(campaign ? campaignControllers() : []),
     eventsDisplay,
     actionableEvents,

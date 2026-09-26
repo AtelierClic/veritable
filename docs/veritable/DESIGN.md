@@ -361,11 +361,13 @@ Le monde démarre au 1er janvier 2026, tel qu'il est et non tel que l'ONU l'offi
 
 Avec un binaire distribué sous AGPL, une source à licence fermée est un blocage, pas un détail. Les licences se revérifient au moment de la collecte, et le jeu est ancré sur un instantané daté.
 
-Licences vérifiées le 2026-09-24 sur les pages de conditions de chaque source (J6).
+Licences vérifiées le 2026-09-24 sur les pages de conditions de chaque source (J6) ; GHS-POP et les lieux peuplés de Natural Earth le 2026-09-26 (J7b).
 
 | Source | Usage | Licence | Traitement dans le dépôt |
 | --- | --- | --- | --- |
 | Natural Earth (v5.1.2) | Frontières de facto, zones contestées, provinces, capitales | Domaine public | Fichiers en cache hors git, empreintes épinglées ; produits commités |
+| Natural Earth (v5.1.2), lieux peuplés | Villes : les trois plus grandes de chaque nation et sa capitale (`POP_MAX`, noms français `NAME_FR`) (J7b) | Domaine public | Fichier en cache hors git, empreinte épinglée ; villes commitées (`data/veritable/cities/`) |
+| GHS-POP R2023A (JRC, Commission européenne), époque 2025, 30 secondes d'arc | Population de chaque tuile (J7b) | CC BY 4.0, © Union européenne ; mention à reprendre sur la page de publication : « Schiavina M., Freire S., Carioli A., MacManus K. (2023) : GHS-POP R2023A, GHS population grid multitemporal (1975-2030), Commission européenne, Centre commun de recherche (JRC) » | Archive en cache hors git (484 Mo, empreinte épinglée) ; seule la grille dérivée par tuile est commitée (`data/veritable/borders/<scénario>.pop.bin`) |
 | Banque mondiale (Open Data) | PIB, population, budget, commerce, R&D, armée (dont indicateurs de source SIPRI et IISS) | CC BY 4.0, sans restriction tierce sur MS.MIL.XPND.GD.ZS ni MS.MIL.TOTL.P1 | Instantanés commités (JSON du J2, CSV du J6) |
 | Our World in Data, énergie | Production et consommation d'énergie (séries EIA, Ember, Energy Institute) | CC BY 4.0 (EIA domaine public, Ember CC BY 4.0 ; conditions propres de l'Energy Institute non vérifiées) | CSV en cache, commit épinglé |
 | EIA (États-Unis) | Énergie, par Our World in Data | Domaine public | Via OWID (l'API EIA demande une clé) |

@@ -43,6 +43,7 @@ import type { AccessionCriteria, MeasureOption, Tally } from "./blocs/blocs";
 import type { AffinityTerms } from "./diplomacy/diplomacy";
 import type { IntelLevels, IntelRules } from "./intel/intel";
 import type { Runoff } from "./politics/elections";
+import type { Occupations } from "./war/people";
 
 // The simulation boundary (ARCHITECTURE.md, "Frontière de simulation").
 // The client (through the worker) and the headless runner are two consumers of
@@ -713,6 +714,13 @@ export interface WorldPort {
     loser: NationId,
     regions: readonly string[],
   ): number;
+  // The people of the tiles (J7b, sim/war/people.ts): whether the world has
+  // a population grid, the people each nation holds (units of the grid),
+  // and the people, capitals and cities that changed hands since the last
+  // call.
+  peopleKnown(): boolean;
+  peopleHoldings(): ReadonlyMap<NationId, number>;
+  takeOccupations(): Occupations;
 }
 
 export type NukeAim =
@@ -727,3 +735,4 @@ export interface NukeOutcome {
 }
 
 export { NationIdSchema };
+export type { Occupations };

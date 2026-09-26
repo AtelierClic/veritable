@@ -16,6 +16,7 @@ import {
   RegionSpec,
 } from "./buildBorders";
 import { calibrate, loadLandMask, prepare } from "./calibrate";
+import { buildCities } from "./cities";
 import { bordersImage, controlImage } from "./control";
 import {
   CACHE_DIR,
@@ -47,6 +48,10 @@ import { nearestWater, partitionWater } from "./zones";
 //       partitions the water tiles of the map between the sea seeds of
 //       data/veritable/maps/<map>.seas.json (travel distance over water),
 //       writes data/veritable/borders/<scenario>.zones.bin and .zones.json.
+//
+//   npm run veritable:borders -- cities --scenario world-2026
+//       the three largest cities of each nation and its capital (J7), from
+//       the populated places of Natural Earth; see cities.ts.
 
 function option(args: string[], name: string, fallback?: string): string {
   const i = args.indexOf(`--${name}`);
@@ -572,9 +577,11 @@ async function main(): Promise<void> {
       return runRasterize(args);
     case "zones":
       return runZones(args);
+    case "cities":
+      return buildCities(option(args, "scenario"));
     default:
       throw new Error(
-        "usage: veritable:borders -- calibrate --map <map> | rasterize --scenario <id> | zones --scenario <id>",
+        "usage: veritable:borders -- calibrate --map <map> | rasterize --scenario <id> | zones --scenario <id> | cities --scenario <id>",
       );
   }
 }

@@ -6,6 +6,7 @@ import {
   FrontGeometry,
   NavalSnapshot,
   NukeOutcome,
+  Occupations,
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
@@ -108,6 +109,19 @@ export class BordersWorld implements WorldPort {
     this.sea = null;
     this.claims.load(grid.tiles);
     this.ownerChanges++;
+  }
+
+  // No population grid (J7b): an annexation moves tiles, not people.
+  peopleKnown(): boolean {
+    return false;
+  }
+
+  peopleHoldings(): ReadonlyMap<NationId, number> {
+    return new Map();
+  }
+
+  takeOccupations(): Occupations {
+    return { moves: [], cities: [] };
   }
 
   // No terrain, no structures: this world has no fronts. Wars declared in it

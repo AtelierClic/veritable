@@ -116,6 +116,9 @@ export interface Driver {
   // The simulation itself, for the harnesses that script AI nations (J6
   // nuclear tests); not for the runner.
   sim?: unknown;
+  // J7b: the people each nation holds on the map (units of the population
+  // grid), when the world has one.
+  peopleHeld?(): ReadonlyMap<string, number>;
 }
 
 export class TimingProbe implements PerfProbe {
@@ -184,6 +187,10 @@ export interface MonthRow {
   blockade: Record<string, number>;
   tiles: Record<string, number>;
   contested: Record<string, number>; // contested tiles held (J5)
+  // J7b: population in play, and the people it holds on the map (units of
+  // the population grid, 0 without one).
+  population: Record<string, number>;
+  people: Record<string, number>;
   exhaustion: Record<string, number>;
   sanctionsAgainst: Record<string, number>; // nations sanctioning it
   atWar: Record<string, number>; // 1 when at war
@@ -248,6 +255,9 @@ export interface DeliveryMetrics {
     date: string;
     debtToGdp: number;
     stability: number;
+    // J7b: the share of the people it held on the first day that it had
+    // lost to occupation (0 without a population grid).
+    occupied?: number;
   }[];
 }
 
@@ -307,6 +317,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   );
 
   const sample = (date: string, view: ReadonlyWorldView = driver.read()) => {
+    const held = driver.peopleHeld?.();
     const pick = (f: (id: string) => number) =>
       Object.fromEntries(pack.scenario.nations.map((id) => [id, f(id)]));
     const row: MonthRow = {
@@ -328,6 +339,8 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         (id) => view.nations.find((n) => n.id === id)?.tileCount ?? 0,
       ),
       contested: pick((id) => view.contested[id] ?? 0),
+      population: pick((id) => view.economies[id].population),
+      people: pick((id) => held?.get(id) ?? 0),
       exhaustion: pick((id) => view.military.nations[id]?.exhaustion ?? 0),
       sanctionsAgainst: pick(
         (id) => view.diplomacy.sanctions.filter((s) => s.against === id).length,
@@ -475,11 +488,16 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       }
     }
     if (event.type === "sovereign-default") {
+      const first = series[0]?.people[event.nation] ?? 0;
       delivery.defaults.push({
         nation: event.nation,
         date: event.date,
         debtToGdp: last.debtToGdp[event.nation] ?? 0,
         stability: last.stability[event.nation] ?? 0,
+        occupied:
+          first > 0
+            ? Math.max(0, 1 - (last.people[event.nation] ?? 0) / first)
+            : 0,
       });
     }
     if (event.type === "nuclear-launch" && "params" in event) {
@@ -700,13 +718,22 @@ export function seriesCsv(result: CampaignResult): string {
 // Value of the land a nation gained since `start` (J5): the tiles it holds
 // beyond its first count, at `valuePerTile` (US$ a year), a contested tile
 // counting for `contestedShare` of a tile (config.war.contest.valueShare).
+// J7b: on a map with a population grid, the people it holds beyond its
+// first count, at the GDP per person of the nation it took them from
+// (`from`, at the start), all contested.
 export function gainedTerritoryValue(
   start: MonthRow,
   end: MonthRow,
   nation: string,
   valuePerTile: number,
   contestedShare: number,
+  from?: string,
 ): number {
+  if (from !== undefined && start.people[from] > 0) {
+    const gained = Math.max(0, end.people[nation] - start.people[nation]);
+    const perPerson = start.gdp[from] / start.people[from];
+    return perPerson * gained * contestedShare;
+  }
   const net = Math.max(0, end.tiles[nation] - start.tiles[nation]);
   const contested = Math.min(net, end.contested[nation] ?? 0);
   return valuePerTile * (net - contested + contestedShare * contested);

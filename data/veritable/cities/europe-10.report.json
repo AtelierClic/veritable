@@ -1,0 +1,9 @@
+{
+  "cities": 30,
+  "capitals": 10,
+  "onLandShare": 0.833,
+  "moved": 5,
+  "nationsWithoutCity": [],
+  "capitalsMovedBeyondTwoTiles": [],
+  "ownerDiffersFromNaturalEarth": []
+}

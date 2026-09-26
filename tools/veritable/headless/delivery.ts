@@ -107,6 +107,10 @@ async function runAll(
   );
 }
 
+// J7b: a nation that lost this share of its first-day people to an occupier
+// is not stable in the sense of the default criterion.
+const OCCUPIED_UNSTABLE = 0.25;
+
 function median(values: number[]): number {
   const s = [...values].sort((a, b) => a - b);
   if (s.length === 0) return 0;
@@ -200,12 +204,23 @@ export function aggregate(campaigns: Campaign[]) {
       high = Math.max(high, hi);
     }
   }
+  // A default in a stable nation: no coup, no revolution (J4) and, since
+  // the J7b, less than a quarter of its first-day people lost to an
+  // occupier — the land that changes hands carries its production, and a
+  // nation that loses most of it keeps its debt.
   const unstableDefaults = campaigns.flatMap((c) =>
     c.defaults
       .filter((d) => {
-        const nation = d.split("@")[0];
+        const [nation, date] = d.split("@");
         const p = c.politics[nation];
-        return p === undefined || (p.coups === 0 && p.revolutions === 0);
+        const occupied =
+          (c.delivery.defaults ?? []).find(
+            (x) => x.nation === nation && x.date === date,
+          )?.occupied ?? 0;
+        return (
+          p === undefined ||
+          (p.coups === 0 && p.revolutions === 0 && occupied < OCCUPIED_UNSTABLE)
+        );
       })
       .map((d) => `${d} (seed ${c.seed})`),
   );

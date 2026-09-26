@@ -89,6 +89,7 @@ describe("the rolling queue of the nations (J7; the staggered review of the J5)"
       retreatMonths: { BBB: 0, CCC: 0 },
       tilesTaken: { BBB: 0, CCC: 0 },
       monthlyTiles: { BBB: 0, CCC: 0 },
+      landValue: { BBB: 0, CCC: 0 },
       offers: [],
     } as unknown as DiplomacyState["wars"][number]);
     days(40);

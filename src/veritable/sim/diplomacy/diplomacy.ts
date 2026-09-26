@@ -221,6 +221,7 @@ function newWar(
     retreatMonths: Object.fromEntries(all.map((n) => [n, 0])),
     tilesTaken: Object.fromEntries(all.map((n) => [n, 0])),
     monthlyTiles: Object.fromEntries(all.map((n) => [n, 0])),
+    landValue: Object.fromEntries(all.map((n) => [n, 0])),
     offers: [],
     losses: Object.fromEntries(all.map((n) => [n, 0])),
     claims: [],
@@ -1261,6 +1262,7 @@ export function joinWar(
   war.retreatMonths[nation] = 0;
   war.tilesTaken[nation] = 0;
   war.monthlyTiles[nation] = 0;
+  war.landValue[nation] = 0;
   war.losses[nation] = 0;
   const enemies = side === "aggressors" ? war.defenders : war.aggressors;
   for (const enemy of enemies) {

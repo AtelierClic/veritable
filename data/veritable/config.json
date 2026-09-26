@@ -95,7 +95,8 @@
       "instabilitySlope": 0.02,
       "nominalMax": 0.15,
       "realMin": 0,
-      "realMax": 0.08
+      "realMax": 0.08,
+      "realCeiling": 0.15
     },
     "austerity": {
       "debtToGdp": 1.5,
@@ -439,7 +440,18 @@
     },
     "warScore": {
       "tileValue": 0.001,
-      "lossValue": 0.0001
+      "lossValue": 0.0001,
+      "peopleValue": 2,
+      "capitalValue": 10,
+      "cityValue": 3
+    },
+    "transfer": {
+      "productionShare": 0.5,
+      "residualShare": 0.01
+    },
+    "urban": {
+      "peoplePerTile": 8000,
+      "defense": 1.5
     },
     "contest": {
       "valueShare": 0.5,

@@ -33,6 +33,15 @@ export async function loadScenarioPackFrom(
       `regions of ${scenarioId} are stale: re-run veritable:borders rasterize`,
     );
   }
+  const population = await source.population(scenario);
+  if (
+    population !== null &&
+    (population.width !== borders.width || population.height !== borders.height)
+  ) {
+    throw new Error(
+      `population of ${scenarioId} is stale: re-run veritable:ingest population`,
+    );
+  }
   return {
     scenario,
     nations: scenario.nations.map((id) => source.nation(id)),
@@ -42,6 +51,8 @@ export async function loadScenarioPackFrom(
     regions: regions?.regions ?? new Map(),
     data: simDataFrom(source, scenario),
     georefScale: source.georef(meta.map).scale,
+    population,
+    cities: source.cities(scenario),
   };
 }
 

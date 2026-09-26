@@ -462,6 +462,7 @@ describe("the months of a war (J7)", () => {
       retreatMonths: {},
       tilesTaken: {},
       monthlyTiles: { AAA: 40, BBB: -40 },
+      landValue: {},
       offers: [],
       losses: { AAA: 1000, BBB: 2500 },
       claims: [],

@@ -129,6 +129,14 @@ export function defaultInterestShare(
     : cfg.interestToRevenue;
 }
 
+// The rate a nation pays: the formula and its spread, between realMin and
+// realCeiling (J7b: a nation that lost most of its land keeps its debt, and
+// the formula, linear in the debt, grew it without bound).
+function rateOf(ctx: EconomyContext, rate: number): number {
+  const cfg = ctx.config.budget.interest;
+  return Math.min(cfg.realCeiling, Math.max(cfg.realMin, rate));
+}
+
 // J6b: the budget of the first day once politics exist: the interest spread
 // of each nation, and the nations already in default (they cannot borrow
 // for noDeficitYears, and do not default again meanwhile).
@@ -146,10 +154,10 @@ export function settleStartBudget(
       real === null
         ? 0
         : real - formulaRate(ctx, sheet.debtToGdp.value, stability);
-    nation.interestRate = formulaRate(ctx, nation.debt / nation.gdp, stability);
-    nation.interestRate = Math.max(
-      ctx.config.budget.interest.realMin,
-      nation.interestRate + nation.interestSpread,
+    nation.interestRate = rateOf(
+      ctx,
+      formulaRate(ctx, nation.debt / nation.gdp, stability) +
+        nation.interestSpread,
     );
     if (sheet.economy.budget.inDefault !== undefined) {
       nation.defaults = 1;
@@ -212,8 +220,8 @@ export function stepBudget(
   }
 
   const debtToGdp = nation.debt / nation.gdp;
-  nation.interestRate = Math.max(
-    cfg.interest.realMin,
+  nation.interestRate = rateOf(
+    ctx,
     formulaRate(ctx, debtToGdp, politics.stability) + nation.interestSpread,
   );
   const interest = (nation.interestRate / 12) * Math.max(0, nation.debt);

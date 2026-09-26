@@ -11,6 +11,8 @@ import { PseudoRandom } from "../../core/PseudoRandom";
 import { Borders } from "../data/bordersFile";
 import { BordersMeta } from "../data/DataSource";
 import { vt } from "../data/i18n";
+import { peopleOf, PopulationGrid } from "../data/populationFile";
+import { CityData } from "../data/schemas/cities";
 import { NationId } from "../data/schemas/common";
 import { NationData } from "../data/schemas/nation";
 import { WorldState } from "../data/schemas/save";
@@ -18,6 +20,7 @@ import { Scenario } from "../data/schemas/scenario";
 import { Zones } from "../data/zonesFile";
 import { SimData } from "../sim/economy/context";
 import { TileGrid } from "../sim/VeritableSim";
+import { PeopleInput } from "../sim/war/people";
 
 // The scenario loader: a campaign starts from the fixed borders of its
 // scenario. There is no spawn phase and no map-manifest roster any more.
@@ -34,6 +37,10 @@ export interface ScenarioPack {
   // Tiles per radian of the map (its georeferencing, J6c): the size of a
   // tile, for the war constants calibrated on the Europe map.
   georefScale?: number;
+  // J7b: the people of every tile (none without a grid) and the cities of
+  // the scenario (its capitals and three largest cities per nation).
+  population?: PopulationGrid | null;
+  cities?: CityData[];
 }
 
 export interface NationBinding {
@@ -208,5 +215,28 @@ export function initialWorld(
       }),
     },
     grid: { width: game.width(), height: game.height(), tiles },
+  };
+}
+
+// The people of the tiles of a scenario (J7b), for its world: the grid of
+// the pack decoded tile by tile, and its capitals and cities; null without
+// a grid.
+export function peopleInput(pack: ScenarioPack): PeopleInput | null {
+  const grid = pack.population ?? null;
+  if (grid === null) return null;
+  const table = new Float32Array(256);
+  for (let level = 1; level < 256; level++) {
+    table[level] = peopleOf(level, grid.steps);
+  }
+  const people = new Float32Array(grid.levels.length);
+  for (let tile = 0; tile < people.length; tile++) {
+    people[tile] = table[grid.levels[tile]];
+  }
+  return {
+    people,
+    cities: (pack.cities ?? []).map((c) => ({
+      tile: c.tile,
+      capital: c.capital,
+    })),
   };
 }

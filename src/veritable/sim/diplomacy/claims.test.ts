@@ -103,6 +103,7 @@ function unit() {
     retreatMonths: { AAA: 0, BBB: 0 },
     tilesTaken: { AAA: 0, BBB: 0 },
     monthlyTiles: { AAA: 0, BBB: 0 },
+    landValue: { AAA: 0, BBB: 0 },
     offers: [],
     losses: { AAA: 20_000, BBB: 5_000 },
     claims: ["strip"],

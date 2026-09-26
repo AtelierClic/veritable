@@ -23,6 +23,11 @@ export const SOURCES = {
     file: "ne_10m_admin_1_states_provinces.geojson",
     sha256: "22d0e3ad85eb3e27f17cabf8ba2d50e554fbc27a87796ff891d958185da62fb5",
   },
+  // J7: populated places, for the cities of a scenario.
+  places: {
+    file: "ne_10m_populated_places.geojson",
+    sha256: "9b8e3de09048ef00dfc70357dbb9fa324493f214b5e0ae4daf1aa79a8d10116b",
+  },
 } as const;
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));

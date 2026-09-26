@@ -6,7 +6,8 @@ import { VeritableConfig } from "./schemas/config";
 // georeferencings), a distance in tiles is multiplied by f and an area — a
 // speed of conquest, in tiles a tick along a segment of scaled length —
 // by f², so that a front takes the same land a day on either map; the war
-// score of a tile is divided by f². The Europe map is its own reference:
+// score of a tile is divided by f², the people that make a tile urban too
+// (J7b). The Europe map is its own reference:
 // its constants are returned untouched, bit for bit.
 export function configForMap(
   config: VeritableConfig,
@@ -23,6 +24,8 @@ export function configForMap(
   scaled.war.vMax = config.war.vMax * f * f;
   scaled.war.cityDefenseRange = distance(config.war.cityDefenseRange, 1);
   scaled.war.warScore.tileValue = config.war.warScore.tileValue / (f * f);
+  // J7b: a tile of the map holds 1 / f² times the land of a reference one.
+  scaled.war.urban.peoplePerTile = config.war.urban.peoplePerTile / (f * f);
   scaled.logistics.range = distance(config.logistics.range, 1);
   scaled.naval.landingRadius = distance(config.naval.landingRadius, 1);
   scaled.nuclear.capitalFrontTiles = distance(

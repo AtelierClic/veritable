@@ -108,6 +108,19 @@ describe("the interest rate of the first day (J6b)", () => {
     expect(internals.economy.nations.AAA.interestSpread).toBe(0);
   });
 
+  it("never climbs over realCeiling, whatever the debt (J7b)", () => {
+    const { internals, days } = campaign([
+      testNation("AAA", { debtToGdp: 1 }),
+      testNation("BBB"),
+    ]);
+    // A nation left with a sliver of its land keeps its debt.
+    internals.economy.nations.AAA.debt = 70 * internals.economy.nations.AAA.gdp;
+    days(40);
+    expect(internals.economy.nations.AAA.interestRate).toBe(
+      internals.ctx.config.budget.interest.realCeiling,
+    );
+  });
+
   it("never falls under realMin, whatever the inflation", () => {
     const { internals } = campaign([
       withInterest(testNation("AAA", { debtToGdp: 0.3 }), 0.03, 0.3),

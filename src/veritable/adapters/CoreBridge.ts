@@ -31,6 +31,7 @@ import {
   NavalSnapshot,
   NukeAim,
   NukeOutcome,
+  Occupations,
   TileGrid,
   WorldPort,
 } from "../sim/VeritableSim";
@@ -44,6 +45,7 @@ import {
   segmentFront,
   Terrain,
 } from "../sim/war/geometry";
+import { PeopleInput, PeopleTiles } from "../sim/war/people";
 import type { TileInfo } from "./protocol";
 import { NationBinding } from "./scenarioWorld";
 
@@ -90,6 +92,9 @@ export class CoreBridge implements WorldPort {
   private readonly ledger: ContestLedger;
   // Claims (J6): regions of the scenario, first-day owners, settled tiles.
   private readonly claims: ClaimTiles;
+  // The people of the tiles (J7b): what each nation holds, what changes
+  // hands.
+  private readonly people: PeopleTiles;
   // Segment tiles of the last computed geometry, by front id.
   private readonly segments = new Map<string, number[][]>();
   // Warheads launched (J5): their execution, and who owned each tile within
@@ -110,10 +115,12 @@ export class CoreBridge implements WorldPort {
     private readonly naval_?: VeritableConfig["naval"],
     private readonly logistics?: VeritableConfig["logistics"],
     claims: ClaimTilesInput | null = null,
+    people: PeopleInput | null = null,
   ) {
     this.coreStart = canonicalJson(coreStart);
     this.ledger = new ContestLedger(game.width() * game.height());
     this.claims = new ClaimTiles(game.width() * game.height(), claims);
+    this.people = new PeopleTiles(game.width() * game.height(), people);
     if (zones !== null && zones.tiles.length !== this.ledger.values.length) {
       throw new Error("maritime zones do not match the map");
     }
@@ -123,13 +130,12 @@ export class CoreBridge implements WorldPort {
     // count of the 8 million tiles of the world map after every capture
     // cost tens of milliseconds per tick.
     this.claims.track();
-    game.setVeritableTileOwnerListener((tile, from, to) =>
-      this.claims.ownerChanged(
-        tile,
-        from === 0 ? null : (this.bySmallID.get(from) ?? null),
-        to === 0 ? null : (this.bySmallID.get(to) ?? null),
-      ),
-    );
+    game.setVeritableTileOwnerListener((tile, from, to) => {
+      const a = from === 0 ? null : (this.bySmallID.get(from) ?? null);
+      const b = to === 0 ? null : (this.bySmallID.get(to) ?? null);
+      this.claims.ownerChanged(tile, a, b);
+      this.people.ownerChanged(tile, a, b);
+    });
     for (const b of bindings) {
       this.byNation.set(b.nationId, b.player);
       this.bySmallID.set(b.player.smallID(), b.nationId);
@@ -264,6 +270,8 @@ export class CoreBridge implements WorldPort {
 
     this.ledger.load(grid.tiles, grid.contest);
     this.claims.load(grid.tiles);
+    // A load is no occupation (J7b).
+    this.people.load();
     this.contestedCache = null;
     grid.tiles.forEach((value, tile) => {
       const owner = value & TILE_NATION_MASK;
@@ -305,8 +313,10 @@ export class CoreBridge implements WorldPort {
 
     this.pending = null;
     this.restoredAtTick = game.ticks();
-    // Claimed land counted at the load, not in the first tick that asks.
+    // Claimed land counted at the load, not in the first tick that asks;
+    // the people each nation holds too.
     this.claims.prime((tile) => this.nationAt(tile));
+    this.people.prime((tile) => this.nationAt(tile));
     if (game.inSpawnPhase()) game.endSpawnPhase();
   }
 
@@ -374,6 +384,20 @@ export class CoreBridge implements WorldPort {
   cede(winner: NationId): number {
     if (this.pending !== null) return 0;
     return this.ledger.cede((tile) => this.nationAt(tile) === winner);
+  }
+
+  // --- people (J7b) ------------------------------------------------------------------
+
+  peopleKnown(): boolean {
+    return this.people.known();
+  }
+
+  peopleHoldings(): ReadonlyMap<NationId, number> {
+    return this.people.holdings();
+  }
+
+  takeOccupations(): Occupations {
+    return this.people.take();
   }
 
   // --- claims (J6) -------------------------------------------------------------------
@@ -736,9 +760,13 @@ export class CoreBridge implements WorldPort {
             let held = 0;
             let posts = 0;
             let cities = 0;
+            let urban = 0;
             for (const tile of s.tiles) {
               if (g.ownerAt(tile) !== i + 1) continue;
               held++;
+              if (this.people.isUrban(tile, this.war.urban.peoplePerTile)) {
+                urban++;
+              }
               if (
                 this.game.hasUnitNearby(
                   tile,
@@ -760,12 +788,14 @@ export class CoreBridge implements WorldPort {
                 cities++;
               }
             }
+            // J7b: urban tiles defend better.
             defense[n] =
               held === 0
                 ? 1
                 : (1 +
                     (config.defensePostDefenseBonus() - 1) * (posts / held)) *
-                  (1 + (this.war.cityDefense - 1) * (cities / held));
+                  (1 + (this.war.cityDefense - 1) * (cities / held)) *
+                  (1 + (this.war.urban.defense - 1) * (urban / held));
             // Logistics: ports and cities of n within range of the segment.
             supply[n] = this.depotsNear(depots[i], s.tiles, range);
           });

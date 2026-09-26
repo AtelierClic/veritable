@@ -109,7 +109,6 @@ describe("nuclear weapons on the real core (Europe map)", () => {
       casusBelli: "none",
     });
     const before = session.sim.read();
-    const gdp = before.economies.ESP.gdp;
     const tiles = before.nations.find((n) => n.id === "ESP")!.tileCount;
     session.sim.apply({
       type: "nuclear-launch",
@@ -138,8 +137,9 @@ describe("nuclear weapons on the real core (Europe map)", () => {
       view.nations.find((n) => n.id === "ESP")!.tileCount -
       (view.contested.ESP ?? 0);
     expect(held(after)).toBeLessThan(tiles);
-    expect(after.economies.ESP.gdp).toBeLessThan(gdp * (1 - 0.8 * lost));
-    expect(after.nuclear.fallout.ESP).toBeLessThan(1);
+    // J7b: the GDP of Spain also moves with the land it takes and loses at
+    // the front; the factor of the fallout is what the warhead did to it.
+    expect(after.nuclear.fallout.ESP).toBeLessThan(1 - 0.8 * lost);
     // Everyone turned against France.
     expect(after.diplomacy.pariahs).toEqual(["FRA"]);
     expect(

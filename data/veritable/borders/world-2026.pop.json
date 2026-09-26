@@ -1,0 +1,1064 @@
+{
+  "source": "GHS-POP R2023A (epoch 2025, 30 arc-seconds), European Commission, Joint Research Centre; Schiavina M., Freire S., Carioli A., MacManus K. (2023); © European Union 1995-2026, CC BY 4.0; aggregated to the tiles of the map and quantised",
+  "url": "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_POP_GLOBE_R2023A/GHS_POP_E2025_GLOBE_R2023A_4326_30ss/V1-0/GHS_POP_E2025_GLOBE_R2023A_4326_30ss_V1_0.zip",
+  "sha256": "752626a5bbe6f9d0cf79ac33a3cac3572234952b98b5113a4cc01a6bd2d30383",
+  "map": "giantworldmap",
+  "steps": 8,
+  "bytes": 1207723,
+  "people": {
+    "grid": 8191988536,
+    "outsideMap": 0,
+    "movedFromSea": 1260279147,
+    "lostAtSea": 57945369,
+    "onMapQuantised": 8136438542
+  },
+  "densityPerTile": {
+    "plains": 5819,
+    "highland": 2898,
+    "mountain": 1219,
+    "mountainOverPlains": 0.209
+  },
+  "nations": {
+    "AFG": {
+      "grid": 44292679,
+      "sheet": 43844100,
+      "ratio": 1.01
+    },
+    "ALB": {
+      "grid": 2890208,
+      "sheet": 2349580,
+      "ratio": 1.23
+    },
+    "DZA": {
+      "grid": 46952389,
+      "sheet": 47435300,
+      "ratio": 0.99
+    },
+    "AND": {
+      "grid": 77027,
+      "sheet": 82904,
+      "ratio": 0.929
+    },
+    "AGO": {
+      "grid": 39008249,
+      "sheet": 39040000,
+      "ratio": 0.999
+    },
+    "ATG": {
+      "grid": 0,
+      "sheet": 94209,
+      "ratio": 0
+    },
+    "ARG": {
+      "grid": 46042819,
+      "sheet": 45851400,
+      "ratio": 1.004
+    },
+    "ARM": {
+      "grid": 2807072,
+      "sheet": 3086700,
+      "ratio": 0.909
+    },
+    "AUS": {
+      "grid": 26850433,
+      "sheet": 27614400,
+      "ratio": 0.972
+    },
+    "AUT": {
+      "grid": 9171319,
+      "sheet": 9208160,
+      "ratio": 0.996
+    },
+    "AZE": {
+      "grid": 10353390,
+      "sheet": 10247000,
+      "ratio": 1.01
+    },
+    "BHS": {
+      "grid": 0,
+      "sheet": 403033,
+      "ratio": 0
+    },
+    "BHR": {
+      "grid": 0,
+      "sheet": 1600370,
+      "ratio": 0
+    },
+    "BGD": {
+      "grid": 174483330,
+      "sheet": 175687000,
+      "ratio": 0.993
+    },
+    "BRB": {
+      "grid": 0,
+      "sheet": 282623,
+      "ratio": 0
+    },
+    "BLR": {
+      "grid": 9409712,
+      "sheet": 9085990,
+      "ratio": 1.036
+    },
+    "BEL": {
+      "grid": 11994585,
+      "sheet": 11941800,
+      "ratio": 1.004
+    },
+    "BLZ": {
+      "grid": 437501,
+      "sheet": 422924,
+      "ratio": 1.034
+    },
+    "BEN": {
+      "grid": 14377930,
+      "sheet": 14814500,
+      "ratio": 0.971
+    },
+    "BTN": {
+      "grid": 938610,
+      "sheet": 796682,
+      "ratio": 1.178
+    },
+    "BOL": {
+      "grid": 12856537,
+      "sheet": 12581800,
+      "ratio": 1.022
+    },
+    "BIH": {
+      "grid": 3292714,
+      "sheet": 3140100,
+      "ratio": 1.049
+    },
+    "BWA": {
+      "grid": 2699828,
+      "sheet": 2562120,
+      "ratio": 1.054
+    },
+    "BRA": {
+      "grid": 218609397,
+      "sheet": 212812000,
+      "ratio": 1.027
+    },
+    "BRN": {
+      "grid": 453245,
+      "sheet": 466330,
+      "ratio": 0.972
+    },
+    "BGR": {
+      "grid": 6575296,
+      "sheet": 6433300,
+      "ratio": 1.022
+    },
+    "BFA": {
+      "grid": 24353382,
+      "sheet": 24074600,
+      "ratio": 1.012
+    },
+    "BDI": {
+      "grid": 13711198,
+      "sheet": 14390000,
+      "ratio": 0.953
+    },
+    "CPV": {
+      "grid": 0,
+      "sheet": 527326,
+      "ratio": 0
+    },
+    "KHM": {
+      "grid": 17780921,
+      "sheet": 17848000,
+      "ratio": 0.996
+    },
+    "CMR": {
+      "grid": 30685676,
+      "sheet": 29879300,
+      "ratio": 1.027
+    },
+    "CAN": {
+      "grid": 38430817,
+      "sheet": 41651700,
+      "ratio": 0.923
+    },
+    "CAF": {
+      "grid": 6291423,
+      "sheet": 5513280,
+      "ratio": 1.141
+    },
+    "TCD": {
+      "grid": 19126411,
+      "sheet": 21003700,
+      "ratio": 0.911
+    },
+    "CHL": {
+      "grid": 19730404,
+      "sheet": 19859900,
+      "ratio": 0.993
+    },
+    "CHN": {
+      "grid": 1430748866,
+      "sheet": 1406590000,
+      "ratio": 1.017
+    },
+    "COL": {
+      "grid": 52541499,
+      "sheet": 53425600,
+      "ratio": 0.983
+    },
+    "COM": {
+      "grid": 0,
+      "sheet": 882847,
+      "ratio": 0
+    },
+    "COG": {
+      "grid": 7788947,
+      "sheet": 6484440,
+      "ratio": 1.201
+    },
+    "CRI": {
+      "grid": 5269810,
+      "sheet": 5152950,
+      "ratio": 1.023
+    },
+    "CIV": {
+      "grid": 30303240,
+      "sheet": 32711500,
+      "ratio": 0.926
+    },
+    "HRV": {
+      "grid": 3885743,
+      "sheet": 3876200,
+      "ratio": 1.002
+    },
+    "CUB": {
+      "grid": 11035417,
+      "sheet": 10937200,
+      "ratio": 1.009
+    },
+    "CYP": {
+      "grid": 876468,
+      "sheet": 1370750,
+      "ratio": 0.639
+    },
+    "CZE": {
+      "grid": 10349766,
+      "sheet": 10886900,
+      "ratio": 0.951
+    },
+    "PRK": {
+      "grid": 25753551,
+      "sheet": 26571000,
+      "ratio": 0.969
+    },
+    "COD": {
+      "grid": 100762589,
+      "sheet": 106063000,
+      "ratio": 0.95
+    },
+    "DNK": {
+      "grid": 5787074,
+      "sheet": 6009170,
+      "ratio": 0.963
+    },
+    "DJI": {
+      "grid": 1191287,
+      "sheet": 1184080,
+      "ratio": 1.006
+    },
+    "DMA": {
+      "grid": 0,
+      "sheet": 65871,
+      "ratio": 0
+    },
+    "DOM": {
+      "grid": 11741470,
+      "sheet": 11520500,
+      "ratio": 1.019
+    },
+    "ECU": {
+      "grid": 18459906,
+      "sheet": 18289900,
+      "ratio": 1.009
+    },
+    "EGY": {
+      "grid": 115942558,
+      "sheet": 118366000,
+      "ratio": 0.98
+    },
+    "SLV": {
+      "grid": 6410672,
+      "sheet": 6365500,
+      "ratio": 1.007
+    },
+    "GNQ": {
+      "grid": 937321,
+      "sheet": 1938430,
+      "ratio": 0.484
+    },
+    "ERI": {
+      "grid": 4106588,
+      "sheet": 3607000,
+      "ratio": 1.139
+    },
+    "EST": {
+      "grid": 1220193,
+      "sheet": 1366480,
+      "ratio": 0.893
+    },
+    "SWZ": {
+      "grid": 1230657,
+      "sheet": 1256170,
+      "ratio": 0.98
+    },
+    "ETH": {
+      "grid": 132105940,
+      "sheet": 135472000,
+      "ratio": 0.975
+    },
+    "FJI": {
+      "grid": 919211,
+      "sheet": 933154,
+      "ratio": 0.985
+    },
+    "FIN": {
+      "grid": 5499796,
+      "sheet": 5646440,
+      "ratio": 0.974
+    },
+    "FRA": {
+      "grid": 66771898,
+      "sheet": 68720300,
+      "ratio": 0.972
+    },
+    "GAB": {
+      "grid": 2546027,
+      "sheet": 2593130,
+      "ratio": 0.982
+    },
+    "GMB": {
+      "grid": 2789404,
+      "sheet": 2822090,
+      "ratio": 0.988
+    },
+    "GEO": {
+      "grid": 3338558,
+      "sheet": 3935770,
+      "ratio": 0.848
+    },
+    "DEU": {
+      "grid": 83272637,
+      "sheet": 83491200,
+      "ratio": 0.997
+    },
+    "GHA": {
+      "grid": 35357501,
+      "sheet": 35064300,
+      "ratio": 1.008
+    },
+    "GRC": {
+      "grid": 9614476,
+      "sheet": 10414000,
+      "ratio": 0.923
+    },
+    "GRD": {
+      "grid": 0,
+      "sheet": 117303,
+      "ratio": 0
+    },
+    "GTM": {
+      "grid": 18479799,
+      "sheet": 18687900,
+      "ratio": 0.989
+    },
+    "GIN": {
+      "grid": 14854532,
+      "sheet": 15099700,
+      "ratio": 0.984
+    },
+    "GNB": {
+      "grid": 2225064,
+      "sheet": 2249520,
+      "ratio": 0.989
+    },
+    "GUY": {
+      "grid": 836598,
+      "sheet": 835986,
+      "ratio": 1.001
+    },
+    "HTI": {
+      "grid": 11819501,
+      "sheet": 11906100,
+      "ratio": 0.993
+    },
+    "HND": {
+      "grid": 10832891,
+      "sheet": 11005900,
+      "ratio": 0.984
+    },
+    "HUN": {
+      "grid": 9882244,
+      "sheet": 9514250,
+      "ratio": 1.039
+    },
+    "ISL": {
+      "grid": 380388,
+      "sheet": 392404,
+      "ratio": 0.969
+    },
+    "IND": {
+      "grid": 1455517902,
+      "sheet": 1463870000,
+      "ratio": 0.994
+    },
+    "IDN": {
+      "grid": 269780050,
+      "sheet": 285721000,
+      "ratio": 0.944
+    },
+    "IRN": {
+      "grid": 90136961,
+      "sheet": 92417700,
+      "ratio": 0.975
+    },
+    "IRQ": {
+      "grid": 47747112,
+      "sheet": 47020800,
+      "ratio": 1.015
+    },
+    "IRL": {
+      "grid": 5142077,
+      "sheet": 5484370,
+      "ratio": 0.938
+    },
+    "ISR": {
+      "grid": 11016259,
+      "sheet": 10122800,
+      "ratio": 1.088
+    },
+    "ITA": {
+      "grid": 58488227,
+      "sheet": 58915700,
+      "ratio": 0.993
+    },
+    "JAM": {
+      "grid": 2808328,
+      "sheet": 2837080,
+      "ratio": 0.99
+    },
+    "JPN": {
+      "grid": 119564083,
+      "sheet": 123367000,
+      "ratio": 0.969
+    },
+    "JOR": {
+      "grid": 11361716,
+      "sheet": 11520700,
+      "ratio": 0.986
+    },
+    "KAZ": {
+      "grid": 20065433,
+      "sheet": 20843800,
+      "ratio": 0.963
+    },
+    "KEN": {
+      "grid": 57938181,
+      "sheet": 57532500,
+      "ratio": 1.007
+    },
+    "KIR": {
+      "grid": 0,
+      "sheet": 136488,
+      "ratio": 0
+    },
+    "KWT": {
+      "grid": 4413628,
+      "sheet": 4865300,
+      "ratio": 0.907
+    },
+    "KGZ": {
+      "grid": 7099361,
+      "sheet": 7343060,
+      "ratio": 0.967
+    },
+    "LAO": {
+      "grid": 7491900,
+      "sheet": 7873050,
+      "ratio": 0.952
+    },
+    "LVA": {
+      "grid": 1793747,
+      "sheet": 1847790,
+      "ratio": 0.971
+    },
+    "LBN": {
+      "grid": 5057659,
+      "sheet": 5849420,
+      "ratio": 0.865
+    },
+    "LSO": {
+      "grid": 2279964,
+      "sheet": 2363330,
+      "ratio": 0.965
+    },
+    "LBR": {
+      "grid": 5744121,
+      "sheet": 5731210,
+      "ratio": 1.002
+    },
+    "LBY": {
+      "grid": 4178161,
+      "sheet": 4698890,
+      "ratio": 0.889
+    },
+    "LIE": {
+      "grid": 0,
+      "sheet": 41024,
+      "ratio": 0
+    },
+    "LTU": {
+      "grid": 2706643,
+      "sheet": 2888770,
+      "ratio": 0.937
+    },
+    "LUX": {
+      "grid": 661824,
+      "sheet": 686970,
+      "ratio": 0.963
+    },
+    "MDG": {
+      "grid": 31716785,
+      "sheet": 32740700,
+      "ratio": 0.969
+    },
+    "MWI": {
+      "grid": 22129317,
+      "sheet": 22216100,
+      "ratio": 0.996
+    },
+    "MYS": {
+      "grid": 41306600,
+      "sheet": 35977800,
+      "ratio": 1.148
+    },
+    "MDV": {
+      "grid": 0,
+      "sheet": 529676,
+      "ratio": 0
+    },
+    "MLI": {
+      "grid": 24945694,
+      "sheet": 25198800,
+      "ratio": 0.99
+    },
+    "MLT": {
+      "grid": 0,
+      "sheet": 579704,
+      "ratio": 0
+    },
+    "MHL": {
+      "grid": 0,
+      "sheet": 36282,
+      "ratio": 0
+    },
+    "MRT": {
+      "grid": 5168099,
+      "sheet": 5315070,
+      "ratio": 0.972
+    },
+    "MUS": {
+      "grid": 1281536,
+      "sheet": 1243740,
+      "ratio": 1.03
+    },
+    "MEX": {
+      "grid": 130378907,
+      "sheet": 131947000,
+      "ratio": 0.988
+    },
+    "FSM": {
+      "grid": 0,
+      "sheet": 113683,
+      "ratio": 0
+    },
+    "MCO": {
+      "grid": 0,
+      "sheet": 38341,
+      "ratio": 0
+    },
+    "MNG": {
+      "grid": 3548457,
+      "sheet": 3568980,
+      "ratio": 0.994
+    },
+    "MNE": {
+      "grid": 632384,
+      "sheet": 623129,
+      "ratio": 1.015
+    },
+    "MAR": {
+      "grid": 39286424,
+      "sheet": 38430800,
+      "ratio": 1.022
+    },
+    "MOZ": {
+      "grid": 35946408,
+      "sheet": 35631700,
+      "ratio": 1.009
+    },
+    "MMR": {
+      "grid": 55299910,
+      "sheet": 54850600,
+      "ratio": 1.008
+    },
+    "NAM": {
+      "grid": 2778919,
+      "sheet": 3092820,
+      "ratio": 0.899
+    },
+    "NRU": {
+      "grid": 0,
+      "sheet": 12025,
+      "ratio": 0
+    },
+    "NPL": {
+      "grid": 32365322,
+      "sheet": 29618100,
+      "ratio": 1.093
+    },
+    "NLD": {
+      "grid": 17593189,
+      "sheet": 18087600,
+      "ratio": 0.973
+    },
+    "NZL": {
+      "grid": 5329976,
+      "sheet": 5324700,
+      "ratio": 1.001
+    },
+    "NIC": {
+      "grid": 7195082,
+      "sheet": 7007500,
+      "ratio": 1.027
+    },
+    "NER": {
+      "grid": 29239311,
+      "sheet": 27917800,
+      "ratio": 1.047
+    },
+    "NGA": {
+      "grid": 233750769,
+      "sheet": 237528000,
+      "ratio": 0.984
+    },
+    "MKD": {
+      "grid": 2084869,
+      "sheet": 1820910,
+      "ratio": 1.145
+    },
+    "NOR": {
+      "grid": 4713596,
+      "sheet": 5610870,
+      "ratio": 0.84
+    },
+    "OMN": {
+      "grid": 4888411,
+      "sheet": 5494690,
+      "ratio": 0.89
+    },
+    "PAK": {
+      "grid": 249331723,
+      "sheet": 255220000,
+      "ratio": 0.977
+    },
+    "PLW": {
+      "grid": 0,
+      "sheet": 17663,
+      "ratio": 0
+    },
+    "PAN": {
+      "grid": 4595987,
+      "sheet": 4571190,
+      "ratio": 1.005
+    },
+    "PNG": {
+      "grid": 10281543,
+      "sheet": 10762800,
+      "ratio": 0.955
+    },
+    "PRY": {
+      "grid": 7387755,
+      "sheet": 7013080,
+      "ratio": 1.053
+    },
+    "PER": {
+      "grid": 34866164,
+      "sheet": 34576700,
+      "ratio": 1.008
+    },
+    "PHL": {
+      "grid": 108472907,
+      "sheet": 116787000,
+      "ratio": 0.929
+    },
+    "POL": {
+      "grid": 39802162,
+      "sheet": 36435900,
+      "ratio": 1.092
+    },
+    "PRT": {
+      "grid": 9762991,
+      "sheet": 10804900,
+      "ratio": 0.904
+    },
+    "QAT": {
+      "grid": 2750392,
+      "sheet": 2972220,
+      "ratio": 0.925
+    },
+    "KOR": {
+      "grid": 50658399,
+      "sheet": 51684600,
+      "ratio": 0.98
+    },
+    "MDA": {
+      "grid": 2928913,
+      "sheet": 2360530,
+      "ratio": 1.241
+    },
+    "ROU": {
+      "grid": 19376822,
+      "sheet": 19020300,
+      "ratio": 1.019
+    },
+    "RUS": {
+      "grid": 152075865,
+      "sheet": 143513000,
+      "ratio": 1.06
+    },
+    "RWA": {
+      "grid": 14495201,
+      "sheet": 14569300,
+      "ratio": 0.995
+    },
+    "KNA": {
+      "grid": 0,
+      "sheet": 46922,
+      "ratio": 0
+    },
+    "LCA": {
+      "grid": 0,
+      "sheet": 180149,
+      "ratio": 0
+    },
+    "VCT": {
+      "grid": 0,
+      "sheet": 99924,
+      "ratio": 0
+    },
+    "WSM": {
+      "grid": 0,
+      "sheet": 219306,
+      "ratio": 0
+    },
+    "SMR": {
+      "grid": 0,
+      "sheet": 34109,
+      "ratio": 0
+    },
+    "STP": {
+      "grid": 0,
+      "sheet": 240254,
+      "ratio": 0
+    },
+    "SAU": {
+      "grid": 37944823,
+      "sheet": 36973600,
+      "ratio": 1.026
+    },
+    "SEN": {
+      "grid": 18851985,
+      "sheet": 18932000,
+      "ratio": 0.996
+    },
+    "SRB": {
+      "grid": 7136543,
+      "sheet": 6549140,
+      "ratio": 1.09
+    },
+    "SYC": {
+      "grid": 0,
+      "sheet": 122730,
+      "ratio": 0
+    },
+    "SLE": {
+      "grid": 8415096,
+      "sheet": 8819790,
+      "ratio": 0.954
+    },
+    "SGP": {
+      "grid": 0,
+      "sheet": 6111180,
+      "ratio": 0
+    },
+    "SVK": {
+      "grid": 5533338,
+      "sheet": 5413810,
+      "ratio": 1.022
+    },
+    "SVN": {
+      "grid": 2055648,
+      "sheet": 2130990,
+      "ratio": 0.965
+    },
+    "SLB": {
+      "grid": 707059,
+      "sheet": 838645,
+      "ratio": 0.843
+    },
+    "SOM": {
+      "grid": 15305035,
+      "sheet": 14741100,
+      "ratio": 1.038
+    },
+    "ZAF": {
+      "grid": 61896211,
+      "sheet": 64747300,
+      "ratio": 0.956
+    },
+    "SSD": {
+      "grid": 11397840,
+      "sheet": 12188800,
+      "ratio": 0.935
+    },
+    "ESP": {
+      "grid": 46480751,
+      "sheet": 49355100,
+      "ratio": 0.942
+    },
+    "LKA": {
+      "grid": 21521161,
+      "sheet": 21756000,
+      "ratio": 0.989
+    },
+    "SDN": {
+      "grid": 34818508,
+      "sheet": 38746600,
+      "ratio": 0.899
+    },
+    "SUR": {
+      "grid": 640906,
+      "sheet": 639850,
+      "ratio": 1.002
+    },
+    "SWE": {
+      "grid": 10641027,
+      "sheet": 10596600,
+      "ratio": 1.004
+    },
+    "CHE": {
+      "grid": 8690000,
+      "sheet": 9092440,
+      "ratio": 0.956
+    },
+    "SYR": {
+      "grid": 22444823,
+      "sheet": 21521200,
+      "ratio": 1.043
+    },
+    "TJK": {
+      "grid": 10407301,
+      "sheet": 10786700,
+      "ratio": 0.965
+    },
+    "THA": {
+      "grid": 71721041,
+      "sheet": 71619900,
+      "ratio": 1.001
+    },
+    "TLS": {
+      "grid": 1420747,
+      "sheet": 1418520,
+      "ratio": 1.002
+    },
+    "TGO": {
+      "grid": 9455995,
+      "sheet": 8591630,
+      "ratio": 1.101
+    },
+    "TON": {
+      "grid": 0,
+      "sheet": 103742,
+      "ratio": 0
+    },
+    "TTO": {
+      "grid": 1458794,
+      "sheet": 1367760,
+      "ratio": 1.067
+    },
+    "TUN": {
+      "grid": 12752640,
+      "sheet": 12348600,
+      "ratio": 1.033
+    },
+    "TUR": {
+      "grid": 86655251,
+      "sheet": 85878600,
+      "ratio": 1.009
+    },
+    "TKM": {
+      "grid": 6792310,
+      "sheet": 7618850,
+      "ratio": 0.892
+    },
+    "TUV": {
+      "grid": 0,
+      "sheet": 9492,
+      "ratio": 0
+    },
+    "UGA": {
+      "grid": 51467714,
+      "sheet": 51384900,
+      "ratio": 1.002
+    },
+    "UKR": {
+      "grid": 30598245,
+      "sheet": 38980400,
+      "ratio": 0.785
+    },
+    "ARE": {
+      "grid": 9506580,
+      "sheet": 11513100,
+      "ratio": 0.826
+    },
+    "GBR": {
+      "grid": 68006024,
+      "sheet": 69487000,
+      "ratio": 0.979
+    },
+    "TZA": {
+      "grid": 68573665,
+      "sheet": 70545900,
+      "ratio": 0.972
+    },
+    "USA": {
+      "grid": 344666367,
+      "sheet": 341785000,
+      "ratio": 1.008
+    },
+    "URY": {
+      "grid": 3309431,
+      "sheet": 3384690,
+      "ratio": 0.978
+    },
+    "UZB": {
+      "grid": 36162149,
+      "sheet": 37053400,
+      "ratio": 0.976
+    },
+    "VUT": {
+      "grid": 265121,
+      "sheet": 335169,
+      "ratio": 0.791
+    },
+    "VEN": {
+      "grid": 29102544,
+      "sheet": 28516900,
+      "ratio": 1.021
+    },
+    "VNM": {
+      "grid": 98604602,
+      "sheet": 101599000,
+      "ratio": 0.971
+    },
+    "YEM": {
+      "grid": 12001199,
+      "sheet": 12532200,
+      "ratio": 0.958
+    },
+    "ZMB": {
+      "grid": 21790852,
+      "sheet": 21913900,
+      "ratio": 0.994
+    },
+    "ZWE": {
+      "grid": 17214858,
+      "sheet": 16950800,
+      "ratio": 1.016
+    },
+    "VAT": {
+      "grid": 0,
+      "sheet": 800,
+      "ratio": 0
+    },
+    "PSE": {
+      "grid": 4014061,
+      "sheet": 5413600,
+      "ratio": 0.741
+    },
+    "TWN": {
+      "grid": 23925046,
+      "sheet": 23400000,
+      "ratio": 1.022
+    },
+    "XKX": {
+      "grid": 1611842,
+      "sheet": 1590000,
+      "ratio": 1.014
+    },
+    "CYN": {
+      "grid": 375400,
+      "sheet": 390000,
+      "ratio": 0.963
+    },
+    "ABK": {
+      "grid": 325164,
+      "sheet": 245000,
+      "ratio": 1.327
+    },
+    "SOS": {
+      "grid": 60915,
+      "sheet": 55000,
+      "ratio": 1.108
+    },
+    "PMR": {
+      "grid": 335156,
+      "sheet": 360000,
+      "ratio": 0.931
+    },
+    "SOL": {
+      "grid": 4528142,
+      "sheet": 4913680,
+      "ratio": 0.922
+    },
+    "ESH": {
+      "grid": 2700,
+      "sheet": 180000,
+      "ratio": 0.015
+    },
+    "YEH": {
+      "grid": 24063046,
+      "sheet": 29241700,
+      "ratio": 0.823
+    },
+    "LBE": {
+      "grid": 2858302,
+      "sheet": 2759670,
+      "ratio": 1.036
+    },
+    "SDR": {
+      "grid": 16120873,
+      "sheet": 12915500,
+      "ratio": 1.248
+    },
+    "RJV": {
+      "grid": 2836123,
+      "sheet": 4099270,
+      "ratio": 0.692
+    },
+    "M23": {
+      "grid": 7045360,
+      "sheet": 6769950,
+      "ratio": 1.041
+    }
+  },
+  "seconds": 34
+}

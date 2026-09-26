@@ -216,13 +216,15 @@ async function main(): Promise<void> {
       warsAndJoins: run.wars,
       netTilesAt3Years: netTiles,
       contestedTilesAt3Years: end.contested.FRA,
-      // A contested tile counts for half a tile (J5).
+      // A contested tile counts for half a tile (J5); J7b: the land by the
+      // people it holds.
       tileValueUsd: gainedTerritoryValue(
         start,
         end,
         "FRA",
         start.gdp.ESP / start.tiles.ESP,
         config.war.contest.valueShare,
+        "ESP",
       ),
       gdpLossUsd:
         control.series[control.series.length - 1].gdp.FRA - end.gdp.FRA,

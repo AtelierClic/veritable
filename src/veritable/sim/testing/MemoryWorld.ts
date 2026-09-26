@@ -10,6 +10,7 @@ import {
   NavalSnapshot,
   NukeAim,
   NukeOutcome,
+  Occupations,
   TileGrid,
   WorldPort,
 } from "../VeritableSim";
@@ -23,6 +24,7 @@ import {
   segmentFront,
   Terrain,
 } from "../war/geometry";
+import { PeopleInput, PeopleTiles } from "../war/people";
 
 // In-memory WorldPort: a tiled world without the OpenFront core. Used by the
 // simulation and save tests. Every tile is land; terrain is plains unless set;
@@ -32,6 +34,9 @@ export class MemoryWorld implements WorldPort {
   private fallout: boolean[];
   private ledger: ContestLedger;
   private claims: ClaimTiles;
+  // J7b: off unless a test gives the people of the tiles (setPeople).
+  private people: PeopleTiles;
+  private urban = { threshold: Infinity, defense: 1 };
   private terrain: Terrain[];
   private structures = new Map<number, number>(); // tile -> defence multiplier
   private segments = new Map<string, number[][]>(); // front id -> segment tiles
@@ -49,7 +54,40 @@ export class MemoryWorld implements WorldPort {
     this.fallout = new Array(width * height).fill(false);
     this.ledger = new ContestLedger(width * height);
     this.claims = new ClaimTiles(width * height, null);
+    this.people = new PeopleTiles(width * height, null);
     this.terrain = new Array<Terrain>(width * height).fill("plains");
+  }
+
+  // J7b: the people of the tiles (and the capitals and cities); the owners
+  // of now are its first count. Urban tiles, above `threshold` people,
+  // defend `defense` times.
+  setPeople(
+    input: PeopleInput,
+    urban: { threshold: number; defense: number } = this.urban,
+  ): void {
+    this.people = new PeopleTiles(this.owners.length, input);
+    this.people.prime((tile) => this.owners[tile]);
+    this.urban = urban;
+  }
+
+  peopleKnown(): boolean {
+    return this.people.known();
+  }
+
+  peopleHoldings(): ReadonlyMap<NationId, number> {
+    return this.people.holdings();
+  }
+
+  takeOccupations(): Occupations {
+    return this.people.take();
+  }
+
+  // Every change of owner goes through here (the people follow).
+  private changeOwner(tile: number, to: NationId | null): void {
+    const from = this.owners[tile];
+    this.owners[tile] = to;
+    this.ownerChanges++;
+    this.people.ownerChanged(tile, from, to);
   }
 
   // Claims (J6): the regions the test declares, and the owners of the
@@ -91,8 +129,7 @@ export class MemoryWorld implements WorldPort {
   private ownerChanges = 0;
 
   setOwner(tile: number, nation: NationId | null): void {
-    this.owners[tile] = nation;
-    this.ownerChanges++;
+    this.changeOwner(tile, nation);
   }
 
   ownerOf(tile: number): NationId | null {
@@ -182,8 +219,7 @@ export class MemoryWorld implements WorldPort {
             const owner = this.owners[tile];
             if (owner === null) continue;
             hits[owner] = (hits[owner] ?? 0) + 1;
-            this.owners[tile] = null;
-            this.ownerChanges++;
+            this.changeOwner(tile, null);
             this.fallout[tile] = true;
             this.ledger.clear(tile);
           }
@@ -257,12 +293,12 @@ export class MemoryWorld implements WorldPort {
   transferAll(from: NationId, to: NationId | null): number {
     let moved = 0;
     this.ownerChanges++;
-    this.owners = this.owners.map((o, i) => {
-      if (o !== from) return o;
+    this.owners.forEach((o, i) => {
+      if (o !== from) return;
       moved++;
       if (to !== null) this.ledger.mark(i);
       else this.ledger.clear(i);
-      return to;
+      this.changeOwner(i, to);
     });
     return moved;
   }
@@ -311,6 +347,9 @@ export class MemoryWorld implements WorldPort {
     });
     this.ledger.load(grid.tiles, grid.contest);
     this.claims.load(grid.tiles);
+    // A load is no occupation (J7b).
+    this.people.load();
+    this.people.prime((tile) => this.owners[tile]);
     this.ownerChanges++;
     this.segments.clear();
   }
@@ -366,9 +405,11 @@ export class MemoryWorld implements WorldPort {
             let held = 0;
             let bonus = 1;
             let near = 0;
+            let urban = 0;
             for (const tile of s.tiles) {
               if (this.owners[tile] !== n) continue;
               held++;
+              if (this.people.isUrban(tile, this.urban.threshold)) urban++;
               for (const [at, multiplier] of this.structures) {
                 if (this.owners[at] !== n) continue;
                 const dx = Math.abs((at % this.width) - (tile % this.width));
@@ -385,7 +426,11 @@ export class MemoryWorld implements WorldPort {
             for (const [at] of this.structures) {
               if (this.owners[at] === n) near++;
             }
-            defense[n] = held === 0 ? 1 : 1 + (bonus - 1) * (covered / held);
+            defense[n] =
+              held === 0
+                ? 1
+                : (1 + (bonus - 1) * (covered / held)) *
+                  (1 + (this.urban.defense - 1) * (urban / held));
             supply[n] = near;
           }
           return {
@@ -420,8 +465,7 @@ export class MemoryWorld implements WorldPort {
       2,
       tiles,
       (tile) => {
-        this.owners[tile] = winner;
-        this.ownerChanges++;
+        this.changeOwner(tile, winner);
         this.ledger.mark(tile);
         this.fallout[tile] = false;
       },
@@ -447,8 +491,7 @@ export class MemoryWorld implements WorldPort {
     let taken = 0;
     for (let i = 0; i < this.owners.length && taken < radius; i++) {
       if (this.owners[i] !== target) continue;
-      this.owners[i] = attacker;
-      this.ownerChanges++;
+      this.changeOwner(i, attacker);
       this.ledger.mark(i);
       taken++;
     }

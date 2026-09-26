@@ -764,6 +764,12 @@ export class VeritableSimImpl implements VeritableSim {
   }
 
   apply(command: PlayerCommand): void {
+    this.applyCommand(command);
+    // J7b: a command that moved land (a peace, a landing) moved its people.
+    this.applyOccupation();
+  }
+
+  private applyCommand(command: PlayerCommand): void {
     this.assertInitialized();
     const cmd = PlayerCommandSchema.parse(command);
     const date = this.calendar.date;
@@ -1270,7 +1276,88 @@ export class VeritableSimImpl implements VeritableSim {
         this.updateNation(id, now);
       }
     });
-    probe.measure("war", "tick", () => this.resolveFronts(tick));
+    probe.measure("war", "tick", () => {
+      this.resolveFronts(tick);
+      this.applyOccupation();
+    });
+  }
+
+  // J7b: land that changed hands (a front, a landing, an annexation)
+  // carries its share of the people, production, consumption and GDP of the
+  // nation that lost it — the share of the people it held (the population
+  // grid of the scenario) — the occupier getting war.transfer.
+  // productionShare of the production and the GDP; a nation keeps at least
+  // residualShare of its first-day GDP, whatever it loses. In a war, the
+  // people occupied
+  // score (war.warScore.peopleValue a million, contested), and so do a
+  // capital and the three largest cities of a nation. Taken every tick and
+  // after every command: nothing waits in the world when it is saved.
+  private applyOccupation(): void {
+    const world = this.deps.world;
+    if (!world.peopleKnown()) return;
+    const { moves, cities } = world.takeOccupations();
+    if (moves.length === 0 && cities.length === 0) return;
+    const cfg = this.deps.config.war;
+    // The people each nation held before these moves.
+    const held = new Map(world.peopleHoldings());
+    for (const m of moves) {
+      held.set(m.from, (held.get(m.from) ?? 0) + m.people);
+      held.set(m.to, (held.get(m.to) ?? 0) - m.people);
+    }
+    const score = (war: War, nation: NationId, value: number) => {
+      war.score[nation] = (war.score[nation] ?? 0) + value;
+      war.landValue[nation] = (war.landValue[nation] ?? 0) + value;
+    };
+    for (const m of moves) {
+      const before = held.get(m.from) ?? 0;
+      held.set(m.from, before - m.people);
+      held.set(m.to, (held.get(m.to) ?? 0) + m.people);
+      const loser = this.economy.nations[m.from];
+      const winner = this.economy.nations[m.to];
+      if (before <= 0 || loser === undefined || winner === undefined) continue;
+      // What a nation keeps whatever it loses: residualShare of its GDP of
+      // the first day (the sheet) — a floor that does not shrink loss after
+      // loss.
+      const floor =
+        cfg.transfer.residualShare * (this.sheets.get(m.from)?.gdp.value ?? 0);
+      const f = Math.max(
+        0,
+        Math.min(m.people / before, loser.gdp > 0 ? 1 - floor / loser.gdp : 0),
+      );
+      if (f <= 0) continue;
+      const people = f * loser.population;
+      loser.population -= people;
+      winner.population += people;
+      const share = cfg.transfer.productionShare;
+      const gdp = f * loser.gdp;
+      loser.gdp -= gdp;
+      winner.gdp += share * gdp;
+      for (const good of Object.keys(loser.production)) {
+        const made = f * loser.production[good];
+        loser.production[good] -= made;
+        winner.production[good] = (winner.production[good] ?? 0) + share * made;
+        const used = f * loser.consumption[good];
+        loser.consumption[good] -= used;
+        winner.consumption[good] = (winner.consumption[good] ?? 0) + used;
+      }
+      const war = warOf(this.diplomacy, m.from, m.to);
+      if (war !== undefined) {
+        score(
+          war,
+          m.to,
+          (people / 1e6) * cfg.warScore.peopleValue * cfg.contest.valueShare,
+        );
+      }
+    }
+    for (const c of cities) {
+      const war = warOf(this.diplomacy, c.from, c.to);
+      if (war === undefined) continue;
+      score(
+        war,
+        c.to,
+        c.capital ? cfg.warScore.capitalValue : cfg.warScore.cityValue,
+      );
+    }
   }
 
   // The goods take turns (J7): the twelve over tradeCycleDays, one at a

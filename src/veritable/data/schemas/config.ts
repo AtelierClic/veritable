@@ -101,6 +101,8 @@ const BudgetConfigSchema = z.object({
     nominalMax: z.number().min(0),
     realMin: z.number(),
     realMax: z.number(),
+    // J7b: the highest real rate a nation pays, whatever its debt.
+    realCeiling: z.number(),
   }),
   austerity: z.object({
     debtToGdp: positive,
@@ -411,6 +413,27 @@ const WarConfigSchema = z.object({
   warScore: z.object({
     tileValue: z.number().min(0),
     lossValue: z.number().min(0),
+    // J7b, on a map with a population grid: the land taken counts the
+    // people it holds (points per million, as a contested tile a share of
+    // it), a capital and each of the three largest cities of a nation more;
+    // tileValue stays for a world without a grid.
+    peopleValue: z.number().min(0),
+    capitalValue: z.number().min(0),
+    cityValue: z.number().min(0),
+  }),
+  // J7b: land that changes hands carries its share of the people and the
+  // production of the nation that loses it (by the people of its tiles);
+  // the occupier gets productionShare of that production, and a nation
+  // that loses all its land keeps residualShare of its economy.
+  transfer: z.object({
+    productionShare: share,
+    residualShare: share,
+  }),
+  // J7b: a tile with more people than peoplePerTile (on the Europe map;
+  // scaled with the area of a tile) is urban and defends `defense` times.
+  urban: z.object({
+    peoplePerTile: z.number().positive(),
+    defense: z.number().min(1),
   }),
   // Contest of the tiles taken (J5): a contested tile is worth `valueShare`
   // of a tile until a treaty cedes it and `cessionMonths` pass, or

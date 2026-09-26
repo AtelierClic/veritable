@@ -13,6 +13,7 @@ import { MapOverlayResult, SnapshotResult, VeritableRequest } from "./protocol";
 import {
   bindScenario,
   initialWorld,
+  peopleInput,
   playerNationOf,
   ScenarioPack,
   unclaimableMask,
@@ -74,6 +75,7 @@ export class VeritableSession {
         firstDay: pack.borders.tiles,
         nations: pack.borders.nations,
       },
+      peopleInput(pack),
     );
 
     const probe = new PerformanceProbe();
@@ -205,6 +207,12 @@ export class VeritableSession {
         rules: view.intel.rules,
       },
     };
+  }
+
+  // J7b: the people each nation holds on the map (units of the population
+  // grid; empty without one), for the headless reports.
+  peopleHoldings(): ReadonlyMap<string, number> {
+    return this.bridge.peopleHoldings();
   }
 
   perf(): Record<string, DomainTiming> {

@@ -1,0 +1,74 @@
+{
+  "source": "GHS-POP R2023A (epoch 2025, 30 arc-seconds), European Commission, Joint Research Centre; Schiavina M., Freire S., Carioli A., MacManus K. (2023); © European Union 1995-2026, CC BY 4.0; aggregated to the tiles of the map and quantised",
+  "url": "https://jeodpp.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/GHS_POP_GLOBE_R2023A/GHS_POP_E2025_GLOBE_R2023A_4326_30ss/V1-0/GHS_POP_E2025_GLOBE_R2023A_4326_30ss_V1_0.zip",
+  "sha256": "752626a5bbe6f9d0cf79ac33a3cac3572234952b98b5113a4cc01a6bd2d30383",
+  "map": "europe",
+  "steps": 8,
+  "bytes": 1762062,
+  "people": {
+    "grid": 8191988536,
+    "outsideMap": 7153202458,
+    "movedFromSea": 68733875,
+    "lostAtSea": 902853,
+    "onMapQuantised": 1038113385
+  },
+  "densityPerTile": {
+    "plains": 519,
+    "highland": 366,
+    "mountain": 291,
+    "mountainOverPlains": 0.562
+  },
+  "nations": {
+    "FRA": {
+      "grid": 64837622,
+      "sheet": 68720300,
+      "ratio": 0.944
+    },
+    "DEU": {
+      "grid": 83269102,
+      "sheet": 83491200,
+      "ratio": 0.997
+    },
+    "GBR": {
+      "grid": 68210885,
+      "sheet": 69487000,
+      "ratio": 0.982
+    },
+    "ITA": {
+      "grid": 58420539,
+      "sheet": 58915700,
+      "ratio": 0.992
+    },
+    "ESP": {
+      "grid": 45321977,
+      "sheet": 49355100,
+      "ratio": 0.918
+    },
+    "POL": {
+      "grid": 39674949,
+      "sheet": 36435900,
+      "ratio": 1.089
+    },
+    "UKR": {
+      "grid": 30636315,
+      "sheet": 38980400,
+      "ratio": 0.786
+    },
+    "RUS": {
+      "grid": 88677260,
+      "sheet": 143513000,
+      "ratio": 0.618
+    },
+    "TUR": {
+      "grid": 86733934,
+      "sheet": 85878600,
+      "ratio": 1.01
+    },
+    "NOR": {
+      "grid": 5351525,
+      "sheet": 5610870,
+      "ratio": 0.954
+    }
+  },
+  "seconds": 34
+}

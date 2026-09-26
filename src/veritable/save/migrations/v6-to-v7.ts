@@ -43,6 +43,8 @@ import { MigrationContext, MigrationError } from "./index";
 //     them); no war weighed yet (its intent comes with its next review);
 //     its war orders due at its first update; no objective of a
 //     breakthrough, no air strike ordered yet (J7b);
+//   - a war: the land each belligerent took is worth what its tiles scored
+//     (J7b: the score of the land by its people from then on);
 //   - intelligence: no snapshot yet, the restore takes them from the
 //     values of the save (the player's relations from its date on).
 
@@ -135,9 +137,18 @@ export function v6ToV7(
   }
 
   const nextFirst = addMonths(`${date.slice(0, 7)}-01`, 1);
+  // J7b: the land a belligerent took is worth what its tiles scored.
+  const tileScore =
+    context.config.war.warScore.tileValue *
+    context.config.war.contest.valueShare;
   const wars: War[] = save.diplomacy.wars.map((w) => ({
     ...w,
     ledgerOn: (w as Partial<War>).ledgerOn ?? nextFirst,
+    landValue:
+      (w as Partial<War>).landValue ??
+      Object.fromEntries(
+        Object.entries(w.tilesTaken).map(([n, t]) => [n, t * tileScore]),
+      ),
   }));
   const abandon = context.config.diplomacy.claims.abandonAfterFailures;
   const claims: Claim[] = save.diplomacy.claims.map((c) => ({

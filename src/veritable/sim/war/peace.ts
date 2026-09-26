@@ -59,10 +59,8 @@ export function offerCost(
   const cfg = ctx.config.war;
   let cost = 0;
   if (terms.kind === "cession") {
-    cost +=
-      (war.tilesTaken[from] ?? 0) *
-      cfg.warScore.tileValue *
-      cfg.contest.valueShare;
+    // J7b: what the land it took scored (its people, capitals and cities).
+    cost += war.landValue[from] ?? 0;
   } else if (terms.kind === "annexation") {
     cost += cfg.peace.annexationValue;
   }

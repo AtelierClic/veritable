@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { build } from "./build";
 import { buildLeaders, writeLeaders } from "./leaders";
+import { buildPopulation } from "./population";
 import { buildRelations, fetchVoeten } from "./relations";
 import {
   fetchAll,
@@ -48,6 +49,9 @@ import { fetchImfFiscal, fetchWorld } from "./world";
 //       snapshots, the ideology table, parties.json and the hand-written
 //       traits of estimates.json; adds the party names and the fictional
 //       leader names to i18n/fr.json and lists the missing parody names.
+//   npm run veritable:ingest -- population --scenario world-2026
+//       people of every tile of the map (J7) from the GHS-POP grid of the
+//       JRC (archive in the cache, outside git); see population.ts
 
 function option(args: string[], name: string): string {
   const i = args.indexOf(`--${name}`);
@@ -106,6 +110,8 @@ async function main(): Promise<void> {
       return fetchVoeten();
     case "build-relations":
       return buildRelations(scenarioId);
+    case "population":
+      return buildPopulation(scenarioId);
     case "build-leaders": {
       const estimates = JSON.parse(
         fs.readFileSync(
@@ -169,7 +175,7 @@ async function main(): Promise<void> {
     }
     default:
       throw new Error(
-        "usage: veritable:ingest -- fetch|fetch-imf|fetch-wikidata|fetch-wb --key <k>|build|build-leaders --scenario <id>",
+        "usage: veritable:ingest -- fetch|fetch-imf|fetch-wikidata|fetch-wb --key <k>|build|build-leaders|population --scenario <id>",
       );
   }
 }

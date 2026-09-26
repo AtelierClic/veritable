@@ -201,7 +201,14 @@ export function resolveTick(
           );
           if (taken > 0) {
             movedTo = mover.nation;
-            recordTiles(cfg, war, mover.nation, other.nation, taken);
+            recordTiles(
+              cfg,
+              war,
+              mover.nation,
+              other.nation,
+              taken,
+              !world.peopleKnown(),
+            );
           }
         }
       }
@@ -318,14 +325,18 @@ function recordTiles(
   winner: NationId,
   loser: NationId,
   taken: number,
+  // J7b: on a map with a population grid the land scores by its people
+  // (VeritableSimImpl.applyOccupation), not here.
+  scoreTiles: boolean,
 ): void {
   war.tilesTaken[winner] = (war.tilesTaken[winner] ?? 0) + taken;
   war.monthlyTiles[winner] = (war.monthlyTiles[winner] ?? 0) + taken;
   war.monthlyTiles[loser] = (war.monthlyTiles[loser] ?? 0) - taken;
+  if (!scoreTiles) return;
   // Every tile taken is contested: it counts for a share of a tile (J5).
-  war.score[winner] =
-    (war.score[winner] ?? 0) +
-    taken * cfg.warScore.tileValue * cfg.contest.valueShare;
+  const value = taken * cfg.warScore.tileValue * cfg.contest.valueShare;
+  war.score[winner] = (war.score[winner] ?? 0) + value;
+  war.landValue[winner] = (war.landValue[winner] ?? 0) + value;
 }
 
 // `side` loses men and equipment in proportion to the enemy's force.
