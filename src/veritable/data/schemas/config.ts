@@ -576,11 +576,11 @@ const NuclearConfigSchema = z.object({
 // annexation. Resistance: an occupant loses weight x (people of the exiles
 // it holds / its own) of stability, at most cap. A nation at
 // liberatorRelation or more with the exile gives back at the peace the land
-// of it it took from the annexer; an annexer whose stability falls under
-// collapseStability gives it back; negotiation: accepted when the
-// resistance weighs resistanceMin or more and the annexer is at most
-// stabilityMax stable or sanctioned by sanctionedMin of its partners (an AI
-// exile tries with monthlyProbability, every cooldownMonths at most). A
+// of it it took from the annexer; an annexer that collapses (a revolution,
+// a failed state) gives it back; negotiation: accepted when the
+// resistance weighs resistanceMin or more, the annexer is at most
+// stabilityMax stable and sanctioned by sanctionedMin of its partners (an
+// AI exile tries with monthlyProbability, every cooldownMonths at most). A
 // last stand: a nation of fewer than lastStandMaxPopulation people.
 const ExileConfigSchema = z.object({
   erosionPerMonth: share,
@@ -592,7 +592,6 @@ const ExileConfigSchema = z.object({
   annexationRecognized: share,
   resistance: z.object({ weight: z.number().min(0), cap: share }),
   liberatorRelation: z.number(),
-  collapseStability: share,
   negotiation: z.object({
     resistanceMin: share,
     stabilityMax: share,

@@ -1,0 +1,73 @@
+{
+  "id": "fishing-rights-clash",
+  "kind": "template",
+  "title": "event.fishing-rights-clash.title",
+  "text": "event.fishing-rights-clash.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.001,
+    "conditions": [],
+    "cooldownMonths": 72
+  },
+  "params": {
+    "other": "neighbor"
+  },
+  "choices": [
+    {
+      "id": "send-navy",
+      "label": "event.fishing-rights-clash.send-navy",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "consular-talks",
+      "label": "event.fishing-rights-clash.consular-talks",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -3
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    },
+    {
+      "id": "accept-line",
+      "label": "event.fishing-rights-clash.accept-line",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

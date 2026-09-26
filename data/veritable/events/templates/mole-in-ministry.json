@@ -1,0 +1,74 @@
+{
+  "id": "mole-in-ministry",
+  "kind": "template",
+  "title": "event.mole-in-ministry.title",
+  "text": "event.mole-in-ministry.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.002,
+    "conditions": [],
+    "cooldownMonths": 60
+  },
+  "params": {
+    "other": "rival"
+  },
+  "choices": [
+    {
+      "id": "expose-publicly",
+      "label": "event.mole-in-ministry.expose-publicly",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "quiet-prosecution",
+      "label": "event.mole-in-ministry.quiet-prosecution",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -4
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "turn-double-agent",
+      "label": "event.mole-in-ministry.turn-double-agent",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 8
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

@@ -1,0 +1,81 @@
+{
+  "id": "satellite-launch",
+  "kind": "template",
+  "title": "event.satellite-launch.title",
+  "text": "event.satellite-launch.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.001,
+    "conditions": [
+      {
+        "target": "gdpPerCapita",
+        "op": "gt",
+        "value": 10000
+      }
+    ],
+    "cooldownMonths": 72
+  },
+  "choices": [
+    {
+      "id": "expand-program",
+      "label": "event.satellite-launch.expand-program",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "spending.research",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": "commercial-focus",
+      "label": "event.satellite-launch.commercial-focus",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.003,
+          "months": 24
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "symbolic-only",
+      "label": "event.satellite-launch.symbolic-only",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

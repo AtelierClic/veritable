@@ -5,7 +5,7 @@
   "text": "event.regional-climate-disaster.text",
   "scope": "world",
   "trigger": {
-    "monthlyProbability": 0.006,
+    "monthlyProbability": 0.0045,
     "conditions": [],
     "cooldownMonths": 36
   },

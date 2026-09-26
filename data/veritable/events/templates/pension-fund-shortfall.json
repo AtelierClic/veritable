@@ -1,0 +1,85 @@
+{
+  "id": "pension-fund-shortfall",
+  "kind": "template",
+  "title": "event.pension-fund-shortfall.title",
+  "text": "event.pension-fund-shortfall.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      },
+      {
+        "target": "debtToGdp",
+        "op": "gt",
+        "value": 0.9
+      }
+    ],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "guarantee",
+      "label": "event.pension-fund-shortfall.guarantee",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.06
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "reform",
+      "label": "event.pension-fund-shortfall.reform",
+      "effects": [
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.004
+        }
+      ]
+    },
+    {
+      "id": "postpone",
+      "label": "event.pension-fund-shortfall.postpone",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

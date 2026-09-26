@@ -21,9 +21,12 @@ import { relation } from "../diplomacy/diplomacy";
 // to it withdraw first, its supporters last. The exile lives on while
 // R + S >= survivalThreshold; it is dissolved after dissolutionMonths in a
 // row under it, or at once when nations weighing more than
-// `annexationRecognized` of the world's GDP recognize the annexation (its
-// annexer, and the nations that no longer recognize it and are not hostile
-// to the annexer). The nations of the AI go through the same states.
+// `annexationRecognized` of the world's GDP recognize the annexation: its
+// annexer, and the nations that withdrew their recognition of the exile and
+// are not hostile to the annexer — a nation that never recognized it is not
+// counted until it says so (it may be closer to the annexer; it did not
+// recognize an annexation that had not happened). The nations of the AI go
+// through the same states.
 
 export type ExileRules = VeritableConfig["exile"];
 
@@ -74,22 +77,29 @@ export function measureExile(
 ): { recognition: number; support: number; annexation: number } {
   const { gdp, total } = weigh(env, exile);
   const recognizers = new Set(state.recognizers);
+  const withdrawn = new Set(state.withdrawn);
   let r = 0;
   let s = 0;
   let a = 0;
   for (const [n, g] of gdp) {
     if (recognizers.has(n)) r += g;
     if (supporter(env, n, exile, state.annexer)) s += g;
-    if (
-      n === state.annexer ||
-      (!recognizers.has(n) &&
-        state.annexer !== null &&
-        relation(env.diplomacy, n, state.annexer) >= 0)
-    ) {
-      a += g;
-    }
+    if (recognizesAnnexation(env, n, state, withdrawn)) a += g;
   }
   return { recognition: r / total, support: s / total, annexation: a / total };
+}
+
+// The annexer, and a nation that withdrew its recognition of the exile and
+// is not hostile to the annexer.
+function recognizesAnnexation(
+  env: ExileEnv,
+  n: NationId,
+  state: ExileState,
+  withdrawn: ReadonlySet<NationId>,
+): boolean {
+  if (state.annexer === null) return false;
+  if (n === state.annexer) return true;
+  return withdrawn.has(n) && relation(env.diplomacy, n, state.annexer) >= 0;
 }
 
 // A nation goes into exile: who recognizes it at first.
@@ -113,6 +123,7 @@ export function openExile(
     since: env.date,
     annexer,
     recognizers,
+    withdrawn: [],
     recognition: 0,
     support: 0,
     annexation: 0,
@@ -134,7 +145,7 @@ function blocsRecognizing(
 ): number {
   const blocs = env.blocsOf(exile);
   if (blocs.length === 0 || state.annexer === null) return 0;
-  const recognizers = new Set(state.recognizers);
+  const withdrawn = new Set(state.withdrawn);
   let recognizing = 0;
   for (const bloc of blocs) {
     let total = 0;
@@ -143,12 +154,7 @@ function blocsRecognizing(
       if (m === exile) continue;
       const g = Math.max(0, env.economy.nations[m]?.gdp ?? 0);
       total += g;
-      if (
-        m === state.annexer ||
-        (!recognizers.has(m) && relation(env.diplomacy, m, state.annexer) >= 0)
-      ) {
-        annexation += g;
-      }
+      if (recognizesAnnexation(env, m, state, withdrawn)) annexation += g;
     }
     if (total > 0 && annexation / total > 0.5) recognizing++;
   }
@@ -194,6 +200,7 @@ export function stepExile(
   }
   if (withdrawn.size > 0) {
     state.recognizers = state.recognizers.filter((n) => !withdrawn.has(n));
+    state.withdrawn.push(...order.filter((n) => withdrawn.has(n)));
   }
   // Nothing left to erode: the rest waits.
   if (state.recognizers.length === 0) state.erosion = 0;
@@ -226,8 +233,9 @@ export function resistanceMalus(
   );
 }
 
-// Does an annexer give the land back when asked (J7c: the resistance weighs
-// on it, and it is weak or sanctioned)?
+// Does an annexer give the land back when asked (J7c)? The resistance
+// weighs on it, it is weak, and it is isolated (sanctioned by enough of its
+// partners): all three.
 export function acceptsReturn(
   rules: ExileRules,
   resistance: number,
@@ -236,8 +244,8 @@ export function acceptsReturn(
 ): boolean {
   return (
     resistance >= rules.negotiation.resistanceMin &&
-    (stability <= rules.negotiation.stabilityMax ||
-      sanctionedShare >= rules.negotiation.sanctionedMin)
+    stability <= rules.negotiation.stabilityMax &&
+    sanctionedShare >= rules.negotiation.sanctionedMin
   );
 }
 

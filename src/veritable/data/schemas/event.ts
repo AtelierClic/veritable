@@ -25,6 +25,16 @@ const goods = (prefix: string) =>
 //                                                     the first day it lost
 //   gdpPerCapita                                      US$
 //   regime                                            regime id (eq / ne)
+// J7c, the new systems:
+//   contamination        people-weighted contaminated share of its land 0..1
+//   exiled               1 when its government is in exile
+//   recognition          share of the world's GDP that recognizes its
+//                        government in exile (0 when not in exile)
+//   occupation           stability it loses to the resistance of the land
+//                        of exiles it holds 0..0.2
+//   capitalLost          1 when another nation holds its capital
+//   threatened           1 when a nation weighs a war against it (the
+//                        intentions of the AI, what intelligence learns)
 export const EVENT_CONDITION_TARGETS = [
   "stability",
   "opinion",
@@ -42,6 +52,12 @@ export const EVENT_CONDITION_TARGETS = [
   "lostTiles",
   "gdpPerCapita",
   "regime",
+  "contamination",
+  "exiled",
+  "recognition",
+  "occupation",
+  "capitalLost",
+  "threatened",
   ...goods("coverage"),
   ...goods("price"),
 ] as const;
@@ -146,10 +162,21 @@ export const EventSchema = z.object({
   // Templates: how the other nation and the good are drawn. A
   // "tense-neighbor" is a land neighbour with relations at or under
   // events.tenseNeighbourRelations (J6c); without one the event does not
-  // fire.
+  // fire. J7c: a "threat" is a nation that weighs a war against the subject
+  // (its intentions); an "occupier" holds land of the subject's first day
+  // (its annexer when in exile).
   params: z
     .object({
-      other: z.enum(["neighbor", "tense-neighbor", "any", "rival"]).optional(),
+      other: z
+        .enum([
+          "neighbor",
+          "tense-neighbor",
+          "any",
+          "rival",
+          "threat",
+          "occupier",
+        ])
+        .optional(),
       good: z.enum(["any", "energy", "food", "industrial"]).optional(),
     })
     .optional(),

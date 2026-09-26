@@ -553,7 +553,6 @@
     "annexationRecognized": 0.5,
     "resistance": { "weight": 0.5, "cap": 0.2 },
     "liberatorRelation": 40,
-    "collapseStability": 0.15,
     "negotiation": {
       "resistanceMin": 0.02,
       "stabilityMax": 0.45,

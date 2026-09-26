@@ -1,0 +1,88 @@
+{
+  "id": "startup-boom",
+  "kind": "template",
+  "title": "event.startup-boom.title",
+  "text": "event.startup-boom.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.003,
+    "conditions": [
+      {
+        "target": "growth",
+        "op": "gt",
+        "value": 0.025
+      },
+      {
+        "target": "gdpPerCapita",
+        "op": "gt",
+        "value": 20000
+      }
+    ],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "public-fund",
+      "label": "event.startup-boom.public-fund",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.005,
+          "months": 24
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": "tax-breaks",
+      "label": "event.startup-boom.tax-breaks",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.004,
+          "months": 24
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "let-market",
+      "label": "event.startup-boom.let-market",
+      "effects": [
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 24
+        },
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

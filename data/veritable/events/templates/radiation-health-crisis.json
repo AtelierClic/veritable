@@ -1,0 +1,85 @@
+{
+  "id": "radiation-health-crisis",
+  "kind": "template",
+  "title": "event.radiation-health-crisis.title",
+  "text": "event.radiation-health-crisis.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "contamination",
+        "op": "gt",
+        "value": 0.03
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "full-care",
+      "label": "event.radiation-health-crisis.full-care",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.005
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "international-aid",
+      "label": "event.radiation-health-crisis.international-aid",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -8
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "limited-care",
+      "label": "event.radiation-health-crisis.limited-care",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

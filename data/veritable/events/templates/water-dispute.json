@@ -1,0 +1,78 @@
+{
+  "id": "water-dispute",
+  "kind": "template",
+  "title": "event.water-dispute.title",
+  "text": "event.water-dispute.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.001,
+    "conditions": [],
+    "cooldownMonths": 72
+  },
+  "params": {
+    "other": "neighbor"
+  },
+  "choices": [
+    {
+      "id": "denounce-treaty",
+      "label": "event.water-dispute.denounce-treaty",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "seek-arbitration",
+      "label": "event.water-dispute.seek-arbitration",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -8
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -3
+        }
+      ]
+    },
+    {
+      "id": "renegotiate-sharing",
+      "label": "event.water-dispute.renegotiate-sharing",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

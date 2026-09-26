@@ -1,0 +1,85 @@
+{
+  "id": "resistance-sabotage",
+  "kind": "template",
+  "title": "event.resistance-sabotage.title",
+  "text": "event.resistance-sabotage.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "occupation",
+        "op": "gt",
+        "value": 0.01
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "crackdown",
+      "label": "event.resistance-sabotage.crackdown",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "amnesty",
+      "label": "event.resistance-sabotage.amnesty",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "autonomy",
+      "label": "event.resistance-sabotage.autonomy",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

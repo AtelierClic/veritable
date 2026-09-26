@@ -385,6 +385,57 @@ describe("events", () => {
     expect(calm.sim.read().events.history).toEqual([]);
   });
 
+  it("the conditions of the new systems (J7c): a threat its intelligence detects, a contaminated land", () => {
+    const { sim, months } = campaign({
+      autopilot: true,
+      events: [
+        event({
+          id: "intelligence-war-warning",
+          kind: "template",
+          trigger: {
+            monthlyProbability: 1,
+            conditions: [{ target: "threatened", op: "eq", value: 1 }],
+            cooldownMonths: 100,
+          },
+          params: { other: "threat" },
+        }),
+        event({
+          id: "contaminated-food-scare",
+          kind: "template",
+          trigger: {
+            monthlyProbability: 1,
+            conditions: [{ target: "contamination", op: "gt", value: 0.05 }],
+            cooldownMonths: 100,
+          },
+        }),
+      ],
+    });
+    const internals = sim as unknown as {
+      ai: { nations: Record<string, { intent: unknown }> };
+      economy: { nations: Record<string, { contamination: number }> };
+    };
+    // BBB's AI weighs a war against AAA (its reviews would forget it: the
+    // test holds it), CCC's land is contaminated.
+    for (let day = 0; day < 31; day++) {
+      internals.ai.nations.BBB.intent = {
+        target: "AAA",
+        casusBelli: "none",
+        ratio: 2,
+        date: "2026-01-01",
+      };
+      internals.economy.nations.CCC.contamination = 0.2;
+      sim.advance(DAY);
+    }
+    months(1);
+    const history = sim.read().events.history;
+    const warning = history.filter(
+      (h) => h.event === "intelligence-war-warning",
+    );
+    expect(warning.map((h) => [h.nation, h.other])).toEqual([["AAA", "BBB"]]);
+    const scare = history.filter((h) => h.event === "contaminated-food-scare");
+    expect(scare.map((h) => h.nation)).toEqual(["CCC"]);
+  });
+
   it("a world event happens once and moves the world's supply", () => {
     const { sim, months } = campaign({
       autopilot: true,

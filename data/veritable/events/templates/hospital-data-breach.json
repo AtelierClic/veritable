@@ -1,0 +1,80 @@
+{
+  "id": "hospital-data-breach",
+  "kind": "template",
+  "title": "event.hospital-data-breach.title",
+  "text": "event.hospital-data-breach.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.001,
+    "conditions": [],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "pay-ransom",
+      "label": "event.hospital-data-breach.pay-ransom",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "refuse-and-restore",
+      "label": "event.hospital-data-breach.refuse-and-restore",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "cyber-plan",
+      "label": "event.hospital-data-breach.cyber-plan",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "spending.research",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.01
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

@@ -1,0 +1,80 @@
+{
+  "id": "teachers-strike",
+  "kind": "template",
+  "title": "event.teachers-strike.title",
+  "text": "event.teachers-strike.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.003,
+    "conditions": [
+      {
+        "target": "deficitToGdp",
+        "op": "gt",
+        "value": 0.02
+      }
+    ],
+    "cooldownMonths": 48
+  },
+  "choices": [
+    {
+      "id": "withdraw-cuts",
+      "label": "event.teachers-strike.withdraw-cuts",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "partial-compromise",
+      "label": "event.teachers-strike.partial-compromise",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.0015
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "hold-budget",
+      "label": "event.teachers-strike.hold-budget",
+      "effects": [
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

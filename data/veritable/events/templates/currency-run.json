@@ -1,0 +1,92 @@
+{
+  "id": "currency-run",
+  "kind": "template",
+  "title": "event.currency-run.title",
+  "text": "event.currency-run.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.006,
+    "conditions": [
+      {
+        "target": "debtToGdp",
+        "op": "gt",
+        "value": 1
+      },
+      {
+        "target": "deficitToGdp",
+        "op": "gt",
+        "value": 0.05
+      }
+    ],
+    "cooldownMonths": 48
+  },
+  "choices": [
+    {
+      "id": "capital-controls",
+      "label": "event.currency-run.capital-controls",
+      "effects": [
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.003,
+          "months": 12
+        }
+      ]
+    },
+    {
+      "id": "raise-rates",
+      "label": "event.currency-run.raise-rates",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.004,
+          "months": 12
+        },
+        {
+          "target": "group.retirees",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "let-devalue",
+      "label": "event.currency-run.let-devalue",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.98
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

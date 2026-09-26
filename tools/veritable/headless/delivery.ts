@@ -107,6 +107,47 @@ async function runAll(
   );
 }
 
+// J7c: the events of the campaigns — their mean, a nation and a year, the
+// share of the busiest day of the month, the share of the most frequent
+// event (a template beyond 10 % is noise).
+function eventStats(
+  campaigns: {
+    delivery: CampaignResult["delivery"];
+    nations?: number;
+    years?: number;
+  }[],
+  n: number,
+): Record<string, unknown> {
+  const journaled = campaigns.reduce(
+    (s, c) => s + c.delivery.eventsOccurred,
+    0,
+  );
+  const total = campaigns.reduce(
+    (s, c) => s + (c.delivery.eventInstances ?? 0),
+    0,
+  );
+  const days = new Array<number>(31).fill(0);
+  const ids: Record<string, number> = {};
+  for (const c of campaigns) {
+    (c.delivery.eventDays ?? []).forEach((v, i) => (days[i] += v));
+    for (const [id, v] of Object.entries(c.delivery.eventIds ?? {})) {
+      ids[id] = (ids[id] ?? 0) + v;
+    }
+  }
+  const top = Object.entries(ids).sort((a, b) => b[1] - a[1]);
+  const busiest = days.indexOf(Math.max(...days));
+  return {
+    mean: journaled / Math.max(1, n),
+    instancesMean: total / Math.max(1, n),
+    busiestDay: busiest + 1,
+    busiestDayShare: total > 0 ? days[busiest] / total : 0,
+    topEvents: top
+      .slice(0, 8)
+      .map(([id, v]) => ({ id, share: total > 0 ? v / total : 0 })),
+    templates: top.length,
+  };
+}
+
 // J7b: a nation that lost this share of its first-day people to an occupier
 // is not stable in the sense of the default criterion.
 const OCCUPIED_UNSTABLE = 0.25;
@@ -332,11 +373,27 @@ export function aggregate(campaigns: Campaign[]) {
       inStableNations: unstableDefaults,
     },
     technology: tier1,
-    events: {
-      mean:
-        campaigns.reduce((s, c) => s + c.delivery.eventsOccurred, 0) /
-        Math.max(1, n),
-    },
+    events: eventStats(campaigns, n),
+    // J7c: annexations, exiles, returns and dissolutions, in all.
+    exileList: campaigns.flatMap((c, i) =>
+      ((c.delivery.exile as { list?: string[] } | undefined)?.list ?? []).map(
+        (x) => `#${i + 1} ${x}`,
+      ),
+    ),
+    exile: ["annexations", "exiles", "returns", "dissolutions"].reduce(
+      (out, k) => ({
+        ...out,
+        [k]: campaigns.reduce(
+          (s, c) =>
+            s +
+            ((
+              c.delivery.exile as unknown as Record<string, number> | undefined
+            )?.[k] ?? 0),
+          0,
+        ),
+      }),
+      {} as Record<string, number>,
+    ),
     blocs: {
       decisionsMean:
         campaigns.reduce((s, c) => s + c.delivery.blocDecisions, 0) /
@@ -385,12 +442,16 @@ function worldMetrics(campaigns: Campaign[]) {
   // it is listed, never taken for a debt above 100 %.
   const fixed = (x: number | null) =>
     typeof x === "number" && Number.isFinite(x) ? x.toFixed(2) : "NaN";
+  // J7c: as for the stable nations of the J5 since the J7b, a nation that
+  // lost a quarter of its first-day people to an occupier is not taken for
+  // a sound one.
   const otherDefaults = defaults
     .filter(
       (d) =>
         !(
           (typeof d.debtToGdp === "number" && d.debtToGdp > 1) ||
-          d.stability < 0.4
+          d.stability < 0.4 ||
+          (d.occupied ?? 0) >= OCCUPIED_UNSTABLE
         ),
     )
     .map(

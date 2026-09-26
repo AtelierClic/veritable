@@ -219,6 +219,26 @@ export class HeadlessBrowser {
     }
   }
 
+  // J7c: a click of the right button (the card of a nation), and a key
+  // pressed and released (the modes of the map: its code, e.g. "KeyN").
+  async rightClick(x: number, y: number): Promise<void> {
+    for (const type of ["mouseMoved", "mousePressed", "mouseReleased"]) {
+      await this.send("Input.dispatchMouseEvent", {
+        type,
+        x,
+        y,
+        button: "right",
+        clickCount: type === "mouseMoved" ? 0 : 1,
+      });
+    }
+  }
+
+  async key(code: string, key: string): Promise<void> {
+    for (const type of ["keyDown", "keyUp"]) {
+      await this.send("Input.dispatchKeyEvent", { type, code, key });
+    }
+  }
+
   // Gives a file input of the page a file from the disk.
   async setFile(selector: string, file: string): Promise<void> {
     const { root } = (await this.send("DOM.getDocument", { depth: -1 })) as {

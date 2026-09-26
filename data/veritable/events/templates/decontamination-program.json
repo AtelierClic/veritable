@@ -1,0 +1,92 @@
+{
+  "id": "decontamination-program",
+  "kind": "template",
+  "title": "event.decontamination-program.title",
+  "text": "event.decontamination-program.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "contamination",
+        "op": "gt",
+        "value": 0.01
+      },
+      {
+        "target": "atWar",
+        "op": "eq",
+        "value": 0
+      }
+    ],
+    "cooldownMonths": 48
+  },
+  "choices": [
+    {
+      "id": "full-program",
+      "label": "event.decontamination-program.full-program",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.006
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.004,
+          "months": 24
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    },
+    {
+      "id": "phased-program",
+      "label": "event.decontamination-program.phased-program",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": 0.002,
+          "months": 12
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "minimal-program",
+      "label": "event.decontamination-program.minimal-program",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

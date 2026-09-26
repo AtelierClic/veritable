@@ -1,0 +1,79 @@
+{
+  "id": "exile-recognition-wavering",
+  "kind": "template",
+  "title": "event.exile-recognition-wavering.title",
+  "text": "event.exile-recognition-wavering.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.04,
+    "conditions": [
+      {
+        "target": "exiled",
+        "op": "eq",
+        "value": 1
+      },
+      {
+        "target": "recognition",
+        "op": "lt",
+        "value": 0.7
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "params": {
+    "other": "occupier"
+  },
+  "choices": [
+    {
+      "id": "targeted-offensive",
+      "label": "event.exile-recognition-wavering.targeted-offensive",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "denounce",
+      "label": "event.exile-recognition-wavering.denounce",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -10
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 2,
+          "uncertain": true
+        }
+      ]
+    },
+    {
+      "id": "accept",
+      "label": "event.exile-recognition-wavering.accept",
+      "effects": [
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -3
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.04
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

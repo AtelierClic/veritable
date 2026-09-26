@@ -8,6 +8,7 @@ import {
   EconomyState,
   MilitaryState,
   PoliticsState,
+  ScheduleState,
 } from "../data/schemas/save";
 import { relation, setRelation } from "../sim/diplomacy/diplomacy";
 import { MemoryWorld } from "../sim/testing/MemoryWorld";
@@ -38,13 +39,14 @@ function campaign(
   config: VeritableConfig = quietConfig(),
   ids = ["AAA", "BBB", "CCC", "DDD"],
   blocs: Bloc[] = [],
+  world = new MemoryWorld(4, 4),
 ) {
   const sheets = new Map<string, NationData>(
     ids.map((id) => [id, testNation(id, options[id] ?? {})]),
   );
   const sim = new VeritableSimImpl({
     config,
-    world: new MemoryWorld(4, 4),
+    world,
     data: testSimData(ids, { landNeighbours: [["BBB", "CCC"]], blocs }),
     nationData: (id) => sheets.get(id),
   });
@@ -156,6 +158,50 @@ describe("war declarations of the AI", () => {
       casusBelli: null,
     });
     expect(sim.read().journal.map((j) => j.kind)).toContain("war-declared");
+  });
+
+  it("its divisions stand on the new front within days of its declaration, not a month later (J7c)", () => {
+    // BBB and CCC side by side, ten columns each.
+    const world = new MemoryWorld(20, 10);
+    for (let tile = 0; tile < 200; tile++) {
+      world.setOwner(tile, tile % 20 < 10 ? "BBB" : "CCC");
+    }
+    const { sim, internals, config } = campaign(
+      {
+        BBB: {
+          activePersonnel: 1_000_000,
+          aiAgenda: [
+            { goal: "regional-influence", weight: 0.8 },
+            { goal: "growth", weight: 0.2 },
+          ],
+          tradeOpenness: 0.05,
+        },
+        CCC: { activePersonnel: 50_000 },
+      },
+      strong(),
+      undefined,
+      undefined,
+      world,
+    );
+    internals.politics.nations.BBB.leader.traits.aggressiveness = 0.95;
+    setRelation(internals.diplomacy, "BBB", "CCC", -30);
+    // A war elsewhere: the fronts of the day are read every day.
+    sim.apply({ type: "declare-war", target: "DDD", casusBelli: "none" });
+    // Its first review at noon, the fronts of the day long read.
+    (sim as unknown as { schedule: ScheduleState }).schedule.nations.BBB.next =
+      DAY + DAY / 2;
+    // Tick by tick, as on the core: the fronts of the day are read in its
+    // first tick, the nations are updated over the others.
+    const tick = config.time.gameMinutesPerTick;
+    const atWar = () =>
+      sim.read().diplomacy.wars.some((w) => w.aggressors.includes("BBB"));
+    for (let t = 0; t < 45 * 20 && !atWar(); t++) sim.advance(tick);
+    expect(atWar()).toBe(true);
+    for (let t = 0; t < 2 * 20; t++) sim.advance(tick);
+    expect(sim.read().fronts.map((f) => f.id)).toContain("BBB|CCC");
+    const divisions = sim.read().military.nations.BBB.divisions;
+    expect(divisions.length).toBeGreaterThan(0);
+    expect(divisions.every((d) => d.front === "BBB|CCC")).toBe(true);
   });
 
   it("no war on a nation it is on better terms with than -10 (J5)", () => {

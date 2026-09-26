@@ -5,7 +5,7 @@
   "text": "event.ministry-corruption-scandal.text",
   "scope": "nation",
   "trigger": {
-    "monthlyProbability": 0.006,
+    "monthlyProbability": 0.0045,
     "conditions": [],
     "cooldownMonths": 36
   },

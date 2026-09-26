@@ -5,7 +5,7 @@
   "text": "event.terror-attack.text",
   "scope": "nation",
   "trigger": {
-    "monthlyProbability": 0.002,
+    "monthlyProbability": 0.0015,
     "conditions": [],
     "cooldownMonths": 36
   },

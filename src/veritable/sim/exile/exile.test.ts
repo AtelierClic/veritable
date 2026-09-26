@@ -70,8 +70,9 @@ describe("a government in exile", () => {
     expect(state.recognizers).toEqual(["FRD", "NEU"]);
     expect(state.recognition).toBeCloseTo(0.6, 12);
     expect(state.support).toBeCloseTo(0.2, 12);
-    // The annexer and PAL (not hostile to it) recognize the annexation.
-    expect(state.annexation).toBeCloseTo(0.4, 12);
+    // Only the annexer recognizes the annexation on the first day: PAL has
+    // not said so (a nation counts once it withdraws its recognition).
+    expect(state.annexation).toBeCloseTo(0.3, 12);
   });
 
   it("erodes by 0.02 x (1 - S) a month, the least attached first, and lives while R + S >= 0.6", () => {
@@ -128,30 +129,33 @@ describe("a government in exile", () => {
   });
 
   it("erodes faster when the blocs it belonged to recognize the annexation", () => {
+    // B, the least attached (and not hostile to the annexer), withdraws
+    // first; then the club (ANX and B: all its other members) recognizes
+    // the annexation, and the exile erodes twice as fast: A goes within two
+    // years, only B without the club.
     const relations: [string, string, number][] = [
       ["A", "EXL", 20],
       ["B", "EXL", 20],
       ["C", "EXL", 20],
-      ["A", "ANX", 30],
-      ["B", "ANX", -10],
+      ["A", "ANX", -10],
+      ["B", "ANX", 10],
       ["C", "ANX", -10],
     ];
     const gdp = { EXL: 1, ANX: 10, A: 40, B: 25, C: 25 };
     const alone = world(gdp, relations);
-    const inBloc = world(gdp, relations, { club: ["EXL", "ANX", "A"] });
+    const inBloc = world(gdp, relations, { club: ["EXL", "ANX", "B"] });
     const s1 = openExile(alone, "EXL", "ANX");
     const s2 = openExile(inBloc, "EXL", "ANX");
-    // A, closer to the annexer, never recognized it; the club (ANX and A:
-    // all its other members) recognizes the annexation from the start, and
-    // the exile erodes twice as fast: B and C gone within 13 months, only B
-    // alone.
-    for (let m = 0; m < 15; m++) {
+    for (let m = 0; m < 24; m++) {
       stepExile(alone, "EXL", s1, 1);
       stepExile(inBloc, "EXL", s2, 1);
     }
-    expect(s1.recognition).toBeCloseTo(0.25, 12);
-    expect(s2.recognition).toBe(0);
-    expect(measureExile(inBloc, "EXL", s2).annexation).toBeGreaterThan(0.4);
+    expect(s1.withdrawn).toEqual(["B"]);
+    expect(s2.withdrawn).toEqual(["B", "A"]);
+    expect(s1.recognition).toBeCloseTo(0.65, 12);
+    expect(s2.recognition).toBeCloseTo(0.25, 12);
+    // A withdrew but is hostile to the annexer: it does not recognize it.
+    expect(measureExile(inBloc, "EXL", s2).annexation).toBeCloseTo(0.35, 12);
   });
 
   it("nobody holds its land: no annexation, nothing erodes", () => {
@@ -173,11 +177,11 @@ describe("resistance and negotiation", () => {
     expect(resistanceMalus(RULES, 100, 100)).toBe(RULES.resistance.cap);
   });
 
-  it("the annexer gives the land back when the resistance weighs on it and it is weak or sanctioned", () => {
+  it("the annexer gives the land back when the resistance weighs on it, it is weak and it is sanctioned", () => {
     const heavy = RULES.negotiation.resistanceMin;
-    expect(acceptsReturn(RULES, heavy, 0.3, 0)).toBe(true);
-    expect(acceptsReturn(RULES, heavy, 0.8, 0.5)).toBe(true);
-    expect(acceptsReturn(RULES, heavy, 0.8, 0)).toBe(false);
+    expect(acceptsReturn(RULES, heavy, 0.3, 0.5)).toBe(true);
+    expect(acceptsReturn(RULES, heavy, 0.3, 0)).toBe(false);
+    expect(acceptsReturn(RULES, heavy, 0.8, 0.5)).toBe(false);
     expect(acceptsReturn(RULES, heavy / 2, 0.1, 1)).toBe(false);
   });
 });

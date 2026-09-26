@@ -1,0 +1,73 @@
+{
+  "id": "intelligence-war-warning",
+  "kind": "template",
+  "title": "event.intelligence-war-warning.title",
+  "text": "event.intelligence-war-warning.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "threatened",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "params": {
+    "other": "threat"
+  },
+  "choices": [
+    {
+      "id": "go-public",
+      "label": "event.intelligence-war-warning.go-public",
+      "effects": [
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -12
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "reinforce-quietly",
+      "label": "event.intelligence-war-warning.reinforce-quietly",
+      "effects": [
+        {
+          "target": "spending.defense",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        }
+      ]
+    },
+    {
+      "id": "warn-allies",
+      "label": "event.intelligence-war-warning.warn-allies",
+      "effects": [
+        {
+          "target": "relations.neighbors",
+          "op": "add",
+          "value": 5
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -6
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

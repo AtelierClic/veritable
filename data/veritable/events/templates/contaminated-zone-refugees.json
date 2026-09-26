@@ -1,0 +1,75 @@
+{
+  "id": "contaminated-zone-refugees",
+  "kind": "template",
+  "title": "event.contaminated-zone-refugees.title",
+  "text": "event.contaminated-zone-refugees.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "contamination",
+        "op": "gt",
+        "value": 0.01
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "resettle",
+      "label": "event.contaminated-zone-refugees.resettle",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "temporary-camps",
+      "label": "event.contaminated-zone-refugees.temporary-camps",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "leave-it",
+      "label": "event.contaminated-zone-refugees.leave-it",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.04
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.03
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

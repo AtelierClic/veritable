@@ -1,0 +1,80 @@
+{
+  "id": "foreign-election-interference",
+  "kind": "template",
+  "title": "event.foreign-election-interference.title",
+  "text": "event.foreign-election-interference.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.002,
+    "conditions": [
+      {
+        "target": "democratic",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "cooldownMonths": 60
+  },
+  "params": {
+    "other": "rival"
+  },
+  "choices": [
+    {
+      "id": "denounce-publicly",
+      "label": "event.foreign-election-interference.denounce-publicly",
+      "effects": [
+        {
+          "target": "grievance.other",
+          "op": "set",
+          "value": 1,
+          "months": 12
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -15
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "reinforce-moderation",
+      "label": "event.foreign-election-interference.reinforce-moderation",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "downplay",
+      "label": "event.foreign-election-interference.downplay",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.05,
+          "uncertain": true
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

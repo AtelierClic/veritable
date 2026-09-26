@@ -2635,11 +2635,7 @@ export class VeritableScreens extends LitElement {
                 relation: rules.liberatorRelation,
               })}
             </div>
-            <div>
-              ${vt("screen.exile.way-collapse", {
-                stability: pct0(rules.collapseStability),
-              })}
-            </div>
+            <div>${vt("screen.exile.way-collapse")}</div>
             <div>
               ${vt("screen.exile.way-negotiation", {
                 resistance: pct0(rules.negotiation.resistanceMin),

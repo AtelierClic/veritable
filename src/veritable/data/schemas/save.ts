@@ -651,8 +651,10 @@ export const ExileStateSchema = z.object({
   // Who took its land (the nation that held most of its homeland when it
   // lost its last tile).
   annexer: NationIdSchema.nullable(),
-  // Nations that recognize the government in exile, sorted.
+  // Nations that recognize the government in exile, sorted; those that
+  // withdrew their recognition since, in order.
   recognizers: z.array(NationIdSchema),
+  withdrawn: z.array(NationIdSchema),
   // Shares of the world's GDP: that recognizes it (R), that supports it
   // (S), that recognizes the annexation.
   recognition: zb.float(),

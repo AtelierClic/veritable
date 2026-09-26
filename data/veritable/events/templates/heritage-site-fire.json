@@ -1,0 +1,75 @@
+{
+  "id": "heritage-site-fire",
+  "kind": "template",
+  "title": "event.heritage-site-fire.title",
+  "text": "event.heritage-site-fire.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.001,
+    "conditions": [],
+    "cooldownMonths": 72
+  },
+  "choices": [
+    {
+      "id": "faithful-rebuild",
+      "label": "event.heritage-site-fire.faithful-rebuild",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "call-for-donations",
+      "label": "event.heritage-site-fire.call-for-donations",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "modern-rebuild",
+      "label": "event.heritage-site-fire.modern-rebuild",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03,
+          "uncertain": true
+        },
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -5
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

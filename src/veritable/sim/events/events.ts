@@ -59,6 +59,17 @@ export interface EventsEnv {
   // The nations and their index, cached by the caller (J7).
   known?: ReadonlySet<NationId>;
   nationIndex?: ReadonlyMap<NationId, number>;
+  // J7c: what the new systems tell the conditions and the parameters of
+  // their events (absent: nothing of them).
+  systems?: {
+    capitalHeld: (nation: NationId) => boolean;
+    occupation: (nation: NationId) => number;
+    // The nation that weighs a war against `nation` (its AI's intent).
+    threat: (nation: NationId) => NationId | null;
+    // The nation that holds most of the first-day land of `nation`.
+    occupier: (nation: NationId) => NationId | null;
+    recognition: (nation: NationId) => number;
+  };
 }
 
 export type EventsEvent =
@@ -149,6 +160,23 @@ export function conditionValue(
       return p.regime;
     case "bloc":
       return ctx.blocsOf(nation).includes(tail) ? 1 : 0;
+    // J7c.
+    case "contamination":
+      return e.contamination;
+    case "exiled":
+      return env.nations.find((n) => n.id === nation)?.status === "exiled"
+        ? 1
+        : 0;
+    case "recognition":
+      return env.systems?.recognition(nation) ?? 0;
+    case "occupation":
+      return env.systems?.occupation(nation) ?? 0;
+    case "capitalLost":
+      return env.systems === undefined || env.systems.capitalHeld(nation)
+        ? 0
+        : 1;
+    case "threatened":
+      return (env.systems?.threat(nation) ?? null) === null ? 0 : 1;
   }
   throw new Error(`unknown event condition ${target}`);
 }
@@ -176,8 +204,11 @@ function holds(env: EventsEnv, nation: NationId, c: EventCondition): boolean {
 function otherOf(
   env: EventsEnv,
   nation: NationId,
-  kind: "neighbor" | "tense-neighbor" | "any" | "rival",
+  kind: "neighbor" | "tense-neighbor" | "any" | "rival" | "threat" | "occupier",
 ): NationId | null {
+  // J7c.
+  if (kind === "threat") return env.systems?.threat(nation) ?? null;
+  if (kind === "occupier") return env.systems?.occupier(nation) ?? null;
   const others = env.ctx.nationIds.filter((n) => n !== nation);
   if (kind === "rival") {
     let worst: NationId | null = null;
@@ -764,7 +795,11 @@ export function stepEventsDraws(
   const day = Number(date.slice(8, 10));
   const inSlot = (subject: string) =>
     (subject === "world" ? 0 : (index.get(subject) ?? 0)) % slots === slot;
-  const everyone = ctx.nationIds.filter(inSlot);
+  // J7c: a dissolved state has no events.
+  const dissolved = new Set(
+    env.nations.filter((n) => n.status === "dissolved").map((n) => n.id),
+  );
+  const everyone = ctx.nationIds.filter((n) => inSlot(n) && !dissolved.has(n));
   for (const event of ctx.events) {
     const t = event.trigger;
     if (

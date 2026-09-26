@@ -1,0 +1,76 @@
+{
+  "id": "exile-diaspora-support",
+  "kind": "template",
+  "title": "event.exile-diaspora-support.title",
+  "text": "event.exile-diaspora-support.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.03,
+    "conditions": [
+      {
+        "target": "exiled",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "cooldownMonths": 24
+  },
+  "choices": [
+    {
+      "id": "fund-administration",
+      "label": "event.exile-diaspora-support.fund-administration",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.003
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "fund-resistance",
+      "label": "event.exile-diaspora-support.fund-resistance",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "divert-funds",
+      "label": "event.exile-diaspora-support.divert-funds",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.006
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.06,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

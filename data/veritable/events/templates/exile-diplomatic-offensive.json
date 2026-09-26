@@ -1,0 +1,73 @@
+{
+  "id": "exile-diplomatic-offensive",
+  "kind": "template",
+  "title": "event.exile-diplomatic-offensive.title",
+  "text": "event.exile-diplomatic-offensive.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.04,
+    "conditions": [
+      {
+        "target": "exiled",
+        "op": "eq",
+        "value": 1
+      }
+    ],
+    "cooldownMonths": 18
+  },
+  "params": {
+    "other": "occupier"
+  },
+  "choices": [
+    {
+      "id": "full-tour",
+      "label": "event.exile-diplomatic-offensive.full-tour",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": "targeted-visits",
+      "label": "event.exile-diplomatic-offensive.targeted-visits",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "save-funds",
+      "label": "event.exile-diplomatic-offensive.save-funds",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": 0.002
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -4
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

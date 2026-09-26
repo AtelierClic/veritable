@@ -1,0 +1,75 @@
+{
+  "id": "occupation-general-strike",
+  "kind": "template",
+  "title": "event.occupation-general-strike.title",
+  "text": "event.occupation-general-strike.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "occupation",
+        "op": "gt",
+        "value": 0.03
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "forced-requisition",
+      "label": "event.occupation-general-strike.forced-requisition",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "relations.all",
+          "op": "add",
+          "value": -5
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "negotiate",
+      "label": "event.occupation-general-strike.negotiate",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.003
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "let-it-run",
+      "label": "event.occupation-general-strike.let-it-run",
+      "effects": [
+        {
+          "target": "gdp",
+          "op": "mul",
+          "value": 0.992
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.06
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

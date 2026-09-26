@@ -1,0 +1,75 @@
+{
+  "id": "farmers-protest",
+  "kind": "template",
+  "title": "event.farmers-protest.title",
+  "text": "event.farmers-protest.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.006,
+    "conditions": [
+      {
+        "target": "price.food",
+        "op": "lt",
+        "value": 0.95
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "choices": [
+    {
+      "id": "price-floor",
+      "label": "event.farmers-protest.price-floor",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.08
+        },
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "one-off-aid",
+      "label": "event.farmers-protest.one-off-aid",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "let-market",
+      "label": "event.farmers-protest.let-market",
+      "effects": [
+        {
+          "target": "group.farmers",
+          "op": "add",
+          "value": -0.1
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

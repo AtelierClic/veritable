@@ -159,7 +159,12 @@ export function simDriver(
     advanceDay: () => sim.advance(MINUTES_PER_GAME_DAY),
     perf: () => probe.byDomain,
     snapshot: () => encodeSave(sim.snapshot()),
+    sim,
   };
+}
+
+interface EventHistory {
+  events?: { history: { id: number; event: string; date: string }[] };
 }
 
 export interface CampaignOptions {
@@ -245,6 +250,20 @@ export interface DeliveryMetrics {
   tier1ShareIn2035: Record<string, number>;
   techCompleted: number;
   eventsOccurred: number;
+  // J7c: the events by day of the month (1 to 31) and by event: every
+  // instance, the AI's templates included (the simulation's history).
+  eventDays: number[];
+  eventIds: Record<string, number>;
+  eventInstances: number;
+  // J7c: annexations, exiles, returns from exile and dissolutions.
+  exile: {
+    annexations: number;
+    exiles: number;
+    returns: number;
+    dissolutions: number;
+    // "NATION:state@date", in order.
+    list: string[];
+  };
   blocDecisions: number;
   // J6c (world criteria): the regime a successful coup overthrew, the
   // debt and stability of a nation that defaulted (both as sampled at the
@@ -427,6 +446,16 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     tier1ShareIn2035: {},
     techCompleted: 0,
     eventsOccurred: 0,
+    eventDays: new Array<number>(31).fill(0),
+    eventIds: {},
+    eventInstances: 0,
+    exile: {
+      annexations: 0,
+      exiles: 0,
+      returns: 0,
+      dissolutions: 0,
+      list: [],
+    },
     blocDecisions: 0,
     coups: [],
     defaults: [],
@@ -489,15 +518,28 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     }
     if (event.type === "sovereign-default") {
       const first = series[0]?.people[event.nation] ?? 0;
+      // J7c: the people and the debt of the day of the default, not only
+      // those of the sample of the month: a nation overrun within weeks
+      // defaults on the day it loses its last land, when its sample still
+      // shows it whole. The debt read after the default is the debt after
+      // the haircut; the stability stays the sample's (the default takes
+      // its toll at once).
+      const view = driver.read();
+      const economy = view.economies[event.nation];
+      const held =
+        driver.peopleHeld?.().get(event.nation) ??
+        last.people[event.nation] ??
+        0;
+      const debtNow =
+        economy !== undefined && economy.gdp > 0
+          ? economy.debt / economy.gdp / (1 - config.budget.default.haircut)
+          : 0;
       delivery.defaults.push({
         nation: event.nation,
         date: event.date,
-        debtToGdp: last.debtToGdp[event.nation] ?? 0,
+        debtToGdp: Math.max(last.debtToGdp[event.nation] ?? 0, debtNow),
         stability: last.stability[event.nation] ?? 0,
-        occupied:
-          first > 0
-            ? Math.max(0, 1 - (last.people[event.nation] ?? 0) / first)
-            : 0,
+        occupied: first > 0 ? Math.max(0, 1 - held / first) : 0,
       });
     }
     if (event.type === "nuclear-launch" && "params" in event) {
@@ -509,6 +551,20 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       });
     }
     if (event.type === "tech-completed") delivery.techCompleted += 1;
+    if (event.type === "annexation") {
+      delivery.exile.annexations += 1;
+      delivery.exile.list.push(`${event.nation}:annexed@${event.date}`);
+    }
+    if (event.type === "exile-returned") {
+      delivery.exile.returns += 1;
+      const way = "params" in event ? event.params.way : "";
+      delivery.exile.list.push(`${event.nation}:returned-${way}@${event.date}`);
+    }
+    if (event.type === "nation-status-changed") {
+      if (event.to === "exiled") delivery.exile.exiles += 1;
+      if (event.to === "dissolved") delivery.exile.dissolutions += 1;
+      delivery.exile.list.push(`${event.nation}:${event.to}@${event.date}`);
+    }
     if (event.type === "event-occurred") delivery.eventsOccurred += 1;
     if (event.type === "bloc-decision") delivery.blocDecisions += 1;
     if ("nation" in event && event.nation in politics) {
@@ -581,6 +637,23 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
 
   // The date follows the days that start: reading the whole view every day
   // would cost more than the simulation (J5: blocs, technology).
+  // J7c: every event instance, from the history of the simulation (the
+  // last 60 resolved; a day never holds more).
+  const seen = new Set<number>();
+  const countInstances = () => {
+    const history = (driver.sim as EventHistory | undefined)?.events?.history;
+    if (history === undefined) return;
+    let low = Infinity;
+    for (const h of history) {
+      low = Math.min(low, h.id);
+      if (seen.has(h.id)) continue;
+      seen.add(h.id);
+      delivery.eventInstances += 1;
+      delivery.eventIds[h.event] = (delivery.eventIds[h.event] ?? 0) + 1;
+      delivery.eventDays[Number(h.date.slice(8, 10)) - 1] += 1;
+    }
+    for (const id of seen) if (id < low) seen.delete(id);
+  };
   let date = driver.read().date;
   while (date < endDate) {
     if (
@@ -618,6 +691,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       if (event.type === "day-started") date = event.date;
       onEvent(event);
     }
+    countInstances();
   }
 
   const last = series[series.length - 1];

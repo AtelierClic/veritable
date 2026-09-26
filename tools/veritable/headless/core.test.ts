@@ -24,6 +24,10 @@ let config: VeritableConfig;
 
 beforeAll(async () => {
   pack = await loadScenarioPackFrom(source, "europe-10");
+  // A/B tests of a policy against its control: without events (J5c), as
+  // the J3 report plays them — an event of one run and not of the other is
+  // noise (J7c: the new templates made the blockade's control drift).
+  pack.data.events = [];
   config = structuredClone(source.config());
   config.economy.growth.noiseMonthlySd = 0;
   config.economy.rowSupplyNoise.monthlySd = 0;

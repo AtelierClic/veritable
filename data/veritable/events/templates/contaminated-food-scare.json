@@ -1,0 +1,83 @@
+{
+  "id": "contaminated-food-scare",
+  "kind": "template",
+  "title": "event.contaminated-food-scare.title",
+  "text": "event.contaminated-food-scare.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.02,
+    "conditions": [
+      {
+        "target": "contamination",
+        "op": "gt",
+        "value": 0.005
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "effects": [
+    {
+      "target": "production.food",
+      "op": "mul",
+      "value": 0.99
+    }
+  ],
+  "choices": [
+    {
+      "id": "recall-all",
+      "label": "event.contaminated-food-scare.recall-all",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "production.food",
+          "op": "mul",
+          "value": 0.97
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        }
+      ]
+    },
+    {
+      "id": "targeted-controls",
+      "label": "event.contaminated-food-scare.targeted-controls",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        },
+        {
+          "target": "consumption.food",
+          "op": "mul",
+          "value": 0.98
+        }
+      ]
+    },
+    {
+      "id": "reassure",
+      "label": "event.contaminated-food-scare.reassure",
+      "effects": [
+        {
+          "target": "consumption.food",
+          "op": "mul",
+          "value": 0.95,
+          "uncertain": true
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

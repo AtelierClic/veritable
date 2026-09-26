@@ -1,0 +1,82 @@
+{
+  "id": "hydropower-drought",
+  "kind": "template",
+  "title": "event.hydropower-drought.title",
+  "text": "event.hydropower-drought.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.004,
+    "conditions": [
+      {
+        "target": "coverage.electricity",
+        "op": "lt",
+        "value": 1
+      }
+    ],
+    "cooldownMonths": 36
+  },
+  "effects": [
+    {
+      "target": "production.electricity",
+      "op": "mul",
+      "value": 0.97
+    }
+  ],
+  "choices": [
+    {
+      "id": "import-power",
+      "label": "event.hydropower-drought.import-power",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "restart-thermal",
+      "label": "event.hydropower-drought.restart-thermal",
+      "effects": [
+        {
+          "target": "production.electricity",
+          "op": "mul",
+          "value": 1.03
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "ration-industry",
+      "label": "event.hydropower-drought.ration-industry",
+      "effects": [
+        {
+          "target": "group.business",
+          "op": "add",
+          "value": -0.08
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "production.steel",
+          "op": "mul",
+          "value": 0.97
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

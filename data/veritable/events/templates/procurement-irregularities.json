@@ -1,0 +1,70 @@
+{
+  "id": "procurement-irregularities",
+  "kind": "template",
+  "title": "event.procurement-irregularities.title",
+  "text": "event.procurement-irregularities.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.001,
+    "conditions": [],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "cancel-retender",
+      "label": "event.procurement-irregularities.cancel-retender",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.04
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": -0.05
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        }
+      ]
+    },
+    {
+      "id": "audit-only",
+      "label": "event.procurement-irregularities.audit-only",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": -8
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "hush-up",
+      "label": "event.procurement-irregularities.hush-up",
+      "effects": [
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.07,
+          "uncertain": true
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.04
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

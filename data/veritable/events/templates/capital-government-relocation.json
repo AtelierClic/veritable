@@ -1,0 +1,94 @@
+{
+  "id": "capital-government-relocation",
+  "kind": "template",
+  "title": "event.capital-government-relocation.title",
+  "text": "event.capital-government-relocation.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.05,
+    "conditions": [
+      {
+        "target": "capitalLost",
+        "op": "eq",
+        "value": 1
+      },
+      {
+        "target": "exiled",
+        "op": "eq",
+        "value": 0
+      }
+    ],
+    "cooldownMonths": 60
+  },
+  "params": {
+    "other": "occupier"
+  },
+  "choices": [
+    {
+      "id": "solemn-capital",
+      "label": "event.capital-government-relocation.solemn-capital",
+      "effects": [
+        {
+          "target": "capital",
+          "op": "add",
+          "value": 10
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        }
+      ]
+    },
+    {
+      "id": "quiet-relocation",
+      "label": "event.capital-government-relocation.quiet-relocation",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.02
+        },
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.001
+        }
+      ]
+    },
+    {
+      "id": "call-to-resist",
+      "label": "event.capital-government-relocation.call-to-resist",
+      "effects": [
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.04,
+          "uncertain": true
+        },
+        {
+          "target": "group.military",
+          "op": "add",
+          "value": 0.05
+        },
+        {
+          "target": "relations.other",
+          "op": "add",
+          "value": -10
+        }
+      ]
+    }
+  ],
+  "pause": true,
+  "journal": true
+}

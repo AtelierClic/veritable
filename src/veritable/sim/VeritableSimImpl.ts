@@ -726,6 +726,8 @@ export class VeritableSimImpl implements VeritableSim {
     this.schedule = state.schedule;
     this.intel = state.intel;
     this.exile = state.exile;
+    this.resistanceCache = null;
+    this.threatCache = null;
     this.syncSuspensions();
     this.invalidateFronts();
     this.initialized = true;
@@ -1330,9 +1332,40 @@ export class VeritableSimImpl implements VeritableSim {
     return best;
   }
 
+  // The nation that weighs a war against each nation (the intent of its AI,
+  // gain over cost at least 1; the first by id), once a tick (J7c).
+  private threats(): Map<NationId, NationId> {
+    const at = this.calendar.elapsedGameMinutes;
+    if (this.threatCache?.at === at) return this.threatCache.map;
+    const map = new Map<NationId, NationId>();
+    for (const id of this.ctx.nationIds) {
+      const intent = this.ai.nations[id]?.intent;
+      if (intent === null || intent === undefined || intent.ratio < 1) continue;
+      const known = map.get(intent.target);
+      if (known === undefined || id < known) map.set(intent.target, id);
+    }
+    this.threatCache = { at, map };
+    return map;
+  }
+
+  private threatCache: { at: number; map: Map<NationId, NationId> } | null =
+    null;
+
   // The stability each occupant loses to the resistance of the governments
   // in exile whose land it holds (J7c), from the world as it is now.
   private resistanceMap(): Map<NationId, number> {
+    // Once a tick: the conditions of the events read it for every nation.
+    const at = this.calendar.elapsedGameMinutes;
+    if (this.resistanceCache?.at === at) return this.resistanceCache.map;
+    const map = this.computeResistance();
+    this.resistanceCache = { at, map };
+    return map;
+  }
+
+  private resistanceCache: { at: number; map: Map<NationId, number> } | null =
+    null;
+
+  private computeResistance(): Map<NationId, number> {
     const out = new Map<NationId, number>();
     const exiles = Object.entries(this.exile.nations).filter(
       ([, e]) => e.dissolvedAt === null,
@@ -1378,15 +1411,7 @@ export class VeritableSimImpl implements VeritableSim {
     // The occupant may have changed hands itself.
     const occupant = this.occupantOf(id);
     if (occupant !== null) state.annexer = occupant;
-    // Its occupant collapses: the land goes back.
     const rules = this.deps.config.exile;
-    if (
-      state.annexer !== null &&
-      (this.politics.nations[state.annexer]?.stability ?? 1) <
-        rules.collapseStability
-    ) {
-      if (this.giveBack(id, state.annexer, "collapse", date) > 0) return;
-    }
     if (
       isAi &&
       state.annexer !== null &&
@@ -1980,21 +2005,25 @@ export class VeritableSimImpl implements VeritableSim {
     }
 
     // The AI: defence, war, navy; its war orders and ceasefires.
-    let ordersWait: boolean;
     if (isAi) {
       const env = this.aiEnv(date);
       for (const event of review(env, id, days)) this.record(date, event);
-      ordersWait = this.warOrders(id, now, date, economy.population);
-    } else {
-      ordersWait = this.firstDeployment(id, now, date);
     }
     const after = this.diplomacy.wars.reduce(
       (s, w) => s + w.aggressors.length + w.defenders.length,
       0,
     );
+    // J7c: the fronts of a war it has just entered are not in the geometry
+    // of the day; its orders wait for them (they were given on the old
+    // fronts, which do not hold the new enemy: every division stayed in
+    // reserve until its next orders, a month later, and a nation of 29
+    // divisions lost its land to one).
     if (this.diplomacy.wars.length !== before || after !== joined) {
       this.invalidateFronts();
     }
+    const ordersWait = isAi
+      ? this.warOrders(id, now, date, economy.population)
+      : this.firstDeployment(id, now, date);
 
     reschedule(
       this.schedule,
@@ -3009,6 +3038,17 @@ export class VeritableSimImpl implements VeritableSim {
       seed: this.seed,
       known: this.knownNations,
       nationIndex: this.nationIndex,
+      systems: {
+        capitalHeld: (nation) => this.deps.world.capitalHeld(nation),
+        occupation: (nation) => this.resistanceMap().get(nation) ?? 0,
+        threat: (nation) => this.threats().get(nation) ?? null,
+        occupier: (nation) =>
+          this.exile.nations[nation]?.annexer ?? this.occupantOf(nation),
+        recognition: (nation) =>
+          this.exile.nations[nation]?.dissolvedAt === null
+            ? (this.exile.nations[nation]?.recognition ?? 0)
+            : 0,
+      },
     };
   }
 
@@ -3623,6 +3663,19 @@ export class VeritableSimImpl implements VeritableSim {
   // sovereignist leader coming to power.
   private afterEvent(date: string, event: DomainEvent): void {
     const nation = event.nation;
+    // J7c: an occupant that collapses — its people overthrow it, or its
+    // state fails — gives back the land of the governments in exile it
+    // holds.
+    if (
+      event.type === "revolution" ||
+      (event.type === "regime-changed" && event.to === "failed-state")
+    ) {
+      for (const [id, state] of Object.entries(this.exile.nations)) {
+        if (state.dissolvedAt === null && state.annexer === nation) {
+          this.giveBack(id, nation, "collapse", date);
+        }
+      }
+    }
     // A nation drawn into a war decides within the day (its orders, its
     // mobilisation, its sanctions), not at its next calm update.
     if (event.type === "war-declared" || event.type === "war-joined") {

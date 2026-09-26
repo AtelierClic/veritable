@@ -5,7 +5,7 @@
   "text": "event.energy-supply-shock.text",
   "scope": "world",
   "trigger": {
-    "monthlyProbability": 0.004,
+    "monthlyProbability": 0.003,
     "conditions": [],
     "cooldownMonths": 36
   },

@@ -1,0 +1,76 @@
+{
+  "id": "remittance-drop",
+  "kind": "template",
+  "title": "event.remittance-drop.title",
+  "text": "event.remittance-drop.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.003,
+    "conditions": [
+      {
+        "target": "gdpPerCapita",
+        "op": "lt",
+        "value": 6000
+      }
+    ],
+    "cooldownMonths": 48
+  },
+  "choices": [
+    {
+      "id": "boost-welfare",
+      "label": "event.remittance-drop.boost-welfare",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.02
+        }
+      ]
+    },
+    {
+      "id": "ease-emigration",
+      "label": "event.remittance-drop.ease-emigration",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "growth",
+          "op": "add",
+          "value": -0.002,
+          "months": 24
+        }
+      ]
+    },
+    {
+      "id": "do-nothing",
+      "label": "event.remittance-drop.do-nothing",
+      "effects": [
+        {
+          "target": "stability",
+          "op": "add",
+          "value": -0.03
+        },
+        {
+          "target": "group.workers",
+          "op": "add",
+          "value": -0.05
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}

@@ -1,0 +1,81 @@
+{
+  "id": "doctors-exodus",
+  "kind": "template",
+  "title": "event.doctors-exodus.title",
+  "text": "event.doctors-exodus.text",
+  "scope": "nation",
+  "trigger": {
+    "monthlyProbability": 0.002,
+    "conditions": [
+      {
+        "target": "gdpPerCapita",
+        "op": "lt",
+        "value": 15000
+      }
+    ],
+    "cooldownMonths": 60
+  },
+  "choices": [
+    {
+      "id": "raise-pay",
+      "label": "event.doctors-exodus.raise-pay",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.004
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": 0.03
+        },
+        {
+          "target": "stability",
+          "op": "add",
+          "value": 0.01
+        }
+      ]
+    },
+    {
+      "id": "service-commitment",
+      "label": "event.doctors-exodus.service-commitment",
+      "effects": [
+        {
+          "target": "group.youth",
+          "op": "add",
+          "value": -0.06
+        },
+        {
+          "target": "legitimacy",
+          "op": "add",
+          "value": -0.02
+        }
+      ]
+    },
+    {
+      "id": "recruit-abroad",
+      "label": "event.doctors-exodus.recruit-abroad",
+      "effects": [
+        {
+          "target": "budget.pctGdp",
+          "op": "add",
+          "value": -0.002
+        },
+        {
+          "target": "group.minorities",
+          "op": "add",
+          "value": 0.02
+        },
+        {
+          "target": "opinion",
+          "op": "add",
+          "value": -0.02,
+          "uncertain": true
+        }
+      ]
+    }
+  ],
+  "pause": false,
+  "journal": true
+}
