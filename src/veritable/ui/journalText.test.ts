@@ -1,5 +1,5 @@
 import { ReadonlyWorldView } from "../sim/VeritableSim";
-import { leaderName, namedParams } from "./journalText";
+import { decidedBy, leaderName, namedParams } from "./journalText";
 
 // J6c: the journal showed "gouvernement formé (fra-renaissance), dirigé par
 // leader.fra-gabriel-attal.parody".
@@ -39,5 +39,26 @@ describe("the names of the journal", () => {
     expect(named.leader).toBe("Gabriel Attelle");
     // An unknown id stays as it is.
     expect(namedParams(view, "FRA", { winner: "x" }).winner).toBe("x");
+  });
+
+  it("say who took the choice of an event (J7)", () => {
+    expect(decidedBy(view, "FRA", { event: "e", by: "player" })).toBe(
+      " Décidé par vous.",
+    );
+    expect(
+      decidedBy(view, "FRA", {
+        event: "e",
+        by: "government",
+        party: "fra-renaissance",
+      }),
+    ).toBe(" Décidé par le gouvernement (Renaissance).");
+    expect(
+      decidedBy(view, "FRA", { event: "e", by: "government", party: "" }),
+    ).toBe(" Décidé par le gouvernement.");
+    expect(decidedBy(view, "FRA", { event: "e", by: "ai" })).toBe("");
+    // An entry of the J6 has no author.
+    expect(namedParams(view, "FRA", { event: "e", choice: "c" }).decided).toBe(
+      "",
+    );
   });
 });

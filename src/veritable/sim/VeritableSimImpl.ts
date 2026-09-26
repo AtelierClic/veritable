@@ -107,9 +107,11 @@ import { initEconomy, initPolitics } from "./economy/init";
 import { populationFactor, populationOf } from "./economy/population";
 import {
   chooseEvent,
+  eventData,
   eventGrowth,
   EventsEnv,
   EventsEvent,
+  governmentChoice,
   initEvents,
   stepEventsDraws,
   stepEventsHousekeeping,
@@ -1956,9 +1958,26 @@ export class VeritableSimImpl implements VeritableSim {
           ? {}
           : researchRefusals(techEnv, player),
       events: this.events,
+      eventLeanings: this.eventLeanings(),
       schedule: this.schedule,
       version: this.viewVersion,
     };
+  }
+
+  // The choice the government leans towards for each pending event (J7).
+  private eventLeanings(): Record<number, string> {
+    const out: Record<number, string> = {};
+    if (this.events.pending.length === 0) return out;
+    const env = this.eventsEnv(this.calendar.date);
+    for (const p of this.events.pending) {
+      out[p.id] = governmentChoice(
+        env,
+        p.nation,
+        eventData(this.ctx, p.event),
+        p.id,
+      );
+    }
+    return out;
   }
 
   private techEnv(date: string): TechEnv {

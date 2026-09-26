@@ -393,6 +393,10 @@ export interface ReadonlyWorldView {
   readonly techRefusals: Readonly<Record<string, string | null>>;
   // Events (J5): the player's pop-ups waiting, the history.
   readonly events: Readonly<EventsState>;
+  // J7: for each pending event of the player's nation, the choice its
+  // government leans towards — the one it takes when the player has not
+  // chosen within events.answerDays (instance id → choice id).
+  readonly eventLeanings: Readonly<Record<number, string>>;
   // J7: the rolling queue (when each nation was last updated and will be
   // next), and the version of the view: it moves whenever something the
   // player sees has changed (the interface reads the view again then).

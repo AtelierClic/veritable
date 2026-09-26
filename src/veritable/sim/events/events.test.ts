@@ -162,6 +162,60 @@ describe("events", () => {
     ).toEqual(["player", "government"]);
   });
 
+  it("the government leans from the first day, never enacts a law outside its window, and decides after 30 days (J7)", () => {
+    const reform = event({
+      id: "pension-crisis",
+      trigger: { nations: ["AAA"], monthlyProbability: 1, conditions: [] },
+      choices: [
+        {
+          id: "reform",
+          label: "event.pension-crisis.reform",
+          effects: [
+            { target: "law.pension-age-raise", op: "add", value: 1 },
+            { target: "stability", op: "add", value: 0.05 },
+          ],
+        },
+        {
+          id: "wait",
+          label: "event.pension-crisis.wait",
+          effects: [{ target: "budget.pctGdp", op: "add", value: -0.001 }],
+        },
+      ],
+    });
+    const { sim, months } = campaign({ events: [reform] });
+    const government = (
+      sim as unknown as {
+        politics: {
+          nations: Record<string, { government: { ideology: object } }>;
+        };
+      }
+    ).politics.nations.AAA.government;
+    months(1);
+    const [pending] = sim.read().events.pending;
+    expect(pending.event).toBe("pension-crisis");
+    // A government of the right: the reform is in its window, and worth more.
+    government.ideology = { economic: 0.6, authority: 0, sovereignty: 0 };
+    expect(sim.read().eventLeanings[pending.id]).toBe("reform");
+    // A government of the left: raising the pension age is outside its
+    // window, whatever it is worth; it waits.
+    government.ideology = { economic: -0.6, authority: 0, sovereignty: 0 };
+    expect(sim.read().eventLeanings[pending.id]).toBe("wait");
+    // Unanswered for 30 days: the government decides as it leans, and the
+    // journal says so.
+    for (let d = 0; d < 31; d++) sim.advance(DAY);
+    expect(sim.read().events.pending).toEqual([]);
+    const done = sim.read().events.history.find((h) => h.id === pending.id)!;
+    expect(done.choice).toBe("wait");
+    const entry = sim
+      .read()
+      .journal.find(
+        (j) =>
+          j.kind === "event-occurred" &&
+          j.params.instance === String(pending.id),
+      )!;
+    expect(entry.params.by).toBe("government");
+  });
+
   it("a template draws a neighbour and gives a grievance: a casus belli until it expires", () => {
     const { sim, months, deps } = campaign({
       autopilot: true,

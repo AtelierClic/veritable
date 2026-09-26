@@ -44,5 +44,22 @@ export function namedParams(
       .map((id) => partyName(view, nation, id))
       .join(", ");
   }
+  if (params.event !== undefined) out.decided = decidedBy(view, nation, params);
   return out;
+}
+
+// Who took the choice of an event (J7): " Décidé par vous.", " Décidé par
+// le gouvernement (parti).", nothing for another nation or an old entry.
+export function decidedBy(
+  view: ReadonlyWorldView,
+  nation: string | undefined,
+  params: Readonly<Record<string, string>>,
+): string {
+  if (params.by === "player") return ` ${vt("journal.decided.player")}`;
+  if (params.by !== "government") return "";
+  return params.party === undefined || params.party === ""
+    ? ` ${vt("journal.decided.government")}`
+    : ` ${vt("journal.decided.government-party", {
+        party: partyName(view, nation, params.party),
+      })}`;
 }

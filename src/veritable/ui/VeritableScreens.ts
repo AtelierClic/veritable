@@ -2350,6 +2350,17 @@ export class VeritableScreens extends LitElement {
               )}
               <div class="text-gray-400">
                 ${vt("screen.events.deadline", { date: p.deadline })}
+                ${(() => {
+                  const leaning = event.choices.find(
+                    (c) => c.id === view.eventLeanings[p.id],
+                  );
+                  return leaning === undefined
+                    ? nothing
+                    : html`·
+                      ${vt("screen.events.leaning", {
+                        choice: vt(leaning.label, params(p)),
+                      })}`;
+                })()}
               </div>
             </div>`;
           })}
