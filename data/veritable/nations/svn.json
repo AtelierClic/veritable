@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 24 avril 2022 (Commission électorale nationale)."
+    "note": "Législatives du 24 avril 2022 (Commission électorale nationale).",
+    "runoff": true
   },
   "aiAgenda": [
     {

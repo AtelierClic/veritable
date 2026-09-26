@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque)."
+    "note": "Législatives du 30 septembre 2023 (Commission électorale statistique de la République slovaque).",
+    "runoff": true
   },
   "aiAgenda": [
     {

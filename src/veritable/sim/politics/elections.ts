@@ -4,6 +4,7 @@ import { Ideology, RegimeData } from "../../data/schemas/politics";
 import { NationPolitics, PartyState } from "../../data/schemas/save";
 import { EconomyContext } from "../economy/context";
 import { Rng } from "../rng";
+import { daysBetweenDates } from "../time";
 import { affinity, ideologyDistance, meanIdeology } from "./ideology";
 import { lawModifiers, scheduleRepeals } from "./laws";
 import { nameOf } from "./leaders";
@@ -27,7 +28,8 @@ export type ElectionEvent =
       type: "election-held";
       nation: NationId;
       winner: string; // party id
-      share: number;
+      share: number; // of the first round, or of the runoff (J7)
+      runoff?: boolean;
       alternation: boolean;
     }
   | {
@@ -61,17 +63,53 @@ export function groupWeights(
   return sheet?.interestGroups ?? ctx.config.politics.groupWeights;
 }
 
+// The share of the national vote the parties of the data covered at the
+// last real election (J7): the small parties outside the data keep the rest,
+// so that the shares shown and recorded are shares of all the votes.
+export function voteCoverage(
+  ctx: EconomyContext,
+  sheet: NationData | undefined,
+): number {
+  if (sheet === undefined) return 1;
+  const parties = ctx.leaders(sheet.id)?.parties ?? [];
+  const total = parties.reduce((s, p) => s + p.support, 0);
+  return total > 0 && total <= 1 ? total : 1;
+}
+
+// The cost of governing (J7): the vote for the parties in power wears out
+// with the years since the government was formed (its "since"; the first
+// day for the governments of the scenario).
+export function incumbencyFatigue(
+  ctx: EconomyContext,
+  politics: NationPolitics,
+  date: string | undefined,
+): number {
+  if (date === undefined) return 1;
+  const cfg = ctx.config.politics.elections;
+  const years = Math.max(
+    0,
+    daysBetweenDates(politics.government.since, date) / 365.25,
+  );
+  return Math.max(
+    cfg.incumbencyFatigueFloor,
+    1 - cfg.incumbencyFatiguePerYear * years,
+  );
+}
+
 // Shares of every party, levers applied, normalised to the total support of
 // the parties in play (the small parties outside the data are ignored).
 export function projectShares(
   ctx: EconomyContext,
   politics: NationPolitics,
   sheet: NationData | undefined,
+  // J7: the day of the vote (the cost of governing); none: no wear.
+  date?: string,
 ): Record<string, number> {
   const cfg = ctx.config.politics.elections;
   const satisfaction = groupSatisfaction(politics);
   const weights = groupWeights(ctx, sheet);
   const incumbents = new Set(politics.government.parties);
+  const fatigue = incumbencyFatigue(ctx, politics, date);
   const shares: Record<string, number> = Object.fromEntries(
     politics.parties.map((p) => [p.id, 0]),
   );
@@ -81,13 +119,12 @@ export function projectShares(
     totalWeight += w;
     const ideology = politics.groupIdeologies[group];
     const votes = politics.parties.map((p) => {
-      let v = affinity(
-        ideology,
-        p.ideology,
-        p.leader.traits.charisma,
-        cfg.sigma,
-      );
-      if (incumbents.has(p.id)) v *= cfg.incumbentBase + satisfaction[group];
+      let v =
+        affinity(ideology, p.ideology, p.leader.traits.charisma, cfg.sigma) *
+        p.base;
+      if (incumbents.has(p.id)) {
+        v *= (cfg.incumbentBase + satisfaction[group]) * fatigue;
+      }
       return v;
     });
     const sum = votes.reduce((a, b) => a + b, 0);
@@ -128,17 +165,130 @@ export function projectShares(
   return shares;
 }
 
+// The runoff of an election in two rounds (J7): the first two of the first
+// round keep their voters; the voters of every other party go to one or the
+// other in proportion to the affinity of their party with each, the
+// incumbent's share of them scaled by the satisfaction of the country
+// (incumbentBase + mean satisfaction, as in the first round). Null where
+// the head of state is not elected in two rounds.
+export interface Runoff {
+  a: string;
+  b: string;
+  shareA: number; // of the two
+  winner: string;
+  share: number; // the winner's
+}
+
+export function runoffOf(
+  ctx: EconomyContext,
+  politics: NationPolitics,
+  sheet: NationData | undefined,
+  shares: Readonly<Record<string, number>>,
+  date?: string,
+): Runoff | null {
+  if (sheet?.politics.runoff !== true) return null;
+  if (!RUNOFF_REGIMES.has(politics.regime)) return null;
+  const ranked = [...politics.parties].sort(
+    (x, y) => (shares[y.id] ?? 0) - (shares[x.id] ?? 0),
+  );
+  if (ranked.length < 2) return null;
+  const [first, second] = ranked;
+  const cfg = ctx.config.politics.elections;
+  const incumbents = new Set(politics.government.parties);
+  const satisfaction = groupSatisfaction(politics);
+  const weights = groupWeights(ctx, sheet);
+  let mean = 0;
+  let total = 0;
+  for (const g of INTEREST_GROUPS) {
+    mean += weights[g] * satisfaction[g];
+    total += weights[g];
+  }
+  const incumbentFactor =
+    (cfg.incumbentBase + (total > 0 ? mean / total : 0.5)) *
+    incumbencyFatigue(ctx, politics, date);
+  const pull = (from: PartyState, to: PartyState) =>
+    affinity(from.ideology, to.ideology, 0, cfg.sigma) *
+    (incumbents.has(to.id) ? incumbentFactor : 1);
+  let a = shares[first.id] ?? 0;
+  let b = shares[second.id] ?? 0;
+  for (const p of ranked.slice(2)) {
+    const toA = pull(p, first);
+    const toB = pull(p, second);
+    if (toA + toB <= 0) continue;
+    const s = shares[p.id] ?? 0;
+    a += (s * toA) / (toA + toB);
+    b += (s * toB) / (toA + toB);
+  }
+  const shareA = a + b > 0 ? a / (a + b) : 0.5;
+  const firstWins = shareA >= 0.5;
+  return {
+    a: first.id,
+    b: second.id,
+    shareA,
+    winner: firstWins ? first.id : second.id,
+    share: firstWins ? shareA : 1 - shareA,
+  };
+}
+
+// Regimes whose election chooses the head of state (the leader in play).
+const RUNOFF_REGIMES = new Set([
+  "presidential",
+  "semi-presidential",
+  "electoral-authoritarian",
+]);
+
+// J7: the attachment of the voters of each party (its `base`), fitted once
+// on the first day so that the vote gives back the last national election
+// (the shares of the data, among the parties in play): the ideologies say
+// who leans where, the bases how many are already there.
+export function fitPartyBases(
+  ctx: EconomyContext,
+  politics: NationPolitics,
+  sheet: NationData | undefined,
+): void {
+  const total = politics.parties.reduce((s, p) => s + p.support, 0);
+  if (total <= 0 || politics.parties.length < 2) return;
+  for (let pass = 0; pass < FIT_PASSES; pass++) {
+    const shares = projectShares(ctx, politics, sheet);
+    let worst = 0;
+    for (const p of politics.parties) {
+      const target = p.support / total;
+      const got = shares[p.id];
+      if (got <= 0 || target <= 0) continue;
+      p.base *= target / got;
+      worst = Math.max(worst, Math.abs(got - target));
+    }
+    // Bases are relative: keep their geometric mean at 1.
+    const mean = Math.exp(
+      politics.parties.reduce((s, p) => s + Math.log(p.base), 0) /
+        politics.parties.length,
+    );
+    for (const p of politics.parties) p.base /= mean;
+    if (worst < FIT_TOLERANCE) break;
+  }
+}
+
+const FIT_PASSES = 200;
+const FIT_TOLERANCE = 1e-6;
+
 // The government after an election: the leading party alone, or a
 // coalition by ideological proximity up to a majority of the shares in play.
+// J7: a majoritarian parliament (the sheet's `government`) makes the first
+// party govern alone, whatever its share.
 export function formGovernment(
   ctx: EconomyContext,
   regime: RegimeData,
   parties: readonly PartyState[],
   leading: string,
+  sheet?: NationData,
 ): Government {
   const lead = parties.find((p) => p.id === leading) ?? parties[0];
   const members: PartyState[] = [lead];
-  if (regime.government === "coalition") {
+  const mode =
+    regime.government === "coalition"
+      ? (sheet?.politics.government ?? "coalition")
+      : regime.government;
+  if (mode === "coalition") {
     const total = parties.reduce((s, p) => s + p.support, 0);
     const majority = ctx.config.politics.elections.coalitionMajority * total;
     const rest = parties
@@ -180,7 +330,7 @@ export function holdElection(
   const regime = ctx.regime(politics.regime);
   const events: ElectionEvent[] = [];
   let democracyRelations = 0;
-  const shares = projectShares(ctx, politics, sheet);
+  const shares = projectShares(ctx, politics, sheet, date);
   const previousLeading = politics.government.parties[0];
   const incumbents = new Set(politics.government.parties);
   const incumbentShare = politics.parties
@@ -217,23 +367,34 @@ export function holdElection(
     }
   }
 
-  // Results.
+  // Results: the first round; a runoff between the first two where the
+  // head of state is elected in two rounds (J7).
+  const coverage = voteCoverage(ctx, sheet);
   let winner = politics.parties[0];
   for (const p of politics.parties) {
-    p.support = shares[p.id];
+    p.support = shares[p.id] * coverage;
     if (shares[p.id] > shares[winner.id]) winner = p;
+  }
+  let share = shares[winner.id] * coverage;
+  const runoff = runoffOf(ctx, politics, sheet, shares, date);
+  if (runoff !== null) {
+    winner = politics.parties.find((p) => p.id === runoff.winner) ?? winner;
+    share = runoff.share;
   }
   const alternation = winner.id !== previousLeading;
   events.push({
     type: "election-held",
     nation,
     winner: winner.id,
-    share: shares[winner.id],
+    share,
     alternation,
+    runoff: runoff !== null,
   });
   politics.lastElection = {
     date,
-    results: { ...shares },
+    results: Object.fromEntries(
+      Object.entries(shares).map(([id, s]) => [id, s * coverage]),
+    ),
     incumbentShare,
     alternation,
     fraudDetected,
@@ -246,8 +407,18 @@ export function holdElection(
   );
 
   // Government, leader, capital.
-  const government = formGovernment(ctx, regime, politics.parties, winner.id);
-  politics.government = { ...government, since: date };
+  const government = formGovernment(
+    ctx,
+    regime,
+    politics.parties,
+    winner.id,
+    sheet,
+  );
+  // A party re-elected keeps its years in power (the cost of governing).
+  politics.government = {
+    ...government,
+    since: alternation ? date : politics.government.since,
+  };
   politics.leader = winner.leader;
   politics.corruption = winner.leader.traits.corruption;
   if (alternation) {

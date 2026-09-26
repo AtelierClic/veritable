@@ -92,6 +92,13 @@ export function coupProbability(
   if (politics.fraudCoupUntil !== null && date < politics.fraudCoupUntil) {
     p *= ctx.config.politics.elections.fraudCoupMultiplier;
   }
+  if (
+    ctx.regime(politics.regime).democratic &&
+    politics.stability >= cfg.stableDemocracyStability &&
+    politics.legitimacy >= cfg.stableDemocracyLegitimacy
+  ) {
+    p *= cfg.stableDemocracyFactor;
+  }
   p *= lawModifiers(ctx, politics).coupRisk;
   return Math.min(1, p);
 }

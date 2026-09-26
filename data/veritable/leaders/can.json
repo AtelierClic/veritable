@@ -80,10 +80,10 @@
       "born": "1965-04-16",
       "party": "can-bloc-quebecois",
       "traits": {
-        "economic": -0.333,
-        "authority": -0.333,
-        "sovereignty": -0.2,
-        "aggressiveness": 0.1934,
+        "economic": -0.2,
+        "authority": -0.1,
+        "sovereignty": 0.5,
+        "aggressiveness": 0.38,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -124,11 +124,11 @@
       "wikidata": "Q138345",
       "ideologies": ["Q201712", "Q3237980", "Q6216"],
       "ideology": {
-        "economic": 0.25,
-        "authority": -0.55,
-        "sovereignty": -0.45
+        "economic": 0.1,
+        "authority": -0.3,
+        "sovereignty": -0.3
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 3)",
+      "ideologySource": "estimate (J7): Libéraux de Mark Carney : centre.",
       "support": 0.4376,
       "supportSource": {
         "source": "estimate",
@@ -162,11 +162,11 @@
       "wikidata": "Q735105",
       "ideologies": ["Q121254", "Q1321476", "Q2855609", "Q3141508", "Q877848"],
       "ideology": {
-        "economic": -0.333,
-        "authority": -0.333,
-        "sovereignty": -0.2
+        "economic": -0.2,
+        "authority": -0.1,
+        "sovereignty": 0.5
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 5)",
+      "ideologySource": "estimate (J7): Bloc québécois : souverainisme québécois, social-démocratie.",
       "support": 0.0629,
       "supportSource": {
         "source": "estimate",

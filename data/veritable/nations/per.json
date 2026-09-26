@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 11 avril 2021 (Congrès de la République, premier tour ; pourcentages approximatifs)."
+    "note": "Élections générales du 11 avril 2021 (Congrès de la République, premier tour ; pourcentages approximatifs).",
+    "runoff": true
   },
   "aiAgenda": [
     {

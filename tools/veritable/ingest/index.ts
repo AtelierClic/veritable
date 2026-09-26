@@ -131,6 +131,8 @@ async function main(): Promise<void> {
           asOf: estimates.asOf,
           leaderTraits: estimates.leaderTraits ?? {},
           partyIdeologies: estimates.partyIdeologies ?? {},
+          partyIdeologyOverrides:
+            estimates.partyIdeologyOverrides?.values ?? {},
           parodyNations: estimates.parodyNations,
           headOverrides: estimates.headOverrides,
           partyLeaderOverrides: estimates.partyLeaderOverrides,

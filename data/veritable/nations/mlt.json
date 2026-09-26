@@ -339,7 +339,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 26 mars 2022."
+    "note": "Législatives du 26 mars 2022.",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

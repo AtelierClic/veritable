@@ -101,11 +101,11 @@
       "wikidata": "Q15978686",
       "ideologies": ["Q6216"],
       "ideology": {
-        "economic": 0.4,
-        "authority": -0.6,
-        "sovereignty": -0.4
+        "economic": -0.2,
+        "authority": -0.2,
+        "sovereignty": 0
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "ideologySource": "estimate (J7): Parti démocrate : centre gauche ; Wikidata le plaçait à droite en économie.",
       "support": 0.41,
       "supportSource": {
         "source": "estimate",

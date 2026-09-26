@@ -1596,6 +1596,16 @@ export class VeritableScreens extends LitElement {
             )}
         </tbody>
       </table>
+      ${view.electionRunoff === null
+        ? nothing
+        : html`<div class="mt-1">
+            ${vt("screen.election.runoff", {
+              a: partyLabel(view.electionRunoff.a),
+              shareA: pct(view.electionRunoff.shareA),
+              b: partyLabel(view.electionRunoff.b),
+              shareB: pct(1 - view.electionRunoff.shareA),
+            })}
+          </div>`}
       ${last === null
         ? nothing
         : html`<div class="mt-1 text-gray-300">

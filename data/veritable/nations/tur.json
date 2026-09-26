@@ -342,7 +342,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "manual",
     "asOf": "2026-01-01",
-    "note": "Présidentielle 2023 (second tour). Intervalle : cinq ans."
+    "note": "Présidentielle 2023 (second tour). Intervalle : cinq ans.",
+    "runoff": true
   },
   "aiAgenda": [
     {

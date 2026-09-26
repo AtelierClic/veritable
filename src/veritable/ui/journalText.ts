@@ -177,6 +177,9 @@ export function journalLine(names: Names, j: JournalEntry): string {
     if (v !== undefined && /^\d+$/.test(v))
       params[key] = INTEGER.format(Number(v));
   }
+  if (j.kind === "election-held") {
+    params.round = p.round === "2" ? vt("journal.round-2") : "";
+  }
   if (p.law !== undefined) params.law = vt(`law.${p.law}.name`);
   if (p.objective !== undefined) {
     params.objective = vt(`objective.${p.objective}.name`);

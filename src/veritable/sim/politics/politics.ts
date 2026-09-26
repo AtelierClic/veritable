@@ -50,23 +50,20 @@ export function driverValue(
   if (key === "shortage") {
     return clamp(-economy.shortage / scales.shortage, -1, 0);
   }
+  // J7: taxes and spending as announced (the targets of the sliders): a
+  // people reacts to a reform when it is announced, not six months later
+  // when the slider has reached it.
   if (key.startsWith("tax.")) {
     const tax = key.slice(4);
-    return clamp(
-      -(economy.taxes[tax] - economy.taxes0[tax]) / scales.taxRate,
-      -1,
-      1,
-    );
+    const rate = economy.taxTargets[tax] ?? economy.taxes[tax];
+    return clamp(-(rate - economy.taxes0[tax]) / scales.taxRate, -1, 1);
   }
   if (key.startsWith("spending.")) {
     const post = key.slice(9);
     const reference = economy.spending0[post];
     if (reference <= 0) return 0;
-    return clamp(
-      (economy.spending[post] - reference) / reference / scales.spending,
-      -1,
-      1,
-    );
+    const share = economy.spendingTargets[post] ?? economy.spending[post];
+    return clamp((share - reference) / reference / scales.spending, -1, 1);
   }
   throw new Error(`unknown political driver: ${key}`);
 }

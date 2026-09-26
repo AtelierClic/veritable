@@ -435,6 +435,25 @@ export function build(scenarioId: string): void {
   const population = (n: string): Sourced =>
     wbSourced("population", n) ??
     ruled(rules.population.values[n] ?? 1e5, rules.population.note);
+  // J7: the electoral system of the estimates over what the sheet had: an
+  // executive elected in two rounds, a parliament where the first party
+  // governs alone.
+  const electoral = estimates.electoralSystems as
+    | { runoff?: string[]; singlePartyGovernment?: string[] }
+    | undefined;
+  const withElectoralSystem = (
+    politics: Record<string, unknown>,
+    n: string,
+  ): Record<string, unknown> => {
+    const out: Record<string, unknown> = { ...politics };
+    delete out.runoff;
+    delete out.government;
+    if (electoral?.runoff?.includes(n) === true) out.runoff = true;
+    if (electoral?.singlePartyGovernment?.includes(n) === true) {
+      out.government = "leading-party";
+    }
+    return out;
+  };
   // J7: the coup history of an electoral autocracy since 1990 (Lukas,
   // answer to the J6): established by hand in the estimates.
   const coupHistory = (n: string) => {
@@ -1173,7 +1192,7 @@ export function build(scenarioId: string): void {
         ...military,
       },
       startingTech: [],
-      politics: politicsData,
+      politics: withElectoralSystem(politicsData, n),
       // The agenda of the nation AI (J5), written by hand and justified, or
       // by rules (J6: worldRules.aiAgenda).
       aiAgenda:

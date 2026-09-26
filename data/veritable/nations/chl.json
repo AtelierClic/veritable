@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 16 novembre 2025 (Chambre des députés). Élection en retard au 1er janvier 2026 (dernière le 2021-12-19) : la suivante est placée trois mois plus tard (estimation)."
+    "note": "Élections législatives du 16 novembre 2025 (Chambre des députés). Élection en retard au 1er janvier 2026 (dernière le 2021-12-19) : la suivante est placée trois mois plus tard (estimation).",
+    "runoff": true
   },
   "aiAgenda": [
     {

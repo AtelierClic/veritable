@@ -342,7 +342,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives des 10-11 et 24-25 novembre 2025 (premier et second tours, ballottages en décembre 2025) pour la Chambre des représentants (596 sièges dont 28 nommés par le président) : Mostakbal Watan (Avenir de la Nation) 231 sièges (38,8 %), Homat Al-Watan (Défenseurs de la Patrie) 91 (15,3 %), Front National 70 (11,7 %), Parti républicain du peuple 28 (4,7 %), reste indépendants et petites formations. Chambre installée le 11 janvier 2026 (nomination des 28 membres présidentiels), soit dix jours après la date de référence de la campagne ; parts calculées en sièges (le scrutin mixte listes/individuel ne produit pas de part de voix nationale unique). La Chambre sortante, élue en 2020, est en fin de mandat au 1er janvier 2026.."
+    "note": "Législatives des 10-11 et 24-25 novembre 2025 (premier et second tours, ballottages en décembre 2025) pour la Chambre des représentants (596 sièges dont 28 nommés par le président) : Mostakbal Watan (Avenir de la Nation) 231 sièges (38,8 %), Homat Al-Watan (Défenseurs de la Patrie) 91 (15,3 %), Front National 70 (11,7 %), Parti républicain du peuple 28 (4,7 %), reste indépendants et petites formations. Chambre installée le 11 janvier 2026 (nomination des 28 membres présidentiels), soit dix jours après la date de référence de la campagne ; parts calculées en sièges (le scrutin mixte listes/individuel ne produit pas de part de voix nationale unique). La Chambre sortante, élue en 2020, est en fin de mandat au 1er janvier 2026..",
+    "runoff": true
   },
   "aiAgenda": [
     {

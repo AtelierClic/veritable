@@ -341,7 +341,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément."
+    "note": "Législatives du 27 octobre 2024 (Chambre législative ; second tour début novembre 2024 pour les sièges non pourvus, Commission électorale centrale) — date de premier tour à confirmer précisément.",
+    "runoff": true
   },
   "aiAgenda": [
     {

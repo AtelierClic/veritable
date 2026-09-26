@@ -346,7 +346,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 4 février 2024 (Assemblée législative)."
+    "note": "Élections législatives du 4 février 2024 (Assemblée législative).",
+    "runoff": true
   },
   "aiAgenda": [
     {

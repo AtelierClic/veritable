@@ -345,7 +345,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 27 décembre 2025 (255 sièges), qui ont remplacé l'Assemblée élue en mars 2021 ; nouvelle Assemblée pas encore installée au 1er janvier 2026 (élection du président de l'Assemblée le 17 janvier 2026) mais composition déjà connue et utilisée ici. Scrutin marqué par le boycott du PPA-CI et une participation de 35,04%.."
+    "note": "Élections législatives du 27 décembre 2025 (255 sièges), qui ont remplacé l'Assemblée élue en mars 2021 ; nouvelle Assemblée pas encore installée au 1er janvier 2026 (élection du président de l'Assemblée le 17 janvier 2026) mais composition déjà connue et utilisée ici. Scrutin marqué par le boycott du PPA-CI et une participation de 35,04%..",
+    "runoff": true
   },
   "aiAgenda": [
     {

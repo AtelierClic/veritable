@@ -193,11 +193,11 @@
       "wikidata": "Q49762",
       "ideologies": ["Q1043096", "Q209158", "Q3781399", "Q7169", "Q729119"],
       "ideology": {
-        "economic": 0.42,
-        "authority": 0.06,
-        "sovereignty": -0.22
+        "economic": 0.4,
+        "authority": 0.25,
+        "sovereignty": -0.3
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 5)",
+      "ideologySource": "estimate (J7): CDU : centre droit conservateur et européen.",
       "support": 0.225,
       "supportSource": {
         "source": "estimate",

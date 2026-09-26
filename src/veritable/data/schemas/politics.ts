@@ -135,6 +135,11 @@ export const NationPoliticsDataSchema = z.object({
   electionIntervalMonths: z.number().int().positive(),
   lastElection: IsoDateSchema, // last real national election
   electionsSuspendedAtWarAtHome: z.boolean(),
+  // J7: the head of state is elected in two rounds (a runoff between the
+  // first two; presidential and semi-presidential regimes), and the first
+  // party governs alone whatever its share (majoritarian parliaments).
+  runoff: z.boolean().optional(),
+  government: z.enum(["coalition", "leading-party"]).optional(),
   groupIdeologies: GroupIdeologiesSchema.optional(),
   source: z.string().min(1),
   asOf: z.string().min(1),

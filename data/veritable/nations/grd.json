@@ -342,7 +342,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 23 juin 2022."
+    "note": "Élections générales du 23 juin 2022.",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

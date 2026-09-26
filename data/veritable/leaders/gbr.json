@@ -57,10 +57,10 @@
       "born": "1980-01-02",
       "party": "gbr-parti-conservateur",
       "traits": {
-        "economic": 0.457,
-        "authority": 0.314,
-        "sovereignty": 0.157,
-        "aggressiveness": 0.3942,
+        "economic": 0.5,
+        "authority": 0.3,
+        "sovereignty": 0.4,
+        "aggressiveness": 0.44,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -80,10 +80,10 @@
       "born": "1964-04-03",
       "party": "gbr-reform-uk",
       "traits": {
-        "economic": 0.28,
-        "authority": 0.18,
-        "sovereignty": 0.36,
-        "aggressiveness": 0.408,
+        "economic": 0.5,
+        "authority": 0.5,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.5800000000000001,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -103,9 +103,9 @@
       "born": "1965-12-25",
       "party": "gbr-liberaux-democrates",
       "traits": {
-        "economic": 0.167,
-        "authority": -0.433,
-        "sovereignty": -0.567,
+        "economic": 0,
+        "authority": -0.4,
+        "sovereignty": -0.6,
         "aggressiveness": 0.09999999999999998,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
@@ -170,11 +170,11 @@
       "wikidata": "Q9630",
       "ideologies": ["Q121254", "Q189280"],
       "ideology": {
-        "economic": -0.6,
-        "authority": -0.3,
+        "economic": -0.25,
+        "authority": -0.1,
         "sovereignty": -0.2
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "ideologySource": "estimate (J7): Travaillistes de Keir Starmer : centre gauche ; Wikidata (socialisme démocratique) les plaçait à −0,6.",
       "support": 0.337,
       "supportSource": {
         "source": "estimate",
@@ -197,11 +197,11 @@
         "Q729119"
       ],
       "ideology": {
-        "economic": 0.457,
-        "authority": 0.314,
-        "sovereignty": 0.157
+        "economic": 0.5,
+        "authority": 0.3,
+        "sovereignty": 0.4
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (7 of 7)",
+      "ideologySource": "estimate (J7): Conservateurs : droite libérale, eurosceptique depuis le Brexit.",
       "support": 0.237,
       "supportSource": {
         "source": "estimate",
@@ -216,11 +216,11 @@
       "wikidata": "Q104721252",
       "ideologies": ["Q223200", "Q436860", "Q729119", "Q852739", "Q878445"],
       "ideology": {
-        "economic": 0.28,
-        "authority": 0.18,
-        "sovereignty": 0.36
+        "economic": 0.5,
+        "authority": 0.5,
+        "sovereignty": 0.9
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (5 of 5)",
+      "ideologySource": "estimate (J7): Reform UK : droite nationale-populiste.",
       "support": 0.143,
       "supportSource": {
         "source": "estimate",
@@ -235,11 +235,11 @@
       "wikidata": "Q9624",
       "ideologies": ["Q201712", "Q3781399", "Q6216"],
       "ideology": {
-        "economic": 0.167,
-        "authority": -0.433,
-        "sovereignty": -0.567
+        "economic": 0,
+        "authority": -0.4,
+        "sovereignty": -0.6
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "ideologySource": "estimate (J7): Libéraux-démocrates : centristes pro-européens.",
       "support": 0.122,
       "supportSource": {
         "source": "estimate",

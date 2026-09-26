@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "manual",
     "asOf": "2026-01-01",
-    "note": "Wybory parlamentarne 2023. Intervalle : Sejm de quatre ans."
+    "note": "Wybory parlamentarne 2023. Intervalle : Sejm de quatre ans.",
+    "runoff": true
   },
   "aiAgenda": [
     {

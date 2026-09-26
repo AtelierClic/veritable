@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 2 octobre 2022 (Chambre des députés)."
+    "note": "Élections législatives du 2 octobre 2022 (Chambre des députés).",
+    "runoff": true
   },
   "aiAgenda": [
     {

@@ -57,10 +57,10 @@
       "born": "1965-01-01",
       "party": "aus-liberal-national-coalition-new-south-wales",
       "traits": {
-        "economic": 0.325,
-        "authority": 0.025,
-        "sovereignty": 0.075,
-        "aggressiveness": 0.32,
+        "economic": 0.5,
+        "authority": 0.3,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.42,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -124,11 +124,11 @@
       "wikidata": "Q216082",
       "ideologies": ["Q121254"],
       "ideology": {
-        "economic": -0.5,
-        "authority": -0.3,
-        "sovereignty": -0.3
+        "economic": -0.25,
+        "authority": -0.1,
+        "sovereignty": -0.1
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 1)",
+      "ideologySource": "estimate (J7): Travaillistes : centre gauche.",
       "support": 0.3456,
       "supportSource": {
         "source": "estimate",
@@ -143,11 +143,11 @@
       "wikidata": "Q125912868",
       "ideologies": ["Q1043096", "Q492050", "Q6216", "Q7169"],
       "ideology": {
-        "economic": 0.325,
-        "authority": 0.025,
-        "sovereignty": 0.075
+        "economic": 0.5,
+        "authority": 0.3,
+        "sovereignty": 0.3
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "ideologySource": "estimate (J7): Coalition libérale-nationale : droite libérale-conservatrice.",
       "support": 0.3182,
       "supportSource": {
         "source": "estimate",

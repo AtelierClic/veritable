@@ -340,7 +340,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Pas d'élection nationale."
+    "note": "Pas d'élection nationale.",
+    "runoff": true
   },
   "aiAgenda": [
     {

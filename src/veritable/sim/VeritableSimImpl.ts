@@ -150,6 +150,8 @@ import {
   ElectionEvent,
   holdElection,
   projectShares,
+  runoffOf,
+  voteCoverage,
 } from "./politics/elections";
 import { clamp01 } from "./politics/ideology";
 import {
@@ -1925,6 +1927,23 @@ export class VeritableSimImpl implements VeritableSim {
         );
       }
     }
+    const shares =
+      player === null
+        ? null
+        : projectShares(
+            this.ctx,
+            this.politics.nations[player],
+            this.sheets.get(player),
+            this.calendar.date,
+          );
+    const coverage =
+      player === null ? 1 : voteCoverage(this.ctx, this.sheets.get(player));
+    const projection =
+      shares === null
+        ? null
+        : Object.fromEntries(
+            Object.entries(shares).map(([id, s]) => [id, s * coverage]),
+          );
     return {
       seed: this.seed,
       date: this.calendar.date,
@@ -1953,13 +1972,16 @@ export class VeritableSimImpl implements VeritableSim {
       initialTiles: this.territory.initialTiles,
       constructionCost: this.territory.constructionCost,
       casusBelli,
-      electionProjection:
-        player === null
+      electionProjection: projection,
+      electionRunoff:
+        player === null || projection === null
           ? null
-          : projectShares(
+          : runoffOf(
               this.ctx,
               this.politics.nations[player],
               this.sheets.get(player),
+              shares ?? projection,
+              this.calendar.date,
             ),
       objectives: this.politics.player.objectives,
       notes: this.politics.player.notes,
@@ -2622,6 +2644,7 @@ export class VeritableSimImpl implements VeritableSim {
           winner: event.winner,
           share: (event.share * 100).toFixed(1),
           alternation: String(event.alternation),
+          round: event.runoff === true ? "2" : "1",
         };
         break;
       case "government-formed":

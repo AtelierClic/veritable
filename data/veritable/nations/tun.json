@@ -344,7 +344,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 17 décembre 2022 et 29 janvier 2023 (nouveau Parlement de 161 sièges, scrutin uninominal sous la constitution 2022) : participation historiquement basse (11,22 % puis 11,4 %), boycottée par la quasi-totalité des partis (Ennahdha, Parti Destourien Libre, Front de salut national...) ; des indépendants ont été élus dans 154 sièges sur 161. Le paysage partisan structuré a cessé d'exister comme force parlementaire ; les parts ci-dessous sont des estimations du poids social des deux principaux partis avant la répression (dernière élection réellement compétitive, 2019), pas des sièges obtenus en 2022-2023.."
+    "note": "Législatives du 17 décembre 2022 et 29 janvier 2023 (nouveau Parlement de 161 sièges, scrutin uninominal sous la constitution 2022) : participation historiquement basse (11,22 % puis 11,4 %), boycottée par la quasi-totalité des partis (Ennahdha, Parti Destourien Libre, Front de salut national...) ; des indépendants ont été élus dans 154 sièges sur 161. Le paysage partisan structuré a cessé d'exister comme force parlementaire ; les parts ci-dessous sont des estimations du poids social des deux principaux partis avant la répression (dernière élection réellement compétitive, 2019), pas des sièges obtenus en 2022-2023..",
+    "runoff": true
   },
   "aiAgenda": [
     {

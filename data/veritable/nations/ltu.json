@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales)."
+    "note": "Législatives du 13 et 27 octobre 2024 (Seimas, Commission électorale centrale, second tour pour les circonscriptions uninominales).",
+    "runoff": true
   },
   "aiAgenda": [
     {

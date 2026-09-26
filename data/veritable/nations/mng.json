@@ -338,7 +338,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élection au Grand Khoural d'État du 28 juin 2024 (126 sièges, nouveau système mixte)."
+    "note": "Élection au Grand Khoural d'État du 28 juin 2024 (126 sièges, nouveau système mixte).",
+    "runoff": true
   },
   "aiAgenda": [
     {

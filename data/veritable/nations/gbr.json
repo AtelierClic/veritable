@@ -341,7 +341,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "manual",
     "asOf": "2026-01-01",
-    "note": "General election 2024. Intervalle : cinq ans au plus."
+    "note": "General election 2024. Intervalle : cinq ans au plus.",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

@@ -341,7 +341,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 25 février 2024 (Commission électorale centrale)."
+    "note": "Législatives du 25 février 2024 (Commission électorale centrale).",
+    "runoff": true
   },
   "aiAgenda": [
     {

@@ -340,7 +340,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 17 août 2025 (Chambre des députés)."
+    "note": "Élections générales du 17 août 2025 (Chambre des députés).",
+    "runoff": true
   },
   "aiAgenda": [
     {

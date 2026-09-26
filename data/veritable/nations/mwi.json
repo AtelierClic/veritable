@@ -338,7 +338,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 16 septembre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximées à partir des sièges (229 au total), les voix précises par parti n'étant pas toutes publiées.."
+    "note": "Élections générales du 16 septembre 2025 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximées à partir des sièges (229 au total), les voix précises par parti n'étant pas toutes publiées..",
+    "runoff": true
   },
   "aiAgenda": [
     {

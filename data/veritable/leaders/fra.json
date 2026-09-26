@@ -57,10 +57,10 @@
       "born": "1995-09-13",
       "party": "fra-rassemblement-national",
       "traits": {
-        "economic": 0.11,
-        "authority": 0.43,
-        "sovereignty": 0.72,
-        "aggressiveness": 0.53,
+        "economic": 0.1,
+        "authority": 0.7,
+        "sovereignty": 0.9,
+        "aggressiveness": 0.62,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -80,10 +80,10 @@
       "born": "1989-03-16",
       "party": "fra-renaissance",
       "traits": {
-        "economic": -0.033,
-        "authority": -0.333,
-        "sovereignty": -0.5,
-        "aggressiveness": 0.1334,
+        "economic": 0.35,
+        "authority": -0.1,
+        "sovereignty": -0.6,
+        "aggressiveness": 0.15999999999999998,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -103,10 +103,10 @@
       "born": "1986-03-30",
       "party": "fra-la-france-insoumise",
       "traits": {
-        "economic": -0.6,
-        "authority": -0.2,
-        "sovereignty": 0.175,
-        "aggressiveness": 0.295,
+        "economic": -0.8,
+        "authority": -0.3,
+        "sovereignty": 0,
+        "aggressiveness": 0.24,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -149,10 +149,10 @@
       "born": "1960-11-20",
       "party": "fra-les-republicains",
       "traits": {
-        "economic": 0.3,
-        "authority": 0.4,
-        "sovereignty": 0.45,
-        "aggressiveness": 0.47000000000000003,
+        "economic": 0.5,
+        "authority": 0.5,
+        "sovereignty": 0.3,
+        "aggressiveness": 0.46,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -172,10 +172,10 @@
       "born": "1986-08-23",
       "party": "fra-les-ecologistes-europe-ecologie-les-verts",
       "traits": {
-        "economic": -0.275,
-        "authority": -0.35,
-        "sovereignty": -0.275,
-        "aggressiveness": 0.175,
+        "economic": -0.5,
+        "authority": -0.5,
+        "sovereignty": -0.4,
+        "aggressiveness": 0.11999999999999997,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -204,11 +204,11 @@
         "Q912036"
       ],
       "ideology": {
-        "economic": 0.11,
-        "authority": 0.43,
-        "sovereignty": 0.72
+        "economic": 0.1,
+        "authority": 0.7,
+        "sovereignty": 0.9
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (10 of 10)",
+      "ideologySource": "estimate (J7): RN : économie mêlée (protection sociale, protectionnisme), autorité et nation au premier plan.",
       "support": 0.33,
       "supportSource": {
         "source": "estimate",
@@ -223,11 +223,11 @@
       "wikidata": "Q23731823",
       "ideologies": ["Q201712", "Q3781399", "Q878445"],
       "ideology": {
-        "economic": -0.033,
-        "authority": -0.333,
-        "sovereignty": -0.5
+        "economic": 0.35,
+        "authority": -0.1,
+        "sovereignty": -0.6
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (3 of 3)",
+      "ideologySource": "estimate (J7): Renaissance : libéral en économie (réforme des retraites de 2023, fiscalité des entreprises), pro-européen ; Wikidata (libéralisme social, européisme, réformisme) le plaçait au centre gauche.",
       "support": 0.2,
       "supportSource": {
         "source": "estimate",
@@ -242,11 +242,11 @@
       "wikidata": "Q27978402",
       "ideologies": ["Q2385364", "Q275595", "Q389647", "Q912036"],
       "ideology": {
-        "economic": -0.6,
-        "authority": -0.2,
-        "sovereignty": 0.175
+        "economic": -0.8,
+        "authority": -0.3,
+        "sovereignty": 0
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "ideologySource": "estimate (J7): LFI : gauche radicale ; critique des traités européens sans nationalisme.",
       "support": 0.12,
       "supportSource": {
         "source": "estimate",
@@ -280,11 +280,11 @@
       "wikidata": "Q20012759",
       "ideologies": ["Q7169", "Q770215"],
       "ideology": {
-        "economic": 0.3,
-        "authority": 0.4,
-        "sovereignty": 0.45
+        "economic": 0.5,
+        "authority": 0.5,
+        "sovereignty": 0.3
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "ideologySource": "estimate (J7): LR : droite libérale-conservatrice.",
       "support": 0.07,
       "supportSource": {
         "source": "estimate",
@@ -299,11 +299,11 @@
       "wikidata": "Q613786",
       "ideologies": ["Q1661415", "Q188961", "Q2385364", "Q3781399"],
       "ideology": {
-        "economic": -0.275,
-        "authority": -0.35,
-        "sovereignty": -0.275
+        "economic": -0.5,
+        "authority": -0.5,
+        "sovereignty": -0.4
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 4)",
+      "ideologySource": "estimate (J7): Écologistes : gauche libertaire et européenne.",
       "support": 0.05,
       "supportSource": {
         "source": "estimate",

@@ -3195,5 +3195,252 @@
       "ZMB": "1990, 1997",
       "ZWE": "2017"
     }
+  },
+  "partyIdeologyOverrides": {
+    "_note": "J7 (régression politique du guide J4) : idéologies écrites à la main, de mémoire, là où celle de Wikidata (P1142) situe mal un parti de gouvernement ou d'opposition des démocraties du G20 et les partis de la présidentielle française ; la fenêtre idéologique décide désormais du choix du gouvernement. À valider.",
+    "values": {
+      "fra-rassemblement-national": {
+        "ideology": {
+          "economic": 0.1,
+          "authority": 0.7,
+          "sovereignty": 0.9
+        },
+        "note": "RN : économie mêlée (protection sociale, protectionnisme), autorité et nation au premier plan."
+      },
+      "fra-renaissance": {
+        "ideology": {
+          "economic": 0.35,
+          "authority": -0.1,
+          "sovereignty": -0.6
+        },
+        "note": "Renaissance : libéral en économie (réforme des retraites de 2023, fiscalité des entreprises), pro-européen ; Wikidata (libéralisme social, européisme, réformisme) le plaçait au centre gauche."
+      },
+      "fra-la-france-insoumise": {
+        "ideology": {
+          "economic": -0.8,
+          "authority": -0.3,
+          "sovereignty": 0.0
+        },
+        "note": "LFI : gauche radicale ; critique des traités européens sans nationalisme."
+      },
+      "fra-les-republicains": {
+        "ideology": {
+          "economic": 0.5,
+          "authority": 0.5,
+          "sovereignty": 0.3
+        },
+        "note": "LR : droite libérale-conservatrice."
+      },
+      "fra-les-ecologistes-europe-ecologie-les-verts": {
+        "ideology": {
+          "economic": -0.5,
+          "authority": -0.5,
+          "sovereignty": -0.4
+        },
+        "note": "Écologistes : gauche libertaire et européenne."
+      },
+      "gbr-parti-travailliste": {
+        "ideology": {
+          "economic": -0.25,
+          "authority": -0.1,
+          "sovereignty": -0.2
+        },
+        "note": "Travaillistes de Keir Starmer : centre gauche ; Wikidata (socialisme démocratique) les plaçait à −0,6."
+      },
+      "gbr-parti-conservateur": {
+        "ideology": {
+          "economic": 0.5,
+          "authority": 0.3,
+          "sovereignty": 0.4
+        },
+        "note": "Conservateurs : droite libérale, eurosceptique depuis le Brexit."
+      },
+      "gbr-reform-uk": {
+        "ideology": {
+          "economic": 0.5,
+          "authority": 0.5,
+          "sovereignty": 0.9
+        },
+        "note": "Reform UK : droite nationale-populiste."
+      },
+      "gbr-liberaux-democrates": {
+        "ideology": {
+          "economic": 0.0,
+          "authority": -0.4,
+          "sovereignty": -0.6
+        },
+        "note": "Libéraux-démocrates : centristes pro-européens."
+      },
+      "usa-parti-republicain": {
+        "ideology": {
+          "economic": 0.5,
+          "authority": 0.5,
+          "sovereignty": 0.7
+        },
+        "note": "Républicains de 2026 : droits de douane, « America First »."
+      },
+      "usa-parti-democrate": {
+        "ideology": {
+          "economic": -0.2,
+          "authority": -0.3,
+          "sovereignty": -0.3
+        },
+        "note": "Démocrates : centre gauche."
+      },
+      "deu-union-chretienne-democrate-d-allemagne": {
+        "ideology": {
+          "economic": 0.4,
+          "authority": 0.25,
+          "sovereignty": -0.3
+        },
+        "note": "CDU : centre droit conservateur et européen."
+      },
+      "jpn-parti-democrate-constitutionnel": {
+        "ideology": {
+          "economic": -0.2,
+          "authority": -0.4,
+          "sovereignty": -0.3
+        },
+        "note": "PDC : centre gauche."
+      },
+      "can-parti-liberal-du-canada": {
+        "ideology": {
+          "economic": 0.1,
+          "authority": -0.3,
+          "sovereignty": -0.3
+        },
+        "note": "Libéraux de Mark Carney : centre."
+      },
+      "can-bloc-quebecois": {
+        "ideology": {
+          "economic": -0.2,
+          "authority": -0.1,
+          "sovereignty": 0.5
+        },
+        "note": "Bloc québécois : souverainisme québécois, social-démocratie."
+      },
+      "aus-parti-travailliste-australien": {
+        "ideology": {
+          "economic": -0.25,
+          "authority": -0.1,
+          "sovereignty": -0.1
+        },
+        "note": "Travaillistes : centre gauche."
+      },
+      "aus-liberal-national-coalition-new-south-wales": {
+        "ideology": {
+          "economic": 0.5,
+          "authority": 0.3,
+          "sovereignty": 0.3
+        },
+        "note": "Coalition libérale-nationale : droite libérale-conservatrice."
+      },
+      "kor-parti-minju": {
+        "ideology": {
+          "economic": -0.2,
+          "authority": -0.2,
+          "sovereignty": 0.0
+        },
+        "note": "Parti démocrate : centre gauche ; Wikidata le plaçait à droite en économie."
+      },
+      "bra-parti-liberal": {
+        "ideology": {
+          "economic": 0.5,
+          "authority": 0.6,
+          "sovereignty": 0.6
+        },
+        "note": "PL de Jair Bolsonaro : droite nationale-conservatrice."
+      },
+      "zaf-congres-national-africain": {
+        "ideology": {
+          "economic": -0.3,
+          "authority": 0.0,
+          "sovereignty": 0.1
+        },
+        "note": "ANC : centre gauche."
+      },
+      "zaf-alliance-democratique": {
+        "ideology": {
+          "economic": 0.4,
+          "authority": -0.3,
+          "sovereignty": -0.3
+        },
+        "note": "Alliance démocratique : libérale."
+      }
+    }
+  },
+  "electoralSystems": {
+    "note": "J7 : scrutins de l'exécutif national à deux tours (un second tour entre les deux premiers quand le chef de l'État est élu, régimes présidentiels et semi-présidentiels), et parlements majoritaires où le premier parti gouverne seul. Listes établies de mémoire, à valider.",
+    "runoff": [
+      "FRA",
+      "POL",
+      "UKR",
+      "RUS",
+      "TUR",
+      "BRA",
+      "ARG",
+      "COL",
+      "CHL",
+      "PER",
+      "ECU",
+      "URY",
+      "BOL",
+      "GTM",
+      "SLV",
+      "DOM",
+      "CRI",
+      "PRT",
+      "AUT",
+      "FIN",
+      "ROU",
+      "BGR",
+      "HRV",
+      "SVN",
+      "SVK",
+      "CZE",
+      "LTU",
+      "CYP",
+      "IDN",
+      "EGY",
+      "TUN",
+      "DZA",
+      "IRN",
+      "KAZ",
+      "UZB",
+      "AZE",
+      "BLR",
+      "MDA",
+      "MNG",
+      "SEN",
+      "CIV",
+      "GHA",
+      "ZWE",
+      "ZMB",
+      "MWI",
+      "BEN",
+      "BFA",
+      "MLI",
+      "NER",
+      "TCD",
+      "KEN",
+      "TLS"
+    ],
+    "singlePartyGovernment": [
+      "GBR",
+      "CAN",
+      "AUS",
+      "JAM",
+      "TTO",
+      "BRB",
+      "BHS",
+      "BLZ",
+      "MLT",
+      "GRD",
+      "LCA",
+      "VCT",
+      "ATG",
+      "DMA",
+      "KNA"
+    ]
   }
 }

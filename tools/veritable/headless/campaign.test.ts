@@ -174,10 +174,19 @@ describe("cutting a gas supplier shows in the curves", () => {
   // Delivery test 1 of the J3: the full EU members stop buying Russian gas
   // and oil in January 2027.
   it("EU embargo on Russian gas and oil: Russian GDP -3 % in two years, gas import price +25 % in the first year", () => {
+    // Without the noise, like the delivery test of the J3 (graine 42, sans
+    // bruit): the random supply shocks of the world part the two campaigns
+    // once their draws differ (J7).
     const pack = calm();
     const shock = parseShock("eu-embargo:RUS@2027-01");
-    const control = runCampaign({ pack, config, seed: 42, years: 4 });
-    const cut = runCampaign({ pack, config, seed: 42, years: 4, shock });
+    const control = runCampaign({ pack, config: quiet(), seed: 42, years: 4 });
+    const cut = runCampaign({
+      pack,
+      config: quiet(),
+      seed: 42,
+      years: 4,
+      shock,
+    });
     const at = (date: string, r: typeof control) =>
       r.series.find((row) => row.date === date)!;
     expect(at("2027-01-01", cut)).toEqual(at("2027-01-01", control));

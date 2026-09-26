@@ -339,7 +339,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 16 septembre 2021."
+    "note": "Élections générales du 16 septembre 2021.",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

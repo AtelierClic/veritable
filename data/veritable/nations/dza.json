@@ -344,7 +344,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %).."
+    "note": "Législatives du 12 juin 2021 (Assemblée populaire nationale, 407 sièges), toujours les dernières au 1er janvier 2026 (prochaines prévues en 2026) : participation record-basse de 22,99 %. Parts de sièges utilisées ci-dessous car les parts de voix nationales, très fragmentées entre listes, restent sous 7 % pour chaque parti (FLN 6,24 %, MSP 4,52 %, RND 4,31 %)..",
+    "runoff": true
   },
   "aiAgenda": [
     {

@@ -143,6 +143,11 @@ export function buildLeaders(
     asOf: string;
     leaderTraits: Record<string, LeaderTraitEstimate>;
     partyIdeologies: Record<string, { ideology: Ideology; note: string }>;
+    // J7: ideologies written by hand, by party id, over Wikidata's.
+    partyIdeologyOverrides?: Record<
+      string,
+      { ideology: Ideology; note: string }
+    >;
     parodyNations?: string[];
     headOverrides?: Record<string, HeadOverride>;
     partyLeaderOverrides?: Record<string, HeadOverride>;
@@ -237,6 +242,11 @@ export function buildLeaders(
         ideology = { economic: 0, authority: 0, sovereignty: 0 };
         ideologySource = "estimate: no ideology known, centre";
         warnings.push(`${nation} ${wd.label}: no ideology at all`);
+      }
+      const override = estimates.partyIdeologyOverrides?.[id];
+      if (override !== undefined) {
+        ideology = override.ideology;
+        ideologySource = `estimate (J7): ${override.note}`;
       }
       const round3 = (v: number) => Math.round(v * 1000) / 1000;
       ideology = {

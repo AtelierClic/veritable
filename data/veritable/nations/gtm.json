@@ -338,7 +338,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 25 juin 2023 (Congrès de la République)."
+    "note": "Élections législatives du 25 juin 2023 (Congrès de la République).",
+    "runoff": true
   },
   "aiAgenda": [
     {

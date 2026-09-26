@@ -343,7 +343,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle."
+    "note": "Élection législative (DPR) du 14 février 2024, simultanée à la présidentielle.",
+    "runoff": true
   },
   "aiAgenda": [
     {

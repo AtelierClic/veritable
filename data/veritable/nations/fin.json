@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 2 avril 2023 (Eduskunta)."
+    "note": "Législatives du 2 avril 2023 (Eduskunta).",
+    "runoff": true
   },
   "aiAgenda": [
     {

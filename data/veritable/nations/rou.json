@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 1er décembre 2024 (Autoritatea Electorală Permanentă)."
+    "note": "Législatives du 1er décembre 2024 (Autoritatea Electorală Permanentă).",
+    "runoff": true
   },
   "aiAgenda": [
     {

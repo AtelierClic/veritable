@@ -39,6 +39,7 @@ import {
 import { Scenario } from "../data/schemas/scenario";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import type { AccessionCriteria, MeasureOption, Tally } from "./blocs/blocs";
+import type { Runoff } from "./politics/elections";
 
 // The simulation boundary (ARCHITECTURE.md, "Frontière de simulation").
 // The client (through the worker) and the headless runner are two consumers of
@@ -450,6 +451,9 @@ export interface ReadonlyWorldView {
   // The political engine (J4): projected shares of the player's next
   // election (levers applied, no draw), the pinned objectives and notes.
   readonly electionProjection: Readonly<Record<string, number>> | null;
+  // J7: the projected runoff where the head of state is elected in two
+  // rounds (null elsewhere).
+  readonly electionRunoff: Readonly<Runoff> | null;
   readonly objectives: readonly Readonly<PinnedObjective>[];
   readonly notes: readonly Readonly<{ date: string; text: string }>[];
   // Blocs, layers 2 and 3 (J5).

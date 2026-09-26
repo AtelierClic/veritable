@@ -341,7 +341,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "manual",
     "asOf": "2026-01-01",
-    "note": "Présidentielle 2022 (second tour). Intervalle : mandat présidentiel de cinq ans."
+    "note": "Présidentielle 2022 (second tour). Intervalle : mandat présidentiel de cinq ans.",
+    "runoff": true
   },
   "aiAgenda": [
     {

@@ -338,7 +338,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 9 août 2022 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximatives par parti (les coalitions Kenya Kwanza et Azimio la Umoja regroupent plusieurs partis).."
+    "note": "Élections générales du 9 août 2022 (Assemblée nationale, concomitantes à la présidentielle) ; parts approximatives par parti (les coalitions Kenya Kwanza et Azimio la Umoja regroupent plusieurs partis)..",
+    "runoff": true
   },
   "aiAgenda": [
     {

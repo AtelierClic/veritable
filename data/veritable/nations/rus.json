@@ -348,7 +348,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "manual",
     "asOf": "2026-01-01",
-    "note": "Présidentielle 2024. Intervalle : mandat présidentiel de six ans."
+    "note": "Présidentielle 2024. Intervalle : mandat présidentiel de six ans.",
+    "runoff": true
   },
   "aiAgenda": [
     {

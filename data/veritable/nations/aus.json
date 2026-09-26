@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élection fédérale du 3 mai 2025 (Chambre des représentants, vote de premier ordre de préférence)."
+    "note": "Élection fédérale du 3 mai 2025 (Chambre des représentants, vote de premier ordre de préférence).",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

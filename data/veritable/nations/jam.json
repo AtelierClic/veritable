@@ -339,7 +339,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 3 septembre 2025."
+    "note": "Élections générales du 3 septembre 2025.",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

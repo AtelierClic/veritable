@@ -175,6 +175,10 @@ const PoliticsConfigSchema = z.object({
     sigma: positive,
     // Vote for the incumbent x (incumbentBase + satisfaction of the group).
     incumbentBase: share,
+    // J7: the cost of governing — the vote for the incumbent x (1 - this x
+    // years in power), never below incumbencyFatigueFloor.
+    incumbencyFatiguePerYear: share,
+    incumbencyFatigueFloor: share,
     // Propaganda: +propagandaWeight x (% of GDP spent) to the incumbent.
     propagandaWeight: z.number().min(0),
     propagandaMaxPctGdp: share,
@@ -232,6 +236,12 @@ const PoliticsConfigSchema = z.object({
     // the campaign (the new regime consolidates; the regime of the first
     // day is not new), and a junta hands power back after a while.
     consolidationMonths: z.number().int().min(0),
+    // J7: a democracy that is stable and legitimate (both at least these)
+    // has its risk of a coup multiplied by stableDemocracyFactor: no
+    // consolidated democracy has fallen to a coup since 1990.
+    stableDemocracyFactor: share,
+    stableDemocracyStability: share,
+    stableDemocracyLegitimacy: share,
     juntaTransitionMonths: z.number().int().min(0),
     juntaTransitionMonthlyProbability: share,
     // J7: an electoral autocracy of the first day without a coup attempt

@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État)."
+    "note": "Législatives du 17 avril 2024 (Sabor, Commission électorale d'État).",
+    "runoff": true
   },
   "aiAgenda": [
     {

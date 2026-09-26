@@ -10,7 +10,7 @@ import {
 import { EconomyContext } from "../economy/context";
 import { debtHealthOf } from "../economy/init";
 import { Rng } from "../rng";
-import { formGovernment } from "./elections";
+import { fitPartyBases, formGovernment } from "./elections";
 import { meanIdeology } from "./ideology";
 import { actorFromData, generateActor } from "./leaders";
 
@@ -65,7 +65,7 @@ export function initNationPolitics(
       name: { kind: "key", key: party.name },
       ideology: { ...party.ideology },
       support: party.support,
-      base: 1, // fitted once the parties are known (fitPartyBases)
+      base: 1, // fitted below, once the state is whole (fitPartyBases)
       leader,
     });
   }
@@ -112,8 +112,14 @@ export function initNationPolitics(
     parties[0];
   leader ??= rulingParty.leader;
 
-  const government = formGovernment(ctx, regime, parties, rulingParty.id);
-  return {
+  const government = formGovernment(
+    ctx,
+    regime,
+    parties,
+    rulingParty.id,
+    sheet,
+  );
+  const politics: NationPolitics = {
     groups: isPlayer
       ? Object.fromEntries(INTEREST_GROUPS.map((g) => [g, 0.5]))
       : null,
@@ -166,6 +172,9 @@ export function initNationPolitics(
     regimeSince: date,
     regimeBefore: null,
   };
+  // J7: the vote of the first day gives back the last national election.
+  fitPartyBases(ctx, politics, sheet);
+  return politics;
 }
 
 export function initPoliticsState(

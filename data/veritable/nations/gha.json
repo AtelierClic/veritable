@@ -338,7 +338,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 7 décembre 2024 (présidentielle et Parlement le même jour, 276 sièges). Parts de sièges utilisées comme approximation des parts de voix législatives, non publiées séparément du scrutin présidentiel.."
+    "note": "Élections générales du 7 décembre 2024 (présidentielle et Parlement le même jour, 276 sièges). Parts de sièges utilisées comme approximation des parts de voix législatives, non publiées séparément du scrutin présidentiel..",
+    "runoff": true
   },
   "aiAgenda": [
     {

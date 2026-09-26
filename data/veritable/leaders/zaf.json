@@ -34,10 +34,10 @@
       "born": "1976-03-25",
       "party": "zaf-alliance-democratique",
       "traits": {
-        "economic": 0,
-        "authority": -0.55,
-        "sovereignty": -0.4,
-        "aggressiveness": 0.10999999999999996,
+        "economic": 0.4,
+        "authority": -0.3,
+        "sovereignty": -0.3,
+        "aggressiveness": 0.18,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -147,11 +147,11 @@
       "wikidata": "Q83162",
       "ideologies": ["Q121254", "Q3874021"],
       "ideology": {
-        "economic": -0.5,
-        "authority": -0.3,
-        "sovereignty": -0.3
+        "economic": -0.3,
+        "authority": 0,
+        "sovereignty": 0.1
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (1 of 2)",
+      "ideologySource": "estimate (J7): ANC : centre gauche.",
       "support": 0.4018,
       "supportSource": {
         "source": "estimate",
@@ -166,11 +166,11 @@
       "wikidata": "Q761877",
       "ideologies": ["Q6216", "Q821102"],
       "ideology": {
-        "economic": 0,
-        "authority": -0.55,
-        "sovereignty": -0.4
+        "economic": 0.4,
+        "authority": -0.3,
+        "sovereignty": -0.3
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (2 of 2)",
+      "ideologySource": "estimate (J7): Alliance démocratique : libérale.",
       "support": 0.2181,
       "supportSource": {
         "source": "estimate",

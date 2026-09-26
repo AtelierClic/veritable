@@ -336,7 +336,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 28 avril 2025 (pourcentages de voix estimés)."
+    "note": "Élections générales du 28 avril 2025 (pourcentages de voix estimés).",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

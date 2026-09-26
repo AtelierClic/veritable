@@ -15,7 +15,12 @@ import { DAYS_PER_MONTH } from "../time";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { coupBaseOf } from "./coups";
-import { holdElection, projectShares } from "./elections";
+import {
+  holdElection,
+  incumbencyFatigue,
+  projectShares,
+  runoffOf,
+} from "./elections";
 import { affinity, insideWindow } from "./ideology";
 import { ageAt, yearlyDeathProbability } from "./leaders";
 
@@ -193,10 +198,14 @@ describe("elections", () => {
     expect(sim.read().politics.AAA.laws.map((l) => l.id)).toEqual([
       "wealth-tax",
     ]);
-    for (const g of Object.keys(live(sim, "AAA").groups!)) {
-      live(sim, "AAA").groups![g] = 0.1;
+    // J7: the vote of the first day gives back the last election (55 % for
+    // the left): only angry groups, kept angry up to the vote, turn it.
+    for (let m = 0; m < 25; m++) {
+      for (const g of Object.keys(live(sim, "AAA").groups!)) {
+        live(sim, "AAA").groups![g] = 0.1;
+      }
+      months(1);
     }
-    months(25);
     const p = live(sim, "AAA");
     expect(p.lastElection!.alternation).toBe(true);
     expect(p.government.parties[0]).toBe("aaa-right");
@@ -208,6 +217,78 @@ describe("elections", () => {
     months(13);
     expect(sim.read().politics.AAA.laws).toEqual([]);
     expect(sim.read().journal.map((j) => j.kind)).toContain("law-repealed");
+  });
+});
+
+describe("the vote of the J7", () => {
+  it("fits the attachment of each party so that the first day gives back the last election", () => {
+    const { sim } = campaign({
+      nations: { AAA: {}, BBB: {} },
+      leaders: { incumbentSupport: 0.3, charisma: 0.9 },
+    });
+    // The charismatic left would take most of the vote by ideology alone.
+    const projection = sim.read().electionProjection!;
+    expect(projection["aaa-left"]).toBeCloseTo(0.3, 3);
+    expect(projection["aaa-right"]).toBeCloseTo(0.7, 3);
+  });
+
+  it("a runoff: the first of the first round loses to the second, whom the third party's voters join", () => {
+    const { sim, sheets } = campaign({ nations: { AAA: {}, BBB: {} } });
+    const ctx = quietCtx(sim);
+    const p = live(sim, "AAA");
+    const party = (
+      id: string,
+      support: number,
+      ideology: { economic: number; authority: number; sovereignty: number },
+    ) => ({ ...p.parties[0], id, support, base: 1, ideology });
+    p.regime = "semi-presidential";
+    p.parties = [
+      party("extreme", 0.4, {
+        economic: 0.1,
+        authority: 0.9,
+        sovereignty: 0.9,
+      }),
+      party("centre", 0.35, {
+        economic: 0.3,
+        authority: -0.1,
+        sovereignty: -0.5,
+      }),
+      party("left", 0.25, {
+        economic: -0.4,
+        authority: -0.3,
+        sovereignty: -0.4,
+      }),
+    ];
+    p.government = {
+      parties: ["centre"],
+      since: "2026-01-01",
+      ideology: p.parties[1].ideology,
+    };
+    const sheet = sheets.get("AAA")!;
+    const shares = { extreme: 0.4, centre: 0.35, left: 0.25 };
+    expect(runoffOf(ctx, p, sheet, shares)).toBeNull();
+    sheet.politics.runoff = true;
+    const runoff = runoffOf(ctx, p, sheet, shares)!;
+    expect(runoff.a).toBe("extreme");
+    expect(runoff.b).toBe("centre");
+    expect(runoff.winner).toBe("centre");
+    expect(runoff.share).toBeGreaterThan(0.5);
+  });
+
+  it("the cost of governing: the longer in power, the fewer votes; a re-elected party keeps its years", () => {
+    const { sim } = campaign({ nations: { AAA: {}, BBB: {} } });
+    const ctx = quietCtx(sim);
+    const p = live(sim, "AAA");
+    const now = projectShares(ctx, p, undefined, "2026-01-01")["aaa-left"];
+    const later = projectShares(ctx, p, undefined, "2034-01-01")["aaa-left"];
+    expect(later).toBeLessThan(now);
+    expect(incumbencyFatigue(ctx, p, "2034-01-01")).toBeCloseTo(
+      1 - 8 * ctx.config.politics.elections.incumbencyFatiguePerYear,
+      2,
+    );
+    expect(incumbencyFatigue(ctx, p, "2076-01-01")).toBe(
+      ctx.config.politics.elections.incumbencyFatigueFloor,
+    );
   });
 });
 

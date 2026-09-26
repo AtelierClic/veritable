@@ -347,7 +347,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 29 décembre 2024 (188 sièges, les premières depuis 2011) : Mouvement Patriotique du Salut (MPS) 124 sièges (45,18 %), Rassemblement National des Démocrates Tchadiens/Le Réveil (RNDT) 11 (6,96 %), Rassemblement pour la Démocratie et le Progrès (RDP) 8 (6,05 %), Union Nationale pour la Démocratie et le Renouveau (UNDR) 7 (3,90 %), reste petites formations et indépendants ; participation 52,38 %.."
+    "note": "Législatives du 29 décembre 2024 (188 sièges, les premières depuis 2011) : Mouvement Patriotique du Salut (MPS) 124 sièges (45,18 %), Rassemblement National des Démocrates Tchadiens/Le Réveil (RNDT) 11 (6,96 %), Rassemblement pour la Démocratie et le Progrès (RDP) 8 (6,05 %), Union Nationale pour la Démocratie et le Renouveau (UNDR) 7 (3,90 %), reste petites formations et indépendants ; participation 52,38 %..",
+    "runoff": true
   },
   "aiAgenda": [
     {

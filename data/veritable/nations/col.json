@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 13 mars 2022 (Chambre des représentants, pourcentages estimés)."
+    "note": "Élections législatives du 13 mars 2022 (Chambre des représentants, pourcentages estimés).",
+    "runoff": true
   },
   "aiAgenda": [
     {

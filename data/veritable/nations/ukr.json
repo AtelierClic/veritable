@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": true,
     "source": "manual",
     "asOf": "2026-01-01",
-    "note": "Présidentielle 2019. Élections suspendues tant que la guerre est sur le territoire (loi martiale depuis 2022)."
+    "note": "Présidentielle 2019. Élections suspendues tant que la guerre est sur le territoire (loi martiale depuis 2022).",
+    "runoff": true
   },
   "aiAgenda": [
     {

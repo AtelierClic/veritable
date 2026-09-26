@@ -337,7 +337,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élection législative (Majlis) de mars 2024 ; estimation des courants faute de partis structurés, faible confiance."
+    "note": "Élection législative (Majlis) de mars 2024 ; estimation des courants faute de partis structurés, faible confiance.",
+    "runoff": true
   },
   "aiAgenda": [
     {

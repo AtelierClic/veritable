@@ -341,7 +341,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 18 janvier 2023."
+    "note": "Élections générales du 18 janvier 2023.",
+    "government": "leading-party"
   },
   "aiAgenda": [
     {

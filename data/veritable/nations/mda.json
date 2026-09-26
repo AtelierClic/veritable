@@ -338,7 +338,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives du 28 septembre 2025."
+    "note": "Législatives du 28 septembre 2025.",
+    "runoff": true
   },
   "aiAgenda": [
     {

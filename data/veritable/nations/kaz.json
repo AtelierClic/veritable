@@ -342,7 +342,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives (Mäjilis) du 19 mars 2023."
+    "note": "Législatives (Mäjilis) du 19 mars 2023.",
+    "runoff": true
   },
   "aiAgenda": [
     {

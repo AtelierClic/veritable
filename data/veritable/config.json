@@ -70,7 +70,7 @@
     "maxTaxRate": {
       "income": 0.6,
       "corporate": 0.6,
-      "vat": 0.4,
+      "vat": 0.45,
       "tariffs": 0.5,
       "rents": 0.9
     },
@@ -128,7 +128,7 @@
       "growth": 0.04,
       "prices": 0.5,
       "taxRate": 0.1,
-      "spending": 0.5,
+      "spending": 0.4,
       "shortage": 0.2
     },
     "drivers": {
@@ -250,6 +250,8 @@
     "elections": {
       "sigma": 0.9,
       "incumbentBase": 0.5,
+      "incumbencyFatiguePerYear": 0.04,
+      "incumbencyFatigueFloor": 0.5,
       "propagandaWeight": 5,
       "propagandaMaxPctGdp": 0.02,
       "mediaControlBonus": 1.2,
@@ -292,6 +294,9 @@
       "failedStabilityHit": 0.1,
       "failedMilitaryHit": 0.1,
       "consolidationMonths": 12,
+      "stableDemocracyFactor": 0.2,
+      "stableDemocracyStability": 0.5,
+      "stableDemocracyLegitimacy": 0.7,
       "noAttemptRegime": "parliamentary",
       "juntaTransitionMonths": 48,
       "juntaTransitionMonthlyProbability": 0.05

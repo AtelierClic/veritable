@@ -34,10 +34,10 @@
       "born": "1965-01-01",
       "party": "bra-parti-liberal",
       "traits": {
-        "economic": 0.225,
-        "authority": 0.025,
-        "sovereignty": 0,
-        "aggressiveness": 0.305,
+        "economic": 0.5,
+        "authority": 0.6,
+        "sovereignty": 0.6,
+        "aggressiveness": 0.54,
         "corruption": 0.09999999999999998,
         "charisma": 0.5,
         "competence": 0.5
@@ -147,11 +147,11 @@
       "wikidata": "Q2731720",
       "ideologies": ["Q106571755", "Q180490", "Q209158", "Q729119", "Q877848"],
       "ideology": {
-        "economic": 0.225,
-        "authority": 0.025,
-        "sovereignty": 0
+        "economic": 0.5,
+        "authority": 0.6,
+        "sovereignty": 0.6
       },
-      "ideologySource": "wikidata:P1142 x ideologies.json (4 of 5)",
+      "ideologySource": "estimate (J7): PL de Jair Bolsonaro : droite nationale-conservatrice.",
       "support": 0.1664,
       "supportSource": {
         "source": "estimate",

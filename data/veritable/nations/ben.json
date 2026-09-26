@@ -347,7 +347,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 8 janvier 2023, 109 sièges ; parts de voix officielles.."
+    "note": "Élections législatives du 8 janvier 2023, 109 sièges ; parts de voix officielles..",
+    "runoff": true
   },
   "aiAgenda": [
     {

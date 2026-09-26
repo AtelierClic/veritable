@@ -345,7 +345,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections générales du 12 août 2021 (Assemblée nationale, concomitantes à la présidentielle).."
+    "note": "Élections générales du 12 août 2021 (Assemblée nationale, concomitantes à la présidentielle)..",
+    "runoff": true
   },
   "aiAgenda": [
     {

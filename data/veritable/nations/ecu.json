@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Élections législatives du 9 février 2025 (Assemblée nationale, pourcentages estimés à partir des sièges)."
+    "note": "Élections législatives du 9 février 2025 (Assemblée nationale, pourcentages estimés à partir des sièges).",
+    "runoff": true
   },
   "aiAgenda": [
     {

@@ -335,7 +335,8 @@
     "electionsSuspendedAtWarAtHome": false,
     "source": "estimate (politics-world.json)",
     "asOf": "2026-01-01",
-    "note": "Législatives anticipées du 18 mai 2025 (Comissão Nacional de Eleições)."
+    "note": "Législatives anticipées du 18 mai 2025 (Comissão Nacional de Eleições).",
+    "runoff": true
   },
   "aiAgenda": [
     {
