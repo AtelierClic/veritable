@@ -5,6 +5,7 @@ import {
   FrontView,
   HudView,
   JournalQuery,
+  MapColors,
   PlayerCommand,
   ReadonlyWorldView,
   SimEvent,
@@ -30,6 +31,8 @@ export type VeritableRequest =
   | { kind: "tile"; tile: number }
   // J7b: what a declaration of war of the player would bring down.
   | { kind: "war-preview"; target: NationId; casusBelli: string }
+  // J7b: what the modes of the map colour the nations by.
+  | { kind: "map-colors" }
   | { kind: "apply"; command: PlayerCommand }
   | { kind: "snapshot" }
   | { kind: "perf" }
@@ -50,6 +53,13 @@ export interface MapOverlayResult {
     levels: Record<NationId, IntelLevels>;
     rules: IntelRules;
   };
+}
+
+// The modes of the map (J7b): the colours of the simulation and the id of
+// each nation in the core (the palette of the renderer is indexed by it).
+export interface MapColorsResult {
+  colors: MapColors;
+  smallIds: Record<NationId, number>;
 }
 
 // A tile of the map as the interface asks about it (J7b).

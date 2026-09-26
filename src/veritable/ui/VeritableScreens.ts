@@ -100,6 +100,28 @@ const fixed1 = (v: number): string => v.toFixed(1);
 
 // The force ratio of a segment from the two perceived forces (J7b): a range
 // when the enemy's force is a range, "?" unknown.
+// J7b: the sea zones where the player's fleet is (present), or the others,
+// by name.
+function seaZones(
+  view: ReadonlyWorldView,
+  me: string,
+  present: boolean,
+): TemplateResult[] {
+  return Object.entries(view.naval.control)
+    .filter(([, shares]) => (shares[me] ?? 0) > 0 === present)
+    .sort((a, b) =>
+      present
+        ? (b[1][me] ?? 0) - (a[1][me] ?? 0)
+        : vt(`sea.${a[0]}`).localeCompare(vt(`sea.${b[0]}`), "fr"),
+    )
+    .map(
+      ([zone, shares]) =>
+        html`<span
+          >${vt(`sea.${zone}`)} : <b>${pct(shares[me] ?? 0, 0)}</b></span
+        >`,
+    );
+}
+
 function ratioText(
   mine: Perceived | undefined,
   theirs: Perceived | undefined,
@@ -1284,17 +1306,20 @@ export class VeritableScreens extends LitElement {
       </div>
       <div class="mt-1 font-bold">${vt("screen.diplomacy.sea")}</div>
       <div class="flex flex-wrap gap-x-3">
-        ${Object.entries(view.naval.control).map(
-          ([zone, shares]) =>
-            html`<span
-              >${vt(`sea.${zone}`)} : <b>${pct(shares[me] ?? 0, 0)}</b></span
-            >`,
-        )}
+        ${seaZones(view, me, true)}
         <span
           >${vt("screen.diplomacy.blockaded")} :
           <b>${pct(view.naval.blockade[me] ?? 0, 0)}</b></span
         >
       </div>
+      <details class="text-gray-300">
+        <summary class="cursor-pointer">
+          ${vt("screen.diplomacy.sea-others", {
+            count: Object.keys(view.naval.control).length,
+          })}
+        </summary>
+        <div class="flex flex-wrap gap-x-3">${seaZones(view, me, false)}</div>
+      </details>
       ${this.renderFleet(view, me)} ${this.renderEmbargoes(view, me, picked)}
       <div class="mt-1 text-gray-400">${vt("screen.diplomacy.note")}</div>
     `;
@@ -1554,7 +1579,9 @@ export class VeritableScreens extends LitElement {
           <tr class="text-gray-300">
             <th class="text-left">${vt("screen.politics.law")}</th>
             <th class="text-left">${vt("screen.politics.domain")}</th>
-            <th class="text-right">${vt("screen.politics.cost")}</th>
+            <th class="whitespace-nowrap text-right">
+              ${vt("screen.politics.cost")}
+            </th>
             <th class="text-left">${vt("screen.politics.window")}</th>
             <th class="text-left">${vt("screen.politics.status")}</th>
             <th></th>
@@ -1995,6 +2022,7 @@ export class VeritableScreens extends LitElement {
     const selected =
       view.blocs.find((b) => b.id === this.selectedBloc) ??
       view.blocs.find((b) => b.playerStatus === "full") ??
+      view.blocs.find((b) => b.members.length > 0) ??
       view.blocs[0];
     return html`
       <table class="w-full text-right">
@@ -2008,38 +2036,41 @@ export class VeritableScreens extends LitElement {
           </tr>
         </thead>
         <tbody>
-          ${view.blocs.map(
-            (b) =>
-              html`<tr
-                class="cursor-pointer ${b.id === selected?.id
-                  ? "bg-gray-700"
-                  : ""}"
-                @click=${() => {
-                  this.selectedBloc = b.id;
-                  this.armedExit = null;
-                }}
-              >
-                <td class="text-left">${vt(`bloc.${b.id}.name`)}</td>
-                <td>
-                  ${b.leader === null
-                    ? vt("screen.blocs.no-leader")
-                    : this.nationLabel(view, b.leader)}
-                </td>
-                <td>
-                  ${vt("screen.blocs.member-count", {
-                    simulated: b.members.filter((m) => m.status === "full")
-                      .length,
-                    world: b.worldMembers,
-                  })}
-                </td>
-                <td>
-                  ${b.playerStatus === null
-                    ? vt("screen.blocs.not-member")
-                    : vt(`bloc.status.${b.playerStatus}`)}
-                </td>
-                <td>${b.pending.length}</td>
-              </tr>`,
-          )}
+          ${view.blocs
+            // J7b: the blocs the scenario simulates a member of.
+            .filter((b) => b.members.length > 0)
+            .map(
+              (b) =>
+                html`<tr
+                  class="cursor-pointer ${b.id === selected?.id
+                    ? "bg-gray-700"
+                    : ""}"
+                  @click=${() => {
+                    this.selectedBloc = b.id;
+                    this.armedExit = null;
+                  }}
+                >
+                  <td class="text-left">${vt(`bloc.${b.id}.name`)}</td>
+                  <td>
+                    ${b.leader === null
+                      ? vt("screen.blocs.no-leader")
+                      : this.nationLabel(view, b.leader)}
+                  </td>
+                  <td>
+                    ${vt("screen.blocs.member-count", {
+                      simulated: b.members.filter((m) => m.status === "full")
+                        .length,
+                      world: b.worldMembers,
+                    })}
+                  </td>
+                  <td>
+                    ${b.playerStatus === null
+                      ? vt("screen.blocs.not-member")
+                      : vt(`bloc.status.${b.playerStatus}`)}
+                  </td>
+                  <td>${b.pending.length}</td>
+                </tr>`,
+            )}
         </tbody>
       </table>
       ${selected === undefined
@@ -2417,7 +2448,7 @@ export class VeritableScreens extends LitElement {
           <tr class="text-left text-gray-300">
             <th>${vt("screen.tech.node")}</th>
             <th>${vt("screen.tech.tier")}</th>
-            <th>${vt("screen.tech.cost")}</th>
+            <th class="whitespace-nowrap">${vt("screen.tech.cost")}</th>
             <th>${vt("screen.tech.effects")}</th>
             <th></th>
           </tr>
@@ -2429,7 +2460,7 @@ export class VeritableScreens extends LitElement {
             return html`<tr title=${vt(n.description)}>
               <td class=${done ? "text-green-300" : ""}>${vt(n.name)}</td>
               <td>${n.tier}</td>
-              <td class="tabular-nums">
+              <td class="whitespace-nowrap tabular-nums">
                 ${(view.techCosts[n.id] ?? n.cost).toFixed(0)}
                 (${vt("screen.tech.months", { months: n.monthsMin })})
               </td>
@@ -2951,10 +2982,19 @@ export class VeritableScreens extends LitElement {
       .querySelector("veritable-topbar > div")
       ?.getBoundingClientRect();
     const top = bar === undefined ? 40 : Math.round(bar.bottom + 4);
+    // Above the modes of the map and the mini-map, in the bottom right.
+    const modes = document
+      .getElementById("veritable-map-modes")
+      ?.getBoundingClientRect();
+    const below =
+      modes === undefined || modes.height === 0
+        ? 8
+        : Math.round(window.innerHeight - modes.top + 8);
     return html`
       <div
-        class="fixed left-1/2 z-[10000] max-h-[80vh] w-[52rem] max-w-[96vw] -translate-x-1/2 overflow-y-auto rounded border border-gray-500 bg-gray-900/95 p-2 text-xs text-white"
-        style="pointer-events:auto; top:${top}px"
+        class="fixed right-2 z-[10000] w-[48rem] max-w-[calc(100vw-1rem)] overflow-y-auto rounded border border-gray-500 bg-gray-900/95 p-2 text-xs text-white"
+        style="pointer-events:auto; top:${top}px; max-height:calc(100vh - ${top +
+        below}px)"
       >
         <div class="mb-1 flex items-center justify-between">
           <span class="text-sm font-bold">${vt(`screen.${screen}.title`)}</span>

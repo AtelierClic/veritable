@@ -64,6 +64,20 @@ export interface VeritableSim {
   // J7b: what a declaration of war of the player would bring down, weighed
   // as the AI weighs its own (the action menu of the map).
   warPreview(target: NationId, casusBelli: string): WarPreview;
+  // J7b: what the modes of the map colour the nations by.
+  mapColors(): MapColors;
+}
+
+// The modes of the map (J7b, ui/mapModes.ts): the relations of the player
+// with each nation, the wars and their sides, the members and candidates of
+// each bloc, the player's level of intelligence on each nation (the mean of
+// its categories but the general one, 0 to 3).
+export interface MapColors {
+  player: NationId | null;
+  relations: Record<NationId, number>;
+  wars: { aggressors: NationId[]; defenders: NationId[] }[];
+  blocs: { id: string; members: NationId[]; candidates: NationId[] }[];
+  intel: Record<NationId, number>;
 }
 
 export interface WarPreview {

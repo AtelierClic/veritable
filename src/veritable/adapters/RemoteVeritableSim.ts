@@ -9,6 +9,7 @@ import {
 } from "../sim/VeritableSim";
 import { DomainTiming } from "./perfProbe";
 import {
+  MapColorsResult,
   MapOverlayResult,
   SnapshotResult,
   TileInfo,
@@ -68,6 +69,11 @@ export class RemoteVeritableSim {
   // J7b: what lies under a point of the map.
   tileInfo(tile: number): Promise<TileInfo> {
     return this.request({ kind: "tile", tile }) as Promise<TileInfo>;
+  }
+
+  // J7b: what the modes of the map colour the nations by.
+  mapColors(): Promise<MapColorsResult> {
+    return this.request({ kind: "map-colors" }) as Promise<MapColorsResult>;
   }
 
   // J7b: what a declaration of war would bring down (the action menu).

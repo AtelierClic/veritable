@@ -320,7 +320,10 @@ class Client {
   private turnstileTokenPromise: Promise<TurnstileToken> | null = null;
 
   async initialize(): Promise<void> {
-    veritablePanel(); // VERITABLE: campaign panel (saves), menu and in game
+    // VERITABLE: campaign panel (saves), menu and in game; J7b: open on the
+    // menu, the way into a campaign now that the Solo card of OpenFront is
+    // gone.
+    veritablePanel().show();
     // FIRST, ahead of consumeCreatorCodePath() and of handleUrl() below --
     // ahead of every history write this client performs. A page served under
     // `/v/<commit>/` is pinned to that build, and three guards depend on

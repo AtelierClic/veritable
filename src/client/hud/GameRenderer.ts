@@ -1,8 +1,11 @@
 import { EventBus } from "../../core/EventBus";
 import { UserSettings } from "../../core/game/UserSettings";
+import { CampaignCameraController } from "../../veritable/ui/Camera";
 import { CityLayerController } from "../../veritable/ui/CityLayer";
 import { FrontOverlayController } from "../../veritable/ui/FrontOverlay";
 import { MapInteractionController } from "../../veritable/ui/MapInteraction";
+import { MapModesController } from "../../veritable/ui/MapModesController";
+import { MiniMapController } from "../../veritable/ui/MiniMap";
 import { Controller } from "../Controller";
 import { AmbienceController } from "../controllers/AmbienceController";
 import { AttackingTroopsController } from "../controllers/AttackingTroopsController";
@@ -326,9 +329,20 @@ export function createRenderer(
     campaign ? [] : [layer];
   const campaignControllers = (): Controller[] => {
     const fronts = new FrontOverlayController(eventBus, transformHandler);
+    const cities = new CityLayerController(transformHandler, game);
+    const modes = new MapModesController(
+      transformHandler,
+      game,
+      view,
+      fronts,
+      cities,
+    );
     return [
       fronts,
-      new CityLayerController(transformHandler, game),
+      cities,
+      modes,
+      new CampaignCameraController(eventBus, game),
+      new MiniMapController(transformHandler, game, modes),
       new MapInteractionController(
         eventBus,
         transformHandler,
@@ -360,7 +374,8 @@ export function createRenderer(
     // VERITABLE: the fronts of a campaign drawn on the map (lines, force
     // ratios, contested tiles, factors of a segment on click); J7b: the map
     // as an interface (the card of a nation on a right click, the action
-    // menu on a left click, the cities).
+    // menu on a left click, the cities, the modes of the map and the
+    // mini-map, the camera that goes to the capital once).
     ...(campaign ? campaignControllers() : []),
     eventsDisplay,
     actionableEvents,
@@ -428,6 +443,7 @@ const LEGACY_PANELS = [
   "win-modal", // no victory
   "alert-frame", // alerts of legacy attacks
   "in-game-promo",
+  "unit-display", // J7b: the legacy build bar (the action menu builds)
 ];
 
 function hideLegacyPanels(): void {

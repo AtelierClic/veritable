@@ -168,6 +168,11 @@ export class VeritableSession {
         return this.bridge.tileInfo(request.tile);
       case "war-preview":
         return this.sim.warPreview(request.target, request.casusBelli);
+      case "map-colors":
+        return {
+          colors: this.sim.mapColors(),
+          smallIds: this.bridge.smallIds(),
+        };
       case "apply":
         this.sim.apply(request.command);
         return null;

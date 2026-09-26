@@ -386,6 +386,13 @@ export class CoreBridge implements WorldPort {
     return this.ledger.cede((tile) => this.nationAt(tile) === winner);
   }
 
+  // The id of each nation in the core (J7b: the palette of the renderer).
+  smallIds(): Record<NationId, number> {
+    const out: Record<NationId, number> = {};
+    for (const [id, player] of this.byNation) out[id] = player.smallID();
+    return out;
+  }
+
   // --- people (J7b) ------------------------------------------------------------------
 
   peopleKnown(): boolean {

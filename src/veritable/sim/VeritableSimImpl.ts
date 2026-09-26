@@ -240,6 +240,7 @@ import {
   JournalPage,
   JournalQuery,
   JournalScope,
+  MapColors,
   PendingVote,
   PlayerCommand,
   PlayerCommandSchema,
@@ -2472,6 +2473,40 @@ export class VeritableSimImpl implements VeritableSim {
       seed: this.seed,
       rules: this.deps.config.intel as IntelRules,
       levels,
+    };
+  }
+
+  mapColors(): MapColors {
+    this.assertInitialized();
+    const player = this.playerNationId();
+    const relations: Record<NationId, number> = {};
+    const intel: Record<NationId, number> = {};
+    if (player !== null) {
+      for (const id of this.ctx.nationIds) {
+        if (id === player) continue;
+        relations[id] = relation(this.diplomacy, player, id);
+        const l = this.intelLevelsOf(player, id);
+        intel[id] =
+          (l.economy + l.politics + l.army + l.nuclear + l.intentions) / 5;
+      }
+    }
+    return {
+      player,
+      relations,
+      wars: this.diplomacy.wars.map((w) => ({
+        aggressors: [...w.aggressors],
+        defenders: [...w.defenders],
+      })),
+      blocs: this.blocs.blocs.map((b) => ({
+        id: b.id,
+        members: b.members
+          .filter((m) => m.status === "full")
+          .map((m) => m.nation),
+        candidates: b.members
+          .filter((m) => m.status === "candidate")
+          .map((m) => m.nation),
+      })),
+      intel,
     };
   }
 

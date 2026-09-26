@@ -1144,9 +1144,13 @@ export class ClientGameRunner {
         this.eventBus.emit(new NewLobbyEvent(message.gameID));
       }
       if (message.type === "turn") {
+        // VERITABLE: in a campaign the camera goes once to the capital of the
+        // player at the scale of a region (veritable/ui/Camera.ts), then only
+        // on the player's order.
         if (
           !this.gameView.inSpawnPhase() &&
           !hasGoneToPlayer &&
+          !this.isCampaign() &&
           this.gameView.myPlayer() &&
           this.userSettings.goToPlayer()
         ) {

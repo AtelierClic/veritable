@@ -702,6 +702,15 @@ export class GPURenderer {
     tileState: Uint16Array,
     changedTiles: readonly number[],
   ): void {
+    // VERITABLE: a campaign lays its whole map in one tick (the restore of
+    // the first day or of a save). A change of more than a tenth of the tiles
+    // is uploaded whole, at once: dripped tile by tile through the scatter
+    // pass it took some fifteen seconds on the world map, the bare land
+    // showing through the nations.
+    if (changedTiles.length * 10 > tileState.length) {
+      this.territoryPass.setLiveRef(tileState);
+      return;
+    }
     this.territoryPass.applyLiveDelta(tileState, changedTiles);
   }
 

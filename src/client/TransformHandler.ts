@@ -19,6 +19,9 @@ export class GoToPositionEvent implements GameEvent {
   constructor(
     public x: number,
     public y: number,
+    // VERITABLE: the scale to reach there (the capital of a campaign at the
+    // scale of a region); the current one without.
+    public zoom?: number,
   ) {}
 }
 
@@ -217,6 +220,7 @@ export class TransformHandler {
   onGoToPosition(event: GoToPositionEvent) {
     this.clearTarget();
     this.target = new Cell(event.x, event.y);
+    this.targetScale = event.zoom ?? null;
     this.intervalID = setInterval(() => this.goTo(), GOTO_INTERVAL_MS);
   }
 
@@ -230,6 +234,9 @@ export class TransformHandler {
   }
 
   centerCamera() {
+    // VERITABLE: in a campaign the key goes back to the capital
+    // (veritable/ui/Camera.ts listens to CenterCameraEvent).
+    if (isCampaign(this.game)) return;
     this.clearTarget();
     const player = this.game.myPlayer();
     const nameLocation = player?.nameLocation();
@@ -403,4 +410,12 @@ export class TransformHandler {
 
     this.override(oHor, oVer, tScale);
   }
+}
+
+// VERITABLE: a campaign game (tolerant of the doubles of the tests).
+function isCampaign(game: GameView): boolean {
+  const config = (
+    game as { config?: () => { isVeritable?: () => boolean } }
+  ).config?.();
+  return config?.isVeritable?.() === true;
 }

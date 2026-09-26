@@ -41,6 +41,13 @@ export class PlayerExecution implements Execution {
     this.config = mg.config();
     this.lastCalc =
       ticks + (simpleHash(this.player.id()) % this.ticksPerClusterCalc);
+    // VERITABLE: a campaign lays every nation's land at once by its restore,
+    // which may come before the first calculation is due: the clusters (and
+    // with them the place of the name, on the land of the capital) are
+    // calculated once within the first ticks, whatever the last change.
+    if (mg.config().isVeritable?.()) {
+      this.lastCalc -= this.ticksPerClusterCalc + 1;
+    }
   }
 
   tick(ticks: number) {
@@ -268,6 +275,17 @@ export class PlayerExecution implements Execution {
       min: new Cell(boxes[lIdx], boxes[lIdx + 1]),
       max: new Cell(boxes[lIdx + 2], boxes[lIdx + 3]),
     };
+    // VERITABLE: in a campaign the name of a nation sits on the land of its
+    // capital, not on its largest land (Denmark on Jutland and the islands,
+    // not on Greenland).
+    const capital = this.capitalCluster(clusters, boxes);
+    if (capital !== null && capital !== largestIndex) {
+      const cIdx = capital * 4;
+      this.player.largestClusterBoundingBox = {
+        min: new Cell(boxes[cIdx], boxes[cIdx + 1]),
+        max: new Cell(boxes[cIdx + 2], boxes[cIdx + 3]),
+      };
+    }
 
     const surroundedBy = this.surroundedBySamePlayer(
       largestCluster,
@@ -459,6 +477,10 @@ export class PlayerExecution implements Execution {
   }
 
   private removeCluster(cluster: readonly TileRef[]) {
+    // VERITABLE: land changes hands in a campaign only by its fronts, its
+    // landings and its treaties: an enclave (Lesotho in South Africa) is
+    // never annexed because another nation surrounds it.
+    if (this.mg.config().isVeritable?.()) return;
     for (const t of cluster) {
       if (this.mg?.ownerID(t) !== this.player?.smallID()) {
         // Other removeCluster operations could change tile owners,
@@ -596,6 +618,28 @@ export class PlayerExecution implements Execution {
 
     // There are no ongoing attacks, so find the enemy with the largest border.
     return getMode(neighbors);
+  }
+
+  // VERITABLE: the cluster around the capital (the spawn tile) of a nation
+  // of a campaign — of those whose box holds it, the one with the most
+  // border tiles; null outside a campaign or without one.
+  private capitalCluster(
+    clusters: TileRef[][],
+    boxes: Int32Array,
+  ): number | null {
+    if (!this.mg.config().isVeritable?.()) return null;
+    const spawn = this.player.spawnTile();
+    if (spawn === undefined) return null;
+    const x = this.mg.x(spawn);
+    const y = this.mg.y(spawn);
+    let best: number | null = null;
+    for (let i = 0; i < clusters.length; i++) {
+      const b = i * 4;
+      if (x < boxes[b] || y < boxes[b + 1]) continue;
+      if (x > boxes[b + 2] || y > boxes[b + 3]) continue;
+      if (best === null || clusters[i].length > clusters[best].length) best = i;
+    }
+    return best;
   }
 
   private calculateClusters(): { clusters: TileRef[][]; boxes: Int32Array } {

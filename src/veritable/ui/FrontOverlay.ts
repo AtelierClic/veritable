@@ -122,6 +122,9 @@ export class FrontOverlayController implements Controller {
   private dirty = true;
   private lastCamera = "";
   private selected: { front: string; segment: number } | null = null;
+  // J7b: the wars mode of the map thickens the fronts when the camera is
+  // far.
+  private wide = false;
   private readonly threshold = loadVeritableConfig().war.advanceThreshold;
 
   constructor(
@@ -291,7 +294,9 @@ export class FrontOverlayController implements Controller {
         const selected =
           this.selected?.front === front.id &&
           this.selected.segment === segment.index;
-        const width = style.width + (selected ? 3 : 0);
+        // J7b: thicker in the wars mode, the more so the farther the camera.
+        const wide = this.wide ? Math.max(1, Math.min(3, 0.6 / s)) : 1;
+        const width = style.width * wide + (selected ? 3 : 0);
         ctx.beginPath();
         ctx.moveTo(line.points[0], line.points[1]);
         for (let i = 2; i < line.points.length; i += 2) {
@@ -389,6 +394,12 @@ export class FrontOverlayController implements Controller {
       if (d <= reach && (best === null || d < best.d)) best = { m, d };
     }
     return best?.m ?? null;
+  }
+
+  setWide(wide: boolean): void {
+    if (this.wide === wide) return;
+    this.wide = wide;
+    this.dirty = true;
   }
 
   // The last fronts drawn (J7b: the action menu finds the segment of a

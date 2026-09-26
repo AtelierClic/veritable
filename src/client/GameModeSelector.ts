@@ -672,13 +672,19 @@ export class GameModeSelector extends LitElement {
         ></ios-add-to-home-screen-banner>
 
         <div class="flex gap-4 h-14 sm:col-span-2 sm:row-start-3">
-          <div class="flex-[2]">
-            ${this.renderSmallActionCard(
-              translateText("main.solo"),
-              this.openSinglePlayerModal,
-              PRIMARY_ACTION,
-            )}
-          </div>
+          ${
+            // VERITABLE: the campaign panel is the way into a solo game
+            // (J7b): no Solo card of OpenFront once it is on the page.
+            document.querySelector("veritable-panel") === null
+              ? html`<div class="flex-[2]">
+                  ${this.renderSmallActionCard(
+                    translateText("main.solo"),
+                    this.openSinglePlayerModal,
+                    PRIMARY_ACTION,
+                  )}
+                </div>`
+              : nothing
+          }
           ${getGamesPlayed() < TUTORIAL_CARD_MAX_GAMES
             ? html`<div class="flex-1">
                 ${this.renderSmallActionCard(
