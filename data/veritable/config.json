@@ -16,6 +16,19 @@
     "maxUpdatesPerTick": 4,
     "tradeCycleDays": 7
   },
+  "intel": {
+    "relationLevels": [0, 40, 70],
+    "precision": [0.4, 0.2, 0.05],
+    "openRegimes": ["parliamentary", "presidential", "semi-presidential"],
+    "closedRegimes": [
+      "single-party",
+      "junta",
+      "absolute-monarchy",
+      "theocracy",
+      "failed-state"
+    ],
+    "trendMonths": 6
+  },
   "save": {
     "autosaveSlots": 6,
     "journalFullYears": 10
@@ -339,6 +352,8 @@
     },
     "affinitySanctions": 40,
     "affinityAllyAtWar": 30,
+    "affinityGuarantee": 20,
+    "affinityClaim": 15,
     "allyBlocTypes": ["military-alliance", "economic-union"],
     "mistrust": {
       "share": 1,

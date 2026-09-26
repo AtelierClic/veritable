@@ -1,6 +1,7 @@
 import { EventBus } from "../../core/EventBus";
 import { UserSettings } from "../../core/game/UserSettings";
 import { FrontOverlayController } from "../../veritable/ui/FrontOverlay";
+import { MapInteractionController } from "../../veritable/ui/MapInteraction";
 import { Controller } from "../Controller";
 import { AmbienceController } from "../controllers/AmbienceController";
 import { AttackingTroopsController } from "../controllers/AttackingTroopsController";
@@ -342,9 +343,13 @@ export function createRenderer(
     new AmbienceController(game, eventBus, transformHandler),
     ...(mapLayerController ? [mapLayerController] : []),
     // VERITABLE: the fronts of a campaign drawn on the map (lines, force
-    // ratios, contested tiles, factors of a segment on click).
+    // ratios, contested tiles, factors of a segment on click); J7b: the map
+    // as an interface (the card of a nation on a right click).
     ...(isCampaign(game)
-      ? [new FrontOverlayController(eventBus, transformHandler)]
+      ? [
+          new FrontOverlayController(eventBus, transformHandler),
+          new MapInteractionController(eventBus, transformHandler, game),
+        ]
       : []),
     eventsDisplay,
     actionableEvents,

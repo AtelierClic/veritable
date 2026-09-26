@@ -15,6 +15,7 @@ import { addDays as addDaysIso, chanceOver, DAYS_PER_MONTH } from "../time";
 import { militaryPower } from "../war/military";
 import {
   claimsAgainst,
+  claimsOf,
   initClaims,
   scenarioWarClaims,
   warClaims,
@@ -481,6 +482,31 @@ export interface AffinityInputs {
   enemies(nation: NationId): readonly NationId[];
   // Inherited mistrust of the pair (J6c, <= 0).
   mistrust(a: NationId, b: NationId): number;
+  // J7: the weight of the strongest active claim of either on land the
+  // other holds (0 without any).
+  claims(a: NationId, b: NationId): number;
+}
+
+// Does either guarantee the other (J7)?
+function guaranteed(ctx: EconomyContext, a: NationId, b: NationId): boolean {
+  return ctx.guarantees.some(
+    (g) =>
+      (g.guarantor === a && g.protected === b) ||
+      (g.guarantor === b && g.protected === a),
+  );
+}
+
+function claimWeightOf(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  claimant: NationId,
+  holder: NationId,
+): number {
+  let weight = 0;
+  for (const c of claimsAgainst(ctx, state, claimant, holder)) {
+    weight = Math.max(weight, c.weight);
+  }
+  return weight;
 }
 
 function mistrustOf(
@@ -501,6 +527,11 @@ export function directAffinityInputs(
     sanctioning: (by, against) => isSanctioning(state, by, against),
     enemies: (nation) => enemiesOf(state, nation),
     mistrust: mistrustOf(ctx, date),
+    claims: (a, b) =>
+      Math.max(
+        claimWeightOf(ctx, state, a, b),
+        claimWeightOf(ctx, state, b, a),
+      ),
   };
 }
 
@@ -513,6 +544,20 @@ export function cachedAffinityInputs(
   const blocs = new Map<NationId, readonly string[]>();
   const enemies = new Map<NationId, readonly NationId[]>();
   const sanctions = new Map<NationId, Set<NationId>>();
+  // J7: the claims of every nation on the land others hold, read once.
+  const { minTiles } = ctx.config.diplomacy.claims;
+  const claims = new Map<string, number>();
+  for (const claimant of ctx.nationIds) {
+    for (const claim of claimsOf(state, claimant)) {
+      if (claim.dormant) continue;
+      for (const [holder, tiles] of ctx.claimHolders(claim.region)) {
+        if (holder === claimant || tiles < minTiles) continue;
+        const key =
+          claimant < holder ? `${claimant}|${holder}` : `${holder}|${claimant}`;
+        claims.set(key, Math.max(claims.get(key) ?? 0, claim.weight));
+      }
+    }
+  }
   for (const s of state.sanctions) {
     let targets = sanctions.get(s.by);
     if (targets === undefined) {
@@ -540,6 +585,7 @@ export function cachedAffinityInputs(
       return list;
     },
     mistrust: mistrustOf(ctx, date),
+    claims: (a, b) => claims.get(a < b ? `${a}|${b}` : `${b}|${a}`) ?? 0,
   };
 }
 
@@ -579,11 +625,25 @@ function fightsAnAlly(
   return false;
 }
 
+// The terms of the affinity of two nations (J7: what the card of a nation
+// shows the player), each signed as it counts, and their clamped sum.
+export interface AffinityTerms {
+  blocs: number;
+  ideology: number;
+  sanctions: number;
+  allyAtWar: number;
+  mistrust: number;
+  claims: number;
+  guarantee: number;
+  total: number;
+}
+
 // Where the relations of two nations settle: common blocs and the
 // ideological proximity of their governments (J4). J6b: a common bloc weighs
 // by its type; sanctions between the two, or a war of either against an ally
 // of the other, pull the affinity down. J6c: so does the mistrust inherited
-// from the first day, which fades.
+// from the first day, which fades. J7: a guarantee between the two lifts it,
+// a claim of either on land the other holds pulls it down.
 export function affinityOf(
   ctx: EconomyContext,
   state: DiplomacyState,
@@ -595,6 +655,19 @@ export function affinityOf(
   withoutSanctions = false,
   inputs: AffinityInputs = directAffinityInputs(ctx, state),
 ): number {
+  return affinityTerms(ctx, state, politics, a, b, withoutSanctions, inputs)
+    .total;
+}
+
+export function affinityTerms(
+  ctx: EconomyContext,
+  state: DiplomacyState,
+  politics: PoliticsState,
+  a: NationId,
+  b: NationId,
+  withoutSanctions = false,
+  inputs: AffinityInputs = directAffinityInputs(ctx, state),
+): AffinityTerms {
   const cfg = ctx.config.diplomacy;
   const pa = politics.nations[a];
   const pb = politics.nations[b];
@@ -622,15 +695,29 @@ export function affinityOf(
       : 0;
   // The bloc term is capped like the first-day relations (blocRelationCap):
   // four common blocs are not worth more than two.
-  return clamp(
-    Math.min(cfg.blocRelationCap, blocs) +
-      cfg.affinityIdeology * proximity -
-      sanctions -
-      allyAtWar +
-      inputs.mistrust(a, b),
-    -100,
-    100,
-  );
+  const terms = {
+    blocs: Math.min(cfg.blocRelationCap, blocs),
+    ideology: cfg.affinityIdeology * proximity,
+    sanctions: -sanctions,
+    allyAtWar: -allyAtWar,
+    mistrust: inputs.mistrust(a, b),
+    claims: -cfg.affinityClaim * inputs.claims(a, b),
+    guarantee: guaranteed(ctx, a, b) ? cfg.affinityGuarantee : 0,
+  };
+  return {
+    ...terms,
+    total: clamp(
+      terms.blocs +
+        terms.ideology +
+        terms.sanctions +
+        terms.allyAtWar +
+        terms.mistrust +
+        terms.claims +
+        terms.guarantee,
+      -100,
+      100,
+    ),
+  };
 }
 
 // Relations of a nation with every democracy move by `delta` (media

@@ -20,6 +20,7 @@ import {
   DiplomacyState,
   EconomyState,
   EventsState,
+  IntelState,
   JournalEntry,
   MilitaryState,
   NationState,
@@ -65,9 +66,11 @@ import {
 } from "./blocs/blocs";
 import { BlocEvent, stepFiscalRules } from "./blocs/fiscalRule";
 import { dateAfter, dayIndex, MINUTES_PER_GAME_DAY } from "./calendar";
-import { claimsOf, wakeClaims } from "./diplomacy/claims";
+import { claimsAgainst, claimsOf, wakeClaims } from "./diplomacy/claims";
 import {
   AffinityInputs,
+  affinityTerms,
+  AffinityTerms,
   allies,
   availableCasusBelli,
   cachedAffinityInputs,
@@ -117,6 +120,18 @@ import {
   stepEventsDraws,
   stepEventsHousekeeping,
 } from "./events/events";
+import {
+  IntelLevels,
+  intelLevels,
+  IntelRules,
+  IntelWorld,
+} from "./intel/intel";
+import {
+  emptyIntel,
+  ensureIntel,
+  recordRelations,
+  takeIntelSnapshots,
+} from "./intel/state";
 import { compactJournal, entryCategory, entryNations } from "./journal";
 import { nationFromData, statusFromTerritory } from "./nation";
 import {
@@ -142,6 +157,7 @@ import {
 import {
   coupBaseOf,
   CoupEvent,
+  coupProbability,
   stepCoups,
   stepJuntaTransition,
   stepRevolution,
@@ -217,6 +233,7 @@ import {
   FrontGeometry,
   FrontView,
   HudView,
+  IntelView,
   JournalPage,
   JournalQuery,
   JournalScope,
@@ -373,6 +390,8 @@ export class VeritableSimImpl implements VeritableSim {
   private events!: EventsState;
   // J7: the rolling queue of the nations (sim/schedule.ts).
   private schedule!: ScheduleState;
+  // Intelligence (J7): snapshots of the indicators, relations of the player.
+  private intel!: IntelState;
   // J7: the version of the view is derived from the saved state (the day,
   // the journal): what the player sees moves with them; the interface reads
   // the view again when it changes, at most four times a second, and after
@@ -445,6 +464,7 @@ export class VeritableSimImpl implements VeritableSim {
         // J6c: every 1 January, the journal older than journalFullYears
         // is folded into yearly summaries.
         onMonth: (c) => {
+          this.intelMonth(c.date);
           if (!c.date.endsWith("-01-01")) return;
           const years = this.deps.config.save.journalFullYears;
           const before = `${Number(c.date.slice(0, 4)) - years}-01-01`;
@@ -556,6 +576,8 @@ export class VeritableSimImpl implements VeritableSim {
         );
       }
     }
+    this.intel = emptyIntel();
+    this.ensureIntelState();
     this.warmUp();
   }
 
@@ -672,6 +694,7 @@ export class VeritableSimImpl implements VeritableSim {
     syncTech(this.ctx, this.tech);
     this.events = state.events;
     this.schedule = state.schedule;
+    this.intel = state.intel;
     this.syncSuspensions();
     this.invalidateFronts();
     this.initialized = true;
@@ -682,6 +705,7 @@ export class VeritableSimImpl implements VeritableSim {
       tiles: state.tiles,
       contest: state.contest,
     });
+    this.ensureIntelState();
     this.warmUp();
   }
 
@@ -715,6 +739,7 @@ export class VeritableSimImpl implements VeritableSim {
       tech: this.tech,
       events: this.events,
       schedule: this.schedule,
+      intel: this.intel,
       journal: this.journal,
       metrics: this.metrics,
       tilesInfo: { width: grid.width, height: grid.height },
@@ -1960,6 +1985,114 @@ export class VeritableSimImpl implements VeritableSim {
     );
   }
 
+  // --- intelligence (J7) -------------------------------------------------------
+
+  // What the indicators of intelligence are read from: the state, and the
+  // military power and the monthly risk of a coup of every nation (once a
+  // game day).
+  private intelWorldCache: { day: number; world: IntelWorld } | null = null;
+  private intelWorld(): IntelWorld {
+    const day = dayIndex(this.calendar.elapsedGameMinutes);
+    if (this.intelWorldCache?.day === day) return this.intelWorldCache.world;
+    const date = this.calendar.date;
+    const power: Record<NationId, number> = {};
+    const coupRisk: Record<NationId, number> = {};
+    for (const id of this.ctx.nationIds) {
+      power[id] = militaryPower(this.ctx, this.military, id);
+      const politics = this.politics.nations[id];
+      coupRisk[id] =
+        politics === undefined
+          ? 0
+          : coupProbability(
+              this.ctx,
+              id,
+              politics,
+              this.military.nations[id],
+              date,
+            );
+    }
+    const env = this.nuclearEnv(date);
+    const world: IntelWorld = {
+      economies: this.economy.nations,
+      politics: this.politics.nations,
+      military: this.military,
+      nuclear: this.nuclear,
+      power,
+      coupRisk,
+      nuclearRisk: this.nuclearRisk(),
+      deadHand: Object.fromEntries(
+        Object.keys(this.nuclear.nations).map((id) => [
+          id,
+          deadHandProbability(env, id),
+        ]),
+      ),
+    };
+    this.intelWorldCache = { day, world };
+    return world;
+  }
+
+  private intelViewer(): NationId | null {
+    return this.politics.autopilot ? null : this.playerNationId();
+  }
+
+  // The 1st of a month: the snapshots of the indicators, the relations of
+  // the player.
+  private intelMonth(date: string): void {
+    this.intelWorldCache = null;
+    takeIntelSnapshots(this.intel, this.intelWorld(), this.ctx.nationIds, date);
+    const viewer = this.intelViewer();
+    recordRelations(
+      this.intel,
+      viewer,
+      this.ctx.nationIds,
+      (id) => (viewer === null ? 0 : relation(this.diplomacy, viewer, id)),
+      date,
+      this.deps.config.intel.trendMonths + 1,
+    );
+  }
+
+  // A new campaign, or a save without snapshots (migrated): from today.
+  private ensureIntelState(): void {
+    const date = this.calendar.date;
+    ensureIntel(this.intel, this.intelWorld(), this.ctx.nationIds, date);
+    const viewer = this.intelViewer();
+    if (this.intel.relations.viewer !== viewer) {
+      recordRelations(
+        this.intel,
+        viewer,
+        this.ctx.nationIds,
+        (id) => (viewer === null ? 0 : relation(this.diplomacy, viewer, id)),
+        `${date.slice(0, 7)}-01`,
+        this.deps.config.intel.trendMonths + 1,
+      );
+    }
+  }
+
+  // The levels of intelligence of a nation on another.
+  private intelLevelsOf(viewer: NationId, target: NationId): IntelLevels {
+    const mine = this.ctx.blocsOf(viewer);
+    let alliance = this.ctx.guarantees.some(
+      (g) =>
+        (g.guarantor === viewer && g.protected === target) ||
+        (g.guarantor === target && g.protected === viewer),
+    );
+    let union = false;
+    for (const bloc of this.ctx.blocsOf(target)) {
+      if (!mine.includes(bloc)) continue;
+      const type = this.ctx.blocType(bloc);
+      if (type === "military-alliance") alliance = true;
+      if (type === "economic-union") union = true;
+    }
+    return intelLevels(this.deps.config.intel as IntelRules, {
+      relation: relation(this.diplomacy, viewer, target),
+      alliance,
+      union,
+      neighbour: this.ctx.landNeighbours(viewer, target),
+      atWar: enemiesOf(this.diplomacy, viewer).includes(target),
+      regime: this.politics.nations[target]?.regime ?? null,
+    });
+  }
+
   read(): ReadonlyWorldView {
     this.assertInitialized();
     const player = this.playerNationId();
@@ -2014,13 +2147,8 @@ export class VeritableSimImpl implements VeritableSim {
       naval: this.naval,
       fronts: this.frontViews,
       nuclear: this.nuclear,
-      deadHand: Object.fromEntries(
-        Object.keys(this.nuclear.nations).map((id) => [
-          id,
-          deadHandProbability(this.nuclearEnv(this.calendar.date), id),
-        ]),
-      ),
-      nuclearRisk: this.nuclearRisk(),
+      deadHand: this.intelWorld().deadHand,
+      nuclearRisk: this.intelWorld().nuclearRisk,
       ai: this.ai,
       contested: Object.fromEntries(this.deps.world.contestedCounts()),
       initialTiles: this.territory.initialTiles,
@@ -2054,7 +2182,53 @@ export class VeritableSimImpl implements VeritableSim {
       events: this.events,
       eventLeanings: this.eventLeanings(),
       schedule: this.schedule,
+      intel: this.intelView(player),
+      power: this.intelWorld().power,
+      coupRisk: this.intelWorld().coupRisk,
       version: this.viewVersion,
+    };
+  }
+
+  // What the player knows of every other nation (J7): its levels, the
+  // terms of their relation.
+  private intelView(player: NationId | null): IntelView {
+    const levels: Record<NationId, IntelLevels> = {};
+    const relationTerms: Record<NationId, AffinityTerms> = {};
+    const claims: IntelView["claims"] = {};
+    if (player !== null) {
+      const { inputs } = this.dailyDiplomacy(this.calendar.date);
+      for (const id of this.ctx.nationIds) {
+        if (id === player) continue;
+        levels[id] = this.intelLevelsOf(player, id);
+        relationTerms[id] = affinityTerms(
+          this.ctx,
+          this.diplomacy,
+          this.politics,
+          player,
+          id,
+          false,
+          inputs,
+        );
+        const byPlayer = claimsAgainst(this.ctx, this.diplomacy, player, id);
+        const byThem = claimsAgainst(this.ctx, this.diplomacy, id, player);
+        if (byPlayer.length > 0 || byThem.length > 0) {
+          claims[id] = {
+            byPlayer: byPlayer.map((c) => c.region),
+            byThem: byThem.map((c) => c.region),
+          };
+        }
+      }
+    }
+    return {
+      state: this.intel,
+      levels,
+      relationTerms,
+      rules: this.deps.config.intel as IntelRules,
+      claims,
+      guarantees: this.ctx.guarantees.map((g) => ({
+        guarantor: g.guarantor,
+        protected: g.protected,
+      })),
     };
   }
 
@@ -2107,6 +2281,35 @@ export class VeritableSimImpl implements VeritableSim {
       mapWidth: this.deps.world.mapWidth(),
       journalMark: this.journalAdded,
       journal: fresh === 0 ? [] : this.journal.slice(-fresh),
+      intel: this.hudIntel(
+        player,
+        fresh === 0 ? [] : this.journal.slice(-fresh),
+      ),
+    };
+  }
+
+  // The levels of the player on its enemies and on the nations of the
+  // journal entries sent to the cards (J7b).
+  private hudIntel(
+    player: NationId | null,
+    entries: readonly JournalEntry[],
+  ): HudView["intel"] {
+    const levels: Record<NationId, IntelLevels> = {};
+    if (player !== null) {
+      const ids = new Set<NationId>(enemiesOf(this.diplomacy, player));
+      for (const e of entries) {
+        for (const id of entryNations(e)) ids.add(id);
+      }
+      ids.delete(player);
+      for (const id of ids) {
+        if (this.politics.nations[id] === undefined) continue;
+        levels[id] = this.intelLevelsOf(player, id);
+      }
+    }
+    return {
+      seed: this.seed,
+      rules: this.deps.config.intel as IntelRules,
+      levels,
     };
   }
 

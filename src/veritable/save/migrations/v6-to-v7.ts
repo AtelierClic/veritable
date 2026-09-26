@@ -8,6 +8,7 @@ import {
 } from "../../data/schemas/save";
 import { SaveFileV6 } from "../../data/schemas/saveV6";
 import { populationFactor } from "../../sim/economy/population";
+import { emptyIntel } from "../../sim/intel/state";
 import { addMonths } from "../../sim/politics/state";
 import { initSchedule } from "../../sim/schedule";
 import { calendarMonth, DAYS_PER_MONTH } from "../../sim/time";
@@ -39,7 +40,10 @@ import { MigrationContext, MigrationError } from "./index";
 //     first day of a campaign; a migrated one keeps the ideological vote of
 //     the J4 to the J6);
 //   - the AI keeps its goals, not its review dates (the queue replaces
-//     them); its war orders due at its first update.
+//     them); no war weighed yet (its intent comes with its next review);
+//     its war orders due at its first update;
+//   - intelligence: no snapshot yet, the restore takes them from the
+//     values of the save (the player's relations from its date on).
 
 export function v6ToV7(
   save: SaveFileV6,
@@ -173,6 +177,7 @@ export function v6ToV7(
           lastLanding: a.lastLanding,
           blockading: a.blockading,
           lastOrders: null,
+          intent: null,
         },
       ]),
     ),
@@ -200,5 +205,6 @@ export function v6ToV7(
     politics,
     ai,
     schedule,
+    intel: emptyIntel(),
   } as SaveFile;
 }

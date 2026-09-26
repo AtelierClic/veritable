@@ -7,7 +7,12 @@ import {
   SimEvent,
 } from "../sim/VeritableSim";
 import { DomainTiming } from "./perfProbe";
-import { MapOverlayResult, SnapshotResult, VeritableRequest } from "./protocol";
+import {
+  MapOverlayResult,
+  SnapshotResult,
+  TileInfo,
+  VeritableRequest,
+} from "./protocol";
 
 // What RemoteVeritableSim needs from src/core/worker/WorkerClient.
 export interface VeritableWorkerChannel {
@@ -57,6 +62,11 @@ export class RemoteVeritableSim {
   // J7: the journal, filtered (the journal screen).
   queryJournal(query: JournalQuery): Promise<JournalPage> {
     return this.request({ kind: "journal", query }) as Promise<JournalPage>;
+  }
+
+  // J7b: what lies under a point of the map.
+  tileInfo(tile: number): Promise<TileInfo> {
+    return this.request({ kind: "tile", tile }) as Promise<TileInfo>;
   }
 
   async apply(command: PlayerCommand): Promise<void> {

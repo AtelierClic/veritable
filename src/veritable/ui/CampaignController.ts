@@ -15,6 +15,7 @@ import { keptForEver } from "../sim/journal";
 import { addDays } from "../sim/time";
 import { HudView } from "../sim/VeritableSim";
 import { eventCards } from "./EventCards";
+import { onIntelSetting } from "./intel";
 import {
   classify,
   loadPauseSettings,
@@ -75,6 +76,7 @@ export class CampaignController {
   private mapWidth = 0;
   private gameDate = "";
   private markerList: MapMarker[] = [];
+  private stopIntel: (() => void) | null = null;
 
   constructor(private readonly store: SaveStore = new IndexedDbSaveStore()) {}
 
@@ -142,6 +144,8 @@ export class CampaignController {
     });
     this.hudTimer = setInterval(() => void this.pollHud(), HUD_MS);
     void this.pollHud();
+    // J7b: the figures of other nations change with the setting.
+    this.stopIntel = onIntelSetting(() => veritableScreens().requestUpdate());
   }
 
   // The simulation of the running campaign, null outside a campaign.
@@ -152,6 +156,8 @@ export class CampaignController {
   detach(): void {
     this.unsubscribe?.();
     this.unsubscribe = null;
+    this.stopIntel?.();
+    this.stopIntel = null;
     if (this.hudTimer !== null) clearInterval(this.hudTimer);
     this.hudTimer = null;
     this.cancelCountdown();

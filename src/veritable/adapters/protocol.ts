@@ -1,5 +1,6 @@
 import { NationId } from "../data/schemas/common";
 import { EncodedSaveStats } from "../save/serialize";
+import type { IntelLevels, IntelRules } from "../sim/intel/intel";
 import {
   FrontView,
   HudView,
@@ -25,6 +26,8 @@ export type VeritableRequest =
   | { kind: "hud"; journalSince?: number }
   // J7: the journal screen, filtered.
   | { kind: "journal"; query: JournalQuery }
+  // J7b: what lies under a point of the map (the card, the action menu).
+  | { kind: "tile"; tile: number }
   | { kind: "apply"; command: PlayerCommand }
   | { kind: "snapshot" }
   | { kind: "perf" }
@@ -36,6 +39,24 @@ export interface MapOverlayResult {
   overlay: MapOverlay;
   fronts: FrontView[];
   player: NationId | null;
+  // J7b: what the player's intelligence needs to show the forces of the
+  // fronts (perceive): the seed, the date, its levels on the nations at
+  // war, the rules.
+  intel: {
+    seed: number;
+    date: string;
+    levels: Record<NationId, IntelLevels>;
+    rules: IntelRules;
+  };
+}
+
+// A tile of the map as the interface asks about it (J7b).
+export interface TileInfo {
+  tile: number;
+  land: boolean;
+  owner: NationId | null;
+  contested: boolean;
+  zone: string | null; // the sea zone of a water tile
 }
 
 export interface SnapshotResult {

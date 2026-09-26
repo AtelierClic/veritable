@@ -11,7 +11,7 @@ const jsonFiles = {
     import: "default",
   }),
   ...import.meta.glob<unknown>(
-    "../../../data/veritable/{goods,nations,scenarios,blocs,war,politics,laws,leaders,names,relations}/*.json",
+    "../../../data/veritable/{goods,nations,scenarios,blocs,war,politics,laws,leaders,names,relations,cities}/*.json",
     { eager: true, import: "default" },
   ),
   ...import.meta.glob<unknown>(

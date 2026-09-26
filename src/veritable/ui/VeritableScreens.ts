@@ -21,6 +21,7 @@ import { TECH_DOMAINS, TechEffect } from "../data/schemas/tech";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import type { Tally } from "../sim/blocs/blocs";
 import { relation } from "../sim/diplomacy/diplomacy";
+import { Perceived, perceivedMiddle } from "../sim/intel/intel";
 import { entryCategory, JOURNAL_CATEGORIES } from "../sim/journal";
 import {
   BlocView,
@@ -34,7 +35,18 @@ import { campaignController } from "./CampaignController";
 import { confirmAction } from "./ConfirmModal";
 import { effectLabel } from "./eventText";
 import { longDate } from "./format";
+import {
+  dataAge,
+  nuclearPowers,
+  own,
+  publicPolitics,
+  seen,
+  shown,
+  sideSeen,
+  unrestSeen,
+} from "./intel";
 import { journalLine, measureName, regionName, viewNames } from "./journalText";
+import { nationCard } from "./NationCard";
 import {
   filterNations,
   fold,
@@ -81,6 +93,28 @@ const REFRESH_MS = 250;
 // Entries of the journal screen shown at first, and added by "more".
 const JOURNAL_PAGE = 60;
 const READ_COST_FACTOR = 8;
+
+const fixed1 = (v: number): string => v.toFixed(1);
+
+// The force ratio of a segment from the two perceived forces (J7b): a range
+// when the enemy's force is a range, "?" unknown.
+function ratioText(
+  mine: Perceived | undefined,
+  theirs: Perceived | undefined,
+): string {
+  const exact = (p: Perceived | undefined): number | null =>
+    p === undefined ? 0 : p.kind === "exact" ? p.value : null;
+  const own = exact(mine);
+  if (own === null || theirs === undefined) return "—";
+  const ratio = (a: number, b: number) =>
+    b > 0 ? a / b : a > 0 ? Infinity : 1;
+  const text = (r: number) => (r === Infinity ? "∞" : r.toFixed(2));
+  if (theirs.kind === "exact") return text(ratio(own, theirs.value));
+  if (theirs.kind === "range") {
+    return `${text(ratio(own, theirs.high))} – ${text(ratio(own, theirs.low))}`;
+  }
+  return vt("intel.unknown");
+}
 
 const pct = (v: number, digits = 1) => `${(v * 100).toFixed(digits)} %`;
 const money = (usd: number) =>
@@ -406,6 +440,49 @@ export class VeritableScreens extends LitElement {
     `;
   }
 
+  // J7b: a share of another nation as the player knows it — the bar runs to
+  // the middle of the range, a lighter band shows the range, "?" unknown.
+  private seenBar(
+    view: ReadonlyWorldView,
+    label: string,
+    p: Perceived,
+  ): TemplateResult {
+    const middle = perceivedMiddle(p);
+    const value = middle ?? 0;
+    const color =
+      value < 0.35
+        ? "bg-red-500"
+        : value < 0.5
+          ? "bg-yellow-500"
+          : "bg-green-500";
+    const age = dataAge(p, view.date);
+    return html`
+      <div class="flex items-center gap-2" title=${age}>
+        <span class="w-40 truncate">${label}</span>
+        <div class="relative h-2 flex-1 rounded bg-gray-700">
+          ${middle === null
+            ? nothing
+            : html`<div
+                class="h-2 rounded ${color}"
+                style="width:${Math.round(value * 100)}%"
+              ></div>`}
+          ${p.kind === "range"
+            ? html`<div
+                class="absolute top-0 h-2 rounded bg-white/25"
+                style="left:${Math.round(p.low * 100)}%;width:${Math.max(
+                  1,
+                  Math.round((p.high - p.low) * 100),
+                )}%"
+              ></div>`
+            : nothing}
+        </div>
+        <span class="w-24 text-right tabular-nums"
+          >${shown(p, (v) => pct(v, 0))}</span
+        >
+      </div>
+    `;
+  }
+
   private renderOpinion(view: ReadonlyWorldView, p: NationPolitics) {
     return html`
       ${this.bar(vt("screen.opinion.stability"), p.stability, true)}
@@ -420,9 +497,10 @@ export class VeritableScreens extends LitElement {
       <div class="mt-1 font-bold">${vt("screen.opinion.world")}</div>
       ${this.worldList(view, ["stability", "name", "gdp", "relations"], (ids) =>
         ids.map((id) =>
-          this.bar(
-            `${this.nationLabel(view, id)}${view.politics[id].unrest ? " ⚠" : ""}`,
-            view.politics[id].stability,
+          this.seenBar(
+            view,
+            `${this.nationLabel(view, id)}${unrestSeen(view, id) === true ? " ⚠" : ""}`,
+            seen(view, id, "stability"),
           ),
         ),
       )}
@@ -559,7 +637,7 @@ export class VeritableScreens extends LitElement {
 
   private renderWar(view: ReadonlyWorldView) {
     const me = view.playerNation!;
-    const m = view.military.nations[me];
+    const m = own(view)!.military;
     const sheetPopulation = m.divisions.reduce((s, d) => s + d.men, 0);
     const wars = view.diplomacy.wars.filter(
       (w) => w.aggressors.includes(me) || w.defenders.includes(me),
@@ -653,7 +731,7 @@ export class VeritableScreens extends LitElement {
   // and the shot (two clicks).
   private renderNuclear(view: ReadonlyWorldView): TemplateResult {
     const me = view.playerNation!;
-    const mine = view.nuclear.nations[me];
+    const mine = own(view)?.nuclear;
     const enemies = view.diplomacy.wars.flatMap((w) =>
       w.aggressors.includes(me)
         ? w.defenders
@@ -661,7 +739,7 @@ export class VeritableScreens extends LitElement {
           ? w.aggressors
           : [],
     );
-    const powers = Object.entries(view.nuclear.nations);
+    const powers = nuclearPowers(view);
     const shot = (target: string, aim: "front" | "capital") => {
       const nation = this.nationLabel(view, target);
       return html`<button
@@ -708,14 +786,26 @@ export class VeritableScreens extends LitElement {
         </thead>
         <tbody>
           ${powers.map(
-            ([id, n]) =>
+            ({ id, doctrine }) =>
               html`<tr>
                 <td class="text-left">${this.nationLabel(view, id)}</td>
-                <td>${n.warheads}</td>
-                <td>${vt(`doctrine.${n.doctrine}`)}</td>
-                <td>${vt(`screen.nuclear.threat-${n.threat}`)}</td>
-                <td>${pct(365 * (view.nuclearRisk[id] ?? 0), 2)}</td>
-                <td>${pct(view.deadHand[id] ?? 0, 0)}</td>
+                <td>
+                  ${shown(seen(view, id, "warheads"), (v) =>
+                    Math.round(v).toLocaleString("fr-FR"),
+                  )}
+                </td>
+                <td>${vt(`doctrine.${doctrine}`)}</td>
+                <td>
+                  ${shown(seen(view, id, "threat"), (v) =>
+                    vt(`screen.nuclear.threat-${Math.round(v)}`),
+                  )}
+                </td>
+                <td>
+                  ${shown(seen(view, id, "nuclearRisk"), (v) =>
+                    pct(365 * v, 2),
+                  )}
+                </td>
+                <td>${shown(seen(view, id, "deadHand"), (v) => pct(v, 0))}</td>
               </tr>`,
           )}
         </tbody>
@@ -882,13 +972,17 @@ export class VeritableScreens extends LitElement {
         </div>
         ${this.peaceTerms.kind === "annexation"
           ? enemies
-              .filter((enemy) => (view.deadHand[enemy] ?? 0) > 0)
+              .filter((enemy) =>
+                nuclearPowers(view).some((p) => p.id === enemy),
+              )
               .map(
                 (enemy) =>
                   html`<div class="text-red-300">
                     ${vt("screen.nuclear.dead-hand-warning", {
                       nation: this.nationLabel(view, enemy),
-                      probability: pct(view.deadHand[enemy], 0),
+                      probability: shown(seen(view, enemy, "deadHand"), (v) =>
+                        pct(v, 0),
+                      ),
                     })}
                   </div>`,
               )
@@ -923,16 +1017,10 @@ export class VeritableScreens extends LitElement {
           </thead>
           <tbody>
             ${front.segments.map((s) => {
-              const mine = s.sides[me];
-              const theirs = s.sides[other];
-              const ratio =
-                mine === undefined || theirs === undefined
-                  ? 1
-                  : theirs.force > 0
-                    ? mine.force / theirs.force
-                    : mine.force > 0
-                      ? Infinity
-                      : 1;
+              // J7b: the enemy as the player sees it in contact.
+              const mine = sideSeen(view, s, me);
+              const theirs = sideSeen(view, s, other);
+              const ratio = ratioText(mine?.force, theirs?.force);
               return html`<tr
                 class=${s.movedTo === me
                   ? "text-green-300"
@@ -947,16 +1035,21 @@ export class VeritableScreens extends LitElement {
                   ${pct(s.terrain.mountain, 0)}
                 </td>
                 <td>
-                  ${mine?.divisions.toFixed(1) ?? "0"} ·
-                  ${mine?.force.toFixed(1) ?? "0"} ${mine?.attacking ? "⚔" : ""}
+                  ${mine === null ? "0" : shown(mine.divisions, fixed1)} ·
+                  ${mine === null ? "0" : shown(mine.force, fixed1)}
+                  ${mine?.attacking ? "⚔" : ""}
                 </td>
                 <td>
-                  ${theirs?.divisions.toFixed(1) ?? "0"} ·
-                  ${theirs?.force.toFixed(1) ?? "0"}
+                  ${theirs === null ? "0" : shown(theirs.divisions, fixed1)} ·
+                  ${theirs === null ? "0" : shown(theirs.force, fixed1)}
                   ${theirs?.attacking ? "⚔" : ""}
                 </td>
-                <td>${ratio === Infinity ? "∞" : ratio.toFixed(2)}</td>
-                <td>${pct(mine?.supply ?? 1, 0)}</td>
+                <td>${ratio}</td>
+                <td>
+                  ${mine === null
+                    ? pct(1, 0)
+                    : shown(mine.supply, (v) => pct(v, 0))}
+                </td>
                 <td>
                   ${s.movedTo === null
                     ? "—"
@@ -1032,6 +1125,14 @@ export class VeritableScreens extends LitElement {
                     @click=${() => (this.picked = id)}
                   >
                     ${this.nationLabel(view, id)}
+                  </button>
+                  <button
+                    class="ml-1 rounded bg-gray-700 px-1 text-[10px] hover:bg-gray-600"
+                    title=${vt("screen.diplomacy.card")}
+                    @click=${(e: MouseEvent) =>
+                      void nationCard().open(id, e.clientX, e.clientY)}
+                  >
+                    ${vt("screen.diplomacy.card-button")}
                   </button>
                 </td>
                 <td
@@ -1728,7 +1829,11 @@ export class VeritableScreens extends LitElement {
             </thead>
             <tbody>
               ${ids.map((id) => {
-                const q = view.politics[id];
+                // J7b: public facts as they are, the figures as known.
+                const q = publicPolitics(view, id);
+                if (q === null) return nothing;
+                const legitimacy = seen(view, id, "legitimacy");
+                const stability = seen(view, id, "stability");
                 return html`
                   <tr>
                     <td>${this.nationLabel(view, id)}</td>
@@ -1736,9 +1841,22 @@ export class VeritableScreens extends LitElement {
                     <td title=${this.ideologyText(q.leader.traits)}>
                       ${this.actorName(q.leader.name)}
                     </td>
-                    <td class="text-right">${pct(q.legitimacy, 0)}</td>
-                    <td class="text-right">
-                      ${q.stability.toFixed(2)}${q.unrest ? " ⚠" : ""}
+                    <td
+                      class="text-right"
+                      title=${dataAge(legitimacy, view.date)}
+                    >
+                      ${shown(legitimacy, (v) => pct(v, 0))}
+                    </td>
+                    <td
+                      class="text-right"
+                      title=${dataAge(stability, view.date)}
+                    >
+                      ${shown(stability, (v) => v.toFixed(2))}${unrestSeen(
+                        view,
+                        id,
+                      ) === true
+                        ? " ⚠"
+                        : ""}
                     </td>
                     <td>
                       ${q.nextElection ?? "—"}${q.electionsSuspended
@@ -2139,8 +2257,7 @@ export class VeritableScreens extends LitElement {
   }
 
   private renderTech(view: ReadonlyWorldView) {
-    const me = view.playerNation!;
-    const mine = view.tech.nations[me];
+    const mine = own(view)?.tech;
     if (mine === undefined) return nothing;
     const tabs = [
       ...TECH_DOMAINS,
@@ -2387,6 +2504,12 @@ export class VeritableScreens extends LitElement {
   private journalAsked = "";
 
   // Opens the journal on one nation, or one thread (a marker of the map).
+  // J7b: the diplomacy on a nation (its card, the journal).
+  openDiplomacy(nation: string): void {
+    this.picked = nation;
+    this.show("diplomacy");
+  }
+
   openJournal(filter: { nation?: string; link?: string }): void {
     this.journalScope = "all";
     this.journalCategory = "";
@@ -2454,16 +2577,15 @@ export class VeritableScreens extends LitElement {
     }
   }
 
-  // The place of an entry: the camera goes there; the nation opens in the
-  // diplomacy screen (its sheet at the J7b).
-  private goToEntry(entry: JournalEntry): void {
+  // The place of an entry: the camera goes there; the card of the nation
+  // opens by the click (J7b).
+  private goToEntry(entry: JournalEntry, x = 0, y = 0): void {
     if (entry.tile !== undefined) campaignController().focus(entry.tile);
     if (
       entry.nation !== undefined &&
       entry.nation !== this.view?.playerNation
     ) {
-      this.picked = entry.nation;
-      this.show("diplomacy");
+      void nationCard().open(entry.nation, x, y);
     }
   }
 
@@ -2614,7 +2736,8 @@ export class VeritableScreens extends LitElement {
                         ? ""
                         : "cursor-pointer hover:text-white"}"
                       title=${vt("screen.journal.go")}
-                      @click=${() => this.goToEntry(j)}
+                      @click=${(e: MouseEvent) =>
+                        this.goToEntry(j, e.clientX, e.clientY)}
                       >${journalLine(names, j)}${this.entryEffects(
                         view,
                         j,
@@ -2737,8 +2860,9 @@ export class VeritableScreens extends LitElement {
     const { screen, view } = this;
     if (screen === null) return nothing;
     const player = view?.playerNation ?? null;
-    const economy = player === null ? undefined : view!.economies[player];
-    const politics = player === null ? undefined : view!.politics[player];
+    const mine = view === null || player === null ? null : own(view);
+    const economy = mine?.economy;
+    const politics = mine?.politics;
     // Under the top bar, whatever its height (it wraps on narrow screens).
     const bar = document
       .querySelector("veritable-topbar > div")

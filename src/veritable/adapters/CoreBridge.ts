@@ -44,6 +44,7 @@ import {
   segmentFront,
   Terrain,
 } from "../sim/war/geometry";
+import type { TileInfo } from "./protocol";
 import { NationBinding } from "./scenarioWorld";
 
 // How many of a nation's own tiles, nearest to its capital first, a silo
@@ -320,6 +321,20 @@ export class CoreBridge implements WorldPort {
   private nationAt(tile: number): NationId | null {
     if (!this.game.hasOwner(tile)) return null;
     return this.bySmallID.get(this.game.ownerID(tile)) ?? null;
+  }
+
+  // What lies under a point of the map (J7b): the interface asks it.
+  tileInfo(tile: number): TileInfo {
+    const valid =
+      Number.isInteger(tile) && tile >= 0 && tile < this.ledger.values.length;
+    const land = valid && this.game.isLand(tile);
+    return {
+      tile,
+      land,
+      owner: valid ? this.nationAt(tile) : null,
+      contested: valid && this.ledger.isContested(tile),
+      zone: valid && !land ? this.zoneOfWater(tile) : null,
+    };
   }
 
   setMonth(month: number): void {

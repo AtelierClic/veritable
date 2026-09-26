@@ -621,6 +621,17 @@ export const NationAiSchema = z.object({
   // J7: the date of its last war orders (divisions, postures, levies,
   // ceasefires), given every ordersDays; null: due at its next update.
   lastOrders: IsoDateSchema.nullable(),
+  // J7: the war it found worth it at its last review of war (target, casus
+  // belli, gain over cost and memory), declared or not; null when none —
+  // what the player sees of its intentions at the top level of intelligence.
+  intent: z
+    .object({
+      target: NationIdSchema,
+      casusBelli: z.string(),
+      ratio: zb.float(),
+      date: IsoDateSchema,
+    })
+    .nullable(),
 });
 export type NationAi = z.infer<typeof NationAiSchema>;
 
@@ -813,6 +824,31 @@ export type TerritoryState = z.infer<typeof TerritoryStateSchema>;
 // every month): `last` and `next` are elapsed game minutes; `drift` the
 // last time the relations it owns drifted (at most once a month but for
 // the player's, every day).
+// --- intelligence (J7) ------------------------------------------------------------
+
+// The indicators of intelligence of every nation (sim/intel/intel.ts, in the
+// order of `metrics`) at the start of the month, of the quarter and of the
+// year: what the player sees at levels 2, 1 and 0. Null dates: not taken yet
+// (a migrated save), filled at the restore. And the relations of the
+// player with every nation at the last month starts (the trend of six
+// months of the card of a nation).
+export const IntelSnapshotSchema = z.object({
+  date: IsoDateSchema.nullable(),
+  values: z.record(z.string(), z.array(zb.float())),
+});
+export const IntelStateSchema = z.object({
+  metrics: z.array(z.string()),
+  month: IntelSnapshotSchema,
+  quarter: IntelSnapshotSchema,
+  year: IntelSnapshotSchema,
+  relations: z.object({
+    viewer: NationIdSchema.nullable(),
+    dates: z.array(IsoDateSchema),
+    values: z.record(z.string(), z.array(zb.float())),
+  }),
+});
+export type IntelState = z.infer<typeof IntelStateSchema>;
+
 export const ScheduleStateSchema = z.object({
   nations: z.record(
     z.string(),
@@ -840,6 +876,7 @@ export const SaveHeaderV7Schema = zb.object({
   tech: TechStateSchema,
   events: EventsStateSchema,
   schedule: ScheduleStateSchema,
+  intel: IntelStateSchema,
   journal: z.array(JournalEntryV7Schema),
   metrics: z.record(z.string(), zb.float()),
   tilesInfo: z.object({ width: zb.uint(), height: zb.uint() }),

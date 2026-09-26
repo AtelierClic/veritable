@@ -9,8 +9,15 @@ import { MapOverlayResult } from "../adapters/protocol";
 import { vt } from "../data/i18n";
 import { loadVeritableConfig } from "../data/loadConfig";
 import { NationId } from "../data/schemas/common";
-import { FrontView, SegmentSide, SegmentView } from "../sim/VeritableSim";
+import { FrontView, SegmentView } from "../sim/VeritableSim";
 import { campaignController, MapMarker } from "./CampaignController";
+import {
+  attackRatioSeen,
+  contactSource,
+  shown,
+  SideSeen,
+  sideSeenWith,
+} from "./intel";
 
 // The fronts on the map (J5), for the campaign only: the line of every
 // segment, coloured by who advances and how wide the margin is, the force
@@ -268,6 +275,7 @@ export class FrontOverlayController implements Controller {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     const labels: { x: number; y: number; text: string; color: string }[] = [];
+    const source = contactSource(data.intel);
     for (const front of data.fronts) {
       const lines = geometry.get(front.id);
       if (lines === undefined) continue;
@@ -296,12 +304,17 @@ export class FrontOverlayController implements Controller {
         ctx.setLineDash(style.dashed ? [6 / s, 5 / s] : []);
         ctx.stroke();
         if (segment.attacker !== null) {
+          // J7b: the ratio as the player's intelligence sees it.
+          const seenRatio = attackRatioSeen(source, data.player, segment);
           labels.push({
             x: line.mid[0],
             y: line.mid[1],
             text: vt("map.front.ratio", {
               nation: segment.attacker,
-              ratio: NUMBER.format(segment.attackRatio),
+              ratio:
+                seenRatio === null
+                  ? NUMBER.format(segment.attackRatio)
+                  : shown(seenRatio, (v) => NUMBER.format(v)),
             }),
             color: style.color,
           });
@@ -472,24 +485,31 @@ export class FrontOverlayController implements Controller {
     }
     el.style.display = "block";
     const sides = [front.a, front.b];
-    const side = (id: NationId): SegmentSide | undefined => segment.sides[id];
-    const row = (label: string, pick: (s: SegmentSide) => string) =>
+    // J7b: every figure of another nation as the player sees it.
+    const source = contactSource(data!.intel);
+    const side = (id: NationId): SideSeen | null =>
+      sideSeenWith(source, data!.player, segment, id);
+    const row = (label: string, pick: (s: SideSeen) => string) =>
       html`<tr>
         <td class="pr-2 opacity-80">${label}</td>
         ${sides.map((id) => {
           const s = side(id);
           return html`<td class="px-2 text-right">
-            ${s === undefined ? "–" : pick(s)}
+            ${s === null ? "–" : pick(s)}
           </td>`;
         })}
       </tr>`;
     const times = (v: number) => `×${NUMBER.format(v)}`;
+    const seenRatio = attackRatioSeen(source, data!.player, segment);
     const footer =
       segment.attacker === null
         ? vt("map.front.quiet")
         : `${vt("map.front.attack", {
             nation: nationName(segment.attacker),
-            ratio: NUMBER.format(segment.attackRatio),
+            ratio:
+              seenRatio === null
+                ? NUMBER.format(segment.attackRatio)
+                : shown(seenRatio, (v) => NUMBER.format(v)),
             threshold: NUMBER.format(this.threshold),
           })} ${vt(
             segment.attackRatio > this.threshold
@@ -527,18 +547,25 @@ export class FrontOverlayController implements Controller {
             </tr>
           </thead>
           <tbody>
-            ${row(vt("map.front.divisions"), (s) => NUMBER.format(s.divisions))}
-            ${row(vt("map.front.men"), (s) => INTEGER.format(s.men))}
-            ${row(
-              vt("map.front.equipment"),
-              (s) => `${INTEGER.format(s.equipment * 100)} %`,
+            ${row(vt("map.front.divisions"), (s) =>
+              shown(s.divisions, (v) => NUMBER.format(v)),
             )}
-            ${row(vt("map.front.training"), (s) => times(s.training))}
-            ${row(vt("map.front.supply"), (s) => times(s.supply))}
-            ${row(vt("map.front.air"), (s) => times(s.air))}
-            ${row(vt("map.front.terrain"), (s) => times(s.terrain))}
-            ${row(vt("map.front.structures"), (s) => times(s.structures))}
-            ${row(vt("map.front.force"), (s) => INTEGER.format(s.force))}
+            ${row(vt("map.front.men"), (s) =>
+              shown(s.men, (v) => INTEGER.format(v)),
+            )}
+            ${row(vt("map.front.equipment"), (s) =>
+              shown(s.equipment, (v) => `${INTEGER.format(v * 100)} %`),
+            )}
+            ${row(vt("map.front.training"), (s) => shown(s.training, times))}
+            ${row(vt("map.front.supply"), (s) => shown(s.supply, times))}
+            ${row(vt("map.front.air"), (s) => shown(s.air, times))}
+            ${row(vt("map.front.terrain"), (s) => shown(s.terrain, times))}
+            ${row(vt("map.front.structures"), (s) =>
+              shown(s.structures, times),
+            )}
+            ${row(vt("map.front.force"), (s) =>
+              shown(s.force, (v) => INTEGER.format(v)),
+            )}
           </tbody>
         </table>
         <div class="mt-1">${footer}</div>`,

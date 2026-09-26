@@ -5,6 +5,7 @@ import { vt } from "../data/i18n";
 import { BlocVote, EventsState } from "../data/schemas/save";
 import { HudView, PendingVote } from "../sim/VeritableSim";
 import { daysBetweenDates } from "../sim/time";
+import { nationCard } from "./NationCard";
 import { effectLabel, eventParams } from "./eventText";
 import { longDate } from "./format";
 import { catalogueNames, journalLine, measureName } from "./journalText";
@@ -34,7 +35,7 @@ export class EventCards extends LitElement {
   private nextKey = 1;
   private readonly catalogue = dataSource.events();
   private readonly config = dataSource.config();
-  private readonly names = catalogueNames();
+  private names = catalogueNames();
 
   onChoose: (id: number, choice: string) => void = () => {};
   onVote: (proposal: number, vote: BlocVote) => void = () => {};
@@ -45,6 +46,8 @@ export class EventCards extends LitElement {
   }
 
   setHud(hud: HudView | null): void {
+    // J7b: the intelligence of the player (the losses of other nations).
+    if (hud !== null) this.names = catalogueNames(hud);
     this.hud = hud;
   }
 
@@ -163,7 +166,14 @@ export class EventCards extends LitElement {
         <span
           >${longDate(entry.date)}${entry.nation === undefined
             ? ""
-            : ` · ${this.names.nation(entry.nation)}`}</span
+            : html` ·
+                <button
+                  class="underline decoration-dotted"
+                  @click=${(e: MouseEvent) =>
+                    void nationCard().open(entry.nation!, e.clientX, e.clientY)}
+                >
+                  ${this.names.nation(entry.nation)}
+                </button>`}</span
         >
         <button
           class="px-1 text-gray-300"

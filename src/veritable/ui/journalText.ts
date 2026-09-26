@@ -1,6 +1,8 @@
 import { hasTextKey, vt } from "../data/i18n";
 import { JournalEntry } from "../data/schemas/save";
-import { ReadonlyWorldView } from "../sim/VeritableSim";
+import { perceive } from "../sim/intel/intel";
+import { HudView, ReadonlyWorldView } from "../sim/VeritableSim";
+import { contactSource, seenContact, shown } from "./intel";
 
 // The names the journal keeps as the simulation wrote them (J6c): a leader
 // as its i18n key or, for a generated one, its literal name; a party as its
@@ -16,6 +18,9 @@ export function leaderName(value: string): string {
 export interface Names {
   nation(id: string): string;
   party(nation: string | undefined, id: string): string;
+  // J7b: the losses of a nation in a war, as the player knows them (its
+  // own exact, another's through perceive).
+  losses(nation: string, value: number): string;
 }
 
 export function partyName(
@@ -23,13 +28,14 @@ export function partyName(
   nation: string | undefined,
   id: string,
 ): string {
+  // intel: public (the names of the parties of a nation)
   const own =
     nation === undefined
       ? undefined
-      : view.politics[nation]?.parties.find((p) => p.id === id);
+      : view.politics[nation]?.parties.find((p) => p.id === id); // intel: public
   const party =
     own ??
-    Object.values(view.politics)
+    Object.values(view.politics) // intel: public
       .flatMap((p) => p.parties)
       .find((p) => p.id === id);
   if (party === undefined) return id;
@@ -38,6 +44,10 @@ export function partyName(
 
 export function viewNames(view: ReadonlyWorldView): Names {
   return {
+    losses: (nation, value) =>
+      shown(seenContact(view, nation, "contactLosses", value), (v) =>
+        INTEGER.format(v),
+      ),
     nation: (id) => {
       const nation = view.nations.find((n) => n.id === id);
       if (nation === undefined) return id;
@@ -49,10 +59,20 @@ export function viewNames(view: ReadonlyWorldView): Names {
   };
 }
 
-export function catalogueNames(): Names {
+// J7b: the cards read the light view (the HUD): its intelligence gives
+// the levels of the player on the nations of its entries.
+export function catalogueNames(hud?: HudView): Names {
   const key = (k: string, fallback: string) =>
     hasTextKey(k) ? vt(k) : fallback;
   return {
+    losses: (nation, value) => {
+      if (hud === undefined) return vt("intel.unknown");
+      const source = contactSource({ ...hud.intel, date: hud.date });
+      return shown(
+        perceive(source, hud.playerNation, nation, "contactLosses", value),
+        (v) => INTEGER.format(v),
+      );
+    },
     nation: (id) => key(`nation.${id.toLowerCase()}.name`, id),
     party: (_nation, id) => key(`party.${id}`, id),
   };
@@ -176,6 +196,23 @@ export function journalLine(names: Names, j: JournalEntry): string {
     const v = p[key];
     if (v !== undefined && /^\d+$/.test(v))
       params[key] = INTEGER.format(Number(v));
+  }
+  // J7b: the losses of a month of war, as the player knows them.
+  if (j.kind === "war-month") {
+    if (
+      j.nation !== undefined &&
+      p.losses !== undefined &&
+      /^\d+$/.test(p.losses)
+    ) {
+      params.losses = names.losses(j.nation, Number(p.losses));
+    }
+    if (
+      p.against !== undefined &&
+      p.lossesAgainst !== undefined &&
+      /^\d+$/.test(p.lossesAgainst)
+    ) {
+      params.lossesAgainst = names.losses(p.against, Number(p.lossesAgainst));
+    }
   }
   if (j.kind === "election-held") {
     params.round = p.round === "2" ? vt("journal.round-2") : "";

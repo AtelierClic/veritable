@@ -3,6 +3,7 @@ import { loadNation } from "../data/catalog";
 import { vt } from "../data/i18n";
 import { relation } from "../sim/diplomacy/diplomacy";
 import { ReadonlyWorldView } from "../sim/VeritableSim";
+import { seenMiddle } from "./intel";
 
 // Lists of nations at the scale of the world (J6c): search by name, filters
 // by region of the world and by bloc, sort. Shared by the screens that list
@@ -87,10 +88,11 @@ export function filterNations(
     switch (filter.sort) {
       case "relations":
         return me === null ? 0 : -relation(view.diplomacy, me, id);
+      // J7b: by what the player knows (the middle of a range).
       case "stability":
-        return view.politics[id]?.stability ?? 0;
+        return seenMiddle(view, id, "stability");
       case "gdp":
-        return -(view.economies[id]?.gdp ?? 0);
+        return -seenMiddle(view, id, "gdp");
       case "name":
         return 0;
     }

@@ -301,6 +301,11 @@ const DiplomacyConfigSchema = z.object({
   }),
   affinitySanctions: z.number().min(0),
   affinityAllyAtWar: z.number().min(0),
+  // J7: plus affinityGuarantee when either guarantees the other, minus
+  // affinityClaim x the weight of the strongest active claim of either on
+  // land the other holds (the terms the card of a nation breaks down).
+  affinityGuarantee: z.number().min(0),
+  affinityClaim: z.number().min(0),
   allyBlocTypes: z.array(
     z.enum(["military-alliance", "economic-union", "forum"]),
   ),
@@ -659,6 +664,18 @@ export const VeritableConfigSchema = z.object({
     electionSoonDays: z.number().int().min(0),
     maxUpdatesPerTick: z.number().int().min(1),
     tradeCycleDays: z.number().int().min(1),
+  }),
+  // Intelligence (J7, sim/intel/intel.ts): the level of the player on
+  // another nation by the relation (at or above each mark: 1, 2, 3), the
+  // half-width of the ranges at levels 0, 1, 2 (share of the value), the
+  // regimes whose statistics are public and those closed to the world.
+  intel: z.object({
+    relationLevels: z.tuple([z.number(), z.number(), z.number()]),
+    precision: z.tuple([share, share, share]),
+    openRegimes: z.array(z.string()),
+    closedRegimes: z.array(z.string()),
+    // Month starts of the player's relations kept for the trend.
+    trendMonths: z.number().int().min(1),
   }),
   save: z.object({
     // Monthly automatic saves kept; older ones are rotated out.

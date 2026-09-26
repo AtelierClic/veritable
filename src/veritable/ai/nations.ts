@@ -92,6 +92,7 @@ export function initAi(ids: readonly NationId[]): AiState {
           lastLanding: null,
           blockading: null,
           lastOrders: null,
+          intent: null,
         } satisfies NationAi,
       ]),
     ),
@@ -390,15 +391,17 @@ function considerWar(
   reviews = 1,
 ): DiplomacyEvent | null {
   const cfg = env.ctx.config.ai.nations.war;
-  if (enemiesOf(env.diplomacy, id).length > 0) return null;
   const state = env.ai.nations[id];
+  // J7: a nation at war, just out of one or worn out weighs no new war.
   if (
-    state.lastWar !== null &&
-    monthsBetween(state.lastWar, env.date) < cfg.minMonthsBetweenWars
+    enemiesOf(env.diplomacy, id).length > 0 ||
+    (state.lastWar !== null &&
+      monthsBetween(state.lastWar, env.date) < cfg.minMonthsBetweenWars) ||
+    (env.military.nations[id]?.exhaustion ?? 0) > 0.2
   ) {
+    state.intent = null;
     return null;
   }
-  if ((env.military.nations[id]?.exhaustion ?? 0) > 0.2) return null;
   const options = env.ctx.nationIds
     .filter((t) => t !== id)
     .map((t) => appraiseWar(env, id, t))
@@ -406,6 +409,16 @@ function considerWar(
       (a): a is WarAppraisal => a !== null && a.gain > a.cost * (1 + a.memory),
     )
     .sort((a, b) => b.gain - b.cost - (a.gain - a.cost));
+  // J7: what it weighs, for the intelligence of the player.
+  state.intent =
+    options.length === 0
+      ? null
+      : {
+          target: options[0].target,
+          casusBelli: options[0].casusBelli,
+          ratio: options[0].gain / (options[0].cost * (1 + options[0].memory)),
+          date: env.date,
+        };
   if (options.length === 0) return null;
   // Even a war that pays is not declared on a whim.
   if (

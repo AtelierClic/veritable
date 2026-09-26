@@ -19,6 +19,7 @@ import {
   BlocVoteSchema,
   DiplomacyState,
   EventsState,
+  IntelState,
   JournalEntry,
   Market,
   MilitaryState,
@@ -39,6 +40,8 @@ import {
 import { Scenario } from "../data/schemas/scenario";
 import { CONSCRIPTION_LEVELS, POSTURES } from "../data/schemas/war";
 import type { AccessionCriteria, MeasureOption, Tally } from "./blocs/blocs";
+import type { AffinityTerms } from "./diplomacy/diplomacy";
+import type { IntelLevels, IntelRules } from "./intel/intel";
 import type { Runoff } from "./politics/elections";
 
 // The simulation boundary (ARCHITECTURE.md, "Frontière de simulation").
@@ -109,6 +112,14 @@ export interface HudView {
   // since the mark asked for (at most 50).
   journalMark: number;
   journal: readonly JournalEntry[];
+  // J7b: what the cards need to show the figures of other nations through
+  // perceive (the losses of a war): the seed, the rules, the levels of the
+  // player on its enemies and on the nations of the entries sent.
+  intel: {
+    seed: number;
+    rules: IntelRules;
+    levels: Record<NationId, IntelLevels>;
+  };
 }
 
 export interface PendingVote {
@@ -473,7 +484,28 @@ export interface ReadonlyWorldView {
   // next), and the version of the view: it moves whenever something the
   // player sees has changed (the interface reads the view again then).
   readonly schedule: Readonly<ScheduleState>;
+  // Intelligence (J7): what the player knows of every other nation — read
+  // only through perceive() (ui/intel.ts), with the military power and the
+  // monthly risk of a coup of every nation.
+  readonly intel: Readonly<IntelView>;
+  readonly power: Readonly<Record<NationId, number>>;
+  readonly coupRisk: Readonly<Record<NationId, number>>;
   readonly version: number;
+}
+
+// Intelligence as the interface sees it (J7): the snapshots of the
+// indicators and the relations of the player, its levels on every other
+// nation and the terms of their relation, the rules of perception.
+export interface IntelView {
+  state: IntelState;
+  levels: Record<NationId, IntelLevels>;
+  relationTerms: Record<NationId, AffinityTerms>;
+  rules: IntelRules;
+  // What is public between the player and each nation: the regions each
+  // claims on land the other holds (only nations with claims), and every
+  // guarantee of the scenario.
+  claims: Record<NationId, { byPlayer: string[]; byThem: string[] }>;
+  guarantees: { guarantor: NationId; protected: NationId }[];
 }
 
 // A bloc as the screen sees it. Members: the simulated nations only, and

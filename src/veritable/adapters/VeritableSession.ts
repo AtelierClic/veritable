@@ -162,6 +162,8 @@ export class VeritableSession {
         return this.sim.hud(request.journalSince);
       case "journal":
         return this.sim.queryJournal(request.query);
+      case "tile":
+        return this.bridge.tileInfo(request.tile);
       case "apply":
         this.sim.apply(request.command);
         return null;
@@ -182,6 +184,7 @@ export class VeritableSession {
 
   mapOverlay(contestedVersion: number): MapOverlayResult {
     const view = this.sim.read();
+    const atWar = new Set(view.fronts.flatMap((f) => [f.a, f.b]));
     return {
       overlay: this.bridge.overlay(
         this.config.war.overlayStep,
@@ -189,6 +192,16 @@ export class VeritableSession {
       ),
       fronts: [...view.fronts],
       player: view.playerNation,
+      intel: {
+        seed: view.seed,
+        date: view.date,
+        levels: Object.fromEntries(
+          [...atWar]
+            .filter((id) => view.intel.levels[id] !== undefined)
+            .map((id) => [id, view.intel.levels[id]]),
+        ),
+        rules: view.intel.rules,
+      },
     };
   }
 

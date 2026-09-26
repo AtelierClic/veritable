@@ -3,6 +3,7 @@ import { customElement, state } from "lit/decorators.js";
 import { vt } from "../data/i18n";
 import { SPEEDS } from "../data/schemas/save";
 import { longDate } from "./format";
+import { intelSetting, IntelSetting, setIntelSetting } from "./intel";
 import { PAUSE_CATEGORIES, PauseCategory, PauseSettings } from "./notices";
 
 export type Speed = (typeof SPEEDS)[number];
@@ -115,6 +116,23 @@ export class VeritableTopBar extends LitElement {
             ${vt(`pause.category.${c}`)}
           </label>`,
       )}
+      <div class="mt-2 flex items-center gap-1">
+        <span class="font-bold">${vt("intel.setting")}</span>
+        ${(["realistic", "omniscient"] as IntelSetting[]).map(
+          (mode) =>
+            html`<button
+              class="rounded px-2 ${intelSetting() === mode
+                ? "bg-blue-600"
+                : "bg-gray-700"}"
+              @click=${() => {
+                setIntelSetting(mode);
+                this.requestUpdate();
+              }}
+            >
+              ${vt(`intel.setting.${mode}`)}
+            </button>`,
+        )}
+      </div>
     </div>`;
   }
 

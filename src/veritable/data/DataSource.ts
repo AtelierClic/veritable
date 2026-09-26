@@ -1,9 +1,12 @@
 import { Borders, decodeBorders } from "./bordersFile";
+import { decodePopulation, PopulationGrid } from "./populationFile";
 import { decodeRegions, Regions } from "./regionsFile";
 import { Bloc, BlocSchema } from "./schemas/bloc";
+import { CitiesFileSchema, CityData } from "./schemas/cities";
 import { NationId } from "./schemas/common";
 import { VeritableConfig, VeritableConfigSchema } from "./schemas/config";
 import { EventSchema, VeritableEvent } from "./schemas/event";
+import { FlagsFileSchema } from "./schemas/flags";
 import { Georef, GeorefSchema } from "./schemas/georef";
 import { Good, GoodsSchema } from "./schemas/goods";
 import { Law, LawsSchema } from "./schemas/laws";
@@ -90,6 +93,11 @@ export interface DataSource {
   // Technology and events (J5).
   tech(): TechNode[];
   events(): VeritableEvent[];
+  // The map as an interface (J7): the flag of each nation, the cities of a
+  // scenario, the people of every tile of its map (null without the file).
+  flags(): Record<NationId, string>;
+  cities(scenario: Scenario): CityData[];
+  population(scenario: Scenario): Promise<PopulationGrid | null>;
 }
 
 export function createDataSource(files: RawDataFiles): DataSource {
@@ -191,6 +199,32 @@ export function createDataSource(files: RawDataFiles): DataSource {
       }),
     zones: async (scenario) =>
       decodeZones(await files.bytes(`borders/${scenario.id}.zones.bin`)),
+    flags: () =>
+      once(
+        "flags",
+        () => FlagsFileSchema.parse(files.json("flags.json")).flags,
+      ),
+    cities: (scenario) =>
+      once(`cities:${scenario.id}`, () => {
+        try {
+          return CitiesFileSchema.parse(
+            files.json(`cities/${scenario.id}.json`),
+          ).cities;
+        } catch (error) {
+          if (error instanceof DataFileNotFound) return [];
+          throw error;
+        }
+      }),
+    population: async (scenario) => {
+      try {
+        return decodePopulation(
+          await files.bytes(`borders/${scenario.id}.pop.bin`),
+        );
+      } catch (error) {
+        if (error instanceof DataFileNotFound) return null;
+        throw error;
+      }
+    },
     regions: async (scenario) =>
       scenario.borders.regions === undefined
         ? null
