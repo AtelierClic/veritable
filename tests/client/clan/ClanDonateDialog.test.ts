@@ -70,8 +70,11 @@ describe("clan-donate-dialog", () => {
   it("shows the player's balance for each currency, soft selected by default", () => {
     expect(currencyButton("soft").getAttribute("aria-checked")).toBe("true");
     expect(currencyButton("hard").getAttribute("aria-checked")).toBe("false");
+    // VERITABLE: the balance is formatted in the locale of the machine
+    // (toLocaleString); "1,000" only held under an English locale, and the
+    // development machine is French ("1 000").
     expect(currencyButton("soft").textContent).toContain(
-      'clan_modal.donate_your_balance:{"balance":"1,000"}',
+      `clan_modal.donate_your_balance:{"balance":"${(1000).toLocaleString()}"}`,
     );
     expect(currencyButton("hard").textContent).toContain(
       'clan_modal.donate_your_balance:{"balance":"25"}',

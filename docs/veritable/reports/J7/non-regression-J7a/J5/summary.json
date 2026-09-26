@@ -1,0 +1,182 @@
+{
+  "campaigns": 100,
+  "criteria": {
+    "noShotInYearOne": true,
+    "shotsInAtMost5pct": true,
+    "neverBelowLevel2": true,
+    "noThreeWayExchange": true,
+    "warsMedianAtMost1Max2": true,
+    "warsMax10": true,
+    "under30pctWithoutCasusBelli": true,
+    "atLeastOneRevolution": true,
+    "crisisInHalfAt10Years": true,
+    "rusJuntaAtMost20pct": true,
+    "turJuntaAtMost20pct": true,
+    "pricesBounded": true,
+    "noDefaultInStableNation": true,
+    "rusUkrRelaunchMedianAtMost1": true,
+    "calm15YearsInAtLeast40pct": true
+  },
+  "world": {
+    "pairShareMax": 1,
+    "pairShareMedian": 0,
+    "pairAbove40pct": [
+      "seed 2: RUS-UKR 1/1",
+      "seed 29: RUS-UKR 1/1",
+      "seed 34: RUS-UKR 1/1",
+      "seed 35: RUS-UKR 1/1",
+      "seed 40: RUS-UKR 1/1",
+      "seed 48: RUS-UKR 1/1",
+      "seed 50: RUS-UKR 1/1",
+      "seed 51: RUS-UKR 1/1",
+      "seed 59: RUS-UKR 1/1",
+      "seed 61: RUS-UKR 1/1",
+      "seed 64: RUS-UKR 1/1",
+      "seed 76: RUS-UKR 1/1",
+      "seed 81: RUS-UKR 1/1",
+      "seed 96: RUS-UKR 1/1"
+    ],
+    "regionsMin": 0,
+    "regionsPerCampaign": {
+      "0": 86,
+      "1": 14
+    },
+    "warsByRegion": {
+      "europe": 14
+    },
+    "pairs": {
+      "RUS-UKR": 14
+    },
+    "coups": 57,
+    "coupsByRegime": {
+      "electoral-authoritarian": 42,
+      "junta": 11,
+      "semi-presidential": 2,
+      "parliamentary": 2
+    },
+    "fragileCoupShare": 0.9298245614035088,
+    "defaults": 0,
+    "otherDefaults": [],
+    "nonFinite": []
+  },
+  "loop": {
+    "relaunchMedian": 0,
+    "relaunchMax": 1,
+    "relaunchesPerCampaign": {
+      "0": 86,
+      "1": 14
+    },
+    "scenarioWarEnded": 100,
+    "calm15Years": 86,
+    "calmShare": 0.86,
+    "yearsToReprise": {
+      "1": 4,
+      "2": 4,
+      "3": 3,
+      "4": 3
+    }
+  },
+  "wars": {
+    "median": 0,
+    "max": 1,
+    "total": 14,
+    "withoutCasusBelli": 1,
+    "byCasusBelli": {
+      "grievance": 13,
+      "none": 1
+    },
+    "byAggressor": {
+      "RUS": 14
+    },
+    "perCampaign": {
+      "0": 86,
+      "1": 14
+    }
+  },
+  "nuclear": {
+    "campaignsWithShots": 0,
+    "shots": 0,
+    "byShooter": {},
+    "byThreat": {},
+    "list": [],
+    "threeWayCampaigns": []
+  },
+  "politics": {
+    "revolutions": [
+      "UKR@2033-05-04"
+    ],
+    "crisisBy10Years": 76,
+    "juntaAt10Years": {
+      "RUS": 4,
+      "TUR": 0
+    },
+    "coups": 57
+  },
+  "prices": {
+    "low": 0.8421129844167297,
+    "high": 1.468063361424948
+  },
+  "defaults": {
+    "total": 0,
+    "inStableNations": []
+  },
+  "technology": {
+    "FRA": {
+      "completed": 100,
+      "median": "2038-07-01",
+      "shareIn2035": 0.9016393442622951
+    },
+    "DEU": {
+      "completed": 100,
+      "median": "2038-09-01",
+      "shareIn2035": 0.8524590163934426
+    },
+    "GBR": {
+      "completed": 100,
+      "median": "2035-12-01",
+      "shareIn2035": 0.9672131147540983
+    },
+    "ITA": {
+      "completed": 100,
+      "median": "2043-01-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "ESP": {
+      "completed": 100,
+      "median": "2043-02-01",
+      "shareIn2035": 0.6885245901639344
+    },
+    "POL": {
+      "completed": 100,
+      "median": "2042-10-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "UKR": {
+      "completed": 100,
+      "median": "2073-01-01",
+      "shareIn2035": 0.3770491803278688
+    },
+    "RUS": {
+      "completed": 100,
+      "median": "2043-12-01",
+      "shareIn2035": 0.7213114754098361
+    },
+    "TUR": {
+      "completed": 100,
+      "median": "2042-12-01",
+      "shareIn2035": 0.6885245901639344
+    },
+    "NOR": {
+      "completed": 100,
+      "median": "2039-01-01",
+      "shareIn2035": 0.8524590163934426
+    }
+  },
+  "events": {
+    "mean": 53.49
+  },
+  "blocs": {
+    "decisionsMean": 61.78
+  },
+  "wallMsMean": 52294.29
+}

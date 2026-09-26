@@ -91,6 +91,7 @@ export function initAi(ids: readonly NationId[]): AiState {
           lastWar: null,
           lastLanding: null,
           blockading: null,
+          lastOrders: null,
         } satisfies NationAi,
       ]),
     ),

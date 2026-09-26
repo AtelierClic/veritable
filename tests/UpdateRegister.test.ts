@@ -26,6 +26,55 @@ function extractRegisterBlock(): string {
   return source.slice(start + BEGIN.length, end);
 }
 
+// VERITABLE: the register block builds and reads its JSON with jq, which the
+// Windows development machine of Véritable does not have: every call then
+// failed and the two tests of a successful registration could not pass.
+// Where bash finds no jq, a stand-in in Node answers the two filters the
+// block uses (an object built from --arg/--argjson, and `.field // empty`
+// read raw from a file), so that the script's own logic still runs; where
+// jq exists, the real one is used (DECISIONS.md, J7a).
+let jqChecked: boolean | null = null;
+function hasJq(): boolean {
+  if (jqChecked === null) {
+    try {
+      execFileSync("bash", ["-c", "command -v jq"], { stdio: "ignore" });
+      jqChecked = true;
+    } catch {
+      jqChecked = false;
+    }
+  }
+  return jqChecked;
+}
+
+const JQ_STAND_IN = `#!/usr/bin/env node
+const fs = require("fs");
+const args = process.argv.slice(2);
+const named = {};
+const rest = [];
+for (let i = 0; i < args.length; i++) {
+  if (args[i] === "--arg") { named[args[i + 1]] = args[i + 2]; i += 2; }
+  else if (args[i] === "--argjson") { named[args[i + 1]] = JSON.parse(args[i + 2]); i += 2; }
+  else if (!args[i].startsWith("-")) rest.push(args[i]);
+}
+const filter = rest[0];
+const field = /^\\.(\\w+) \\/\\/ empty$/.exec(filter);
+if (field) {
+  let value;
+  try {
+    value = JSON.parse(fs.readFileSync(rest[1], "utf8"))[field[1]];
+  } catch (e) {
+    process.stderr.write("jq: error: " + e.message + "\\n");
+    process.exit(5);
+  }
+  if (value === undefined || value === null || value === false) process.exit(0);
+  process.stdout.write((typeof value === "string" ? value : JSON.stringify(value)) + "\\n");
+} else {
+  const out = {};
+  for (const m of filter.matchAll(/(\\w+):\\s*\\$(\\w+)/g)) out[m[1]] = named[m[2]];
+  process.stdout.write(JSON.stringify(out) + "\\n");
+}
+`;
+
 let tempDir: string | null = null;
 
 afterEach(() => {
@@ -87,6 +136,11 @@ printf '%s' "$CODE"
   const curlPath = path.join(binDir, "curl");
   fs.writeFileSync(curlPath, fakeCurl);
   fs.chmodSync(curlPath, 0o755);
+  if (!hasJq()) {
+    const jqPath = path.join(binDir, "jq");
+    fs.writeFileSync(jqPath, JQ_STAND_IN);
+    fs.chmodSync(jqPath, 0o755);
+  }
 
   const script = [
     `export PATH='${binDir}':"$PATH"`,

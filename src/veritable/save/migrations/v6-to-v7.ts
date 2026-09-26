@@ -39,7 +39,7 @@ import { MigrationContext, MigrationError } from "./index";
 //     first day of a campaign; a migrated one keeps the ideological vote of
 //     the J4 to the J6);
 //   - the AI keeps its goals, not its review dates (the queue replaces
-//     them).
+//     them); its war orders due at its first update.
 
 export function v6ToV7(
   save: SaveFileV6,
@@ -172,6 +172,7 @@ export function v6ToV7(
           lastWar: a.lastWar,
           lastLanding: a.lastLanding,
           blockading: a.blockading,
+          lastOrders: null,
         },
       ]),
     ),

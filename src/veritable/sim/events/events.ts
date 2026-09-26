@@ -411,6 +411,23 @@ export function governmentTraits(
 }
 
 // The party a government decides for, or null (no party).
+// The traits an AI nation chooses its own events with (J7a.7): its
+// leader's aggressiveness, no ideology — the scoring of the J5 to the J6.
+// The ideology of the government shades the choice its government makes
+// for the player (governmentChoice) only: applied to every AI nation, it
+// made the sovereignist governments of the world take every grievance
+// (Russia three times as many against Ukraine, a war every six to eight
+// years on europe-10).
+export function aiTraits(env: EventsEnv, nation: NationId): ChoiceTraits {
+  return {
+    economic: 0,
+    authority: 0,
+    sovereignty: 0,
+    aggressiveness:
+      env.politics.nations[nation]?.leader.traits.aggressiveness ?? 0.5,
+  };
+}
+
 export function governmentParty(
   env: EventsEnv,
   nation: NationId,
@@ -434,7 +451,7 @@ export function choiceScore(
   env: EventsEnv,
   nation: NationId,
   effects: readonly EventEffect[],
-  traits: ChoiceTraits = governmentTraits(env, nation),
+  traits: ChoiceTraits = aiTraits(env, nation),
 ): number {
   const w = env.ctx.config.events.ai;
   const shade = env.ctx.config.events.ideology;
@@ -576,7 +593,7 @@ export function aiChoice(
   nation: NationId,
   event: VeritableEvent,
 ): string {
-  const traits = governmentTraits(env, nation);
+  const traits = aiTraits(env, nation);
   let best = event.choices[0];
   let bestScore = choiceScore(env, nation, best.effects, traits);
   for (const choice of event.choices.slice(1)) {

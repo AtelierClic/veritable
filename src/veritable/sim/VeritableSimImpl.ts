@@ -541,6 +541,21 @@ export class VeritableSimImpl implements VeritableSim {
       this.deps.config.time.gameMinutesPerTick,
       this.politics.autopilot ? null : this.playerNationId(),
     );
+    // J7: the belligerents of the wars of the scenario take their first
+    // war orders together, at the first ticks, once the fronts are known —
+    // spread over the first week, the first to come (Ukraine) found the
+    // other's segments empty and took land the scenario gives Russia.
+    for (const war of this.diplomacy.wars) {
+      for (const id of [...war.aggressors, ...war.defenders]) {
+        hasten(
+          this.schedule,
+          id,
+          0,
+          0,
+          this.deps.config.time.gameMinutesPerTick,
+        );
+      }
+    }
     this.warmUp();
   }
 
@@ -1464,25 +1479,11 @@ export class VeritableSimImpl implements VeritableSim {
     }
 
     // The AI: defence, war, navy; its war orders and ceasefires.
+    let ordersWait = false;
     if (isAi) {
       const env = this.aiEnv(date);
       for (const event of review(env, id, days)) this.record(date, event);
-      const orders = stepWarAi(
-        this.ctx,
-        this.diplomacy,
-        this.military,
-        economy.population,
-        this.geometry,
-        id,
-      );
-      for (const to of orders.ceasefireTo) {
-        const war = this.diplomacy.wars.find(
-          (w) => warSide(w, id) !== null && warSide(w, to) !== null,
-        );
-        if (war === undefined) continue;
-        if (war.offers.some((o) => o.from === id && o.to === to)) continue;
-        this.offerPeace(war, id, to, CEASEFIRE, date);
-      }
+      ordersWait = this.warOrders(id, now, date, economy.population);
     }
     const after = this.diplomacy.wars.reduce(
       (s, w) => s + w.aggressors.length + w.defenders.length,
@@ -1499,6 +1500,59 @@ export class VeritableSimImpl implements VeritableSim {
       this.cadence(id),
       this.deps.config.time.gameMinutesPerTick,
     );
+    // Orders waiting for the fronts of the day: the next tick.
+    if (ordersWait) {
+      const tick = this.deps.config.time.gameMinutesPerTick;
+      hasten(this.schedule, id, now, tick / MINUTES_PER_GAME_DAY, tick);
+    }
+  }
+
+  // The war orders of an AI nation (J7): its divisions on the segments of
+  // its fronts, postures, levies and ceasefires, every ordersDays of its
+  // own time — the monthly step gave them to every nation at once until the
+  // J6; weekly orders at every update of a nation at war let a defender
+  // answer every Russian push within days and the war of the scenario never
+  // ended as it did — and at once when the nation enters a war, once the
+  // fronts of the day are known (a war declared in this very tick has none
+  // yet). True when the orders wait for them.
+  private warOrders(
+    id: NationId,
+    now: number,
+    date: string,
+    population: number,
+  ): boolean {
+    const ai = this.ai.nations[id];
+    if (
+      ai.lastOrders !== null &&
+      daysBetweenDates(ai.lastOrders, date) <
+        this.deps.config.ai.nations.war.ordersDays
+    ) {
+      return false;
+    }
+    if (
+      enemiesOf(this.diplomacy, id).length > 0 &&
+      this.geometryDay !== dayIndex(now)
+    ) {
+      return true;
+    }
+    ai.lastOrders = date;
+    const orders = stepWarAi(
+      this.ctx,
+      this.diplomacy,
+      this.military,
+      population,
+      this.geometry,
+      id,
+    );
+    for (const to of orders.ceasefireTo) {
+      const war = this.diplomacy.wars.find(
+        (w) => warSide(w, id) !== null && warSide(w, to) !== null,
+      );
+      if (war === undefined) continue;
+      if (war.offers.some((o) => o.from === id && o.to === to)) continue;
+      this.offerPeace(war, id, to, CEASEFIRE, date);
+    }
+    return false;
   }
 
   // The political engine of one nation over `months` (J4; once a month
@@ -2771,6 +2825,9 @@ export class VeritableSimImpl implements VeritableSim {
           1,
           this.deps.config.time.gameMinutesPerTick,
         );
+        // Its war orders at that update, whenever it had its last ones.
+        const ai = this.ai.nations[id];
+        if (ai !== undefined) ai.lastOrders = null;
       }
     }
     if (event.type === "regime-changed") {

@@ -216,6 +216,67 @@ describe("events", () => {
     expect(entry.params.by).toBe("government");
   });
 
+  it("an AI nation chooses its own events by its leader, not by the ideology of its government (J7a.7)", () => {
+    const config = quietConfig();
+    config.events.aiMistakeProbability = 0;
+    const incident = event({
+      id: "frontier-incident",
+      kind: "template",
+      trigger: {
+        nations: ["AAA"],
+        monthlyProbability: 1,
+        conditions: [],
+        cooldownMonths: 100,
+      },
+      params: { other: "neighbor" },
+      choices: [
+        {
+          id: "escalate",
+          label: "event.frontier-incident.escalate",
+          effects: [
+            { target: "grievance.other", op: "set", value: 1, months: 12 },
+          ],
+        },
+        {
+          id: "calm",
+          label: "event.frontier-incident.calm",
+          effects: [],
+        },
+      ],
+    });
+    const { sim, months } = campaign({
+      events: [incident],
+      autopilot: true,
+      landNeighbours: [["AAA", "BBB"]],
+      config,
+    });
+    const politics = (
+      sim as unknown as {
+        politics: {
+          nations: Record<
+            string,
+            {
+              government: { parties: string[] };
+              parties: { id: string; ideology: object }[];
+              leader: { traits: { aggressiveness: number } };
+            }
+          >;
+        };
+      }
+    ).politics.nations.AAA;
+    // A sovereignist government under a leader of little aggressiveness.
+    const lead = politics.parties.find(
+      (p) => p.id === politics.government.parties[0],
+    )!;
+    lead.ideology = { economic: 0, authority: 0.5, sovereignty: 1 };
+    politics.leader.traits.aggressiveness = 0.45;
+    months(1);
+    const done = sim
+      .read()
+      .events.history.find((h) => h.event === "frontier-incident")!;
+    expect(done.choice).toBe("calm");
+  });
+
   it("a template draws a neighbour and gives a grievance: a casus belli until it expires", () => {
     const { sim, months, deps } = campaign({
       autopilot: true,

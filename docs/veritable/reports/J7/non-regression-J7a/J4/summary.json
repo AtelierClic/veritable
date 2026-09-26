@@ -1,0 +1,299 @@
+{
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51
+  ],
+  "years": 10,
+  "alternationNations": [
+    "FRA",
+    "DEU",
+    "GBR",
+    "ESP",
+    "POL",
+    "TUR",
+    "NOR"
+  ],
+  "alternationNationsCount": 7,
+  "perCampaignAlternationNations": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    5,
+    6,
+    6,
+    4,
+    6
+  ],
+  "crisisCampaigns": 7,
+  "campaigns": 10,
+  "unexplainedJuntas": [],
+  "juntaMonths": [
+    {
+      "nation": "TUR",
+      "seed": 47,
+      "months": 48
+    }
+  ],
+  "juntaSeeds": {
+    "FRA": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "DEU": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "GBR": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "ITA": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "ESP": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "POL": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "UKR": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "RUS": {
+      "ever": 0,
+      "atEnd": 0
+    },
+    "TUR": {
+      "ever": 1,
+      "atEnd": 0
+    },
+    "NOR": {
+      "ever": 0,
+      "atEnd": 0
+    }
+  },
+  "coupsInStableDemocracies": [],
+  "coups": {
+    "successful": 1,
+    "attempts": 2
+  },
+  "criteria": {
+    "russiaTurkeyJuntaInAtMostTwoSeeds": true,
+    "noCoupInAStableDemocracy": true,
+    "alternationInSevenNations": true,
+    "crisisInHalfOfCampaigns": true,
+    "noUnexplainedJunta": true
+  },
+  "events": [
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 2,
+      "event-occurred": 46,
+      "month-started": 120,
+      "unrest-started": 4,
+      "bloc-presidency": 40,
+      "tech-completed": 63,
+      "unrest-ended": 4,
+      "bloc-reprimand": 15,
+      "bloc-proposal": 14,
+      "bloc-decision": 14,
+      "peace-signed": 1,
+      "leader-died": 3,
+      "leader-succeeded": 3,
+      "sanctions-lifted": 1,
+      "bloc-application": 1,
+      "bloc-accession-opened": 1,
+      "war-declared": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 2,
+      "month-started": 120,
+      "bloc-proposal": 9,
+      "bloc-decision": 9,
+      "event-occurred": 53,
+      "tech-completed": 65,
+      "bloc-presidency": 40,
+      "bloc-reprimand": 18,
+      "bloc-accession-opened": 1,
+      "bloc-accession-frozen": 1,
+      "unrest-started": 6,
+      "unrest-ended": 6,
+      "peace-signed": 1,
+      "leader-died": 2,
+      "leader-succeeded": 2,
+      "sanctions-lifted": 1,
+      "war-declared": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 2,
+      "month-started": 120,
+      "event-occurred": 50,
+      "bloc-proposal": 9,
+      "bloc-decision": 9,
+      "unrest-started": 8,
+      "tech-completed": 64,
+      "bloc-presidency": 40,
+      "unrest-ended": 8,
+      "bloc-reprimand": 25,
+      "leader-died": 1,
+      "leader-succeeded": 1,
+      "peace-signed": 1,
+      "sanctions-lifted": 1,
+      "war-declared": 1,
+      "austerity-started": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 2,
+      "month-started": 120,
+      "event-occurred": 46,
+      "bloc-proposal": 15,
+      "bloc-decision": 15,
+      "unrest-started": 1,
+      "tech-completed": 64,
+      "bloc-presidency": 41,
+      "unrest-ended": 1,
+      "bloc-reprimand": 19,
+      "leader-died": 5,
+      "leader-succeeded": 5,
+      "peace-signed": 1,
+      "bloc-application": 1,
+      "bloc-accession-opened": 1,
+      "sanctions-lifted": 1,
+      "war-declared": 1,
+      "bloc-joined": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 1,
+      "month-started": 120,
+      "event-occurred": 38,
+      "tech-completed": 63,
+      "bloc-presidency": 42,
+      "bloc-proposal": 18,
+      "bloc-decision": 18,
+      "bloc-reprimand": 21,
+      "leader-died": 1,
+      "leader-succeeded": 1,
+      "peace-signed": 1,
+      "bloc-application": 2,
+      "bloc-accession-opened": 2,
+      "sanctions-lifted": 1,
+      "bloc-joined": 1
+    },
+    {
+      "election-held": 20,
+      "government-formed": 20,
+      "sanctions-imposed": 1,
+      "event-occurred": 39,
+      "month-started": 120,
+      "bloc-proposal": 14,
+      "bloc-decision": 14,
+      "tech-completed": 66,
+      "bloc-presidency": 41,
+      "bloc-reprimand": 19,
+      "bloc-accession-opened": 3,
+      "leader-died": 2,
+      "leader-succeeded": 2,
+      "bloc-accession-frozen": 1,
+      "peace-signed": 1,
+      "bloc-application": 1,
+      "coup-succeeded": 1,
+      "regime-changed": 2,
+      "war-declared": 1,
+      "bloc-joined": 1,
+      "civilian-transition": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 1,
+      "month-started": 120,
+      "event-occurred": 50,
+      "tech-completed": 65,
+      "bloc-presidency": 40,
+      "bloc-reprimand": 21,
+      "bloc-proposal": 8,
+      "bloc-decision": 8,
+      "bloc-accession-opened": 1,
+      "bloc-accession-frozen": 1,
+      "leader-died": 2,
+      "leader-succeeded": 2,
+      "peace-signed": 1,
+      "sanctions-lifted": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 2,
+      "month-started": 120,
+      "bloc-proposal": 9,
+      "bloc-decision": 9,
+      "event-occurred": 55,
+      "tech-completed": 63,
+      "bloc-presidency": 40,
+      "bloc-reprimand": 19,
+      "leader-died": 4,
+      "leader-succeeded": 4,
+      "peace-signed": 1,
+      "sanctions-lifted": 1,
+      "war-declared": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 1,
+      "month-started": 120,
+      "event-occurred": 49,
+      "coup-attempted": 1,
+      "tech-completed": 65,
+      "bloc-presidency": 41,
+      "bloc-reprimand": 21,
+      "bloc-proposal": 11,
+      "bloc-decision": 11,
+      "bloc-application": 1,
+      "bloc-accession-opened": 1,
+      "peace-signed": 1,
+      "bloc-joined": 1,
+      "war-declared": 1
+    },
+    {
+      "election-held": 21,
+      "government-formed": 21,
+      "sanctions-imposed": 1,
+      "bloc-proposal": 12,
+      "bloc-decision": 12,
+      "month-started": 120,
+      "event-occurred": 53,
+      "tech-completed": 64,
+      "bloc-presidency": 40,
+      "bloc-reprimand": 19,
+      "unrest-started": 7,
+      "unrest-ended": 7,
+      "peace-signed": 1,
+      "sanctions-lifted": 1
+    }
+  ],
+  "meanWallMs": 2167
+}

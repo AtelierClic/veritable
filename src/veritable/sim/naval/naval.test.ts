@@ -145,21 +145,20 @@ describe("zones and control", () => {
     });
     strong.sim.apply({ type: "set-blockade", target: "CCC", active: true });
     strong.days(1);
-    const tilesBefore = strong.sim
-      .read()
-      .nations.find((n) => n.id === "AAA")!.tileCount;
+    const tilesBefore = strong.world.tileCounts().get("AAA") ?? 0;
     strong.sim.apply({ type: "landing", target: "CCC" });
+    // The beachhead, taken at the landing (the memory world lands at once).
+    expect(strong.world.tileCounts().get("AAA")).toBe(tilesBefore + 6);
+    // It is a front as soon as the fronts are read again. (J7a.7: CCC, an AI
+    // at war, takes its first war orders with the fronts of the day and may
+    // throw the beachhead back within the day.)
+    strong.events.push(...strong.sim.advance(2 * 72));
+    expect(strong.sim.read().fronts.map((f) => f.id)).toContain("AAA|CCC");
     strong.days(1);
     expect(strong.events.map((e) => e.type)).toContain("landing");
     expect(strong.world.landings).toEqual([
       { attacker: "AAA", target: "CCC", radius: 6 },
     ]);
-    expect(
-      strong.sim.read().nations.find((n) => n.id === "AAA")!.tileCount,
-    ).toBe(tilesBefore + 6);
-    // The beachhead is a front now.
-    strong.days(1);
-    expect(strong.sim.read().fronts.map((f) => f.id)).toContain("AAA|CCC");
     expect(() => strong.sim.apply({ type: "landing", target: "BBB" })).toThrow(
       /not an enemy/,
     );

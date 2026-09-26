@@ -24,6 +24,7 @@ import {
 } from "../../../src/veritable/adapters/scenarioWorld";
 import { VeritableSession } from "../../../src/veritable/adapters/VeritableSession";
 import { VeritableConfig } from "../../../src/veritable/data/schemas/config";
+import { peekCoreStart } from "../../../src/veritable/save/serialize";
 import { SimEvent } from "../../../src/veritable/sim/VeritableSim";
 import { Driver } from "./campaign";
 
@@ -46,7 +47,18 @@ export async function coreDriver(
   autopilot: boolean,
   // J6: the duration of every tick (core + simulation), for the profiles.
   onTick?: (ms: number) => void,
+  // J7: a save of this scenario to load instead of a new campaign; its own
+  // game id and player (the point 37: the first ticks after a load).
+  saveBytes?: Uint8Array,
 ): Promise<Driver> {
+  const saved =
+    saveBytes === undefined
+      ? null
+      : (peekCoreStart(saveBytes) as {
+          gameID: string;
+          config: GameConfig;
+        });
+  const nation = saved?.config.veritablePlayerNation ?? player;
   const dir = path.join(MAPS, pack.scenario.map);
   const manifest = JSON.parse(
     fs.readFileSync(path.join(dir, "manifest.json"), "utf8"),
@@ -61,8 +73,8 @@ export async function coreDriver(
   );
   // J6c: a game id the client accepts (8 to 10 letters and digits), so that
   // a headless save loads in the game ("headless-42" did not).
-  const gameID = `hl${String(seed).padStart(8, "0")}`;
-  const gameConfig: GameConfig = {
+  const gameID = saved?.gameID ?? `hl${String(seed).padStart(8, "0")}`;
+  const gameConfig: GameConfig = saved?.config ?? {
     gameMap: gameMapOf(pack.scenario.map),
     gameMapSize: GameMapSize.Normal,
     gameMode: GameMode.FFA,
@@ -78,13 +90,13 @@ export async function coreDriver(
     randomSpawn: false,
     veritable: true,
     veritableScenario: pack.scenario.id,
-    veritablePlayerNation: player,
+    veritablePlayerNation: nation,
   };
   const coreStart = {
     gameID,
     lobbyCreatedAt: 0,
     players: [
-      { clientID: "headless", username: player, clanTag: null, cosmetics: {} },
+      { clientID: "headless", username: nation, clanTag: null, cosmetics: {} },
     ],
     config: gameConfig,
   };
@@ -92,7 +104,7 @@ export async function coreDriver(
   const game = createGame(
     [
       new PlayerInfo(
-        player,
+        nation,
         PlayerType.Human,
         "headless",
         random.nextID(),
@@ -101,10 +113,10 @@ export async function coreDriver(
         [],
         null,
         null,
-        player,
+        nation,
       ),
     ],
-    coreRoster(pack, player)(random),
+    coreRoster(pack, nation)(random),
     map,
     mini,
     new Config(gameConfig, new UserSettings(), false),
@@ -114,6 +126,7 @@ export async function coreDriver(
     pack,
     config,
     autopilot,
+    saveBytes,
   });
   new GameRunner(game, new Executor(game, gameID, undefined), () => {}).init();
   // The first ticks load the scenario; campaign time starts with the first
@@ -132,9 +145,16 @@ export async function coreDriver(
     game.drainNukeImpacts();
   };
   let pending: SimEvent[] = [];
-  while (session.sim.read().elapsedGameMinutes === 0) {
+  // J7: until the first tick that advances the campaign (0 for a new one,
+  // the saved time for a load); that tick is play, and is reported.
+  const loadedAt = session.sim.read().elapsedGameMinutes;
+  while (session.sim.read().elapsedGameMinutes === loadedAt) {
+    const t0 = performance.now();
     tick();
     pending = session.onCoreTick();
+    if (session.sim.read().elapsedGameMinutes !== loadedAt) {
+      onTick?.(performance.now() - t0);
+    }
   }
   let ticksIntoDay = 1;
   const ticksPerDay = Math.round((24 * 60) / config.time.gameMinutesPerTick);

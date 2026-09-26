@@ -15,6 +15,9 @@ import { coreDriver } from "./coreDriver";
 //     --out docs/veritable/reports/J6/perf
 //
 // The measure of a map (J6a): --years 1 --windows 2026.
+// J7 (the point 37): --load <file.vsave> starts from a save instead of a new
+// campaign; the first window then opens at the save's date and counts the
+// first tick after the load, and the first day and first month are reported.
 
 function option(args: string[], name: string, fallback: string): string {
   const i = args.indexOf(`--${name}`);
@@ -32,9 +35,7 @@ async function main(): Promise<void> {
   const years = Number(option(args, "years", "1"));
   const seed = Number(option(args, "seed", "42"));
   const player = option(args, "player", "FRA");
-  const windows = option(args, "windows", "2026")
-    .split(",")
-    .map((y) => Number(y));
+  const load = option(args, "load", "");
   const out = option(args, "out", "");
   const gc = (globalThis as { gc?: () => void }).gc;
 
@@ -42,18 +43,30 @@ async function main(): Promise<void> {
   const source = createDataSource(fsDataFiles());
   const pack = await loadScenarioPackFrom(source, scenarioId);
   const config = source.config();
-  let ticks: number[] | null = null;
+  // From the first tick of the campaign: kept when the first window opens
+  // on the first day.
+  let ticks: number[] | null = [];
   const loadStarted = performance.now();
-  const driver = await coreDriver(pack, config, seed, player, true, (ms) =>
-    ticks?.push(ms),
+  const driver = await coreDriver(
+    pack,
+    config,
+    seed,
+    player,
+    true,
+    (ms) => ticks?.push(ms),
+    load === "" ? undefined : new Uint8Array(fs.readFileSync(load)),
   );
   const loadMs = performance.now() - loadStarted;
+  const startYear = Number(driver.read().date.slice(0, 4));
+  const windows = option(args, "windows", String(startYear))
+    .split(",")
+    .map((y) => Number(y));
   const heap = () => {
     gc?.();
     return Math.round(process.memoryUsage().heapUsed / 1e6);
   };
   const results: Record<string, unknown>[] = [];
-  const end = `${2026 + years}-01-01`;
+  const end = `${startYear + years}-01-01`;
   let current: { year: number; until: string } | null = null;
   if (out !== "") fs.mkdirSync(out, { recursive: true });
   const heapAtStart = heap();
@@ -72,7 +85,7 @@ async function main(): Promise<void> {
           );
         }
         current = { year, until: `${year + 1}${date.slice(4)}` };
-        ticks = [];
+        ticks = results.length === 0 && year === startYear ? (ticks ?? []) : [];
         results.push({
           year,
           from: date,
@@ -83,10 +96,16 @@ async function main(): Promise<void> {
     }
     driver.advanceDay();
     if (current !== null && driver.read().date >= current.until) {
-      const sorted = [...(ticks ?? [])].sort((a, b) => a - b);
+      const inOrder = ticks ?? [];
+      const sorted = [...inOrder].sort((a, b) => a - b);
       const r = results.find((x) => x.year === current!.year)!;
+      const ticksPerDay = Math.round(
+        (24 * 60) / config.time.gameMinutesPerTick,
+      );
       Object.assign(r, {
         to: driver.read().date,
+        firstDayMaxMs: Math.max(0, ...inOrder.slice(0, ticksPerDay)),
+        firstMonthMaxMs: Math.max(0, ...inOrder.slice(0, ticksPerDay * 31)),
         ticks: sorted.length,
         meanMs: sorted.reduce((s, v) => s + v, 0) / Math.max(1, sorted.length),
         p50Ms: percentile(sorted, 0.5),
@@ -110,6 +129,7 @@ async function main(): Promise<void> {
     microstates: Object.keys(pack.meta.microstates ?? {}).length,
     tiles: pack.borders.width * pack.borders.height,
     loadMs: Math.round(loadMs),
+    loaded: load === "" ? null : path.basename(load),
     years,
     endDate: view.date,
     finalSaveBytes: finalBytes.length,

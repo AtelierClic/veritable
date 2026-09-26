@@ -621,6 +621,7 @@
         "reputationCostPctGdp": 0.01,
         "declareProbability": 0.05,
         "minMonthsBetweenWars": 60,
+        "ordersDays": 30,
         "gainHorizonYears": 10,
         "casusBelliMotive": 2,
         "expectedWarYears": 3,

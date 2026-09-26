@@ -226,7 +226,11 @@ describe("Client.initialize() booted from Main.ts module scope", () => {
     // listener, join-lobby listener and slider wiring are all in place.
     await vi.waitFor(() => expect(mocks.userAuth).toHaveBeenCalled());
     await new Promise((resolve) => setTimeout(resolve, 25));
-  }, 20_000);
+    // VERITABLE: 20 s -> 60 s. The boot imports the whole client, Véritable's
+    // screens and data included; alone it takes about 15 s on the Windows
+    // development machine, and more than 20 s while the rest of the suite
+    // runs in parallel (DECISIONS.md, J7a).
+  }, 60_000);
 
   it("runs the signed-out boot: onUserMe(false) and the missing-version warn", () => {
     // renderNavVersion() === 0 branch (line 411).

@@ -707,6 +707,11 @@ export const VeritableConfigSchema = z.object({
         reputationCostPctGdp: share,
         declareProbability: share,
         minMonthsBetweenWars: z.number().int().min(0),
+        // J7: the war orders of an AI nation (divisions on the segments,
+        // postures, levies, ceasefires) come every ordersDays of its own
+        // time, as the monthly step gave them until the J6, and at once
+        // when it enters a war.
+        ordersDays: z.number().int().min(1),
         // The land taken stays (its contest ends), the costs end with the
         // war: gain over this horizon against cost over the expected war.
         gainHorizonYears: z.number().min(0),

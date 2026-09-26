@@ -618,6 +618,9 @@ export const NationAiSchema = z.object({
   lastWar: IsoDateSchema.nullable(), // last war it declared
   lastLanding: IsoDateSchema.nullable(),
   blockading: NationIdSchema.nullable(),
+  // J7: the date of its last war orders (divisions, postures, levies,
+  // ceasefires), given every ordersDays; null: due at its next update.
+  lastOrders: IsoDateSchema.nullable(),
 });
 export type NationAi = z.infer<typeof NationAiSchema>;
 

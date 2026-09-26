@@ -432,12 +432,13 @@ describe("europe-10 on the real Europe map", () => {
     expect(game.player("human_id").units(UnitType.City)).toHaveLength(1);
     expect(game.inSpawnPhase()).toBe(false);
     expect(loadMs).toBeLessThan(60_000);
-    fs.writeFileSync(
-      path.join(
-        __dirname,
-        "../../../tools/veritable/borders/cache/load-ms.txt",
-      ),
-      `${Math.round(loadMs)}`,
+    // The time of the load, for the reports (the cache, outside git, may
+    // not exist in a fresh clone).
+    const out = path.join(
+      __dirname,
+      "../../../tools/veritable/borders/cache/load-ms.txt",
     );
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    fs.writeFileSync(out, `${Math.round(loadMs)}`);
   }, 180_000);
 });
