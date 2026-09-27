@@ -240,9 +240,9 @@
       "seed": 17,
       "exiled": "exiled",
       "taken": 400,
-      "heldAtPeace": 380,
+      "heldAtPeace": 376,
       "stillFrench": 0,
-      "returned": 380,
+      "returned": 376,
       "status": "active",
       "ways": [
         "liberation"

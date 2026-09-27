@@ -33,7 +33,7 @@
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 418,
+      "journalEntries": 381,
       "journalIntact": true,
       "lastStands": [
         {
@@ -42,36 +42,17 @@
           "to": "MDA"
         }
       ],
-      "saveBytes": 1896915,
-      "wallS": 26
+      "saveBytes": 1874602,
+      "wallS": 24
     },
     {
       "seed": 2,
-      "dissolvedAfterDays": 396,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 419,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-02",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1907583,
-      "wallS": 27
-    },
-    {
-      "seed": 3,
       "dissolvedAfterDays": 395,
       "choices": 109,
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 508,
+      "journalEntries": 458,
       "journalIntact": true,
       "lastStands": [
         {
@@ -80,7 +61,26 @@
           "to": "MDA"
         }
       ],
-      "saveBytes": 1933973,
+      "saveBytes": 1915215,
+      "wallS": 28
+    },
+    {
+      "seed": 3,
+      "dissolvedAfterDays": 396,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 503,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-02",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1934545,
       "wallS": 34
     },
     {
@@ -90,7 +90,7 @@
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 571,
+      "journalEntries": 557,
       "journalIntact": true,
       "lastStands": [
         {
@@ -99,27 +99,27 @@
           "to": "MDA"
         }
       ],
-      "saveBytes": 1910242,
-      "wallS": 28
+      "saveBytes": 1935560,
+      "wallS": 30
     },
     {
       "seed": 5,
-      "dissolvedAfterDays": 395,
+      "dissolvedAfterDays": 396,
       "choices": 109,
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 510,
+      "journalEntries": 566,
       "journalIntact": true,
       "lastStands": [
         {
-          "date": "2027-02-01",
+          "date": "2027-02-02",
           "from": "UKR",
           "to": "MDA"
         }
       ],
-      "saveBytes": 1910863,
-      "wallS": 32
+      "saveBytes": 1929677,
+      "wallS": 34
     },
     {
       "seed": 6,
@@ -128,7 +128,7 @@
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 582,
+      "journalEntries": 573,
       "journalIntact": true,
       "lastStands": [
         {
@@ -137,46 +137,46 @@
           "to": "MDA"
         }
       ],
-      "saveBytes": 1922525,
-      "wallS": 33
+      "saveBytes": 1908541,
+      "wallS": 32
     },
     {
       "seed": 7,
-      "dissolvedAfterDays": 396,
+      "dissolvedAfterDays": 395,
       "choices": 109,
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 529,
+      "journalEntries": 601,
       "journalIntact": true,
       "lastStands": [
         {
-          "date": "2027-02-02",
+          "date": "2027-02-01",
           "from": "UKR",
           "to": "MDA"
         }
       ],
-      "saveBytes": 1914505,
-      "wallS": 34
+      "saveBytes": 1931626,
+      "wallS": 33
     },
     {
       "seed": 8,
-      "dissolvedAfterDays": 396,
-      "choices": 108,
+      "dissolvedAfterDays": 395,
+      "choices": 109,
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 632,
+      "journalEntries": 616,
       "journalIntact": true,
       "lastStands": [
         {
-          "date": "2027-02-02",
+          "date": "2027-02-01",
           "from": "UKR",
           "to": "MDA"
         }
       ],
-      "saveBytes": 1940739,
-      "wallS": 36
+      "saveBytes": 1924150,
+      "wallS": 34
     },
     {
       "seed": 9,
@@ -185,7 +185,7 @@
       "moldovaOffered": true,
       "player": "MDA",
       "playerAfterLoad": "MDA",
-      "journalEntries": 491,
+      "journalEntries": 557,
       "journalIntact": true,
       "lastStands": [
         {
@@ -194,202 +194,12 @@
           "to": "MDA"
         }
       ],
-      "saveBytes": 1920851,
-      "wallS": 31
+      "saveBytes": 1923646,
+      "wallS": 33
     },
     {
       "seed": 10,
-      "dissolvedAfterDays": 395,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 501,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-01",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1930762,
-      "wallS": 33
-    },
-    {
-      "seed": 11,
-      "dissolvedAfterDays": 395,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 436,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-01",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1918242,
-      "wallS": 27
-    },
-    {
-      "seed": 12,
-      "dissolvedAfterDays": 395,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 614,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-01",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1941396,
-      "wallS": 38
-    },
-    {
-      "seed": 13,
       "dissolvedAfterDays": 396,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 589,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-02",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1931536,
-      "wallS": 33
-    },
-    {
-      "seed": 14,
-      "dissolvedAfterDays": 395,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 464,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-01",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1905577,
-      "wallS": 26
-    },
-    {
-      "seed": 15,
-      "dissolvedAfterDays": 396,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 220,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-02",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1862989,
-      "wallS": 19
-    },
-    {
-      "seed": 16,
-      "dissolvedAfterDays": 396,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 613,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-02",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1911624,
-      "wallS": 35
-    },
-    {
-      "seed": 17,
-      "dissolvedAfterDays": 395,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 611,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-01",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1931102,
-      "wallS": 28
-    },
-    {
-      "seed": 18,
-      "dissolvedAfterDays": 395,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 535,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-01",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1926712,
-      "wallS": 30
-    },
-    {
-      "seed": 19,
-      "dissolvedAfterDays": 395,
-      "choices": 109,
-      "moldovaOffered": true,
-      "player": "MDA",
-      "playerAfterLoad": "MDA",
-      "journalEntries": 498,
-      "journalIntact": true,
-      "lastStands": [
-        {
-          "date": "2027-02-01",
-          "from": "UKR",
-          "to": "MDA"
-        }
-      ],
-      "saveBytes": 1915481,
-      "wallS": 29
-    },
-    {
-      "seed": 20,
-      "dissolvedAfterDays": 395,
       "choices": 109,
       "moldovaOffered": true,
       "player": "MDA",
@@ -398,13 +208,203 @@
       "journalIntact": true,
       "lastStands": [
         {
+          "date": "2027-02-02",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1914689,
+      "wallS": 33
+    },
+    {
+      "seed": 11,
+      "dissolvedAfterDays": 396,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 466,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-02",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1902851,
+      "wallS": 28
+    },
+    {
+      "seed": 12,
+      "dissolvedAfterDays": 395,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 613,
+      "journalIntact": true,
+      "lastStands": [
+        {
           "date": "2027-02-01",
           "from": "UKR",
           "to": "MDA"
         }
       ],
-      "saveBytes": 1926362,
-      "wallS": 29
+      "saveBytes": 1938223,
+      "wallS": 34
+    },
+    {
+      "seed": 13,
+      "dissolvedAfterDays": 395,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 515,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-01",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1924970,
+      "wallS": 36
+    },
+    {
+      "seed": 14,
+      "dissolvedAfterDays": 396,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 405,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-02",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1895094,
+      "wallS": 25
+    },
+    {
+      "seed": 15,
+      "dissolvedAfterDays": 396,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 225,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-02",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1862958,
+      "wallS": 19
+    },
+    {
+      "seed": 16,
+      "dissolvedAfterDays": 395,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 518,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-01",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1899927,
+      "wallS": 26
+    },
+    {
+      "seed": 17,
+      "dissolvedAfterDays": 395,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 550,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-01",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1934905,
+      "wallS": 34
+    },
+    {
+      "seed": 18,
+      "dissolvedAfterDays": 395,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 488,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-01",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1904210,
+      "wallS": 32
+    },
+    {
+      "seed": 19,
+      "dissolvedAfterDays": 396,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 518,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-02",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1903019,
+      "wallS": 28
+    },
+    {
+      "seed": 20,
+      "dissolvedAfterDays": 395,
+      "choices": 109,
+      "moldovaOffered": true,
+      "player": "MDA",
+      "playerAfterLoad": "MDA",
+      "journalEntries": 539,
+      "journalIntact": true,
+      "lastStands": [
+        {
+          "date": "2027-02-01",
+          "from": "UKR",
+          "to": "MDA"
+        }
+      ],
+      "saveBytes": 1917345,
+      "wallS": 26
     }
   ]
 }

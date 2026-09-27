@@ -1143,7 +1143,11 @@ Dans la seconde série, une campagne (graine 5) voyait l'armement monter de 1,04
   - Aucune guerre ni aucun incident avec une nation hors de portée. Un événement relevé le jour même de l'exil de la Palestine venait avant (la mesure lit désormais le statut du matin).
   - 90 % des coups réussis dans des régimes fragiles ; 211 exils, 29 retours, 182 dissolutions, aucune annexion par traité.
   - **Tombe : une paire au-delà de 40 %**. Graine 26 : Russie–Ukraine, 3 des 7 guerres nouvelles (2031, 2036, 2057). La revendication russe s'endort au troisième échec, puis se réveille à un changement de régime ou avec un dirigeant souverainiste (réponse de Lukas au J6) ; une campagne pauvre en guerres dépasse alors le seuil. Laissé en l'état, à trancher.
-- **Non-régression sur europe-10** : J3, les quatre critères (gaz à l'import +34 % la première année, PIB russe −5,6 % à deux ans ; France contre Espagne : 7 sanctionneurs à six mois, stabilité 0,47 contre 0,62 ; commerce maritime norvégien −52 % ; débarquement italien refusé) ; J4, les cinq critères, juntes sur 60 graines : Russie 15 %, Turquie 3 % des décennies.
+- **Non-régression sur europe-10** (`docs/veritable/reports/J7/non-regression-J7c/`) :
+  - J3 : les quatre critères (gaz à l'import +34 % la première année, PIB russe −5,6 % à deux ans ; France contre Espagne : 7 sanctionneurs à six mois, stabilité 0,47 contre 0,62 ; commerce maritime norvégien −52 % ; débarquement italien refusé) ;
+  - J4 : les cinq critères ; juntes sur 60 graines : Russie 15 %, Turquie 3 % des décennies ;
+  - J5 (100 campagnes de 50 ans sur le cœur) : les seize critères. Aucun tir nucléaire ; guerres nouvelles médiane 0, au plus 1 ; 91 % de campagnes calmes quinze ans après le cessez-le-feu ; 18 révolutions ; crise à dix ans dans toutes ; junte à dix ans : Russie 1, Turquie 3 ; prix entre 0,88 et 1,52 ; rien qui touche une nation hors de portée.
+- **Sauvegardes du guide J7** régénérées sur le code final, chargées dans le cœur et jouées dix jours ; un test (`save/guideSaves.test.ts`) vérifie qu'elles se décodent dans la version courante et font l'aller-retour octet pour octet (il échouait sur les anciennes).
 
 ## À compléter par Claude Code
 
