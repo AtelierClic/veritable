@@ -170,9 +170,12 @@ interface EventHistory {
       event: string;
       date: string;
       nation: string;
+      other: string | null;
       choice: string;
     }[];
   };
+  // J7c: a nation without land (dissolved, or in exile under an annexer).
+  beyondReach?(id: string): boolean;
 }
 
 export interface CampaignOptions {
@@ -281,6 +284,10 @@ export interface DeliveryMetrics {
   sanctionsEnd: number;
   lifts: Record<string, number>;
   governmentDecisions: Record<string, number>;
+  // J7c: what should never happen — a war declared or joined by or against
+  // a nation without land, an event that draws one as the other nation, or
+  // gives one a neighbour ("A>B@date", "event:A~B@date").
+  beyondReach: { wars: string[]; events: string[] };
   // J6c (world criteria): the regime a successful coup overthrew, the
   // debt and stability of a nation that defaulted (both as sampled at the
   // start of the month).
@@ -449,6 +456,9 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   const tier1 = pack.data.tech
     .filter((n) => n.tier === 1 && n.bloc === undefined)
     .map((n) => n.id);
+  // J7c: a nation without land, read on the simulation at the event.
+  const landless = (id: string) =>
+    (driver.sim as EventHistory | undefined)?.beyondReach?.(id) === true;
   const delivery: DeliveryMetrics = {
     newWars: [],
     peaces: [],
@@ -477,6 +487,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
     sanctionsEnd: 0,
     lifts: {},
     governmentDecisions: {},
+    beyondReach: { wars: [], events: [] },
     coups: [],
     defaults: [],
   };
@@ -511,6 +522,16 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         casusBelli: event.casusBelli ?? "none",
         war: event.war,
       });
+      if (landless(event.nation) || landless(event.target)) {
+        delivery.beyondReach.wars.push(
+          `${event.nation}>${event.target}@${event.date}`,
+        );
+      }
+    }
+    if (event.type === "war-joined" && landless(event.nation)) {
+      delivery.beyondReach.wars.push(
+        `${event.nation}+${event.against}@${event.date}`,
+      );
     }
     if (event.type === "peace-signed") {
       delivery.peaces.push({ war: event.war, date: event.date });
@@ -663,6 +684,15 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   // would cost more than the simulation (J5: blocs, technology).
   // J7c: every event instance, from the history of the simulation (the
   // last 60 resolved; a day never holds more).
+  const neighbourKinds = new Set(
+    pack.data.events
+      .filter(
+        (e) =>
+          e.params?.other === "neighbor" ||
+          e.params?.other === "tense-neighbor",
+      )
+      .map((e) => e.id),
+  );
   const seen = new Set<number>();
   const countInstances = () => {
     const history = (driver.sim as EventHistory | undefined)?.events?.history;
@@ -682,6 +712,14 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         const year = h.date.slice(0, 4);
         delivery.governmentDecisions[year] =
           (delivery.governmentDecisions[year] ?? 0) + 1;
+      }
+      if (
+        (h.other !== null && landless(h.other)) ||
+        (neighbourKinds.has(h.event) && landless(h.nation))
+      ) {
+        delivery.beyondReach.events.push(
+          `${h.event}:${h.nation}~${h.other ?? ""}@${h.date}`,
+        );
       }
     }
     for (const id of seen) if (id < low) seen.delete(id);

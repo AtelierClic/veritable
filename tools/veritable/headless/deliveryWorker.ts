@@ -7,7 +7,9 @@ import { runCampaign, simDriver } from "./campaign";
 import { coreDriver } from "./coreDriver";
 
 // One child process of the delivery (delivery.ts): runs its seeds one after
-// the other and writes one JSON per campaign (without the monthly series).
+// the other and writes one JSON per campaign (without the monthly series),
+// as soon as it ends, whole: a temporary file renamed (J7c: a series cut
+// short by a power cut goes on with --resume).
 //   node --import tsx deliveryWorker.ts --seeds 1,6,11 --years 50 --out dir [--core]
 
 function option(args: string[], name: string): string | undefined {
@@ -35,20 +37,25 @@ async function main(): Promise<void> {
       : simDriver(pack, config, seed, player, true);
     const result = runCampaign({ pack, config, seed, years, driver });
     const { series, ...slim } = result;
-    fs.writeFileSync(
-      path.join(out, `campaign-${seed}.json`),
-      JSON.stringify(
-        {
-          ...slim,
-          // Prices by year (the bounds of the delivery), and debt at the end.
-          yearlyPrices: series
-            .filter((row) => row.date.endsWith("-01-01"))
-            .map((row) => ({ date: row.date, prices: row.prices })),
-        },
-        null,
-        1,
-      ),
+    const file = path.join(out, `campaign-${seed}.json`);
+    const text = JSON.stringify(
+      {
+        ...slim,
+        // Prices by year (the bounds of the delivery), and debt at the end.
+        yearlyPrices: series
+          .filter((row) => row.date.endsWith("-01-01"))
+          .map((row) => ({ date: row.date, prices: row.prices })),
+      },
+      null,
+      1,
     );
+    // On disk before the rename: a power cut leaves the old name or the
+    // whole file, never half of it.
+    const fd = fs.openSync(`${file}.tmp`, "w");
+    fs.writeSync(fd, text);
+    fs.fsyncSync(fd);
+    fs.closeSync(fd);
+    fs.renameSync(`${file}.tmp`, file);
     process.stdout.write(`done ${seed} ${result.wallMs} ms\n`);
   }
 }

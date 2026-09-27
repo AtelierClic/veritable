@@ -870,9 +870,12 @@ export class VeritableSimImpl implements VeritableSim {
       }
       case "declare-war": {
         const me = this.requirePlayer();
-        // J7c: no war on a nation without land to fight for.
+        // J7c: no war on a nation without land to fight for, nor from one.
         if (this.beyondReach(cmd.target)) {
           throw new Error("declare-war: the target has no land");
+        }
+        if (this.beyondReach(me)) {
+          throw new Error("declare-war: your nation has no land");
         }
         const event = declareWar(
           this.ctx,
@@ -1547,6 +1550,15 @@ export class VeritableSimImpl implements VeritableSim {
     this.diplomacy.wars = this.diplomacy.wars.filter(
       (w) => w.aggressors.length > 0 && w.defenders.length > 0,
     );
+    // Nothing is owed to it or by it any more: its grievances and the calls
+    // to its wars go with it.
+    this.diplomacy.grievances = this.diplomacy.grievances.filter(
+      (g) => g.by !== id && g.against !== id,
+    );
+    this.diplomacy.coalitionCalls = this.diplomacy.coalitionCalls.filter(
+      (c) => c.nation !== id,
+    );
+    this.blocs.calls = this.blocs.calls.filter((c) => c.nation !== id);
     this.invalidateFronts();
     this.pending.push({
       type: "nation-status-changed",
@@ -2376,6 +2388,7 @@ export class VeritableSimImpl implements VeritableSim {
       player: this.politics.autopilot ? null : this.playerNationId(),
       blocHeld: (by, against) =>
         blocSanction(this.ctx, this.blocs, by, against),
+      beyondReach: (id) => this.beyondReach(id),
       ...this.dailyDiplomacy(date),
     };
   }
@@ -2673,8 +2686,14 @@ export class VeritableSimImpl implements VeritableSim {
     if (techEnv !== null) techEnv.shares = diffusionShares(techEnv);
     const casusBelli: Record<NationId, string[]> = {};
     if (player !== null) {
+      const landless = this.beyondReach(player);
       for (const id of this.ctx.nationIds) {
         if (id === player) continue;
+        // J7c: no casus belli against a nation without land, nor from one.
+        if (landless || this.beyondReach(id)) {
+          casusBelli[id] = [];
+          continue;
+        }
         casusBelli[id] = availableCasusBelli(
           this.ctx,
           this.diplomacy,
@@ -3138,6 +3157,7 @@ export class VeritableSimImpl implements VeritableSim {
       sheets: this.sheets,
       aiNations: this.aiNations(),
       date,
+      beyondReach: (id) => this.beyondReach(id),
     };
   }
 
@@ -3897,9 +3917,13 @@ export class VeritableSimImpl implements VeritableSim {
     };
   }
 
-  // J7c: a nation no war, no border incident and no bloc measure reaches: a
-  // dissolved nation, or a government in exile whose land an annexer
-  // holds (an exile nobody annexed — a test world — is still in reach).
+  // J7c: a nation without land to fight for or from, which no war, call to
+  // a war, casus belli or border incident names, on either side: a
+  // dissolved nation, or a government in exile whose land an annexer holds
+  // (an exile nobody annexed — a test world — is still in reach). The land
+  // neighbours of the data are those of the first day: without this, an
+  // absorbed nation kept its borders.
+
   private beyondReach(id: NationId): boolean {
     const status = this.statusOf(id);
     return (

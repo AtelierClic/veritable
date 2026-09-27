@@ -10,6 +10,9 @@ import type { CampaignResult } from "./campaign";
 //   npx tsx tools/veritable/headless/delivery.ts --runs 100 --years 50
 //       --parallel 5 --seed 1 --core --out docs/veritable/reports/J5
 //   --aggregate: only read the campaign files already in --out.
+//   --resume: run only the seeds without a campaign file in --out (each
+//   campaign is written, whole, as soon as it ends: a series cut short
+//   goes on where it stopped).
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -337,6 +340,13 @@ export function aggregate(campaigns: Campaign[]) {
     }),
   );
   const world = worldMetrics(campaigns);
+  // J7c: wars and events that name a nation without land (none expected).
+  const beyond = {
+    wars: campaigns.flatMap((c) => c.delivery.beyondReach?.wars ?? []),
+    events: campaigns.flatMap((c) => c.delivery.beyondReach?.events ?? []),
+  };
+  const noneBeyondReach =
+    beyond.wars.length === 0 && beyond.events.length === 0;
   const europe = {
     noShotInYearOne: shots.every((s) => s.date >= yearOne),
     shotsInAtMost5pct: campaignsWithShots.length <= 0.05 * n,
@@ -360,6 +370,8 @@ export function aggregate(campaigns: Campaign[]) {
     // J6: the RUS-UKR loop.
     rusUkrRelaunchMedianAtMost1: loop.relaunchMedian <= 1,
     calm15YearsInAtLeast40pct: loop.calmShare >= 0.4,
+    // J7c.
+    noWarOrIncidentBeyondReach: noneBeyondReach,
   };
   const j7c = j7cMetrics(campaigns);
   const events = eventStats(campaigns, n);
@@ -387,8 +399,10 @@ export function aggregate(campaigns: Campaign[]) {
           noEventAbove10pct: (
             (events.topEvents as { share: number }[] | undefined) ?? []
           ).every((e) => e.share <= 0.1),
+          // Every year of every campaign (the floor of the decisions).
           playerGovernmentDecisionEveryYear:
-            j7c.governmentDecisionsPerYearMin >= 1,
+            j7c.yearsWithAGovernmentDecisionMin >= 1,
+          noWarOrIncidentBeyondReach: noneBeyondReach,
         }
       : europe;
   return {
@@ -396,6 +410,11 @@ export function aggregate(campaigns: Campaign[]) {
     criteria,
     world,
     loop,
+    beyondReach: {
+      wars: beyond.wars.length,
+      events: beyond.events.length,
+      samples: [...beyond.wars, ...beyond.events].slice(0, 20),
+    },
     wars: {
       median: median(wars),
       max: Math.max(0, ...wars),
@@ -608,6 +627,18 @@ function campaignsCsv(campaigns: Campaign[]): string {
   return `${header.join(",")}\n${rows.join("\n")}\n`;
 }
 
+// A campaign file written whole (the worker writes a temporary file and
+// renames it), or null: missing or unreadable.
+function readCampaign(out: string, seed: number): Campaign | null {
+  const file = path.join(out, `campaign-${seed}.json`);
+  if (!fs.existsSync(file)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8")) as Campaign;
+  } catch {
+    return null;
+  }
+}
+
 function histogramOf(values: string[]): Record<string, number> {
   const out: Record<string, number> = {};
   for (const v of values) out[v] = (out[v] ?? 0) + 1;
@@ -628,16 +659,22 @@ async function main(): Promise<void> {
   fs.mkdirSync(out, { recursive: true });
   const seeds = Array.from({ length: runs }, (_, i) => seed + i);
   if (!args.includes("--aggregate")) {
+    // J7c: --resume keeps the campaigns already written whole.
+    const todo = args.includes("--resume")
+      ? seeds.filter((s) => readCampaign(out, s) === null)
+      : seeds;
+    process.stdout.write(
+      `${todo.length} campaigns to run, ${seeds.length - todo.length} kept\n`,
+    );
     const started = Date.now();
-    await runAll(seeds, parallel, years, out, core, scenario);
+    await runAll(todo, parallel, years, out, core, scenario);
     process.stdout.write(
       `all done in ${Math.round((Date.now() - started) / 1000)} s\n`,
     );
   }
   const campaigns: Campaign[] = seeds
-    .map((s) => path.join(out, `campaign-${s}.json`))
-    .filter((f) => fs.existsSync(f))
-    .map((f) => JSON.parse(fs.readFileSync(f, "utf8")) as Campaign);
+    .map((s) => readCampaign(out, s))
+    .filter((c): c is Campaign => c !== null);
   const summary = aggregate(campaigns);
   fs.writeFileSync(
     path.join(out, "summary.json"),

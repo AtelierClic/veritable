@@ -18,6 +18,7 @@ import { VeritableSimImpl } from "../VeritableSimImpl";
 import { buildContext } from "./context";
 import { effectiveProduction, stepGrowth, stepTrade } from "./engine";
 import { initEconomy, initPolitics } from "./init";
+import { demandAt, supplyAt } from "./market";
 
 const DAY = 1440;
 
@@ -664,6 +665,38 @@ describe("J3 corrections of the J2", () => {
     expect(unsold).toBeGreaterThan(0);
     // Before the J6c, all of it left the supply that forms the price.
     expect(economy.market.stranded.oil).toBeLessThan(0.5 * unsold);
+  });
+
+  it("a saturated market: the buyer an embargo cuts off is served by others, so the unsold of the exporter under the embargo stays on the market (J7c)", () => {
+    const config = quietConfig();
+    const ids = ["AAA", "BBB", "CCC"];
+    const nations = ids.map((id) => testNation(id));
+    const ctx = buildContext(config, testSimData(ids), nations);
+    const economy = initEconomy(ctx, nations, testRow());
+    const a = economy.nations.AAA;
+    a.production.oil = 20 * (a.production.oil + a.consumption.oil + 1);
+    // BBB would buy from it; CCC floods the market too and serves it.
+    economy.nations.BBB.production.oil = 0;
+    const c = economy.nations.CCC;
+    c.production.oil = 20 * (c.production.oil + c.consumption.oil + 1);
+    for (const to of ["BBB", "CCC", "ROW"]) {
+      economy.market.embargoes.push({ from: "AAA", to, good: "oil" });
+    }
+    stepTrade(ctx, economy);
+    const good = ctx.goods.find((g) => g.id === "oil")!;
+    const price = economy.market.prices.oil;
+    const surplus =
+      supplyAt(effectiveProduction(ctx, a, good), good, price) -
+      demandAt(a.consumption.oil, good, price);
+    expect(economy.nations.BBB.coverage.oil).toBeCloseTo(1, 6);
+    // What it withheld leaves the price; its unsold, which no cut-off buyer
+    // lacks, does not: in the J6c it left too, and every exporter under an
+    // embargo took its excess off the price as the price rose — the arms of
+    // the world climbed to four times their base.
+    expect(economy.market.stranded.oil).toBeGreaterThan(0);
+    expect(economy.market.stranded.oil).toBeLessThanOrEqual(
+      surplus * (1 - a.circumvention.oil) + 1e-9,
+    );
   });
 
   it("stepTrade and stepGrowth are the monthly steps behind the campaign", () => {

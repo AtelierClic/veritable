@@ -768,6 +768,9 @@ export interface DiplomacyStepEnv {
   inputs?: AffinityInputs;
   // Military power of every nation for the step, and their sum.
   power?: Map<NationId, number>;
+  // J7c: a nation without land to fight for or from (dissolved, or in exile
+  // under an annexer): it answers no call to a war.
+  beyondReach?: (id: NationId) => boolean;
 }
 
 export type LiftReason =
@@ -1059,6 +1062,11 @@ export function answerCoalitionsOf(
   const { ctx, state } = env;
   const cfg = ctx.config.diplomacy;
   const events: DiplomacyEvent[] = [];
+  // J7c: a nation without land joins no war.
+  if (env.beyondReach?.(id) === true) {
+    state.coalitionCalls = state.coalitionCalls.filter((c) => c.nation !== id);
+    return events;
+  }
   const power = powerOf(env);
   for (const war of state.wars) {
     if (warSide(war, id) !== null) continue;

@@ -1,7 +1,11 @@
 import { loadVeritableConfig } from "../../data/loadConfig";
+import { Bloc } from "../../data/schemas/bloc";
+import { NationId } from "../../data/schemas/common";
 import { VeritableConfig } from "../../data/schemas/config";
+import { EventSchema, VeritableEvent } from "../../data/schemas/event";
 import { NationData } from "../../data/schemas/nation";
 import {
+  BlocsState,
   DiplomacyState,
   ExileSection,
   PeaceOffer,
@@ -9,10 +13,16 @@ import {
   War,
 } from "../../data/schemas/save";
 import { decodeSave, encodeSave } from "../../save/serialize";
+import { claimsAgainst } from "../diplomacy/claims";
 import { setRelation } from "../diplomacy/diplomacy";
+import { EconomyContext } from "../economy/context";
 import { MemoryWorld } from "../testing/MemoryWorld";
-import { testNation, testScenario } from "../testing/nations";
-import { testSimData } from "../testing/simData";
+import {
+  TestNationOptions,
+  testNation,
+  testScenario,
+} from "../testing/nations";
+import { testBloc, testSimData } from "../testing/simData";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 import { proposePeace } from "../war/peace";
 
@@ -33,10 +43,19 @@ function quietConfig(): VeritableConfig {
 }
 
 // Four nations side by side, 10 columns each, the first of `ids` played.
-function campaign(ids: string[], config: VeritableConfig = quietConfig()) {
+function campaign(
+  ids: string[],
+  config: VeritableConfig = quietConfig(),
+  extra: {
+    events?: VeritableEvent[];
+    landNeighbours?: [NationId, NationId][];
+    blocs?: Bloc[];
+    options?: Record<string, TestNationOptions>;
+  } = {},
+) {
   const sheets = new Map<string, NationData>(
     ids.map((id) => {
-      const sheet = testNation(id);
+      const sheet = testNation(id, extra.options?.[id] ?? {});
       // DDD is small: a nation a last stand may take.
       if (id === "DDD") sheet.population = { ...sheet.population, value: 5e6 };
       return [id, sheet];
@@ -58,13 +77,19 @@ function campaign(ids: string[], config: VeritableConfig = quietConfig()) {
   const sim = new VeritableSimImpl({
     config,
     world,
-    data: testSimData(ids),
+    data: testSimData(ids, {
+      events: extra.events,
+      landNeighbours: extra.landNeighbours,
+      blocs: extra.blocs,
+    }),
     nationData: (id) => sheets.get(id),
     scenario,
   });
   sim.init(scenario, 3);
   const internals = sim as unknown as {
+    ctx: EconomyContext;
     diplomacy: DiplomacyState;
+    blocs: BlocsState;
     exile: ExileSection;
     sign(war: War, offer: PeaceOffer, date: string): void;
   };
@@ -148,6 +173,102 @@ describe("an annexed nation (J7c)", () => {
     // Its annexer is in reach.
     sim.apply({ type: "declare-war", target: "AAA", casusBelli: "none" });
     expect(sim.read().diplomacy.wars).toHaveLength(1);
+  });
+
+  it("is beyond reach, on either side: no war, casus belli, claim, call to a war or border incident names it (J7c)", () => {
+    // A border incident every month with a hostile land neighbour.
+    const incident = EventSchema.parse({
+      id: "incident",
+      kind: "template",
+      title: "event.incident.title",
+      text: "event.incident.text",
+      scope: "nation",
+      trigger: { monthlyProbability: 1, cooldownMonths: 1, conditions: [] },
+      params: { other: "tense-neighbor" },
+      choices: [
+        { id: "calm", label: "event.incident.calm", effects: [] },
+        { id: "wait", label: "event.incident.wait", effects: [] },
+      ],
+      pause: false,
+      journal: false,
+    });
+    // BBB and DDD are allies: an attack on DDD calls BBB.
+    const pact = testBloc({
+      id: "pact",
+      type: "military-alliance",
+      members: [
+        { nation: "BBB", status: "full" },
+        { nation: "DDD", status: "full" },
+      ],
+      collectiveDefense: {
+        joinProbability: 1,
+        sovereignJoinProbability: 1,
+        sovereigntyAbove: 2,
+      },
+    });
+    const ids = ["CCC", "AAA", "BBB", "DDD"];
+    const { sim, world, internals, days, status } = campaign(
+      ids,
+      quietConfig(),
+      {
+        events: [incident],
+        landNeighbours: [
+          ["CCC", "AAA"],
+          ["AAA", "BBB"],
+          ["BBB", "DDD"],
+        ],
+        blocs: [pact],
+        // The player outweighs DDD: its war without casus belli calls a
+        // coalition, and BBB is DDD's ally.
+        options: { CCC: { activePersonnel: 2_000_000 } },
+      },
+    );
+    const d = internals.diplomacy;
+    for (const a of ids) {
+      for (const b of ids) if (a < b) setRelation(d, a, b, -80);
+    }
+    world.transferAll("BBB", "AAA");
+    days(1);
+    expect(status("BBB")).toBe("exiled");
+    expect(internals.exile.nations.BBB.annexer).toBe("AAA");
+
+    sim.apply({ type: "declare-war", target: "DDD", casusBelli: "none" });
+    for (let k = 0; k < 3; k++) {
+      days(30);
+      // No call to the war goes to it: neither its alliance's article 5
+      // nor the coalition against the player.
+      expect(internals.blocs.calls.some((c) => c.nation === "BBB")).toBe(false);
+      expect(d.coalitionCalls.some((c) => c.nation === "BBB")).toBe(false);
+    }
+    // In no war, on either side.
+    for (const war of d.wars) {
+      expect([...war.aggressors, ...war.defenders]).not.toContain("BBB");
+    }
+    // No casus belli against it, no claim on land it holds: it holds none.
+    const view = sim.read();
+    expect(view.casusBelli.BBB).toEqual([]);
+    for (const x of ["CCC", "AAA", "DDD"]) {
+      expect(claimsAgainst(internals.ctx, d, x, "BBB")).toEqual([]);
+    }
+    // Border incidents between the others, never with it.
+    const incidents = view.events.history.filter((h) => h.event === "incident");
+    expect(incidents.length).toBeGreaterThan(0);
+    expect(incidents.some((h) => h.nation === "BBB" || h.other === "BBB")).toBe(
+      false,
+    );
+  });
+
+  it("the player in exile declares no war: no casus belli, the command refused (J7c)", () => {
+    const { sim, world, days, status } = campaign(["BBB", "AAA", "CCC", "DDD"]);
+    world.transferAll("BBB", "AAA");
+    days(1);
+    expect(status("BBB")).toBe("exiled");
+    for (const id of ["AAA", "CCC", "DDD"]) {
+      expect(sim.read().casusBelli[id]).toEqual([]);
+    }
+    expect(() =>
+      sim.apply({ type: "declare-war", target: "AAA", casusBelli: "none" }),
+    ).toThrow(/no land/);
   });
 
   it("holds no national election while in exile", () => {

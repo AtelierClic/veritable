@@ -19,9 +19,12 @@ import { CampaignResult, runCampaign, seriesCsv } from "./campaign";
 //   - at least one political crisis (unrest, coup, detected fraud,
 //     revolution) in half of the campaigns;
 //   - no nation in a permanent junta without cause: a junta either returns
-//     to elections within the ten years or is explained by a coup or a war.
-// Writes one CSV per seed, politics.json (the counters of every nation of
-// every seed) and summary.json.
+//     to elections within the ten years or is explained by a coup or a war;
+//   - J7c (answer of Lukas): a junta in Russia, and one in Turkey, in at
+//     most 20 % of the decades, measured over 60 seeds at least
+//     (--junta-runs): three seeds out of ten were noise.
+// Writes one CSV per seed (the first ten), politics.json (the counters of
+// every nation of those seeds) and summary.json.
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -38,15 +41,28 @@ async function main(): Promise<void> {
   const seed0 = Number(option(args, "seed", "42"));
   const runs = Number(option(args, "runs", "10"));
   const years = Number(option(args, "years", "10"));
+  const juntaRuns = Math.max(runs, Number(option(args, "junta-runs", "60")));
   fs.mkdirSync(out, { recursive: true });
   const source = createDataSource(fsDataFiles());
   const pack = await loadScenarioPackFrom(source, "europe-10");
   const config = source.config();
 
   const results: CampaignResult[] = [];
-  for (let i = 0; i < runs; i++) {
+  // Seeds with a junta at some point, by nation, over the juntaRuns seeds.
+  const juntaEver: Record<string, number> = {};
+  for (let i = 0; i < juntaRuns; i++) {
     const seed = seed0 + i;
     const result = runCampaign({ pack, config, seed, years });
+    for (const [id, p] of Object.entries(result.politics)) {
+      if (p.juntaMonths > 0) juntaEver[id] = (juntaEver[id] ?? 0) + 1;
+    }
+    if (i >= runs) {
+      const juntas = Object.entries(result.politics)
+        .filter(([, p]) => p.juntaMonths > 0)
+        .map(([id]) => id);
+      console.log(`seed ${seed}: juntas ${juntas.join(" ")}`);
+      continue;
+    }
     results.push(result);
     fs.writeFileSync(path.join(out, `seed-${seed}.csv`), seriesCsv(result));
     const crises = Object.values(result.politics).map(
@@ -138,9 +154,20 @@ async function main(): Promise<void> {
         0,
       ),
     },
+    // J7c: the juntas over juntaRuns seeds (the criterion).
+    juntasOverSeeds: {
+      seeds: [seed0, seed0 + juntaRuns - 1],
+      runs: juntaRuns,
+      RUS: juntaEver.RUS ?? 0,
+      TUR: juntaEver.TUR ?? 0,
+      rus: (juntaEver.RUS ?? 0) / juntaRuns,
+      tur: (juntaEver.TUR ?? 0) / juntaRuns,
+    },
     criteria: {
-      russiaTurkeyJuntaInAtMostTwoSeeds:
-        juntaSeeds.RUS.ever <= 2 && juntaSeeds.TUR.ever <= 2,
+      russiaTurkeyJuntaAtMost20pctOver60Seeds:
+        juntaRuns >= 60 &&
+        (juntaEver.RUS ?? 0) <= 0.2 * juntaRuns &&
+        (juntaEver.TUR ?? 0) <= 0.2 * juntaRuns,
       noCoupInAStableDemocracy: coupsInStableDemocracies.length === 0,
       alternationInSevenNations: alternationNations.length >= 7,
       crisisInHalfOfCampaigns: crisisCampaigns * 2 >= results.length,

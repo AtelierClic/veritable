@@ -115,6 +115,9 @@ function peaceMenu(
 ): MenuEntry[] {
   const { view } = ctx;
   const casus = view.casusBelli[target] ?? [];
+  // J7c: a nation in exile or dissolved has no land to fight from.
+  const status = view.nations.find((n) => n.id === me)?.status;
+  const landless = status === "exiled" || status === "dissolved";
   const sanctioning = view.diplomacy.sanctions.some(
     (s) => s.by === me && s.against === target,
   );
@@ -123,7 +126,10 @@ function peaceMenu(
     {
       label: vt("menu.declare-war"),
       hint: vt("menu.declare-war-hint"),
-      disabled: casus.length === 0 ? vt("menu.no-casus-belli") : null,
+      disabled:
+        casus.length === 0
+          ? vt(landless ? "menu.no-land" : "menu.no-casus-belli")
+          : null,
       children: () =>
         casus.map((cb) => ({
           label: casusBelliName(cb),

@@ -48,13 +48,26 @@ const event = (
     ...e,
   });
 
+// A template that never fires by itself: only the floor draws it.
+const rare = (
+  id: string,
+  conditions: VeritableEvent["trigger"]["conditions"],
+): VeritableEvent =>
+  event({
+    id,
+    kind: "template",
+    trigger: { monthlyProbability: 1e-12, cooldownMonths: 1, conditions },
+  });
+
+// The first of `ids` plays (AAA by default).
 function campaign(options: {
   events: VeritableEvent[];
   autopilot?: boolean;
   landNeighbours?: [string, string][];
   config?: VeritableConfig;
+  ids?: string[];
 }) {
-  const ids = ["AAA", "BBB", "CCC"];
+  const ids = options.ids ?? ["AAA", "BBB", "CCC"];
   const sheets = new Map<string, NationData>(
     ids.map((id) => [id, testNation(id)]),
   );
@@ -503,20 +516,17 @@ describe("events", () => {
     ).toBe(1);
   });
 
-  it("the nation of the player never goes playerFloorDays without a decision, played or in autopilot: one of its templates, never one its conditions forbid (J7c)", () => {
+  it("the nation of the player never goes playerFloorDays without a decision, played or in autopilot, whichever it is: one of its templates, never one its conditions forbid (J7c)", () => {
     const floor = loadVeritableConfig().events.playerFloorDays;
-    const rare = (
-      id: string,
-      conditions: VeritableEvent["trigger"]["conditions"],
-    ) =>
-      event({
-        id,
-        kind: "template",
-        trigger: { monthlyProbability: 1e-12, cooldownMonths: 1, conditions },
-      });
-    for (const autopilot of [false, true]) {
+    for (const [autopilot, ids] of [
+      [false, ["AAA", "BBB", "CCC"]],
+      [true, ["AAA", "BBB", "CCC"]],
+      [false, ["CCC", "AAA", "BBB"]],
+    ] as const) {
+      const me = ids[0];
       const { sim } = campaign({
         autopilot,
+        ids: [...ids],
         events: [
           rare("quiet", []),
           rare("never", [{ target: "debtToGdp", op: "gt", value: 100 }]),
@@ -526,25 +536,49 @@ describe("events", () => {
       sim.advance(DAY);
       const counted = (sim as unknown as { events: EventsState }).events
         .lastDecision;
-      expect(counted?.nation).toBe("AAA");
+      expect(counted?.nation).toBe(me);
       const due = addDays(counted!.date, floor);
       const all = () => [
         ...sim.read().events.history,
         ...sim.read().events.pending,
       ];
-      // The first on the day the floor is reached, for the player alone.
+      // The first on the day the floor is reached, for the player alone:
+      // a template of the data, no filler.
       while (sim.read().date <= due) sim.advance(DAY);
       expect(all().map((h) => [h.nation, h.event, h.date])).toEqual([
-        ["AAA", "quiet", due],
+        [me, "quiet", due],
       ]);
       // Then again `floor` days after that decision.
       const next = addDays(due, floor);
       while (sim.read().date <= next) sim.advance(DAY);
       expect(all().map((h) => [h.nation, h.event, h.date])).toEqual([
-        ["AAA", "quiet", due],
-        ["AAA", "quiet", next],
+        [me, "quiet", due],
+        [me, "quiet", next],
       ]);
     }
+  });
+
+  it("the floor waits when the two decisions of the player's month are spent (J7c)", () => {
+    const { sim } = campaign({ events: [rare("quiet", [])] });
+    sim.advance(DAY);
+    const state = (sim as unknown as { events: EventsState }).events;
+    // A long silence: the floor is due, but the month's two pop-ups are gone.
+    state.lastDecision = { nation: "AAA", date: "2025-01-01" };
+    const month = sim.read().date.slice(0, 7);
+    state.popupMonth = month;
+    state.popups = loadVeritableConfig().events.maxPopupsPerMonth;
+    const all = () => [
+      ...sim.read().events.history,
+      ...sim.read().events.pending,
+    ];
+    // Nothing this month; the next month, at once.
+    while (sim.read().date.slice(0, 7) === month) sim.advance(DAY);
+    const nextMonth = sim.read().date.slice(0, 7);
+    sim.advance(DAY);
+    sim.advance(DAY);
+    expect(all().map((h) => [h.nation, h.event, h.date.slice(0, 7)])).toEqual([
+      ["AAA", "quiet", nextMonth],
+    ]);
   });
 
   it("the event state round-trips byte for byte", () => {

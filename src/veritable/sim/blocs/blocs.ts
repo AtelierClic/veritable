@@ -73,6 +73,9 @@ export interface BlocEnv {
   // the calls themselves.
   aiNations: readonly NationId[];
   date: string;
+  // J7c: a nation without land to fight for or from (dissolved, or in exile
+  // under an annexer): no call to a war goes to it.
+  beyondReach?: (id: NationId) => boolean;
 }
 
 export type BlocEventKind =
@@ -1049,6 +1052,7 @@ function collectiveDefense(env: BlocEnv): BlocStepEvent[] {
       });
       for (const m of simulatedMembers(ctx, bloc.id)) {
         if (m === victim || warSide(war, m) !== null) continue;
+        if (env.beyondReach?.(m) === true) continue;
         if (!env.aiNations.includes(m)) {
           state.calls.push({
             bloc: bloc.id,
@@ -1083,6 +1087,7 @@ function collectiveDefense(env: BlocEnv): BlocStepEvent[] {
       if (warSide(war, g.guarantor) !== null) continue;
       if (!ctx.nationIds.includes(g.guarantor)) continue;
       if (!env.aiNations.includes(g.guarantor)) continue;
+      if (env.beyondReach?.(g.guarantor) === true) continue;
       if (env.rng.next() < g.probability) {
         joinWar(ctx, env.diplomacy, war, g.guarantor, "defenders");
         events.push({

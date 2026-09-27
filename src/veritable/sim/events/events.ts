@@ -216,7 +216,16 @@ function otherOf(
   // J7c.
   if (kind === "threat") return env.systems?.threat(nation) ?? null;
   if (kind === "occupier") return env.systems?.occupier(nation) ?? null;
+  // J7c: nobody draws a nation without land (dissolved, or in exile under
+  // an annexer), and such a nation has no border: no neighbour, tense or
+  // not (the land neighbours of the data are those of the first day).
   const gone = env.systems?.beyondReach;
+  if (
+    (kind === "neighbor" || kind === "tense-neighbor") &&
+    gone?.(nation) === true
+  ) {
+    return null;
+  }
   const others = env.ctx.nationIds.filter(
     (n) => n !== nation && gone?.(n) !== true,
   );

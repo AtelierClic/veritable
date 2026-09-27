@@ -312,6 +312,30 @@ describe("the sanctions a war would bring (J6c)", () => {
   });
 });
 
+describe("a nation beyond reach (J7c)", () => {
+  it("no war is weighed by it or against it: dissolved, or in exile under an annexer", () => {
+    const { sim, internals } = campaign({
+      BBB: { activePersonnel: 1_000_000, tradeOpenness: 0.05 },
+      CCC: { activePersonnel: 60_000 },
+    });
+    setRelation(internals.diplomacy, "BBB", "CCC", -30);
+    internals.diplomacy.grievances.push({
+      by: "BBB",
+      against: "CCC",
+      until: "2027-06-01",
+    });
+    const env = (sim as unknown as { aiEnv(date: string): AiEnv }).aiEnv(
+      "2026-01-01",
+    );
+    expect(appraiseWar(env, "BBB", "CCC")).not.toBeNull();
+    for (const gone of ["BBB", "CCC"]) {
+      expect(
+        appraiseWar({ ...env, beyondReach: (id) => id === gone }, "BBB", "CCC"),
+      ).toBeNull();
+    }
+  });
+});
+
 describe("the cost of a war by its size (J6c)", () => {
   it("exhaustion and reputation fall as the gap in power grows", () => {
     const appraise = (target: number) => {

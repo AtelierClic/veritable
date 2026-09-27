@@ -5008,6 +5008,7 @@
   "menu.declare-war": "Déclarer la guerre…",
   "menu.declare-war-hint": "Choisir un casus belli, puis voir les conséquences attendues avant de confirmer.",
   "menu.no-casus-belli": "Aucun casus belli disponible.",
+  "menu.no-land": "Votre nation n'a plus de terre : elle ne peut déclarer aucune guerre.",
   "menu.preview-hint": "Aperçu des conséquences, puis confirmation.",
   "menu.sanction": "Sanctionner…",
   "menu.sanction-hint": "Sanctions complètes, ou embargos bien par bien.",

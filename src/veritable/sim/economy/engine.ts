@@ -298,6 +298,17 @@ export function stepTradeGood(
     }
   }
 
+  // J7c: the demand the embargoes left unserved — the deficits, after the
+  // flows, of the buyers some embargo on the good cuts off.
+  let unmetBlocked = 0;
+  if (blocked !== undefined) {
+    for (let i = 0; i < m; i++) {
+      let cut = false;
+      for (let e = 0; e < m && !cut; e++) cut = blocked[e * m + i] === 1;
+      if (cut) unmetBlocked += Math.max(0, deficit[i] - flows.received[i]);
+    }
+  }
+
   // What the scenario's importers could not get sets the premium they pay
   // over the world price (the "pays a premium elsewhere" of DESIGN.md).
   let uncovered = 0;
@@ -320,6 +331,7 @@ export function stepTradeGood(
   // What an embargoed exporter could not place is dumped on the rest of the
   // world at a discount, and leaves the supply that forms the price.
   let stranded = 0;
+  let unsoldClosed = 0;
   for (let k = 0; k < nationCount; k++) {
     const nation = state.nations[ids[k]];
     const demand = needed[k];
@@ -355,12 +367,24 @@ export function stepTradeGood(
       ? (supply - dumped * dumpDiscount - shipped * rerouted) * price * 1e6
       : 0;
     nation.maritimeValue[good.id] = maritimeValue[k];
-    if (isEmbargoed) stranded += dumped;
+    // What the embargoes withheld leaves the price-forming supply; its
+    // unsold in the closed share of its market (the J6c) only as far as the
+    // buyers the embargoes cut off still lack the good (J7c, below).
+    if (isEmbargoed) {
+      stranded += withheld[k];
+      unsoldClosed += flows.unsold[k] * lostShare[k];
+    }
     // The imported share of the basket is paid at the import price.
     const importedShare = demand <= 1e-12 ? 0 : Math.min(1, received / demand);
     nation.paidPrice[good.id] = price + (importPrice - price) * importedShare;
   }
-  market.stranded[good.id] = stranded + blockaded;
+  // J7c: once the price is above equilibrium every exporter has unsold;
+  // counted whole, the unsold of the exporters under an embargo (whoever
+  // sanctions someone) left the supply, the price rose, their unsold grew:
+  // the arms of the world climbed to four times their price. Unsold that
+  // no cut-off buyer lacks is ordinary excess and stays on the market.
+  market.stranded[good.id] =
+    stranded + Math.min(unsoldClosed, unmetBlocked) + blockaded;
 }
 
 // The aggregates of the trade of every nation, from its per-good values:

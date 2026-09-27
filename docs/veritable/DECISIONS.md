@@ -1087,6 +1087,50 @@ Plan, liste « à valider » et écarts : `docs/veritable/plans/J7.md`.
   - **Baroud** : l'Ukraine, soutien coupé, est dissoute en 395 ou 396 jours. Le joueur continue avec la Moldavie ; sauvegardée et rechargée, la campagne garde la Moldavie et toutes les entrées du journal (le jeu rechargé peut en ajouter une au tick suivant).
 - **Corrigé en mesurant** : après le chargement d'une sauvegarde en jeu, les noms des villes étaient dessinés deux fois, la couche de la partie précédente continuant de dessiner à l'ancienne caméra. La couche de densité se dédoublait de même et les touches des modes restaient liées à l'ancienne partie. Les couches de la partie précédente sont retirées.
 
+### Campagnes mondiales, corrections, non-régression (J7c.6)
+
+- **Première série de 30 campagnes mondiales** (code du J7c.5) : quatre critères tombaient.
+  1. **Prix de l'armement au plafond** (quatre fois sa base dans une campagne, 2,3 dans une autre). Le Soudan déclarait la guerre tous les quelques années aux Forces de soutien rapide dissoutes, sur un casus belli humanitaire (leur stabilité, figée, restait sous 0,3), et les livraisons d'armes à ces guerres vidaient le marché ; 153 des 501 guerres nouvelles visaient une nation dissoute ou en exil.
+  2. **Tirs nucléaires dans quatre campagnes sur trente** (critère : 10 % au plus), dont deux au niveau de menace 2 : Israël contre le Liban (sa capitale est à portée du front dans chacune de ses guerres) et le Pakistan contre l'Afghanistan (quelques tuiles de frontière perdues). **Niveau 2 : au moins 2 % de la terre du premier jour perdue, ou une terre perdue avec la capitale à portée d'un front** (`nuclear.level2LostShare`, à valider) ; un front près de la capitale ne suffit plus seul.
+  3. **Aucune levée par les voies (b) ou (c)** : les levées votées en séance de bloc étaient inscrites comme « relations rétablies ». Elles portent désormais leur voie (« vote », à valider).
+  4. **Décisions de la France** : la mesure lisait le journal, où ne vont pas les événements d'une nation en pilote automatique ; elle lit l'historique de la simulation. Mesurée ainsi, la France recevait 0,85 décision par an, avec des années sans aucune (sonde sans le cœur, vingt ans : huit années vides).
+- **Régression du J7c.4 trouvée par la non-régression du J4** : le plafond de 0,2 sur la légitimité qu'emportent des troubles (`events.unrestLegitimacyMax`) valait pour toutes les nations, alors que la décision visait les démocraties stables (« une nation stable baisse sans entrer en troubles, une nation fragile y entre toujours »). L'Ukraine en guerre, dont l'opinion est déjà au plus bas, n'entrait presque plus en troubles : sur 60 campagnes europe-10 de dix ans sans le cœur, 4 débuts de troubles contre 131 au J7b, et une crise politique dans 23 % des campagnes contre 67 % (critère du J4 : la moitié ; tenu de justesse, 5 sur 10, aux graines fixes). Bissection sur 60 graines : J7b.6, J7c.1 et J7c.2 identiques (40 campagnes en crise sur 60), J7c.3 42, J7c.4 14. **Le plafond ne vaut plus que pour une démocratie stable** au sens des coups (régime démocratique, stabilité ≥ 0,5, légitimité ≥ 0,7) ; une nation fragile perd la légitimité qu'il faut. Crises : 43 campagnes sur 60, puis 39 sur les 60 graines suivantes ; test dans `sim/events/events.test.ts`.
+- **Coupure de courant pendant la seconde série** (2026-09-27, matin). Reprise : aucun verrou git, port 9000 libre, aucun processus orphelin ; les 39 fichiers modifiés ou créés relus (aucun vide, tronqué, ni octet nul ; JSON valides ; aucune longueur en recul), `git fsck` propre ; tsc, lint et `npm test` verts (7 072 tests, 768 côté serveur) ; travail récupéré commité tel quel (`877c0689c`). La seconde série et les comparaisons sur 60 graines, perdues, sont relancées en entier.
+
+#### Réponses de Lukas (2026-09-27, après la coupure)
+
+- **Soudan–FSR : corriger la cause générale.** Aucune guerre, revendication ni incident de frontière ne peut viser une entité dissoute ou absorbée ; un test ; vérifier qu'aucune autre paire n'est touchée dans les résultats.
+- **Plancher des décisions validé**, à trois conditions : il tire dans les gabarits éligibles pour la nation, sans événement générique de remplissage ; il respecte la limite de deux décisions par mois ; il vaut pour toute nation jouée.
+- **Juntes russes** : trois graines sur dix relevaient du bruit (sur 120 graines, 10 % des décennies, sous le seuil de 20 %). **Le critère se mesure désormais sur au moins 60 graines** ; le point sort de la liste « à valider », sauf si la nouvelle série dépasse 20 %.
+- **Sauvegardes v7 intermédiaires** : régénérées à la fin avec celles du guide, chargement testé.
+- Écrire chaque campagne sur disque dès qu'elle se termine, pour reprendre une série sans la recommencer.
+
+#### Hors de portée : la cause générale
+
+Le voisinage terrestre des données est celui du premier jour (`ctx.landNeighbours`, écrit par l'outil des frontières) : une nation annexée gardait ses « voisins », son IA pesait encore des guerres, et elle recevait des incidents de frontière. **Une nation dissoute, ou un gouvernement en exil dont un annexeur tient la terre, est hors de portée, des deux côtés** (`VeritableSimImpl.beyondReach`) :
+
+- l'IA ne pèse aucune guerre contre elle ni venant d'elle (`appraiseWar`) ; le joueur ne peut ni lui déclarer la guerre, ni en déclarer une depuis l'exil (« votre nation n'a plus de terre » dans le menu de la carte) ; la vue ne propose aucun casus belli contre elle, ni aucun à un joueur en exil ;
+- elle ne reçoit aucun appel à une guerre : ni coalition (`answerCoalitionsOf`), ni défense collective d'un bloc, ni garantie (`blocs.ts`) ;
+- aucun événement ne la tire comme autre nation, et, sans terre, elle n'a pas de voisin : aucun incident de frontière (« voisin », « voisin tendu ») ne la prend pour sujet ;
+- aucune revendication ne la vise : les détenteurs d'une terre revendiquée se lisent sur la carte, et elle n'en tient aucune (vérifié par le test) ;
+- à sa dissolution, ses griefs et les appels à ses guerres disparaissent avec elle.
+- Une nation en exil reste belligérante des guerres qu'elle menait quand elle a perdu sa dernière tuile : la libération par un ami passe par elles.
+- Tests : `sim/exile/exileSim.test.ts` (une annexée : ni guerre, ni casus belli, ni revendication, ni appel de coalition ou de défense collective, ni incident de frontière ; le joueur en exil ne déclare aucune guerre), `ai/nations.test.ts` (aucune guerre pesée par ou contre elle). Chaque garde retirée fait échouer un test.
+- La livraison compte ce qui ne doit jamais arriver (`delivery.beyondReach` : guerre déclarée ou rejointe par ou contre une nation hors de portée, événement qui la tire comme autre nation ou lui donne un voisin ; critère `noWarOrIncidentBeyondReach`).
+
+#### Plancher des décisions
+
+**La nation du joueur ne passe jamais plus de 300 jours de jeu sans décision** (`events.playerFloorDays`) : au-delà, un de ses gabarits est tiré le jour même, au poids de sa probabilité mensuelle, parmi ceux que ses règles (fenêtre, recharge) et ses conditions permettent ; aucun événement de remplissage. Il passe par le même tir que les autres événements : la limite de deux décisions par mois du joueur vaut pour lui (le plancher dû attend le mois suivant). Il vaut pour la nation jouée, quelle qu'elle soit (après un baroud, il repart de la nouvelle), et en pilote automatique. Sonde (monde sans le cœur, vingt ans) : la France reçoit 1,85 décision par an, au moins une chaque année. Sauvegarde : `events.lastDecision` (v7, champ facultatif ; zbin n'ayant pas d'étiquette de champ, une v7 écrite avant ne se décode plus). Tests : `sim/events/events.test.ts`. DESIGN.md (section Événements) le dit.
+
+#### Prix de l'armement : seconde cause, le volume retiré du prix
+
+Dans la seconde série, une campagne (graine 5) voyait l'armement monter de 1,04 en 2049 à 4 en 2072, sans guerre contre une nation dissoute. Sonde sur le même chemin : le volume retiré de l'offre qui forme le prix passait de 8 en 2040 à 1 078 en 2062, la moitié de l'offre mondiale. Les « exportateurs sous embargo » étaient les États-Unis, la Chine, l'Inde, l'Allemagne, la France, l'Arabie saoudite : leurs propres sanctions (contre l'Iran, la Russie…) leur ferment une part de leur marché. La règle du J6c retirait du prix, en plus de ce qu'ils retiennent, leur invendu au prorata de cette part. Or, le prix au-dessus de l'équilibre, tout exportateur a de l'invendu ordinaire : retiré, il faisait monter le prix, qui gonflait leur production et leur invendu, jusqu'au plafond. **Désormais, leur invendu ne sort du prix qu'à hauteur de la demande que les acheteurs coupés par un embargo n'ont pas pu satisfaire** (`stepTradeGood`) ; il se vend toujours avec la décote. Un marché saturé reste sur le marché ; un vrai blocage (l'embargo de l'UE sur le gaz russe : les Européens manquent encore de gaz) en sort comme au J6c. Embargo de l'UE, graine 42 : couverture allemande en gaz en 2029 à 0,936 contre 0,979 pour le témoin (0,888 si l'invendu ne sortait jamais du prix, test du J3 à 0,05). Test : `sim/economy/campaign.test.ts`, qui échoue avec la règle du J6c.
+
+#### Outils
+
+- **Campagnes écrites entières dès qu'elles finissent** : chaque processus de la livraison écrit un fichier temporaire, le vide sur le disque (`fsync`) puis le renomme ; `delivery.ts --resume` ne rejoue que les graines sans fichier lisible.
+- **Rapport du J4** : le critère des juntes se mesure sur 60 graines (`--junta-runs`, 42 à 101) ; les autres critères restent sur les dix graines fixes.
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.
