@@ -1131,6 +1131,20 @@ Dans la seconde série, une campagne (graine 5) voyait l'armement monter de 1,04
 - **Campagnes écrites entières dès qu'elles finissent** : chaque processus de la livraison écrit un fichier temporaire, le vide sur le disque (`fsync`) puis le renomme ; `delivery.ts --resume` ne rejoue que les graines sans fichier lisible.
 - **Rapport du J4** : le critère des juntes se mesure sur 60 graines (`--junta-runs`, 42 à 101) ; les autres critères restent sur les dix graines fixes.
 
+#### Résultats sur le code final
+
+- **30 campagnes mondiales de 50 ans** (`docs/veritable/reports/J7/world/`, cœur, graines 1 à 30) : seize critères sur dix-sept.
+  - Guerres nouvelles : médiane 12 par campagne (7 à 18), 362 en tout, 5 sans casus belli ; trois régions au moins.
+  - Nucléaire : un tir dans 2 campagnes (le Pakistan sur l'Inde, niveau 3) ; aucun en année 1 ni sous le niveau 2, aucun échange à trois.
+  - Prix mondiaux entre 0,68 et 1,63 fois leur base ; défauts seulement dans des nations endettées ou instables.
+  - Sanctions en vigueur en 2075 : 0,62 fois celles de 2026 (médiane) ; levées votées par un bloc : médiane 66 par campagne (2 061 en tout, 335 après un changement de régime, 164 relations rétablies).
+  - La France reçoit au moins une décision chaque année de chaque campagne (1,5 par an au moins, 1,62 en médiane).
+  - Aucun gabarit au-delà de 5,9 % des événements ; le jour du mois le plus chargé en porte 3,3 %.
+  - Aucune guerre ni aucun incident avec une nation hors de portée. Un événement relevé le jour même de l'exil de la Palestine venait avant (la mesure lit désormais le statut du matin).
+  - 90 % des coups réussis dans des régimes fragiles ; 211 exils, 29 retours, 182 dissolutions, aucune annexion par traité.
+  - **Tombe : une paire au-delà de 40 %**. Graine 26 : Russie–Ukraine, 3 des 7 guerres nouvelles (2031, 2036, 2057). La revendication russe s'endort au troisième échec, puis se réveille à un changement de régime ou avec un dirigeant souverainiste (réponse de Lukas au J6) ; une campagne pauvre en guerres dépasse alors le seuil. Laissé en l'état, à trancher.
+- **Non-régression sur europe-10** : J3, les quatre critères (gaz à l'import +34 % la première année, PIB russe −5,6 % à deux ans ; France contre Espagne : 7 sanctionneurs à six mois, stabilité 0,47 contre 0,62 ; commerce maritime norvégien −52 % ; débarquement italien refusé) ; J4, les cinq critères, juntes sur 60 graines : Russie 15 %, Turquie 3 % des décennies.
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.

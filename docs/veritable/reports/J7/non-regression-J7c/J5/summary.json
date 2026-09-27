@@ -1,0 +1,466 @@
+{
+  "campaigns": 100,
+  "criteria": {
+    "noShotInYearOne": true,
+    "shotsInAtMost5pct": true,
+    "neverBelowLevel2": true,
+    "noThreeWayExchange": true,
+    "warsMedianAtMost1Max2": true,
+    "warsMax10": true,
+    "under30pctWithoutCasusBelli": true,
+    "atLeastOneRevolution": true,
+    "crisisInHalfAt10Years": true,
+    "rusJuntaAtMost20pct": true,
+    "turJuntaAtMost20pct": true,
+    "pricesBounded": true,
+    "noDefaultInStableNation": true,
+    "rusUkrRelaunchMedianAtMost1": true,
+    "calm15YearsInAtLeast40pct": true,
+    "noWarOrIncidentBeyondReach": true
+  },
+  "world": {
+    "pairShareMax": 1,
+    "pairShareMedian": 0,
+    "pairAbove40pct": [
+      "seed 8: RUS-UKR 1/1",
+      "seed 25: RUS-UKR 1/1",
+      "seed 32: RUS-UKR 1/1",
+      "seed 46: RUS-UKR 1/1",
+      "seed 59: RUS-UKR 1/1",
+      "seed 77: RUS-UKR 1/1",
+      "seed 86: RUS-UKR 1/1",
+      "seed 89: RUS-UKR 1/1",
+      "seed 93: RUS-UKR 1/1",
+      "seed 100: RUS-UKR 1/1"
+    ],
+    "regionsMin": 0,
+    "regionsPerCampaign": {
+      "0": 90,
+      "1": 10
+    },
+    "warsByRegion": {
+      "europe": 10
+    },
+    "pairs": {
+      "RUS-UKR": 10
+    },
+    "coups": 52,
+    "coupsByRegime": {
+      "electoral-authoritarian": 35,
+      "semi-presidential": 7,
+      "junta": 7,
+      "parliamentary": 3
+    },
+    "fragileCoupShare": 0.8076923076923077,
+    "defaults": 252,
+    "otherDefaults": [],
+    "nonFinite": []
+  },
+  "loop": {
+    "relaunchMedian": 0,
+    "relaunchMax": 1,
+    "relaunchesPerCampaign": {
+      "0": 90,
+      "1": 10
+    },
+    "scenarioWarEnded": 100,
+    "calm15Years": 91,
+    "calmShare": 0.91,
+    "yearsToReprise": {
+      "1": 1,
+      "2": 1,
+      "3": 3,
+      "4": 2,
+      "5": 1,
+      "8": 1,
+      "18": 1
+    }
+  },
+  "beyondReach": {
+    "wars": 0,
+    "events": 0,
+    "samples": []
+  },
+  "wars": {
+    "median": 0,
+    "max": 1,
+    "total": 10,
+    "withoutCasusBelli": 0,
+    "byCasusBelli": {
+      "grievance": 10
+    },
+    "byAggressor": {
+      "RUS": 10
+    },
+    "perCampaign": {
+      "0": 90,
+      "1": 10
+    }
+  },
+  "nuclear": {
+    "campaignsWithShots": 0,
+    "shots": 0,
+    "byShooter": {},
+    "byThreat": {},
+    "list": [],
+    "threeWayCampaigns": []
+  },
+  "politics": {
+    "revolutions": [
+      "UKR@2029-03-08",
+      "UKR@2029-07-19",
+      "UKR@2029-05-24",
+      "UKR@2027-05-27",
+      "UKR@2028-11-23",
+      "UKR@2028-12-28",
+      "UKR@2029-03-15",
+      "UKR@2029-10-25",
+      "UKR@2029-04-12",
+      "UKR@2028-12-28",
+      "UKR@2027-12-16",
+      "UKR@2027-10-14",
+      "UKR@2029-05-03",
+      "UKR@2029-12-06",
+      "UKR@2028-12-28",
+      "UKR@2029-10-18",
+      "UKR@2029-03-01",
+      "UKR@2028-09-14"
+    ],
+    "crisisBy10Years": 100,
+    "juntaAt10Years": {
+      "RUS": 1,
+      "TUR": 3
+    },
+    "coups": 52
+  },
+  "prices": {
+    "low": 0.8786513716031513,
+    "high": 1.517118627167872
+  },
+  "defaults": {
+    "total": 252,
+    "inStableNations": []
+  },
+  "technology": {
+    "FRA": {
+      "completed": 100,
+      "median": "2038-05-01",
+      "shareIn2035": 0.9180327868852459
+    },
+    "DEU": {
+      "completed": 100,
+      "median": "2038-09-01",
+      "shareIn2035": 0.8688524590163934
+    },
+    "GBR": {
+      "completed": 100,
+      "median": "2036-01-01",
+      "shareIn2035": 0.9672131147540983
+    },
+    "ITA": {
+      "completed": 100,
+      "median": "2042-12-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "ESP": {
+      "completed": 100,
+      "median": "2042-11-01",
+      "shareIn2035": 0.6885245901639344
+    },
+    "POL": {
+      "completed": 100,
+      "median": "2042-09-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "UKR": {
+      "completed": 100,
+      "median": "2072-12-01",
+      "shareIn2035": 0.3770491803278688
+    },
+    "RUS": {
+      "completed": 100,
+      "median": "2044-04-01",
+      "shareIn2035": 0.7377049180327869
+    },
+    "TUR": {
+      "completed": 100,
+      "median": "2043-01-01",
+      "shareIn2035": 0.6885245901639344
+    },
+    "NOR": {
+      "completed": 100,
+      "median": "2038-10-01",
+      "shareIn2035": 0.8524590163934426
+    }
+  },
+  "events": {
+    "mean": 52.31,
+    "instancesMean": 448.76,
+    "busiestDay": 1,
+    "busiestDayShare": 0.03387111150726446,
+    "topEvents": [
+      {
+        "id": "ministry-corruption-scandal",
+        "share": 0.05795971120420715
+      },
+      {
+        "id": "coalition-crisis",
+        "share": 0.05305731348605045
+      },
+      {
+        "id": "naval-standoff",
+        "share": 0.051787146804528034
+      },
+      {
+        "id": "infrastructure-sabotage",
+        "share": 0.049692485961315626
+      },
+      {
+        "id": "investment-boom",
+        "share": 0.0466396292004635
+      },
+      {
+        "id": "wildfire-season",
+        "share": 0.04349763793564489
+      },
+      {
+        "id": "heatwave-drought",
+        "share": 0.04238345663606382
+      },
+      {
+        "id": "river-floods",
+        "share": 0.04220518762813085
+      }
+    ],
+    "templates": 91
+  },
+  "j7c": {
+    "sanctionsStartMedian": 1,
+    "sanctionsEndMedian": 0,
+    "sanctionsRatioMedian": 0,
+    "sanctionsRatios": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "liftsBcMedian": 0,
+    "liftsBcPerCampaign": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "liftsByReason": {
+      "relations": 99,
+      "regime": 4
+    },
+    "governmentDecisionsPerYearMin": 1.46,
+    "governmentDecisionsPerYearMedian": 1.6,
+    "yearsWithAGovernmentDecisionMin": 1,
+    "yearsWithAGovernmentDecisionMedian": 1
+  },
+  "exileList": [],
+  "exile": {
+    "annexations": 0,
+    "exiles": 0,
+    "returns": 0,
+    "dissolutions": 0
+  },
+  "blocs": {
+    "decisionsMean": 37.81
+  },
+  "wallMsMean": 62157.13
+}
