@@ -1,9 +1,10 @@
 import { Playtest } from "./harness";
 
-// The test guide of the J5 played (J6c): technology, events, the French
-// presidency of the EU, the dead hand before an annexation, sanctions put to
-// a vote, a save reloaded. Captures and observations:
-// docs/veritable/reports/J6/playtest/j5-*.
+// The test guide of the J5 played (J6c; J7c: the event cards, the French
+// presidency of the second half of 2026 before the decision left to the
+// government): technology, events, the French presidency of the EU, the
+// dead hand before an annexation, sanctions put to a vote, a save reloaded.
+// Captures and observations: docs/veritable/reports/J7/playtest/j5-*.
 
 const OUT = process.argv[2] ?? "docs/veritable/reports/J6/playtest";
 
@@ -66,6 +67,8 @@ async function main(): Promise<void> {
   ]);
 
   // --- 3. Events -------------------------------------------------------------
+  // J7: an event of the player's nation is a card that pauses the game for
+  // three seconds (a countdown on the speed control).
   const firstPopup = await t.eval<string>(`(async () => {
     await vt.speed("×5");
     for (let i = 0; i < 1500; i++) {
@@ -74,57 +77,21 @@ async function main(): Promise<void> {
     }
     return "none";
   })()`);
-  await t.step("3. Événements : une fenêtre met le jeu en pause", [
+  const card = await t.eval<string>(
+    `vt.text(document.querySelector("veritable-event-cards")).slice(0, 600)`,
+  );
+  await t.step("3. Événements : une carte met le jeu en pause", [
     `pause au ${firstPopup}`,
-    await screen(600),
+    `barre : ${await t.eval<string>(`vt.text(vt.bar()).slice(0, 120)`)}`,
+    `carte : ${card}`,
   ]);
   const answered = await t.eval<string[]>(`vt.answerAll()`);
   await t.eval(`vt.close()`);
-  // The next pop-up is left to the government.
-  const second = await t.eval<string>(`(async () => {
-    await vt.speed("×5");
-    for (let i = 0; i < 1500; i++) {
-      await vt.sleep(400);
-      if (vt.paused()) {
-        const v = await vt.view();
-        return v.date + " " + v.events.pending.map((p) => p.event).join(",");
-      }
-    }
-    return "none";
-  })()`);
-  await t.eval(`vt.close()`);
-  const leftAlone = await t.eval<string>(`(async () => {
-    const v0 = await vt.view();
-    const ids = v0.events.pending.map((p) => p.id);
-    const end = v0.date.slice(0, 5) + String(Number(v0.date.slice(5, 7)) + 2).padStart(2, "0") + "-02";
-    await vt.speed("×5");
-    for (let i = 0; i < 3000; i++) {
-      await vt.sleep(400);
-      const v = await vt.view();
-      if (vt.paused()) {
-        // Others are answered; those of the step are left alone.
-        for (const p of v.events.pending) {
-          if (ids.includes(p.id)) continue;
-          const data = vt.screens().eventCatalogue.find((e) => e.id === p.event);
-          await vt.apply({ type: "event-choose", id: p.id, choice: data.choices[0].id });
-        }
-        vt.close(); await vt.speed("×5");
-      }
-      if (v.date >= end || !v.events.pending.some((p) => ids.includes(p.id))) {
-        await vt.speed("⏸");
-        return v.date + " : " + (v.events.pending.some((p) => ids.includes(p.id)) ? "toujours en attente" : "tranché par le gouvernement");
-      }
-    }
-    return "délai dépassé";
-  })()`);
-  await t.eval(`vt.open("Événements")`);
-  await t.step("3. Événements : une réponse, une décision laissée", [
+  await t.step("3. Événements : la carte répondue", [
     `répondu : ${answered.join(", ")}`,
-    `seconde fenêtre : ${second}`,
-    `laissée sans réponse : ${leftAlone}`,
   ]);
 
-  // --- 4. The presidency of the EU --------------------------------------------
+  // --- 4. The presidency of the EU (France, second half of 2026) ------------
   await t.eval(`vt.until("2026-07-02")`);
   await t.eval(`vt.open("Blocs")`);
   const leader = await t.eval<string>(
@@ -189,8 +156,53 @@ async function main(): Promise<void> {
     sanctions,
     await screen(900),
   ]);
+
+  // --- 3 (continued). A decision left to the government -----------------------
+  // The next card of the player's nation is left alone: the government
+  // decides it after 30 days of play (J7a); the others are answered.
+  const second = await t.eval<string>(`(async () => {
+    await vt.speed("×5");
+    for (let i = 0; i < 3000; i++) {
+      await vt.sleep(400);
+      const v = await vt.view();
+      if (v.events.pending.length > 0) return v.date + " " + v.events.pending.map((p) => p.event + "#" + p.id).join(",");
+    }
+    return "none";
+  })()`);
+  const leftAlone = await t.eval<string>(`(async () => {
+    const v0 = await vt.view();
+    const ids = v0.events.pending.map((p) => p.id);
+    const end = new Date(Date.parse(v0.date) + 45 * 86400000).toISOString().slice(0, 10);
+    await vt.speed("×5");
+    for (let i = 0; i < 3000; i++) {
+      await vt.sleep(400);
+      const v = await vt.view();
+      // Others are answered; those of the step are left alone.
+      for (const p of v.events.pending) {
+        if (ids.includes(p.id)) continue;
+        const data = vt.screens().eventCatalogue.find((e) => e.id === p.event);
+        await vt.apply({ type: "event-choose", id: p.id, choice: data.choices[0].id });
+      }
+      if (vt.paused()) await vt.speed("×5");
+      if (v.date >= end || !v.events.pending.some((p) => ids.includes(p.id))) {
+        await vt.speed("⏸");
+        return v.date + " : " + (v.events.pending.some((p) => ids.includes(p.id)) ? "toujours en attente" : "tranché par le gouvernement");
+      }
+    }
+    return "délai dépassé";
+  })()`);
+  await t.eval(`vt.open("Journal")`);
+  const decided = await t.eval<string>(
+    `vt.view().then((v) => v.journal.filter((j) => j.nation === "FRA" && j.params && (j.params.by === "government" || j.params.by === "player")).slice(-3).map((j) => j.date + " " + j.kind + " " + JSON.stringify(j.params)).join(" | "))`,
+  );
+  await t.step("3. Événements : une décision laissée au gouvernement", [
+    `carte : ${second}`,
+    `sans réponse : ${leftAlone}`,
+    `journal : ${decided}`,
+  ]);
+
   await t.eval(`vt.until("2027-03-02")`);
-  await t.eval(`vt.open("Objectifs et journal")`);
+  await t.eval(`vt.open("Journal")`);
   const decisions = await t.eval<string[]>(
     `vt.view().then((v) => v.journal.filter((j) => j.kind === "bloc-decision" || j.kind === "sanctions-imposed").slice(-12).map((j) => j.date + " " + j.kind + " " + (j.nation ?? "") + " " + JSON.stringify(j.params)))`,
   );

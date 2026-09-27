@@ -90,8 +90,21 @@ window.vt = {
     }
     throw new Error("the game did not start");
   },
-  paused() { return this.text(this.bar()).includes("En pause"); },
-  async speed(label) { this.button(this.bar(), label).click(); await this.sleep(300); },
+  // J7: an event card pauses the game for three seconds, a countdown on the
+  // speed control ("Reprise dans 3 s", the pause button reads "⏸ 3").
+  paused() {
+    const bar = this.text(this.bar());
+    return bar.includes("En pause") || bar.includes("Reprise dans");
+  },
+  async speed(label) {
+    const b = [...this.bar().querySelectorAll("button")].find((x) => {
+      const t = x.textContent.replace(/\s+/g, " ").trim();
+      return t === label || (label === "⏸" && t.startsWith("⏸ "));
+    });
+    if (!b) throw new Error("no button " + label);
+    b.click();
+    await this.sleep(300);
+  },
   async open(title) {
     const s = this.screens();
     if (s.screen !== null && this.text(s).startsWith(title)) return;
@@ -112,7 +125,11 @@ window.vt = {
     }
     return answered;
   },
-  // Runs at x5 until the date, answering the pop-ups that pause the game.
+  // Runs at x5 until the date. J7c: the decisions of the event cards are
+  // left to the government (it decides after 30 days, as for a player who
+  // does not answer); the pause of a card resumes by itself, a pause that
+  // stays is lifted. (Until the J7a the pop-ups paused the game and were
+  // answered with their first choice.)
   async until(date, timeoutMs = 900000) {
     const started = Date.now();
     const answered = [];
@@ -121,8 +138,7 @@ window.vt = {
       await this.sleep(400);
       const v = await this.view();
       if (v.date >= date) { await this.speed("⏸"); return { date: v.date, answered }; }
-      if (this.paused()) {
-        answered.push(...(await this.answerAll()));
+      if (this.text(this.bar()).includes("En pause")) {
         this.close();
         await this.speed("×5");
       }
@@ -164,11 +180,26 @@ export class Playtest {
     url = "http://localhost:9000/",
   ): Promise<Playtest> {
     const browser = await HeadlessBrowser.launch();
-    await browser.goto(url);
-    await sleep(3000);
     const test = new Playtest(browser, outDir, prefix);
-    await test.install();
+    await test.reopen(url);
     return test;
+  }
+
+  // Loads the page again (back to the menu: a new campaign starts from
+  // there), waits for the client and installs the helpers.
+  async reopen(url = "http://localhost:9000/"): Promise<void> {
+    await this.browser.goto(url);
+    await sleep(3000);
+    // J7c: the campaign panel exists once the client has initialized (the
+    // first load after changes compiles the modules for a while).
+    for (let i = 0; i < 240; i++) {
+      const ready = await this.browser
+        .eval<boolean>(`document.querySelector("veritable-panel") !== null`)
+        .catch(() => false);
+      if (ready) break;
+      await sleep(500);
+    }
+    await this.install();
   }
 
   async install(): Promise<void> {

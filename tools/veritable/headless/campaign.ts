@@ -265,6 +265,14 @@ export interface DeliveryMetrics {
     list: string[];
   };
   blocDecisions: number;
+  // J7c (world criteria): the sanctions in force on the first and the last
+  // day; the lifts by reason (regime, friendly, vote, relations, peace,
+  // player); the player's event decisions by year, taken by the government
+  // (the player lets it decide: autopilot) or by the player.
+  sanctionsStart: number;
+  sanctionsEnd: number;
+  lifts: Record<string, number>;
+  governmentDecisions: Record<string, number>;
   // J6c (world criteria): the regime a successful coup overthrew, the
   // debt and stability of a nation that defaulted (both as sampled at the
   // start of the month).
@@ -457,6 +465,10 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       list: [],
     },
     blocDecisions: 0,
+    sanctionsStart: driver.read().diplomacy.sanctions.length,
+    sanctionsEnd: 0,
+    lifts: {},
+    governmentDecisions: {},
     coups: [],
     defaults: [],
   };
@@ -515,6 +527,23 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       ) {
         coup.regime = event.params.from;
       }
+    }
+    if (event.type === "sanctions-lifted") {
+      const reason = event.reason ?? "relations";
+      delivery.lifts[reason] = (delivery.lifts[reason] ?? 0) + 1;
+    }
+    // The player's decisions left to its government: by the government
+    // after 30 days in the game, by the AI's choice in autopilot (the
+    // player's nation has no pop-up there).
+    if (
+      event.type === "event-occurred" &&
+      event.nation === player &&
+      event.params.choice !== "" &&
+      (event.params.by === "government" || event.params.by === "ai")
+    ) {
+      const year = event.date.slice(0, 4);
+      delivery.governmentDecisions[year] =
+        (delivery.governmentDecisions[year] ?? 0) + 1;
     }
     if (event.type === "sovereign-default") {
       const first = series[0]?.people[event.nation] ?? 0;
@@ -696,6 +725,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
 
   const last = series[series.length - 1];
   const stabilities = Object.values(last.stability);
+  delivery.sanctionsEnd = driver.read().diplomacy.sanctions.length;
   for (const id of pack.scenario.nations) {
     politics[id].finalRegime = driver.read().politics[id].regime;
   }

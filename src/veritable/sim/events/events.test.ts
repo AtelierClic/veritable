@@ -141,8 +141,11 @@ describe("events", () => {
       (id) => !pending.some((p) => p.event === id),
     )!;
     const opinion = sim.read().politics.AAA.opinion;
+    const legitimacy = sim.read().politics.AAA.legitimacy;
     sim.apply({ type: "event-choose", id: pending[0].id, choice: "ignore" });
     expect(sim.read().politics.AAA.opinion).toBeLessThan(opinion - 0.2);
+    // J7c: unrest takes at most 0.2 of legitimacy (it took it all).
+    expect(sim.read().politics.AAA.legitimacy).toBeCloseTo(legitimacy - 0.2, 9);
     // The third one comes next month; the unanswered second is decided by
     // the government after 30 days (it pays rather than face unrest).
     months(1);

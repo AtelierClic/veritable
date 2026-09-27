@@ -117,6 +117,9 @@ export interface AccessionCriteria {
   regime: boolean;
   debt: boolean;
   relations: boolean;
+  // J7c: the candidate comes from the regions of the bloc and belongs to
+  // none of the blocs it excludes.
+  origin: boolean;
   meanRelations: number;
   ok: boolean;
 }
@@ -445,12 +448,28 @@ export function accessionCriteria(
         members.length;
   const relations =
     a.minRelations === undefined || meanRelations >= a.minRelations;
+  // J7c: a candidate of the regions of the bloc, or one it names, and a
+  // full member of none of the blocs it excludes (no member of the G7 or
+  // of the EU applies to the BRICS: Germany did, in europe-10).
+  const geography = env.sheets.get(nation)?.geography;
+  const region =
+    a.regions === undefined ||
+    (a.nations ?? []).includes(nation) ||
+    (geography !== undefined &&
+      (a.regions.includes(geography.region) ||
+        a.regions.includes(geography.subregion)));
+  const excluded = (a.excludes ?? []).some((b) => {
+    const other = env.state.blocs.find((x) => x.id === b);
+    return other !== undefined && memberStatus(other, nation) === "full";
+  });
+  const origin = region && !excluded;
   return {
     regime,
     debt,
     relations,
+    origin,
     meanRelations,
-    ok: regime && debt && relations,
+    ok: regime && debt && relations && origin,
   };
 }
 

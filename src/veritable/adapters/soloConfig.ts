@@ -56,6 +56,11 @@ export function veritableSoloConfig(
       UnitType.MIRV,
     ],
     infiniteGold: true,
+    // J7c: no spawn immunity. The spawn of OpenFront is replaced by the
+    // scenario and every load starts the core anew: its immunity (50 ticks,
+    // two and a half days of play) made every nuclear shot of the first days
+    // of a campaign, and of the first days after each load, fail in silence.
+    spawnImmunityDuration: 0,
   };
 }
 

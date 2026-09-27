@@ -63,6 +63,8 @@ describe("veritableSoloConfig", () => {
     expect(config.maxTimerValue).toBeUndefined();
     expect(config.overtime).toBeUndefined();
     expect(config.doomsdayClock).toBeUndefined();
+    // J7c: no spawn immunity (a nuclear shot of the first days failed).
+    expect(config.spawnImmunityDuration).toBe(0);
   });
 
   it("keeps the chosen nation and is idempotent", () => {

@@ -87,6 +87,15 @@ export const BlocSchema = z.object({
     maxDebtToGdp: z.number().positive().optional(),
     // Mean relations of the members with the candidate.
     minRelations: z.number().optional(),
+    // J7c: where a candidate may come from — world regions or subregions of
+    // the sheets (`geography`), and nations eligible besides (the J5 left
+    // the criterion to the J6: every nation of the Europe map could apply
+    // to the EU, and Germany applied to the Shanghai Cooperation
+    // Organisation).
+    regions: z.array(z.string()).optional(),
+    nations: z.array(NationIdSchema).optional(),
+    // Blocs whose full members do not apply (J7c).
+    excludes: z.array(z.string()).optional(),
     monthsMin: z.number().int().min(0),
     monthsMax: z.number().int().min(0),
   }),

@@ -78,12 +78,12 @@ async function main(): Promise<void> {
     `projection ${shares(f0.projection)}`,
   ]);
   const pinned = await t.eval<boolean>(`(async () => {
-    await vt.open("Objectifs et journal");
+    await vt.open("Objectifs");
     await vt.apply({ type: "pin-objective", objective: "win-election" });
     await vt.apply({ type: "pin-objective", objective: "stable-five-years" });
     await vt.apply({ type: "add-note", text: "Test joué du guide J4 : l'élection d'avril 2027." });
     await vt.sleep(1500);
-    vt.close(); await vt.open("Objectifs et journal");
+    vt.close(); await vt.open("Objectifs");
     return vt.text(vt.screens()).includes("Gagner une élection");
   })()`);
   await t.step("1. Objectifs épinglés et note", [
@@ -134,7 +134,7 @@ async function main(): Promise<void> {
     `groupes ${shares(f3.groups)}`,
   ]);
   await t.eval(`vt.until("2027-05-15")`);
-  await t.eval(`vt.open("Objectifs et journal")`);
+  await t.eval(`vt.open("Journal")`);
   const f4 = await facts();
   await t.step("2. Perdre : après le scrutin", [
     ...(await journal("election-held,government-formed,fraud-detected")),
@@ -164,7 +164,7 @@ async function main(): Promise<void> {
     `${detection} (guide : 68 %)`,
   ]);
   await t.eval(`vt.until("2027-05-15")`);
-  await t.eval(`vt.open("Objectifs et journal")`);
+  await t.eval(`vt.open("Journal")`);
   const f6 = await facts();
   await t.step("3. Voler : après le scrutin", [
     ...(await journal("election-held,government-formed,fraud-detected")),
@@ -211,7 +211,7 @@ async function main(): Promise<void> {
     `corruption du dirigeant ${pct(f7.corruption)}`,
   ]);
   await t.eval(`vt.until("2027-05-15")`);
-  await t.eval(`vt.open("Objectifs et journal")`);
+  await t.eval(`vt.open("Journal")`);
   const f8 = await facts();
   await t.step("4. Gagner : après le scrutin", [
     ...(await journal(

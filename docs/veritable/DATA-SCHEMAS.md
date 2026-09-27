@@ -351,6 +351,11 @@ Forme du J5 (couches 2 et 3), validée par `src/veritable/data/schemas/bloc.ts`.
     "regimes": ["parliamentary", "presidential", "semi-presidential"],
     "maxDebtToGdp": 1.2,
     "minRelations": 20,
+    // J7c : régions ou sous-régions d'où vient un candidat (champ
+    // geography des fiches), et nations admises en plus ; blocs dont les
+    // membres ne postulent pas (BRICS, OCS : ["g7", "eu"]).
+    "regions": ["europe"],
+    "nations": ["CYP", "TUR", "GEO"],
     "monthsMin": 24,
     "monthsMax": 60,
   },

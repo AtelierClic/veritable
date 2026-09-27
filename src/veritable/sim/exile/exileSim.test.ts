@@ -5,6 +5,7 @@ import {
   DiplomacyState,
   ExileSection,
   PeaceOffer,
+  PoliticsState,
   War,
 } from "../../data/schemas/save";
 import { decodeSave, encodeSave } from "../../save/serialize";
@@ -134,6 +135,22 @@ describe("an annexed nation (J7c)", () => {
     expect(back).toHaveLength(1);
     expect(back[0].params).toMatchObject({ way: "liberation", by: "CCC" });
     expect(internals.exile.nations.BBB).toBeUndefined();
+  });
+
+  it("holds no national election while in exile", () => {
+    const { sim, world, days, status } = campaign(["CCC", "AAA", "BBB", "DDD"]);
+    world.transferAll("BBB", "AAA");
+    days(1);
+    expect(status("BBB")).toBe("exiled");
+    const politics = (sim as unknown as { politics: PoliticsState }).politics
+      .nations.BBB;
+    politics.nextElection = sim.read().date;
+    days(40);
+    const mine = sim.read().journal.filter((j) => j.nation === "BBB");
+    expect(mine.some((j) => j.kind === "election-held")).toBe(false);
+    expect(
+      mine.find((j) => j.kind === "elections-suspended")?.params.until,
+    ).toBe("exile");
   });
 
   it("without support, is dissolved within one to three years; the player goes on with a small nation, and a save keeps it", () => {

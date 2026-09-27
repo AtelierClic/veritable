@@ -1,0 +1,169 @@
+[
+  {
+    "step": "01",
+    "title": "Mise en place : France, europe-10",
+    "date": "2026-01-01",
+    "capture": "j4-01-mise-en-place-france-europe-10.png",
+    "notes": [
+      "date 2026-01-01, jeu en pause"
+    ]
+  },
+  {
+    "step": "02",
+    "title": "1. Dirigeants",
+    "date": "2026-01-01",
+    "capture": "j4-02-1-dirigeants.png",
+    "notes": [
+      "Dirigeants Fermer Dirigeant Mastuel Microne — chef de l'État, 48 ans, Renaissance économie +0.3 · autorité -0.1 · souveraineté -0.7 agressivité 40 %corruption 15 %charisme 60 %compétence 60 % Partis Rassemblement national 33.0 % opposition — économie +0.1 · autorité +0.7 · souveraineté +0.9 dirigé par Jordan Bardoche (charisme 50 %, compétence 50 %) Renaissance 20.0 % au gouvernement — économie +0.3 · autorité -0.1 · souveraineté -0.6 dirigé par Gabriel Attelle (charisme 50 %, compétence 50 %) La France insoumise 12.0 % opposition — économie -0.8 · autorité -0.3 · souveraineté +0.0 dirigé par "
+    ]
+  },
+  {
+    "step": "03",
+    "title": "1. Politique au départ",
+    "date": "2026-01-01",
+    "capture": "j4-03-1-politique-au-depart.png",
+    "notes": [
+      "légitimité 80.0 % (guide : 80 %)",
+      "capital 30 (guide : 30)",
+      "liberté de la presse 85.0 % (guide : 85 %), contrôle des médias 0.0 %",
+      "risque de coup 0.0 % par mois (guide J4 : 0 par la période de grâce ; supprimée au J5)",
+      "prochaine élection 2027-04-24 (guide : 24 avril 2027)",
+      "gouvernement fra-renaissance",
+      "projection fra-rassemblement-national 33.0 %, fra-renaissance 20.0 %, fra-la-france-insoumise 12.0 %, fra-parti-socialiste 9.0 %, fra-les-republicains 7.0 %, fra-les-ecologistes-europe-ecologie-les-verts 5.0 %"
+    ]
+  },
+  {
+    "step": "04",
+    "title": "1. Objectifs épinglés et note",
+    "date": "2026-01-01",
+    "capture": "j4-04-1-objectifs-epingles-et-note.png",
+    "notes": [
+      "« Gagner une élection » affiché : true"
+    ]
+  },
+  {
+    "step": "05",
+    "title": "2. Perdre : trois mois après TVA +8 et social −5",
+    "date": "2026-04-01",
+    "capture": "j4-05-2-perdre-trois-mois-apres-tva-8-et-socia.png",
+    "notes": [
+      "date 2026-04-01",
+      "groupes military 48.1 %, business 44.5 %, farmers 44.1 %, religious 43.2 %, youth 43.0 %, minorities 37.2 %, retirees 36.4 %, workers 32.2 % (guide : salariés et retraités 50 % → 30-35 %)",
+      "projection fra-rassemblement-national 33.5 %, fra-renaissance 18.5 %, fra-la-france-insoumise 12.4 %, fra-parti-socialiste 9.3 %, fra-les-republicains 7.2 %, fra-les-ecologistes-europe-ecologie-les-verts 5.2 %"
+    ]
+  },
+  {
+    "step": "06",
+    "title": "2. Perdre : la loi sur les retraites",
+    "date": "2026-04-01",
+    "capture": "j4-06-2-perdre-la-loi-sur-les-retraites.png",
+    "notes": [
+      "bouton « Voter » cliqué : true, capital après 4",
+      "date 2026-04-01"
+    ]
+  },
+  {
+    "step": "07",
+    "title": "2. Perdre : un mois avant le scrutin",
+    "date": "2027-04-01",
+    "capture": "j4-07-2-perdre-un-mois-avant-le-scrutin.png",
+    "notes": [
+      "projection fra-rassemblement-national 34.1 %, fra-renaissance 17.1 %, fra-la-france-insoumise 12.7 %, fra-parti-socialiste 9.5 %, fra-les-republicains 7.2 %, fra-les-ecologistes-europe-ecologie-les-verts 5.3 %",
+      "groupes military 66.4 %, business 50.5 %, youth 41.5 %, farmers 39.8 %, religious 37.1 %, minorities 27.9 %, workers 19.0 %, retirees 17.6 %"
+    ]
+  },
+  {
+    "step": "08",
+    "title": "2. Perdre : après le scrutin",
+    "date": "2027-05-15",
+    "capture": "j4-08-2-perdre-apres-le-scrutin.png",
+    "notes": [
+      "2027-04-24 election-held {\"winner\":\"fra-rassemblement-national\",\"share\":\"51.0\",\"alternation\":\"true\",\"round\":\"2\"}",
+      "2027-04-24 government-formed {\"parties\":\"fra-rassemblement-national\",\"leader\":\"leader.fra-jordan-bardella.parody\"}",
+      "gouvernement fra-renaissance → fra-rassemblement-national, capital 32"
+    ]
+  },
+  {
+    "step": "09",
+    "title": "2. Perdre : les dirigeants après l'alternance",
+    "date": "2027-05-15",
+    "capture": "j4-09-2-perdre-les-dirigeants-apres-l-alternan.png",
+    "notes": [
+      "Dirigeants Fermer Dirigeant Jordan Bardoche — chef de l'État, 31 ans, Rassemblement national économie +0.1 · autorité +0.7 · souveraineté +0.9 agressivité 62 %corruption 10 %charisme 50 %compétence 50 % Partis Rassemblement national 34.0 % au gouvernement — économie +0.1 · autorité +0.7 · souveraineté +0.9 dirigé par Jordan Bardoche (charisme 50 %, compétence 50 %) Renaissance 17.4 % opposition — économie +0.3 · autorité -0.1 · souveraineté -0.6 dirigé par Gabriel Attelle (charisme 50 %, compéte"
+    ]
+  },
+  {
+    "step": "10",
+    "title": "3. Voler : fraude 20 %, propagande 2 % du PIB",
+    "date": "2027-03-01",
+    "capture": "j4-10-3-voler-fraude-20-propagande-2-du-pib.png",
+    "notes": [
+      "projection fra-renaissance 44.2 %, fra-rassemblement-national 20.7 %, fra-la-france-insoumise 7.7 %, fra-parti-socialiste 5.8 %, fra-les-republicains 4.5 %, fra-les-ecologistes-europe-ecologie-les-verts 3.2 % (guide : le sortant vers 45 %, en tête)",
+      "détection 68 % (guide : 68 %)"
+    ]
+  },
+  {
+    "step": "11",
+    "title": "3. Voler : après le scrutin",
+    "date": "2027-05-15",
+    "capture": "j4-11-3-voler-apres-le-scrutin.png",
+    "notes": [
+      "2027-04-24 election-held {\"winner\":\"fra-renaissance\",\"share\":\"69.5\",\"alternation\":\"false\",\"round\":\"2\"}",
+      "2027-04-24 government-formed {\"parties\":\"fra-renaissance\",\"leader\":\"leader.fra-gabriel-attal.parody\"}",
+      "légitimité 80.0 % → 84.3 % (guide : 50 % si la fraude est révélée)",
+      "risque de coup 0.0 % par mois"
+    ]
+  },
+  {
+    "step": "12",
+    "title": "3. Voler : relations avec les démocraties",
+    "date": "2027-05-15",
+    "capture": "j4-12-3-voler-relations-avec-les-democraties.png",
+    "notes": [
+      "DEU 81, GBR 71, ITA 74, ESP 75, POL 79, NOR 55"
+    ]
+  },
+  {
+    "step": "13",
+    "title": "4. Gagner : un mois avant le scrutin",
+    "date": "2027-04-02",
+    "capture": "j4-13-4-gagner-un-mois-avant-le-scrutin.png",
+    "notes": [
+      "« Programme de logement » voté par le bouton : true",
+      "groupes military 64.6 %, youth 57.2 %, retirees 53.3 %, religious 47.6 %, minorities 47.0 %, business 45.8 %, workers 44.6 %, farmers 43.0 % (guide : retraités 65-70 %)",
+      "projection fra-rassemblement-national 33.3 %, fra-renaissance 19.3 %, fra-la-france-insoumise 12.1 %, fra-parti-socialiste 9.1 %, fra-les-republicains 7.1 %, fra-les-ecologistes-europe-ecologie-les-verts 5.1 %",
+      "corruption du dirigeant 15.0 %"
+    ]
+  },
+  {
+    "step": "14",
+    "title": "4. Gagner : après le scrutin",
+    "date": "2027-05-15",
+    "capture": "j4-14-4-gagner-apres-le-scrutin.png",
+    "notes": [
+      "2027-04-24 election-held {\"winner\":\"fra-renaissance\",\"share\":\"51.3\",\"alternation\":\"false\",\"round\":\"2\"}",
+      "2027-04-24 government-formed {\"parties\":\"fra-renaissance\",\"leader\":\"leader.fra-gabriel-attal.parody\"}",
+      "2027-04-24 objective-completed {\"objective\":\"win-election\"}",
+      "gouvernement fra-renaissance → fra-renaissance, capital 99"
+    ]
+  },
+  {
+    "step": "15",
+    "title": "5. Ailleurs dans le monde",
+    "date": "2027-05-15",
+    "capture": "j4-15-5-ailleurs-dans-le-monde.png",
+    "notes": [
+      "Dirigeants Fermer Dirigeant Gabriel Attelle — chef de l'État, 38 ans, Renaissance économie +0.3 · autorité -0.1 · souveraineté -0.6 agressivité 16 %corruption 10 %charisme 50 %compétence 50 % Partis Rassemblement national 33.2 % opposition — économie +0.1 · autorité +0.7 · souveraineté +0.9 dirigé par Jordan Bardoche (charisme 50 %, compétence 50 %) Renaissance 19.5 % au gouvernement — économie +0.3 · autorité -0.1 · souveraineté -0.6 dirigé par Gabriel Attelle (charisme 50 %, compétence 50 %) La France insoumise 12.1 % opposition — économie -0.8 · autorité -0.3 · souveraineté +0.0 dirigé par Manuel Bombard (charisme 50 %, compétence 50 %) Parti socialiste 9.1 % opposition — économie -0.3 · autorité -0.5 · souveraineté -0.4 dirigé par Olivier Faune (charisme 50 %, compétence 50 %) Les Répu"
+    ]
+  },
+  {
+    "step": "errors",
+    "title": "Erreurs de la page",
+    "date": null,
+    "capture": "",
+    "notes": [
+      "got wrong turn have turns 0, received turn 1",
+      "got wrong turn have turns 0, received turn 1"
+    ]
+  }
+]

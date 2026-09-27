@@ -1862,6 +1862,7 @@ export class VeritableScreens extends LitElement {
     view: ReadonlyWorldView,
     a: ActorState,
     partyLabel: (id: string | null) => string,
+    role: string = a.role,
   ) {
     const traits = [
       "aggressiveness",
@@ -1872,7 +1873,7 @@ export class VeritableScreens extends LitElement {
     return html`
       <div class="mb-1 rounded border border-gray-700 p-1">
         <div>
-          <b>${this.actorName(a.name)}</b> — ${vt(`role.${a.role}`)},
+          <b>${this.actorName(a.name)}</b> — ${vt(`role.${role}`)},
           ${this.ageOf(a.born, view.date)}
           ${vt("screen.leaders.years")}${a.party === null
             ? ""
@@ -1899,7 +1900,19 @@ export class VeritableScreens extends LitElement {
     const incumbents = new Set(p.government.parties);
     return html`
       <div class="font-bold">${vt("screen.leaders.leader")}</div>
-      ${this.renderActor(view, p.leader, partyLabel)}
+      ${this.renderActor(
+        view,
+        p.leader,
+        partyLabel,
+        // J7c: a party leader who came to power holds the function of the
+        // leader in play (J4: the head of government of a parliamentary
+        // state, the head of state otherwise), not "party leader".
+        p.leader.role === "party-leader"
+          ? p.regime === "parliamentary"
+            ? "head-of-government"
+            : "head-of-state"
+          : p.leader.role,
+      )}
       <div class="mt-1 font-bold">${vt("screen.leaders.parties")}</div>
       ${[...p.parties]
         .sort((a, b) => b.support - a.support)
@@ -2321,6 +2334,9 @@ export class VeritableScreens extends LitElement {
               ),
               debt: vt(b.criteria.debt ? "screen.blocs.ok" : "screen.blocs.ko"),
               relations: b.criteria.meanRelations.toFixed(0),
+              origin: vt(
+                b.criteria.origin ? "screen.blocs.ok" : "screen.blocs.ko",
+              ),
             })}
             ${s.applications.some((a) => a.nation === me) ||
             s.accessions.some((a) => a.nation === me)

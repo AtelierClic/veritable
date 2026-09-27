@@ -194,6 +194,12 @@ describe("perceive (J7)", () => {
     ).toBe("exact");
   });
 
+  it("shows the probability of the dead hand to everyone, exact (DESIGN.md: visible before the final assault)", () => {
+    expect(
+      perceive(source(at(0), { deadHand: 0.7 }), "FRA", "RUS", "deadHand"),
+    ).toEqual({ kind: "exact", value: 0.7, asOf: "2031-05-17", level: 3 });
+  });
+
   it("keeps shares within [0, 1] and counts whole", () => {
     const p = perceive(
       source(at(0), { stability: 0.97 }),

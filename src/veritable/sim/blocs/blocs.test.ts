@@ -569,6 +569,57 @@ describe("accession and exit", () => {
     );
   });
 
+  it("a candidate from outside the regions of the bloc is not eligible, unless the bloc names it (J7c)", () => {
+    const regional = (nations?: string[]) =>
+      club({
+        accession: {
+          minRelations: -100,
+          regions: ["asia"],
+          nations,
+          monthsMin: 24,
+          monthsMax: 24,
+        },
+      });
+    const outside = campaign({
+      nations: { DDD: {}, AAA: {}, BBB: {}, CCC: {} },
+      player: "DDD",
+      blocs: [regional()],
+    });
+    const criteria = bloc("club")(outside.sim.read()).criteria!;
+    expect(criteria.origin).toBe(false);
+    expect(criteria.ok).toBe(false);
+    expect(() =>
+      outside.sim.apply({ type: "bloc-apply", bloc: "club" }),
+    ).toThrow(/criteria/);
+    const named = campaign({
+      nations: { DDD: {}, AAA: {}, BBB: {}, CCC: {} },
+      player: "DDD",
+      blocs: [regional(["DDD"])],
+    });
+    expect(bloc("club")(named.sim.read()).criteria!.ok).toBe(true);
+  });
+
+  it("a full member of a bloc the club excludes is not eligible (J7c)", () => {
+    const { sim } = campaign({
+      nations: { DDD: {}, AAA: {}, BBB: {}, CCC: {} },
+      player: "DDD",
+      blocs: [
+        club({
+          accession: {
+            minRelations: -100,
+            excludes: ["west"],
+            monthsMin: 24,
+            monthsMax: 24,
+          },
+        }),
+        testBloc({ id: "west", members: [{ nation: "DDD", status: "full" }] }),
+      ],
+    });
+    const criteria = bloc("club")(sim.read()).criteria!;
+    expect(criteria.origin).toBe(false);
+    expect(criteria.ok).toBe(false);
+  });
+
   it("an exit takes effect after the delay and costs its share of GDP", () => {
     const blocs = [club({ exit: { delayMonths: 3, tradeCostPctGdp: 0.02 } })];
     const nations = { AAA: {}, BBB: {}, CCC: {} };

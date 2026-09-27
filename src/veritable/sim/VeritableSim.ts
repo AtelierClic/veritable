@@ -373,6 +373,8 @@ export type SimEvent =
       date: string;
       nation: NationId; // sanctioned
       by: NationId;
+      // J7c: why a sanction was lifted (the journal's reason).
+      reason?: string;
     }
   | {
       type: "peace-offered" | "peace-refused" | "peace-signed";

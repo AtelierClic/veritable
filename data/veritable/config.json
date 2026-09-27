@@ -658,6 +658,7 @@
     "defaultCooldownMonths": 36,
     "uncertainProbability": 0.5,
     "unrestMargin": 0.07,
+    "unrestLegitimacyMax": 0.2,
     "aiMistakeProbability": 0.2,
     "grievanceMonths": 24,
     "tenseNeighbourRelations": -10,

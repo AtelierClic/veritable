@@ -148,6 +148,54 @@ function eventStats(
   };
 }
 
+// J7c: the sanctions in force at the end against the first day (the
+// median of the ratio over the campaigns), the lifts by the ways (b) and (c)
+// of the J7a (two friendly years; a vote of a bloc) per campaign, and the
+// player's event decisions left to the government, by year.
+function j7cMetrics(campaigns: Campaign[]) {
+  const d = (c: Campaign) => c.delivery;
+  const ratios = campaigns.map(
+    (c) => (d(c).sanctionsEnd ?? 0) / Math.max(1, d(c).sanctionsStart ?? 0),
+  );
+  const liftsBc = campaigns.map(
+    (c) => (d(c).lifts?.friendly ?? 0) + (d(c).lifts?.vote ?? 0),
+  );
+  const lifts: Record<string, number> = {};
+  for (const c of campaigns) {
+    for (const [k, v] of Object.entries(d(c).lifts ?? {})) {
+      lifts[k] = (lifts[k] ?? 0) + v;
+    }
+  }
+  const perYear = campaigns.map(
+    (c) =>
+      Object.values(d(c).governmentDecisions ?? {}).reduce((s, v) => s + v, 0) /
+      Math.max(1, c.years),
+  );
+  const yearsCovered = campaigns.map((c) => {
+    const start = Number(c.startDate.slice(0, 4));
+    let covered = 0;
+    for (let y = start; y < start + c.years; y++) {
+      if ((d(c).governmentDecisions?.[String(y)] ?? 0) >= 1) covered++;
+    }
+    return covered / Math.max(1, c.years);
+  });
+  return {
+    sanctionsStartMedian: median(
+      campaigns.map((c) => d(c).sanctionsStart ?? 0),
+    ),
+    sanctionsEndMedian: median(campaigns.map((c) => d(c).sanctionsEnd ?? 0)),
+    sanctionsRatioMedian: median(ratios),
+    sanctionsRatios: ratios.map((r) => Number(r.toFixed(2))),
+    liftsBcMedian: median(liftsBc),
+    liftsBcPerCampaign: liftsBc,
+    liftsByReason: lifts,
+    governmentDecisionsPerYearMin: Math.min(...perYear),
+    governmentDecisionsPerYearMedian: median(perYear),
+    yearsWithAGovernmentDecisionMin: Math.min(...yearsCovered),
+    yearsWithAGovernmentDecisionMedian: median(yearsCovered),
+  };
+}
+
 // J7b: a nation that lost this share of its first-day people to an occupier
 // is not stable in the sense of the default criterion.
 const OCCUPIED_UNSTABLE = 0.25;
@@ -313,6 +361,8 @@ export function aggregate(campaigns: Campaign[]) {
     rusUkrRelaunchMedianAtMost1: loop.relaunchMedian <= 1,
     calm15YearsInAtLeast40pct: loop.calmShare >= 0.4,
   };
+  const j7c = j7cMetrics(campaigns);
+  const events = eventStats(campaigns, n);
   // J6c: the campaigns of the world have their own criteria.
   const criteria =
     campaigns[0]?.scenario === "world-2026"
@@ -330,6 +380,15 @@ export function aggregate(campaigns: Campaign[]) {
           pricesBounded: low >= 0.5 && high <= 2,
           defaultsOnlyInIndebtedOrUnstable: world.otherDefaults.length === 0,
           noNonFiniteDebt: world.nonFinite.length === 0,
+          // J7c.
+          sanctions2075Within05To2Of2026:
+            j7c.sanctionsRatioMedian >= 0.5 && j7c.sanctionsRatioMedian <= 2,
+          liftsByWaysBOrCMedianAtLeast1: j7c.liftsBcMedian >= 1,
+          noEventAbove10pct: (
+            (events.topEvents as { share: number }[] | undefined) ?? []
+          ).every((e) => e.share <= 0.1),
+          playerGovernmentDecisionEveryYear:
+            j7c.governmentDecisionsPerYearMin >= 1,
         }
       : europe;
   return {
@@ -373,7 +432,8 @@ export function aggregate(campaigns: Campaign[]) {
       inStableNations: unstableDefaults,
     },
     technology: tier1,
-    events: eventStats(campaigns, n),
+    events,
+    j7c,
     // J7c: annexations, exiles, returns and dissolutions, in all.
     exileList: campaigns.flatMap((c, i) =>
       ((c.delivery.exile as { list?: string[] } | undefined)?.list ?? []).map(

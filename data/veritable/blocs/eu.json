@@ -176,6 +176,8 @@
     "regimes": ["parliamentary", "presidential", "semi-presidential"],
     "maxDebtToGdp": 1.2,
     "minRelations": 20,
+    "regions": ["europe"],
+    "nations": ["CYP", "TUR", "GEO"],
     "monthsMin": 24,
     "monthsMax": 60
   },

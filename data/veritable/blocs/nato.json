@@ -151,6 +151,8 @@
   "accession": {
     "regimes": ["parliamentary", "presidential", "semi-presidential"],
     "minRelations": 30,
+    "regions": ["europe", "northern-america"],
+    "nations": ["TUR", "GEO"],
     "monthsMin": 12,
     "monthsMax": 36
   },

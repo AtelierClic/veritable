@@ -102,6 +102,7 @@
   },
   "accession": {
     "minRelations": 0,
+    "excludes": ["g7", "eu"],
     "monthsMin": 12,
     "monthsMax": 36
   },

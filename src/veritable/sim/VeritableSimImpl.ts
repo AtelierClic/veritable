@@ -2163,18 +2163,25 @@ export class VeritableSimImpl implements VeritableSim {
       );
     }
 
-    // Elections, when due and not suspended by a war at home.
+    // Elections, when due and not suspended by a war at home — or, J7c, by
+    // the exile: a government in exile holds no national election (Ukraine,
+    // annexed, elected a president two days later).
     if (politics.nextElection !== null && date >= politics.nextElection) {
+      // (An exile nobody annexed — a test world, an emptied land — votes.)
+      const exiled =
+        this.statusOf(id) === "exiled" &&
+        (this.exile.nations[id]?.annexer ?? null) !== null;
       const suspended =
-        (sheet?.politics.electionsSuspendedAtWarAtHome ?? false) &&
-        this.hasFrontAtHome(id);
+        exiled ||
+        ((sheet?.politics.electionsSuspendedAtWarAtHome ?? false) &&
+          this.hasFrontAtHome(id));
       if (suspended) {
         if (!politics.electionsSuspended) {
           politics.electionsSuspended = true;
           this.record(date, {
             type: "elections-suspended",
             nation: id,
-            until: "war",
+            until: exiled ? "exile" : "war",
           });
         }
       } else {
@@ -3641,6 +3648,8 @@ export class VeritableSimImpl implements VeritableSim {
         nation: event.nation,
         params,
       } as SimEvent);
+    } else if (event.type === "sanctions-lifted") {
+      this.pending.push({ ...event, date, reason: params.reason });
     } else if (event.type !== "note") {
       this.pending.push({ ...event, date } as SimEvent);
     }

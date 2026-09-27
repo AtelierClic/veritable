@@ -712,8 +712,10 @@ const EventsConfigSchema = z.object({
   answerDays: z.number().int().min(1),
   defaultCooldownMonths: z.number().int().min(0),
   uncertainProbability: share,
-  // Unrest brings stability this far under the unrest threshold.
+  // Unrest brings stability this far under the unrest threshold, taking at
+  // most unrestLegitimacyMax of legitimacy for what opinion cannot carry.
   unrestMargin: share,
+  unrestLegitimacyMax: share,
   // A government sometimes takes another choice than its best one.
   aiMistakeProbability: share,
   grievanceMonths: z.number().int().min(1),

@@ -68,9 +68,12 @@ export const INTEL_METRICS = {
   exhaustion: { category: "army", floor: 0.02, bounded: true },
   warheads: { category: "nuclear", floor: 1, integer: true },
   threat: { category: "nuclear", floor: 0.5, integer: true },
-  // The daily probability of a shot, the probability of the dead hand.
+  // The daily probability of a shot, the probability of the dead hand. J7c:
+  // the dead hand is public — "the probability is visible to the player
+  // before the final assault: he knows what he risks" (DESIGN.md; its
+  // doctrine is in the data, its leader's aggressiveness on the screens).
   nuclearRisk: { category: "nuclear", floor: 0.00001, bounded: true },
-  deadHand: { category: "nuclear", floor: 0.02, bounded: true },
+  deadHand: { category: "general", floor: 0.02, bounded: true },
   coupRisk: { category: "intentions", floor: 0.0005, bounded: true },
   // Seen in contact (a front, a war): given to perceive() as they are today.
   contactDivisions: { category: "army", floor: 1 },

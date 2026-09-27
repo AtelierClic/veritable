@@ -565,9 +565,10 @@ export class FrontOverlayController implements Controller {
   private renderLegend(): void {
     const data = this.data;
     const show = data !== null && data.fronts.length > 0;
+    // J7c: above the button of the campaign panel, in the same corner.
     const el = this.element(
       LEGEND_ID,
-      "fixed bottom-2 left-2 z-[900] rounded border border-gray-600 bg-gray-900/85 p-2 text-[11px] text-white pointer-events-none",
+      "fixed bottom-10 left-2 z-[900] rounded border border-gray-600 bg-gray-900/85 p-2 text-[11px] text-white pointer-events-none",
     );
     el.style.display = show ? "block" : "none";
     if (!show) return;

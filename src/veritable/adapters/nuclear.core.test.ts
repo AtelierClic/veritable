@@ -25,7 +25,7 @@ import { VeritableSession } from "./VeritableSession";
 // Véritable system flies through NukeExecution, lands, and leaves fallout
 // that the simulation reads (tiles lost, production and GDP hit).
 
-async function europe(player: string) {
+async function europe(player: string, spawnImmunityDuration?: number) {
   const dir = path.join(__dirname, "../../../resources/maps/europe");
   const manifest = JSON.parse(
     fs.readFileSync(path.join(dir, "manifest.json"), "utf8"),
@@ -62,6 +62,7 @@ async function europe(player: string) {
         UnitType.HydrogenBomb,
         UnitType.MIRV,
       ],
+      spawnImmunityDuration,
     },
     new UserSettings(),
     false,
@@ -140,6 +141,32 @@ describe("nuclear weapons on the real core (Europe map)", () => {
     expect(
       after.diplomacy.sanctions.filter((s) => s.against === "FRA").length,
     ).toBeGreaterThanOrEqual(8);
+  }, 300_000);
+
+  it("without the spawn immunity of OpenFront, as in a campaign, a warhead fired on the first day lands (J7c)", async () => {
+    // veritableSoloConfig sets it to 0: with the 50 ticks of OpenFront, a
+    // shot of the first two days and a half of a campaign, or after a load,
+    // failed in silence.
+    const { game, session, tick } = await europe("FRA", 0);
+    tick(2);
+    session.sim.apply({
+      type: "declare-war",
+      target: "ESP",
+      casusBelli: "none",
+    });
+    session.sim.apply({
+      type: "nuclear-launch",
+      target: "ESP",
+      aim: "capital",
+      confirmed: true,
+    });
+    let strike = session.sim.read().nuclear.strikes[0];
+    for (let i = 0; i < 40 && strike.status === "in-flight"; i++) {
+      tick(20);
+      strike = session.sim.read().nuclear.strikes[0];
+    }
+    expect(strike.status).toBe("detonated");
+    expect(game.owner(strike.tile!)).toBe(nameOf(game, "ESP"));
   }, 300_000);
 
   it("a nation that lost its silo and the land around its capital builds one farther away and fires (J6)", async () => {

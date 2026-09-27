@@ -170,15 +170,17 @@ async function main(): Promise<void> {
   await sleep(1000);
 
   // --- 7. The action menu at peace -------------------------------------------------
-  await goToCapital("CHE");
+  await goToCapital("ESP");
   await t.browser.click(W / 2, H / 2);
   await sleep(1500);
-  await t.step("7. Clic gauche sur la Suisse (en paix) : le menu", [
+  await t.step("7. Clic gauche sur l'Espagne (en paix) : le menu", [
     await text("veritable-action-menu", 700),
   ]);
   await escape();
 
   // --- 8. At war: Ukraine against Russia ------------------------------------------
+  // A new campaign starts from the menu: the page is loaded again.
+  await t.reopen();
   await t.eval(`vt.start("world-2026", "UKR")`);
   await t.eval(`vt.speed("⏸")`);
   await sleep(6000);
@@ -267,6 +269,20 @@ async function main(): Promise<void> {
   })()`);
   await t.step("11. Baroud : la Moldavie", [chosen]);
   await t.eval(`vt.close()`);
+  // Saved and loaded again: Moldova played, the journal intact.
+  const before = await t.eval<string>(
+    `vt.view().then((v) => v.playerNation + " ; " + v.journal.length + " entrées ; " + v.journal.filter((j) => j.kind === "last-stand").length + " baroud")`,
+  );
+  await t.eval(`vt.keep("baroud")`);
+  await t.eval(`vt.reload("baroud")`);
+  await t.eval(`vt.speed("⏸")`);
+  const after = await t.eval<string>(
+    `vt.view().then((v) => v.playerNation + " ; " + v.journal.length + " entrées ; " + v.journal.filter((j) => j.kind === "last-stand").length + " baroud")`,
+  );
+  await t.step("11. Baroud : sauvegarde et rechargement", [
+    `avant : ${before}`,
+    `après : ${after}`,
+  ]);
   await t.close();
 }
 

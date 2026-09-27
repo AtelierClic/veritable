@@ -1,0 +1,242 @@
+[
+  {
+    "step": "01",
+    "title": "1. Campagne France, carte du monde : la caméra sur Paris",
+    "date": "2026-01-01",
+    "capture": "j7-01-1-campagne-france-carte-du-monde-la-came.png",
+    "notes": [
+      "départ 2026-01-01"
+    ]
+  },
+  {
+    "step": "02",
+    "title": "2. Clic droit : la fiche de DEU (une alliée)",
+    "date": "2026-01-01",
+    "capture": "j7-02-2-clic-droit-la-fiche-de-deu-une-alliee.png",
+    "notes": [
+      "Allemagne Régime parlementaire · Friedrich Mars ✕ Capitale : Berlin Blocs : Union européenne, G20, G7, OTAN Population : 83,5 M Relation avec vous : +61 ■ 0 depuis le 1er janvier 2026 Les relations tendent vers +78 : Blocs communs +60 Proximité idéologique +18 Entre vous Ni guerre, ni sanction, ni revendication. Économie renseignement complet PIB 5,1 T$ PIB par habitant 60 496 $ Croissance 1,0 % Dette publique 63 % Déficit public 0,0 % Pénuries 3 % Politique intérieure renseignement complet Stabilité 72 % Légitimité 80 % Armée renseignement complet Divisions 12 Hommes en divisions 169 k Équipement 100 % Puissance aérienne 0,5 Puissance navale 0,4 Puissance militaire 38 Dépenses de défense 1,9 % Épuisement 0 % Intentions renseignement complet N'envisage aucune guerre. Défense : 1,9 % du PIB, pour un objectif de 0,0 %. Risque de coup (par mois) 0,00 % Diplomatie Actions…"
+    ]
+  },
+  {
+    "step": "03",
+    "title": "2. Clic droit : la fiche de BRA (un pays lointain)",
+    "date": "2026-01-01",
+    "capture": "j7-03-2-clic-droit-la-fiche-de-bra-un-pays-loi.png",
+    "notes": [
+      "Brésil Régime présidentiel · Luiz Inácio Loulou da Silva ✕ Capitale : Brasilia Blocs : BRICS, G20, Mercosur Population : 203,9 M – 225,2 M Relation avec vous : +5 ■ 0 depuis le 1er janvier 2026 Les relations tendent vers +20 : Blocs communs +5 Proximité idéologique +15 Entre vous Ni guerre, ni sanction, ni revendication. Économie bon renseignement PIB 2,1 T$ – 2,3 T$ PIB par habitant 9 811 $ – 10 882 $ Croissance 0,9 % – 1,0 % Dette publique 90 % – 99 % Déficit public ≈ 0,0 % Pénuries ≈ 1 % Politique intérieure renseignement faible Stabilité 51 % – 78 % Légitimité 73 % – 100 % Armée renseignement faible Divisions 24 – 35 Hommes en divisions 256 k – 395 k Équipement 92 % – 100 % Puissance aérienne 0,3 – 0,4 Puissance navale 0,4 – 0,6 Puissance militaire 56 – 79 Dépenses de défense 0,7 % – 1,1 % Épuisement ≈ 0 % Intentions renseignement faible Ses intentions ne se lisent qu'au renseignemen"
+    ]
+  },
+  {
+    "step": "04",
+    "title": "2. Clic droit : la fiche de RUS (un adversaire)",
+    "date": "2026-01-01",
+    "capture": "j7-04-2-clic-droit-la-fiche-de-rus-un-adversai.png",
+    "notes": [
+      "Russie Autoritarisme électoral · Vladimir Poutain ✕ Capitale : Moscou Blocs : BRICS, G20, Organisation de coopération de Shanghai Population : 139 M – 153,4 M En guerre contre : Ukraine Sanctionnée par 43 nation(s) Relation avec vous : −60 ■ 0 depuis le 1er janvier 2026 Les relations tendent vers −84 : Blocs communs +5 Proximité idéologique +11 Sanctions −40 Défiance héritée −60 Entre vous Vous la sanctionnezVos exportations vers elle sous embargo : Pétrole, Gaz, Charbon, Électricité, Minerais critiques, Acier et industrie lourde, Biens de consommation, Électronique et high-tech, Armement, Services, AlimentationSes exportations vers vous sous embargo : Pétrole, Gaz, Charbon, Électricité, Minerais critiques, Acier et industrie lourde, Biens de consommation, Électronique et high-tech, Armement, Services, Alimentation Économie renseignement nul PIB 700,8 Md$ – 2,7 T$ PIB par habitant 8 911 "
+    ]
+  },
+  {
+    "step": "05",
+    "title": "3. Mode relations (touche N)",
+    "date": "2026-01-01",
+    "capture": "j7-05-3-mode-relations-touche-n.png",
+    "notes": [
+      "changement en 0.6 ms",
+      "Politique V Relations N Blocs O Guerres X Population H Renseignement I Orange : hostile (−100) · gris : neutre · bleu : amical (+100) ; blanc : vous."
+    ]
+  },
+  {
+    "step": "06",
+    "title": "3. Mode blocs (touche O)",
+    "date": "2026-01-01",
+    "capture": "j7-06-3-mode-blocs-touche-o.png",
+    "notes": [
+      "changement en 0.4 ms",
+      "Politique V Relations N Blocs O Guerres X Population H Renseignement I Ligue arabe ASEAN Union africaine BRICS CEDEAO Union européenne G20 G7 Mercosur OTAN OPEP Organisation de coopération de Shanghai Vert : membre · vert clair : candidat · gris : hors du bloc."
+    ]
+  },
+  {
+    "step": "07",
+    "title": "3. Mode guerres (touche X)",
+    "date": "2026-01-01",
+    "capture": "j7-07-3-mode-guerres-touche-x.png",
+    "notes": [
+      "changement en 0.3 ms",
+      "Politique V Relations N Blocs O Guerres X Population H Renseignement I Rouge : vos ennemis · bleu : vos alliés en guerre · orange : les autres belligérants ; hachures : terres contestées."
+    ]
+  },
+  {
+    "step": "08",
+    "title": "3. Mode population (touche H)",
+    "date": "2026-01-01",
+    "capture": "j7-08-3-mode-population-touche-h.png",
+    "notes": [
+      "changement en 0.2 ms",
+      "Politique V Relations N Blocs O Guerres X Population H Renseignement I Du jaune pâle (peu d'habitants) au violet (les plus denses) ; source : GHS-POP 2025, Commission européenne, JRC."
+    ]
+  },
+  {
+    "step": "09",
+    "title": "3. Mode renseignement (touche I)",
+    "date": "2026-01-01",
+    "capture": "j7-09-3-mode-renseignement-touche-i.png",
+    "notes": [
+      "changement en 0.3 ms",
+      "Politique V Relations N Blocs O Guerres X Population H Renseignement I Du gris (niveau 0) au bleu foncé (niveau 3) ; blanc : vous."
+    ]
+  },
+  {
+    "step": "10",
+    "title": "3. Mode politique (touche V)",
+    "date": "2026-01-01",
+    "capture": "j7-10-3-mode-politique-touche-v.png",
+    "notes": [
+      "changement en 0.3 ms",
+      "Politique V Relations N Blocs O Guerres X Population H Renseignement I Chaque nation dans sa couleur."
+    ]
+  },
+  {
+    "step": "11",
+    "title": "4. Une carte d'événement de la France, la pause de 3 s",
+    "date": "2026-01-16",
+    "capture": "j7-11-4-une-carte-d-evenement-de-la-france-la-.png",
+    "notes": [
+      "en attente : austerity-riots-wave#7",
+      "barre : France 16 janvier 2026 ⏸ 3 ×1 ×2 ×5 Reprise dans 3 s Économie Budget Opinion Fronts et divisions Diplomatie et sanctions Politique Élection Dirigeants Objectifs Journal Blocs Technologie Événements Ex",
+      "carte : 16 janvier 2026 · France encore 30 j La rue contre la rigueur Pour contenir un déficit qui dérape, le gouvernement de France prépare des coupes dans les pensions, la santé et l'éducation. Les premières manifestations ont tourné à l'émeute dans plusieurs villes. Les investisseurs observent si le gouvernement tiendra. Maintenir les coupes Étaler les coupes sur plusieurs années Renoncer aux coupes Le gouvernement penche pour : Étaler les coupes sur plusieurs années"
+    ]
+  },
+  {
+    "step": "12",
+    "title": "4. Sans réponse : le gouvernement tranche",
+    "date": "2026-02-16",
+    "capture": "j7-12-4-sans-reponse-le-gouvernement-tranche.png",
+    "notes": [
+      "Journal Fermer Tout le monde Ma nation Mes alliés Mes voisins Afrique · Afrique australe · Afrique centrale · Afrique de l'Est · Afrique de l'Ouest · Afrique du Nord Amériques · Amérique centrale · Amérique du Nord · Amérique du Sud · Caraïbes Asie · Asie centrale · Asie de l'Est · Asie du Sud · Asie du Sud-Est · Asie occidentale Europe · Europe de l'Est · Europe de l'Ouest · Europe du Nord · Europe du Sud Océanie · Australie et Nouvelle-Zélande · Mélanésie · Micronésie · Polynésie Ligue arabe ASEAN Union africaine BRICS CEDEAO Union européenne G20 G7 Mercosur OTAN OPEP Organisation de coopération de Shanghai Toutes catégories politique économie guerre diplomatie objectifs notes autre de à 23 sur 23 15 février 2026 autre France : La rue contre la rigueur, Étaler les coupes sur plusieurs années. Décidé par le gouvernement (Renaissance).budget +0.20 % du PIB, Salariés -0.06, stabilité -0.02 15 février 2026 diplomatie Union européenne ouvre les négociations d'adhésion avec Moldavie (fin prévue le 2030-06-15). 15 février 2026 diplomatie Union européenne : adhésion de Moldavie, adoptée (27 pour, 0 contre, 0 abstentions). 15 février 2026 guerre Soudan gagne 12 tuiles sur Soudan (Tasis) ce mois-ci (pertes depuis le début de la guerre : ? hommes, 11 042 – 16 160 en face). Fil 29 janvier 2026 politique Soudan : changement de régime, État failli → Junte. 29 janvier 2026 politique Soudan : coup d'État ; Mona Al-Sayed prend le pouvoir. 28 janvier 2026 guerre République démocratique du Congo gagne 37 tuiles sur Congo oriental (AFC/M23) ce mois-ci (pertes depuis le début de la guerre : 1 806 – 2 725 hommes, 3 051 – 4 309 en face). Fil 26 janvier 2026 politique Portugal : gouvernement formé (Aliança Democrática (AD)), dirigé par Carolina Oliveira. 26 janvier 2026 politique Portugal : élection, Aliança Democrática (AD) en tête au second tour avec 66.2 % (sortant reconduit). 25 janvier 2026 politique Thaïlande : Somsak Wongsawat lui succède. 25 janvier 2026 politique Thaïlande : Rama Dix est mort. 24 janvier 2026 guerre Russie gagne 10 tuiles sur Ukraine ce mois-ci (pertes depuis le début de la guerre : ? hommes, 53 686 – 75 348 en face). Fil 16 janvier 2026 diplomatie Chypre soumet au vote de Union européenne : adhésion de Moldavie. 15 janvier 2026 guerre Soudan gagne 2 tuiles sur Soudan (Tasis) ce mois-ci (pertes depuis le début de la guerre : ? hommes, 3 694 – 5 408 en face). Fil 14 janvier 2026 politique Ouganda : gouvernement formé (Mouvement de résistance nationale), dirigé par Ssemakula Nakawombe. 14 janvier 2026 politique Ouganda : élection, Mouvement de résistance nationale en tête avec 59.1 % (sortant reconduit). 11 janvier 2026 politique Kirghizistan : gouvernement formé (Yntymak), dirigé par Bakyt Kubanychbekov. 11 janvier 2026 politique Kirghizistan : élection, Yntymak en tête avec 3.0 % (sortant reconduit). 1er janvier 2026 politique Biélorussie livre des armes à Russie. 1er janvier 2026 politique Ukraine : élections suspendues, guerre sur le territoire. 1er janvier 2026 diplomatie Soudan sanctionne Soudan (Tasis) : embargo sur tous les biens sauf l'alimentation et la pharmacie. 1er janvier 2026 diplomatie République démocratique du Congo sanctionne Congo oriental (AFC/M23) : embargo sur tous les biens sauf l'alimentation et la pharmacie. 1er janvier 2026 autre La campagne commence. | 15 février 2026 autre France : La rue contre la rigueur, Étaler les coupes sur plusieurs années. Décidé par le gouvernement (Renaissance).budget +0.20 % du PIB, Salariés -0.06, stabilité -0.02 15 février 2026 diplomatie Union européenne ouvre les négociations d'adhésion avec Moldavie (fin prévue le 2030-06-15). 15 février 2026 diplomatie Union européenne : adhésion de Moldavie, adoptée (27 pour, 0 contre, 0 abstentions). 15 février 2026 guerre Soudan gagne 12 tuiles sur Soudan (Tasis) ce mois-ci (pertes depuis le début de la guerre : ? hommes, 11 042 – 16 160 en face). Fil 29 janvier 2026 politique Soudan : changement de régime, État failli → Junte. 29 janvier 2026 politique Soudan : coup d'État ; Mona Al-Sayed prend le pouvoir. 28 janvier 2026 guerre République démocratique du Congo gagne 37 tuiles sur Congo oriental (AFC/M23) ce mois-ci (pertes depuis le début de la guerre : 1 806 – 2 725 hommes, 3 051 – 4 309 en face). Fil 26 janvier 2026 politique Portugal : gouvernement formé (Aliança Democrática (AD)), dirigé par Carolina Oliveira. 26 janvier 2026 politique Portugal : élection, Aliança Democrática (AD) en tête au second tour avec 66.2 % (sortant reconduit). 25 janvier 2026 politique Thaïlande : Somsak Wongsawat lui succède. 25 janvier 2026 politique Thaïlande : Rama Dix est mort. 24 janvier 2026 guerre Russie gagne 10 tuiles sur Ukraine ce mois-ci (pertes depuis le début de la guerre : ? hommes, 53 686 – 75 348 en face). Fil 16 janvier 2026 diplomatie Chypre soumet au vote de Union européenne : adhésion de Moldavie. 15 janvier 2026 guerre Soudan gagne 2 tuiles sur Soudan (Tasis) ce mois-ci (pertes depuis le début de la guerre : ? hommes, 3 694 – 5 408 en face). Fil 14 janvier 2026 politique Ouganda : gouvernement formé (Mouvement de résistance nationale), dirigé par Ssemakula Nakawombe. 14 janvier 2026 politique Ouganda : élection, Mouvement de résistance nationale en tête avec 59.1 % (sortant reconduit). 11 janvier 2026 politique Kirghizistan : gouvernement formé (Yntymak), dirigé par Bakyt Kubanychbekov. 11 janvier 2026 politique Kirghizistan : élection, Yntymak en tête avec 3.0 % (sortant reconduit). 1er janvier 2026 politique Biélorussie livre des armes à Russie. 1er janvier 2026 politique Ukraine : élections suspendues, guerre sur le territoire. 1er janvier 2026 diplomatie Soudan sanctionne Soudan (Tasis) : embargo sur tous les biens sauf l'alimentation et la pharmacie. 1er janvier 2026 diplomatie République démocratique du Congo sanctionne Congo oriental (AFC/M23) : embargo sur tous les biens sauf l'alimentation et la pharmacie. 1er janvier 2026 autre La campagne commence. | 15 février 2026 autre France : La rue contre la rigueur, Étaler les coupes sur plusieurs années. Décidé par le gouvernement (Renaissance).budget +0.20 % du PIB, Salariés -0.06, stabilité -0.02"
+    ]
+  },
+  {
+    "step": "13",
+    "title": "5. Journal : un clic sur une entrée (caméra et fiche)",
+    "date": "2026-02-16",
+    "capture": "j7-13-5-journal-un-clic-sur-une-entree-camera-.png",
+    "notes": [
+      "15 février 2026 guerre Soudan gagne 12 tuiles sur Soudan (Tasis) ce mois-ci (pertes depuis le début de la guerre : ? hommes, 11 042 – 16 160 en face). Fil"
+    ]
+  },
+  {
+    "step": "14",
+    "title": "6. Villes : Paris et ses voisines au zoom régional",
+    "date": "2026-02-16",
+    "capture": "j7-14-6-villes-paris-et-ses-voisines-au-zoom-r.png",
+    "notes": []
+  },
+  {
+    "step": "15",
+    "title": "6. Densité de population (mode H)",
+    "date": "2026-02-16",
+    "capture": "j7-15-6-densite-de-population-mode-h.png",
+    "notes": []
+  },
+  {
+    "step": "16",
+    "title": "7. Clic gauche sur l'Espagne (en paix) : le menu",
+    "date": "2026-02-16",
+    "capture": "j7-16-7-clic-gauche-sur-l-espagne-en-paix-le-m.png",
+    "notes": [
+      "Espagne 1 Déclarer la guerre… › Choisir un casus belli, puis voir les conséquences attendues avant de confirmer. 2 Sanctionner… › Sanctions complètes, ou embargos bien par bien. 3 Proposer… › Les mesures qu'un bloc que vous dirigez peut voter à son sujet. 4 Fiche du pays"
+    ]
+  },
+  {
+    "step": "17",
+    "title": "8. Ukraine : clic gauche sur le front russo-ukrainien",
+    "date": "2026-01-01",
+    "capture": "j7-17-8-ukraine-clic-gauche-sur-le-front-russo.png",
+    "notes": [
+      "Russie En guerre contre vous 1 Attaquer ici Renfort : 3 divisions de la réserve vers le segment 4. Posture « Attaquer » pour les divisions du segment. 2 Percer vers ce point Renfort : 3 divisions de la réserve vers le segment 4. Posture « Percer » pour les divisions du segment. Les prises du segment vont d'abord vers ce point. 3 Débarquer Un front terrestre passe ici : attaquez par le front. 4 Frappe aérienne Frappe l'industrie et le ravitaillement de l'ennemi : 5 % de sa capacité × votre supériorité aérienne (17 % – 24 %) ; une frappe tous les 30 jours. 5 Frappe nucléaire… › Aucune ogive. 6 F",
+      "Russie En guerre contre vous 1 Attaquer ici Renfort : 3 divisions de la réserve vers le segment 4. Posture « Attaquer » pour les divisions du segment. 2 Percer vers ce point Renfort : 3 divisions de la réserve vers le segment 4. Posture « Percer » pour les divisions du segment. Les prises du segment vont d'abord vers ce point. 3 Débarquer Un front terrestre passe ici : attaquez par le front. 4 Frappe aérienne Frappe l'industrie et le ravitaillement de l'ennemi : 5 % de sa capacité × votre supériorité aérienne (17 % – 24 %) ; une frappe tous les 30 jours. 5 Frappe nucléaire… › Aucune ogive. 6 F"
+    ]
+  },
+  {
+    "step": "18",
+    "title": "9. Sauvegarde « guerre nucléaire » chargée",
+    "date": "2026-01-03",
+    "capture": "j7-18-9-sauvegarde-guerre-nucleaire-chargee.png",
+    "notes": [
+      "2026-01-03 : FRA > RUS"
+    ]
+  },
+  {
+    "step": "19",
+    "title": "9. Frappe sur Moscou : hachures et icône",
+    "date": "2026-01-06",
+    "capture": "j7-19-9-frappe-sur-moscou-hachures-et-icone.png",
+    "notes": [
+      "detonated ; morts 1209309 ; tuiles 79"
+    ]
+  },
+  {
+    "step": "20",
+    "title": "9. Le journal : les morts au point zéro",
+    "date": "2026-01-06",
+    "capture": "j7-20-9-le-journal-les-morts-au-point-zero.png",
+    "notes": [
+      "2026-01-06 nuclear-detonation {\"by\":\"FRA\",\"tiles\":\"79\",\"deaths\":\"1209309\"}"
+    ]
+  },
+  {
+    "step": "21",
+    "title": "10. Ukraine en exil : l'écran Exil",
+    "date": "2026-01-04",
+    "capture": "j7-21-10-ukraine-en-exil-l-ecran-exil.png",
+    "notes": [
+      "Exil Fermer Votre gouvernement est en exil depuis le 2 janvier 2026. Occupant : Russie. Reconnaissance 62 % du PIB mondial, soutien 0 % : 62 % (seuil de survie 60 %) ; l'annexion est reconnue par 2 % (dissolution au-delà de 50 %). Sous le seuil depuis 0 mois (dissolution à 12). La résistance coûte à l'occupant 8 % de stabilité. Conditions de retour Libération : une nation à 40 ou plus avec vous, en guerre contre l'occupant, vous rend à la paix la terre qu'elle lui a reprise. Effondrement : l'occupant rend votre terre si son peuple le renverse (révolution) ou si son État sombre (État failli). Négociation : l'occupant accepte quand la résistance lui coûte au moins 2 % de stabilité, qu'il est à 45 % au plus de stabilité et sanctionné par 30 % au moins de ses partenaires. Demander le retour Gouvernements en exil Nation Depuis Occupant Reconnaissance Soutien État Ukraine 2 janvier 2026 Russie"
+    ]
+  },
+  {
+    "step": "22",
+    "title": "10. Demande de retour à l'occupant",
+    "date": "2026-01-04",
+    "capture": "j7-22-10-demande-de-retour-a-l-occupant.png",
+    "notes": [
+      "nation-status {\"from\":\"active\",\"to\":\"exiled\"} | sovereign-default {} | exile-negotiation {\"by\":\"RUS\"}"
+    ]
+  },
+  {
+    "step": "23",
+    "title": "11. Ukraine dissoute : le baroud d'honneur",
+    "date": "2027-02-03",
+    "capture": "j7-23-11-ukraine-dissoute-le-baroud-d-honneur.png",
+    "notes": [
+      "Exil Fermer Votre État est dissous. Baroud d'honneur : poursuivez la lutte avec une nation de moins de 10 millions d'habitants, dans le même monde, le journal intact. Albanie Andorre Antigua-et-Barbuda Arménie Autriche Bahamas Bahreïn Barbade Biélorussie Belize Bhoutan Bosnie-Herzégovine Botswana Brunei Bulgarie Cap-Vert République centrafricaine Comores République du Congo Costa Rica Croatie Chypre Danemark Djibouti Dominique Salvador Guinée équatoriale Érythrée Estonie Eswatini Fidji Finlande Gabon Gambie Géorgie Grenade Guinée-Bissau Guyana Hongrie Islande Irlande Jamaïque Kiribati Koweït Kirghizistan Laos Lettonie Liban Lesotho Liberia Libye Liechtenstein Lituanie Luxembourg Maldives Mal"
+    ]
+  },
+  {
+    "step": "24",
+    "title": "11. Baroud : la Moldavie",
+    "date": "2027-02-03",
+    "capture": "j7-24-11-baroud-la-moldavie.png",
+    "notes": [
+      "joueur : MDA ; last-stand"
+    ]
+  },
+  {
+    "step": "25",
+    "title": "11. Baroud : sauvegarde et rechargement",
+    "date": "2027-02-03",
+    "capture": "j7-25-11-baroud-sauvegarde-et-rechargement.png",
+    "notes": [
+      "avant : MDA ; 200 entrées ; 1 baroud",
+      "après : MDA ; 200 entrées ; 1 baroud"
+    ]
+  },
+  {
+    "step": "errors",
+    "title": "Erreurs de la page",
+    "date": null,
+    "capture": "",
+    "notes": [
+      "got wrong turn have turns 0, received turn 1"
+    ]
+  }
+]

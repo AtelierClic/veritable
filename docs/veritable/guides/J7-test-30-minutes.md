@@ -48,7 +48,7 @@ Zoom sur l'Europe : points proportionnels à la population, étoiles des capital
 
 ## 7. Menu du clic gauche (4 min)
 
-- **En paix** : clic gauche sur la Suisse → « Déclarer la guerre… » (casus belli, puis aperçu : partenaires qui sanctionneraient, nations tenues de la défendre, coût de relations), « Sanctionner… », « Proposer… », « Fiche ». Échap ferme ; les chiffres choisissent une entrée.
+- **En paix** : clic gauche sur l'Espagne → « Déclarer la guerre… » (casus belli, puis aperçu : partenaires qui sanctionneraient, nations tenues de la défendre, coût de relations), « Sanctionner… », « Proposer… », « Fiche ». Échap ferme ; les chiffres choisissent une entrée.
 - **En guerre** : nouvelle campagne, Ukraine (en guerre depuis le 1er janvier 2026). Clic gauche sur le front, côté russe : « Attaquer ici », « Percer vers ce point », « Frappe aérienne… » ; sur la terre ukrainienne : « Construire ici… », « Déplacer des troupes », « Fortifier ».
 
 ## 8. Tir nucléaire (3 min)

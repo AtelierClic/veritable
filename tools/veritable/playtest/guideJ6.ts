@@ -134,7 +134,7 @@ async function main(): Promise<void> {
   const year = await t.eval<{ date: string; answered: string[] }>(
     `vt.until("2027-01-02", 3600000)`,
   );
-  await t.eval(`vt.open("Objectifs et journal")`);
+  await t.eval(`vt.open("Journal")`);
   const journal = await t.eval<string[]>(
     `vt.view().then((v) => v.journal.slice(-15).map((j) => j.date + " " + j.kind + " " + (j.nation ?? "")))`,
   );

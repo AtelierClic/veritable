@@ -346,8 +346,16 @@ export function applyEffects(
         const fromOpinion = Math.min(gap, p.opinion * opinionWeight);
         shockOpinion(-fromOpinion / opinionWeight);
         gap -= fromOpinion;
+        // J7c: legitimacy carries at most unrestLegitimacyMax. Stability
+        // is recomputed from its inputs; a stable democracy could reach the
+        // threshold only by losing all of its legitimacy (France: 0.80 to 0
+        // for a general strike held firm, six years to recover): it goes
+        // down, into troubles or not, without it.
         if (gap > 0) {
-          p.legitimacy = clamp01(p.legitimacy - gap / s.legitimacy);
+          p.legitimacy = clamp01(
+            p.legitimacy -
+              Math.min(cfg.unrestLegitimacyMax, gap / s.legitimacy),
+          );
         }
         break;
       }

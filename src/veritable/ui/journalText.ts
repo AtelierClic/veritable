@@ -227,6 +227,10 @@ export function journalLine(names: Names, j: JournalEntry): string {
   if (j.kind === "election-held") {
     params.round = p.round === "2" ? vt("journal.round-2") : "";
   }
+  // J7c: suspended by a war at home, or by the exile.
+  if (j.kind === "elections-suspended") {
+    params.cause = vt(`journal.suspended-by.${p.until ?? "war"}`);
+  }
   // J7c: the ways back from exile, the nation a last stand leaves.
   if (j.kind === "exile-returned" && p.way !== undefined) {
     params.way = vt(`journal.exile-way.${p.way}`);

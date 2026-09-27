@@ -71,6 +71,9 @@
   },
   "accession": {
     "minRelations": 0,
+    "excludes": ["g7", "eu"],
+    "regions": ["asia"],
+    "nations": ["RUS", "BLR"],
     "monthsMin": 12,
     "monthsMax": 48
   },

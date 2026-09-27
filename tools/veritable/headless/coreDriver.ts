@@ -91,6 +91,8 @@ export async function coreDriver(
     veritable: true,
     veritableScenario: pack.scenario.id,
     veritablePlayerNation: nation,
+    // As in the game (veritableSoloConfig): no spawn immunity.
+    spawnImmunityDuration: 0,
   };
   const coreStart = {
     gameID,

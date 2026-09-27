@@ -94,6 +94,7 @@ import { GameView, PlayerView } from "./view";
 import { RemoteVeritableSim } from "../veritable/adapters/RemoteVeritableSim";
 import { veritableSoloConfig } from "../veritable/adapters/soloConfig";
 import { campaignController } from "../veritable/ui/CampaignController";
+import { campaignNukeFx } from "../veritable/ui/nukeFx";
 
 export interface LobbyConfig {
   cosmetics: PlayerCosmeticRefs;
@@ -765,6 +766,12 @@ async function createClientGame(
     const resolveRenderSettings = (): RenderSettings => {
       const settings = createRenderSettings();
       applyGraphicsOverrides(settings, userSettings.graphicsOverrides());
+      // VERITABLE: the effects of a burst at the radii of the campaign's
+      // weapons, not OpenFront's (J7c).
+      campaignNukeFx(
+        settings,
+        lobbyConfig.gameStartInfo?.config.veritableScenario,
+      );
       return settings;
     };
 
