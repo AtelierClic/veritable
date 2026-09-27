@@ -24,7 +24,7 @@ import { windowDistance } from "../politics/ideology";
 import { enactLaw } from "../politics/laws";
 import { addMonths } from "../politics/state";
 import { Rng } from "../rng";
-import { addDays, chanceOver, daysInMonth } from "../time";
+import { addDays, chanceOver, daysBetweenDates, daysInMonth } from "../time";
 
 // Events (J5): one trigger engine for the scripted events of 2026-2030 and
 // the procedural templates. J7: every game day (until the J6, once a month
@@ -34,7 +34,9 @@ import { addDays, chanceOver, daysInMonth } from "../time";
 // the state. A world event happens once in the world. The player answers a
 // card (at most `maxPopupsPerMonth` decisions a month; the others wait for
 // the next month); unanswered after `answerDays`, its government decides
-// (governmentChoice). The AI chooses by its agenda and its ideology.
+// (governmentChoice). The AI chooses by its agenda and its leader. J7c:
+// the nation of the player never goes `playerFloorDays` without a decision
+// (a template drawn on the day past them).
 // Effects: data/schemas/event.ts.
 
 export interface EventsEnv {
@@ -52,6 +54,9 @@ export interface EventsEnv {
   // The nation of the player when it plays (null in autopilot): its events
   // are pop-ups.
   player: NationId | null;
+  // J7c: the nation of the player, played or in autopilot (absent: the
+  // player): the floor of its decisions (events.playerFloorDays).
+  played?: NationId | null;
   date: string;
   // Seed of the campaign: the tie-break of a government, the day of a sure
   // event (J7).
@@ -69,6 +74,8 @@ export interface EventsEnv {
     // The nation that holds most of the first-day land of `nation`.
     occupier: (nation: NationId) => NationId | null;
     recognition: (nation: NationId) => number;
+    // J7c: dissolved, or in exile under an annexer: no border, no rival.
+    beyondReach?: (nation: NationId) => boolean;
   };
 }
 
@@ -209,7 +216,10 @@ function otherOf(
   // J7c.
   if (kind === "threat") return env.systems?.threat(nation) ?? null;
   if (kind === "occupier") return env.systems?.occupier(nation) ?? null;
-  const others = env.ctx.nationIds.filter((n) => n !== nation);
+  const gone = env.systems?.beyondReach;
+  const others = env.ctx.nationIds.filter(
+    (n) => n !== nation && gone?.(n) !== true,
+  );
   if (kind === "rival") {
     let worst: NationId | null = null;
     for (const n of others) {
@@ -346,15 +356,23 @@ export function applyEffects(
         const fromOpinion = Math.min(gap, p.opinion * opinionWeight);
         shockOpinion(-fromOpinion / opinionWeight);
         gap -= fromOpinion;
-        // J7c: legitimacy carries at most unrestLegitimacyMax. Stability
-        // is recomputed from its inputs; a stable democracy could reach the
-        // threshold only by losing all of its legitimacy (France: 0.80 to 0
-        // for a general strike held firm, six years to recover): it goes
-        // down, into troubles or not, without it.
+        // J7c: a stable democracy (the coups' definition: a democratic
+        // regime, stability and legitimacy at or above their thresholds)
+        // gives at most unrestLegitimacyMax of legitimacy. Stability is
+        // recomputed from its inputs; it could reach the threshold only by
+        // losing all of its legitimacy (France: 0.80 to 0 for a general
+        // strike held firm, six years to recover): it goes down, into
+        // troubles or not, without it. A fragile nation gives what it takes.
         if (gap > 0) {
+          const coups = ctx.config.politics.coups;
+          const stable =
+            ctx.regime(p.regime).democratic &&
+            p.stability >= coups.stableDemocracyStability &&
+            p.legitimacy >= coups.stableDemocracyLegitimacy;
+          const taken = gap / s.legitimacy;
           p.legitimacy = clamp01(
             p.legitimacy -
-              Math.min(cfg.unrestLegitimacyMax, gap / s.legitimacy),
+              (stable ? Math.min(cfg.unrestLegitimacyMax, taken) : taken),
           );
         }
         break;
@@ -808,15 +826,102 @@ export function stepEventsDraws(
     env.nations.filter((n) => n.status === "dissolved").map((n) => n.id),
   );
   const everyone = ctx.nationIds.filter((n) => inSlot(n) && !dissolved.has(n));
-  for (const event of ctx.events) {
+  const played = env.played === undefined ? env.player : env.played;
+  const inWindow = (event: VeritableEvent) => {
+    const range = event.trigger.dateRange;
+    return range === undefined || (date >= range[0] && date <= range[1]);
+  };
+  // Fires `event` for `subject` when its rules (once, cooldown), its
+  // conditions and its parameters allow it; false otherwise.
+  const fire = (event: VeritableEvent, subject: string): boolean => {
     const t = event.trigger;
-    if (
-      t.dateRange !== undefined &&
-      (date < t.dateRange[0] || date > t.dateRange[1])
-    )
-      continue;
     const once = t.once ?? event.kind === "scripted";
     const cooldown = t.cooldownMonths ?? (once ? 0 : cfg.defaultCooldownMonths);
+    const fired = events.fired[event.id];
+    if (once && fired !== undefined && fired.includes(subject)) return false;
+    if (events.cooldowns[`${event.id}|${subject}`] !== undefined) return false;
+    const nation = subject === "world" ? env.player : subject;
+    if (nation !== null && !t.conditions.every((c) => holds(env, nation, c)))
+      return false;
+    // The player's events wait when its pop-ups of the month are spent.
+    const popup =
+      nation !== null && nation === env.player && event.choices.length > 0;
+    if (popup && events.popups >= cfg.maxPopupsPerMonth) return false;
+    const other =
+      event.params?.other === undefined || nation === null
+        ? null
+        : otherOf(env, nation, event.params.other);
+    if (event.params?.other !== undefined && other === null) return false;
+    const good =
+      event.params?.good === undefined ? null : goodOf(env, event.params.good);
+
+    if (once) (events.fired[event.id] ??= []).push(subject);
+    if (cooldown > 0) {
+      events.cooldowns[`${event.id}|${subject}`] = addMonths(date, cooldown);
+    }
+    if (event.worldEffects !== undefined) {
+      applyEffects(
+        env,
+        nation ?? ctx.nationIds[0],
+        other,
+        event.worldEffects.filter((e) => e.target.startsWith("worldSupply")),
+      );
+      if (nation !== null) {
+        applyEffects(
+          env,
+          nation,
+          other,
+          event.worldEffects.filter((e) => !e.target.startsWith("worldSupply")),
+        );
+      }
+    }
+    if (nation !== null && event.effects !== undefined) {
+      applyEffects(env, nation, other, event.effects);
+    }
+    if (nation === null) {
+      // A world event in autopilot: nobody chooses.
+      out.push({
+        type: "event-occurred",
+        nation: ctx.nationIds[0],
+        params: {
+          event: event.id,
+          choice: "",
+          other: "",
+          good: good ?? "",
+          by: "none",
+          party: "",
+          instance: "",
+        },
+      });
+      return true;
+    }
+    if (nation === played && event.choices.length > 0) {
+      events.lastDecision = { nation, date };
+    }
+    const instance: EventInstance = {
+      id: events.nextId++,
+      event: event.id,
+      nation,
+      other,
+      good,
+      date,
+    };
+    if (popup) {
+      events.popups += 1;
+      const pending = {
+        ...instance,
+        deadline: addDays(date, cfg.answerDays),
+      };
+      events.pending.push(pending);
+      out.push({ type: "event-popup", nation, instance });
+    } else {
+      out.push(resolve(env, instance, aiChoice(env, nation, event), "ai"));
+    }
+    return true;
+  };
+  for (const event of ctx.events) {
+    const t = event.trigger;
+    if (!inWindow(event)) continue;
     const sure = t.monthlyProbability >= 1;
     const p = sure ? 1 : chanceOver(t.monthlyProbability, months);
     const subjects =
@@ -835,87 +940,37 @@ export function stepEventsDraws(
           (subject) => !daily || seededDay(env, event.id, subject) === day,
         )
       : drawDistinct(subjects, binomial(subjects.length, p, env.rng), env.rng);
-    const fired = events.fired[event.id];
-    for (const subject of hit) {
-      if (once && fired !== undefined && fired.includes(subject)) continue;
-      if (events.cooldowns[`${event.id}|${subject}`] !== undefined) continue;
-      const nation = subject === "world" ? env.player : subject;
-      if (nation !== null && !t.conditions.every((c) => holds(env, nation, c)))
-        continue;
-      // The player's events wait when its pop-ups of the month are spent.
-      const popup =
-        nation !== null && nation === env.player && event.choices.length > 0;
-      if (popup && events.popups >= cfg.maxPopupsPerMonth) continue;
-      const other =
-        event.params?.other === undefined || nation === null
-          ? null
-          : otherOf(env, nation, event.params.other);
-      if (event.params?.other !== undefined && other === null) continue;
-      const good =
-        event.params?.good === undefined
-          ? null
-          : goodOf(env, event.params.good);
-
-      if (once) (events.fired[event.id] ??= []).push(subject);
-      if (cooldown > 0) {
-        events.cooldowns[`${event.id}|${subject}`] = addMonths(date, cooldown);
-      }
-      if (event.worldEffects !== undefined) {
-        applyEffects(
-          env,
-          nation ?? ctx.nationIds[0],
-          other,
-          event.worldEffects.filter((e) => e.target.startsWith("worldSupply")),
-        );
-        if (nation !== null) {
-          applyEffects(
-            env,
-            nation,
-            other,
-            event.worldEffects.filter(
-              (e) => !e.target.startsWith("worldSupply"),
-            ),
-          );
+    for (const subject of hit) fire(event, subject);
+  }
+  // J7c: the nation of the player never goes `playerFloorDays` without a
+  // decision (DESIGN.md: the templates keep a long campaign alive): past
+  // them, one of its templates is drawn on the day, by the weight of its
+  // monthly probability, among those its rules and conditions allow.
+  if (played !== null && inSlot(played) && !dissolved.has(played)) {
+    const last = events.lastDecision;
+    if (last === undefined || last.nation !== played) {
+      events.lastDecision = { nation: played, date };
+    } else if (daysBetweenDates(last.date, date) >= cfg.playerFloorDays) {
+      const pool = ctx.events.filter(
+        (e) =>
+          e.kind !== "scripted" &&
+          e.scope !== "world" &&
+          e.choices.length > 0 &&
+          inWindow(e) &&
+          (e.trigger.nations === undefined ||
+            e.trigger.nations.includes(played)),
+      );
+      while (pool.length > 0) {
+        let u =
+          env.rng.next() *
+          pool.reduce((sum, e) => sum + e.trigger.monthlyProbability, 0);
+        let k = 0;
+        while (k < pool.length - 1 && u >= pool[k].trigger.monthlyProbability) {
+          u -= pool[k].trigger.monthlyProbability;
+          k++;
         }
-      }
-      if (nation !== null && event.effects !== undefined) {
-        applyEffects(env, nation, other, event.effects);
-      }
-      if (nation === null) {
-        // A world event in autopilot: nobody chooses.
-        out.push({
-          type: "event-occurred",
-          nation: ctx.nationIds[0],
-          params: {
-            event: event.id,
-            choice: "",
-            other: "",
-            good: good ?? "",
-            by: "none",
-            party: "",
-            instance: "",
-          },
-        });
-        continue;
-      }
-      const instance: EventInstance = {
-        id: events.nextId++,
-        event: event.id,
-        nation,
-        other,
-        good,
-        date,
-      };
-      if (popup) {
-        events.popups += 1;
-        const pending = {
-          ...instance,
-          deadline: addDays(date, cfg.answerDays),
-        };
-        events.pending.push(pending);
-        out.push({ type: "event-popup", nation, instance });
-      } else {
-        out.push(resolve(env, instance, aiChoice(env, nation, event), "ai"));
+        if (fire(pool[k], played)) break;
+        pool.splice(k, 1);
       }
     }
   }

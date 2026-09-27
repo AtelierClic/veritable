@@ -84,17 +84,24 @@ const nuclearBBB: Record<string, TestNationOptions> = {
 };
 
 describe("threat level of a nuclear nation", () => {
-  it("0 at peace, 1 at war, 2 when its capital is near a front or land was taken, 3 when its capital falls", () => {
-    const { sim, world, internals, days } = campaign(nuclearBBB);
+  it("0 at peace, 1 at war, 2 when land that weighs was taken or land was taken near its capital, 3 when its capital falls", () => {
+    const { sim, world, internals, days, config } = campaign(nuclearBBB);
     days(1);
     expect(sim.read().nuclear.nations.BBB.threat).toBe(0);
     sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
     days(1);
     expect(sim.read().nuclear.nations.BBB.threat).toBe(1);
+    // J7c: a front near its capital alone is not enough.
     world.frontDistances.set("BBB", 10);
     days(1);
+    expect(sim.read().nuclear.nations.BBB.threat).toBe(1);
+    // BBB held 8 tiles on the first day: one lost near its capital...
+    internals.diplomacy.wars[0].tilesTaken.AAA = 1;
+    days(1);
     expect(sim.read().nuclear.nations.BBB.threat).toBe(2);
+    // ... or a share that weighs, wherever the front.
     world.frontDistances.delete("BBB");
+    expect(config.nuclear.level2LostShare * 8).toBeLessThanOrEqual(3);
     internals.diplomacy.wars[0].tilesTaken.AAA = 3;
     days(1);
     expect(sim.read().nuclear.nations.BBB.threat).toBe(2);

@@ -156,10 +156,17 @@ export function threatLevel(env: NuclearEnv, id: NationId): number {
   ) {
     return 3;
   }
+  // J7c: land lost that weighs (level2LostShare of its first-day land), or
+  // land lost with a front near its capital. A front near the capital alone
+  // was enough: a small nation — Israel against Lebanon — stood at level 2
+  // in every war it fought, and a few border tiles lost to Afghanistan put
+  // Pakistan there as well (shots in four campaigns out of thirty).
+  let taken = 0;
+  for (const tiles of landTakenBy(env, id).values()) taken += tiles;
   const distance = env.world.capitalFrontDistance(id);
   if (
-    landTakenBy(env, id).size > 0 ||
-    (distance !== null && distance <= cfg.capitalFrontTiles)
+    (initial > 0 && taken >= cfg.level2LostShare * initial) ||
+    (taken > 0 && distance !== null && distance <= cfg.capitalFrontTiles)
   ) {
     return 2;
   }

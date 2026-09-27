@@ -2,12 +2,14 @@ import { loadVeritableConfig } from "../../data/loadConfig";
 import { VeritableConfig } from "../../data/schemas/config";
 import { EventSchema, VeritableEvent } from "../../data/schemas/event";
 import { NationData } from "../../data/schemas/nation";
+import { EventsState, PoliticsState } from "../../data/schemas/save";
 import { decodeSave, encodeSave } from "../../save/serialize";
 import { availableCasusBelli } from "../diplomacy/diplomacy";
 import { addMonths } from "../politics/state";
 import { MemoryWorld } from "../testing/MemoryWorld";
 import { testNation, testScenario } from "../testing/nations";
 import { testSimData } from "../testing/simData";
+import { addDays } from "../time";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
 
@@ -114,6 +116,46 @@ describe("events", () => {
     expect(
       sim.read().journal.filter((j) => j.kind === "event-occurred").length,
     ).toBe(2);
+  });
+
+  it("unrest takes at most 0.2 of a stable democracy's legitimacy, all it needs of a fragile nation's (J7c)", () => {
+    const config = quietConfig();
+    config.politics.coups.militaryScale = 0;
+    const riot = event({
+      id: "riot",
+      trigger: {
+        nations: ["BBB", "CCC"],
+        monthlyProbability: 1,
+        conditions: [],
+      },
+      effects: [{ target: "unrest", op: "set", value: 1 }],
+      choices: [
+        { id: "calm", label: "event.riot.calm", effects: [] },
+        { id: "wait", label: "event.riot.wait", effects: [] },
+      ],
+    });
+    const { sim, months } = campaign({
+      events: [riot],
+      autopilot: true,
+      config,
+    });
+    const nations = (sim as unknown as { politics: PoliticsState }).politics
+      .nations;
+    // CCC is no democracy: fragile in the sense of the cap.
+    nations.CCC.regime = "electoral-authoritarian";
+    const before = {
+      BBB: nations.BBB.legitimacy,
+      CCC: nations.CCC.legitimacy,
+    };
+    months(1);
+    expect(
+      sim
+        .read()
+        .events.history.map((h) => h.nation)
+        .sort(),
+    ).toEqual(["BBB", "CCC"]);
+    expect(nations.BBB.legitimacy).toBeCloseTo(before.BBB - 0.2, 9);
+    expect(before.CCC - nations.CCC.legitimacy).toBeGreaterThan(0.2);
   });
 
   it("the player gets a pop-up that asks to pause; two a month at most; the choice applies; unanswered, the government decides", () => {
@@ -459,6 +501,50 @@ describe("events", () => {
     expect(
       sim.read().journal.filter((j) => j.kind === "event-occurred").length,
     ).toBe(1);
+  });
+
+  it("the nation of the player never goes playerFloorDays without a decision, played or in autopilot: one of its templates, never one its conditions forbid (J7c)", () => {
+    const floor = loadVeritableConfig().events.playerFloorDays;
+    const rare = (
+      id: string,
+      conditions: VeritableEvent["trigger"]["conditions"],
+    ) =>
+      event({
+        id,
+        kind: "template",
+        trigger: { monthlyProbability: 1e-12, cooldownMonths: 1, conditions },
+      });
+    for (const autopilot of [false, true]) {
+      const { sim } = campaign({
+        autopilot,
+        events: [
+          rare("quiet", []),
+          rare("never", [{ target: "debtToGdp", op: "gt", value: 100 }]),
+        ],
+      });
+      // The floor counts from the first draw of the player's nation.
+      sim.advance(DAY);
+      const counted = (sim as unknown as { events: EventsState }).events
+        .lastDecision;
+      expect(counted?.nation).toBe("AAA");
+      const due = addDays(counted!.date, floor);
+      const all = () => [
+        ...sim.read().events.history,
+        ...sim.read().events.pending,
+      ];
+      // The first on the day the floor is reached, for the player alone.
+      while (sim.read().date <= due) sim.advance(DAY);
+      expect(all().map((h) => [h.nation, h.event, h.date])).toEqual([
+        ["AAA", "quiet", due],
+      ]);
+      // Then again `floor` days after that decision.
+      const next = addDays(due, floor);
+      while (sim.read().date <= next) sim.advance(DAY);
+      expect(all().map((h) => [h.nation, h.event, h.date])).toEqual([
+        ["AAA", "quiet", due],
+        ["AAA", "quiet", next],
+      ]);
+    }
   });
 
   it("the event state round-trips byte for byte", () => {

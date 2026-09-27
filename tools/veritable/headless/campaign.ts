@@ -164,7 +164,15 @@ export function simDriver(
 }
 
 interface EventHistory {
-  events?: { history: { id: number; event: string; date: string }[] };
+  events?: {
+    history: {
+      id: number;
+      event: string;
+      date: string;
+      nation: string;
+      choice: string;
+    }[];
+  };
 }
 
 export interface CampaignOptions {
@@ -532,19 +540,6 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       const reason = event.reason ?? "relations";
       delivery.lifts[reason] = (delivery.lifts[reason] ?? 0) + 1;
     }
-    // The player's decisions left to its government: by the government
-    // after 30 days in the game, by the AI's choice in autopilot (the
-    // player's nation has no pop-up there).
-    if (
-      event.type === "event-occurred" &&
-      event.nation === player &&
-      event.params.choice !== "" &&
-      (event.params.by === "government" || event.params.by === "ai")
-    ) {
-      const year = event.date.slice(0, 4);
-      delivery.governmentDecisions[year] =
-        (delivery.governmentDecisions[year] ?? 0) + 1;
-    }
     if (event.type === "sovereign-default") {
       const first = series[0]?.people[event.nation] ?? 0;
       // J7c: the people and the debt of the day of the default, not only
@@ -680,6 +675,14 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
       delivery.eventInstances += 1;
       delivery.eventIds[h.event] = (delivery.eventIds[h.event] ?? 0) + 1;
       delivery.eventDays[Number(h.date.slice(8, 10)) - 1] += 1;
+      // The player's decisions left to its government (in autopilot its
+      // events are decided as an AI's; the templates of an AI go to the
+      // history, not to the journal).
+      if (h.nation === player && h.choice !== "") {
+        const year = h.date.slice(0, 4);
+        delivery.governmentDecisions[year] =
+          (delivery.governmentDecisions[year] ?? 0) + 1;
+      }
     }
     for (const id of seen) if (id < low) seen.delete(id);
   };

@@ -79,6 +79,9 @@ export interface AiEnv {
   aiNations: readonly NationId[];
   player: NationId | null;
   date: string;
+  // J7c: a nation no war can reach — dissolved, or a government in exile
+  // whose land an annexer holds.
+  beyondReach?: (id: NationId) => boolean;
 }
 
 export function initAi(ids: readonly NationId[]): AiState {
@@ -350,6 +353,9 @@ export function appraiseWar(
 ): WarAppraisal | null {
   const cfg = env.ctx.config.ai.nations.war;
   if (!env.ctx.landNeighbours(id, target)) return null;
+  // J7c: the Sudan declared war on the dissolved RSF every few years, on
+  // the unrest of its frozen stability (humanitarian casus belli).
+  if (env.beyondReach?.(target) === true) return null;
   if (hasWarheads(env, target) && !hasWarheads(env, id)) return null;
   if (relation(env.diplomacy, id, target) > cfg.maxRelations) return null;
   const cbs = availableCasusBelli(

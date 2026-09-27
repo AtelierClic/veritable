@@ -501,6 +501,7 @@
     "deterrence": 0.1,
     "collectiveDefenseBlocs": ["nato"],
     "capitalFrontTiles": 100,
+    "level2LostShare": 0.02,
     "lostTerritoryShare": 0.5,
     "collapseStability": 0.15,
     "deadHand": {
@@ -655,6 +656,7 @@
   "events": {
     "maxPopupsPerMonth": 2,
     "answerDays": 30,
+    "playerFloorDays": 300,
     "defaultCooldownMonths": 36,
     "uncertainProbability": 0.5,
     "unrestMargin": 0.07,

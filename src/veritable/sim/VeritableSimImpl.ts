@@ -870,6 +870,10 @@ export class VeritableSimImpl implements VeritableSim {
       }
       case "declare-war": {
         const me = this.requirePlayer();
+        // J7c: no war on a nation without land to fight for.
+        if (this.beyondReach(cmd.target)) {
+          throw new Error("declare-war: the target has no land");
+        }
         const event = declareWar(
           this.ctx,
           this.diplomacy,
@@ -2429,7 +2433,14 @@ export class VeritableSimImpl implements VeritableSim {
   private blocsDay(clock: ClockContext): void {
     let joined = false;
     for (const event of stepBlocsDay(this.blocEnv(clock.date))) {
-      this.record(clock.date, event);
+      // J7c: a lift of a bloc is the vote of its members (way (c)); it was
+      // journaled as relations healed.
+      this.record(
+        clock.date,
+        event,
+        undefined,
+        event.type === "sanctions-lifted" ? "vote" : undefined,
+      );
       if (event.type === "war-joined") joined = true;
     }
     if (joined) this.invalidateFronts();
@@ -2438,7 +2449,12 @@ export class VeritableSimImpl implements VeritableSim {
   private blocSession(id: string, date: string): void {
     let joined = false;
     for (const event of stepBlocSession(this.blocEnv(date), id)) {
-      this.record(date, event);
+      this.record(
+        date,
+        event,
+        undefined,
+        event.type === "sanctions-lifted" ? "vote" : undefined,
+      );
       if (event.type === "war-joined") joined = true;
     }
     if (joined) this.invalidateFronts();
@@ -3041,6 +3057,9 @@ export class VeritableSimImpl implements VeritableSim {
       nations: this.nations,
       sheets: this.sheets,
       player: this.politics.autopilot ? null : this.playerNationId(),
+      // J7c: the floor of the player's decisions holds in autopilot too
+      // (the headless runner measures what a player would get).
+      played: this.playerNationId(),
       date,
       seed: this.seed,
       known: this.knownNations,
@@ -3055,6 +3074,7 @@ export class VeritableSimImpl implements VeritableSim {
           this.exile.nations[nation]?.dissolvedAt === null
             ? (this.exile.nations[nation]?.recognition ?? 0)
             : 0,
+        beyondReach: (nation) => this.beyondReach(nation),
       },
     };
   }
@@ -3873,7 +3893,20 @@ export class VeritableSimImpl implements VeritableSim {
       aiNations: this.aiNations(),
       player: this.playerNationId(),
       date,
+      beyondReach: (id) => this.beyondReach(id),
     };
+  }
+
+  // J7c: a nation no war, no border incident and no bloc measure reaches: a
+  // dissolved nation, or a government in exile whose land an annexer
+  // holds (an exile nobody annexed — a test world — is still in reach).
+  private beyondReach(id: NationId): boolean {
+    const status = this.statusOf(id);
+    return (
+      status === "dissolved" ||
+      (status === "exiled" &&
+        (this.exile.nations[id]?.annexer ?? null) !== null)
+    );
   }
 
   private nuclearEnv(date: string): NuclearEnv {

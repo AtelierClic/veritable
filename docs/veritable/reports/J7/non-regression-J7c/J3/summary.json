@@ -1,0 +1,35 @@
+{
+  "seed": 42,
+  "eu-embargo": {
+    "gasImportPricePeakYear1": 1.3420664486251501,
+    "gasWorldPricePeakYear1": 1.0590783889205357,
+    "russianGdpAt2Years": 0.9461860037877793
+  },
+  "war-fra-esp": {
+    "sanctionersAt6Months": 7,
+    "warsAndJoins": [
+      "FRA>ESP@2027-01-01",
+      "TUR>FRA@2027-08-14",
+      "GBR>FRA@2028-01-01",
+      "NOR>FRA@2028-01-09",
+      "DEU>FRA@2028-03-02",
+      "POL>FRA@2028-04-08",
+      "ITA>FRA@2028-05-12"
+    ],
+    "netTilesAt3Years": -210,
+    "contestedTilesAt3Years": 46863,
+    "tileValueUsd": 0,
+    "gdpLossUsd": 1730646144833.4204,
+    "frenchGdpRatio": 0.4982783458678951,
+    "frenchStabilityAt3Years": 0.47117482402277794,
+    "controlStabilityAt3Years": 0.6209151462222305
+  },
+  "blockade-gbr-nor": {
+    "norwegianBlockadeAt6Months": 0.4592562560071664,
+    "norwegianMaritimeTradeRatioAt6Months": 0.4772881443401618
+  },
+  "landing-ita-esp": {
+    "landingsRefused": 1,
+    "landings": 0
+  }
+}

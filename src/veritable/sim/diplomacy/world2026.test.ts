@@ -462,7 +462,15 @@ describe("the lift of the sanctions (J7, the answer of Lukas to the J6)", () => 
         }
         days(31);
       }
-      return internals.blocs.blocs.find((b) => b.id === "union")!.sanctions;
+      // J7c: the lifts of the members are journaled as the vote of the
+      // bloc, not as relations healed.
+      const members = internals
+        .journalLifts()
+        .filter((lift) => ["BBB", "CCC"].includes(lift.by));
+      for (const lift of members) expect(lift.reason).toBe("vote");
+      const held = internals.blocs.blocs.find((b) => b.id === "union")!;
+      if (held.sanctions.length === 0) expect(members.length).toBe(2);
+      return held.sanctions;
     };
     // The governments of the test nations are identical: relations healed,
     // the leader proposes the lift and it passes, a change of regime or

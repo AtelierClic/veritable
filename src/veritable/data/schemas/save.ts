@@ -870,6 +870,12 @@ export const EventsStateSchema = z.object({
   // Pop-ups shown to the player this month ("YYYY-MM").
   popupMonth: z.string(),
   popups: zb.uint(),
+  // J7c: the last decision of the nation of the player (played or in
+  // autopilot), for the floor of its decisions (events.playerFloorDays);
+  // absent before the first day it is counted.
+  lastDecision: z
+    .object({ nation: NationIdSchema, date: IsoDateSchema })
+    .optional(),
 });
 export type EventsState = z.infer<typeof EventsStateSchema>;
 

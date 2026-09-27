@@ -137,6 +137,19 @@ describe("an annexed nation (J7c)", () => {
     expect(internals.exile.nations.BBB).toBeUndefined();
   });
 
+  it("is beyond the reach of a war: no declaration on a government in exile under an annexer (J7c)", () => {
+    const { sim, world, days, status } = campaign(["CCC", "AAA", "BBB", "DDD"]);
+    world.transferAll("BBB", "AAA");
+    days(1);
+    expect(status("BBB")).toBe("exiled");
+    expect(() =>
+      sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" }),
+    ).toThrow(/no land/);
+    // Its annexer is in reach.
+    sim.apply({ type: "declare-war", target: "AAA", casusBelli: "none" });
+    expect(sim.read().diplomacy.wars).toHaveLength(1);
+  });
+
   it("holds no national election while in exile", () => {
     const { sim, world, days, status } = campaign(["CCC", "AAA", "BBB", "DDD"]);
     world.transferAll("BBB", "AAA");

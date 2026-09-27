@@ -116,12 +116,19 @@ Modèle recommandé : Fable 5.1 pour la conception du module, Opus 5 pour l'impl
 
 ## J7 — Le reste
 
-- [ ] Electron : empaquetage, sauvegardes dans le dossier utilisateur, build Windows
-- [ ] Page itch.io ou GitHub Releases ; mentions AGPL et © OpenFront and Contributors ; sources publiées
-- [ ] Gouvernement en exil ; dissolution ; baroud d'honneur
-- [ ] Événements procéduraux élargis (le palier 2 de l'arbre existe depuis le J5c ; celui des biens passe après la 1.0)
-- [ ] Reconstruction post-nucléaire
-- [ ] Polissage UI ; documentation de modding
+Plan, suivi et liste « à valider » : `docs/veritable/plans/J7.md`. J7a, J7b et J7c livrés d'une traite ; le J7d (Electron, publication, modding) attend le test de Lukas.
+
+- [x] Le temps : file tournante des nations, file des biens, événements quotidiens, intégration du temps écoulé ; sauvegarde `schemaVersion: 7` _(2026-09-26 — tâche ajoutée au jalon ; plus de pas mensuel qui porte le monde)_
+- [x] Décision du gouvernement, cartes d'événements et pause de trois secondes, journal détaillé et marqueurs _(2026-09-26 — tâche ajoutée au jalon ; régression politique du guide J4 corrigée : vote ajusté à la dernière élection, second tour, coût de gouverner)_
+- [x] La carte comme interface : renseignement et fiche du pays, menu d'action, villes et population par tuile, modes de carte et mini-carte _(2026-09-26 — tâche ajoutée au jalon)_
+- [x] Gouvernement en exil ; dissolution ; baroud d'honneur _(2026-09-26 — reconnaissance et soutien, érosion, résistance, trois voies du retour, écran Exil ; les nations IA passent par les mêmes états)_
+- [x] Événements procéduraux élargis (le palier 2 de l'arbre existe depuis le J5c ; celui des biens passe après la 1.0) _(2026-09-27 — 61 gabarits, dont 12 sur les nouveaux systèmes ; au plus 300 jours sans décision pour la nation du joueur)_
+- [x] Reconstruction post-nucléaire _(2026-09-26 — un tir ne change plus aucune tuile ; morts par la population, contamination qui guérit plus vite avec les infrastructures et l'aide, repeuplement)_
+- [x] Polissage UI _(2026-09-26 — liste du J6c traitée : caméra, bouton « Solo », interface héritée, barre du haut, écrans à droite)_
+- [ ] Tests entièrement verts, tests joués (guides J4 à J7), rythme, performance, tests forcés, 30 campagnes mondiales, non-régression (tâche ajoutée au jalon)
+- [ ] Electron : empaquetage, sauvegardes dans le dossier utilisateur, build Windows (J7d)
+- [ ] Page itch.io ou GitHub Releases ; mentions AGPL et © OpenFront and Contributors ; sources publiées (J7d)
+- [ ] Documentation de modding (J7d)
 
 ## Après 1.0
 

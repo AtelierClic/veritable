@@ -500,8 +500,10 @@ const NuclearWeaponSchema = z.object({
 });
 
 // Nuclear weapons (J5). Threat level of a nuclear nation: 0 at peace, 1 at
-// war, 2 when an enemy took land from it in a war going on or its capital is
-// within `capitalFrontTiles` of a front, 3 when it lost more than
+// war, 2 when its enemies in the wars going on took `level2LostShare` of its
+// first-day land, or took land while its capital is within
+// `capitalFrontTiles` of a front (J7c; the J5 put it at 2 for any land taken
+// or a front near the capital), 3 when it lost more than
 // `lostTerritoryShare` of its first-day land, its capital, or its stability
 // fell under `collapseStability`. Daily probability of a shot =
 // base[doctrine][level] x (0.5 + aggressiveness of the leader) x deterrence.
@@ -515,6 +517,7 @@ const NuclearConfigSchema = z.object({
   deterrence: share,
   collectiveDefenseBlocs: z.array(z.string()),
   capitalFrontTiles: z.number().int().min(0),
+  level2LostShare: share,
   lostTerritoryShare: share,
   collapseStability: share,
   // Dead hand: at the annexation of a nuclear nation, p = deadHand[doctrine]
@@ -710,10 +713,16 @@ const EventsConfigSchema = z.object({
   maxPopupsPerMonth: z.number().int().min(0),
   // J7: game days the player has to choose before the government decides.
   answerDays: z.number().int().min(1),
+  // J7c: the nation of the player never goes this many game days without a
+  // decision: past them, one of its templates is drawn on the day (by the
+  // weight of its monthly probability).
+  playerFloorDays: z.number().int().min(1),
   defaultCooldownMonths: z.number().int().min(0),
   uncertainProbability: share,
-  // Unrest brings stability this far under the unrest threshold, taking at
-  // most unrestLegitimacyMax of legitimacy for what opinion cannot carry.
+  // Unrest brings stability this far under the unrest threshold, taking
+  // legitimacy for what opinion cannot carry: at most unrestLegitimacyMax of
+  // a stable democracy's (politics.coups.stableDemocracy*), all it takes of
+  // a fragile nation's.
   unrestMargin: share,
   unrestLegitimacyMax: share,
   // A government sometimes takes another choice than its best one.
