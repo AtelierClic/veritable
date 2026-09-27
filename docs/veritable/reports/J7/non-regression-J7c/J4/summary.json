@@ -107,8 +107,19 @@
     "successful": 7,
     "attempts": 9
   },
+  "juntasOverSeeds": {
+    "seeds": [
+      42,
+      101
+    ],
+    "runs": 60,
+    "RUS": 9,
+    "TUR": 2,
+    "rus": 0.15,
+    "tur": 0.03333333333333333
+  },
   "criteria": {
-    "russiaTurkeyJuntaInAtMostTwoSeeds": false,
+    "russiaTurkeyJuntaAtMost20pctOver60Seeds": true,
     "noCoupInAStableDemocracy": true,
     "alternationInSevenNations": true,
     "crisisInHalfOfCampaigns": true,
@@ -181,18 +192,18 @@
       "elections-suspended": 2,
       "sanctions-imposed": 2,
       "month-started": 120,
-      "event-occurred": 46,
+      "event-occurred": 45,
       "tech-completed": 62,
       "bloc-presidency": 40,
       "bloc-proposal": 15,
       "bloc-decision": 15,
-      "bloc-reprimand": 19,
-      "unrest-started": 2,
+      "bloc-reprimand": 20,
+      "unrest-started": 1,
       "election-held": 20,
       "government-formed": 20,
-      "leader-died": 4,
-      "leader-succeeded": 4,
-      "unrest-ended": 2,
+      "leader-died": 3,
+      "leader-succeeded": 3,
+      "unrest-ended": 1,
       "coup-attempted": 1,
       "peace-signed": 1,
       "bloc-application": 1,
@@ -251,7 +262,7 @@
       "event-occurred": 53,
       "tech-completed": 64,
       "bloc-presidency": 40,
-      "bloc-reprimand": 22,
+      "bloc-reprimand": 23,
       "election-held": 19,
       "government-formed": 19,
       "coup-succeeded": 3,
@@ -328,5 +339,5 @@
       "bloc-accession-opened": 1
     }
   ],
-  "meanWallMs": 5935
+  "meanWallMs": 4997
 }

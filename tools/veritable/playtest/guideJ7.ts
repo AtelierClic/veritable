@@ -249,6 +249,17 @@ async function main(): Promise<void> {
     ),
   ]);
   await t.eval(`vt.close()`);
+  // J7c.6: without land, no war — the menu of the map says why.
+  await goToCapital("RUS");
+  await t.browser.click(W / 2, H / 2);
+  await sleep(1500);
+  await t.step("10. Sans terre, aucune déclaration de guerre", [
+    await text("veritable-action-menu", 600),
+    await t.eval<string>(
+      `vt.view().then((v) => "casus belli contre la Russie : " + JSON.stringify(v.casusBelli.RUS ?? []))`,
+    ),
+  ]);
+  await escape();
 
   // --- 11. The last stand (save: Ukraine dissolved) ---------------------------------
   await importSave("j7-baroud.vsave");

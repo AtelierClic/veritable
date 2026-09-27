@@ -43,6 +43,7 @@ Passer à **×5** (une année de jeu dure environ 2 min 30 s).
 - Un événement de la France apparaît en carte en haut à gauche : le jeu s'arrête **3 secondes** (« Reprise dans 3 s » à côté des vitesses, « ⏸ 3 » sur le bouton), puis reprend à ×5. **Espace** pendant le compte à rebours garde la pause. Deux pauses automatiques sont séparées de 20 secondes réelles au moins ; sur cinq ans à ×5, elles prennent 6 % du temps.
 - La carte donne la date, le pays, le titre, les choix (effets au survol), le délai restant (« encore 30 j ») et le penchant du gouvernement.
 - Laisser une décision sans réponse : au bout de 30 jours de jeu, le gouvernement tranche. Le journal dit « Décidé par le gouvernement (Renaissance) ».
+- Jamais plus de 300 jours de jeu sans une décision pour la France, jamais plus de deux par mois : dans une période calme, un gabarit de la France arrive au bout de dix mois.
 - Les cartes de vote d'un bloc (par exemple « Vote — Union européenne, adhésion du Monténégro, proposé par Chypre ») portent des boutons de vote.
 - Réglages (⚙ sous la barre du haut) : durée 0, 3 ou 5 s, une case par catégorie.
 
@@ -77,6 +78,7 @@ Importer **`j7-exil.vsave`** (vous jouez l'Ukraine, annexée par la Russie par t
 - les trois voies du retour (libération, effondrement de l'occupant, négociation) ;
 - **« Demander le retour »** : la Russie refuse (elle n'est ni assez faible ni assez isolée). Le journal le dit.
 - L'Ukraine en exil ne tient plus d'élection.
+- Sans terre, elle ne déclare aucune guerre : clic gauche sur la Russie, « Déclarer la guerre… » est grisé (« Votre nation n'a plus de terre »), et la Diplomatie ne propose aucun casus belli.
 
 ## 10. Baroud d'honneur (2 min)
 
@@ -107,5 +109,6 @@ Normal :
 - des noms de villes en double ;
 - une pause automatique qui ne reprend pas seule ;
 - ×5 qui saccade hors du premier mois ;
-- une nation dissoute encore présente dans une guerre ou un bloc ;
+- une nation dissoute encore présente dans une guerre ou un bloc, ou une guerre déclarée à une nation en exil ;
+- un prix mondial au-delà de deux fois sa base dans l'écran Économie ;
 - un baroud qui ne se recharge pas sur la nouvelle nation.

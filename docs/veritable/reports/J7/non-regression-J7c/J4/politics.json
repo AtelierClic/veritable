@@ -610,7 +610,7 @@
         "coupsFoiled": 1,
         "revolutions": 0,
         "fraudDetected": 0,
-        "unrestStarts": 2,
+        "unrestStarts": 1,
         "juntaMonths": 0,
         "regimes": [
           "semi-presidential"
@@ -668,7 +668,7 @@
       }
     },
     "wars": [
-      "RUS>UKR@2034-01-31"
+      "RUS>UKR@2034-02-14"
     ]
   },
   {
