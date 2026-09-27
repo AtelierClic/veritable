@@ -22,6 +22,7 @@ import {
   DiplomacyEvent,
   imposeSanctions,
   isSanctioning,
+  joinConflicts,
   joinWar,
   liftSanctions,
   relation,
@@ -673,6 +674,10 @@ export function honorCall(
   if (call === undefined || war === undefined) {
     throw new Error("bloc-honor: no such call");
   }
+  // J7c: the call stays and lapses without a price (collectiveDefense).
+  if (joinConflicts(env.diplomacy, war, nation, "defenders")) {
+    throw new Error("bloc-honor: at war with a nation of that side");
+  }
   env.state.calls.splice(env.state.calls.indexOf(call), 1);
   if (warSide(war, nation) !== null) return [];
   joinWar(env.ctx, env.diplomacy, war, nation, "defenders");
@@ -1010,7 +1015,13 @@ function collectiveDefense(env: BlocEnv): BlocStepEvent[] {
   const events: BlocStepEvent[] = [];
   for (const call of [...state.calls]) {
     const war = env.diplomacy.wars.find((w) => w.id === call.war);
-    if (war === undefined || warSide(war, call.nation) !== null) {
+    // J7c: a call the player could not honour (a war begun since sets it
+    // against the side) lapses without a price.
+    if (
+      war === undefined ||
+      warSide(war, call.nation) !== null ||
+      joinConflicts(env.diplomacy, war, call.nation, "defenders")
+    ) {
       state.calls.splice(state.calls.indexOf(call), 1);
       continue;
     }
@@ -1053,6 +1064,7 @@ function collectiveDefense(env: BlocEnv): BlocStepEvent[] {
       for (const m of simulatedMembers(ctx, bloc.id)) {
         if (m === victim || warSide(war, m) !== null) continue;
         if (env.beyondReach?.(m) === true) continue;
+        if (joinConflicts(env.diplomacy, war, m, "defenders")) continue;
         if (!env.aiNations.includes(m)) {
           state.calls.push({
             bloc: bloc.id,
@@ -1088,6 +1100,7 @@ function collectiveDefense(env: BlocEnv): BlocStepEvent[] {
       if (!ctx.nationIds.includes(g.guarantor)) continue;
       if (!env.aiNations.includes(g.guarantor)) continue;
       if (env.beyondReach?.(g.guarantor) === true) continue;
+      if (joinConflicts(env.diplomacy, war, g.guarantor, "defenders")) continue;
       if (env.rng.next() < g.probability) {
         joinWar(ctx, env.diplomacy, war, g.guarantor, "defenders");
         events.push({

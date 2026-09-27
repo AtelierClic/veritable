@@ -14,7 +14,7 @@ import { testBloc, testSimData } from "../testing/simData";
 import { DAYS_PER_MONTH } from "../time";
 import { SimEvent } from "../VeritableSim";
 import { VeritableSimImpl } from "../VeritableSimImpl";
-import { relation, setRelation } from "./diplomacy";
+import { declareWar, relation, setRelation } from "./diplomacy";
 
 const DAY = 1440;
 
@@ -436,6 +436,90 @@ describe("international reaction", () => {
     expect(
       far.sim.read().diplomacy.coalitionCalls.some((c) => c.nation === "DDD"),
     ).toBe(false);
+  });
+
+  it("a nation never joins a coalition beside a nation it fights, nor against one it fights beside (J7c)", () => {
+    // DDD, a hostile land neighbour of the aggressor, would be called; but
+    // it fights the victim (first case) or fights beside the aggressor
+    // (second case) in a war of the scenario.
+    for (const belligerents of [
+      [["DDD"], ["BBB"]],
+      [["AAA", "DDD"], ["CCC"]],
+    ] as [string[], string[]][]) {
+      const { sim, months } = campaign({
+        nations: {
+          AAA: { personnel: 600_000 },
+          BBB: { personnel: 100_000 },
+          CCC: { personnel: 100_000 },
+          DDD: { personnel: 100_000 },
+        },
+        landNeighbours: [["AAA", "DDD"]],
+        scenario: {
+          wars: [
+            {
+              id: "old-war",
+              belligerents,
+              since: "2022-02-24",
+              intensity: 0.8,
+              fronts: [],
+            },
+          ],
+        },
+      });
+      sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+      setRelation(sim.read().diplomacy as DiplomacyState, "AAA", "DDD", -90);
+      for (let m = 0; m < 6; m++) {
+        months(1);
+        const d = sim.read().diplomacy;
+        expect(d.coalitionCalls.some((c) => c.nation === "DDD")).toBe(false);
+        const war = d.wars.find((w) => w.id !== "old-war")!;
+        expect(war.defenders).not.toContain("DDD");
+      }
+    }
+  });
+
+  it("a call lapses when a war begun since sets the nation against the side it would join (J7c)", () => {
+    const { sim } = campaign({
+      nations: {
+        AAA: { personnel: 600_000 },
+        BBB: { personnel: 100_000 },
+        CCC: { personnel: 100_000 },
+        DDD: { personnel: 100_000 },
+      },
+      landNeighbours: [["AAA", "DDD"]],
+    });
+    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    setRelation(sim.read().diplomacy as DiplomacyState, "AAA", "DDD", -90);
+    const called = () =>
+      sim.read().diplomacy.coalitionCalls.some((c) => c.nation === "DDD");
+    for (let d = 0; d < 31 && !called(); d++) sim.advance(DAY);
+    expect(called()).toBe(true);
+    // DDD then attacks the victim it was called to defend.
+    const internals = sim as unknown as {
+      ctx: Parameters<typeof declareWar>[0];
+      diplomacy: DiplomacyState;
+      politics: Parameters<typeof declareWar>[2];
+      military: Parameters<typeof declareWar>[3];
+      scenario: Parameters<typeof declareWar>[4];
+    };
+    declareWar(
+      internals.ctx,
+      internals.diplomacy,
+      internals.politics,
+      internals.military,
+      internals.scenario,
+      "DDD",
+      "BBB",
+      "none",
+      sim.read().date,
+    );
+    for (let d = 0; d < 8; d++) sim.advance(DAY);
+    // Its next update drops the call, draw or not.
+    expect(called()).toBe(false);
+    const war = sim
+      .read()
+      .diplomacy.wars.find((w) => w.aggressors.includes("AAA"))!;
+    expect(war.defenders).not.toContain("DDD");
   });
 
   it("no coalition with a casus belli, however strong the aggressor", () => {

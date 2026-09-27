@@ -136,6 +136,31 @@ export function warSide(
   return null;
 }
 
+// J7c: a nation never joins `side` of a war beside a nation it fights in
+// another war, nor against one it fights beside: the call of a coalition,
+// of a collective defence or of a guarantee is then refused. In the forced
+// invasion of Russia, Ukraine, at war with Russia, joined the coalition
+// that defended it.
+export function joinConflicts(
+  state: DiplomacyState,
+  war: War,
+  nation: NationId,
+  side: "aggressors" | "defenders",
+): boolean {
+  const friends = war[side];
+  const foes = side === "aggressors" ? war.defenders : war.aggressors;
+  for (const other of state.wars) {
+    if (other === war) continue;
+    const mine = warSide(other, nation);
+    if (mine === null) continue;
+    const ours = other[mine];
+    const theirs = mine === "aggressors" ? other.defenders : other.aggressors;
+    if (friends.some((f) => theirs.includes(f))) return true;
+    if (foes.some((f) => f !== nation && ours.includes(f))) return true;
+  }
+  return false;
+}
+
 // --- first day ------------------------------------------------------------------
 
 export function initDiplomacy(
@@ -1117,7 +1142,9 @@ export function answerCoalitionsOf(
       remove();
       continue;
     }
-    if (env.date >= call.until) {
+    // J7c: never beside a nation it fights, nor against one it fights
+    // beside (a war begun since the call included): the call lapses.
+    if (env.date >= call.until || joinConflicts(state, war, id, call.side)) {
       remove();
       continue;
     }

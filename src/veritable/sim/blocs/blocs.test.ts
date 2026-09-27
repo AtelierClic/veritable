@@ -381,6 +381,67 @@ describe("collective defence", () => {
     );
   });
 
+  it("a member at war with the victim does not come to its defence (J7c)", () => {
+    const { sim, months, internals } = campaign({
+      nations: { EEE: {}, AAA: {}, BBB: {}, CCC: {}, DDD: {} },
+      player: "EEE",
+      blocs: [pact(["AAA", "BBB", "CCC", "DDD"])],
+    });
+    for (const id of ["AAA", "CCC", "DDD"]) {
+      internals.politics.nations[id].government.ideology.sovereignty = 0;
+    }
+    // DDD already fights BBB (a member attacking a member: no call).
+    declareWar(
+      internals.ctx,
+      internals.diplomacy,
+      internals.politics,
+      internals.military,
+      internals.scenario,
+      "DDD",
+      "BBB",
+      "none",
+      sim.read().date,
+    );
+    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    months(1);
+    const war = sim
+      .read()
+      .diplomacy.wars.find((w) => w.aggressors.includes("EEE"))!;
+    expect([...war.defenders].sort()).toEqual(["AAA", "BBB", "CCC"]);
+  });
+
+  it("a call the player can no longer honour lapses without a price (J7c)", () => {
+    const { sim, months, internals } = campaign({
+      nations: { AAA: {}, BBB: {}, CCC: {}, EEE: {} },
+      player: "AAA",
+      blocs: [pact(["AAA", "BBB", "CCC"])],
+    });
+    declareWar(
+      internals.ctx,
+      internals.diplomacy,
+      internals.politics,
+      internals.military,
+      internals.scenario,
+      "EEE",
+      "BBB",
+      "none",
+      sim.read().date,
+    );
+    months(1);
+    const calls = bloc("pact")(sim.read()).calls;
+    expect(calls.length).toBe(1);
+    // The player attacks the member it was called to defend.
+    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    expect(() =>
+      sim.apply({ type: "bloc-honor", bloc: "pact", war: calls[0].war }),
+    ).toThrow();
+    months(1);
+    expect(bloc("pact")(sim.read()).calls.length).toBe(0);
+    expect(
+      sim.read().journal.some((j) => j.kind === "bloc-article5-refused"),
+    ).toBe(false);
+  });
+
   it("no call when the aggressor is a member too", () => {
     const { sim, months } = campaign({
       nations: { AAA: {}, BBB: {}, CCC: {} },

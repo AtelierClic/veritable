@@ -23,6 +23,7 @@ import {
   directAffinityInputs,
   imposeSanctions,
   isSanctioning,
+  joinWar,
   relation,
   scheduleSanctionReviews,
   setRelation,
@@ -254,6 +255,25 @@ describe("bilateral guarantees (J6b)", () => {
     days(40); // the monthly step of the blocs
     const war = internals.diplomacy.wars[0];
     expect(war.defenders).toContain("CCC");
+  });
+
+  it("keep a guarantor out of a war against a nation it fights beside (J7c)", () => {
+    const { sim, internals, days } = campaign({}, { guarantees });
+    // AAA and CCC already fight BBB together.
+    sim.apply({ type: "declare-war", target: "BBB", casusBelli: "none" });
+    joinWar(
+      internals.ctx,
+      internals.diplomacy,
+      internals.diplomacy.wars[0],
+      "CCC",
+      "aggressors",
+    );
+    sim.apply({ type: "declare-war", target: "DDD", casusBelli: "none" });
+    days(40);
+    const war = internals.diplomacy.wars.find((w) =>
+      w.defenders.includes("DDD"),
+    )!;
+    expect(war.defenders).not.toContain("CCC");
   });
 
   it("make the guarantor and the protected nation allies", () => {
