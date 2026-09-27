@@ -1,0 +1,147 @@
+{
+  "scenario": "world-2026",
+  "map": "giantworldmap",
+  "nations": 208,
+  "microstates": 28,
+  "tiles": 8002384,
+  "loadMs": 3229,
+  "loaded": null,
+  "years": 50,
+  "endDate": "2076-01-01",
+  "finalSaveBytes": 2486214,
+  "heapMbAtStart": 75,
+  "heapMbAtEnd": 87,
+  "wars": 2,
+  "windows": [
+    {
+      "year": 2026,
+      "from": "2026-01-01",
+      "saveBytes": 1743516,
+      "heapMbAtStart": 75,
+      "to": "2027-01-01",
+      "firstDayMaxMs": 83.38699999999972,
+      "firstMonthMaxMs": 83.38699999999972,
+      "ticks": 7300,
+      "meanMs": 1.266131986301371,
+      "p50Ms": 0.6254999999982829,
+      "p90Ms": 3.5449999999982538,
+      "p99Ms": 6.388800000000629,
+      "maxMs": 83.38699999999972,
+      "over10ms": 8,
+      "over100ms": 0
+    },
+    {
+      "year": 2040,
+      "from": "2040-01-01",
+      "saveBytes": 2099349,
+      "heapMbAtStart": 85,
+      "to": "2041-01-01",
+      "firstDayMaxMs": 3.9667999999946915,
+      "firstMonthMaxMs": 6.497600000002421,
+      "ticks": 7320,
+      "meanMs": 0.6963262568305756,
+      "p50Ms": 0.3062999999965541,
+      "p90Ms": 1.7131999999983236,
+      "p99Ms": 4.601699999999255,
+      "maxMs": 7.64869999999064,
+      "over10ms": 0,
+      "over100ms": 0
+    },
+    {
+      "year": 2060,
+      "from": "2060-01-01",
+      "saveBytes": 2302215,
+      "heapMbAtStart": 86,
+      "to": "2061-01-01",
+      "firstDayMaxMs": 3.5187000000150874,
+      "firstMonthMaxMs": 6.226900000008754,
+      "ticks": 7320,
+      "meanMs": 0.8440128142076568,
+      "p50Ms": 0.4274999999906868,
+      "p90Ms": 1.9843999999575317,
+      "p99Ms": 4.997299999988172,
+      "maxMs": 8.523300000000745,
+      "over10ms": 0,
+      "over100ms": 0
+    },
+    {
+      "year": 2075,
+      "from": "2075-01-01",
+      "saveBytes": 2480130,
+      "heapMbAtStart": 87,
+      "to": "2076-01-01",
+      "firstDayMaxMs": 3.630399999965448,
+      "firstMonthMaxMs": 7.801900000020396,
+      "ticks": 7300,
+      "meanMs": 0.7235987260273087,
+      "p50Ms": 0.29460000002291054,
+      "p90Ms": 1.7875999999814667,
+      "p99Ms": 4.778300000005402,
+      "maxMs": 8.395399999979418,
+      "over10ms": 0,
+      "over100ms": 0
+    }
+  ],
+  "perfByDomain": {
+    "veritable:events:tick": {
+      "calls": 365240,
+      "totalMs": 11699.638499996096,
+      "maxMs": 10.964099999982864
+    },
+    "veritable:trade:tick": {
+      "calls": 365240,
+      "totalMs": 47399.844900004406,
+      "maxMs": 7.148800000024494
+    },
+    "veritable:nations:tick": {
+      "calls": 365240,
+      "totalMs": 63732.55710000202,
+      "maxMs": 25.726000000000568
+    },
+    "veritable:war:tick": {
+      "calls": 365240,
+      "totalMs": 34259.47009998915,
+      "maxMs": 11.419499999999971
+    },
+    "veritable:blocs:tick": {
+      "calls": 7200,
+      "totalMs": 1370.3796000011707,
+      "maxMs": 9.833099999988917
+    },
+    "veritable:economy:day": {
+      "calls": 18262,
+      "totalMs": 12491.360999999262,
+      "maxMs": 5.136999999987893
+    },
+    "veritable:diplomacy:day": {
+      "calls": 18262,
+      "totalMs": 41995.058600000455,
+      "maxMs": 9.525799999999435
+    },
+    "veritable:blocs:day": {
+      "calls": 18262,
+      "totalMs": 251.5511999930368,
+      "maxMs": 1.8021000000298955
+    },
+    "veritable:events:day": {
+      "calls": 18262,
+      "totalMs": 3662.5619000040942,
+      "maxMs": 3.2466999999596737
+    },
+    "veritable:blocs:month": {
+      "calls": 600,
+      "totalMs": 912.1202999999723,
+      "maxMs": 4.247499999997672
+    },
+    "veritable:save:month": {
+      "calls": 600,
+      "totalMs": 791.121799999637,
+      "maxMs": 3.8614999999990687
+    },
+    "core:tick": {
+      "calls": 365239,
+      "totalMs": 67794.1415000102
+    }
+  },
+  "wallS": 442
+}

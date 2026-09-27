@@ -1,0 +1,96 @@
+{
+  "scenario": "world-2026",
+  "map": "giantworldmap",
+  "nations": 208,
+  "microstates": 28,
+  "tiles": 8002384,
+  "loadMs": 2062,
+  "loaded": "world-2026-2040.vsave",
+  "years": 1,
+  "endDate": "2041-01-01",
+  "finalSaveBytes": 2105332,
+  "heapMbAtStart": 81,
+  "heapMbAtEnd": 83,
+  "wars": 0,
+  "windows": [
+    {
+      "year": 2040,
+      "from": "2040-01-01",
+      "saveBytes": 2099350,
+      "heapMbAtStart": 81,
+      "to": "2041-01-01",
+      "firstDayMaxMs": 50.70170000000007,
+      "firstMonthMaxMs": 50.70170000000007,
+      "ticks": 7320,
+      "meanMs": 0.8023742486338722,
+      "p50Ms": 0.3888999999999214,
+      "p90Ms": 1.8795000000000073,
+      "p99Ms": 5.066200000000208,
+      "maxMs": 50.70170000000007,
+      "over10ms": 2,
+      "over100ms": 0
+    }
+  ],
+  "perfByDomain": {
+    "veritable:events:tick": {
+      "calls": 7320,
+      "totalMs": 281.32380000000876,
+      "maxMs": 1.5625999999992928
+    },
+    "veritable:trade:tick": {
+      "calls": 7320,
+      "totalMs": 973.1792999999366,
+      "maxMs": 6.487600000000384
+    },
+    "veritable:nations:tick": {
+      "calls": 7320,
+      "totalMs": 1375.0958999999484,
+      "maxMs": 4.871099999999842
+    },
+    "veritable:war:tick": {
+      "calls": 7320,
+      "totalMs": 7.89159999997355,
+      "maxMs": 0.3047999999998865
+    },
+    "veritable:blocs:tick": {
+      "calls": 144,
+      "totalMs": 23.565299999999752,
+      "maxMs": 1.3404000000009546
+    },
+    "veritable:economy:day": {
+      "calls": 366,
+      "totalMs": 270.00760000001264,
+      "maxMs": 1.629399999999805
+    },
+    "veritable:diplomacy:day": {
+      "calls": 366,
+      "totalMs": 892.8087999999789,
+      "maxMs": 17.590599999999995
+    },
+    "veritable:blocs:day": {
+      "calls": 366,
+      "totalMs": 7.217399999992722,
+      "maxMs": 0.4443999999998596
+    },
+    "veritable:events:day": {
+      "calls": 366,
+      "totalMs": 60.582300000001396,
+      "maxMs": 2.1349000000009255
+    },
+    "veritable:blocs:month": {
+      "calls": 12,
+      "totalMs": 24.52259999999933,
+      "maxMs": 3.087100000000646
+    },
+    "veritable:save:month": {
+      "calls": 12,
+      "totalMs": 18.239199999991797,
+      "maxMs": 2.7572999999974854
+    },
+    "core:tick": {
+      "calls": 7319,
+      "totalMs": 1494.287299999855
+    }
+  },
+  "wallS": 19
+}

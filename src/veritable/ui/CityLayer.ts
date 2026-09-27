@@ -60,6 +60,10 @@ export class CityLayerController implements Controller {
       (a, b) =>
         Number(b.capital) - Number(a.capital) || b.population - a.population,
     );
+    // J7c: the layer of the game before (a save loaded in the game) goes;
+    // its drawing loop stops with it (the names of the cities were drawn
+    // twice, the old ones at the old camera).
+    document.getElementById(CANVAS_ID)?.remove();
     const canvas = document.createElement("canvas");
     canvas.id = CANVAS_ID;
     Object.assign(canvas.style, {

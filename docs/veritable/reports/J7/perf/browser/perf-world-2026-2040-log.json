@@ -1,0 +1,20 @@
+[
+  {
+    "step": "01",
+    "title": "Sauvegarde world-2026-2040 chargée : mode population",
+    "date": "2040-01-02",
+    "capture": "perf-world-2026-2040-01-sauvegarde-world-2026-2040-chargee-mode-.png",
+    "notes": [
+      "date 2040-01-01"
+    ]
+  },
+  {
+    "step": "02",
+    "title": "Sauvegarde world-2026-2040 : ×5 pendant 60 s",
+    "date": "2040-05-31",
+    "capture": "perf-world-2026-2040-02-sauvegarde-world-2026-2040-5-pendant-60-.png",
+    "notes": [
+      "de 2040-01-03 à 2040-05-31"
+    ]
+  }
+]

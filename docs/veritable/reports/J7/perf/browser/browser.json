@@ -1,0 +1,255 @@
+[
+  {
+    "save": "world-2026-2026",
+    "loadedAt": "2026-01-01",
+    "windows": [
+      {
+        "from": "2026-01-04",
+        "to": "2026-02-02",
+        "ticksPerSecond": 49.52185792349727,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": true
+      },
+      {
+        "from": "2026-02-03",
+        "to": "2026-03-04",
+        "ticksPerSecond": 49.67412063959078,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2026-03-05",
+        "to": "2026-04-03",
+        "ticksPerSecond": 49.76533072496267,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2026-04-04",
+        "to": "2026-05-03",
+        "ticksPerSecond": 49.7495368146636,
+        "monthStart": true,
+        "cards": true,
+        "firstMonth": false
+      },
+      {
+        "from": "2026-05-04",
+        "to": "2026-06-01",
+        "ticksPerSecond": 49.69517335627463,
+        "monthStart": true,
+        "cards": true,
+        "firstMonth": false
+      }
+    ],
+    "warmMin": 49.67412063959078,
+    "warmMedian": 49.7495368146636,
+    "warmUnder49": 0,
+    "monthStartWindow": {
+      "from": "2026-02-03",
+      "to": "2026-03-04",
+      "ticksPerSecond": 49.67412063959078,
+      "monthStart": true,
+      "cards": false,
+      "firstMonth": false
+    },
+    "cardWindow": {
+      "from": "2026-04-04",
+      "to": "2026-05-03",
+      "ticksPerSecond": 49.7495368146636,
+      "monthStart": true,
+      "cards": true,
+      "firstMonth": false
+    }
+  },
+  {
+    "save": "world-2026-2040",
+    "loadedAt": "2040-01-01",
+    "windows": [
+      {
+        "from": "2040-01-04",
+        "to": "2040-02-02",
+        "ticksPerSecond": 49.481721622659215,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": true
+      },
+      {
+        "from": "2040-02-03",
+        "to": "2040-03-03",
+        "ticksPerSecond": 49.413007548275424,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2040-03-04",
+        "to": "2040-04-02",
+        "ticksPerSecond": 49.685184391998966,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2040-04-03",
+        "to": "2040-05-02",
+        "ticksPerSecond": 49.752950864665614,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2040-05-03",
+        "to": "2040-05-31",
+        "ticksPerSecond": 49.94782236412419,
+        "monthStart": false,
+        "cards": true,
+        "firstMonth": false
+      }
+    ],
+    "warmMin": 49.413007548275424,
+    "warmMedian": 49.752950864665614,
+    "warmUnder49": 0,
+    "monthStartWindow": {
+      "from": "2040-02-03",
+      "to": "2040-03-03",
+      "ticksPerSecond": 49.413007548275424,
+      "monthStart": true,
+      "cards": false,
+      "firstMonth": false
+    },
+    "cardWindow": {
+      "from": "2040-05-03",
+      "to": "2040-05-31",
+      "ticksPerSecond": 49.94782236412419,
+      "monthStart": false,
+      "cards": true,
+      "firstMonth": false
+    }
+  },
+  {
+    "save": "world-2026-2060",
+    "loadedAt": "2060-01-01",
+    "windows": [
+      {
+        "from": "2060-01-04",
+        "to": "2060-02-02",
+        "ticksPerSecond": 49.572225878404986,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": true
+      },
+      {
+        "from": "2060-02-03",
+        "to": "2060-03-03",
+        "ticksPerSecond": 49.78113466655223,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2060-03-04",
+        "to": "2060-04-02",
+        "ticksPerSecond": 49.798658870607134,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2060-04-03",
+        "to": "2060-05-02",
+        "ticksPerSecond": 49.703067022027724,
+        "monthStart": true,
+        "cards": true,
+        "firstMonth": false
+      },
+      {
+        "from": "2060-05-03",
+        "to": "2060-05-31",
+        "ticksPerSecond": 50.25802109041956,
+        "monthStart": false,
+        "cards": true,
+        "firstMonth": false
+      }
+    ],
+    "warmMin": 49.703067022027724,
+    "warmMedian": 49.798658870607134,
+    "warmUnder49": 0,
+    "monthStartWindow": {
+      "from": "2060-02-03",
+      "to": "2060-03-03",
+      "ticksPerSecond": 49.78113466655223,
+      "monthStart": true,
+      "cards": false,
+      "firstMonth": false
+    },
+    "cardWindow": {
+      "from": "2060-04-03",
+      "to": "2060-05-02",
+      "ticksPerSecond": 49.703067022027724,
+      "monthStart": true,
+      "cards": true,
+      "firstMonth": false
+    }
+  },
+  {
+    "save": "world-2026-2075",
+    "loadedAt": "2075-01-01",
+    "windows": [
+      {
+        "from": "2075-01-04",
+        "to": "2075-02-02",
+        "ticksPerSecond": 49.575615635136096,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": true
+      },
+      {
+        "from": "2075-02-03",
+        "to": "2075-03-04",
+        "ticksPerSecond": 49.73119432034193,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2075-03-05",
+        "to": "2075-04-03",
+        "ticksPerSecond": 49.40795638470057,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2075-04-04",
+        "to": "2075-05-03",
+        "ticksPerSecond": 49.68092851942267,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      },
+      {
+        "from": "2075-05-04",
+        "to": "2075-06-01",
+        "ticksPerSecond": 49.60537155308449,
+        "monthStart": true,
+        "cards": false,
+        "firstMonth": false
+      }
+    ],
+    "warmMin": 49.40795638470057,
+    "warmMedian": 49.68092851942267,
+    "warmUnder49": 0,
+    "monthStartWindow": {
+      "from": "2075-02-03",
+      "to": "2075-03-04",
+      "ticksPerSecond": 49.73119432034193,
+      "monthStart": true,
+      "cards": false,
+      "firstMonth": false
+    },
+    "cardWindow": null
+  }
+]

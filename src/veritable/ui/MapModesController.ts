@@ -39,6 +39,9 @@ const DENSITY_MAX_WIDTH = 2100;
 const DENSITY_ALPHA = 190;
 const BAR_ID = "veritable-map-modes";
 const CANVAS_ID = "veritable-density-layer";
+// J7c: the keys of the controller of the game in play only (a save loaded
+// in the game makes a new one).
+let activeKeys: ((e: KeyboardEvent) => void) | null = null;
 
 export class MapModesController implements Controller {
   private mode: MapMode = "political";
@@ -63,7 +66,10 @@ export class MapModesController implements Controller {
 
   init(): void {
     this.legibility();
+    if (activeKeys !== null) window.removeEventListener("keydown", activeKeys);
+    activeKeys = this.onKey;
     window.addEventListener("keydown", this.onKey);
+    document.getElementById(CANVAS_ID)?.remove();
     const canvas = document.createElement("canvas");
     canvas.id = CANVAS_ID;
     Object.assign(canvas.style, {

@@ -1,0 +1,814 @@
+{
+  "test": "exile-cut",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "years": 3,
+  "dissolved": 20,
+  "within12to36Months": 20,
+  "share": 1,
+  "criterion": true,
+  "months": [
+    18,
+    19,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    19,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18
+  ],
+  "results": [
+    {
+      "seed": 1,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048903163248763,
+        "support": 0.08270284119859612,
+        "annexation": 0.024244192438827562,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.594873865417078,
+          "s": 0,
+          "a": 0.11870571601071847
+        },
+        {
+          "month": 12,
+          "r": 0.5350738383090963,
+          "s": 0,
+          "a": 0.12616137987793627
+        },
+        {
+          "month": 18,
+          "r": 0.5333194438083042,
+          "s": 0,
+          "a": 0.14553726217834587
+        }
+      ],
+      "wallS": 25
+    },
+    {
+      "seed": 2,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7207205401146362,
+        "support": 0.08270577181791001,
+        "annexation": 0.024217657385823543,
+        "recognizers": 133
+      },
+      "dissolvedAfter": 19,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.6129471414322966,
+          "s": 0,
+          "a": 0.07661091058328323
+        },
+        {
+          "month": 12,
+          "r": 0.5332896904427797,
+          "s": 0,
+          "a": 0.12817604475115524
+        },
+        {
+          "month": 18,
+          "r": 0.5298892822260406,
+          "s": 0,
+          "a": 0.13578916123986506
+        }
+      ],
+      "wallS": 26
+    },
+    {
+      "seed": 3,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048927834775968,
+        "support": 0.08270115236137801,
+        "annexation": 0.024239823678281328,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5947087925255857,
+          "s": 0,
+          "a": 0.11920295647180207
+        },
+        {
+          "month": 12,
+          "r": 0.5347862246306434,
+          "s": 0,
+          "a": 0.12629540341731196
+        },
+        {
+          "month": 18,
+          "r": 0.5315113785957106,
+          "s": 0,
+          "a": 0.1461567684612355
+        }
+      ],
+      "wallS": 25
+    },
+    {
+      "seed": 4,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7049003860447819,
+        "support": 0.08269943446563383,
+        "annexation": 0.024228084875696283,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5949233636483492,
+          "s": 0,
+          "a": 0.11890939763367889
+        },
+        {
+          "month": 12,
+          "r": 0.5341052233701721,
+          "s": 0,
+          "a": 0.12656332258066505
+        },
+        {
+          "month": 18,
+          "r": 0.5328255015790201,
+          "s": 0,
+          "a": 0.14562447243887283
+        }
+      ],
+      "wallS": 25
+    },
+    {
+      "seed": 5,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048987688310169,
+        "support": 0.08270227104463103,
+        "annexation": 0.02422919119897714,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5940592652996399,
+          "s": 0,
+          "a": 0.11907797516448576
+        },
+        {
+          "month": 12,
+          "r": 0.5336242538820241,
+          "s": 0,
+          "a": 0.12668301310157973
+        },
+        {
+          "month": 18,
+          "r": 0.531705791807796,
+          "s": 0,
+          "a": 0.1325169683565149
+        }
+      ],
+      "wallS": 24
+    },
+    {
+      "seed": 6,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048821394842041,
+        "support": 0.08269840140138653,
+        "annexation": 0.02424834693031256,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5943564870480709,
+          "s": 0,
+          "a": 0.11916170152628852
+        },
+        {
+          "month": 12,
+          "r": 0.5328670374059066,
+          "s": 0,
+          "a": 0.12686625874367882
+        },
+        {
+          "month": 18,
+          "r": 0.5303950872701574,
+          "s": 0,
+          "a": 0.14669490677353864
+        }
+      ],
+      "wallS": 25
+    },
+    {
+      "seed": 7,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048871945504991,
+        "support": 0.08269775743889421,
+        "annexation": 0.02423987582954327,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5934866090721964,
+          "s": 0,
+          "a": 0.11922733787246782
+        },
+        {
+          "month": 12,
+          "r": 0.5329561230947767,
+          "s": 0,
+          "a": 0.12646783853894508
+        },
+        {
+          "month": 18,
+          "r": 0.529289351033275,
+          "s": 0,
+          "a": 0.141081845055503
+        }
+      ],
+      "wallS": 26
+    },
+    {
+      "seed": 8,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.704893518267968,
+        "support": 0.08270730692091849,
+        "annexation": 0.024230987471964886,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5942029815094818,
+          "s": 0,
+          "a": 0.11891957448644822
+        },
+        {
+          "month": 12,
+          "r": 0.5352456798188996,
+          "s": 0,
+          "a": 0.1265194255716505
+        },
+        {
+          "month": 18,
+          "r": 0.5338076306052248,
+          "s": 0,
+          "a": 0.1454215584506976
+        }
+      ],
+      "wallS": 26
+    },
+    {
+      "seed": 9,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048948714346992,
+        "support": 0.0827029311584051,
+        "annexation": 0.024236166660967385,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5946131982535309,
+          "s": 0,
+          "a": 0.11893074526907826
+        },
+        {
+          "month": 12,
+          "r": 0.5329691479209381,
+          "s": 0,
+          "a": 0.12609555974363718
+        },
+        {
+          "month": 18,
+          "r": 0.4984052107140644,
+          "s": 0,
+          "a": 0.12611889742461024
+        }
+      ],
+      "wallS": 26
+    },
+    {
+      "seed": 10,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.704893131768863,
+        "support": 0.08270072888963015,
+        "annexation": 0.024242252995056963,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5942441218922989,
+          "s": 0,
+          "a": 0.11974894267598533
+        },
+        {
+          "month": 12,
+          "r": 0.5353508046368814,
+          "s": 0,
+          "a": 0.1266545500698361
+        },
+        {
+          "month": 18,
+          "r": 0.5337820241940359,
+          "s": 0,
+          "a": 0.13225451971593002
+        }
+      ],
+      "wallS": 27
+    },
+    {
+      "seed": 11,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.704890191431829,
+        "support": 0.08270502966774781,
+        "annexation": 0.024242461360559554,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5943244453796801,
+          "s": 0,
+          "a": 0.11919263088986934
+        },
+        {
+          "month": 12,
+          "r": 0.5323591866964066,
+          "s": 0,
+          "a": 0.12644063497563288
+        },
+        {
+          "month": 18,
+          "r": 0.5296314063048757,
+          "s": 0,
+          "a": 0.132224263002007
+        }
+      ],
+      "wallS": 25
+    },
+    {
+      "seed": 12,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048899365764486,
+        "support": 0.08270240478501503,
+        "annexation": 0.024233205186930274,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 19,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5953808746416063,
+          "s": 0,
+          "a": 0.11887572837109456
+        },
+        {
+          "month": 12,
+          "r": 0.5326619187590288,
+          "s": 0,
+          "a": 0.12637848559270942
+        },
+        {
+          "month": 18,
+          "r": 0.5296042298747556,
+          "s": 0,
+          "a": 0.1459054365483105
+        }
+      ],
+      "wallS": 26
+    },
+    {
+      "seed": 13,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.704889232689263,
+        "support": 0.08270215870918242,
+        "annexation": 0.024234076109573163,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5952678682819336,
+          "s": 0,
+          "a": 0.11905896281714239
+        },
+        {
+          "month": 12,
+          "r": 0.5010636398885343,
+          "s": 0,
+          "a": 0.12627499285437355
+        },
+        {
+          "month": 18,
+          "r": 0.49939808293346716,
+          "s": 0,
+          "a": 0.13181288135828526
+        }
+      ],
+      "wallS": 24
+    },
+    {
+      "seed": 14,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7049009338053226,
+        "support": 0.08270578244431992,
+        "annexation": 0.02423692562780775,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5952148000476335,
+          "s": 0,
+          "a": 0.118828985579264
+        },
+        {
+          "month": 12,
+          "r": 0.5358996711443311,
+          "s": 0,
+          "a": 0.12629294146076736
+        },
+        {
+          "month": 18,
+          "r": 0.5340329368364595,
+          "s": 0,
+          "a": 0.1265491077427336
+        }
+      ],
+      "wallS": 24
+    },
+    {
+      "seed": 15,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048879847237924,
+        "support": 0.08270121519699412,
+        "annexation": 0.024249561511613556,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5946313284906436,
+          "s": 0,
+          "a": 0.1188540733284445
+        },
+        {
+          "month": 12,
+          "r": 0.5335906355447787,
+          "s": 0,
+          "a": 0.12557810422873855
+        },
+        {
+          "month": 18,
+          "r": 0.531253262120942,
+          "s": 0,
+          "a": 0.13958033525330596
+        }
+      ],
+      "wallS": 25
+    },
+    {
+      "seed": 16,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048876804027583,
+        "support": 0.08270273150753923,
+        "annexation": 0.024242341638953776,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5947484606818902,
+          "s": 0,
+          "a": 0.11897696403272409
+        },
+        {
+          "month": 12,
+          "r": 0.5350649042373412,
+          "s": 0,
+          "a": 0.12667578043342292
+        },
+        {
+          "month": 18,
+          "r": 0.5317114517361243,
+          "s": 0,
+          "a": 0.14555123624607688
+        }
+      ],
+      "wallS": 23
+    },
+    {
+      "seed": 17,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048887289233366,
+        "support": 0.08269867767479809,
+        "annexation": 0.024244047875410606,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5941808115196034,
+          "s": 0,
+          "a": 0.11915239082063774
+        },
+        {
+          "month": 12,
+          "r": 0.5321247389061737,
+          "s": 0,
+          "a": 0.12647838795062868
+        },
+        {
+          "month": 18,
+          "r": 0.5306595441494256,
+          "s": 0,
+          "a": 0.13265454630802248
+        }
+      ],
+      "wallS": 23
+    },
+    {
+      "seed": 18,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048999771587617,
+        "support": 0.08270455867262329,
+        "annexation": 0.02423040471269532,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.5951205541351705,
+          "s": 0,
+          "a": 0.11902672822180317
+        },
+        {
+          "month": 12,
+          "r": 0.5338821317336471,
+          "s": 0,
+          "a": 0.1266645814099516
+        },
+        {
+          "month": 18,
+          "r": 0.5313374306518363,
+          "s": 0,
+          "a": 0.12692069583614365
+        }
+      ],
+      "wallS": 23
+    },
+    {
+      "seed": 19,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7049085571963861,
+        "support": 0.08270490058828386,
+        "annexation": 0.024219300772558443,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.593076824633849,
+          "s": 0,
+          "a": 0.11940862612848838
+        },
+        {
+          "month": 12,
+          "r": 0.5008186181753796,
+          "s": 0,
+          "a": 0.12649031449591877
+        },
+        {
+          "month": 18,
+          "r": 0.4995718966255311,
+          "s": 0,
+          "a": 0.13229549997519174
+        }
+      ],
+      "wallS": 23
+    },
+    {
+      "seed": 20,
+      "cut": true,
+      "opened": "exiled",
+      "annexer": "RUS",
+      "start": {
+        "recognition": 0.7048901005055406,
+        "support": 0.08270002804736803,
+        "annexation": 0.024243413374672618,
+        "recognizers": 105
+      },
+      "dissolvedAfter": 18,
+      "returnedAfter": null,
+      "status": "dissolved",
+      "reason": "threshold",
+      "returns": [],
+      "track": [
+        {
+          "month": 6,
+          "r": 0.594257272105137,
+          "s": 0,
+          "a": 0.11943640225956373
+        },
+        {
+          "month": 12,
+          "r": 0.5314529989193896,
+          "s": 0,
+          "a": 0.1268534093342868
+        },
+        {
+          "month": 18,
+          "r": 0.5286331929476494,
+          "s": 0,
+          "a": 0.1466545471912276
+        }
+      ],
+      "wallS": 22
+    }
+  ]
+}

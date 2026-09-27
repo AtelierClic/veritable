@@ -1058,6 +1058,35 @@ Plan, liste « à valider » et écarts : `docs/veritable/plans/J7.md`.
      - les guides visent les écrans « Objectifs » et « Journal ».
 - **Écarts relevés, laissés** : 28 points de recherche (J6b) ; retraités à 53 % dans la campagne honnête ; clic synthétique sur la petite carte ; sanctions de l'UE contre la Russie rejetées dans europe-10 ; une cinquantaine de cartes d'information quand toutes les nations sanctionnent un tireur (repliées en « + 48 »).
 
+### Rythme, performance, tests forcés (J7c.5)
+
+- **Rythme** (`tools/veritable/playtest/rhythmJ7.ts`, `docs/veritable/reports/J7/rhythm/`) : France sur la carte du monde, cinq ans à ×5, sans rien répondre (le gouvernement tranche), villes affichées et mode population actif, 13 minutes réelles.
+  - Pauses automatiques : 6,2 % du temps réel (critère : 10 % au plus).
+  - Les chiffres de la France (PIB, dette, population, stabilité), relevés toutes les deux secondes réelles pendant deux ans, bougent chaque semaine de jeu : 103 semaines, aucune immobile.
+  - 31 fenêtres de 12 s de 2028 à 2030, entre 49,45 et 50,1 ticks par seconde (médiane 49,75), dont une qui traverse un 1er du mois et une avec une carte d'événement.
+  - Une première passe lisait quatre fenêtres à 37 ticks/s. Elles contenaient les trois secondes d'une carte, que l'outil n'écartait pas : le jeu reprend quelques échantillons avant que la date bouge. Toute pause survenue depuis le changement de date précédent écarte désormais la fenêtre.
+  - Jours du mois : le journal de cette campagne ne compte que 17 événements en cinq ans (ceux de la France et du monde, plus les scriptés des IA), trop peu pour une part par jour. La part se mesure sur toutes les instances des campagnes mondiales (J7c.6).
+- **Performance sur le cœur** (`perfWorld.ts`, `docs/veritable/reports/J7/perf/`), graine 42 :
+  - 50 ans du monde en 7 min 22 s.
+  - Sauvegarde de 2,49 Mo à cinquante ans (critère : moins de 5 Mo) ; tas de 75 à 87 Mo.
+  - Aucun tick au-delà de 100 ms, que l'année suive une campagne continue ou un démarrage à froid (chargement de la sauvegarde de l'année dans un processus neuf) :
+
+| Fenêtre d'un an       | Continu : p99 | Continu : maximum    | À froid : p99 | À froid : maximum |
+| --------------------- | ------------- | -------------------- | ------------- | ----------------- |
+| 2026 (campagne neuve) | 6,4 ms        | 83 ms (premier jour) | idem          | idem              |
+| 2040                  | 4,6 ms        | 7,6 ms               | 5,1 ms        | 51 ms             |
+| 2060                  | 5,0 ms        | 8,5 ms               | 5,7 ms        | 38 ms             |
+| 2075                  | 4,8 ms        | 8,4 ms               | 5,6 ms        | 53 ms             |
+
+- **Navigateur** (`tools/veritable/playtest/perfBrowserJ7.ts`, `docs/veritable/reports/J7/perf/browser/`) : les quatre sauvegardes chargées chacune dans une page neuve, avec le mode population, les villes et les pauses automatiques à 0 s (les cartes s'affichent sans arrêter le jeu), puis ×5 pendant 60 s. Les 20 fenêtres de 12 s tournent entre 49,41 et 50,26 ticks/s, y compris le premier mois après le chargement, les fenêtres qui traversent un 1er du mois et celles qui portent des cartes.
+- **Tests forcés** (`forcedJ7c.ts`, carte du monde sur le cœur, 20 graines chacun, `docs/veritable/reports/J7/forced/`) :
+  - **Bombe H sur Paris** : 13,0 millions d'habitants dans les 40 tuiles ; 2,09 millions de morts, toujours (critère : de l'ordre de 1 à 3) ; aucune tuile ne change de propriétaire ; la contamination au point zéro guérit 2,00 fois plus vite avec 2 points de PIB d'infrastructures et 2 % d'aide que sans.
+  - **Exil** : l'Autriche, annexée par la Russie par traité le troisième jour, part en exil dans les 20 graines. Sa reconnaissance vaut 0,71, son soutien 0,08, puis 0,17 quand les partenaires de l'UE deviennent hostiles à la Russie. R + S reste autour de 0,70 jusqu'au 24e ou 30e mois, puis une grande économie se retire. Exil de 24 mois ou plus dans les 20 graines (critère : 70 %).
+  - **Soutien coupé** : dissous en 18 ou 19 mois dans les 20 graines (critère : entre 12 et 36 mois dans 80 %).
+  - **Libération** : l'Ukraine annexée ; la France, en guerre contre la Russie, lui reprend 400 tuiles et signe un cessez-le-feu le lendemain. Les 373 à 400 tuiles qu'elle tient à la paix reviennent à l'Ukraine, qui quitte l'exil dans les 20 graines. Une première version signait un mois plus tard : la Russie reprenait la poche dans 16 graines sur 20 (la France n'y a pas d'armée).
+  - **Baroud** : l'Ukraine, soutien coupé, est dissoute en 395 ou 396 jours. Le joueur continue avec la Moldavie ; sauvegardée et rechargée, la campagne garde la Moldavie et toutes les entrées du journal (le jeu rechargé peut en ajouter une au tick suivant).
+- **Corrigé en mesurant** : après le chargement d'une sauvegarde en jeu, les noms des villes étaient dessinés deux fois, la couche de la partie précédente continuant de dessiner à l'ancienne caméra. La couche de densité se dédoublait de même et les touches des modes restaient liées à l'ancienne partie. Les couches de la partie précédente sont retirées.
+
 ## À compléter par Claude Code
 
 - Commit de départ du fork (`upstream-base`) : `4bf92e3c98201326003f790839e04dfcc43ff41a` (« meta: raise saturation midpoints… #5587 »), tag `upstream-base`. Noté le 2026-09-21.

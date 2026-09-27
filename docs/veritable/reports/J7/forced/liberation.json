@@ -1,0 +1,292 @@
+{
+  "test": "liberation",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "years": 3,
+  "returnedAll": true,
+  "heldAtPeaceMin": 373,
+  "backFromExile": 20,
+  "criterion": true,
+  "results": [
+    {
+      "seed": 1,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 376,
+      "stillFrench": 0,
+      "returned": 376,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 6
+    },
+    {
+      "seed": 2,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 385,
+      "stillFrench": 0,
+      "returned": 385,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 6
+    },
+    {
+      "seed": 3,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 400,
+      "stillFrench": 0,
+      "returned": 400,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 6
+    },
+    {
+      "seed": 4,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 377,
+      "stillFrench": 0,
+      "returned": 377,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 6
+    },
+    {
+      "seed": 5,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 386,
+      "stillFrench": 0,
+      "returned": 386,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 6,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 373,
+      "stillFrench": 0,
+      "returned": 373,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 7,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 384,
+      "stillFrench": 0,
+      "returned": 384,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 8,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 377,
+      "stillFrench": 0,
+      "returned": 377,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 9,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 383,
+      "stillFrench": 0,
+      "returned": 383,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 10,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 380,
+      "stillFrench": 0,
+      "returned": 380,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 11,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 385,
+      "stillFrench": 0,
+      "returned": 385,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 12,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 400,
+      "stillFrench": 0,
+      "returned": 400,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 13,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 400,
+      "stillFrench": 0,
+      "returned": 400,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 14,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 389,
+      "stillFrench": 0,
+      "returned": 389,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 15,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 377,
+      "stillFrench": 0,
+      "returned": 377,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 16,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 382,
+      "stillFrench": 0,
+      "returned": 382,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 17,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 380,
+      "stillFrench": 0,
+      "returned": 380,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 18,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 374,
+      "stillFrench": 0,
+      "returned": 374,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 19,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 383,
+      "stillFrench": 0,
+      "returned": 383,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    },
+    {
+      "seed": 20,
+      "exiled": "exiled",
+      "taken": 400,
+      "heldAtPeace": 381,
+      "stillFrench": 0,
+      "returned": 381,
+      "status": "active",
+      "ways": [
+        "liberation"
+      ],
+      "wallS": 5
+    }
+  ]
+}

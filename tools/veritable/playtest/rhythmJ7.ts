@@ -77,6 +77,14 @@ async function main(): Promise<void> {
   }
   await t.eval(`vt.speed("⏸")`);
   const realMs = Date.now() - started;
+  // The events of the campaign by day of the month: the journal's (five
+  // years are kept in full): the player's, the world's and the scripted
+  // ones of the AI.
+  const eventDays = await t.eval<number[]>(`vt.view().then((v) => {
+    const days = new Array(31).fill(0);
+    for (const j of v.journal) if (j.kind === "event-occurred") days[Number(j.date.slice(8, 10)) - 1] += 1;
+    return days;
+  })`);
 
   // Pauses: the time of the samples in a pause.
   let pausedMs = 0;
@@ -101,16 +109,22 @@ async function main(): Promise<void> {
   const stillWeeks = weeks.filter(([, s]) => !s.has("changed")).length;
 
   // Ticks a second over windows of 12 s: the date changes and their times.
+  // A change follows a pause when any sample since the change before was
+  // paused (J7c: the game resumes some samples before the date moves; the
+  // window then held the three seconds of a card and read 37 ticks/s).
   const changes: { t: number; day: number; paused: boolean; cards: number }[] =
     [];
+  let pausedSince = false;
   for (let i = 1; i < samples.length; i++) {
+    pausedSince = pausedSince || samples[i - 1].paused || samples[i].paused;
     if (samples[i].date !== samples[i - 1].date) {
       changes.push({
         t: samples[i].t,
         day: dayIndex(samples[i].date),
-        paused: samples[i].paused || samples[i - 1].paused,
+        paused: pausedSince,
         cards: samples[i].cards,
       });
+      pausedSince = false;
     }
   }
   const windows: {
@@ -139,8 +153,15 @@ async function main(): Promise<void> {
     i = j; // windows side by side
   }
   const rates = windows.map((w) => w.ticksPerSecond).sort((a, b) => a - b);
+  const eventsTotal = eventDays.reduce((a, b) => a + b, 0);
+  const busiest = eventDays.indexOf(Math.max(...eventDays));
   const summary = {
     years: YEARS,
+    events: eventsTotal,
+    busiestDay: busiest + 1,
+    busiestDayShare: eventsTotal > 0 ? eventDays[busiest] / eventsTotal : 0,
+    noDayAbove8pct:
+      eventsTotal > 0 && eventDays.every((d) => d / eventsTotal <= 0.08),
     realMinutes: realMs / 60000,
     pausedShare: pausedMs / realMs,
     pausesUnder10pct: pausedMs / realMs <= 0.1,
@@ -158,8 +179,13 @@ async function main(): Promise<void> {
   fs.mkdirSync(OUT, { recursive: true });
   fs.writeFileSync(
     path.join(OUT, "rhythm.json"),
-    `${JSON.stringify({ ...summary, windowsList: windows }, null, 2)}\n`,
+    `${JSON.stringify({ ...summary, eventDays, windowsList: windows }, null, 2)}\n`,
   );
+  // The samples themselves, to look into a slow window (outside the
+  // repository: a large file).
+  if (process.env.RHYTHM_SAMPLES !== undefined) {
+    fs.writeFileSync(process.env.RHYTHM_SAMPLES, JSON.stringify(samples));
+  }
 }
 
 main().catch((e) => {

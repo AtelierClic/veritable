@@ -1,0 +1,249 @@
+{
+  "years": 5,
+  "events": 17,
+  "busiestDay": 9,
+  "busiestDayShare": 0.11764705882352941,
+  "noDayAbove8pct": false,
+  "realMinutes": 13.021983333333333,
+  "pausedShare": 0.0618575767388415,
+  "pausesUnder10pct": true,
+  "weeks": 103,
+  "weeksWithoutChange": 0,
+  "windows": 31,
+  "ticksPerSecondMin": 49.45429740791269,
+  "ticksPerSecondMedian": 49.74996354529805,
+  "windowsUnder49": 0,
+  "monthStartWindow": {
+    "from": "2028-01-01",
+    "ticksPerSecond": 49.59638801475103,
+    "monthStart": true,
+    "cards": false
+  },
+  "cardWindow": {
+    "from": "2028-04-28",
+    "ticksPerSecond": 49.89118560379319,
+    "monthStart": true,
+    "cards": true
+  },
+  "eventDays": [
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    1,
+    0,
+    2,
+    1,
+    1,
+    0,
+    1,
+    0,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0
+  ],
+  "windowsList": [
+    {
+      "from": "2028-01-01",
+      "ticksPerSecond": 49.59638801475103,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-01-31",
+      "ticksPerSecond": 49.45429740791269,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-03-10",
+      "ticksPerSecond": 49.710734947503745,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-04-28",
+      "ticksPerSecond": 49.89118560379319,
+      "monthStart": true,
+      "cards": true
+    },
+    {
+      "from": "2028-05-28",
+      "ticksPerSecond": 49.81576754932828,
+      "monthStart": true,
+      "cards": true
+    },
+    {
+      "from": "2028-06-27",
+      "ticksPerSecond": 49.72735690523731,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-07-27",
+      "ticksPerSecond": 49.75465806538892,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-08-26",
+      "ticksPerSecond": 49.67965189979939,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-10-11",
+      "ticksPerSecond": 49.903204990320496,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-11-10",
+      "ticksPerSecond": 49.653708190299895,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2028-12-10",
+      "ticksPerSecond": 49.533276967861326,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-01-09",
+      "ticksPerSecond": 49.74100373915767,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-02-08",
+      "ticksPerSecond": 49.817051174129986,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-03-29",
+      "ticksPerSecond": 49.83674170819729,
+      "monthStart": true,
+      "cards": true
+    },
+    {
+      "from": "2029-04-28",
+      "ticksPerSecond": 49.80122442318825,
+      "monthStart": true,
+      "cards": true
+    },
+    {
+      "from": "2029-05-28",
+      "ticksPerSecond": 49.64903269988016,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-07-15",
+      "ticksPerSecond": 49.557401141522796,
+      "monthStart": true,
+      "cards": true
+    },
+    {
+      "from": "2029-08-14",
+      "ticksPerSecond": 49.78583507155204,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-09-13",
+      "ticksPerSecond": 49.86330576524258,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-10-13",
+      "ticksPerSecond": 49.79352855829928,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-11-12",
+      "ticksPerSecond": 49.780280142805175,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2029-12-12",
+      "ticksPerSecond": 49.5243950339049,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-01-26",
+      "ticksPerSecond": 49.74996354529805,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-02-25",
+      "ticksPerSecond": 49.90964632991997,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-04-18",
+      "ticksPerSecond": 49.640958926360554,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-05-18",
+      "ticksPerSecond": 49.731194320373696,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-06-17",
+      "ticksPerSecond": 49.82903486312284,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-07-17",
+      "ticksPerSecond": 49.550627071747726,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-08-16",
+      "ticksPerSecond": 49.80721174076842,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-09-15",
+      "ticksPerSecond": 49.83288798767091,
+      "monthStart": true,
+      "cards": false
+    },
+    {
+      "from": "2030-11-15",
+      "ticksPerSecond": 49.71840523931031,
+      "monthStart": true,
+      "cards": true
+    }
+  ]
+}
