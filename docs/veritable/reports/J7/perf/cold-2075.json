@@ -4,92 +4,92 @@
   "nations": 208,
   "microstates": 28,
   "tiles": 8002384,
-  "loadMs": 2104,
+  "loadMs": 2081,
   "loaded": "world-2026-2075.vsave",
   "years": 1,
   "endDate": "2076-01-01",
-  "finalSaveBytes": 2486214,
+  "finalSaveBytes": 2483208,
   "heapMbAtStart": 82,
   "heapMbAtEnd": 85,
-  "wars": 2,
+  "wars": 0,
   "windows": [
     {
       "year": 2075,
       "from": "2075-01-01",
-      "saveBytes": 2480130,
+      "saveBytes": 2474639,
       "heapMbAtStart": 83,
       "to": "2076-01-01",
-      "firstDayMaxMs": 52.5933,
-      "firstMonthMaxMs": 52.5933,
+      "firstDayMaxMs": 31.858099999999467,
+      "firstMonthMaxMs": 31.858099999999467,
       "ticks": 7300,
-      "meanMs": 0.8667388219178109,
-      "p50Ms": 0.37519999999949505,
-      "p90Ms": 2.010099999999511,
-      "p99Ms": 5.572899999999208,
-      "maxMs": 52.5933,
-      "over10ms": 3,
+      "meanMs": 0.8273310684931725,
+      "p50Ms": 0.3765000000021246,
+      "p90Ms": 1.9320999999999913,
+      "p99Ms": 5.458499999998821,
+      "maxMs": 34.76299999999901,
+      "over10ms": 8,
       "over100ms": 0
     }
   ],
   "perfByDomain": {
     "veritable:events:tick": {
       "calls": 7300,
-      "totalMs": 278.5460999998945,
-      "maxMs": 1.58140000000094
+      "totalMs": 299.8970000000145,
+      "maxMs": 1.6288000000004104
     },
     "veritable:trade:tick": {
       "calls": 7300,
-      "totalMs": 984.5636000000559,
-      "maxMs": 6.526299999999992
+      "totalMs": 946.1592999998566,
+      "maxMs": 15.53859999999986
     },
     "veritable:nations:tick": {
       "calls": 7300,
-      "totalMs": 1628.429499999986,
-      "maxMs": 5.457899999999881
+      "totalMs": 1595.759800000178,
+      "maxMs": 5.757300000000214
     },
     "veritable:war:tick": {
       "calls": 7300,
-      "totalMs": 145.16329999998334,
-      "maxMs": 3.6008999999999105
+      "totalMs": 9.124500000107219,
+      "maxMs": 0.2705000000005384
     },
     "veritable:blocs:tick": {
       "calls": 144,
-      "totalMs": 45.218199999993885,
-      "maxMs": 2.1322000000000116
+      "totalMs": 34.85070000000542,
+      "maxMs": 1.9627000000000407
     },
     "veritable:economy:day": {
       "calls": 365,
-      "totalMs": 274.16969999999947,
-      "maxMs": 4.132499999999709
+      "totalMs": 274.0603000000183,
+      "maxMs": 3.0843000000004395
     },
     "veritable:diplomacy:day": {
       "calls": 365,
-      "totalMs": 901.7075999999861,
-      "maxMs": 17.583599999999933
+      "totalMs": 878.7546000000157,
+      "maxMs": 18.157799999999952
     },
     "veritable:blocs:day": {
       "calls": 365,
-      "totalMs": 7.364300000008825,
-      "maxMs": 0.2962999999999738
+      "totalMs": 8.45729999998457,
+      "maxMs": 0.43589999999858264
     },
     "veritable:events:day": {
       "calls": 365,
-      "totalMs": 69.0188000000253,
-      "maxMs": 3.665299999999661
+      "totalMs": 61.0376000000324,
+      "maxMs": 0.3091999999996915
     },
     "veritable:blocs:month": {
       "calls": 12,
-      "totalMs": 24.781299999998737,
-      "maxMs": 3.255199999999604
+      "totalMs": 25.313300000001618,
+      "maxMs": 3.136700000000019
     },
     "veritable:save:month": {
       "calls": 12,
-      "totalMs": 21.67229999999745,
-      "maxMs": 3.245999999999185
+      "totalMs": 21.784699999999248,
+      "maxMs": 3.5653000000020256
     },
     "core:tick": {
       "calls": 7299,
-      "totalMs": 1500.969000000031
+      "totalMs": 1475.0221000000402
     }
   },
   "wallS": 19

@@ -1,0 +1,45 @@
+{
+  "note": "J7c.6: the code of the J7c.5 (0e66dcd99, A) and the final code (B), one year of a new world campaign (seed 42), alternated on the same machine state: A, B, A, B.",
+  "runs": [
+    {
+      "run": "A1",
+      "code": "J7c.5",
+      "meanMs": 1.4114124794520337,
+      "p99Ms": 6.91649999999936,
+      "maxMs": 115.40419999999995,
+      "firstDayMaxMs": 115.40419999999995,
+      "wallS": 24,
+      "coreTickMs": 2470.981299999815
+    },
+    {
+      "run": "B1",
+      "code": "final",
+      "meanMs": 1.347363712328755,
+      "p99Ms": 6.4583999999995285,
+      "maxMs": 95.90469999999914,
+      "firstDayMaxMs": 95.90469999999914,
+      "wallS": 24,
+      "coreTickMs": 2239.535800000004
+    },
+    {
+      "run": "A2",
+      "code": "J7c.5",
+      "meanMs": 1.3135142739725825,
+      "p99Ms": 6.39969999999812,
+      "maxMs": 92.85390000000007,
+      "firstDayMaxMs": 92.85390000000007,
+      "wallS": 23,
+      "coreTickMs": 2180.0084999998217
+    },
+    {
+      "run": "B2",
+      "code": "final",
+      "meanMs": 1.2373839589040865,
+      "p99Ms": 6.07799999999952,
+      "maxMs": 66.02260000000024,
+      "firstDayMaxMs": 66.02260000000024,
+      "wallS": 22,
+      "coreTickMs": 1959.7898999999443
+    }
+  ]
+}
