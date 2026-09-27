@@ -1,0 +1,456 @@
+{
+  "test": "invasion",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "years": 12,
+  "divisions": 80,
+  "landingRadius": 20,
+  "expectedShare": 0.41597322720160756,
+  "observedShare": 0.4,
+  "withinTolerance": true,
+  "campaignsAtLevel3": 17,
+  "shotLevels": [
+    3,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3
+  ],
+  "results": [
+    {
+      "seed": 1,
+      "daysByLevel": {
+        "0": 0,
+        "1": 473,
+        "2": 1493,
+        "3": 105
+      },
+      "landings": 80,
+      "warOver": false,
+      "firstLevel3": "2031-05-22",
+      "expected": 0.29069548999999856,
+      "chance": 0.2524060604268292,
+      "shot": {
+        "date": "2031-09-04",
+        "threat": 3,
+        "target": "POL"
+      },
+      "tilesLostShare": 0.5066888872584472,
+      "stability": 0.37273926743158137,
+      "endDate": "2031-09-04",
+      "wallS": 420
+    },
+    {
+      "seed": 2,
+      "daysByLevel": {
+        "0": 0,
+        "1": 370,
+        "2": 1141,
+        "3": 2872
+      },
+      "landings": 202,
+      "warOver": false,
+      "firstLevel3": "2030-02-11",
+      "expected": 1.0018730720421032,
+      "chance": 0.633017441170262,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.3193649598754269,
+      "endDate": "2038-01-02",
+      "wallS": 984
+    },
+    {
+      "seed": 3,
+      "daysByLevel": {
+        "0": 0,
+        "1": 408,
+        "2": 1153,
+        "3": 2822
+      },
+      "landings": 153,
+      "warOver": false,
+      "firstLevel3": "2030-04-12",
+      "expected": 0.5484377380457115,
+      "chance": 0.4221790967944241,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.283212185382116,
+      "endDate": "2038-01-02",
+      "wallS": 879
+    },
+    {
+      "seed": 4,
+      "daysByLevel": {
+        "0": 535,
+        "1": 502,
+        "2": 1002,
+        "3": 2344
+      },
+      "landings": 150,
+      "warOver": false,
+      "firstLevel3": "2030-02-14",
+      "expected": 0.33531400000000344,
+      "chance": 0.28491123039902844,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.2845819403934947,
+      "endDate": "2038-01-02",
+      "wallS": 634
+    },
+    {
+      "seed": 5,
+      "daysByLevel": {
+        "0": 303,
+        "1": 535,
+        "2": 1189,
+        "3": 2356
+      },
+      "landings": 147,
+      "warOver": false,
+      "firstLevel3": "2030-09-22",
+      "expected": 0.7173445000000276,
+      "chance": 0.5121295385344496,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.4797217301062254,
+      "endDate": "2038-01-02",
+      "wallS": 558
+    },
+    {
+      "seed": 6,
+      "daysByLevel": {
+        "0": 53,
+        "1": 356,
+        "2": 1145,
+        "3": 2829
+      },
+      "landings": 135,
+      "warOver": false,
+      "firstLevel3": "2030-02-11",
+      "expected": 0.4029370000000097,
+      "chance": 0.33167326947285103,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.30560965755107916,
+      "endDate": "2038-01-02",
+      "wallS": 584
+    },
+    {
+      "seed": 7,
+      "daysByLevel": {
+        "0": 396,
+        "1": 344,
+        "2": 1343,
+        "3": 2300
+      },
+      "landings": 136,
+      "warOver": false,
+      "firstLevel3": "2030-08-16",
+      "expected": 0.2966905000000003,
+      "chance": 0.25674811301232947,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.4466100460995543,
+      "endDate": "2038-01-02",
+      "wallS": 571
+    },
+    {
+      "seed": 8,
+      "daysByLevel": {
+        "0": 508,
+        "1": 513,
+        "2": 1071,
+        "3": 2291
+      },
+      "landings": 131,
+      "warOver": false,
+      "firstLevel3": "2030-05-05",
+      "expected": 0.34135631990525034,
+      "chance": 0.2892155253194285,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.45946787600314326,
+      "endDate": "2038-01-02",
+      "wallS": 575
+    },
+    {
+      "seed": 9,
+      "daysByLevel": {
+        "0": 0,
+        "1": 411,
+        "2": 1013,
+        "3": 0
+      },
+      "landings": 63,
+      "warOver": false,
+      "firstLevel3": null,
+      "expected": 0.11762800000000087,
+      "chance": 0.11098046125348127,
+      "shot": {
+        "date": "2029-11-26",
+        "threat": 2,
+        "target": "POL"
+      },
+      "tilesLostShare": 0.4024477588995916,
+      "stability": 0.4717972525902739,
+      "endDate": "2029-11-26",
+      "wallS": 151
+    },
+    {
+      "seed": 10,
+      "daysByLevel": {
+        "0": 0,
+        "1": 358,
+        "2": 62,
+        "3": 0
+      },
+      "landings": 48,
+      "warOver": false,
+      "firstLevel3": null,
+      "expected": 0.0008680000000000005,
+      "chance": 0.0008676294677546492,
+      "shot": {
+        "date": "2027-02-26",
+        "threat": 2,
+        "target": "GBR"
+      },
+      "tilesLostShare": 0.024219047519224657,
+      "stability": 0.5620081969666197,
+      "endDate": "2027-02-26",
+      "wallS": 31
+    },
+    {
+      "seed": 11,
+      "daysByLevel": {
+        "0": 300,
+        "1": 370,
+        "2": 1191,
+        "3": 2522
+      },
+      "landings": 143,
+      "warOver": false,
+      "firstLevel3": "2030-04-12",
+      "expected": 0.4153300663542628,
+      "chance": 0.3399040121327661,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.31849065094557255,
+      "endDate": "2038-01-02",
+      "wallS": 573
+    },
+    {
+      "seed": 12,
+      "daysByLevel": {
+        "0": 0,
+        "1": 401,
+        "2": 142,
+        "3": 0
+      },
+      "landings": 47,
+      "warOver": false,
+      "firstLevel3": null,
+      "expected": 0.01988000000000002,
+      "chance": 0.01968506012929816,
+      "shot": {
+        "date": "2027-06-29",
+        "threat": 2,
+        "target": "POL"
+      },
+      "tilesLostShare": 0.03556692206372003,
+      "stability": 0.46546861450496596,
+      "endDate": "2027-06-29",
+      "wallS": 42
+    },
+    {
+      "seed": 13,
+      "daysByLevel": {
+        "0": 0,
+        "1": 446,
+        "2": 1176,
+        "3": 2761
+      },
+      "landings": 134,
+      "warOver": false,
+      "firstLevel3": "2030-06-12",
+      "expected": 0.3848018837994311,
+      "chance": 0.31944357136381885,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.31805201245134174,
+      "endDate": "2038-01-02",
+      "wallS": 592
+    },
+    {
+      "seed": 14,
+      "daysByLevel": {
+        "0": 0,
+        "1": 379,
+        "2": 1102,
+        "3": 688
+      },
+      "landings": 89,
+      "warOver": false,
+      "firstLevel3": "2030-01-22",
+      "expected": 0.17160299999999934,
+      "chance": 0.15770094178548855,
+      "shot": {
+        "date": "2031-12-11",
+        "threat": 3,
+        "target": "FRA"
+      },
+      "tilesLostShare": 0.8379014817221657,
+      "stability": 0.2760810975533951,
+      "endDate": "2031-12-11",
+      "wallS": 249
+    },
+    {
+      "seed": 15,
+      "daysByLevel": {
+        "0": 0,
+        "1": 425,
+        "2": 1196,
+        "3": 2515
+      },
+      "landings": 151,
+      "warOver": false,
+      "firstLevel3": "2030-06-11",
+      "expected": 1.1000737537413023,
+      "chance": 0.6674019327744883,
+      "shot": {
+        "date": "2037-04-30",
+        "threat": 3,
+        "target": "POL"
+      },
+      "tilesLostShare": 0.9992348569811439,
+      "stability": 0.2542176072474413,
+      "endDate": "2037-04-30",
+      "wallS": 534
+    },
+    {
+      "seed": 16,
+      "daysByLevel": {
+        "0": 0,
+        "1": 365,
+        "2": 1156,
+        "3": 2862
+      },
+      "landings": 145,
+      "warOver": false,
+      "firstLevel3": "2030-03-03",
+      "expected": 0.37694600000000716,
+      "chance": 0.3140734182316366,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.2756057406102576,
+      "endDate": "2038-01-02",
+      "wallS": 584
+    },
+    {
+      "seed": 17,
+      "daysByLevel": {
+        "0": 0,
+        "1": 507,
+        "2": 1094,
+        "3": 234
+      },
+      "landings": 77,
+      "warOver": false,
+      "firstLevel3": "2030-05-22",
+      "expected": 0.4834210000000024,
+      "chance": 0.3836018030346734,
+      "shot": {
+        "date": "2031-01-11",
+        "threat": 3,
+        "target": "POL"
+      },
+      "tilesLostShare": 0.5655402643411909,
+      "stability": 0.4524073110784613,
+      "endDate": "2031-01-11",
+      "wallS": 193
+    },
+    {
+      "seed": 18,
+      "daysByLevel": {
+        "0": 0,
+        "1": 363,
+        "2": 1198,
+        "3": 2193
+      },
+      "landings": 144,
+      "warOver": false,
+      "firstLevel3": "2030-04-12",
+      "expected": 0.5919287045606835,
+      "chance": 0.44684720178780235,
+      "shot": {
+        "date": "2036-04-13",
+        "threat": 3,
+        "target": "POL"
+      },
+      "tilesLostShare": 0.9080029068447109,
+      "stability": 0.27904927164078075,
+      "endDate": "2036-04-13",
+      "wallS": 462
+    },
+    {
+      "seed": 19,
+      "daysByLevel": {
+        "0": 433,
+        "1": 466,
+        "2": 1225,
+        "3": 2259
+      },
+      "landings": 125,
+      "warOver": false,
+      "firstLevel3": "2030-08-20",
+      "expected": 0.31206385000000164,
+      "chance": 0.2680879076986368,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.40010536220829557,
+      "endDate": "2038-01-02",
+      "wallS": 430
+    },
+    {
+      "seed": 20,
+      "daysByLevel": {
+        "0": 725,
+        "1": 455,
+        "2": 1154,
+        "3": 2049
+      },
+      "landings": 130,
+      "warOver": false,
+      "firstLevel3": "2030-05-30",
+      "expected": 0.4102716655833548,
+      "chance": 0.33656452598208497,
+      "shot": null,
+      "tilesLostShare": 1,
+      "stability": 0.4494531549914818,
+      "endDate": "2038-01-02",
+      "wallS": 550
+    }
+  ]
+}

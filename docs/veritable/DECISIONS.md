@@ -1126,14 +1126,27 @@ Le voisinage terrestre des données est celui du premier jour (`ctx.landNeighbou
 
 Dans la seconde série, une campagne (graine 5) voyait l'armement monter de 1,04 en 2049 à 4 en 2072, sans guerre contre une nation dissoute. Sonde sur le même chemin : le volume retiré de l'offre qui forme le prix passait de 8 en 2040 à 1 078 en 2062, la moitié de l'offre mondiale. Les « exportateurs sous embargo » étaient les États-Unis, la Chine, l'Inde, l'Allemagne, la France, l'Arabie saoudite : leurs propres sanctions (contre l'Iran, la Russie…) leur ferment une part de leur marché. La règle du J6c retirait du prix, en plus de ce qu'ils retiennent, leur invendu au prorata de cette part. Or, le prix au-dessus de l'équilibre, tout exportateur a de l'invendu ordinaire : retiré, il faisait monter le prix, qui gonflait leur production et leur invendu, jusqu'au plafond. **Désormais, leur invendu ne sort du prix qu'à hauteur de la demande que les acheteurs coupés par un embargo n'ont pas pu satisfaire** (`stepTradeGood`) ; il se vend toujours avec la décote. Un marché saturé reste sur le marché ; un vrai blocage (l'embargo de l'UE sur le gaz russe : les Européens manquent encore de gaz) en sort comme au J6c. Embargo de l'UE, graine 42 : couverture allemande en gaz en 2029 à 0,936 contre 0,979 pour le témoin (0,888 si l'invendu ne sortait jamais du prix, test du J3 à 0,05). Test : `sim/economy/campaign.test.ts`, qui échoue avec la règle du J6c.
 
+#### Jamais aux côtés d'un ennemi
+
+Trouvé en rejouant le test d'invasion forcé du J6 : l'Ukraine, en guerre contre la Russie, rejoignait en mars 2026 la coalition qui défendait la Russie contre les quatre agresseurs sans casus belli (voisine terrestre de la Pologne, hostile aux agresseurs). **Une nation ne rejoint plus une guerre aux côtés d'une nation qu'elle combat dans une autre guerre, ni contre une nation qu'elle combat à ses côtés** (`joinConflicts`) :
+
+- appels de coalition (l'appel s'éteint, y compris quand une guerre commencée depuis l'appel crée le conflit) ;
+- défense collective d'un bloc et garanties ;
+- l'appel d'un bloc que le joueur ne peut plus honorer s'éteint sans prix, et « Honorer » est refusé.
+
+La garde ne consomme aucun tirage : une campagne où le cas ne se présente pas reste identique octet pour octet. Tests : `diplomacy.test.ts` (les deux cas, l'appel qui s'éteint), `blocs.test.ts` (défense collective, appel du joueur), `world2026.test.ts` (garantie) ; chaque garde retirée en fait échouer un. L'estimation par l'IA des nations qui défendraient sa cible (`defenseGuarantors`, et l'aperçu d'une déclaration de guerre) n'en tient pas compte : c'est une estimation, laissée telle quelle.
+
+Effet sur les séries, rejouées sur le code final : les 30 campagnes mondiales, le J3, le J4 et la main morte sont identiques (la garde ne s'y déclenche jamais) ; le J5 l'est par construction (ses dix guerres nouvelles ont toutes un casus belli, aucun tir, aucune garantie dans europe-10 : aucun appel de coalition possible) ; seul le test d'invasion change (ci-dessous).
+
 #### Outils
 
 - **Campagnes écrites entières dès qu'elles finissent** : chaque processus de la livraison écrit un fichier temporaire, le vide sur le disque (`fsync`) puis le renomme ; `delivery.ts --resume` ne rejoue que les graines sans fichier lisible.
 - **Rapport du J4** : le critère des juntes se mesure sur 60 graines (`--junta-runs`, 42 à 101) ; les autres critères restent sur les dix graines fixes.
+- **Tests nucléaires forcés** : l'espérance du test d'invasion est la somme des probabilités journalières jusqu'au premier tir ou jusqu'à la fin, dont l'espérance est exactement la part des campagnes qui tirent. Le J6 prenait 1 − Π(1 − p) sur les jours d'une campagne, arrêté au premier tir, ce qui la sous-estime : une campagne qui tire cesse de compter ses jours. L'ancienne mesure reste dans le fichier (`chance`).
 
 #### Résultats sur le code final
 
-- **30 campagnes mondiales de 50 ans** (`docs/veritable/reports/J7/world/`, cœur, graines 1 à 30) : seize critères sur dix-sept.
+- **30 campagnes mondiales de 50 ans** (`docs/veritable/reports/J7/world/`, cœur, graines 1 à 30 ; rejouées après la garde des coalitions : identiques) : seize critères sur dix-sept.
   - Guerres nouvelles : médiane 12 par campagne (7 à 18), 362 en tout, 5 sans casus belli ; trois régions au moins.
   - Nucléaire : un tir dans 2 campagnes (le Pakistan sur l'Inde, niveau 3) ; aucun en année 1 ni sous le niveau 2, aucun échange à trois.
   - Prix mondiaux entre 0,68 et 1,63 fois leur base ; défauts seulement dans des nations endettées ou instables.
@@ -1146,7 +1159,8 @@ Dans la seconde série, une campagne (graine 5) voyait l'armement monter de 1,04
 - **Non-régression sur europe-10** (`docs/veritable/reports/J7/non-regression-J7c/`) :
   - J3 : les quatre critères (gaz à l'import +34 % la première année, PIB russe −5,6 % à deux ans ; France contre Espagne : 7 sanctionneurs à six mois, stabilité 0,47 contre 0,62 ; commerce maritime norvégien −52 % ; débarquement italien refusé) ;
   - J4 : les cinq critères ; juntes sur 60 graines : Russie 15 %, Turquie 3 % des décennies ;
-  - J5 (100 campagnes de 50 ans sur le cœur) : les seize critères. Aucun tir nucléaire ; guerres nouvelles médiane 0, au plus 1 ; 91 % de campagnes calmes quinze ans après le cessez-le-feu ; 18 révolutions ; crise à dix ans dans toutes ; junte à dix ans : Russie 1, Turquie 3 ; prix entre 0,88 et 1,52 ; rien qui touche une nation hors de portée.
+  - J5 (100 campagnes de 50 ans sur le cœur) : les seize critères. Aucun tir nucléaire ; guerres nouvelles médiane 0, au plus 1 ; 91 % de campagnes calmes quinze ans après le cessez-le-feu ; 18 révolutions ; crise à dix ans dans toutes ; junte à dix ans : Russie 1, Turquie 3 ; prix entre 0,88 et 1,52 ; rien qui touche une nation hors de portée ;
+  - J6, tests nucléaires forcés (`J6/nuclear/`) : **invasion** (20 graines × 12 ans) : tir russe dans 8 campagnes (0,40) pour 0,42 attendu (tolérance 50 %) ; niveau 3 atteint dans 17 ; tirs au niveau 3 sur la Pologne (4) et la France (1), au niveau 2 sur la Pologne (2) et le Royaume-Uni (1) ; la Russie perd toute sa terre dans 13 campagnes, et ses vecteurs avec elle. Avant la garde des coalitions, l'Ukraine se battait aux côtés de la Russie : 10 tirs sur 14 graines pour 8,7 attendus. Les tirs au niveau 2 sur la Pologne tiennent au scénario forcé : l'Italie et l'Espagne rejoignent la Russie contre des agresseurs sans casus belli, l'OTAN suspend alors le Royaume-Uni puis la Pologne (graine 12 : juillet et août 2026), et la Pologne, sans ogive, perd la dissuasion de l'alliance ; le niveau 2 vient de la règle du J7c.6 (2 % de la terre du premier jour perdue). **Main morte** : 0,95 sur les graines 1 à 20 pour 0,70 affiché, hors de la tolérance de 15 points ; 0,74 sur 100 graines, dans la tolérance (blocs de vingt : 19, 14, 13, 18 et 10). Dans ces campagnes, le tirage de la main morte tombe toujours au même rang du `Rng` (1 511 ou 1 531), et les vingt premières graines sont extrêmes à ce rang (le générateur y est uniforme sur 2 000 graines) : **le critère se mesure désormais sur 100 graines** (à valider).
 - **Sauvegardes du guide J7** régénérées sur le code final, chargées dans le cœur et jouées dix jours ; un test (`save/guideSaves.test.ts`) vérifie qu'elles se décodent dans la version courante et font l'aller-retour octet pour octet (il échouait sur les anciennes).
 
 ## À compléter par Claude Code

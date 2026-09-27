@@ -1,0 +1,710 @@
+{
+  "test": "dead-hand",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100
+  ],
+  "shownProbability": 0.7000000000000013,
+  "firedShare": 0.74,
+  "withinTolerance": true,
+  "results": [
+    {
+      "seed": 1,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 2,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 3,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 4,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 2
+    },
+    {
+      "seed": 5,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 6,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 7,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 8,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 9,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 10,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 11,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 12,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 13,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 14,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 15,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 16,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 17,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 18,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 19,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 20,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 21,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 22,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 23,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 24,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 25,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 26,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 27,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 28,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 29,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 30,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 31,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 32,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 33,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 34,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 35,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 36,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 37,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 38,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 39,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 40,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 41,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 42,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 43,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 44,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 45,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 46,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 47,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 48,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 49,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 50,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 51,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 52,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 53,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 54,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 55,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 56,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 57,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 58,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 59,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 60,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 61,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 62,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 63,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 64,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 65,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 66,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 67,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 68,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 69,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 70,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 71,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 72,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 73,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 74,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 75,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 76,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 77,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 78,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 79,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 80,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 81,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 82,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 83,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 84,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 85,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 86,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 87,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 88,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 89,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 90,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 91,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 92,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 93,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 94,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 95,
+      "shown": 0.7,
+      "fired": false,
+      "wallS": 2
+    },
+    {
+      "seed": 96,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 97,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 98,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 99,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    },
+    {
+      "seed": 100,
+      "shown": 0.7,
+      "fired": true,
+      "wallS": 1
+    }
+  ]
+}
