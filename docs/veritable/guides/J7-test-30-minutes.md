@@ -23,7 +23,7 @@ Les trois sauvegardes préparées sont dans `docs/veritable/guides/J7-saves/`. E
 Clic droit sur l'Allemagne, puis sur le Brésil, puis sur la Russie (la mini-carte en bas à droite conduit la caméra d'un clic). Le jeu ne s'arrête pas ; Échap ou un clic ailleurs ferme la fiche.
 
 - **Allemagne** (OTAN et UE) : « renseignement complet » partout, chiffres exacts ; relation +61 avec sa tendance, qui monte vers +78 (blocs communs +60, proximité idéologique +18).
-- **Brésil** (lointain) : fourchettes (population 196 à 217 millions, PIB 2,2 à 2,5 T$, stabilité 62 à 89 %), datées.
+- **Brésil** (lointain) : fourchettes datées, par exemple population 212 à 234 millions, PIB 2,2 à 2,4 T$ (elles changent d'une campagne à l'autre, toujours autour de la vraie valeur).
 - **Russie** : relation −60 qui tend vers −84 (sanctions −40, défiance héritée −60) ; « en guerre contre l'Ukraine », sanctionnée par 43 nations ; embargos dans les deux sens sur onze biens ; fourchettes larges, « ? » pour les intentions.
 
 ## 3. Modes de carte et mini-carte (3 min)
@@ -40,7 +40,7 @@ Touches **V** (politique), **N** (relations), **O** (blocs), **X** (guerres), **
 
 Passer à **×5** (une année de jeu dure environ 2 min 30 s).
 
-- Un événement de la France apparaît en carte en haut à gauche : le jeu s'arrête **3 secondes** (« Reprise dans 3 s » à côté des vitesses, « ⏸ 3 » sur le bouton), puis reprend à ×5. **Espace** pendant le compte à rebours garde la pause. Deux pauses automatiques sont séparées de 20 secondes réelles au moins ; sur cinq ans à ×5, elles prennent 6 % du temps.
+- Un événement de la France apparaît en carte en haut à gauche : le jeu s'arrête **3 secondes** (« Reprise dans 3 s » à côté des vitesses, « ⏸ 3 » sur le bouton), puis reprend à ×5. **Espace** pendant le compte à rebours garde la pause. Deux pauses automatiques sont séparées de 20 secondes réelles au moins ; sur cinq ans à ×5, elles prennent 9 % du temps.
 - La carte donne la date, le pays, le titre, les choix (effets au survol), le délai restant (« encore 30 j ») et le penchant du gouvernement.
 - Laisser une décision sans réponse : au bout de 30 jours de jeu, le gouvernement tranche. Le journal dit « Décidé par le gouvernement (Renaissance) ».
 - Jamais plus de 300 jours de jeu sans une décision pour la France, jamais plus de deux par mois : dans une période calme, un gabarit de la France arrive au bout de dix mois.
@@ -87,7 +87,7 @@ Importer **`j7-baroud.vsave`** (la même Ukraine, son soutien coupé, dissoute l
 ## Ce que disent les mesures (lecture facultative)
 
 - **Rythme** : `docs/veritable/reports/J7/rhythm/rhythm.json`, cinq ans de la France à ×5.
-- **Performance** : `docs/veritable/reports/J7/perf/`. Dans le navigateur (`browser/`), ×5 entre 49,4 et 50,3 ticks/s en 2026, 2040, 2060 et 2075, villes et mode population actifs ; sauvegarde de 2,5 Mo à cinquante ans.
+- **Performance** : `docs/veritable/reports/J7/perf/`. Dans le navigateur (`browser/`), ×5 entre 49,4 et 50,2 ticks/s en 2026, 2040, 2060 et 2075, villes et mode population actifs ; sauvegarde de 2,5 Mo à cinquante ans.
 - **Tests forcés** : `docs/veritable/reports/J7/forced/`, 20 graines chacun. Bombe H sur Paris ; Autriche en exil ; dissolution sans soutien ; libération par la France ; baroud.
 - **Campagnes mondiales** : `docs/veritable/reports/J7/world/`, 30 campagnes de 50 ans.
 - **Tests joués** : `docs/veritable/reports/J7/playtest/`, captures des guides J4 à J7.
