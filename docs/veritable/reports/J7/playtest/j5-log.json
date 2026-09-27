@@ -41,21 +41,21 @@
   {
     "step": "05",
     "title": "3. Événements : une carte met le jeu en pause",
-    "date": "2026-03-21",
+    "date": "2026-05-17",
     "capture": "j5-05-3-evenements-une-carte-met-le-jeu-en-pau.png",
     "notes": [
-      "pause au 2026-03-21",
-      "barre : France 21 mars 2026 ⏸ 3 ×1 ×2 ×5 Reprise dans 3 s Économie Budget Opinion Fronts et divisions Diplomatie et sanctions Po",
-      "carte : 21 mars 2026 · France encore 30 j Motion de censure sur le budget Faute de majorité, le gouvernement de France voit son projet de budget menacé par une motion de censure que soutiennent des oppositions de tous bords. Les agences de notation ont prévenu qu'un budget reconduit à l'identique pèserait sur la note du pays. Le chef du gouvernement a trois jours pour trancher. Faire adopter le budget sans vote Céder aux oppositions sur les retraites et la fiscalité Reconduire le budget par une loi spéciale Le gouvernement penche pour : Céder aux oppositions sur les retraites et la fiscalité"
+      "pause au 2026-05-17",
+      "barre : France 17 mai 2026 ⏸ 3 ×1 ×2 ×5 Reprise dans 3 s Économie Budget Opinion Fronts et divisions Diplomatie et sanctions Pol",
+      "carte : 17 mai 2026 · France encore 30 j Rançongiciel contre les hôpitaux Un groupe criminel paralyse les systèmes informatiques de plusieurs hôpitaux de France et exige une rançon en cryptomonnaie sous peine de publier les dossiers médicaux volés. Des opérations sont reportées et les urgences fonctionnent en mode dégradé. Le ministère de la Santé hésite sur la conduite à tenir. Payer discrètement la rançon Refuser de payer et restaurer les systèmes Lancer un plan de cybersécurité pour la santé Le gouvernement penche pour : Lancer un plan de cybersécurité pour la santé"
     ]
   },
   {
     "step": "06",
     "title": "3. Événements : la carte répondue",
-    "date": "2026-03-21",
+    "date": "2026-05-17",
     "capture": "j5-06-3-evenements-la-carte-repondue.png",
     "notes": [
-      "répondu : budget-censure-motion:force"
+      "répondu : hospital-data-breach:pay-ransom"
     ]
   },
   {
@@ -75,8 +75,8 @@
     "date": "2026-08-03",
     "capture": "j5-08-4-presidence-le-programme-au-mois-suivan.png",
     "notes": [
-      "programmes de l'UE [{\"id\":2,\"since\":\"2026-08-01\",\"until\":\"2029-08-01\"}]",
-      "points 28.3 → 35.4 (guide : +25 %)"
+      "programmes de l'UE [{\"id\":1,\"since\":\"2026-08-01\",\"until\":\"2029-08-01\"}]",
+      "points 28.3 → 44.7 (guide : +25 %)"
     ]
   },
   {
@@ -102,12 +102,12 @@
   {
     "step": "11",
     "title": "3. Événements : une décision laissée au gouvernement",
-    "date": "2026-10-19",
+    "date": "2026-10-13",
     "capture": "j5-11-3-evenements-une-decision-laissee-au-gou.png",
     "notes": [
-      "carte : 2026-09-19 naval-standoff#21",
-      "sans réponse : 2026-10-19 : tranché par le gouvernement",
-      "journal : 2026-07-03 event-occurred {\"event\":\"nato-summit-spending-pledge\",\"choice\":\"pledge-high\",\"other\":\"\",\"good\":\"\",\"by\":\"player\",\"party\":\"\",\"instance\":\"10\"} | 2026-08-04 event-occurred {\"event\":\"fighter-jet-export-deal\",\"choice\":\"sign\",\"other\":\"\",\"good\":\"\",\"by\":\"government\",\"party\":\"fra-renaissance\",\"instance\":\"11\"} | 2026-10-19 event-occurred {\"event\":\"naval-standoff\",\"choice\":\"de-escalate\",\"other\":\"RUS\",\"good\":\"\",\"by\":\"government\",\"party\":\"fra-renaissance\",\"instance\":\"21\"}"
+      "carte : 2026-09-13 pension-reform-general-strike#29",
+      "sans réponse : 2026-10-13 : tranché par le gouvernement",
+      "journal : 2026-09-22 event-occurred {\"event\":\"hormuz-tanker-crisis\",\"choice\":\"release-stocks\",\"other\":\"\",\"good\":\"\",\"by\":\"player\",\"party\":\"\",\"instance\":\"31\"} | 2026-10-08 event-occurred {\"event\":\"sea-climate-crisis\",\"choice\":\"major-aid\",\"other\":\"\",\"good\":\"\",\"by\":\"player\",\"party\":\"\",\"instance\":\"36\"} | 2026-10-13 event-occurred {\"event\":\"pension-reform-general-strike\",\"choice\":\"suspend\",\"other\":\"\",\"good\":\"\",\"by\":\"government\",\"party\":\"fra-renaissance\",\"instance\":\"29\"}"
     ]
   },
   {
@@ -117,17 +117,15 @@
     "capture": "j5-12-6-les-votes-et-les-sanctions-au-journal.png",
     "notes": [
       "2026-01-01 sanctions-imposed RUS {\"by\":\"UKR\"}",
-      "2026-02-01 bloc-decision RUS {\"bloc\":\"sco\",\"kind\":\"accession\",\"target\":\"DEU\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"1\",\"no\":\"0\",\"abstain\":\"0\"}",
       "2026-08-01 bloc-decision FRA {\"bloc\":\"eu\",\"kind\":\"tech-program\",\"target\":\"\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"5\",\"no\":\"0\",\"abstain\":\"0\"}",
       "2026-08-04 sanctions-imposed FRA {\"by\":\"RUS\"}",
       "2026-09-01 bloc-decision RUS {\"bloc\":\"sco\",\"kind\":\"common-defense\",\"target\":\"\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"1\",\"no\":\"0\",\"abstain\":\"0\"}",
       "2026-10-02 bloc-decision FRA {\"bloc\":\"eu\",\"kind\":\"sanctions\",\"target\":\"RUS\",\"direction\":\"\",\"result\":\"rejected\",\"yes\":\"1\",\"no\":\"4\",\"abstain\":\"0\"}",
-      "2026-12-21 sanctions-imposed FRA {\"by\":\"GBR\"}",
-      "2026-12-29 sanctions-imposed FRA {\"by\":\"TUR\"}",
-      "2027-01-02 sanctions-imposed FRA {\"by\":\"ITA\"}",
-      "2027-01-15 sanctions-imposed FRA {\"by\":\"DEU\"}",
-      "2027-01-24 bloc-decision GBR {\"bloc\":\"g7\",\"kind\":\"sanctions\",\"target\":\"FRA\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"3\",\"no\":\"0\",\"abstain\":\"0\"}",
-      "2027-02-01 bloc-decision RUS {\"bloc\":\"sco\",\"kind\":\"accession\",\"target\":\"DEU\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"1\",\"no\":\"0\",\"abstain\":\"0\"}"
+      "2026-12-14 sanctions-imposed FRA {\"by\":\"TUR\"}",
+      "2027-01-08 sanctions-imposed FRA {\"by\":\"DEU\"}",
+      "2027-01-08 sanctions-imposed FRA {\"by\":\"GBR\"}",
+      "2027-01-08 sanctions-imposed FRA {\"by\":\"ITA\"}",
+      "2027-01-24 bloc-decision GBR {\"bloc\":\"g7\",\"kind\":\"sanctions\",\"target\":\"FRA\",\"direction\":\"\",\"result\":\"adopted\",\"yes\":\"3\",\"no\":\"0\",\"abstain\":\"0\"}"
     ]
   },
   {
@@ -136,8 +134,8 @@
     "date": "2027-03-02",
     "capture": "j5-13-7-sauvegarde-et-rechargement.png",
     "notes": [
-      "avant {\"date\":\"2027-03-02\",\"projects\":[],\"pending\":0,\"blocs\":[\"arab-league:0\",\"asean:0\",\"au:0\",\"brics:1\",\"ecowas:0\",\"eu:7\",\"g20:6\",\"g7:4\",\"mercosur:0\",\"nato:8\",\"opec:0\",\"sco:2\"]}",
-      "après {\"date\":\"2027-03-02\",\"projects\":[],\"pending\":0,\"blocs\":[\"arab-league:0\",\"asean:0\",\"au:0\",\"brics:1\",\"ecowas:0\",\"eu:7\",\"g20:6\",\"g7:4\",\"mercosur:0\",\"nato:8\",\"opec:0\",\"sco:2\"]}",
+      "avant {\"date\":\"2027-03-02\",\"projects\":[],\"pending\":1,\"blocs\":[\"arab-league:0\",\"asean:0\",\"au:0\",\"brics:1\",\"ecowas:0\",\"eu:7\",\"g20:6\",\"g7:4\",\"mercosur:0\",\"nato:8\",\"opec:0\",\"sco:1\"]}",
+      "après {\"date\":\"2027-03-02\",\"projects\":[],\"pending\":1,\"blocs\":[\"arab-league:0\",\"asean:0\",\"au:0\",\"brics:1\",\"ecowas:0\",\"eu:7\",\"g20:6\",\"g7:4\",\"mercosur:0\",\"nato:8\",\"opec:0\",\"sco:1\"]}",
       "identiques : true"
     ]
   },

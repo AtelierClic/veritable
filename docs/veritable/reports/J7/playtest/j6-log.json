@@ -97,11 +97,15 @@
   {
     "step": "12",
     "title": "6. Un an à ×5 : le journal",
-    "date": "2027-01-03",
+    "date": "2027-01-02",
     "capture": "j6-12-6-un-an-a-5-le-journal.png",
     "notes": [
-      "fenêtres répondues : pension-fund-shortfall:guarantee, sea-climate-crisis:major-aid, fighter-jet-export-deal:sign",
-      "2026-12-31 event-occurred COM",
+      "fenêtres répondues : ",
+      "2026-12-16 government-formed PMR",
+      "2026-12-17 election-held FJI",
+      "2026-12-17 government-formed FJI",
+      "2026-12-21 event-occurred ITA",
+      "2026-12-24 war-month RUS",
       "2027-01-01 bloc-presidency BHR",
       "2027-01-01 bloc-presidency SGP",
       "2027-01-01 bloc-presidency AGO",
@@ -111,17 +115,13 @@
       "2027-01-01 bloc-presidency GBR",
       "2027-01-01 bloc-presidency USA",
       "2027-01-01 bloc-presidency ARG",
-      "2027-01-01 bloc-presidency PAK",
-      "2027-01-01 event-occurred GTM",
-      "2027-01-01 leader-died CYN",
-      "2027-01-01 leader-succeeded CYN",
-      "2027-01-02 event-occurred MHL"
+      "2027-01-01 bloc-presidency PAK"
     ]
   },
   {
     "step": "13",
     "title": "6. Présidence de l'UE au 1er janvier 2027",
-    "date": "2027-01-03",
+    "date": "2027-01-02",
     "capture": "j6-13-6-presidence-de-l-ue-au-1er-janvier-2027.png",
     "notes": [
       "LTU jusqu'au 2027-07-01",
@@ -131,12 +131,12 @@
   {
     "step": "14",
     "title": "7. Sauvegarde et rechargement",
-    "date": "2027-01-03",
+    "date": "2027-01-02",
     "capture": "j6-14-7-sauvegarde-et-rechargement.png",
     "notes": [
       "taille 1.87 Mo",
-      "avant {\"date\":\"2027-01-03\",\"nations\":208,\"wars\":3,\"sanctions\":143}",
-      "après {\"date\":\"2027-01-03\",\"nations\":208,\"wars\":3,\"sanctions\":143}"
+      "avant {\"date\":\"2027-01-02\",\"nations\":208,\"wars\":4,\"sanctions\":144}",
+      "après {\"date\":\"2027-01-02\",\"nations\":208,\"wars\":4,\"sanctions\":144}"
     ]
   },
   {
