@@ -257,7 +257,10 @@ export class HeadlessBrowser {
 
   async close(): Promise<void> {
     try {
-      await this.send("Browser.close");
+      // Edge may close the socket without answering: an answer that never
+      // comes left nothing to keep Node running, and it exited in silence
+      // before the caller wrote its results (the rhythm of the J7c.6).
+      await Promise.race([this.send("Browser.close"), sleep(2000)]);
     } catch {
       // already gone
     }
