@@ -82,7 +82,7 @@ Importer **`j7-exil.vsave`** (vous jouez l'Ukraine, annexée par la Russie par t
 
 ## 10. Baroud d'honneur (2 min)
 
-Importer **`j7-baroud.vsave`** (la même Ukraine, son soutien coupé, dissoute le 2 février 2027). Écran **Exil** : « Votre État est dissous », puis la liste des nations de moins de dix millions d'habitants, sauf la Russie. Deux clics sur **Moldavie** : la barre du haut passe à la Moldavie, **C** y conduit la caméra, le journal garde toute l'histoire. Sauvegarder, recharger : la Moldavie, le journal intact.
+Importer **`j7-baroud.vsave`** (la même Ukraine, son soutien coupé, dissoute le 31 janvier 2027, sauvegardée le lendemain). Écran **Exil** : « Votre État est dissous », puis la liste des nations de moins de dix millions d'habitants, sauf la Russie. Deux clics sur **Moldavie** : la barre du haut passe à la Moldavie, **C** y conduit la caméra, le journal garde toute l'histoire. Sauvegarder, recharger : la Moldavie, le journal intact.
 
 ## Ce que disent les mesures (lecture facultative)
 
