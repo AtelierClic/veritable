@@ -1,0 +1,1910 @@
+{
+  "campaigns": 30,
+  "criteria": {
+    "warsMedian10to30": true,
+    "noPairAbove40pct": false,
+    "warsInAtLeast3Regions": true,
+    "under30pctWithoutCasusBelli": true,
+    "noShotInYearOne": true,
+    "shotsInAtMost10pct": true,
+    "neverBelowLevel2": true,
+    "noThreeWayExchange": true,
+    "atLeast70pctCoupsInFragileRegimes": true,
+    "pricesBounded": true,
+    "defaultsOnlyInIndebtedOrUnstable": true,
+    "noNonFiniteDebt": true,
+    "sanctions2075Within05To2Of2026": true,
+    "liftsByWaysBOrCMedianAtLeast1": true,
+    "noEventAbove10pct": true,
+    "playerGovernmentDecisionEveryYear": true,
+    "noWarOrIncidentBeyondReach": true
+  },
+  "world": {
+    "pairShareMax": 0.42857142857142855,
+    "pairShareMedian": 0.25,
+    "pairAbove40pct": [
+      "seed 26: RUS-UKR 3/7"
+    ],
+    "regionsMin": 3,
+    "regionsPerCampaign": {
+      "3": 28,
+      "4": 2
+    },
+    "warsByRegion": {
+      "asia": 191,
+      "africa": 99,
+      "europe": 70,
+      "oceania": 1,
+      "americas": 1
+    },
+    "pairs": {
+      "RUS-UKR": 66,
+      "YEH-YEM": 56,
+      "IND-PAK": 40,
+      "RJV-SYR": 33,
+      "SOL-SOM": 30,
+      "DZA-MLI": 25,
+      "AFG-PAK": 19,
+      "ISR-PSE": 19,
+      "LBE-LBY": 19,
+      "ISR-LBN": 10,
+      "COD-RWA": 8,
+      "ISR-SYR": 7,
+      "SDN-SSD": 5,
+      "SDN-SDR": 4,
+      "DZA-MAR": 3,
+      "GEO-RUS": 3,
+      "ARM-IRN": 2,
+      "ARM-TUR": 2,
+      "ARM-AZE": 2,
+      "LBE-SDN": 1,
+      "EGY-SDN": 1,
+      "ETH-SDN": 1,
+      "ERI-SDN": 1,
+      "AFG-IRN": 1,
+      "BEN-NER": 1,
+      "PNG-SLB": 1,
+      "GTM-MEX": 1,
+      "MNG-RUS": 1
+    },
+    "coups": 753,
+    "coupsByRegime": {
+      "electoral-authoritarian": 285,
+      "failed-state": 209,
+      "junta": 181,
+      "absolute-monarchy": 29,
+      "single-party": 25,
+      "theocracy": 8,
+      "parliamentary": 7,
+      "presidential": 5,
+      "semi-presidential": 4
+    },
+    "fragileCoupShare": 0.896414342629482,
+    "defaults": 314,
+    "otherDefaults": [],
+    "nonFinite": []
+  },
+  "loop": {
+    "relaunchMedian": 2,
+    "relaunchMax": 4,
+    "relaunchesPerCampaign": {
+      "2": 25,
+      "3": 4,
+      "4": 1
+    },
+    "scenarioWarEnded": 30,
+    "calm15Years": 0,
+    "calmShare": 0,
+    "yearsToReprise": {
+      "1": 10,
+      "2": 19,
+      "3": 1
+    }
+  },
+  "beyondReach": {
+    "wars": 0,
+    "events": 0,
+    "samples": []
+  },
+  "wars": {
+    "median": 12,
+    "max": 18,
+    "total": 362,
+    "withoutCasusBelli": 5,
+    "byCasusBelli": {
+      "contested-territory": 203,
+      "grievance": 151,
+      "none": 5,
+      "ally-attacked": 3
+    },
+    "byAggressor": {
+      "RUS": 70,
+      "PAK": 37,
+      "ISR": 36,
+      "SYR": 32,
+      "SOM": 30,
+      "YEH": 29,
+      "DZA": 28,
+      "YEM": 27,
+      "IND": 22,
+      "LBE": 19,
+      "SDN": 10,
+      "COD": 8,
+      "IRN": 3,
+      "TUR": 2,
+      "AZE": 2,
+      "RJV": 1,
+      "EGY": 1,
+      "ETH": 1,
+      "ERI": 1,
+      "BEN": 1,
+      "PNG": 1,
+      "MEX": 1
+    },
+    "perCampaign": {
+      "7": 4,
+      "8": 1,
+      "10": 6,
+      "11": 2,
+      "12": 3,
+      "13": 3,
+      "14": 3,
+      "15": 4,
+      "16": 2,
+      "17": 1,
+      "18": 1
+    }
+  },
+  "nuclear": {
+    "campaignsWithShots": 2,
+    "shots": 3,
+    "byShooter": {
+      "PAK": 3
+    },
+    "byThreat": {
+      "3": 3
+    },
+    "list": [
+      "PAK>IND@2036-02-23 (level 3, seed 12)",
+      "PAK>IND@2070-09-26 (level 3, seed 20)",
+      "PAK>IND@2070-12-20 (level 3, seed 20)"
+    ],
+    "threeWayCampaigns": []
+  },
+  "politics": {
+    "revolutions": [
+      "SDR@2029-02-01",
+      "SDR@2029-10-11",
+      "PSE@2034-10-31",
+      "RJV@2048-04-11",
+      "YEM@2048-12-04",
+      "SDR@2029-03-15",
+      "YEM@2062-05-14",
+      "PAK@2072-12-02",
+      "PSE@2043-02-26",
+      "YEM@2043-03-05",
+      "YEM@2044-05-19",
+      "YEM@2045-04-10",
+      "VEN@2053-12-29",
+      "UKR@2028-06-01",
+      "SDR@2029-07-05",
+      "UKR@2028-07-06",
+      "YEM@2045-09-11",
+      "YEM@2046-09-03",
+      "YEM@2048-11-16",
+      "CUB@2027-07-04",
+      "VEN@2031-06-19",
+      "LBN@2042-08-12",
+      "SDR@2030-02-21",
+      "PAK@2035-10-24",
+      "PAK@2036-09-09",
+      "PAK@2037-03-19",
+      "YEM@2042-08-15",
+      "YEM@2043-09-18",
+      "YEM@2044-12-31",
+      "YEM@2045-12-20",
+      "SSD@2047-04-07",
+      "YEM@2047-04-25",
+      "YEM@2057-09-18",
+      "YEM@2062-07-23",
+      "SDR@2029-06-14",
+      "PAK@2071-07-13",
+      "UKR@2028-08-03",
+      "SDR@2029-05-10",
+      "UKR@2028-07-06",
+      "SDR@2029-09-06",
+      "LBE@2033-06-13",
+      "SDR@2029-04-26",
+      "SDN@2029-07-19",
+      "SDR@2029-11-22",
+      "LBE@2054-10-04",
+      "VEN@2064-04-04",
+      "SDN@2029-10-18",
+      "LBE@2035-08-26",
+      "YEM@2052-06-28",
+      "SDR@2029-03-08",
+      "PSE@2030-08-09",
+      "PSE@2031-03-28",
+      "LBE@2057-10-22",
+      "PAK@2071-01-12",
+      "VEN@2030-11-29",
+      "YEM@2047-09-30",
+      "UKR@2028-04-13",
+      "SDR@2029-02-15",
+      "YEM@2042-10-17",
+      "LBE@2048-05-07",
+      "SDR@2029-04-12",
+      "SDN@2029-08-02",
+      "SDR@2033-04-23",
+      "VEN@2042-03-01",
+      "UKR@2028-06-15",
+      "SDN@2029-11-01",
+      "SDR@2034-03-14",
+      "SDR@2029-09-06",
+      "PSE@2040-12-27",
+      "YEM@2049-11-07",
+      "SDR@2029-01-25",
+      "LBE@2032-10-15",
+      "YEM@2050-01-15",
+      "YEM@2053-08-13",
+      "YEM@2054-12-09",
+      "YEH@2056-01-06",
+      "YEM@2056-11-22",
+      "SDN@2029-09-27"
+    ],
+    "crisisBy10Years": 30,
+    "juntaAt10Years": {
+      "RUS": 4,
+      "TUR": 1
+    },
+    "coups": 753
+  },
+  "prices": {
+    "low": 0.6799269298221889,
+    "high": 1.6299023490104985
+  },
+  "defaults": {
+    "total": 314,
+    "inStableNations": [
+      "CUB@2031-01-25 (seed 2)",
+      "CUB@2031-01-16 (seed 5)",
+      "CUB@2031-06-02 (seed 8)",
+      "CUB@2031-01-19 (seed 12)",
+      "CUB@2031-01-05 (seed 15)",
+      "CUB@2031-01-08 (seed 16)",
+      "CUB@2031-01-09 (seed 17)",
+      "GUY@2067-11-08 (seed 18)",
+      "CUB@2031-01-14 (seed 19)",
+      "CUB@2031-01-11 (seed 21)",
+      "CUB@2031-01-18 (seed 22)",
+      "CUB@2031-05-30 (seed 23)",
+      "CUB@2031-10-13 (seed 25)",
+      "CUB@2031-01-06 (seed 27)",
+      "CUB@2031-01-29 (seed 30)"
+    ]
+  },
+  "technology": {
+    "AFG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ALB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "DZA": {
+      "completed": 13,
+      "median": "2068-06-01",
+      "shareIn2035": 0.19672131147540983
+    },
+    "AND": {
+      "completed": 15,
+      "median": "2064-05-01",
+      "shareIn2035": 0.19672131147540983
+    },
+    "AGO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "ATG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ARG": {
+      "completed": 30,
+      "median": "2074-02-01",
+      "shareIn2035": 0.2786885245901639
+    },
+    "ARM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "AUS": {
+      "completed": 30,
+      "median": "2039-11-01",
+      "shareIn2035": 0.8032786885245902
+    },
+    "AUT": {
+      "completed": 30,
+      "median": "2039-02-01",
+      "shareIn2035": 0.8524590163934426
+    },
+    "AZE": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "BHS": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "BHR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "BGD": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "BRB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "BLR": {
+      "completed": 22,
+      "median": "2067-04-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "BEL": {
+      "completed": 30,
+      "median": "2040-01-01",
+      "shareIn2035": 0.819672131147541
+    },
+    "BLZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "BEN": {
+      "completed": 21,
+      "median": "2064-08-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "BTN": {
+      "completed": 7,
+      "median": "2069-02-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "BOL": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "BIH": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "BWA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.22950819672131148
+    },
+    "BRA": {
+      "completed": 30,
+      "median": "2055-06-01",
+      "shareIn2035": 0.4098360655737705
+    },
+    "BRN": {
+      "completed": 4,
+      "median": "2072-08-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "BGR": {
+      "completed": 30,
+      "median": "2065-08-01",
+      "shareIn2035": 0.3114754098360656
+    },
+    "BFA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "BDI": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "CPV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "KHM": {
+      "completed": 3,
+      "median": "2056-11-01",
+      "shareIn2035": 0.03278688524590164
+    },
+    "CMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "CAN": {
+      "completed": 30,
+      "median": "2041-09-01",
+      "shareIn2035": 0.7868852459016393
+    },
+    "CAF": {
+      "completed": 19,
+      "median": "2063-11-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "TCD": {
+      "completed": 1,
+      "median": "2061-06-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "CHL": {
+      "completed": 10,
+      "median": "2062-09-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "CHN": {
+      "completed": 30,
+      "median": "2037-11-01",
+      "shareIn2035": 0.8852459016393442
+    },
+    "COL": {
+      "completed": 15,
+      "median": "2066-10-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "COM": {
+      "completed": 22,
+      "median": "2065-08-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "COG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "CRI": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "CIV": {
+      "completed": 13,
+      "median": "2066-08-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "HRV": {
+      "completed": 30,
+      "median": "2049-07-01",
+      "shareIn2035": 0.5081967213114754
+    },
+    "CUB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.18032786885245902
+    },
+    "CYP": {
+      "completed": 30,
+      "median": "2068-10-01",
+      "shareIn2035": 0.3114754098360656
+    },
+    "CZE": {
+      "completed": 30,
+      "median": "2044-04-01",
+      "shareIn2035": 0.6721311475409836
+    },
+    "PRK": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "COD": {
+      "completed": 2,
+      "median": "2069-09-01",
+      "shareIn2035": 0.18032786885245902
+    },
+    "DNK": {
+      "completed": 30,
+      "median": "2039-05-01",
+      "shareIn2035": 0.8360655737704918
+    },
+    "DJI": {
+      "completed": 14,
+      "median": "2063-09-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "DMA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "DOM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ECU": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.19672131147540983
+    },
+    "EGY": {
+      "completed": 30,
+      "median": "2059-11-01",
+      "shareIn2035": 0.3770491803278688
+    },
+    "SLV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "GNQ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ERI": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "EST": {
+      "completed": 30,
+      "median": "2044-05-01",
+      "shareIn2035": 0.6721311475409836
+    },
+    "SWZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ETH": {
+      "completed": 17,
+      "median": "2064-11-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "FJI": {
+      "completed": 1,
+      "median": "2069-11-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "FIN": {
+      "completed": 30,
+      "median": "2039-09-01",
+      "shareIn2035": 0.8524590163934426
+    },
+    "FRA": {
+      "completed": 30,
+      "median": "2038-06-01",
+      "shareIn2035": 0.9016393442622951
+    },
+    "GAB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "GMB": {
+      "completed": 10,
+      "median": "2068-01-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "GEO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "DEU": {
+      "completed": 30,
+      "median": "2039-01-01",
+      "shareIn2035": 0.8524590163934426
+    },
+    "GHA": {
+      "completed": 20,
+      "median": "2060-10-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "GRC": {
+      "completed": 30,
+      "median": "2048-11-01",
+      "shareIn2035": 0.5245901639344263
+    },
+    "GRD": {
+      "completed": 8,
+      "median": "2072-08-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "GTM": {
+      "completed": 10,
+      "median": "2070-07-01",
+      "shareIn2035": 0
+    },
+    "GIN": {
+      "completed": 19,
+      "median": "2065-11-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "GNB": {
+      "completed": 9,
+      "median": "2065-12-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "GUY": {
+      "completed": 9,
+      "median": "2064-04-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "HTI": {
+      "completed": 18,
+      "median": "2065-06-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "HND": {
+      "completed": 17,
+      "median": "2065-11-01",
+      "shareIn2035": 0.01639344262295082
+    },
+    "HUN": {
+      "completed": 30,
+      "median": "2050-03-01",
+      "shareIn2035": 0.5245901639344263
+    },
+    "ISL": {
+      "completed": 30,
+      "median": "2038-07-01",
+      "shareIn2035": 0.8688524590163934
+    },
+    "IND": {
+      "completed": 29,
+      "median": "2068-06-01",
+      "shareIn2035": 0.32786885245901637
+    },
+    "IDN": {
+      "completed": 23,
+      "median": "2067-01-01",
+      "shareIn2035": 0.16393442622950818
+    },
+    "IRN": {
+      "completed": 30,
+      "median": "2066-05-01",
+      "shareIn2035": 0.36065573770491804
+    },
+    "IRQ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "IRL": {
+      "completed": 30,
+      "median": "2043-02-01",
+      "shareIn2035": 0.7377049180327869
+    },
+    "ISR": {
+      "completed": 30,
+      "median": "2036-03-01",
+      "shareIn2035": 0.9344262295081968
+    },
+    "ITA": {
+      "completed": 30,
+      "median": "2047-05-01",
+      "shareIn2035": 0.6065573770491803
+    },
+    "JAM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "JPN": {
+      "completed": 30,
+      "median": "2036-03-01",
+      "shareIn2035": 0.9344262295081968
+    },
+    "JOR": {
+      "completed": 30,
+      "median": "2068-10-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "KAZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "KEN": {
+      "completed": 30,
+      "median": "2061-04-01",
+      "shareIn2035": 0.29508196721311475
+    },
+    "KIR": {
+      "completed": 18,
+      "median": "2065-05-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "KWT": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "KGZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.01639344262295082
+    },
+    "LAO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "LVA": {
+      "completed": 30,
+      "median": "2064-09-01",
+      "shareIn2035": 0.32786885245901637
+    },
+    "LBN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "LSO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "LBR": {
+      "completed": 19,
+      "median": "2060-04-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "LBY": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "LIE": {
+      "completed": 30,
+      "median": "2037-08-01",
+      "shareIn2035": 0.9016393442622951
+    },
+    "LTU": {
+      "completed": 30,
+      "median": "2057-03-01",
+      "shareIn2035": 0.4098360655737705
+    },
+    "LUX": {
+      "completed": 30,
+      "median": "2052-02-01",
+      "shareIn2035": 0.5901639344262295
+    },
+    "MDG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "MWI": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "MYS": {
+      "completed": 30,
+      "median": "2058-07-01",
+      "shareIn2035": 0.3442622950819672
+    },
+    "MDV": {
+      "completed": 2,
+      "median": "2066-06-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "MLI": {
+      "completed": 6,
+      "median": "2070-05-01",
+      "shareIn2035": 0.08196721311475409
+    },
+    "MLT": {
+      "completed": 30,
+      "median": "2068-05-01",
+      "shareIn2035": 0.36065573770491804
+    },
+    "MHL": {
+      "completed": 24,
+      "median": "2067-10-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "MRT": {
+      "completed": 8,
+      "median": "2070-10-01",
+      "shareIn2035": 0
+    },
+    "MUS": {
+      "completed": 7,
+      "median": "2074-01-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "MEX": {
+      "completed": 4,
+      "median": "2072-08-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "FSM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "MCO": {
+      "completed": 22,
+      "median": "2062-06-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "MNG": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "MNE": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "MAR": {
+      "completed": 30,
+      "median": "2071-08-01",
+      "shareIn2035": 0.2459016393442623
+    },
+    "MOZ": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "MMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "NAM": {
+      "completed": 30,
+      "median": "2073-03-01",
+      "shareIn2035": 0.2459016393442623
+    },
+    "NRU": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "NPL": {
+      "completed": 18,
+      "median": "2065-05-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "NLD": {
+      "completed": 30,
+      "median": "2039-06-01",
+      "shareIn2035": 0.8688524590163934
+    },
+    "NZL": {
+      "completed": 30,
+      "median": "2046-03-01",
+      "shareIn2035": 0.6065573770491803
+    },
+    "NIC": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "NER": {
+      "completed": 4,
+      "median": "2073-05-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "NGA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "MKD": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.1557377049180328
+    },
+    "NOR": {
+      "completed": 30,
+      "median": "2040-03-01",
+      "shareIn2035": 0.8360655737704918
+    },
+    "OMN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.16393442622950818
+    },
+    "PAK": {
+      "completed": 9,
+      "median": "2065-09-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "PLW": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "PAN": {
+      "completed": 3,
+      "median": "2074-07-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "PNG": {
+      "completed": 5,
+      "median": "2073-03-01",
+      "shareIn2035": 0
+    },
+    "PRY": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.09836065573770492
+    },
+    "PER": {
+      "completed": 5,
+      "median": "2063-06-01",
+      "shareIn2035": 0.09836065573770492
+    },
+    "PHL": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "POL": {
+      "completed": 30,
+      "median": "2044-09-01",
+      "shareIn2035": 0.6229508196721312
+    },
+    "PRT": {
+      "completed": 30,
+      "median": "2045-01-01",
+      "shareIn2035": 0.6721311475409836
+    },
+    "QAT": {
+      "completed": 30,
+      "median": "2066-12-01",
+      "shareIn2035": 0.39344262295081966
+    },
+    "KOR": {
+      "completed": 30,
+      "median": "2035-11-01",
+      "shareIn2035": 0.9672131147540983
+    },
+    "MDA": {
+      "completed": 11,
+      "median": "2065-05-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "ROU": {
+      "completed": 26,
+      "median": "2063-04-01",
+      "shareIn2035": 0.2459016393442623
+    },
+    "RUS": {
+      "completed": 30,
+      "median": "2049-10-01",
+      "shareIn2035": 0.6065573770491803
+    },
+    "RWA": {
+      "completed": 29,
+      "median": "2066-01-01",
+      "shareIn2035": 0.29508196721311475
+    },
+    "KNA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "LCA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "VCT": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "WSM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "SMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.26229508196721313
+    },
+    "STP": {
+      "completed": 17,
+      "median": "2065-10-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "SAU": {
+      "completed": 30,
+      "median": "2072-02-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "SEN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.22950819672131148
+    },
+    "SRB": {
+      "completed": 30,
+      "median": "2060-10-01",
+      "shareIn2035": 0.3442622950819672
+    },
+    "SYC": {
+      "completed": 4,
+      "median": "2065-08-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "SLE": {
+      "completed": 21,
+      "median": "2068-03-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "SGP": {
+      "completed": 30,
+      "median": "2040-09-01",
+      "shareIn2035": 0.7868852459016393
+    },
+    "SVK": {
+      "completed": 30,
+      "median": "2057-04-01",
+      "shareIn2035": 0.4098360655737705
+    },
+    "SVN": {
+      "completed": 30,
+      "median": "2042-09-01",
+      "shareIn2035": 0.7049180327868853
+    },
+    "SLB": {
+      "completed": 8,
+      "median": "2071-03-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "SOM": {
+      "completed": 16,
+      "median": "2071-12-01",
+      "shareIn2035": 0.13114754098360656
+    },
+    "ZAF": {
+      "completed": 7,
+      "median": "2074-05-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "SSD": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "ESP": {
+      "completed": 30,
+      "median": "2046-12-01",
+      "shareIn2035": 0.6065573770491803
+    },
+    "LKA": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "SDN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "SUR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "SWE": {
+      "completed": 30,
+      "median": "2040-02-01",
+      "shareIn2035": 0.819672131147541
+    },
+    "CHE": {
+      "completed": 30,
+      "median": "2037-02-01",
+      "shareIn2035": 0.9016393442622951
+    },
+    "SYR": {
+      "completed": 3,
+      "median": "2069-01-01",
+      "shareIn2035": 0
+    },
+    "TJK": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "THA": {
+      "completed": 30,
+      "median": "2056-08-01",
+      "shareIn2035": 0.3442622950819672
+    },
+    "TLS": {
+      "completed": 6,
+      "median": "2071-09-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "TGO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.11475409836065574
+    },
+    "TON": {
+      "completed": 11,
+      "median": "2066-04-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "TTO": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "TUN": {
+      "completed": 30,
+      "median": "2067-04-01",
+      "shareIn2035": 0.29508196721311475
+    },
+    "TUR": {
+      "completed": 30,
+      "median": "2048-05-01",
+      "shareIn2035": 0.5409836065573771
+    },
+    "TKM": {
+      "completed": 8,
+      "median": "2068-02-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "TUV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "UGA": {
+      "completed": 23,
+      "median": "2067-10-01",
+      "shareIn2035": 0.19672131147540983
+    },
+    "UKR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.32786885245901637
+    },
+    "ARE": {
+      "completed": 30,
+      "median": "2045-08-01",
+      "shareIn2035": 0.5901639344262295
+    },
+    "GBR": {
+      "completed": 30,
+      "median": "2035-11-01",
+      "shareIn2035": 0.9508196721311475
+    },
+    "TZA": {
+      "completed": 24,
+      "median": "2059-10-01",
+      "shareIn2035": 0.21311475409836064
+    },
+    "USA": {
+      "completed": 30,
+      "median": "2033-10-01",
+      "shareIn2035": 1
+    },
+    "URY": {
+      "completed": 30,
+      "median": "2070-01-01",
+      "shareIn2035": 0.2786885245901639
+    },
+    "UZB": {
+      "completed": 17,
+      "median": "2066-02-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "VUT": {
+      "completed": 10,
+      "median": "2068-05-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "VEN": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "VNM": {
+      "completed": 25,
+      "median": "2060-06-01",
+      "shareIn2035": 0.18032786885245902
+    },
+    "YEM": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.13114754098360656
+    },
+    "ZMB": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ZWE": {
+      "completed": 10,
+      "median": "2072-06-01",
+      "shareIn2035": 0.14754098360655737
+    },
+    "VAT": {
+      "completed": 13,
+      "median": "2061-01-01",
+      "shareIn2035": 0.26229508196721313
+    },
+    "PSE": {
+      "completed": 5,
+      "median": "2052-11-01",
+      "shareIn2035": 0.18032786885245902
+    },
+    "TWN": {
+      "completed": 30,
+      "median": "2037-01-01",
+      "shareIn2035": 0.9016393442622951
+    },
+    "XKX": {
+      "completed": 16,
+      "median": "2066-02-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "CYN": {
+      "completed": 14,
+      "median": "2068-12-01",
+      "shareIn2035": 0.11475409836065574
+    },
+    "ABK": {
+      "completed": 6,
+      "median": "2067-06-01",
+      "shareIn2035": 0.04918032786885246
+    },
+    "SOS": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "PMR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "SOL": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "ESH": {
+      "completed": 2,
+      "median": "2065-12-01",
+      "shareIn2035": 0
+    },
+    "YEH": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "LBE": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.14754098360655737
+    },
+    "SDR": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0.04918032786885246
+    },
+    "RJV": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    },
+    "M23": {
+      "completed": 0,
+      "median": null,
+      "shareIn2035": 0
+    }
+  },
+  "events": {
+    "mean": 206.9,
+    "instancesMean": 8337.4,
+    "busiestDay": 22,
+    "busiestDayShare": 0.033447677533363716,
+    "topEvents": [
+      {
+        "id": "fuel-price-blockades",
+        "share": 0.05855142690367101
+      },
+      {
+        "id": "ministry-corruption-scandal",
+        "share": 0.057196088308905255
+      },
+      {
+        "id": "naval-standoff",
+        "share": 0.05205059930753792
+      },
+      {
+        "id": "infrastructure-sabotage",
+        "share": 0.04971573871950488
+      },
+      {
+        "id": "investment-boom",
+        "share": 0.045521785368740054
+      },
+      {
+        "id": "heatwave-drought",
+        "share": 0.041499748122916014
+      },
+      {
+        "id": "river-floods",
+        "share": 0.040916032975907755
+      },
+      {
+        "id": "wildfire-season",
+        "share": 0.04078809540944019
+      }
+    ],
+    "templates": 97
+  },
+  "j7c": {
+    "sanctionsStartMedian": 143,
+    "sanctionsEndMedian": 88,
+    "sanctionsRatioMedian": 0.6153846153846154,
+    "sanctionsRatios": [
+      0.61,
+      0.62,
+      0.82,
+      0.57,
+      0.55,
+      0.59,
+      0.6,
+      0.56,
+      0.59,
+      0.65,
+      0.82,
+      0.64,
+      0.62,
+      0.57,
+      0.62,
+      0.57,
+      0.54,
+      0.62,
+      0.63,
+      0.59,
+      0.62,
+      0.8,
+      0.8,
+      0.56,
+      0.89,
+      0.81,
+      0.78,
+      0.56,
+      0.57,
+      0.83
+    ],
+    "liftsBcMedian": 66,
+    "liftsBcPerCampaign": [
+      66,
+      66,
+      35,
+      66,
+      64,
+      64,
+      66,
+      66,
+      62,
+      66,
+      34,
+      64,
+      66,
+      159,
+      68,
+      66,
+      66,
+      66,
+      163,
+      65,
+      163,
+      36,
+      35,
+      66,
+      36,
+      35,
+      36,
+      66,
+      115,
+      35
+    ],
+    "liftsByReason": {
+      "regime": 335,
+      "vote": 2061,
+      "relations": 164
+    },
+    "governmentDecisionsPerYearMin": 1.5,
+    "governmentDecisionsPerYearMedian": 1.62,
+    "yearsWithAGovernmentDecisionMin": 1,
+    "yearsWithAGovernmentDecisionMedian": 1
+  },
+  "exileList": [
+    "#1 M23:exiled@2026-04-22",
+    "#1 M23:dissolved@2027-04-22",
+    "#1 SDR:exiled@2028-10-31",
+    "#1 SDR:dissolved@2029-11-01",
+    "#1 RJV:exiled@2029-11-24",
+    "#1 RJV:dissolved@2031-11-26",
+    "#1 SOL:exiled@2037-02-04",
+    "#1 SOL:dissolved@2038-05-15",
+    "#1 PSE:exiled@2044-05-09",
+    "#1 PSE:dissolved@2045-07-23",
+    "#2 M23:exiled@2026-04-19",
+    "#2 M23:dissolved@2027-04-22",
+    "#2 SDR:exiled@2028-10-21",
+    "#2 SDR:dissolved@2029-10-25",
+    "#2 SOL:exiled@2035-06-23",
+    "#2 SOL:dissolved@2037-04-29",
+    "#2 LBN:exiled@2048-06-02",
+    "#2 LBN:dissolved@2049-06-06",
+    "#2 RJV:exiled@2055-01-02",
+    "#2 RJV:dissolved@2056-01-14",
+    "#3 M23:exiled@2026-04-23",
+    "#3 M23:dissolved@2027-04-29",
+    "#3 SDR:exiled@2028-09-15",
+    "#3 SDR:dissolved@2029-09-20",
+    "#3 SOL:exiled@2030-09-30",
+    "#3 SOL:dissolved@2032-03-13",
+    "#3 LBY:exiled@2033-01-05",
+    "#3 PSE:exiled@2034-03-07",
+    "#3 LBY:dissolved@2034-03-29",
+    "#3 PSE:dissolved@2035-07-10",
+    "#3 SYR:exiled@2047-07-05",
+    "#3 YEH:exiled@2048-02-14",
+    "#3 SYR:dissolved@2048-07-05",
+    "#3 YEH:returned-collapse@2048-12-04",
+    "#3 YEH:active@2048-12-04",
+    "#3 YEH:exiled@2051-01-06",
+    "#3 YEH:dissolved@2052-01-06",
+    "#4 M23:exiled@2026-04-16",
+    "#4 M23:dissolved@2027-04-22",
+    "#4 SDR:exiled@2028-10-25",
+    "#4 SDR:dissolved@2030-01-17",
+    "#4 SOL:exiled@2032-07-01",
+    "#4 SOL:dissolved@2033-11-23",
+    "#4 PSE:exiled@2057-07-16",
+    "#4 PSE:dissolved@2059-03-08",
+    "#4 YEH:exiled@2061-07-28",
+    "#4 YEH:returned-collapse@2062-05-14",
+    "#4 YEH:active@2062-05-14",
+    "#4 YEH:exiled@2062-09-11",
+    "#4 YEH:dissolved@2063-09-17",
+    "#4 PAK:exiled@2073-02-23",
+    "#4 PAK:dissolved@2074-02-23",
+    "#5 M23:exiled@2026-04-25",
+    "#5 M23:dissolved@2027-04-29",
+    "#5 SDR:exiled@2028-11-20",
+    "#5 RJV:exiled@2029-11-25",
+    "#5 SDR:dissolved@2030-01-24",
+    "#5 RJV:dissolved@2031-11-10",
+    "#5 SOL:exiled@2034-10-27",
+    "#5 LBY:exiled@2036-01-04",
+    "#5 SOL:dissolved@2036-11-23",
+    "#5 LBY:dissolved@2037-01-08",
+    "#5 PSE:exiled@2041-10-10",
+    "#5 PSE:dissolved@2043-03-26",
+    "#5 YEH:exiled@2043-06-14",
+    "#5 YEH:dissolved@2044-06-18",
+    "#5 LBN:exiled@2047-12-03",
+    "#5 LBN:dissolved@2048-12-05",
+    "#6 M23:exiled@2026-04-23",
+    "#6 M23:dissolved@2027-04-22",
+    "#6 SDR:exiled@2028-09-10",
+    "#6 SDR:dissolved@2029-09-13",
+    "#6 SOL:exiled@2031-05-21",
+    "#6 PSE:exiled@2031-12-07",
+    "#6 PSE:dissolved@2033-02-08",
+    "#6 SOL:dissolved@2033-07-02",
+    "#6 YEH:exiled@2042-04-19",
+    "#6 YEH:returned-collapse@2043-03-05",
+    "#6 YEH:active@2043-03-05",
+    "#6 YEH:exiled@2043-06-28",
+    "#6 YEH:returned-collapse@2044-05-19",
+    "#6 YEH:active@2044-05-19",
+    "#6 YEH:exiled@2046-03-27",
+    "#6 YEH:dissolved@2047-03-29",
+    "#6 RJV:exiled@2049-03-09",
+    "#6 RJV:dissolved@2050-03-09",
+    "#6 LBN:exiled@2061-09-11",
+    "#6 LBN:dissolved@2062-09-15",
+    "#6 PAK:exiled@2069-02-01",
+    "#6 PAK:dissolved@2070-02-06",
+    "#7 M23:exiled@2026-04-16",
+    "#7 M23:dissolved@2027-04-22",
+    "#7 SDR:exiled@2028-10-10",
+    "#7 SDR:dissolved@2030-01-03",
+    "#7 SOL:exiled@2032-09-26",
+    "#7 SOL:dissolved@2034-09-11",
+    "#7 LBY:exiled@2035-12-31",
+    "#7 LBY:dissolved@2037-03-24",
+    "#7 RJV:exiled@2056-02-12",
+    "#7 RJV:dissolved@2057-02-11",
+    "#7 PSE:exiled@2065-10-30",
+    "#7 PSE:dissolved@2066-12-27",
+    "#8 M23:exiled@2026-04-14",
+    "#8 M23:dissolved@2027-04-15",
+    "#8 SDR:exiled@2028-10-16",
+    "#8 SDR:dissolved@2029-11-01",
+    "#8 SOL:exiled@2034-02-14",
+    "#8 SOL:dissolved@2035-12-29",
+    "#8 PSE:exiled@2042-09-03",
+    "#8 PSE:dissolved@2043-09-09",
+    "#8 YEH:exiled@2051-05-16",
+    "#8 YEH:dissolved@2052-05-15",
+    "#8 RJV:exiled@2072-09-24",
+    "#8 RJV:dissolved@2073-09-28",
+    "#9 M23:exiled@2026-04-13",
+    "#9 M23:dissolved@2027-04-15",
+    "#9 SDR:exiled@2028-10-13",
+    "#9 SDR:dissolved@2030-04-11",
+    "#9 SOL:exiled@2035-05-02",
+    "#9 SOL:dissolved@2036-07-01",
+    "#9 YEH:exiled@2044-11-24",
+    "#9 YEH:returned-collapse@2045-09-11",
+    "#9 YEH:active@2045-09-11",
+    "#9 YEH:exiled@2046-01-09",
+    "#9 YEH:returned-collapse@2046-09-03",
+    "#9 YEH:active@2046-09-03",
+    "#9 YEH:exiled@2047-01-17",
+    "#9 YEH:dissolved@2048-01-27",
+    "#9 LBY:exiled@2068-11-27",
+    "#9 LBY:dissolved@2071-02-07",
+    "#10 M23:exiled@2026-04-25",
+    "#10 M23:dissolved@2027-04-29",
+    "#10 PSE:exiled@2027-06-27",
+    "#10 SDR:exiled@2028-10-18",
+    "#10 PSE:dissolved@2029-01-08",
+    "#10 SDR:dissolved@2029-10-18",
+    "#10 SOL:exiled@2032-11-01",
+    "#10 SOL:dissolved@2034-11-24",
+    "#10 LBN:exiled@2041-11-11",
+    "#10 LBN:dissolved@2042-12-01",
+    "#10 LBY:exiled@2045-11-06",
+    "#10 LBY:dissolved@2046-11-09",
+    "#11 M23:exiled@2026-04-20",
+    "#11 M23:dissolved@2027-04-22",
+    "#11 SDR:exiled@2028-11-13",
+    "#11 RJV:exiled@2029-12-15",
+    "#11 SDR:dissolved@2030-05-25",
+    "#11 RJV:dissolved@2031-12-01",
+    "#11 LBY:exiled@2032-09-14",
+    "#11 SOL:exiled@2032-10-20",
+    "#11 LBY:dissolved@2033-09-17",
+    "#11 SOL:dissolved@2033-11-07",
+    "#11 YEH:exiled@2040-10-06",
+    "#11 YEH:dissolved@2041-10-11",
+    "#12 M23:exiled@2026-04-19",
+    "#12 M23:dissolved@2027-04-22",
+    "#12 SDR:exiled@2028-10-12",
+    "#12 SDR:dissolved@2029-10-18",
+    "#12 SOL:exiled@2030-10-16",
+    "#12 SOL:dissolved@2032-06-25",
+    "#12 PAK:exiled@2036-12-15",
+    "#12 PAK:dissolved@2037-12-17",
+    "#12 YEH:exiled@2041-11-24",
+    "#12 YEH:returned-collapse@2042-08-15",
+    "#12 YEH:active@2042-08-15",
+    "#12 YEH:exiled@2042-12-28",
+    "#12 YEH:returned-collapse@2043-09-18",
+    "#12 YEH:active@2043-09-18",
+    "#12 YEH:exiled@2045-05-24",
+    "#12 YEH:returned-collapse@2045-12-20",
+    "#12 YEH:active@2045-12-20",
+    "#12 YEH:exiled@2046-04-26",
+    "#12 SDN:exiled@2046-08-05",
+    "#12 SDN:returned-collapse@2047-04-07",
+    "#12 SDN:active@2047-04-07",
+    "#12 YEH:returned-collapse@2047-04-25",
+    "#12 YEH:active@2047-04-25",
+    "#12 SDN:exiled@2047-08-08",
+    "#12 YEH:exiled@2047-08-18",
+    "#12 SDN:dissolved@2048-08-11",
+    "#12 YEH:dissolved@2048-08-20",
+    "#12 RJV:exiled@2055-02-09",
+    "#12 RJV:dissolved@2056-02-08",
+    "#12 PSE:exiled@2059-06-27",
+    "#12 PSE:dissolved@2061-01-21",
+    "#13 M23:exiled@2026-04-19",
+    "#13 M23:dissolved@2027-04-22",
+    "#13 SDR:exiled@2028-09-26",
+    "#13 SDR:dissolved@2029-09-27",
+    "#13 LBY:exiled@2031-02-04",
+    "#13 LBY:dissolved@2032-02-09",
+    "#13 SOL:exiled@2033-05-22",
+    "#13 SOL:dissolved@2035-05-28",
+    "#13 PSE:exiled@2046-03-24",
+    "#13 PSE:dissolved@2047-08-31",
+    "#13 RJV:exiled@2054-11-15",
+    "#13 RJV:dissolved@2055-11-17",
+    "#14 M23:exiled@2026-04-28",
+    "#14 M23:dissolved@2027-04-29",
+    "#14 SDR:exiled@2028-11-10",
+    "#14 SDR:dissolved@2030-01-10",
+    "#14 SOL:exiled@2030-10-08",
+    "#14 SOL:dissolved@2032-11-07",
+    "#14 YEH:exiled@2054-05-27",
+    "#14 YEH:dissolved@2055-05-27",
+    "#15 M23:exiled@2026-04-19",
+    "#15 M23:dissolved@2027-04-22",
+    "#15 SDR:exiled@2028-10-14",
+    "#15 SDR:dissolved@2029-10-18",
+    "#15 SOL:exiled@2031-01-21",
+    "#15 SOL:dissolved@2033-07-25",
+    "#15 PSE:exiled@2039-12-13",
+    "#15 PSE:dissolved@2041-06-17",
+    "#15 YEH:exiled@2057-10-07",
+    "#15 YEH:dissolved@2058-10-07",
+    "#16 M23:exiled@2026-04-21",
+    "#16 M23:dissolved@2027-04-22",
+    "#16 SDR:exiled@2028-12-26",
+    "#16 SDR:dissolved@2030-06-13",
+    "#16 RJV:exiled@2030-11-15",
+    "#16 SOL:exiled@2031-05-21",
+    "#16 RJV:dissolved@2031-11-19",
+    "#16 LBY:exiled@2032-08-23",
+    "#16 LBY:returned-collapse@2033-06-13",
+    "#16 LBY:active@2033-06-13",
+    "#16 SOL:dissolved@2033-06-30",
+    "#17 M23:exiled@2026-04-22",
+    "#17 M23:dissolved@2027-04-22",
+    "#17 PSE:exiled@2027-08-08",
+    "#17 SDR:exiled@2028-10-31",
+    "#17 PSE:dissolved@2029-02-20",
+    "#17 SDR:returned-collapse@2029-07-19",
+    "#17 SDR:active@2029-07-19",
+    "#17 SOL:exiled@2033-11-09",
+    "#17 SDR:exiled@2034-08-21",
+    "#17 SOL:dissolved@2036-01-06",
+    "#17 SDR:dissolved@2036-09-16",
+    "#17 RJV:exiled@2037-02-14",
+    "#17 RJV:dissolved@2038-02-16",
+    "#17 LBY:exiled@2038-10-17",
+    "#17 LBY:dissolved@2040-02-05",
+    "#17 YEH:exiled@2054-02-21",
+    "#17 YEH:dissolved@2055-02-24",
+    "#17 PAK:exiled@2070-08-29",
+    "#17 PAK:dissolved@2071-08-29",
+    "#18 M23:exiled@2026-04-21",
+    "#18 M23:dissolved@2027-04-22",
+    "#18 SDR:exiled@2028-12-05",
+    "#18 SDR:dissolved@2029-12-29",
+    "#18 SOL:exiled@2031-08-01",
+    "#18 SOL:dissolved@2033-10-17",
+    "#18 PSE:exiled@2044-01-16",
+    "#18 PSE:dissolved@2045-08-21",
+    "#18 YEH:exiled@2046-03-06",
+    "#18 YEH:dissolved@2047-03-29",
+    "#18 RJV:exiled@2052-01-09",
+    "#18 RJV:dissolved@2053-01-11",
+    "#18 LBY:exiled@2053-10-16",
+    "#18 LBY:returned-collapse@2054-10-04",
+    "#18 LBY:active@2054-10-04",
+    "#19 M23:exiled@2026-04-24",
+    "#19 M23:dissolved@2027-04-29",
+    "#19 SDR:exiled@2028-10-15",
+    "#19 SDR:returned-collapse@2029-10-18",
+    "#19 SDR:dissolved@2029-10-18",
+    "#19 LBY:exiled@2034-10-21",
+    "#19 SOL:exiled@2034-11-23",
+    "#19 LBY:returned-collapse@2035-08-26",
+    "#19 LBY:active@2035-08-26",
+    "#19 SOL:dissolved@2037-01-02",
+    "#19 LBY:exiled@2040-12-16",
+    "#19 LBY:dissolved@2042-03-20",
+    "#19 YEH:exiled@2051-07-22",
+    "#19 YEH:returned-collapse@2052-06-28",
+    "#19 YEH:active@2052-06-28",
+    "#19 YEH:exiled@2052-11-30",
+    "#19 RJV:exiled@2053-10-06",
+    "#19 YEH:dissolved@2053-11-29",
+    "#19 RJV:dissolved@2054-10-09",
+    "#19 PAK:exiled@2075-10-27",
+    "#20 M23:exiled@2026-04-19",
+    "#20 M23:dissolved@2027-04-22",
+    "#20 SDR:exiled@2028-09-27",
+    "#20 PSE:exiled@2029-09-23",
+    "#20 SDR:dissolved@2029-09-27",
+    "#20 PSE:dissolved@2031-04-18",
+    "#20 SOL:exiled@2033-02-24",
+    "#20 SOL:dissolved@2035-03-28",
+    "#20 YEH:exiled@2048-12-11",
+    "#20 RJV:exiled@2049-07-30",
+    "#20 YEH:dissolved@2049-12-12",
+    "#20 RJV:dissolved@2050-08-01",
+    "#20 LBY:exiled@2057-02-11",
+    "#20 LBY:returned-collapse@2057-10-22",
+    "#20 LBY:active@2057-10-22",
+    "#20 LBY:exiled@2058-08-20",
+    "#20 LBY:dissolved@2060-10-09",
+    "#20 PAK:exiled@2071-07-20",
+    "#20 PAK:dissolved@2072-07-24",
+    "#21 M23:exiled@2026-04-24",
+    "#21 M23:dissolved@2027-04-29",
+    "#21 SDR:exiled@2028-11-27",
+    "#21 SDR:dissolved@2029-11-29",
+    "#21 SOL:exiled@2030-12-23",
+    "#21 SOL:dissolved@2033-03-07",
+    "#21 PSE:exiled@2042-03-27",
+    "#21 PSE:dissolved@2043-10-26",
+    "#21 YEH:exiled@2047-01-03",
+    "#21 YEH:returned-collapse@2047-09-30",
+    "#21 YEH:active@2047-09-30",
+    "#21 LBY:exiled@2051-06-28",
+    "#21 YEH:exiled@2052-03-24",
+    "#21 LBY:dissolved@2052-11-07",
+    "#21 YEH:dissolved@2053-03-26",
+    "#22 M23:exiled@2026-04-23",
+    "#22 M23:dissolved@2027-04-22",
+    "#22 SDR:exiled@2028-09-23",
+    "#22 SDR:dissolved@2029-09-27",
+    "#22 RJV:exiled@2029-10-03",
+    "#22 SOL:exiled@2030-09-25",
+    "#22 RJV:dissolved@2031-08-28",
+    "#22 SOL:dissolved@2032-11-25",
+    "#22 YEH:exiled@2041-11-12",
+    "#22 YEH:returned-collapse@2042-10-17",
+    "#22 YEH:active@2042-10-17",
+    "#22 YEH:exiled@2043-02-12",
+    "#22 YEH:dissolved@2044-02-13",
+    "#22 LBY:exiled@2047-08-05",
+    "#22 LBY:returned-collapse@2048-05-07",
+    "#22 LBY:active@2048-05-07",
+    "#22 PSE:exiled@2051-11-24",
+    "#22 ARM:exiled@2053-02-21",
+    "#22 PSE:dissolved@2053-03-23",
+    "#22 ARM:dissolved@2054-02-23",
+    "#23 M23:exiled@2026-04-24",
+    "#23 M23:dissolved@2027-04-29",
+    "#23 ARM:exiled@2027-10-06",
+    "#23 SDR:exiled@2028-10-23",
+    "#23 ARM:dissolved@2029-02-20",
+    "#23 SDR:returned-collapse@2029-08-02",
+    "#23 SDR:active@2029-08-02",
+    "#23 SOL:exiled@2030-10-14",
+    "#23 SDR:exiled@2032-01-23",
+    "#23 SOL:dissolved@2032-05-06",
+    "#23 RJV:exiled@2032-11-02",
+    "#23 SDR:dissolved@2033-07-02",
+    "#23 RJV:dissolved@2033-11-04",
+    "#24 M23:exiled@2026-08-06",
+    "#24 M23:dissolved@2027-08-12",
+    "#24 SDR:exiled@2028-11-26",
+    "#24 SDR:dissolved@2029-11-29",
+    "#24 SOL:exiled@2031-12-06",
+    "#24 LBY:exiled@2032-08-06",
+    "#24 LBY:dissolved@2033-08-08",
+    "#24 SOL:dissolved@2033-10-22",
+    "#24 YEH:exiled@2047-08-02",
+    "#24 YEH:dissolved@2048-08-12",
+    "#25 M23:exiled@2026-04-14",
+    "#25 M23:dissolved@2027-04-15",
+    "#25 SDR:exiled@2028-11-15",
+    "#25 SDR:dissolved@2030-01-31",
+    "#25 SOL:exiled@2030-12-08",
+    "#25 LBY:exiled@2032-08-12",
+    "#25 SOL:dissolved@2033-05-29",
+    "#25 LBY:dissolved@2033-08-12",
+    "#25 RJV:exiled@2050-03-10",
+    "#25 RJV:dissolved@2051-03-12",
+    "#26 M23:exiled@2026-04-20",
+    "#26 M23:dissolved@2027-04-22",
+    "#26 SDR:exiled@2028-12-16",
+    "#26 SDR:returned-collapse@2029-11-01",
+    "#26 SDR:active@2029-11-01",
+    "#26 SOL:exiled@2031-05-15",
+    "#26 SOL:dissolved@2033-07-12",
+    "#26 SDR:exiled@2033-07-21",
+    "#26 SDR:dissolved@2034-07-25",
+    "#26 RJV:exiled@2051-02-25",
+    "#26 RJV:dissolved@2052-02-26",
+    "#27 M23:exiled@2026-04-26",
+    "#27 M23:dissolved@2027-04-29",
+    "#27 SDR:exiled@2028-10-10",
+    "#27 SDR:dissolved@2029-10-11",
+    "#27 SOL:exiled@2030-12-08",
+    "#27 SOL:dissolved@2032-10-10",
+    "#27 PSE:exiled@2040-07-06",
+    "#27 PSE:dissolved@2041-10-17",
+    "#27 YEH:exiled@2049-01-10",
+    "#27 YEH:returned-collapse@2049-11-07",
+    "#27 YEH:active@2049-11-07",
+    "#27 YEH:exiled@2050-03-22",
+    "#27 YEH:dissolved@2051-03-27",
+    "#28 M23:exiled@2026-04-16",
+    "#28 M23:dissolved@2027-04-15",
+    "#28 SDR:exiled@2028-09-16",
+    "#28 SDR:dissolved@2030-02-14",
+    "#28 PSE:exiled@2030-08-20",
+    "#28 PSE:dissolved@2032-03-11",
+    "#28 LBN:exiled@2037-05-17",
+    "#28 SOL:exiled@2037-08-10",
+    "#28 LBN:dissolved@2038-05-22",
+    "#28 SOL:dissolved@2039-09-03",
+    "#28 GEO:exiled@2042-01-08",
+    "#28 GEO:dissolved@2043-01-09",
+    "#28 YEH:exiled@2047-09-10",
+    "#28 YEH:dissolved@2048-09-11",
+    "#28 RJV:exiled@2051-03-10",
+    "#28 RJV:dissolved@2052-03-14",
+    "#28 RWA:exiled@2057-01-23",
+    "#28 RWA:dissolved@2058-01-23",
+    "#29 M23:exiled@2026-04-25",
+    "#29 M23:dissolved@2027-04-29",
+    "#29 SDR:exiled@2028-10-23",
+    "#29 PSE:exiled@2029-12-03",
+    "#29 RJV:exiled@2030-01-07",
+    "#29 SDR:dissolved@2030-05-23",
+    "#29 LBY:exiled@2031-08-03",
+    "#29 PSE:dissolved@2031-08-04",
+    "#29 RJV:dissolved@2031-12-29",
+    "#29 LBY:returned-collapse@2032-10-15",
+    "#29 LBY:active@2032-10-15",
+    "#29 SOL:exiled@2032-12-11",
+    "#29 SOL:dissolved@2035-06-24",
+    "#29 GEO:exiled@2048-11-05",
+    "#29 YEH:exiled@2049-02-18",
+    "#29 YEH:returned-collapse@2050-01-15",
+    "#29 YEH:active@2050-01-15",
+    "#29 GEO:dissolved@2051-05-03",
+    "#29 YEH:exiled@2053-01-13",
+    "#29 YEH:returned-collapse@2053-08-13",
+    "#29 YEH:active@2053-08-13",
+    "#29 YEH:exiled@2053-12-11",
+    "#29 YEH:returned-collapse@2054-12-09",
+    "#29 YEH:active@2054-12-09",
+    "#29 MNG:exiled@2055-01-01",
+    "#29 YEH:exiled@2055-04-18",
+    "#29 YEH:dissolved@2056-04-20",
+    "#29 LBN:exiled@2057-04-16",
+    "#29 MNG:dissolved@2057-06-05",
+    "#29 LBN:dissolved@2058-04-21",
+    "#30 M23:exiled@2026-04-17",
+    "#30 M23:dissolved@2027-04-22",
+    "#30 SDR:exiled@2028-10-18",
+    "#30 SDR:returned-collapse@2029-09-27",
+    "#30 SDR:active@2029-09-27",
+    "#30 SOL:exiled@2031-04-22",
+    "#30 SOL:dissolved@2033-06-29",
+    "#30 SDR:exiled@2033-07-06",
+    "#30 SDR:dissolved@2034-07-06",
+    "#30 LBY:exiled@2037-09-21",
+    "#30 LBY:dissolved@2039-01-22"
+  ],
+  "exile": {
+    "annexations": 0,
+    "exiles": 211,
+    "returns": 29,
+    "dissolutions": 182
+  },
+  "blocs": {
+    "decisionsMean": 55.7
+  },
+  "wallMsMean": 723777.0666666667
+}

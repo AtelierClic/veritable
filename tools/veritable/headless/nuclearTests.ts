@@ -39,10 +39,13 @@ import { coreDriver } from "./coreDriver";
 // control of the sea: the test is the nuclear answer, not the navy). Every
 // day the
 // harness reads Russia's threat level and its daily probability of a shot
-// (what the nuclear panel shows); the expected chance of a Russian shot in
-// a campaign is 1 - prod(1 - p) up to the first shot. Criterion: the share
-// of campaigns with a Russian shot is within 50 % of the mean expected
-// chance.
+// (what the nuclear panel shows). The share of campaigns with a Russian shot
+// is expected to be the mean, over the campaigns, of the daily probabilities
+// summed up to the first shot or the end (the compensator of the shot: its
+// expectation is the chance of a shot). J7c: until then the harness took
+// 1 - prod(1 - p) up to the first shot, biased low as a shot grows likely —
+// half the truth when a shot is near-certain. Criterion: the share of
+// campaigns with a Russian shot is within 50 % of the expected share.
 //
 // dead-hand: France declares war on Russia, then Russia is annexed by a
 // treaty signed the next day; the dead hand fires or not. Criterion: the
@@ -75,7 +78,8 @@ interface InvasionResult {
   landings: number;
   warOver: boolean;
   firstLevel3: string | null;
-  expected: number; // 1 - prod(1 - p) up to the first shot
+  expected: number; // sum of the daily p up to the first shot or the end
+  chance: number; // 1 - prod(1 - p) over the same days (J6 measure)
   shot: { date: string; threat: number; target: string } | null;
   tilesLostShare: number;
   stability: number;
@@ -119,6 +123,7 @@ async function invasion(
   let landings = 0;
   let day = 0;
   let survive = 1;
+  let hazard = 0;
   let firstLevel3: string | null = null;
   let shot: InvasionResult["shot"] = null;
   const end = `${2026 + years}-01-02`;
@@ -148,6 +153,7 @@ async function invasion(
     // view shows is that of the last computed level: the same day's value.
     const p = view.nuclearRisk.RUS ?? 0;
     survive *= 1 - p;
+    hazard += p;
     const events = driver.advanceDay();
     const launch = events.find(
       (e) => e.type === "nuclear-launch" && e.nation === "RUS",
@@ -170,7 +176,8 @@ async function invasion(
     landings,
     warOver: !sim.diplomacy.wars.some((w) => w.id === war.id),
     firstLevel3,
-    expected: 1 - survive,
+    expected: hazard,
+    chance: 1 - survive,
     shot,
     tilesLostShare: 1 - tiles / initial,
     stability: view.politics.RUS?.stability ?? 0,

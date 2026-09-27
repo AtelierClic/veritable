@@ -341,9 +341,16 @@ export function aggregate(campaigns: Campaign[]) {
   );
   const world = worldMetrics(campaigns);
   // J7c: wars and events that name a nation without land (none expected).
+  // Files written before the reading at dawn checked the status at the end
+  // of the day: an entry dated the day its nation left reach happened
+  // before, in the day, and is dropped.
   const beyond = {
-    wars: campaigns.flatMap((c) => c.delivery.beyondReach?.wars ?? []),
-    events: campaigns.flatMap((c) => c.delivery.beyondReach?.events ?? []),
+    wars: campaigns.flatMap((c) =>
+      (c.delivery.beyondReach?.wars ?? []).filter((e) => !sameDay(c, e)),
+    ),
+    events: campaigns.flatMap((c) =>
+      (c.delivery.beyondReach?.events ?? []).filter((e) => !sameDay(c, e)),
+    ),
   };
   const noneBeyondReach =
     beyond.wars.length === 0 && beyond.events.length === 0;
@@ -625,6 +632,26 @@ function campaignsCsv(campaigns: Campaign[]): string {
     ].join(",");
   });
   return `${header.join(",")}\n${rows.join("\n")}\n`;
+}
+
+// A beyond-reach entry ("A>B@date", "event:A~B@date") dated the day one of
+// its nations went into exile or was dissolved (the exile list of the
+// campaign, "NATION:state@date").
+function sameDay(c: Campaign, entry: string): boolean {
+  const date = entry.slice(entry.lastIndexOf("@") + 1);
+  const names = entry
+    .slice(0, entry.lastIndexOf("@"))
+    .replace(/^[^:]*:/, "")
+    .split(/[>+~]/);
+  return (c.delivery.exile?.list ?? []).some((x) => {
+    const [nation, rest] = x.split(":");
+    const [state, day] = rest.split("@");
+    return (
+      day === date &&
+      names.includes(nation) &&
+      (state === "exiled" || state === "dissolved")
+    );
+  });
 }
 
 // A campaign file written whole (the worker writes a temporary file and

@@ -456,9 +456,15 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
   const tier1 = pack.data.tech
     .filter((n) => n.tier === 1 && n.bloc === undefined)
     .map((n) => n.id);
-  // J7c: a nation without land, read on the simulation at the event.
-  const landless = (id: string) =>
-    (driver.sim as EventHistory | undefined)?.beyondReach?.(id) === true;
+  // J7c: the nations without land at dawn (a nation that loses its last
+  // tile in the day was still in reach for what happened before).
+  let dawn = new Set<string>();
+  const readDawn = () => {
+    const sim = driver.sim as EventHistory | undefined;
+    if (sim?.beyondReach === undefined) return;
+    dawn = new Set(pack.scenario.nations.filter((id) => sim.beyondReach!(id)));
+  };
+  const landless = (id: string) => dawn.has(id);
   const delivery: DeliveryMetrics = {
     newWars: [],
     peaces: [],
@@ -757,6 +763,7 @@ export function runCampaign(options: CampaignOptions): CampaignResult {
         }
       }
     }
+    readDawn();
     for (const event of driver.advanceDay()) {
       if (event.type === "day-started") date = event.date;
       onEvent(event);
