@@ -6,7 +6,7 @@
       {
         "from": "2026-01-04",
         "to": "2026-02-02",
-        "ticksPerSecond": 49.52185792349727,
+        "ticksPerSecond": 49.38734151347283,
         "monthStart": true,
         "cards": false,
         "firstMonth": true
@@ -14,7 +14,7 @@
       {
         "from": "2026-02-03",
         "to": "2026-03-04",
-        "ticksPerSecond": 49.67412063959078,
+        "ticksPerSecond": 49.69710471524606,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -22,7 +22,7 @@
       {
         "from": "2026-03-05",
         "to": "2026-04-03",
-        "ticksPerSecond": 49.76533072496267,
+        "ticksPerSecond": 49.54512450348097,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -30,7 +30,7 @@
       {
         "from": "2026-04-04",
         "to": "2026-05-03",
-        "ticksPerSecond": 49.7495368146636,
+        "ticksPerSecond": 49.43617193560916,
         "monthStart": true,
         "cards": true,
         "firstMonth": false
@@ -38,19 +38,19 @@
       {
         "from": "2026-05-04",
         "to": "2026-06-01",
-        "ticksPerSecond": 49.69517335627463,
+        "ticksPerSecond": 49.60625038755538,
         "monthStart": true,
         "cards": true,
         "firstMonth": false
       }
     ],
-    "warmMin": 49.67412063959078,
-    "warmMedian": 49.7495368146636,
+    "warmMin": 49.43617193560916,
+    "warmMedian": 49.60625038755538,
     "warmUnder49": 0,
     "monthStartWindow": {
       "from": "2026-02-03",
       "to": "2026-03-04",
-      "ticksPerSecond": 49.67412063959078,
+      "ticksPerSecond": 49.69710471524606,
       "monthStart": true,
       "cards": false,
       "firstMonth": false
@@ -58,7 +58,7 @@
     "cardWindow": {
       "from": "2026-04-04",
       "to": "2026-05-03",
-      "ticksPerSecond": 49.7495368146636,
+      "ticksPerSecond": 49.43617193560916,
       "monthStart": true,
       "cards": true,
       "firstMonth": false
@@ -71,7 +71,7 @@
       {
         "from": "2040-01-04",
         "to": "2040-02-02",
-        "ticksPerSecond": 49.481721622659215,
+        "ticksPerSecond": 49.69454987877512,
         "monthStart": true,
         "cards": false,
         "firstMonth": true
@@ -79,7 +79,7 @@
       {
         "from": "2040-02-03",
         "to": "2040-03-03",
-        "ticksPerSecond": 49.413007548275424,
+        "ticksPerSecond": 49.64945770808464,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -87,7 +87,7 @@
       {
         "from": "2040-03-04",
         "to": "2040-04-02",
-        "ticksPerSecond": 49.685184391998966,
+        "ticksPerSecond": 49.59850862416079,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -95,7 +95,7 @@
       {
         "from": "2040-04-03",
         "to": "2040-05-02",
-        "ticksPerSecond": 49.752950864665614,
+        "ticksPerSecond": 49.52058946578789,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -103,19 +103,19 @@
       {
         "from": "2040-05-03",
         "to": "2040-05-31",
-        "ticksPerSecond": 49.94782236412419,
+        "ticksPerSecond": 49.87175833572142,
         "monthStart": false,
         "cards": true,
         "firstMonth": false
       }
     ],
-    "warmMin": 49.413007548275424,
-    "warmMedian": 49.752950864665614,
+    "warmMin": 49.52058946578789,
+    "warmMedian": 49.64945770808464,
     "warmUnder49": 0,
     "monthStartWindow": {
       "from": "2040-02-03",
       "to": "2040-03-03",
-      "ticksPerSecond": 49.413007548275424,
+      "ticksPerSecond": 49.64945770808464,
       "monthStart": true,
       "cards": false,
       "firstMonth": false
@@ -123,7 +123,7 @@
     "cardWindow": {
       "from": "2040-05-03",
       "to": "2040-05-31",
-      "ticksPerSecond": 49.94782236412419,
+      "ticksPerSecond": 49.87175833572142,
       "monthStart": false,
       "cards": true,
       "firstMonth": false
@@ -136,7 +136,7 @@
       {
         "from": "2060-01-04",
         "to": "2060-02-02",
-        "ticksPerSecond": 49.572225878404986,
+        "ticksPerSecond": 49.810633711487,
         "monthStart": true,
         "cards": false,
         "firstMonth": true
@@ -144,7 +144,7 @@
       {
         "from": "2060-02-03",
         "to": "2060-03-03",
-        "ticksPerSecond": 49.78113466655223,
+        "ticksPerSecond": 49.80507324781237,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -152,7 +152,7 @@
       {
         "from": "2060-03-04",
         "to": "2060-04-02",
-        "ticksPerSecond": 49.798658870607134,
+        "ticksPerSecond": 49.73119432034193,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -160,39 +160,32 @@
       {
         "from": "2060-04-03",
         "to": "2060-05-02",
-        "ticksPerSecond": 49.703067022027724,
+        "ticksPerSecond": 49.81619541689089,
         "monthStart": true,
-        "cards": true,
+        "cards": false,
         "firstMonth": false
       },
       {
         "from": "2060-05-03",
         "to": "2060-05-31",
-        "ticksPerSecond": 50.25802109041956,
+        "ticksPerSecond": 50.15763829178754,
         "monthStart": false,
-        "cards": true,
+        "cards": false,
         "firstMonth": false
       }
     ],
-    "warmMin": 49.703067022027724,
-    "warmMedian": 49.798658870607134,
+    "warmMin": 49.73119432034193,
+    "warmMedian": 49.81619541689089,
     "warmUnder49": 0,
     "monthStartWindow": {
       "from": "2060-02-03",
       "to": "2060-03-03",
-      "ticksPerSecond": 49.78113466655223,
+      "ticksPerSecond": 49.80507324781237,
       "monthStart": true,
       "cards": false,
       "firstMonth": false
     },
-    "cardWindow": {
-      "from": "2060-04-03",
-      "to": "2060-05-02",
-      "ticksPerSecond": 49.703067022027724,
-      "monthStart": true,
-      "cards": true,
-      "firstMonth": false
-    }
+    "cardWindow": null
   },
   {
     "save": "world-2026-2075",
@@ -201,7 +194,7 @@
       {
         "from": "2075-01-04",
         "to": "2075-02-02",
-        "ticksPerSecond": 49.575615635136096,
+        "ticksPerSecond": 49.58070113949497,
         "monthStart": true,
         "cards": false,
         "firstMonth": true
@@ -209,7 +202,7 @@
       {
         "from": "2075-02-03",
         "to": "2075-03-04",
-        "ticksPerSecond": 49.73119432034193,
+        "ticksPerSecond": 49.64903269988016,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -217,7 +210,7 @@
       {
         "from": "2075-03-05",
         "to": "2075-04-03",
-        "ticksPerSecond": 49.40795638470057,
+        "ticksPerSecond": 49.64308334903144,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -225,7 +218,7 @@
       {
         "from": "2075-04-04",
         "to": "2075-05-03",
-        "ticksPerSecond": 49.68092851942267,
+        "ticksPerSecond": 49.483832437505335,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
@@ -233,19 +226,19 @@
       {
         "from": "2075-05-04",
         "to": "2075-06-01",
-        "ticksPerSecond": 49.60537155308449,
+        "ticksPerSecond": 49.627351760435126,
         "monthStart": true,
         "cards": false,
         "firstMonth": false
       }
     ],
-    "warmMin": 49.40795638470057,
-    "warmMedian": 49.68092851942267,
+    "warmMin": 49.483832437505335,
+    "warmMedian": 49.64308334903144,
     "warmUnder49": 0,
     "monthStartWindow": {
       "from": "2075-02-03",
       "to": "2075-03-04",
-      "ticksPerSecond": 49.73119432034193,
+      "ticksPerSecond": 49.64903269988016,
       "monthStart": true,
       "cards": false,
       "firstMonth": false
